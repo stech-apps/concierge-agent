@@ -15,7 +15,9 @@ export class GlobalErrorHandler {
         // switch (error.errorCode) {
         // default:
         const dsError = errorAction as DataServiceError<any>;
-        this.translateService.get([contextualErrorKey, this.genericErrorKey], {
+
+        console.error(dsError);
+       /* this.translateService.get([contextualErrorKey, this.genericErrorKey], {
             errorCode: dsError.errorCode,
             ...interpolationParams
         }).subscribe(
@@ -23,6 +25,8 @@ export class GlobalErrorHandler {
                 this.toastService.errorToast(`${errorMsgs[contextualErrorKey]}. ${errorMsgs[this.genericErrorKey]}`);
             }
             ).unsubscribe();
+
+            */
         // break;
         // }
     }
@@ -35,5 +39,5 @@ export class GlobalErrorHandler {
         };
       }
 
-    constructor(private toastService: ToastService, private translateService: TranslateService) { }
+    constructor(private toastService: ToastService/*, private translateService: TranslateService*/) { }
 }

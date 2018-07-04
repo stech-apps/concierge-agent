@@ -7,7 +7,6 @@ import { IAppState } from '../../reducers';
 import { IUserState } from '../../reducers/user.reducer';
 import { IUser } from '../../../models/IUser';
 
-import { ADMIN_ROLE } from './../../reducers/user-role.reducer';
 
 // selectors
 const getUserState = createFeatureSelector<IAccountState>('account');
@@ -37,11 +36,6 @@ const getUserDirection = createSelector(
   (state: IAccount) => state.direction
 );
 
-const getUserIsAdmin = createSelector(
-  getUserState,
-  (state: IAccountState) => state.userRole === ADMIN_ROLE
-);
-
 @Injectable()
 export class UserSelectors {
   constructor(private store: Store<IAppState>) {}
@@ -51,5 +45,4 @@ export class UserSelectors {
   userUserName$ = this.store.select(getUserUserName);
   userLocale$ = this.store.select(getUserLocale);
   userDirection$ = this.store.select(getUserDirection);
-  userIsAdmin$ = this.store.select(getUserIsAdmin);
 }

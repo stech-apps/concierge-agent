@@ -1,3 +1,4 @@
+import { UserRole } from 'src/models/UserPermissionsEnum';
 import { Action } from '@ngrx/store';
 
 // Fetching user info
@@ -16,7 +17,7 @@ export class FetchUserRoleInfoFail implements Action {
 
 export class FetchUserRoleInfoSuccess implements Action {
   readonly type = FETCH_USER_ROLE_SUCCESS;
-  constructor(public payload: string) {}
+  constructor(public payload: UserRole) {}
 }
 
 // Action types

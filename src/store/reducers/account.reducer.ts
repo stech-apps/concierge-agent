@@ -1,9 +1,10 @@
+import { UserRole } from './../../models/UserPermissionsEnum';
 import { IAccount } from './../../models/IAccount';
 import * as AccountActions from '../actions';
 
 export interface IAccountState {
   data: IAccount;
-  userRole: string;
+  userRole: UserRole;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -21,7 +22,7 @@ const initialState = {
     fullName: '',
     modules: []
   },
-  userRole: '',
+  userRole: UserRole.None,
   loading: false,
   loaded: false,
   error: null

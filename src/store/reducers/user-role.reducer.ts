@@ -1,11 +1,13 @@
 import * as UserRoleActions from '../actions';
+import { UserRole } from 'src/models/UserPermissionsEnum';
 
-export const ADMIN_ROLE = 'ADMIN_ROLE';
-export const USER_ROLE = 'USER_ROLE';
+export const VISIT_USER_ROLE = 'VISIT_USER_ROLE';
+export const APPOINTMENT_USER_ROLE = 'APPOINTMENT_USER_ROLE';
 export const NO_ROLE = 'NO_ROLE';
 
+
 export interface IUserRoleState {
-  role: string;
+  role: UserRole;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -22,7 +24,7 @@ const initialState = {
     fullName: '',
     isAdmin: true
   },
-  role: NO_ROLE,
+  role: UserRole.None,
   loading: false,
   loaded: false,
   error: null

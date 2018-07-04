@@ -1,3 +1,4 @@
+import { UserRole } from 'src/models/UserPermissionsEnum';
 import { Action } from '@ngrx/store';
 import { IAccount } from './../../models/IAccount';
 
@@ -18,7 +19,7 @@ export class FetchAccountInfoFail implements Action {
 
 export class FetchAccountInfoSuccess implements Action {
   readonly type = FETCH_ACCOUNT_INFO_SUCCESS;
-  constructor(public payload: { data: IAccount; userRole: string }) {}
+  constructor(public payload: { data: IAccount; userRole: UserRole }) {}
 }
 
 // Action types

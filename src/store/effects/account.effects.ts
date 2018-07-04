@@ -37,7 +37,7 @@ export class AccountEffects {
     .pipe(
       tap((action: AccountActions.FetchAccountInfoSuccess) => {
         this.translate.use(
-          'appointmentBookingMessages' +
+          'connectConcierge' +
             (action.payload.data.locale === 'en'
               ? ''
               : `_${action.payload.data.locale}`)

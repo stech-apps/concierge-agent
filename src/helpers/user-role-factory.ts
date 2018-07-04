@@ -6,20 +6,22 @@ export function userRoleFactory(mods: { modules: string[]}) : UserRole {
         let isVisitUserRole = false;
         let isAppointmentUser = false;
         let isSuperAdminUser = false;
+        
+        let userRole = UserRole.None;
 
         if (mods.modules.includes(SUPER_ADMIN_ROLE)) {
           isVisitUserRole = true;
           isAppointmentUser = true;
           isSuperAdminUser = true;
+          userRole = UserRole.All
         }
         else if (mods.modules.includes(CONCIERGE_ROLE) || mods.modules.includes(CONNECT_CONCIERGE_ROLE)) {
           isVisitUserRole = mods.modules.includes(SERVICEPOINT_ROLE);
           isAppointmentUser = mods.modules.includes(CALENDAR_ROLE);
+          userRole = isVisitUserRole ? userRole & UserRole.VisitUserRole : userRole;
+          userRole = isAppointmentUser ? userRole & UserRole.AppointmentUserRole : userRole;
         }
 
-        let userRole = UserRole.None;
-        userRole = isVisitUserRole || isSuperAdminUser ? userRole & UserRole.VisitUserRole : userRole;
-        userRole = isAppointmentUser || isSuperAdminUser ? userRole & UserRole.AppointmentUserRole : userRole;
         return userRole;
     }
 

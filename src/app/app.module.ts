@@ -73,13 +73,13 @@ const toastrGlobalOptions = {
     ...(!environment.production
       ? [StoreDevtoolsModule.instrument({ maxAge: 10 })]
       : []),
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-        }
-      })
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     ...storeServices,

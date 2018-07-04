@@ -5,7 +5,7 @@ import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 // Angular Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 // Components
@@ -26,6 +26,13 @@ import { effects } from '../store/effects';
 // Env
 import { environment } from '../environments/environment';
 
+// Translations
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateService
+} from '@ngx-translate/core';
+
 // services
 import {
   storeServices
@@ -33,7 +40,6 @@ import {
 import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 import { ToastService } from './../util/services/toast.service';
 import { ToastrModule } from 'ngx-toastr';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/i18n/TranslationsLoaderFactory';
 import { LicenseDispatchers } from './../store/services/license/license.dispatchers';
 import { QmAppLoaderComponent } from './components/containers/qm-app-loader/qm-app-loader.component';
@@ -66,7 +72,14 @@ const toastrGlobalOptions = {
     ToastrModule.forRoot(toastrGlobalOptions),
     ...(!environment.production
       ? [StoreDevtoolsModule.instrument({ maxAge: 10 })]
-      : [])
+      : []),
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      })
   ],
   providers: [
     ...storeServices,

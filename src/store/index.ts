@@ -5,7 +5,8 @@ export * from './services';
 
 import { 
     SystemInfoDispatchers, SystemInfoDataService, SystemInfoSelectors, 
-    LicenseDataService, LicenseInfoSelectors, LicenseDispatchers } from './services';
+    LicenseDataService, LicenseInfoSelectors, LicenseDispatchers, UserRoleDataService,
+    UserRoleDispatchers, UserRoleSelectors, UserDataService, UserDispatchers, UserSelectors } from './services';
 
 
 export const storeServices = [
@@ -15,5 +16,11 @@ export const storeServices = [
 
     LicenseDataService,
     LicenseInfoSelectors,
-    LicenseDispatchers
+    LicenseDispatchers,
+    UserRoleDataService,
+    UserRoleDispatchers,
+    UserRoleSelectors,
+    UserDataService,
+    UserDispatchers,
+    UserSelectors
 ];

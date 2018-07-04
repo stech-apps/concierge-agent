@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/operator/catch';
 import { map } from 'rxjs/operators';
 
 // Declare native methods in window object

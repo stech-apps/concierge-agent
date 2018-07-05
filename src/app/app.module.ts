@@ -1,3 +1,4 @@
+import { NativeApiService } from './../util/services/native-api.service';
 // Route guards
 import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 
@@ -90,7 +91,8 @@ const toastrGlobalOptions = {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private licenseInfoDispatchers: LicenseDispatchers) {
+  constructor(private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService) {
     this.licenseInfoDispatchers.fetchLicenseInfo();
+    this.nativeApiService.showNativeLoader(false);
   }
 }

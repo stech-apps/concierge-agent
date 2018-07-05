@@ -1,0 +1,14 @@
+{
+    "remote_deploy": {
+        "host": "",
+        "username": "",
+        "password": ""
+    },
+    "artifactory": {
+        "host": "artifactory.qmatic.net",
+        "protocol": "http",
+        "username": "nalhew",
+        "password": "AKCp5aUZqD1XHs5c9Z6U9kR59JFCmaj5j8snWptW8dsuBuk9Fcxa92cJjjvRnypgBHsghV8QW",
+        "path": "/artifactory/list/qmatic/appointment-booking-ui"
+    }
+}

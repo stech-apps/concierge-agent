@@ -1,9 +1,10 @@
 import { ISystemInfo } from './../models/ISystemInfo';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SystemInfoDispatchers } from './../store/services/system-info/system-info.dispatchers';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SystemInfoSelectors, AccountDispatchers } from '../store';
+import { SystemInfoSelectors, AccountDispatchers, LicenseInfoSelectors } from '../store';
+import { NativeApiService } from 'src/util/services/native-api.service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,17 @@ import { SystemInfoSelectors, AccountDispatchers } from '../store';
 })
 export class AppComponent implements OnInit {
   public systemInformation$: Observable<ISystemInfo>;
+  private licenseSubscription: Subscription;
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
-              private accountDispatchers: AccountDispatchers ) {
+              private accountDispatchers: AccountDispatchers,
+              private licenseSelector: LicenseInfoSelectors, private nativeApiService: NativeApiService ) {
     this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
+
+    this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
+      if (loadedState) {
+       this.nativeApiService.showNativeLoader(false);
+      }
+    });
   }
 
   ngOnInit() {

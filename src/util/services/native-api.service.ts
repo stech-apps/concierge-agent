@@ -8,8 +8,6 @@ declare var webkit: any;
 export class NativeApiService {
 
   constructor() {
-
-
   }
 
   showNativeLoader(state) {
@@ -33,5 +31,5 @@ export class NativeApiService {
         console.log('The native context does not exist yet', { class: "nativeApi", func: "removeNativeLoader", exception: err });
       }
     }
-  }
+  }  
 }

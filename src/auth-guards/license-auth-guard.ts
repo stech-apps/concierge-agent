@@ -18,7 +18,6 @@ export class LicenseAuthGuard implements CanActivate {
                  return false;
                }
             } else {
-              this.router.navigate(['/loading']);
               return false;
             }
           }

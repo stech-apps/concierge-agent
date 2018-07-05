@@ -8,7 +8,9 @@
         "host": "artifactory.qmatic.net",
         "protocol": "http",
         "username": "nalhew",
-        "password": "AKCp5aUZqD1XHs5c9Z6U9kR59JFCmaj5j8snWptW8dsuBuk9Fcxa92cJjjvRnypgBHsghV8QW",
+        "password": "",
         "path": "/artifactory/list/qmatic/appointment-booking-ui"
-    }
+    },
+
+    "remote_deploy_method": "localcopy"
 }

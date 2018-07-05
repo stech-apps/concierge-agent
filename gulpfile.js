@@ -9,7 +9,7 @@ var ncmd = require('node-cmd');
 require('events').EventEmitter.prototype._maxListeners = 100;
 
 // Remote Deployment Defaults
-var remoteDeploymentDefaultPath = 'C:\\qmatic\\orchestra\\system\\custdeploy';
+var remoteDeploymentDefaultPath = 'C:\\qmatic2\\orchestra\\system\\custdeploy';
 var remoteDeploymentDefaultLangPath =
   'C:\\qmatic\\orchestra\\system\\conf\\lang';
 var remoteDeploymentDefaultHost = 'localhost';
@@ -27,6 +27,9 @@ try {
     remoteDeploymentDefaultHost;
   var remoteDeployUsername = config.remote_deploy.username;
   var remoteDeployPassword = config.remote_deploy.password;
+
+  // If true will be using local copy instead of sftp 
+  var useLocalCopy = config.remote_deploy_method === 'localcopy';
 
   // Artifactory Deployment (artifactory)
   var targetArtifactoryIp = config.artifactory.host ?
@@ -139,16 +142,22 @@ function getVersionInfo() {
 
 // Deploy build to orchestra
 gulp.task('deploy:war', function () {
-  return gulp.src('./dist/webapp/connectconcierge.war').pipe(
-    sftp({
-      remotePath: remoteDeploymentDefaultPath,
-      remotePlatform: remoteDeploymentPlatform,
-      host: remoteDeployHost,
-      user: remoteDeployUsername,
-      pass: remoteDeployPassword,
-      timeout: 9999999
-    })
-  );
+
+  if(!useLocalCopy) {
+    return gulp.src('./dist/webapp/connectconcierge.war').pipe(
+      sftp({
+        remotePath: remoteDeploymentDefaultPath,
+        remotePlatform: remoteDeploymentPlatform,
+        host: remoteDeployHost,
+        user: remoteDeployUsername,
+        pass: remoteDeployPassword,
+        timeout: 9999999
+      })
+    );
+  }
+  else {
+    return gulp.src('./dist/webapp/connectconcierge.war').pipe(gulp.dest(remoteDeploymentDefaultPath));
+  }
 });
 
 // Deploy build to artifactory
@@ -173,7 +182,8 @@ gulp.task('deploy:war:artifactory', function () {
 
 // Deploy lang file to orchestra
 gulp.task('deploy:lang', function () {
-  return gulp
+  if(!useLocalCopy) { 
+    return gulp
     .src('./dist/properties/connectConciergeMessages.properties')
     .pipe(
       sftp({
@@ -185,6 +195,13 @@ gulp.task('deploy:lang', function () {
         timeout: 9999999
       })
     );
+  }
+  else {
+    return gulp
+           .src('./dist/properties/connectConciergeMessages.properties')
+           .pipe(gulp.dest(remoteDeploymentDefaultPath));
+  }
+ 
 });
 
 /**

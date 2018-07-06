@@ -11,4 +11,8 @@ export class LicenseDispatchers {
   fetchLicenseInfo() {
     this.store.dispatch(new actions.FetchLicenseInfo());
   }
+
+  updateLicenseStatus(status: boolean) {
+    this.store.dispatch(new actions.FetchLicenseInfoSuccess(status));
+  }
 }

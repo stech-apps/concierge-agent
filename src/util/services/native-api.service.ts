@@ -34,6 +34,6 @@ export class NativeApiService {
   }
 
   isNativeBrowser(): boolean {
-    return !!navigator.userAgent.match(/iPhone|iPad|iPod|Android/i);
+      return !!navigator.userAgent.match(/iPhone|iPad|iPod|Android/i);
   }
 }

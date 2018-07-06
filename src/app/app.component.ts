@@ -1,9 +1,10 @@
+import { Router } from '@angular/router';
 import { ISystemInfo } from './../models/ISystemInfo';
 import { Observable, Subscription } from 'rxjs';
 import { SystemInfoDispatchers } from './../store/services/system-info/system-info.dispatchers';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SystemInfoSelectors, AccountDispatchers, LicenseInfoSelectors } from '../store';
+import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers } from '../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
 
 @Component({
@@ -16,14 +17,8 @@ export class AppComponent implements OnInit {
   private licenseSubscription: Subscription;
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
               private accountDispatchers: AccountDispatchers,
-              private licenseSelector: LicenseInfoSelectors, private nativeApiService: NativeApiService ) {
-  
-
-    this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
-      if (loadedState) {
-       this.nativeApiService.showNativeLoader(false);
-      }
-    });
+              private licenseDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
+              private router: Router ) {
   }
 
   ngOnInit() {

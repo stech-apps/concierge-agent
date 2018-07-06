@@ -46,6 +46,8 @@ import { LicenseDispatchers } from './../store/services/license/license.dispatch
 import { QmAppLoaderComponent } from './components/containers/qm-app-loader/qm-app-loader.component';
 import { QmAppComponent } from './components/containers/qm-app/qm-app.component';
 import { QmInvalidLicenseComponent } from './components/presentational/qm-invalid-license/qm-invalid-license.component';
+import { QmAppPageNotFoundComponent } from './components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
+import { Router } from '@angular/router';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -59,7 +61,8 @@ const toastrGlobalOptions = {
     AppComponent,
     QmAppLoaderComponent,
     QmAppComponent,
-    QmInvalidLicenseComponent
+    QmInvalidLicenseComponent,
+    QmAppPageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -92,14 +95,16 @@ const toastrGlobalOptions = {
 })
 export class AppModule {
   constructor( private translate: TranslateService, 
-    private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService) {
+    private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
+    private router: Router) {
     this.translate.setDefaultLang('connectConciergeMessages');
 
-    if(this.nativeApiService.isNativeBrowser()) {
-      this.nativeApiService.showNativeLoader(false);
+    if(!this.nativeApiService.isNativeBrowser()) {
+      this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
+      this.router.navigate(['/loading']);
     }
     else {
-      this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
+      this.router.navigate(['/app']);
     }
   }
 }

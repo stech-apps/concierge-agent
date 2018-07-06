@@ -19,7 +19,7 @@ export class LicenseDataService {
         const isValidLicense = res.components.reduce((result, next) => {
                if (next.name === CONCIERGE_COMPONENT) {
                    result = result || (+next.licensedAmount > 0);
-               }
+               }  
                return result;
           }, false);
           return isValidLicense;

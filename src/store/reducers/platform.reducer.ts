@@ -1,13 +1,6 @@
-/* export interface IPlatformState {
-    isMobile: boolean;
-    userAgent: string;
-    loading: boolean;
-    loaded: boolean;
-    error: Object;
-}
+import * as AllPlatformActions from '../actions';
 
-
-const initialState: IPlatformState = {
+const initialState: IPlatformInfoState = {
     isMobile: null,
     userAgent: null,
     loading: false,
@@ -15,41 +8,30 @@ const initialState: IPlatformState = {
     error: null
 };
 
+export interface IPlatformInfoState {
+    isMobile: boolean;
+    userAgent: string;
+    loading: boolean;
+    loaded: boolean;
+    error: Object;
+}
 
-
-export function reducer(state: IPlatformState = initialState, action: LicenseActions.AllLicenseActions): ILicenseState {
+export function reducer(state: IPlatformInfoState = initialState, action: AllPlatformActions.PlatformDetected): IPlatformInfoState {
     switch (action.type) {
-        case LicenseActions.FETCH_LICENSE_INFO: {
+        case AllPlatformActions.PLATFORM_DETECTED: {
             return {
                 ...state,
+                isMobile: action.payload.isMobile,
+                userAgent: action.payload.userAgent,
                 loading: true,
                 loaded: false,
                 error: null
             };
         }
-        case LicenseActions.FETCH_LICENSE_INFO_SUCCESS: {
-            return {
-                ...state,
-                status: action.payload,
-                loading: false,
-                loaded: true,
-                error: null
-            };
-        }
-        case LicenseActions.FETCH_LICENSE_INFO_FAIL: {
-            return {
-                ...state,
-                loading: false,
-                loaded: true,
-                error: {
-                    ...action.payload
-                }
-            };
-        }
+
         default: {
             return state;
         }
     }
 }
 
-*/

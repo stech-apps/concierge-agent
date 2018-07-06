@@ -13,7 +13,7 @@ export class LicenseAuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
 
     if(this.nativeApiService.isNativeBrowser()) {
-      return of(true);
+      return of(true); // skip license check for mobile
     }
 
     return this.licenseStatusSelector.getLicenseInfo$.pipe(

@@ -48,6 +48,7 @@ import { QmAppComponent } from './components/containers/qm-app/qm-app.component'
 import { QmInvalidLicenseComponent } from './components/presentational/qm-invalid-license/qm-invalid-license.component';
 import { QmAppPageNotFoundComponent } from './components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
 import { Router } from '@angular/router';
+import { PlatformDispatchers } from 'src/store/services/platform';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -96,8 +97,10 @@ const toastrGlobalOptions = {
 export class AppModule {
   constructor( private translate: TranslateService, 
     private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
-    private router: Router) {
+    private router: Router, private platformDispatchers: PlatformDispatchers) {
     this.translate.setDefaultLang('connectConciergeMessages');
+
+    this.platformDispatchers.updatePlatform(this.nativeApiService.getPlatform());
 
     if(!this.nativeApiService.isNativeBrowser()) {
       this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop

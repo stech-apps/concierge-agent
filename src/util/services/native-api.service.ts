@@ -1,3 +1,4 @@
+import { IPlatform } from './../../models/IPlatform';
 import { Injectable } from '@angular/core';
 declare var Android: any;
 declare var webkit: any;
@@ -35,5 +36,16 @@ export class NativeApiService {
 
   isNativeBrowser(): boolean {
       return !!navigator.userAgent.match(/iPhone|iPad|iPod|Android/i);
+  }
+
+  getUserAgent(): string {
+    return navigator.userAgent;
+  }
+
+  getPlatform(): IPlatform {
+    return {
+        isMobile : this.isNativeBrowser(),
+        userAgent: navigator.userAgent
+    };
   }
 }

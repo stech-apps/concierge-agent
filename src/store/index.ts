@@ -7,7 +7,7 @@ import {
     SystemInfoDispatchers, SystemInfoDataService, SystemInfoSelectors, 
     LicenseDataService, LicenseInfoSelectors, LicenseDispatchers, UserRoleDataService,
     UserRoleDispatchers, UserRoleSelectors, UserDataService, UserDispatchers, UserSelectors,
-    AccountDataService, AccountDispatchers,
+    AccountDataService, AccountDispatchers, PlatformSelectors, PlatformDispatchers
  } from './services';
 
 
@@ -25,5 +25,7 @@ export const storeServices = [
     UserRoleSelectors,
     UserDataService,
     UserDispatchers,
-    UserSelectors
+    UserSelectors,
+    PlatformSelectors,
+    PlatformDispatchers
 ];

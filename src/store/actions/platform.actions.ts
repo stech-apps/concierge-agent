@@ -1,23 +1,10 @@
+import { IPlatform } from './../../models/IPlatform';
 import { Action } from '@ngrx/store';
-import { ILicense } from './../../models/ILicense';
+import { IPlatformInfoState } from './../reducers/platform.reducer';
 
-export const FETCH_LICENSE_INFO = '[License] FETCH_LICENSE_INFO';
-export const FETCH_LICENSE_INFO_SUCCESS = '[License] FETCH_LICENSE_INFO_SUCCESS';
-export const FETCH_LICENSE_INFO_FAIL = '[License] FETCH_LICENSE_INFO_FAIL';
+export const PLATFORM_DETECTED = '[platform] PLATFORM_DETECTED';
 
-export class FetchLicenseInfo implements Action {
-  readonly type = FETCH_LICENSE_INFO;
+export class PlatformDetected implements Action {
+    readonly type = PLATFORM_DETECTED;
+    constructor(public payload: IPlatform) {}
 }
-
-export class FetchLicenseFail implements Action {
-  readonly type = FETCH_LICENSE_INFO_FAIL;
-  constructor(public payload: Object) {}
-}
-
-export class FetchLicenseInfoSuccess implements Action {
-  readonly type = FETCH_LICENSE_INFO_SUCCESS;
-  constructor(public payload: boolean) {}
-}
-
-// Action types
-export type AllLicenseActions = FetchLicenseInfo | FetchLicenseFail | FetchLicenseInfoSuccess;

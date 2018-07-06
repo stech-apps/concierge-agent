@@ -9,7 +9,7 @@ var ncmd = require('node-cmd');
 require('events').EventEmitter.prototype._maxListeners = 100;
 
 // Remote Deployment Defaults
-var remoteDeploymentDefaultPath = 'C:\\qmatic2\\orchestra\\system\\custdeploy';
+var remoteDeploymentDefaultPath = 'C:\\qmatic2\\custdeploy';
 var remoteDeploymentDefaultLangPath =
   'C:\\qmatic\\orchestra\\system\\conf\\lang';
 var remoteDeploymentDefaultHost = 'localhost';

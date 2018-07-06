@@ -1,4 +1,7 @@
+import { Observable } from 'rxjs';
+import { ISystemInfo } from './../../../../models/ISystemInfo';
 import { Component, OnInit } from '@angular/core';
+import { SystemInfoSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-app',
@@ -7,9 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QmAppComponent implements OnInit {
 
-  constructor() { }
+  public systemInformation$: Observable<ISystemInfo> = this.systemInfoSelectors.systemInfo$;
+  constructor(private systemInfoSelectors: SystemInfoSelectors) { }
 
   ngOnInit() {
   }
-
 }

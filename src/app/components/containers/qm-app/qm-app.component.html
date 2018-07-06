@@ -1,3 +1,9 @@
-<p>
-  Concierge content goes here...
-</p>
+<h1 ng-cloak>
+  {{'module_name' | translate }}
+</h1>
+<footer>
+  <div *ngIf="systemInformation$ | async as systemInformation">
+      QMATIC {{ systemInformation.productName }} {{ systemInformation.releaseName }} [{{ systemInformation.productVersion
+      }}] {{ systemInformation.licenseCompanyName }}
+  </div>
+</footer>

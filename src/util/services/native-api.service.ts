@@ -31,5 +31,9 @@ export class NativeApiService {
         console.log('The native context does not exist yet', { class: "nativeApi", func: "removeNativeLoader", exception: err });
       }
     }
-  }  
+  }
+
+  isNativeBrowser(): boolean {
+    return !!navigator.userAgent.match(/iPhone|iPad|iPod|Android/i);
+  }
 }

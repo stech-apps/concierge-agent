@@ -8,7 +8,8 @@ export const appRoutes: Routes = [
     {
       path: '',
       children: [
-        { path: '', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
+        { path: 'loading', component: QmAppLoaderComponent },
+        { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
         { path: 'invalid-license', component: QmInvalidLicenseComponent },
         { path: '**', component: QmAppLoaderComponent }
       ]

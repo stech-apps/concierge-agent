@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
               private accountDispatchers: AccountDispatchers,
               private licenseSelector: LicenseInfoSelectors, private nativeApiService: NativeApiService ) {
-    this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
+  
 
     this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
       if (loadedState) {

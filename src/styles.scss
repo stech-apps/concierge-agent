@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Vendor styles (Bootstrap reboot, Bootstrap grid etc.)
+@import "styles/vendor/_manifest.scss";
+
+// Global styles (fonts, icons etc)
+@import "styles/base/_manifest.scss";
+
+// Layout specific common styles
+@import "styles/layout/_manifest.scss";
+
+// Reusable components without a specific angular component
+@import "styles/components/_manifest.scss";

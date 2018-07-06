@@ -91,8 +91,15 @@ const toastrGlobalOptions = {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService) {
-    this.licenseInfoDispatchers.fetchLicenseInfo();
-    this.nativeApiService.showNativeLoader(false);
+  constructor( private translate: TranslateService, 
+    private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService) {
+    this.translate.setDefaultLang('connectConciergeMessages');
+
+    if(this.nativeApiService.isNativeBrowser()) {
+      this.nativeApiService.showNativeLoader(false);
+    }
+    else {
+      this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
+    }
   }
 }

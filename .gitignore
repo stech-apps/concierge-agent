@@ -34,6 +34,17 @@ yarn-error.log
 testem.log
 /typings
 
+# e2e
+/e2e/*.js
+/e2e/*.map
+
 # System Files
 .DS_Store
 Thumbs.db
+/build
+
+# Gulp configurations
+gulp.config.json
+
+# Remove proxy config
+proxy.config.json

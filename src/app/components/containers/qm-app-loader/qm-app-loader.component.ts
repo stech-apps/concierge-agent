@@ -15,7 +15,7 @@ export class QmAppLoaderComponent implements OnInit {
     private router: Router) { 
     this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
       if (loadedState) {
-        this.router.navigate(['/app']);
+        this.router.navigate(['/profile']);
       }
     });
   }

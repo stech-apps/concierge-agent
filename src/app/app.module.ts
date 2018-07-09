@@ -49,6 +49,8 @@ import { QmInvalidLicenseComponent } from './components/presentational/qm-invali
 import { QmAppPageNotFoundComponent } from './components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
 import { Router } from '@angular/router';
 import { PlatformDispatchers } from 'src/store/services/platform';
+import { QmProfileComponent } from './components/presentational/qm-profile/qm-profile.component';
+import { QmPageHeaderComponent } from './components/containers/qm-page-header/qm-page-header.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -63,7 +65,9 @@ const toastrGlobalOptions = {
     QmAppLoaderComponent,
     QmAppComponent,
     QmInvalidLicenseComponent,
-    QmAppPageNotFoundComponent
+    QmAppPageNotFoundComponent,
+    QmProfileComponent,
+    QmPageHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,6 @@ export class AppModule {
     private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
     private router: Router, private platformDispatchers: PlatformDispatchers) {
     this.translate.setDefaultLang('connectConciergeMessages');
-
     this.platformDispatchers.updatePlatform(this.nativeApiService.getPlatform());
 
     if(!this.nativeApiService.isNativeBrowser()) {
@@ -107,7 +110,7 @@ export class AppModule {
       this.router.navigate(['/loading']);
     }
     else {
-      this.router.navigate(['/app']);
-    }
+      this.router.navigate(['/profile']);
+    }   
   }
 }

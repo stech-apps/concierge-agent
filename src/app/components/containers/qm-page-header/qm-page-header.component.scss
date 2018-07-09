@@ -1,0 +1,22 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
+:host {
+    text-align: center;
+    order: -1;
+}
+
+.qm-header {
+    display: flex;
+    background-color:$midnight-blue;
+    justify-content: center;
+    color: $header-text-color;
+    height: 6rem;
+    align-items: center;
+
+    &__title {
+        font-size: 2rem;
+        font-family: OpenSans-CondLight;
+    }
+
+    border-bottom: 0.4rem solid $header-border-color;
+}

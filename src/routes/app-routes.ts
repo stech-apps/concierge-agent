@@ -1,3 +1,4 @@
+import { QmProfileComponent } from './../app/components/presentational/qm-profile/qm-profile.component';
 import { QmAppPageNotFoundComponent } from './../app/components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
 import { QmAppComponent } from './../app/components/containers/qm-app/qm-app.component';
 import { QmAppLoaderComponent } from './../app/components/containers/qm-app-loader/qm-app-loader.component';
@@ -12,6 +13,7 @@ export const appRoutes: Routes = [
         { path: 'loading', component: QmAppLoaderComponent },
         { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
         { path: 'invalid-license', component: QmInvalidLicenseComponent },
+        { path: 'profile', component: QmProfileComponent},
         { path: '**', component: QmAppPageNotFoundComponent}
       ]
     }

@@ -3,7 +3,7 @@ import * as BranchActions from '../actions';
 
 export interface IBranchState {
   branches: IBranch[];
-  selectedBranch: IBranch[];
+  selectedBranch: IBranch;
   searchText: string;
   loading: boolean;
   loaded: boolean;
@@ -12,7 +12,7 @@ export interface IBranchState {
 
 export const initialState: IBranchState = {
   branches: [],
-  selectedBranch: [],
+  selectedBranch: { id: -1, name: ''},
   searchText: '',
   loading: false,
   loaded: false,
@@ -51,13 +51,13 @@ export function reducer (
     case BranchActions.SELECT_BRANCH: {
       return {
         ...state,
-        selectedBranch: [action.payload]
+        selectedBranch: action.payload
       };
     }
     case BranchActions.DESELECT_BRANCH: {
       return {
         ...state,
-        selectedBranch: []
+        selectedBranch: initialState.selectedBranch
       };
     }
     case BranchActions.FILTER_BRANCHES: {
@@ -75,7 +75,7 @@ export function reducer (
     case BranchActions.LOAD_SELECTED_BRANCH: {
       return {
         ...state,
-        selectedBranch: [action.payload]
+        selectedBranch: action.payload
       };
     }
     default: {

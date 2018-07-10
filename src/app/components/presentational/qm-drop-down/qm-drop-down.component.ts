@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import { IDropDownItem } from './../../../../models/IDropDownItem';
+import { Component, OnInit, Input, ViewChild, ElementRef,
+  Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'qm-drop-down',
@@ -18,7 +20,18 @@ export class QmDropDownComponent implements OnInit {
   @Input()
   caption: string;
 
+  @Input()
+  items: Array<IDropDownItem>;
+
+  @Output()
+  itemClickCallBack: EventEmitter<any> = new EventEmitter<any>();
+
   dropDownExpand() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  itemClick(item: IDropDownItem) {
+    this.itemClickCallBack.emit(item);
+    this.isExpanded  = false;
   }
 }

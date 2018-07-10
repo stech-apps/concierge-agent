@@ -4,8 +4,8 @@
     <div class="qm-profile-content__title">
       {{ 'user_settings' | translate}}
     </div>
-    <qm-drop-down caption="{{'branch' | translate}}"></qm-drop-down>
-    <qm-drop-down caption="{{'service_point' | translate}}"></qm-drop-down>
+    <qm-drop-down caption="branch"></qm-drop-down>
+    <qm-drop-down caption="service_point" [items]="[{text: 'Service Point 1'}]"></qm-drop-down>
 
     <div class="qm-use-as-default">
         <input type="checkbox" class="qm-use-as-default__checkbox"/> 

@@ -63,7 +63,7 @@
 }
 
 .qm-profile-ok {
-    font-family: $secondary-font-family1;
+    font-family: $secondary-font-semi-bold;
     margin-top: 10%;
     border: $border-thick solid;
     line-height: 3em;
@@ -78,6 +78,7 @@
 .qm-profile-cancel {
     letter-spacing: $extended-letter-spacing;
     font-size: $font-small;
+    font-family: $secondary-font-light;
     margin-top: 10%;
 }
 

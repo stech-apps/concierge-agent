@@ -52,6 +52,7 @@ import { PlatformDispatchers } from 'src/store/services/platform';
 import { QmProfileComponent } from './components/presentational/qm-profile/qm-profile.component';
 import { QmPageHeaderComponent } from './components/containers/qm-page-header/qm-page-header.component';
 import { QmDropDownComponent } from './components/presentational/qm-drop-down/qm-drop-down.component';
+import { QEvents } from 'src/services/qevents/qevents.service';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -96,7 +97,8 @@ const toastrGlobalOptions = {
     ...storeServices,
     GlobalErrorHandler,
     ToastService,
-    LicenseAuthGuard
+    LicenseAuthGuard,
+    QEvents
   ],
   bootstrap: [AppComponent]
 })

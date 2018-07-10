@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QEvents } from 'src/services/qevents/qevents.service'
 
 @Component({
   selector: 'qm-profile',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QmProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(public qevents: QEvents) { }
 
   ngOnInit() {
   }
 
+  subscribeCometD(){
+    this.qevents.initializeCometD(this.qevents);
+  }
 }

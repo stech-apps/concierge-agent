@@ -1,5 +1,27 @@
 <div class="qm-profile">
-    <qm-page-header></qm-page-header>
-    <div class="qm-profile__profile-content"></div>
-    <footer>test</footer>
+  <qm-page-header></qm-page-header>
+  <div class="qm-profile-content">
+    <div class="qm-profile-content__title">
+      {{ 'user_settings' | translate}}
+    </div>
+    <div class="qm-dropdown">
+      <button class="qm-dropdown-button">
+        <div class="qm-dropdown-button--label">Branch1</div>
+        <div class="qm-dropdown-button--arrow triangle-down"></div>
+      </button>
+    </div>
+    <div class="qm-dropdown">
+      <button class="qm-dropdown-button">
+        <div class="qm-dropdown-button--label">Branch1</div>
+        <div class="qm-dropdown-button--arrow triangle-down"></div>
+      </button>
+    </div>
+    <div class="qm-use-as-default">
+        <input type="checkbox" class="qm-use-as-default__checkbox"/> 
+        <span>{{ 'use_as_default' | translate }}</span>
+    </div>
+
+    <div class="qm-profile-ok">{{ 'ok' | translate}}</div>
+    <div class="qm-profile-cancel">{{ 'cancel' | translate}}</div>
+  </div>
 </div>

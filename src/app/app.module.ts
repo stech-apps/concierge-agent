@@ -51,6 +51,7 @@ import { Router } from '@angular/router';
 import { PlatformDispatchers } from 'src/store/services/platform';
 import { QmProfileComponent } from './components/presentational/qm-profile/qm-profile.component';
 import { QmPageHeaderComponent } from './components/containers/qm-page-header/qm-page-header.component';
+import { QmDropDownComponent } from './components/presentational/qm-drop-down/qm-drop-down.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -67,7 +68,8 @@ const toastrGlobalOptions = {
     QmInvalidLicenseComponent,
     QmAppPageNotFoundComponent,
     QmProfileComponent,
-    QmPageHeaderComponent
+    QmPageHeaderComponent,
+    QmDropDownComponent
   ],
   imports: [
     BrowserModule,

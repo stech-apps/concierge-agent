@@ -1,0 +1,10 @@
+<div class="qm-dropdown">
+  <button class="qm-dropdown-button" (click)="dropDownExpand()">
+    <div class="qm-dropdown-button--label">{{caption}}</div>
+    <div class="qm-dropdown-button--arrow triangle-down"></div>
+  </button>
+  <div class="qm-dropdown__content" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
+    <a href="#" >SERVICE POINT</a>
+    <a href="#">SERVICE POINT2</a>
+  </div>
+</div>

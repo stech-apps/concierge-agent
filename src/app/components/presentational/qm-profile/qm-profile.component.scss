@@ -26,6 +26,7 @@
     .qm-dropdown {
         width: 100%;
         margin: 0.5rem 0;
+        position: relative;
         &-button {
             width: 100%;
             margin: 0;
@@ -38,10 +39,30 @@
             align-items: center;
             display: flex;
             padding: 1rem;
+            cursor: pointer;
 
             &--label {
                 flex: 1;
                 text-align: left;
+            }
+        }
+
+        &__content {
+            position: absolute;
+            background-color: $light-gray3;
+            text-align: left;
+            min-width: 10rem;
+            box-shadow: 0 0.5rem 1rem 0 $drop-down-box-shadow-color;
+            width: 100%;
+            margin-top: -.2em;
+            z-index: 1000;
+
+            a {
+                color: $drop-down-item-color;
+                padding: 0.75rem 1rem;
+                display: block;
+                width: 100%;
+                text-decoration: none;
             }
         }
     }

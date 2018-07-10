@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-export const restEndpoint = '/rest/servicepoint';
+export const servicePoint = '/rest/servicepoint';
 export const calendarEndpoint = '/calendar-backend/api/v1';
 export const calendarPublicEndpoint = '/calendar-backend/public/api/v1';
 export const calendarPublicEndpointV2 = '/calendar-backend/public/api/v2';

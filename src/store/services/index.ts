@@ -6,3 +6,6 @@ export * from './user';
 export * from './user-role';
 export * from './account';
 export * from './platform';
+export * from './branch';
+export * from './service';
+export * from './service-point';

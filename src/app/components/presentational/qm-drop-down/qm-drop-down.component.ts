@@ -21,16 +21,19 @@ export class QmDropDownComponent implements OnInit {
   caption: string;
 
   @Input()
-  items: Array<IDropDownItem>;
+  labelProperty: string = 'text';
 
-  @Output()
+  @Input()
+  items: Array<IDropDownItem | any>;
+
+  @Output('itemClick')
   itemClickCallBack: EventEmitter<any> = new EventEmitter<any>();
 
   dropDownExpand() {
     this.isExpanded = !this.isExpanded;
   }
 
-  itemClick(item: IDropDownItem) {
+  itemClick(item: IDropDownItem | any) {
     this.itemClickCallBack.emit(item);
     this.isExpanded  = false;
   }

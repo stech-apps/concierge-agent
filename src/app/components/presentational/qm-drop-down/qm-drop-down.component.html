@@ -4,6 +4,6 @@
     <div class="qm-dropdown-button--arrow triangle-down"></div>
   </button>
   <div class="qm-dropdown__content" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
-    <a *ngFor="let item of items" (click)="itemClick(item)" >{{item.text}}</a>
+    <a *ngFor="let item of items" (click)="itemClick(item)" >{{item[labelProperty]}}</a>
   </div>
 </div>

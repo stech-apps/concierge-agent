@@ -4,7 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { SystemInfoDispatchers } from './../store/services/system-info/system-info.dispatchers';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers } from '../store';
+import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers, BranchDispatchers, 
+         ServiceDispatchers, ServicePointDispatchers } from '../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
 import { QEvents } from 'src/services/qevents/qevents.service'
 
@@ -19,12 +20,13 @@ export class AppComponent implements OnInit {
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
               private accountDispatchers: AccountDispatchers,
               private licenseDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
-              private router: Router, public qevents: QEvents ) {
+              private router: Router, private branchDispatchers: BranchDispatchers, private servicePointDispatchers: ServicePointDispatchers , public qevents: QEvents) {
   }
 
   ngOnInit() {
     this.qevents.handshake();
     this.systemInfoDispatchers.fetchSystemInfo();
     this.accountDispatchers.fetchAccountInfo();
+    this.branchDispatchers.fetchBranches();
   }
 }

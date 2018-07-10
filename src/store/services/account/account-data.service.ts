@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { IAccount } from './../../../models/IAccount';
-import { restEndpoint, DataServiceError } from './../data.service';
+import { servicePoint, DataServiceError } from './../data.service';
 import { GlobalErrorHandler } from '../../../util/services//global-error-handler.service';
 import {  userRoleFactory } from 'src/helpers/user-role-factory';
 
@@ -19,7 +19,7 @@ export class AccountDataService {
 
   getAccountInfo(): Observable<{ data: IAccount; userRole: UserRole }> {
     return this.http
-      .get<IAccount>(`${restEndpoint}/account`)
+      .get<IAccount>(`${servicePoint}/account`)
       .pipe(map((res: IAccount) => {
 
         let userRole = UserRole.None;

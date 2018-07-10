@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { IAccount } from './../../../models/IAccount';
-import { restEndpoint, DataServiceError } from './../data.service';
+import { servicePoint, DataServiceError } from './../data.service';
 import {
   VISIT_USER_ROLE,
   APPOINTMENT_USER_ROLE,
@@ -26,7 +26,7 @@ export class UserRoleDataService {
 
   getUserRoleInfo(): Observable<UserRole> {
     return this.http
-      .get<IAccount>(`${restEndpoint}/account`)
+      .get<IAccount>(`${servicePoint}/account`)
       .pipe(map((res: { modules: string[] }) => {
         let isVisitUserRole = false;
         let isAppointmentUser = false;

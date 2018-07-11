@@ -1,3 +1,4 @@
+import { UserSelectors } from './../../../../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
 import { Observable } from 'rxjs';
 import { ISystemInfo } from './../../../../models/ISystemInfo';
@@ -12,7 +13,11 @@ import { SystemInfoSelectors } from 'src/store';
 export class QmAppComponent implements OnInit, AfterViewInit {
 
   public systemInformation$: Observable<ISystemInfo> = this.systemInfoSelectors.systemInfo$;
-  constructor(private systemInfoSelectors: SystemInfoSelectors, private nativeApiService: NativeApiService) { }
+  userDirection$: Observable<string>;
+  constructor(private systemInfoSelectors: SystemInfoSelectors, private nativeApiService: NativeApiService,
+              private userSelectors: UserSelectors) { 
+    this.userDirection$ = this.userSelectors.userDirection$;
+  }
 
   ngOnInit() {
   }

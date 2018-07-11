@@ -1,0 +1,21 @@
+.qm-toast-icon {
+    float: left;
+    display: block;
+    width: 4rem;
+    margin-right: 2rem;
+}
+
+[class^="col"] {
+    padding: 5px;
+}
+
+.qm-toast-inner-container {
+    position: relative;
+    padding-right: 1.8rem;
+}
+
+.qm-close-container {
+    position: absolute;
+    right: 0;
+    top: -0.8rem;
+}

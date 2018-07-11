@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class ToastService {
@@ -9,7 +10,7 @@ export class ToastService {
     messageClass: 'qm-toast__message',
     easing: 'ease-in-out',
     closeButton: true,
-    timeOut: 5000,
+    timeOut: 100000,
   };
 
   private successOptions: Object = {
@@ -17,8 +18,15 @@ export class ToastService {
     toastClass: 'toast qm-toast qm-toast--success'
   };
 
+  private infoOptions: Object = {
+    ...this.toastrOptions,
+    enableHtml: true,
+    toastClass: 'toast qm-toast qm-toast--info'
+  };
+
   private errorOptions: Object = {
     ...this.toastrOptions,
+    enableHtml: true,
     toastClass: 'toast qm-toast qm-toast--danger'
   };
 
@@ -46,6 +54,12 @@ export class ToastService {
     return this.toastrService.success(text, '', this.successOptions);
   }
 
+  infoToast(text: string) {
+
+    return this.toastrService.success(text, '', this.infoOptions);
+  }
+
+
   errorToast(text: string) {
     this.toastrService.error(text, '', this.errorOptions);
   }
@@ -64,5 +78,5 @@ export class ToastService {
       .map(toast => this.toastrService.clear(toast.toastId));
   }
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService, private sanitizer: DomSanitizer) { }
 }

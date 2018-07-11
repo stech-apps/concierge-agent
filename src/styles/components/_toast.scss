@@ -1,0 +1,101 @@
+.toast-container {
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+.toast-close-button {
+  height: rem(28px);
+  width: rem(28px);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: $light-transparent42;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  order: 1;
+
+  span {
+    @include sr-only();
+  }
+
+  &:before {
+    content: "\00d7"; /* This will render the 'X' */
+    font-size: rem(28px);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+    &:before {
+      color: $toast-text-color;
+    }
+  }
+}
+
+// Block
+.qm-toast {
+  display: flex;
+  align-items: center;
+  padding: rem($standard-padding $standard-padding / 2 $standard-padding $standard-padding * 1.5);
+  color: $toast-text-color;
+  background: $tertiary-color;
+  max-width: 570px;
+  width: 100%;
+  z-index: 3;
+  margin: 0 auto;
+
+  @at-root [dir='rtl'] & {
+    padding: rem($standard-padding $standard-padding * 1.5 $standard-padding $standard-padding / 2);
+  }
+
+  & + & {
+    border-top: 1px solid $light-transparent42;
+  }
+
+  // Elements
+  &__layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  &__icon {
+    font-size: rem(28px);
+    margin-right: rem($standard-margin / 2);
+
+    @at-root [dir='rtl'] & {
+      margin-right: 0;
+      margin-left: rem($standard-margin / 2);
+    }
+  }
+
+  &__message {
+    flex: 1 1 auto;
+    padding-right: rem($standard-padding * 2);
+
+    @at-root [dir='rtl'] & {
+      text-align: right;
+      padding-right: 0;
+      padding-left: rem($standard-padding * 2);
+    }
+  }
+
+  // Modifiers
+  &--success {
+    background: $toast-success-background-color;
+  }
+
+  &--danger {
+    background: $toast-error-background-color;
+  }
+
+  &--info {
+    background: $toast-info-background-color;
+  }
+}
+
+

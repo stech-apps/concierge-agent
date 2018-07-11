@@ -19,3 +19,9 @@ $font-weight-medium: 500;
 $font-weight-bold: 700;
 
 $font-small: 0.8rem;
+
+// Z-indexes
+$z-index: (
+  toastContainer: 150,
+  modal: 200,
+);

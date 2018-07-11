@@ -6,7 +6,7 @@
     </div>
     <qm-drop-down [caption]="selectedBranch.name" [items]="branches" (itemClick)="onBranchSelect($event)"
                   labelProperty="name"></qm-drop-down>
-    <qm-drop-down caption="service_point"
+    <qm-drop-down [caption]="selectedServicePoint.name"
     (itemClick)="onServicePointSelect($event)"
     [items]="servicePoints" labelProperty="name"></qm-drop-down>
 

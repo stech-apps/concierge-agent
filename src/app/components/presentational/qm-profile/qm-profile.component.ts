@@ -7,6 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
          BranchDispatchers } from '../../../../../src/store';
 import { QEvents } from 'src/services/qevents/qevents.service'
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'qm-profile',
@@ -21,7 +22,9 @@ export class QmProfileComponent implements OnInit, OnDestroy {
   selectedServicePoint: IServicePoint;
   selectedBranch: IBranch;
 
-  constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors,
+  constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
+              private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService){
+
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
     this.subscriptions.add(branchSubscription);
 
@@ -29,6 +32,16 @@ export class QmProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.add(servicePointsSubscription);
 
     this.branchSelectors.selectedBranch$.subscribe((sb) => this.selectedBranch = sb).unsubscribe();
+
+    this.translateService.get('service_point').subscribe(v=> {
+      this.selectedServicePoint = {
+        name: v
+      };
+    })
+  }
+
+  ngOnInit() {
+
   }
 
   subscribeCometD(){
@@ -40,13 +53,13 @@ export class QmProfileComponent implements OnInit, OnDestroy {
 
   onBranchSelect(selectedBranch: IBranch) {
     if (this.selectedBranch.id != selectedBranch.id) {
-      this.ServicePointDispatchers.fetchServicePointsByBranch(selectedBranch.id);
+      this.servicePointDispatchers.fetchServicePointsByBranch(selectedBranch.id);
       this.selectedBranch = selectedBranch;
       this.branchDispatchers.selectBranch(selectedBranch);
     }
   }
 
-  onServicePointelect(selectedSp: IServicePoint) {
-
+  onServicePointSelect(selectedSp: IServicePoint) {
+    this.selectedServicePoint = selectedSp;
   }
 }

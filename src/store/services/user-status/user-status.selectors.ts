@@ -14,9 +14,27 @@ const getUserStatus = createSelector(
   (state: IUserStatusState) => state.data
 );
 
+const getServicePoint = createSelector(
+  getUserStatus,
+  (state: IUserStatus) => state.servicePointId
+);
+
+const getUserState = createSelector(
+  getUserStatus,
+  (state: IUserStatus) => state.userState
+);
+
+const getServicePointStatus = createSelector(
+  getUserStatus,
+  (state: IUserStatus) => state.servicePointState
+);
+
 @Injectable()
 export class UserStatusSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   userStatus$ = this.store.select(getUserStatus);
+  userState$ = this.store.select(getUserState);
+  servicePoint$ = this.store.select(getServicePoint);
+  servicePointStatus$ = this.store.select(getServicePointStatus);
 }

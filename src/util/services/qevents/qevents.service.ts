@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PUBLIC_EVENTS } from './qevents';
+import { UserStatusSelectors, ServicePointSelectors } from 'src/store/services';
+import { Subscription } from 'rxjs';
+import { IServicePoint } from '../../../models/IServicePoint';
 
 declare var require: any;
 
@@ -8,10 +11,22 @@ declare var require: any;
 export class QEvents {
   private lib: any;
   private cometd: any;
+  private servicePointId: number;
+  private servicePoints: Array<IServicePoint>;
+
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
+    private userStatusSelectors: UserStatusSelectors,
+    private servicePointSelectors: ServicePointSelectors
   ) {
     this.configureCometD();
+
+    const servicePointSubscription = this.userStatusSelectors.servicePoint$.subscribe((spId) => this.servicePointId = spId);
+    this.subscriptions.add(servicePointSubscription);
+
+    const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sp) => this.servicePoints = sp);
+    this.subscriptions.add(servicePointsSubscription);
   }
 
   configureCometD(){

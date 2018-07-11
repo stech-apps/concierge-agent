@@ -7,7 +7,7 @@ import * as fromPlatform from './platform.reducer';
 import * as fromBranch from './branch.reducer';
 import * as fromServices from './service.reducer';
 import * as fromServicePoints from './service-point.reducer';
-
+import * as fromUserStatus from './user-status.reducer';
 
 export interface IAppState {
     systemInfo: fromSystemInfo.ISystemInfoState;
@@ -16,7 +16,8 @@ export interface IAppState {
     platform: fromPlatform.IPlatformInfoState; 
     branches: fromBranch.IBranchState;
     services: fromServices.IServiceState,
-    servicePoints: fromServicePoints.IServicePointState
+    servicePoints: fromServicePoints.IServicePointState,
+    userStatus: fromUserStatus.IUserStatusState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -26,5 +27,6 @@ export const reducers: ActionReducerMap<IAppState> = {
     platform: fromPlatform.reducer,
     branches: fromBranch.reducer,
     services: fromServices.reducer,
-    servicePoints: fromServicePoints.reducer
+    servicePoints: fromServicePoints.reducer,
+    userStatus: fromUserStatus.reducer
 };

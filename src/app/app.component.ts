@@ -6,7 +6,7 @@ import { SystemInfoDispatchers } from './../store/services/system-info/system-in
 import { Component } from '@angular/core';
 import { OnInit, OnDestroy } from '@angular/core';
 import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers, BranchDispatchers, 
-         ServiceDispatchers, ServicePointDispatchers } from '../store';
+         ServiceDispatchers, ServicePointDispatchers, UserStatusDispatchers } from '../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
               private accountDispatchers: AccountDispatchers,
               private licenseDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
-              private router: Router, private branchDispatchers: BranchDispatchers, private servicePointDispatchers: ServicePointDispatchers , public qevents: QEvents,
+              private router: Router, private branchDispatchers: BranchDispatchers, private userStatusDispatchers: UserStatusDispatchers, private servicePointDispatchers: ServicePointDispatchers , public qevents: QEvents,
               private translateService: TranslateService) {
   }
 
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.systemInfoDispatchers.fetchSystemInfo();
     this.accountDispatchers.fetchAccountInfo();
     this.branchDispatchers.fetchBranches();
+    this.userStatusDispatchers.fetchUserStatus();
 
     const translateSubscription = this.translateService.get('branch').subscribe(
       (branchLabel: string) => {

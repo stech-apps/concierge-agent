@@ -42,8 +42,7 @@ export function reducer(
       return {
         ...state,
         data: {
-            ...state.data,
-            ...action.payload
+          ...action.payload
         },
         loading: false,
         loaded: true,

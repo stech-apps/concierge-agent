@@ -21,7 +21,7 @@ export class UserStatusEffects {
 
   @Effect()
   getUserStatus$: Observable<Action> = this.actions$
-    .ofType(UserStatusActions.FETCH_USER_STATUS_SUCCESS)
+    .ofType(UserStatusActions.FETCH_USER_STATUS)
     .pipe(
       switchMap(() =>
         toAction(

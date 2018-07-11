@@ -8,7 +8,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers, BranchDispatchers, 
          ServiceDispatchers, ServicePointDispatchers } from '../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
-import { QEvents } from 'src/services/qevents/qevents.service'
+import { QEvents } from 'src/util/services/qevents/qevents.service'
 
 @Component({
   selector: 'app-root',

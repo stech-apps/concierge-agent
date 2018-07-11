@@ -38,9 +38,15 @@ export class QEvents {
     // Handshake with the server.
     this.cometd.handshake(function(h) {
       if (h.successful) {
-      
+    
       }
     });
+  }
+
+  cc(){
+    this.cometd.addListener('/meta/connect', '', function(msg){
+      console.log(msg);
+    })
   }
 
   initializeCometD(qeventObj){

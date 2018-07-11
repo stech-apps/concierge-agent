@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
          BranchDispatchers } from '../../../../../src/store';
-import { QEvents } from 'src/services/qevents/qevents.service'
+import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 

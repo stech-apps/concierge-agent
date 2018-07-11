@@ -4,9 +4,9 @@
     <div class="qm-profile-content__title">
       {{ 'user_settings' | translate}}
     </div>
-    <qm-drop-down [caption]="selectedBranch.name" [items]="branches" (itemClick)="onBranchSelect($event)"
+    <qm-drop-down [caption]="selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)"
                   labelProperty="name"></qm-drop-down>
-    <qm-drop-down [caption]="selectedServicePoint.name"
+    <qm-drop-down [caption]="selectedServicePoint?.name"
     (itemClick)="onServicePointSelect($event)"
     [items]="servicePoints" labelProperty="name"></qm-drop-down>
 

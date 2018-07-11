@@ -114,7 +114,8 @@ export class AppModule {
       this.router.navigate(['/loading']);
     }
     else {
-      this.router.navigate(['/profile']);
+      this.nativeApiService.showNativeLoader(false);
+      this.router.navigate(['/profile']);     
     }   
   }
 }

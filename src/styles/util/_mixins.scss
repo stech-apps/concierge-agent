@@ -9,6 +9,13 @@
     clip-path: inset(50%);
     border: 0;
   }
+
+  @mixin qm-background {
+    background: rgb(32,44,68); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(32,44,68,1) 1%, rgba(39,54,78,1) 18%, rgba(39,54,78,1) 46%, rgba(109,105,129,1) 93%, rgba(109,105,129,1) 93%, rgba(109,105,129,1) 93%, rgba(109,105,129,1) 100%, rgba(109,105,129,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(32,44,68,1) 1%,rgba(39,54,78,1) 18%,rgba(39,54,78,1) 46%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 100%,rgba(109,105,129,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(32,44,68,1) 1%,rgba(39,54,78,1) 18%,rgba(39,54,78,1) 46%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 93%,rgba(109,105,129,1) 100%,rgba(109,105,129,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  }
   
   @mixin icomoon-styles {
     /* use !important to prevent issues with browser extensions that change fonts */

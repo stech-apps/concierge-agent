@@ -1,116 +1,105 @@
 @import '../../../../styles/base/_component-manifest.scss';
-
 .qm-profile {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  @include qm-background;
+
+  &-content {
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
-    background-image: url(../../../../assets/images/qm-background.jpeg);
-    background-size: cover;
-
-    &-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: rem(154px) auto 0 auto;
-        width: 40%;
-
-        &__title {
-            font-family: Montserrat-UltraLight;
-            letter-spacing: $extended-letter-spacing;
-            margin-bottom: 4.6rem;
-            font-size: 1.3rem;
-            height: 1rem;
-        }      
+    align-items: center;
+    margin: rem(154px) auto 0 auto;
+    width: 40%;
+    &__title {
+      font-family: Montserrat-UltraLight;
+      letter-spacing: $extended-letter-spacing;
+      margin-bottom: 4.6rem;
+      font-size: 1.3rem;
+      height: 1rem;
     }
-
-    .qm-dropdown {
+  }
+  .qm-dropdown {
+    width: 100%;
+    margin: 0.5rem 0;
+    position: relative;
+    &-button {
+      width: 100%;
+      margin: 0;
+      min-height: 3rem;
+      background: $primary-color;
+      border: 1px solid $drop-down-border-color;
+      border-radius: .25rem;
+      color: $light-gray2;
+      display: flex;
+      align-items: center;
+      display: flex;
+      padding: 1rem;
+      cursor: pointer;
+      &--label {
+        flex: 1;
+        text-align: left;
+      }
+    }
+    &__content {
+      position: absolute;
+      background-color: $light-gray3;
+      text-align: left;
+      min-width: 10rem;
+      box-shadow: 0 0.5rem 1rem 0 $drop-down-box-shadow-color;
+      width: 100%;
+      margin-top: -.2em;
+      z-index: 1000;
+      a {
+        color: $drop-down-item-color;
+        padding: 0.75rem 1rem;
+        display: block;
         width: 100%;
-        margin: 0.5rem 0;
-        position: relative;
-        &-button {
-            width: 100%;
-            margin: 0;
-            min-height: 3rem;
-            background: $primary-color;
-            border: 1px solid $drop-down-border-color;
-            border-radius: .25rem;
-            color: $light-gray2;
-            display: flex;
-            align-items: center;
-            display: flex;
-            padding: 1rem;
-            cursor: pointer;
-
-            &--label {
-                flex: 1;
-                text-align: left;
-            }
-        }
-
-        &__content {
-            position: absolute;
-            background-color: $light-gray3;
-            text-align: left;
-            min-width: 10rem;
-            box-shadow: 0 0.5rem 1rem 0 $drop-down-box-shadow-color;
-            width: 100%;
-            margin-top: -.2em;
-            z-index: 1000;
-
-            a {
-                color: $drop-down-item-color;
-                padding: 0.75rem 1rem;
-                display: block;
-                width: 100%;
-                text-decoration: none;
-            }
-        }
+        text-decoration: none;
+      }
     }
-
-    .qm-use-as-default {
-        width: 100%;
-        margin-top: 1rem;
-        display: inline-flex;
-
-        &__checkbox {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            vertical-align: -webkit-baseline-middle;
-            padding-right: $standard-padding;
-            margin-right: 0.7rem;
-        }
+  }
+  .qm-use-as-default {
+    width: 100%;
+    margin-top: 1rem;
+    display: inline-flex;
+    &__checkbox {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      vertical-align: -webkit-baseline-middle;
+      padding-right: $standard-padding;
+      margin-right: 0.7rem;
     }
+  }
 }
 
 .qm-profile-ok {
-    font-family: $secondary-font-semi-bold;
-    margin-top: 10%;
-    border: $border-thick solid;
-    line-height: 3em;
-    font-size: 1.3em;
-    font-weight: $font-weight-bold;
-    border-radius: 4px;
-    letter-spacing: $extended-letter-spacing;
-    width: 100%;
-    text-align: center;
+  font-family: $secondary-font-semi-bold;
+  margin-top: 10%;
+  border: $border-thick solid;
+  line-height: 3em;
+  font-size: 1.3em;
+  font-weight: $font-weight-bold;
+  border-radius: 4px;
+  letter-spacing: $extended-letter-spacing;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
 }
 
 .qm-profile-cancel {
-    letter-spacing: $extended-letter-spacing;
-    font-size: $font-small;
-    font-family: $secondary-font-light;
-    margin-top: 10%;
+  letter-spacing: $extended-letter-spacing;
+  font-size: $font-small;
+  font-family: $secondary-font-light;
+  margin-top: 10%;
 }
 
-@media screen and (max-width: 800px)
-{
-    .qm-profile {
-        &-content {
-            margin-top: 154px;
-            width: 70%;    
-        }
+@media screen and (max-width: 800px) {
+  .qm-profile {
+    &-content {
+      margin-top: 154px;
+      width: 70%;
     }
+  }
 }
-
-

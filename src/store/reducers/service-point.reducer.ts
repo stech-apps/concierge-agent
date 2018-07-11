@@ -5,6 +5,7 @@ import { IServicePoint } from 'src/models/IServicePoint';
 
 export interface IServicePointState {
   servicePoints: IServicePoint[];
+  openServicePoint: IServicePoint;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -12,6 +13,7 @@ export interface IServicePointState {
 
 export const initialState: IServicePointState = {
   servicePoints: [],
+  openServicePoint: null,
   loading: false,
   loaded: false,
   error: null
@@ -25,6 +27,7 @@ export function reducer (
     case ServicePointActions.FETCH_SERVICEPOINTS: {
       return {
         ...state,
+        openServicePoint: null,
         loading: true,
         error: null
       };
@@ -43,6 +46,12 @@ export function reducer (
         ...state,
         loading: false,
         error: action.payload
+      };
+    }
+    case ServicePointActions.SET_OPEN_SERVICE_POINT: {
+      return {
+        ...state,
+        openServicePoint: action.servicePoint,
       };
     }
     default: {

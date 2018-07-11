@@ -16,9 +16,15 @@ const getAllServicePoints = createSelector(
   (state: IServicePointState) => state.servicePoints
 );
 
+const getOpenServicePoint = createSelector(
+  getServicePointState,
+  (state: IServicePointState) => state.openServicePoint
+);
+
 @Injectable()
 export class ServicePointSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
-  servicePoints$ = this.store.select(getAllServicePoints);  
+  servicePoints$ = this.store.select(getAllServicePoints); 
+  openServicePoint$ = this.store.select(getOpenServicePoint);  
 }

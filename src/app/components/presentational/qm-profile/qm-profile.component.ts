@@ -38,7 +38,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.translateService.get('service_point').subscribe(v=> {
       this.selectedServicePoint = {
-        name: v
+        name: v,
+        id: -1,
+        unitId: null
       };
     });
 
@@ -55,7 +57,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   subscribeCometD(){
-    this.qevents.initializeCometD(this.qevents);
+    this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

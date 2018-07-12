@@ -60,6 +60,7 @@ import { QmAutoCloseComponent } from './components/containers/qm-auto-close/qm-a
 import { AutoClose } from '../util/services/autoclose.service';
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 import { Logout } from './../util/services/logout.service';
+import { QmSideMenuComponent } from './components/containers/qm-side-menu/qm-side-menu.component';
 import { SPService } from './../util/services/rest/sp.service';
 
 // Global options for Toastr
@@ -82,7 +83,8 @@ const toastrGlobalOptions = {
     QmDropDownComponent,
     QmCustomToastComponent,
     QmAutoCloseComponent,
-    QmHomeComponent
+    QmHomeComponent,
+    QmSideMenuComponent
   ],
   entryComponents: [QmCustomToastComponent],
   imports: [

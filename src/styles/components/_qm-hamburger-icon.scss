@@ -1,0 +1,22 @@
+@import '../base/colors';
+
+.hamburger-icon {
+  position: absolute;
+  padding-left: 1.25em;
+  left: 1rem;
+  top: 1rem;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25em;
+    width: rem(32px);
+    height: 0.16em;
+    background: $primary-button-text-color;
+    box-shadow: 0 0.5rem 0 0 $primary-button-text-color, 0 1rem 0 0 $primary-button-text-color;
+  }
+}

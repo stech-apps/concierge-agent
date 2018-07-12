@@ -40,7 +40,7 @@ import { INFO_SVG } from 'src/svgs/info-icon';
 export class QmCustomToastComponent extends Toast {
 
   // constructor is only necessary when not using AoT
-  private iconSvg : any =  INFO_SVG;
+  iconSvg : any =  INFO_SVG;
 
   
   constructor(

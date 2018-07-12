@@ -6,6 +6,7 @@ import { AppComponent } from './../app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 import { QmInvalidLicenseComponent } from 'src/app/components/presentational/qm-invalid-license/qm-invalid-license.component';
+import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 export const appRoutes: Routes = [
     {
       path: '',
@@ -13,6 +14,7 @@ export const appRoutes: Routes = [
         { path: 'loading', component: QmAppLoaderComponent },
         { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
         { path: 'invalid-license', component: QmInvalidLicenseComponent },
+        { path: 'home', component: QmHomeComponent },
         { path: 'profile', component: QmProfileComponent},
         { path: '**', component: QmAppPageNotFoundComponent}
       ]

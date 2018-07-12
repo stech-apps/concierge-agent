@@ -28,12 +28,11 @@ export class QEvents {
 
     const servicePointsSubscription = this.servicePointSelectors.openServicePoint$.subscribe((sp) => {
       if(sp){
-        if(sp !== this.openServicePoint){
+        if(this.openServicePoint && sp !== this.openServicePoint){
           this.unsubscribe();
         }
         this.openServicePoint = sp;
-        this.initializeCometD();
-        this.subscribe();
+        this.initializeCometD(this);
       }
       else if(this.openServicePoint){
         this.unsubscribe();
@@ -60,22 +59,22 @@ export class QEvents {
     });
   }
  
-  handshake(){
+  handshake(currentObj){
     // Handshake with the server.
     this.cometd.handshake(function(h) {
       if (h.successful) {
-    
+        currentObj.checkServerStatus(currentObj);
       }
     });
   }
 
-  cc(){
+  checkServerStatus(currentObj){
     this.cometd.addListener('/meta/connect', '', function(msg){
-      console.log(msg);
+      currentObj.qEventHelper.checkServerStatus(msg);
     })
   }
 
-  initializeCometD(){
+  initializeCometD(currentObj){
     var initCmd = {
       "M": "C",
       "C": {
@@ -95,10 +94,11 @@ export class QEvents {
     initCmd.C.PRM.uid = this.openServicePoint.unitId;
        
     this.cometd.publish('/events/INIT', initCmd, function(m) {
+      currentObj.subscribe(currentObj);
     });
   }
 
-  subscribe(){
+  subscribe(currentObj){
     var chanel = this.qEventHelper.getChannelStr(this.openServicePoint.unitId)
     this.cometd.subscribe('/events/' + chanel + '/' + this.userName, function(m){
 

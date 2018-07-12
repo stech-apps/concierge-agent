@@ -41,7 +41,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedServicePoint = {
         name: v,
         id: -1,
-        unitId: null
+        unitId: null,
+        parameters: null,
+        state: null
       };
     });
 

@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.qevents.handshake();
+    this.qevents.handshake(this.qevents);
     this.systemInfoDispatchers.fetchSystemInfo();
     this.accountDispatchers.fetchAccountInfo();
     this.branchDispatchers.fetchBranches();

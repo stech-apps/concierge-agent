@@ -21,6 +21,15 @@ export class QEventsHelper {
     return str.replace(new RegExp(':', 'g'), '/');
   }
 
+  checkServerStatus(msg){
+      if(msg.successful){
+          console.log("done")
+      }
+      else{
+          console.log("no");
+      }
+  }
+
   receiveEvent(msg){
     var processedEvent;
       try {

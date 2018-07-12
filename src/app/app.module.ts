@@ -1,3 +1,4 @@
+import { QmCustomToastComponent } from './components/presentational/qm-custom-toast/qm-custom-toast.component';
 import { NativeApiService } from './../util/services/native-api.service';
 // Route guards
 import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
@@ -7,6 +8,7 @@ import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 // Components
@@ -40,7 +42,7 @@ import {
 } from '../store';
 import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 import { ToastService } from './../util/services/toast.service';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { HttpLoaderFactory } from 'src/i18n/TranslationsLoaderFactory';
 import { LicenseDispatchers } from './../store/services/license/license.dispatchers';
 import { QmAppLoaderComponent } from './components/containers/qm-app-loader/qm-app-loader.component';
@@ -59,7 +61,9 @@ import { QEventsHelper } from 'src/util/services/qevents/qevents';
 const toastrGlobalOptions = {
   maxOpened: 3,
   autoDismiss: true,
-  iconClasses: {}
+  iconClasses: {},
+
+  toastComponent: QmCustomToastComponent,
 };
 
 @NgModule({
@@ -71,8 +75,10 @@ const toastrGlobalOptions = {
     QmAppPageNotFoundComponent,
     QmProfileComponent,
     QmPageHeaderComponent,
-    QmDropDownComponent
+    QmDropDownComponent,
+    QmCustomToastComponent
   ],
+  entryComponents: [QmCustomToastComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -83,6 +89,7 @@ const toastrGlobalOptions = {
       { enableTracing: false } // <-- debugging purposes only
     ),
     ToastrModule.forRoot(toastrGlobalOptions),
+    ToastContainerModule,
     ...(!environment.production
       ? [StoreDevtoolsModule.instrument({ maxAge: 10 })]
       : []),
@@ -92,7 +99,8 @@ const toastrGlobalOptions = {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     ...storeServices,

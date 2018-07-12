@@ -4,11 +4,13 @@ import { ISystemInfo } from './../models/ISystemInfo';
 import { Observable, Subscription } from 'rxjs';
 import { SystemInfoDispatchers } from './../store/services/system-info/system-info.dispatchers';
 import { Component } from '@angular/core';
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SystemInfoSelectors, AccountDispatchers, LicenseDispatchers, BranchDispatchers, 
-         ServiceDispatchers, ServicePointDispatchers, UserStatusDispatchers } from '../store';
+         ServiceDispatchers, ServicePointDispatchers, UserStatusDispatchers, UserSelectors } from '../store';
 import { NativeApiService } from 'src/util/services/native-api.service';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
+import { ToastService } from 'src/util/services/toast.service';
+import { ToastContainerDirective } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +21,14 @@ export class AppComponent implements OnInit, OnDestroy {
   public systemInformation$: Observable<ISystemInfo>;
 
   private subscriptions: Subscription = new Subscription();
+  userDirection$: Observable<string>;
+  @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
 
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
               private accountDispatchers: AccountDispatchers,
               private licenseDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
               private router: Router, private branchDispatchers: BranchDispatchers, private userStatusDispatchers: UserStatusDispatchers, private servicePointDispatchers: ServicePointDispatchers , public qevents: QEvents,
-              private translateService: TranslateService) {
+              private translateService: TranslateService, private toastService: ToastService, private userSelectors: UserSelectors) {
   }
 
   ngOnInit() {
@@ -33,13 +37,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.accountDispatchers.fetchAccountInfo();
     this.branchDispatchers.fetchBranches();
     this.userStatusDispatchers.fetchUserStatus();
+    this.userDirection$ = this.userSelectors.userDirection$;
 
     const translateSubscription = this.translateService.get('branch').subscribe(
       (branchLabel: string) => {
        this.branchDispatchers.selectBranch({id: -1, name: branchLabel});
       }
     );  
-    this.subscriptions.add(translateSubscription);  
+    this.subscriptions.add(translateSubscription); 
+    
+    this.toastService.setToastContainer(this.toastContainer);
   }
 
   ngOnDestroy() {

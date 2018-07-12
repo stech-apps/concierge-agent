@@ -10,6 +10,7 @@ import { BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointD
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ToastService } from 'src/util/services/toast.service';
 
 @Component({
   selector: 'qm-profile',
@@ -26,7 +27,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
               private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-              private nativeApiService: NativeApiService){
+              private nativeApiService: NativeApiService, private toastService: ToastService){
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
     this.subscriptions.add(branchSubscription);
@@ -77,5 +78,14 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onServicePointSelect(selectedSp: IServicePoint) {
     this.selectedServicePoint = selectedSp;
+     
+  }
+
+  onConfirmProfile() {
+    if(this.selectedServicePoint.id === -1) {
+      this.translateService.get('no_workstation_set').subscribe(v=> {
+        this.toastService.infoToast(v);
+      });  
+    }
   }
 }

@@ -1,4 +1,6 @@
+import { UserSelectors } from 'src/store/services';
 import { Component, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'qm-side-menu',
@@ -9,7 +11,13 @@ export class QmSideMenuComponent implements OnInit {
 
   @ViewChild('menu') menu: ElementRef;
 
-  constructor() { }
+  subscriptions: Subscription = new Subscription();
+  currentUser: string;
+
+  //todo: bind from store
+  connectedDevice: string = 'MobileConnectConcierge_TPTouch'.toUpperCase();
+
+  constructor(private userSelectors: UserSelectors) { }
 
   toggleMenu() {
     this.menu.nativeElement.classList.add("qm-side-menu__container--animatable");	
@@ -21,6 +29,14 @@ export class QmSideMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+   const userSubscription  = this.userSelectors.userFullName$.subscribe((u)=> {
+      this.currentUser = u.toUpperCase();
+    });
+
+    this.subscriptions.add(userSubscription);
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 }

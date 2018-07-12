@@ -1,7 +1,12 @@
 <!-- refactor out to app component -->
-<div class="qm-side-menu__container" #menu (click)="toggleMenu()">
+<div class="qm-side-menu qm-side-menu__container" #menu (click)="toggleMenu()">
     <div class="qm-side-menu__content" #appMenu>
-
-
+        <div class="qm-side-menu__heading">
+            <div class="qm-side-menu__heading--user-name">{{currentUser}}</div>
+            <div class="qm-side-menu__heading--device"> {{ connectedDevice }}</div>
+        </div>
+        <div class="qm-side-menu__items">
+            <div>{{ 'customers' | translate }}</div>    
+        </div>
     </div>
 </div>

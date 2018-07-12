@@ -56,6 +56,8 @@ import { QmPageHeaderComponent } from './components/containers/qm-page-header/qm
 import { QmDropDownComponent } from './components/presentational/qm-drop-down/qm-drop-down.component';
 import { QEvents } from 'src/util/services/qevents/qevents.service';
 import { QEventsHelper } from 'src/util/services/qevents/qevents';
+import { QmAutoCloseComponent } from './components/containers/qm-auto-close/qm-auto-close.component';
+import { AutoClose } from '../util/services/autoclose.service';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -76,7 +78,8 @@ const toastrGlobalOptions = {
     QmProfileComponent,
     QmPageHeaderComponent,
     QmDropDownComponent,
-    QmCustomToastComponent
+    QmCustomToastComponent,
+    QmAutoCloseComponent
   ],
   entryComponents: [QmCustomToastComponent],
   imports: [
@@ -108,7 +111,8 @@ const toastrGlobalOptions = {
     ToastService,
     LicenseAuthGuard,
     QEvents,
-    QEventsHelper
+    QEventsHelper,
+    AutoClose
   ],
   bootstrap: [AppComponent]
 })

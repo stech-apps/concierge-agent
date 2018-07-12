@@ -1,0 +1,21 @@
+<div class="qm-page-root qm-profile">
+    <qm-page-header></qm-page-header>
+    <div class="qm-profile-content">
+      <div class="qm-profile-content__title">
+        {{ 'user_settings' | translate}}
+      </div>
+      <qm-drop-down [caption]="selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)"
+                    labelProperty="name"></qm-drop-down>
+      <qm-drop-down [caption]="selectedServicePoint?.name"
+      (itemClick)="onServicePointSelect($event)"
+      [items]="servicePoints" labelProperty="name"></qm-drop-down>
+  
+      <div class="qm-use-as-default">
+          <input type="checkbox" class="qm-use-as-default__checkbox"/> 
+          <span>{{ 'use_as_default' | translate }}</span>
+      </div>
+      <div class="qm-profile-ok" (click)="onConfirmProfile()">{{ 'ok' | translate}}</div>
+      <div class="qm-profile-cancel">{{ 'cancel' | translate}}</div>
+    </div>
+  </div>
+  

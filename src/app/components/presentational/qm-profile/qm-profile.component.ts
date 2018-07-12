@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { NativeApiService } from './../../../../util/services/native-api.service';
 import { IServicePoint } from './../../../../models/IServicePoint';
 import { IService } from './../../../../models/IService';
@@ -27,7 +28,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
               private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-              private nativeApiService: NativeApiService, private toastService: ToastService){
+              private nativeApiService: NativeApiService, private toastService: ToastService, private router: Router){
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
     this.subscriptions.add(branchSubscription);
@@ -88,6 +89,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.translateService.get('no_workstation_set').subscribe(v=> {
         this.toastService.infoToast(v);
       });  
+    }
+    else {
+      this.router.navigate(['home']);
     }
   }
 }

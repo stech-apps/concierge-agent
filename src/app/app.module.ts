@@ -58,13 +58,13 @@ import { QEvents } from 'src/util/services/qevents/qevents.service';
 import { QEventsHelper } from 'src/util/services/qevents/qevents';
 import { QmAutoCloseComponent } from './components/containers/qm-auto-close/qm-auto-close.component';
 import { AutoClose } from '../util/services/autoclose.service';
+import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
   maxOpened: 3,
   autoDismiss: true,
   iconClasses: {},
-
   toastComponent: QmCustomToastComponent,
 };
 
@@ -79,7 +79,8 @@ const toastrGlobalOptions = {
     QmPageHeaderComponent,
     QmDropDownComponent,
     QmCustomToastComponent,
-    QmAutoCloseComponent
+    QmAutoCloseComponent,
+    QmHomeComponent
   ],
   entryComponents: [QmCustomToastComponent],
   imports: [

@@ -59,6 +59,8 @@ import { QEventsHelper } from 'src/util/services/qevents/qevents';
 import { QmAutoCloseComponent } from './components/containers/qm-auto-close/qm-auto-close.component';
 import { AutoClose } from '../util/services/autoclose.service';
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
+import { Logout } from './../util/services/logout.service';
+import { SPService } from './../util/services/rest/sp.service';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -113,7 +115,9 @@ const toastrGlobalOptions = {
     LicenseAuthGuard,
     QEvents,
     QEventsHelper,
-    AutoClose
+    AutoClose,
+    Logout,
+    SPService
   ],
   bootstrap: [AppComponent]
 })

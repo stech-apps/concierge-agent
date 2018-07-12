@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServicePointSelectors } from 'src/store/services';
+import { Logout } from 'src/util/services/logout.service';
 
 
 @Injectable()
@@ -9,10 +10,12 @@ export class AutoClose {
   private currentAutoCloseTime = 0;
   private autoCloseInterval = null;
   constructor(
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private logoutService: Logout
   ) {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params === null){
+        this.stopAutoCloseTime();
         return
       }
       this.autoCloseTimeInSeconds = params.autoClose;
@@ -33,7 +36,13 @@ export class AutoClose {
   }
 
   onAutoCloseTimeExpired() {
-    //this.logoutService.logout();
+    this.logoutService.logout(true);
+  }
+
+  stopAutoCloseTime(){
+    if (this.autoCloseInterval) {
+      clearInterval(this.autoCloseInterval);
+    }
   }
 
   refreshAutoClose() {

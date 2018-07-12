@@ -12,8 +12,4 @@ export class UserStatusDispatchers {
   fetchUserStatus() {
     this.store.dispatch(new UserStatusActions.FetchUserStatus);
   }
-
-  logout() {
-    this.store.dispatch(new UserStatusActions.Logout);
-  }
 }

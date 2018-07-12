@@ -59,34 +59,6 @@ export function reducer(
         }
       };
     }
-    case UserStatusActions.LOG_OUT: {
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-    }
-    case UserStatusActions.LOG_OUT_SUCCESS: {
-      return {
-        ...state,
-        data: {
-          ...action.payload
-        },
-        loading: false,
-        loaded: true,
-        error: null
-      };
-    }
-    case UserStatusActions.LOG_OUT_FAIL: {
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: {
-            ...action.payload
-        }
-      };
-    }
     default: {
         return state;
     }

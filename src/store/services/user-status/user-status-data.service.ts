@@ -16,4 +16,12 @@ export class UserStatusDataService {
       .get<IUserStatus>(`${servicePoint}/user/status`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
+
+  logout(): Observable<IUserStatus> {
+    return this.http
+      .put<IUserStatus>(`${servicePoint}/logout`, {})
+      .pipe(
+        catchError(this.errorHandler.handleError())
+      );
+  }
 }

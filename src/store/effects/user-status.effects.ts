@@ -31,4 +31,17 @@ export class UserStatusEffects {
         )
       )
     );
+
+    @Effect()
+  logout$: Observable<Action> = this.actions$
+    .ofType(UserStatusActions.LOG_OUT)
+    .pipe(
+      switchMap(() =>
+        toAction(
+          this.userStatusDataService.logout(),
+          UserStatusActions.LogoutSuccess,
+          UserStatusActions.LogoutFail
+        )
+      )
+    );
 }

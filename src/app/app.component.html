@@ -1,2 +1,4 @@
-<router-outlet></router-outlet>
-<div class="qm-messages" toastContainer dir="{{ userDirection$ | async }}"></div>
+<qm-auto-close>
+    <router-outlet></router-outlet>
+    <div class="qm-messages" toastContainer dir="{{ userDirection$ | async }}"></div>
+</qm-auto-close> 

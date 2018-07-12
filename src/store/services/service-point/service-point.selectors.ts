@@ -24,7 +24,12 @@ const getOpenServicePoint = createSelector(
 
 const getUttParameters = createSelector(
   getOpenServicePoint,
-  (state: IServicePoint) => state.parameters
+  (state: IServicePoint) => {
+    if(state === null){
+      return null
+    }
+    state.parameters
+  }
 );
 
 @Injectable()

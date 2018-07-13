@@ -105,7 +105,7 @@ export class QEvents {
     })
 
     this.cometd.addListener('/events/' + chanel + '/' + this.userName, '', function(msg){
-      this.qEventHelper.receiveEvent(msg);
+      currentObj.qEventHelper.receiveEvent(msg);
     })
   }
 

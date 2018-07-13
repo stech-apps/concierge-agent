@@ -1,8 +1,8 @@
 {
     "remote_deploy": {
-        "host": "",
-        "username": "",
-        "password": ""
+        "host": "10.2.3.35",
+        "username": "kasun",
+        "password": "Love2017KP"
     },
     "artifactory": {
         "host": "artifactory.qmatic.net",
@@ -12,5 +12,5 @@
         "path": "/artifactory/list/qmatic/appointment-booking-ui"
     },
 
-    "remote_deploy_method": "localcopy"
+    "remote_deploy_method": "localcopyx"
 }

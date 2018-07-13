@@ -23,7 +23,7 @@ export class SPService implements OnDestroy {
 
   logout(force: boolean) {
     return this.http
-        .put(`${servicePoint}/logout?force${force}`, {})
+        .put(`${servicePoint}/logout?force=${force}`, {})
         .pipe(
           catchError(this.errorHandler.handleError())
         );

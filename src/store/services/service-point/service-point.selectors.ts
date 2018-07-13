@@ -28,7 +28,7 @@ const getUttParameters = createSelector(
     if(state === null){
       return null
     }
-    state.parameters
+    return state.parameters
   }
 );
 

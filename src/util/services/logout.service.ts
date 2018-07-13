@@ -6,6 +6,7 @@ import { SPService } from '../services/rest/sp.service';
 import { UserSelectors } from '../../store/index';
 import { VISIT_STATE } from '../q-state';
 import { NativeApiService } from '../services/native-api.service'
+import { LOGOUT_URL } from '../url-helper';
 
 
 @Injectable()
@@ -50,10 +51,10 @@ export class Logout {
   initiateLogout(force : boolean){
     this.spService.logout(force).subscribe((status: any) => {
       if(this.nativeApi.isNativeBrowser){
-
+        this.nativeApi.logOut();
       }
       else{
-        window.location.href =  "/logout.jsp";
+        window.location.href =  LOGOUT_URL;
       }
     })
   }

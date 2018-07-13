@@ -57,12 +57,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    
+    this.servicePointDispatchers.setOpenServicePoint(null);
   }
 
-  subscribeCometD(){
-    this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
-  }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
@@ -91,6 +88,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       });  
     }
     else {
+      this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
       this.router.navigate(['home']);
     }
   }

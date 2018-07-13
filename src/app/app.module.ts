@@ -62,6 +62,7 @@ import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-ho
 import { Logout } from './../util/services/logout.service';
 import { QmSideMenuComponent } from './components/containers/qm-side-menu/qm-side-menu.component';
 import { SPService } from './../util/services/rest/sp.service';
+import { Util } from './../util/util';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -119,7 +120,8 @@ const toastrGlobalOptions = {
     QEventsHelper,
     AutoClose,
     Logout,
-    SPService
+    SPService,
+    Util
   ],
   bootstrap: [AppComponent]
 })
@@ -130,13 +132,13 @@ export class AppModule {
     this.translate.setDefaultLang('connectConciergeMessages');
     this.platformDispatchers.updatePlatform(this.nativeApiService.getPlatform());
 
-    if(!this.nativeApiService.isNativeBrowser()) {
-      this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
-      this.router.navigate(['/loading']);
+    if(this.nativeApiService.isNativeBrowser()) {
+      this.nativeApiService.showNativeLoader(false);
+      this.router.navigate(['/profile']);
     }
     else {
-      this.nativeApiService.showNativeLoader(false);
-      this.router.navigate(['/profile']);     
+      this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
+      this.router.navigate(['/loading']);
     }   
   }
 }

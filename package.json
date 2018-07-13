@@ -8,7 +8,7 @@
     "start": "npm run ng-config-dev && ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "ng test",
-    "build-war-dev": "npm run ng-config-dev && ng build && gulp build:war:properties",
+    "build-war-dev": "npm run ng-config-dev && ng build --base-href /connectconcierge/ && gulp build:war:properties",
     "build-war-prod": "npm run ng-config-prod && ng build --prod --base-href /connectconcierge/ && gulp build:war:properties",
     "build-artifactory": "npm run ng-config-prod && ng build --prod --base-href /connectconcierge/ && gulp build:artifactory",
     "deploy-war-dev": "npm run ng-config-dev && ng build && gulp build:war:deploy",

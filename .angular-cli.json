@@ -10,7 +10,7 @@
       "WEB-INF/",
       "META-INF",
       "app.json",
-      "favicon.icow",
+      "favicon.ico",
       "config.properties"
     ],
     "index": "index.html",

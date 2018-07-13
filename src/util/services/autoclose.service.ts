@@ -14,7 +14,7 @@ export class AutoClose {
     private logoutService: Logout
   ) {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if(params === null){
+      if(params === null || params === undefined){
         this.stopAutoCloseTime();
         return
       }

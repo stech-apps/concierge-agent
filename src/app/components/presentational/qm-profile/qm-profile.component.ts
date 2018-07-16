@@ -37,10 +37,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => this.servicePoints = sps);
     this.subscriptions.add(servicePointsSubscription);
-
-
-
-
   }
 
   ngOnInit() {

@@ -45,6 +45,8 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     );  
     this.subscriptions.add(translateSubscription); 
+
+    console.log('setting toast container', this.toastContainer);
     
     this.toastService.setToastContainer(this.toastContainer);
   }

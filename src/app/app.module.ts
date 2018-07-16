@@ -68,8 +68,7 @@ import { Util } from './../util/util';
 const toastrGlobalOptions = {
   maxOpened: 3,
   autoDismiss: true,
-  iconClasses: {},
-  toastComponent: QmCustomToastComponent,
+  iconClasses: {}
 };
 
 @NgModule({

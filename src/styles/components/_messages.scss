@@ -1,6 +1,6 @@
 // Toast containers
 .qm-messages {
-    position: fixed;
+    position: absolute;
     top: 0;
     z-index: map-get($z-index, 'toastContainer');
     width: 100%;

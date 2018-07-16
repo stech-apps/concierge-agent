@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="col-12 qm-toast-inner-container">
+  <div class="qm-toast-inner-container">
     <div *ngIf="title" [class]="options.titleClass" [attr.aria-label]="title" class="custom-title">
       {{ title }}
     </div>
@@ -21,8 +20,6 @@
       </a>
     </div>
   </div>
-
-</div>
 <div *ngIf="options.progressBar">
   <div class="toast-progress" [style.width]="width + '%'"></div>
 </div>

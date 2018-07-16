@@ -10,7 +10,7 @@ import {
     UserRoleDispatchers, UserRoleSelectors, UserDataService, UserDispatchers, UserSelectors,
     UserStatusDispatchers, UserStatusDataService, UserStatusSelectors,
     AccountDataService, AccountDispatchers, PlatformSelectors, PlatformDispatchers, BranchSelectors,
-    BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService
+    BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService, CalendarServiceDataService, CalendarServiceDispatchers, CalendarServiceSelectors
  } from './services';
 import { ServicePointDataService, ServicePointDispatchers, ServicePointSelectors } from 'src/store/services/service-point';
 
@@ -41,6 +41,9 @@ export const storeServices = [
     ServiceDispatchers,
     ServiceDataService,
     ServiceSelectors,
+    CalendarServiceDispatchers,
+    CalendarServiceDataService,
+    CalendarServiceSelectors,
     ServicePointDataService,
     ServicePointDispatchers,
     ServicePointSelectors

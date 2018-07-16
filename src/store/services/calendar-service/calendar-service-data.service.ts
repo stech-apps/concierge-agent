@@ -11,17 +11,22 @@ import {
   servicePoint
 } from '../data.service';
 
-import { IServiceResponse } from '../../../models/IServiceResponse';
 import { IServiceGroup } from '../../../models/IServiceGroup';
 import { ICalendarServiceResponse } from '../../../models/ICalendarServiceResponse';
 
 @Injectable()
-export class ServiceDataService {
+export class CalendarServiceDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
 
-  getServices(): Observable<IServiceResponse> {
+  getCalendarServices(): Observable<ICalendarServiceResponse> {
     return this.http
-      .get<IServiceResponse>(`${servicePoint}/services/`)
+      .get<ICalendarServiceResponse>(`${calendarPublicEndpoint}/services/`)
+      .pipe(catchError(this.errorHandler.handleError()));
+  }
+
+  getServiceGroups(servicePublicIds: string): Observable<IServiceGroup[]> {
+    return this.http
+      .get<IServiceGroup[]>(`${calendarPublicEndpoint}/services/groups${servicePublicIds}`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 }

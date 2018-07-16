@@ -9,4 +9,5 @@ export * from './account';
 export * from './platform';
 export * from './branch';
 export * from './service';
+export * from './calendar-service';
 export * from './service-point';

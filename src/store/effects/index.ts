@@ -7,6 +7,7 @@ import { UserStatusEffects } from './user-status.effects';
 import { UserRoleEffects } from './user-role.effects';
 import { AccountEffects } from './account.effects';
 import { ServiceEffects } from './service.effects';
+import { CalendarServiceEffects } from './calendar-service.effects';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -17,5 +18,6 @@ export const effects: any[] = [
     AccountEffects,
     BranchEffects,
     ServiceEffects,
-    ServicePointEffects
+    ServicePointEffects,
+    CalendarServiceEffects
 ];

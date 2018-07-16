@@ -1,5 +1,5 @@
-import { IService } from './IService';
+import { ICalendarService } from './ICalendarService';
 
 export interface IServiceGroupList {
-  services: IService[];
+  services: ICalendarService[];
 }

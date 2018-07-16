@@ -1,16 +1,11 @@
 import { Action } from '@ngrx/store';
 import { IServiceResponse } from '../../models/IServiceResponse';
 import { IService } from '../../models/IService';
-import { IServiceGroup } from '../../models/IServiceGroup';
 
 // Service actions
 export const FETCH_SERVICES = '[Service] FETCH_SERVICES';
 export const FETCH_SERVICES_FAIL = '[Service] FETCH_SERVICES_FAIL';
 export const FETCH_SERVICES_SUCCESS = '[Service] FETCH_SERVICES_SUCCESS';
-
-export const FETCH_SERVICE_GROUPS = '[Service] FETCH_SERVICE_GROUPS';
-export const FETCH_SERVICE_GROUPS_FAIL = '[Service] FETCH_SERVICE_GROUPS_FAIL';
-export const FETCH_SERVICE_GROUPS_SUCCESS = '[Service] FETCH_SERVICE_GROUPS_SUCCESS';
 
 export const SELECT_SERVICE = '[Service] SELECT_SERVICE';
 export const SELECT_MULTI_SERVICE = '[Service] SELECT_MULTI_SERVICE';
@@ -33,21 +28,6 @@ export class FetchServicesFail implements Action {
 export class FetchServicesSuccess implements Action {
   readonly type = FETCH_SERVICES_SUCCESS;
   constructor(public payload: IServiceResponse) {}
-}
-
-export class FetchServiceGroups implements Action {
-  readonly type = FETCH_SERVICE_GROUPS;
-  constructor(public payload: string) {}
-}
-
-export class FetchServiceGroupsFail implements Action {
-  readonly type = FETCH_SERVICE_GROUPS_FAIL;
-  constructor(public payload: Object) {}
-}
-
-export class FetchServiceGroupsSuccess implements Action {
-  readonly type = FETCH_SERVICE_GROUPS_SUCCESS;
-  constructor(public payload: IServiceGroup[]) {}
 }
 
 export class SelectService implements Action {
@@ -87,9 +67,6 @@ export class LoadSelectedServices implements Action {
 export type AllServiceActions = FetchServices |
                                 FetchServicesFail |
                                 FetchServicesSuccess |
-                                FetchServiceGroups |
-                                FetchServiceGroupsFail |
-                                FetchServiceGroupsSuccess |
                                 SelectService |
                                 DeselectService |
                                 DeselectServices |

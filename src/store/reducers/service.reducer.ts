@@ -50,29 +50,6 @@ export function reducer (
         error: action.payload
       };
     }
-    case ServiceActions.FETCH_SERVICE_GROUPS: {
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-    }
-    case ServiceActions.FETCH_SERVICE_GROUPS_SUCCESS: {
-      return {
-        ...state,
-        serviceGroups: action.payload,
-        loading: false,
-        loaded: true,
-        error: null
-      };
-    }
-    case ServiceActions.FETCH_SERVICE_GROUPS_FAIL: {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
-      };
-    }
     case ServiceActions.SELECT_SERVICE: {
       return {
         ...state,
@@ -84,7 +61,7 @@ export function reducer (
         ...state,
         selectedServices: state.selectedServices.filter(
           (service: IService) =>
-            service.publicId !== action.payload.publicId
+            service.id !== action.payload.id
         )
       };
     }
@@ -134,8 +111,8 @@ export function reducer (
 function sortServices(serviceList: IService[]): IService[] {
   return serviceList.sort(
     (service1: IService, service2: IService) => {
-      if (service1.name.toLowerCase() < service2.name.toLowerCase() ) { return -1; }
-      if (service1.name.toLowerCase() > service2.name.toLowerCase() ) { return 1; }
+      if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
+      if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
       return 0;
     }
   );

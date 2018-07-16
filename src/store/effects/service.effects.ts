@@ -28,17 +28,4 @@ export class ServiceEffects {
           )
         )
       );
-
-    @Effect()
-    getServiceGroups$: Observable<Action> = this.actions$
-      .ofType(AllActions.FETCH_SERVICE_GROUPS)
-      .pipe(
-        switchMap((action: AllActions.FetchServiceGroups) =>
-          toAction(
-            this.serviceDataService.getServiceGroups(action.payload),
-            AllActions.FetchServiceGroupsSuccess,
-            AllActions.FetchServiceGroupsFail
-          )
-        )
-      );
 }

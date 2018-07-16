@@ -9,4 +9,5 @@ export * from './account.actions';
 export * from './platform.actions';
 export * from './branch.actions';
 export * from './service.actions';
+export * from './calendar-service.actions';
 export * from './service-point.actions';

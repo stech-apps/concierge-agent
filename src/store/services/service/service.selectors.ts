@@ -20,11 +20,6 @@ export const getSelectedServices = createSelector(
   (state: IServiceState) => state.selectedServices
 );
 
-export const getServiceGroups = createSelector(
-  getServiceState,
-  (state: IServiceState) => state.serviceGroups
-);
-
 @Injectable()
 export class ServiceSelectors {
   constructor(private store: Store<IAppState>) {}

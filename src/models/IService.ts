@@ -1,9 +1,8 @@
-export interface IService {
-    duration: number;
-    publicEnabled: boolean;
-    additionalCustomerDuration: number;
-    name: string;
-    active: boolean;
-    publicId: string;
+export class IService {
+    id: number;
+    internalName: string;
+    externalName: string;
+    internalDescription: string;
+    externalDescription: string
+    targetTransactionTime: number;
   }
-  

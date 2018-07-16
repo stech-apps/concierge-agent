@@ -6,8 +6,10 @@ import { IDropDownItem } from './../../../../models/IDropDownItem';
 import { IBranch } from './../../../../models/IBranch';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
-         BranchDispatchers } from '../../../../../src/store';
+import {
+  BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
+  BranchDispatchers
+} from '../../../../../src/store';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -27,8 +29,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedBranch: IBranch;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
-              private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-              private nativeApiService: NativeApiService, private toastService: ToastService, private router: Router){
+    private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
+    private nativeApiService: NativeApiService, private toastService: ToastService, private router: Router) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
     this.subscriptions.add(branchSubscription);
@@ -36,28 +38,26 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => this.servicePoints = sps);
     this.subscriptions.add(servicePointsSubscription);
 
-    
 
-    this.translateService.get('service_point').subscribe(v=> {
-      this.selectedServicePoint = {
-        name: v,
-        id: -1,
-        unitId: null,
-        parameters: null,
-        state: null
-      };
-    });
 
-    this.translateService.get('branch').subscribe(v=> {
-      this.selectedBranch = {
-        name: v,
-        id: -1
-      };
-    });
+
   }
 
   ngOnInit() {
     this.servicePointDispatchers.setOpenServicePoint(null);
+
+    this.selectedServicePoint = {
+      name: 'service_point',
+      id: -1,
+      unitId: null,
+      parameters: null,
+      state: null
+    };
+
+    this.selectedBranch = {
+      name: 'branch',
+      id: -1
+    };
   }
 
   ngOnDestroy() {
@@ -78,14 +78,14 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onServicePointSelect(selectedSp: IServicePoint) {
     this.selectedServicePoint = selectedSp;
-     
+
   }
 
   onConfirmProfile() {
-    if(this.selectedServicePoint.id === -1) {
-      this.translateService.get('no_workstation_set').subscribe(v=> {
+    if (this.selectedServicePoint.id === -1) {
+      this.translateService.get('no_workstation_set').subscribe(v => {
         this.toastService.infoToast(v);
-      });  
+      });
     }
     else {
       this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);

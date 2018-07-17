@@ -77,6 +77,10 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  onCancel() {
+    this.router.navigate(['home']);
+  }
+
   onConfirmProfile() {
     if (this.selectedServicePoint.id === -1) {
       this.translateService.get('no_workstation_set').subscribe(v => {

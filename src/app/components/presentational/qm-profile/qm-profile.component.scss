@@ -5,6 +5,10 @@
   flex-direction: column;
   @include qm-background;
 
+  &-cancel {
+    cursor: pointer;
+  }
+
   &-content {
     display: flex;
     flex-direction: column;

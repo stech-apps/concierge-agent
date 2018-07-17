@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 
 import * as AllActions from './../actions';
 import { ServiceDataService } from '../services';
+import { AllServiceActions } from './../actions';
 
 const toAction = AllActions.toAction();
 
@@ -20,9 +21,9 @@ export class ServiceEffects {
     getServices$: Observable<Action> = this.actions$
       .ofType(AllActions.FETCH_SERVICES)
       .pipe(
-        switchMap(() =>
+        switchMap((action: AllActions.FetchServices) =>
           toAction(
-            this.serviceDataService.getServices(),
+            this.serviceDataService.getServices(action.payload),
             AllActions.FetchServicesSuccess,
             AllActions.FetchServicesFail
           )

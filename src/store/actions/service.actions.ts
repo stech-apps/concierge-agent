@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { IServiceResponse } from '../../models/IServiceResponse';
 import { IService } from '../../models/IService';
+import { IBranch } from '../../models/IBranch';
 
 // Service actions
 export const FETCH_SERVICES = '[Service] FETCH_SERVICES';
@@ -18,6 +19,7 @@ export const LOAD_SELECTED_SERVICES = '[Service] LOAD_SELECTED_SERVICES';
 
 export class FetchServices implements Action {
   readonly type = FETCH_SERVICES;
+  constructor(public payload: IBranch) {}
 }
 
 export class FetchServicesFail implements Action {
@@ -27,7 +29,7 @@ export class FetchServicesFail implements Action {
 
 export class FetchServicesSuccess implements Action {
   readonly type = FETCH_SERVICES_SUCCESS;
-  constructor(public payload: IServiceResponse) {}
+  constructor(public payload: IService[]) {}
 }
 
 export class SelectService implements Action {

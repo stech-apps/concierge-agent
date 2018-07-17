@@ -14,14 +14,16 @@ import {
 import { IServiceResponse } from '../../../models/IServiceResponse';
 import { IServiceGroup } from '../../../models/IServiceGroup';
 import { ICalendarServiceResponse } from '../../../models/ICalendarServiceResponse';
+import { IBranch } from '../../../models/IBranch';
+import { IService } from '../../../models/IService';
 
 @Injectable()
 export class ServiceDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
 
-  getServices(): Observable<IServiceResponse> {
+  getServices(branch: IBranch): Observable<IService[]> {
     return this.http
-      .get<IServiceResponse>(`${servicePoint}/services/`)
+      .get<IService[]>(`${servicePoint}/branches/${branch.id}/services/`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 }

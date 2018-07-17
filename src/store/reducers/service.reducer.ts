@@ -37,7 +37,7 @@ export function reducer (
     case ServiceActions.FETCH_SERVICES_SUCCESS: {
       return {
         ...state,
-        services: sortServices(action.payload.serviceList),
+        services: action.payload,
         loading: false,
         loaded: true,
         error: null

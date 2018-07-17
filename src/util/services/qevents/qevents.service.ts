@@ -4,6 +4,7 @@ import { PUBLIC_EVENTS, QEventsHelper } from './qevents';
 import { UserStatusSelectors, ServicePointSelectors, UserSelectors } from 'src/store/services';
 import { Subscription } from 'rxjs';
 import { IServicePoint } from '../../../models/IServicePoint';
+import { AutoClose} from './../autoclose.service';
 
 declare var require: any;
 
@@ -19,7 +20,8 @@ export class QEvents {
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private userSelectors: UserSelectors,
-    private qEventHelper: QEventsHelper
+    private qEventHelper: QEventsHelper,
+    private autoClose: AutoClose
   ) {
     this.configureCometD();
 

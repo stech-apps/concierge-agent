@@ -37,7 +37,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.servicePointDispatchers.setOpenServicePoint(null);
+    
   }
 
   ngOnDestroy() {

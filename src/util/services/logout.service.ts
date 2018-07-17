@@ -50,7 +50,7 @@ export class Logout {
 
   initiateLogout(force : boolean){
     this.spService.logout(force).subscribe((status: any) => {
-      if(this.nativeApi.isNativeBrowser){
+      if(this.nativeApi.isNativeBrowser()){
         this.nativeApi.logOut();
       }
       else{

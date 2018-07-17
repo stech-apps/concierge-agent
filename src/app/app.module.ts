@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 
 // Components
 import { AppComponent } from './app.component';
+import { QmQuickServeComponent } from 'src/app/components/presentational/qm-quick-serve/qm-quick-serve.component';
 
 // Routes
 import { appRoutes } from './../routes/app-routes';
@@ -84,7 +85,8 @@ const toastrGlobalOptions = {
     QmCustomToastComponent,
     QmAutoCloseComponent,
     QmHomeComponent,
-    QmSideMenuComponent
+    QmSideMenuComponent,
+    QmQuickServeComponent
   ],
   entryComponents: [QmCustomToastComponent],
   imports: [

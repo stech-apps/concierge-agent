@@ -5,6 +5,8 @@
     background-color:$primary-background-color;
     font-family: $tertiary-font-family;
 
+    @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
+
 }
 
 .qm-home-menu {
@@ -31,5 +33,6 @@
         font-size: 0.9rem;
         word-wrap: break-word;
         line-height: 1.4em;
+        cursor: pointer;
     }
 }

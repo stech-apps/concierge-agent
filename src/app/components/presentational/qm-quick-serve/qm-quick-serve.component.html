@@ -1,7 +1,8 @@
 <div>
+    <div>{{ 'quick_serve' | translate }}</div>
     <div *ngFor="let service of services">
-        <div>{{ service.internalName }}</div>
+        <div (click)="onServiceSelect(service)">{{ service.internalName }}</div>
     </div>
-    <button>Serve</button>
+    <button (click)="onServe()" [disabled]="selectedService !== null">{{ 'serve' | translate }}</button>
 </div>
   

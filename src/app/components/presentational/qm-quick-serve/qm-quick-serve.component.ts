@@ -1,8 +1,12 @@
 import { IService } from './../../../../models/IService';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
+import { SPService } from 'src/util/services/rest/sp.service';
+import { IServicePoint } from '../../../../models/IServicePoint';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from 'src/util/services/toast.service';
 
 @Component({
   selector: 'qm-quick-serve',
@@ -14,19 +18,26 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private services: IService[] = new Array<IService>();
   private selectedService: IService;
+  private selectedBranch: IBranch;
+  private selectedServicePoint: IServicePoint;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
+    private servicePointSelectors: ServicePointSelectors,
     private branchSelectors: BranchSelectors,
-    private serviceDispatchers: ServiceDispatchers
+    private serviceDispatchers: ServiceDispatchers,
+    private spService: SPService,
+    private translateService: TranslateService,
+    private toastService: ToastService
   ){
-    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
-      this.services = services
-      console.log(services);
-    });
+    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => this.services = services);
     this.subscriptions.add(serviceSubscription);
 
+    const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
+    this.subscriptions.add(servicePointSubscription);
+
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
+      this.selectedBranch = branch;
       if(branch){
         this.serviceDispatchers.fetchServices(branch);
       }
@@ -43,11 +54,21 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   }
 
   onServiceSelect(selectedService: IService) {
-    this.selectedService = selectedService;
-
+    if(this.selectedService){
+      this.selectedService = null;
+    }
+    else{
+      this.selectedService = selectedService;
+    }
   }
 
   onServe() {
-
+    this.spService.quickServe(this.selectedBranch, this.selectedServicePoint, this.selectedService).subscribe((status: any) => {
+      if(status){
+        this.translateService.get('customer_served').subscribe(v => {
+          this.toastService.infoToast(v + ' - ' + this.selectedService.internalName.toUpperCase());
+        });
+      }
+    });
   }
 }

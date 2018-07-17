@@ -10,9 +10,6 @@ export function userRoleFactory(mods: { modules: string[]}) : UserRole {
         let userRole = UserRole.None;
 
         if (mods.modules.includes(SUPER_ADMIN_ROLE)) {
-          isVisitUserRole = true;
-          isAppointmentUser = true;
-          isSuperAdminUser = true;
           userRole = UserRole.All
         }
         else if (mods.modules.includes(CONCIERGE_ROLE) || mods.modules.includes(CONNECT_CONCIERGE_ROLE)) {

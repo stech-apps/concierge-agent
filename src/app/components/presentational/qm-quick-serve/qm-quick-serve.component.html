@@ -1,8 +1,15 @@
-<div>
-    <div>{{ 'quick_serve' | translate }}</div>
-    <div *ngFor="let service of services">
-        <div (click)="onServiceSelect(service)">{{ service.internalName }}</div>
+<div class="qm-quick-serve">
+    <div class="qm-quick-serve__content">
+        <div class="qm-quick-serve__header">{{ 'quick_serve' | translate }}</div>
+        <div class="qm-quick-serve__list-container" *ngFor="let service of services">
+            <div class="qm-quick-serve__item" (click)="onServiceSelect(service)">
+                <span class="qm-quick-serve__item__label">{{ service.internalName }}</span>
+                <div></div>
+            </div>
+        </div>
+        <div class="qm-quick-serve__button-container">
+            <button class="qm-quick-serve__button" (click)="onServe()" [disabled]="selectedService === null">{{ 'serve' | translate }}</button>
+        </div>
     </div>
-    <button (click)="onServe()" [disabled]="selectedService !== null">{{ 'serve' | translate }}</button>
 </div>
   

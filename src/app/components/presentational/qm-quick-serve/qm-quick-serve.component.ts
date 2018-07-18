@@ -46,7 +46,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+    this.selectedService = null;
   }
 
   ngOnDestroy() {
@@ -67,6 +67,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       if(status){
         this.translateService.get('customer_served').subscribe(v => {
           this.toastService.infoToast(v + ' - ' + this.selectedService.internalName.toUpperCase());
+          this.selectedService = null;
         });
       }
     });

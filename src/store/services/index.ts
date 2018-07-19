@@ -11,3 +11,4 @@ export * from './branch';
 export * from './service';
 export * from './calendar-service';
 export * from './service-point';
+export * from './account';

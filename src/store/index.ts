@@ -1,3 +1,4 @@
+
 import { ServiceSelectors } from './services/service/service.selectors';
 export * from './actions';
 export * from './effects';
@@ -10,7 +11,8 @@ import {
     UserRoleDispatchers, UserRoleSelectors, UserDataService, UserDispatchers, UserSelectors,
     UserStatusDispatchers, UserStatusDataService, UserStatusSelectors,
     AccountDataService, AccountDispatchers, PlatformSelectors, PlatformDispatchers, BranchSelectors,
-    BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService, CalendarServiceDataService, CalendarServiceDispatchers, CalendarServiceSelectors
+    BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService, CalendarServiceDataService,
+    CalendarServiceDispatchers, CalendarServiceSelectors, AccountSelectors
  } from './services';
 import { ServicePointDataService, ServicePointDispatchers, ServicePointSelectors } from 'src/store/services/service-point';
 
@@ -21,6 +23,7 @@ export const storeServices = [
     SystemInfoSelectors,
     AccountDataService,
     AccountDispatchers,
+    AccountSelectors,
     LicenseDataService,
     LicenseInfoSelectors,
     LicenseDispatchers,

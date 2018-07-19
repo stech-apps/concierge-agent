@@ -1,4 +1,7 @@
+import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
+import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit } from '@angular/core';
+import { AccountSelectors, ServicePointSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-home-menu',
@@ -7,9 +10,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QmHomeMenuComponent implements OnInit {
 
-  constructor() { }
+
+  //user permissions
+  isVisitUser = false;
+  isAppointmentUser = false;
+
+  // final flow permissions
+  isCreateVisit = false;
+  isEditVisit = false;
+  isArriveAppointment = false;
+  isEditAppointment = false;
+  isCreateAppointment = false;
+
+  constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors) { }
 
   ngOnInit() {
+    this.checkUserPermissions();
+    this.checkUttPermissions();
   }
 
+  checkUttPermissions() {
+    this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
+
+      if (this.isVisitUser) {
+        this.isCreateVisit = uttpParams[CREATE_VISIT];
+        this.isEditVisit = uttpParams[EDIT_VISIT];
+      }
+      else {
+        this.isCreateVisit = false;
+        this.isEditVisit = false;
+      }
+
+      if (this.isAppointmentUser) {
+        this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
+        this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
+        this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+      }
+      else {
+        this.isCreateAppointment = false;
+        this.isEditAppointment = false;
+        this.isArriveAppointment = false;
+      }
+    });
+  }
+
+  checkUserPermissions() {
+    this.accountSelectors.userRole$.subscribe((ur: UserRole) => {
+      if (ur && UserRole.All) {
+        this.isAppointmentUser = true;
+        this.isVisitUser = true;
+      }
+      else if (ur && UserRole.AppointmentUserRole) {
+        this.isAppointmentUser = true;
+      }
+      else if (ur & UserRole.VisitUserRole) {
+        this.isVisitUser = true;
+      }
+    });
+  }
 }

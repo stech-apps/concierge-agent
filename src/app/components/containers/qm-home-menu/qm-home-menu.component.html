@@ -1,5 +1,5 @@
 <div class='qm-home-menu'>
-  <div class="qm-home-menu__item">
+  <div class="qm-home-menu__item" *ngIf="isCreateAppointment">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
       <g>
@@ -15,7 +15,7 @@
     </svg>
     <span class="qm-home-menu__item--text" [innerHTML]="'create_appointment' | translate"></span>
   </div>
-  <div class="qm-home-menu__item">
+  <div class="qm-home-menu__item" *ngIf="isEditAppointment">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
       <g>
@@ -38,7 +38,7 @@
     </svg>
     <span class="qm-home-menu__item--text" [innerHTML]="'change_appointment' | translate"></span>
   </div>
-  <div class="qm-home-menu__item">
+  <div class="qm-home-menu__item" *ngIf="isArriveAppointment">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
       <g>
@@ -53,7 +53,7 @@
     </svg>
     <span class="qm-home-menu__item--text" [innerHTML]="'checkin_appointment' | translate"></span>
   </div>
-  <div class="qm-home-menu__item">
+  <div class="qm-home-menu__item" *ngIf="isCreateVisit">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
       <g>
@@ -87,7 +87,7 @@
     </svg>
     <span class="qm-home-menu__item--text" [innerHTML]="'create_visit' | translate"></span>
   </div>
-  <div class="qm-home-menu__item">
+  <div class="qm-home-menu__item" *ngIf="isEditVisit">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
       <g>

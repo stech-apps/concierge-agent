@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class QmHomeComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
-  private isQuickServeEnable: boolean;
+  isQuickServeEnable: boolean;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors

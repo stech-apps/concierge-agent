@@ -16,8 +16,8 @@ import { ToastService } from 'src/util/services/toast.service';
 export class QmQuickServeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
-  private services: IService[] = new Array<IService>();
-  private selectedService: IService;
+  services: IService[] = new Array<IService>();
+  selectedService: IService;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
 

@@ -14,8 +14,7 @@ export class QmHomeComponent implements OnInit {
   isQuickServeEnable: boolean;
 
   constructor(
-    private servicePointSelectors: ServicePointSelectors,
-    private queueSelectors: QueueSelectors
+    private servicePointSelectors: ServicePointSelectors
   ) { 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
@@ -23,11 +22,6 @@ export class QmHomeComponent implements OnInit {
       }
     });
     this.subscriptions.add(servicePointsSubscription);
-
-    const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs)=> {
-      console.log(qs);
-    });
-    this.subscriptions.add(queueSubscription);
   }
 
   ngOnInit() {

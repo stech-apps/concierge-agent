@@ -12,11 +12,13 @@ export class QmQueueSummaryComponent implements OnInit {
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
 
+  public queueSummary: any;
+
   constructor(
     private queueSelectors: QueueSelectors
   ) {
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
-      console.log(qs);
+      this.queueSummary = qs;
     });
 
     this.subscriptions.add(queueSubscription);

@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store/src/models';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import * as AllActions from './../actions';
 import { ServiceDataService } from '../services';
 import { AllServiceActions } from './../actions';
+import { IBranch } from '../../models/IBranch';
 
 const toAction = AllActions.toAction();
 
@@ -26,6 +27,19 @@ export class ServiceEffects {
             this.serviceDataService.getServices(action.payload),
             AllActions.FetchServicesSuccess,
             AllActions.FetchServicesFail
+          )
+        )
+      );
+
+    @Effect()
+    getServicesConfiguration$: Observable<Action> = this.actions$
+      .ofType(AllActions.FETCH_SERVICE_CONFIGURATION)
+      .pipe(
+        switchMap((action: AllActions.FetchServiceConfiguration) =>
+          toAction(
+            this.serviceDataService.getServicesConfiguration(action.branch, action.services),
+            AllActions.FetchServiceConfigurationSuccess,
+            AllActions.FetchServiceConfigurationFail
           )
         )
       );

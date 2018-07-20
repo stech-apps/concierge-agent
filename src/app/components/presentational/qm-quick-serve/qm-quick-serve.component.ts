@@ -7,6 +7,7 @@ import { SPService } from 'src/util/services/rest/sp.service';
 import { IServicePoint } from '../../../../models/IServicePoint';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from 'src/util/services/toast.service';
+import { IServiceConfiguration } from '../../../../models/IServiceConfiguration';
 
 @Component({
   selector: 'qm-quick-serve',
@@ -16,7 +17,7 @@ import { ToastService } from 'src/util/services/toast.service';
 export class QmQuickServeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
-  services: IService[] = new Array<IService>();
+  services: IServiceConfiguration[] = new Array<IServiceConfiguration>();
   selectedService: IService;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
@@ -30,9 +31,6 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private toastService: ToastService
   ){
-    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => this.services = services);
-    this.subscriptions.add(serviceSubscription);
-
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
 
@@ -43,6 +41,18 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(branchSubscription);
+
+    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
+      var serviceDispatchers = this.serviceDispatchers;
+      var selectedBranch = this.selectedBranch;
+      if(services && services.length > 0 && this.selectedBranch){
+        serviceDispatchers.fetchServiceConfiguration(selectedBranch, services);
+      }
+    });
+    this.subscriptions.add(serviceSubscription);
+
+    const serviceConfigSubscription = this.serviceSelectors.configServices$.subscribe((services) => this.services = services);
+    this.subscriptions.add(serviceConfigSubscription);
   }
 
   ngOnInit() {

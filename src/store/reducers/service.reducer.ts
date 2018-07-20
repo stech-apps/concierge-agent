@@ -1,9 +1,11 @@
 import { IService } from '../../models/IService';
 import * as ServiceActions from '../actions';
 import { IServiceGroup } from '../../models/IServiceGroup';
+import { IServiceConfiguration } from '../../models/IServiceConfiguration';
 
 export interface IServiceState {
   services: IService[];
+  servicesConfiguration: IServiceConfiguration[];
   serviceGroups: IServiceGroup[];
   selectedServices: IService[];
   searchText: string;
@@ -14,6 +16,7 @@ export interface IServiceState {
 
 export const initialState: IServiceState = {
   services: [],
+  servicesConfiguration: [],
   serviceGroups: [],
   selectedServices: [],
   searchText: '',
@@ -44,6 +47,29 @@ export function reducer (
       };
     }
     case ServiceActions.FETCH_SERVICES_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    }
+    case ServiceActions.FETCH_SERVICE_CONFIGURATION: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    }
+    case ServiceActions.FETCH_SERVICE_CONFIGURATION_SUCCESS: {
+      return {
+        ...state,
+        servicesConfiguration: sortConfigServices(action.payload),
+        loading: false,
+        loaded: true,
+        error: null
+      };
+    }
+    case ServiceActions.FETCH_SERVICE_CONFIGURATION_FAIL: {
       return {
         ...state,
         loading: false,
@@ -111,6 +137,16 @@ export function reducer (
 function sortServices(serviceList: IService[]): IService[] {
   return serviceList.sort(
     (service1: IService, service2: IService) => {
+      if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
+      if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
+      return 0;
+    }
+  );
+}
+
+function sortConfigServices(serviceList: IServiceConfiguration[]): IServiceConfiguration[] {
+  return serviceList.sort(
+    (service1: IServiceConfiguration, service2: IServiceConfiguration) => {
       if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
       if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
       return 0;

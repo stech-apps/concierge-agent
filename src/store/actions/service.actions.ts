@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { IServiceResponse } from '../../models/IServiceResponse';
 import { IService } from '../../models/IService';
 import { IBranch } from '../../models/IBranch';
+import { IServiceConfiguration } from '../../models/IServiceConfiguration';
 
 // Service actions
 export const FETCH_SERVICES = '[Service] FETCH_SERVICES';
@@ -17,6 +18,11 @@ export const RESET_FILTER_SERVICES = '[Service] RESET_FILTER_SERVICES';
 
 export const LOAD_SELECTED_SERVICES = '[Service] LOAD_SELECTED_SERVICES';
 
+export const FETCH_SERVICE_CONFIGURATION = '[Service] FETCH_SERVICE_CONFIGURATION';
+export const FETCH_SERVICE_CONFIGURATION_FAIL = '[Service] FETCH_SERVICE_CONFIGURATION_FAIL';
+export const FETCH_SERVICE_CONFIGURATION_SUCCESS = '[Service] FETCH_SERVICE_CONFIGURATION_SUCCESS';
+
+
 export class FetchServices implements Action {
   readonly type = FETCH_SERVICES;
   constructor(public payload: IBranch) {}
@@ -30,6 +36,21 @@ export class FetchServicesFail implements Action {
 export class FetchServicesSuccess implements Action {
   readonly type = FETCH_SERVICES_SUCCESS;
   constructor(public payload: IService[]) {}
+}
+
+export class FetchServiceConfiguration implements Action {
+  readonly type = FETCH_SERVICE_CONFIGURATION;
+  constructor(public branch: IBranch, public services: IService[]) {}
+}
+
+export class FetchServiceConfigurationFail implements Action {
+  readonly type = FETCH_SERVICE_CONFIGURATION_FAIL;
+  constructor(public payload: Object) {}
+}
+
+export class FetchServiceConfigurationSuccess implements Action {
+  readonly type = FETCH_SERVICE_CONFIGURATION_SUCCESS;
+  constructor(public payload: IServiceConfiguration[]) {}
 }
 
 export class SelectService implements Action {
@@ -69,6 +90,9 @@ export class LoadSelectedServices implements Action {
 export type AllServiceActions = FetchServices |
                                 FetchServicesFail |
                                 FetchServicesSuccess |
+                                FetchServiceConfiguration |
+                                FetchServiceConfigurationFail |
+                                FetchServiceConfigurationSuccess |
                                 SelectService |
                                 DeselectService |
                                 DeselectServices |

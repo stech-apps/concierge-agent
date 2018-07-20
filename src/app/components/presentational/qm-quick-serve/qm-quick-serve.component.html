@@ -2,7 +2,7 @@
     <div class="qm-quick-serve__content">
         <div class="qm-quick-serve__header">{{ 'quick_serve' | translate }}</div>
         <div class="qm-quick-serve__list-container" *ngFor="let service of services">
-            <div class="qm-quick-serve__item" (click)="onServiceSelect(service)">
+            <div *ngIf="service.deliveredServices.length === 0 && service.outcomes.length === 0" class="qm-quick-serve__item" (click)="onServiceSelect(service)">
                 <span class="qm-quick-serve__item__label">{{ service.internalName }}</span>
                 <div *ngIf="selectedService !== null && selectedService.id === service.id">
                     <i class="qm-action-btn__icon icon-check qm-quick-serve__icon" aria-hidden="true"></i>

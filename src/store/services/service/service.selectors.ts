@@ -15,6 +15,11 @@ const getAllServices = createSelector(
   (state: IServiceState) => state.services
 );
 
+const getAllConfigServices = createSelector(
+  getServiceState,
+  (state: IServiceState) => state.servicesConfiguration
+);
+
 export const getSelectedServices = createSelector(
   getServiceState,
   (state: IServiceState) => state.selectedServices
@@ -25,5 +30,6 @@ export class ServiceSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   services$ = this.store.select(getAllServices);
+  configServices$ = this.store.select(getAllConfigServices);
   selectedServices$ = this.store.select(getSelectedServices);
 }

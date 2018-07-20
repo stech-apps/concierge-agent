@@ -51,7 +51,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(serviceSubscription);
 
-    const serviceConfigSubscription = this.serviceSelectors.configServices$.subscribe((services) => this.services = services);
+    const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => this.services = services);
     this.subscriptions.add(serviceConfigSubscription);
   }
 

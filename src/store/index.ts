@@ -1,5 +1,4 @@
 
-import { ServiceSelectors } from './services/service/service.selectors';
 export * from './actions';
 export * from './effects';
 export * from './reducers';
@@ -12,9 +11,9 @@ import {
     UserStatusDispatchers, UserStatusDataService, UserStatusSelectors,
     AccountDataService, AccountDispatchers, PlatformSelectors, PlatformDispatchers, BranchSelectors,
     BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService, CalendarServiceDataService,
-    CalendarServiceDispatchers, CalendarServiceSelectors, AccountSelectors
+    CalendarServiceDispatchers, CalendarServiceSelectors, AccountSelectors, QueueDispatchers, QueueSelectors, QueueDataService,
+    ServicePointDataService, ServicePointDispatchers, ServicePointSelectors, ServiceSelectors
  } from './services';
-import { ServicePointDataService, ServicePointDispatchers, ServicePointSelectors } from 'src/store/services/service-point';
 
 
 export const storeServices = [
@@ -49,5 +48,8 @@ export const storeServices = [
     CalendarServiceSelectors,
     ServicePointDataService,
     ServicePointDispatchers,
-    ServicePointSelectors
+    ServicePointSelectors,
+    QueueDispatchers,
+    QueueSelectors,
+    QueueDataService
 ];

@@ -8,6 +8,7 @@ import * as fromBranch from './branch.reducer';
 import * as fromServices from './service.reducer';
 import * as fromServicePoints from './service-point.reducer';
 import * as fromUserStatus from './user-status.reducer';
+import * as fromQueue from './queue.reducer';
 
 export interface IAppState {
     systemInfo: fromSystemInfo.ISystemInfoState;
@@ -17,7 +18,8 @@ export interface IAppState {
     branches: fromBranch.IBranchState;
     services: fromServices.IServiceState,
     servicePoints: fromServicePoints.IServicePointState,
-    userStatus: fromUserStatus.IUserStatusState
+    userStatus: fromUserStatus.IUserStatusState,
+    queue: fromQueue.IQueueState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -28,5 +30,6 @@ export const reducers: ActionReducerMap<IAppState> = {
     branches: fromBranch.reducer,
     services: fromServices.reducer,
     servicePoints: fromServicePoints.reducer,
-    userStatus: fromUserStatus.reducer
+    userStatus: fromUserStatus.reducer,
+    queue: fromQueue.reducer
 };

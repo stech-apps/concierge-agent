@@ -1,3 +1,4 @@
+import { QueueEffects } from './queue.effects';
 import { ServicePointEffects } from './service-point.effects';
 import { BranchEffects } from './branch.effects';
 import { SystemInfoEffects } from './system-info.effects';
@@ -19,5 +20,6 @@ export const effects: any[] = [
     BranchEffects,
     ServiceEffects,
     ServicePointEffects,
+    QueueEffects,
     CalendarServiceEffects
 ];

@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
-  BranchDispatchers
+  BranchDispatchers,
+  QueueDispatchers
 } from '../../../../../src/store';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +31,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-    private nativeApiService: NativeApiService, private toastService: ToastService, private router: Router) {
+    private nativeApiService: NativeApiService, private toastService: ToastService, private router: Router, private   queueDispatchers: QueueDispatchers) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
     this.subscriptions.add(branchSubscription);
@@ -88,6 +89,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     else {
+      this.queueDispatchers.fetchQueueInfo(this.selectedBranch.id);
       this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
       this.router.navigate(['home']);
     }

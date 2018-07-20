@@ -1,10 +1,10 @@
 @import '../../../../styles/base/_component-manifest.scss';
 
 .qm-quick-serve {
-    width: 50%;
     display: flex;
     justify-content: center;
     margin-top: 5em;
+
 
     &__content {
         background-color: rgba(26, 28, 51, 0.4);

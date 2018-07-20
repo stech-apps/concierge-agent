@@ -1,6 +1,7 @@
 // Generic colors
 
 $midnight-blue: #1a1c34;
+$late-midnight-blue: #1a1c3366;
 $medium-blue: #2c364f;
 $pale-blue: #334366;
 
@@ -30,6 +31,7 @@ $dark-transparent82: rgba(0, 0, 0, 0.82);
 $dark-transparent72: rgba(0, 0, 0, 0.72);
 $dark-transparent62: rgba(0, 0, 0, 0.62);
 $dark-transparent42: rgba(0, 0, 0, 0.42);
+$dark-transparent44: rgba(0, 0, 0, 0.44);
 $dark-transparent22: rgba(0, 0, 0, 0.22);
 $dark-transparent12: rgba(0, 0, 0, 0.12);
 $dark-transparent04: rgba(0, 0, 0, 0.04);
@@ -52,6 +54,7 @@ $primary-color:$midnight-blue;
 $secondary-color: $pale-aquamarine;
 $tertiary-color: $qmatic-bordeaux;
 $primary-background-color:$midnight-blue;
+
 
 
 $standard-box-shadow: 0 2px 4px 0 $dark-transparent42;
@@ -120,3 +123,7 @@ $errorinput-border : $qmatic-bordeaux;
 $drop-down-border-color : $medium-gray;
 $drop-down-box-shadow-color : $dark-transparent20;
 $drop-down-item-color : $black;
+
+
+//summary view
+$wating-list-background: $late-midnight-blue;

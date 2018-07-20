@@ -58,9 +58,13 @@ $standard-box-shadow: 0 2px 4px 0 $dark-transparent42;
 $heavy-box-shadow: 0 5px 8px 0 $dark-transparent42;
 
 // Header
-$header-background-color: $tertiary-color;
+$header-background-color: $primary-color;
 $header-text-color: $white;
 $header-border-color: rgb(169, 2, 58);
+//Header branchName
+$header-branch-name-color: #8C8D99;
+//aheader Edit Button
+$header-edit-link-color: #C5C6CB;
 
 // Main
 $dark-background-gradient: linear-gradient(254.96deg, $background-gradient-stop1 0%, $background-gradient-stop2 34.9%, $background-gradient-stop3 62.87%, $background-gradient-stop4 77.12%, $background-gradient-stop5 100%);

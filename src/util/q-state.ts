@@ -21,3 +21,8 @@ export enum USER_STATE {
     WRAPUP = "WRAPUP",
     VISIT_NOT_CALLED = "VISIT_NOT_CALLED"
 }
+
+export enum COUNTER_STATE {
+    CLOSED = "CLOSED",
+    OPEN = "OPEN"
+}

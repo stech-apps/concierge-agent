@@ -37,10 +37,23 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService) {
 
-    const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => this.branches = bs);
+    const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
+      this.branches = bs;
+      if(bs.length === 1){
+        this.onBranchSelect(bs[0]);
+      }
+    });
     this.subscriptions.add(branchSubscription);
 
-    const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => this.servicePoints = sps);
+    const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => {
+      this.servicePoints = sps;
+      if(sps.length === 1){
+        this.onServicePointSelect(sps[0]);
+        if(this.branches.length === 1){
+          this.onConfirmProfile();
+        }
+      }
+    });
     this.subscriptions.add(servicePointsSubscription);
 
     const userStateSubscription = this.spService.fetchUserStatus().subscribe((status: any) => this.currentStatus = status);
@@ -82,7 +95,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onServicePointSelect(selectedSp: IServicePoint) {
     this.selectedServicePoint = selectedSp;
-
   }
 
   onCancel() {

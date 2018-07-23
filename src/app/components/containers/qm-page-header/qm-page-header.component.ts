@@ -23,7 +23,7 @@ import {
 import { NativeApiService } from "../../../../util/services/native-api.service";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { APP_URL } from "./header-navigation";
+import { APP_URL } from "src/util/url-helper";
 
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IBranch } from "../../../../models/IBranch";

@@ -59,6 +59,16 @@ export function reducer(
         }
       };
     }
+    case UserStatusActions.SET_USER_STATUS: {
+      return {
+        ...state,
+        data: {
+          ...action.payload
+        },
+        loading: false,
+        error: null
+      };
+    }
     default: {
         return state;
     }

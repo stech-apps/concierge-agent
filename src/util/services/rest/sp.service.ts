@@ -6,6 +6,7 @@ import { GlobalErrorHandler } from '../../../util/services/global-error-handler.
 import { IService } from '../../../models/IService';
 import { IBranch } from '../../../models/IBranch';
 import { IServicePoint } from '../../../models/IServicePoint';
+import { IAccount } from '../../../models/IAccount';
 
 
 @Injectable()
@@ -27,6 +28,22 @@ export class SPService implements OnDestroy {
   logout(force: boolean) {
     return this.http
         .put(`${servicePoint}/logout?force=${force}`, {})
+        .pipe(
+          catchError(this.errorHandler.handleError())
+        );
+  }
+
+  login(branch: IBranch, selectedServicePoint: IServicePoint, user: IAccount) {
+    return this.http
+        .put(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/users/${user.userName}`, {})
+        .pipe(
+          catchError(this.errorHandler.handleError())
+        );
+  }
+
+  removeWorkProfile(branch: IBranch, user: IAccount){
+    return this.http
+        .delete(`${servicePoint}/branches/${branch.id}/users/${user.userName}/workProfile`, {})
         .pipe(
           catchError(this.errorHandler.handleError())
         );

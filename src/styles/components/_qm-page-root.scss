@@ -1,6 +1,6 @@
 .qm-page-root {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
     flex-direction: column;
     overflow: hidden;
     @include qm-background;

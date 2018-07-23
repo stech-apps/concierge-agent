@@ -4,7 +4,7 @@ export const servicePoint = '/rest/servicepoint';
 export const calendarEndpoint = '/calendar-backend/api/v1';
 export const calendarPublicEndpoint = '/calendar-backend/public/api/v1';
 export const calendarPublicEndpointV2 = '/calendar-backend/public/api/v2';
-export const managementEndpoint = 'rest/managementinformation/v2';
+export const managementEndpoint = '/rest/managementinformation/v2';
 export const qsystemEndpoint = '/qsystem/rest';
 export const applicationId = 'connectconcierge';
 

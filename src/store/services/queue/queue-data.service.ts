@@ -67,9 +67,6 @@ export class QueueDataService {
     var est_w_time = undefined;
     var maxWT = 0;
     for (var i = 0; i < queueInfo.length; i++) {
-      if (queueInfo[i].queueType === "APPOINTMENT_QUEUE") {
-        continue;
-      }
       customerCount = customerCount + queueInfo[i].customersWaiting;
       est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : this.processEstWaitingTime(
         Math.round(queueInfo[i].estimatedWaitingTime / 60));

@@ -1,3 +1,5 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
 .qm-home-content {
     flex: 1;
     display: flex;
@@ -5,3 +7,9 @@
     margin-right: 1rem;
     margin-left: 1rem;
 }
+
+@media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
+    .qm-home-content {
+        flex-direction: column;
+    }
+  }

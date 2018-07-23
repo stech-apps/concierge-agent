@@ -1,0 +1,37 @@
+
+@import '../../../../styles/base/_component-manifest.scss';
+:host {
+    font-size: rem(12px);
+}
+
+.qm-queue-list {
+    margin-top: rem($standard-margin * 1.5);
+    &__headers {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 3rem;
+        margin-right: 2rem;
+        margin-left: 2rem;
+        border-bottom: 1px solid $header-text-color;
+        i {
+            font-size: 1.2rem;
+            padding-right: rem(8px);
+        }
+    } 
+
+    &-header-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-body-row {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 3rem;
+    }
+
+    background-color: $wating-list-background;
+}

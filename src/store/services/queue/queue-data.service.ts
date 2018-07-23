@@ -21,7 +21,6 @@ export class QueueDataService {
     return this.http
       .get<IAccount>(`${managementEndpoint}/branches/${branchId}/queues`)
       .pipe(map((data: any) => {
-        debugger;
         return this.processQueueInfo(data);
       }))
       .pipe(catchError(this.errorHandler.handleError()));

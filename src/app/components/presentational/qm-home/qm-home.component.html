@@ -1,8 +1,11 @@
 <div class="qm-page-root qm-home">
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
-   <qm-quick-serve *ngIf="isQuickServeEnable"></qm-quick-serve>
-   <qm-queue-summary></qm-queue-summary>
+    <qm-quick-serve *ngIf="isQuickServeEnable"></qm-quick-serve>
+    <div style="display: flex;flex: 1;flex-direction: column; margin-left: 1.5rem;">
+      <qm-queue-summary></qm-queue-summary>
+      <qm-queue-list></qm-queue-list>
+    </div>
   </div>
   <qm-home-menu class="animated slideInUp"></qm-home-menu>
 </div>

@@ -50,6 +50,7 @@ export function reducer(
       };
     }
     case SystemInfoActions.FETCH_SYSTEM_INFO_FAIL: {
+  
       return {
         ...state,
         loading: false,

@@ -1,12 +1,9 @@
 @import '../../../../styles/base/_component-manifest.scss';
 :host {
-  width: 60%;
-  flex-grow: 0.6;
   height: 4rem;
   display: flex;
   background-color: $wating-list-background;
   margin-top: 5rem;
-  margin-left: 1.5rem;
   font-size: rem(12px);
   line-height: 1.3;
   i {

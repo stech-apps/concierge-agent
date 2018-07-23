@@ -1,0 +1,27 @@
+<div class="qm-queue-list">
+  <div class="qm-queue-list__headers qm-flex-grid">
+    <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+      <div>
+        <i class="icon-queue" aria-hidden="true"></i>
+      </div>
+      <div>{{'ql_queue' | translate}}</div>
+    </div>
+    <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+      <div>
+        <i class="icon-customer-solid" aria-hidden="true"></i>
+      </div>
+      <div>{{'ql_customer' | translate}}</div>
+    </div>
+    <div class="qm-col"> {{ 'ql_max_wait_time' | translate}} </div>
+    <div class="qm-col"> {{ 'ql_est_wait_time' | translate}} </div>
+  </div>
+
+  <div class="qm-queue-list__body">
+    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection">
+        <div class="qm-col">{{q.queue}}</div>
+        <div class="qm-col">{{q.customers }}</div>
+        <div class="qm-col">{{q.max_w_time }}</div>
+        <div class="qm-col">{{ q.est_w_time }}</div>
+    </div>
+  </div>
+</div>

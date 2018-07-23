@@ -67,6 +67,7 @@ import { Util } from './../util/util';
 import { QmHomeMenuComponent } from './components/containers/qm-home-menu/qm-home-menu.component';
 import { QmQueueSummaryComponent } from './components/presentational/qm-queue-summary/qm-queue-summary.component';
 import { LoginService } from 'src/util/services/login.service';
+import { QmQueueListComponent } from './components/presentational/qm-queue-list/qm-queue-list.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -91,7 +92,8 @@ const toastrGlobalOptions = {
     QmSideMenuComponent,
     QmQuickServeComponent,
     QmHomeMenuComponent,
-    QmQueueSummaryComponent
+    QmQueueSummaryComponent,
+    QmQueueListComponent
   ],
   entryComponents: [QmCustomToastComponent],
   imports: [

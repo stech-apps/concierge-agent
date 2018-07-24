@@ -7,32 +7,26 @@ import { Logout } from 'src/util/services/logout.service';
 @Injectable()
 export class AutoClose {
   private autoCloseTimeInSeconds = 0;
-  private currentAutoCloseTime = 0;
   private autoCloseInterval = null;
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private logoutService: Logout
   ) {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if(params === null || params === undefined){
-        this.stopAutoCloseTime();
-        return
+      if(params !== null && params !== undefined){
+        this.autoCloseTimeInSeconds = params.autoClose;
+        this.setAutoClose();
       }
-      this.autoCloseTimeInSeconds = params.autoClose;
-
-      this.currentAutoCloseTime = this.autoCloseTimeInSeconds;
-      if (this.autoCloseInterval) {
-        clearInterval(this.autoCloseInterval);
-      }
-      this.autoCloseInterval = setInterval(() => {
-        if (this.currentAutoCloseTime === 0) {
-          clearInterval(this.autoCloseInterval);
-          this.onAutoCloseTimeExpired();
-        } else {
-          this.currentAutoCloseTime -= 1;
-        }
-      }, 1000);
     });
+  }
+
+  setAutoClose(){
+    if (this.autoCloseInterval) {
+      clearTimeout(this.autoCloseInterval);
+    }
+    this.autoCloseInterval = setTimeout(() => {
+      this.onAutoCloseTimeExpired();
+    }, (this.autoCloseTimeInSeconds * 1000));
   }
 
   onAutoCloseTimeExpired() {
@@ -46,8 +40,8 @@ export class AutoClose {
   }
 
   refreshAutoClose() {
-    if (this.currentAutoCloseTime > 0) {
-      this.currentAutoCloseTime = this.autoCloseTimeInSeconds;
+    if(this.autoCloseInterval){
+      this.setAutoClose();
     }
   }
 }

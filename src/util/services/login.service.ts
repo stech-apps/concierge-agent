@@ -5,7 +5,7 @@ import { SPService } from '../services/rest/sp.service';
 import { USER_STATE, COUNTER_STATE } from '../q-state';
 import { NativeApiService } from '../services/native-api.service'
 import { IUserStatus } from '../../models/IUserStatus';
-import { BranchSelectors, UserSelectors, ServicePointDispatchers, UserStatusDispatchers, QueueDispatchers, ServicePointSelectors } from 'src/store';
+import { BranchSelectors, UserSelectors, ServicePointDispatchers, UserStatusDispatchers, ServicePointSelectors } from 'src/store';
 import { Subscription } from 'rxjs';
 import { IBranch } from '../../models/IBranch';
 import { IServicePoint } from '../../models/IServicePoint';
@@ -30,8 +30,7 @@ export class LoginService {
         private servicePointDispatchers: ServicePointDispatchers,
         private servicePointSelectors: ServicePointSelectors,
         private router: Router,
-        private userStatusDispatcher: UserStatusDispatchers,
-        private queueDispatchers: QueueDispatchers
+        private userStatusDispatcher: UserStatusDispatchers
     ) {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
         this.subscriptions.add(branchSubscription);
@@ -100,7 +99,6 @@ export class LoginService {
                 if(status.workProfileId != null){
                     this.resetUserSession();
                 }
-                this.queueDispatchers.fetchQueueInfo(this.selectedBranch.id);
                 this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
                 this.router.navigate(['home']);
             }

@@ -1,6 +1,7 @@
 import { UserRole } from './../../models/UserPermissionsEnum';
-import { IAccount } from './../../models/IAccount';
+import { Queue } from './../../models/IQueue';
 import * as QueueActions from '../actions';
+import { Visit } from '../../models/IVisit';
 
 export interface IQueueState {
   allQueueSummary: any;
@@ -39,8 +40,21 @@ export function reducer(
         }
       };
     }
+    case QueueActions.UPDATE_QUEUE_INFO: {
+      return {
+        ...state,
+        allQueueSummary: updateQueueInfo(state.allQueueSummary, action.visit, action.isAddedVisit),
+        loading: true,
+        error: null
+      };
+    }
     default: {
       return state;
     }
   }
+
+  function updateQueueInfo(queueList: Queue[], visit: Visit, isAddVisit: boolean): Queue[] {
+    return queueList;
+  }
+    
 }

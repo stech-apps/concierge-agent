@@ -1,5 +1,6 @@
 @import '../../../../styles/base/_component-manifest.scss';
 
+$standard-home-margin : 1.5rem;
 .qm-home-content {
     flex: 1;
     display: flex;
@@ -11,8 +12,8 @@
         display: flex;
         flex: 1;
         flex-direction: column; 
-        margin-left: 1.5rem;
-    }
+        margin-left: $standard-home-margin;        
+    }   
 }
 
 @media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {

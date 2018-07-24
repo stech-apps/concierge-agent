@@ -1,10 +1,19 @@
 @import '../../../../styles/base/_component-manifest.scss';
 
+[dir='rtl'] .qm-quick-serve {
+    margin-left: rem($standard-margin);
+
+}
+
 .qm-quick-serve {
     display: flex;
     justify-content: center;
     margin-top: 5em;
+    
 
+    @at-root [dir='rtl'] {
+        margin-left: rem($standard-margin);
+    }
 
     &__content {
         background-color: rgba(26, 28, 51, 0.4);

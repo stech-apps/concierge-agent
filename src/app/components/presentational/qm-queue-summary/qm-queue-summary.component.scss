@@ -11,6 +11,19 @@
   }
 }
 
+$summary-border: 1px solid $dark-transparent44;
+
+[dir="rtl"] :host {
+  .qm-queue-summary {
+    &__left {
+      border: none;
+    }
+    &__right {
+      border-right: $summary-border;
+    }
+  }
+}
+
 .qm-queue-summary {
   &-label {
     margin-left: ($standard-padding/2);
@@ -26,7 +39,7 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    border-right: 1px solid $dark-transparent44;
+    border-right: $summary-border;
   }
   &__right {
     display: flex;

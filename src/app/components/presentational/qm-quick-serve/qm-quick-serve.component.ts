@@ -1,5 +1,6 @@
+import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
@@ -21,6 +22,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   selectedService: IService;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
+  private userDirection$:  Observable<string>;
+  
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -29,7 +32,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     private serviceDispatchers: ServiceDispatchers,
     private spService: SPService,
     private translateService: TranslateService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private userSelectors: UserSelectors
   ){
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
@@ -57,6 +61,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.selectedService = null;
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   ngOnDestroy() {

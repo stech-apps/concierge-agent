@@ -1,5 +1,6 @@
+import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { QueueSelectors } from 'src/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,11 +12,12 @@ export class QmQueueSummaryComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
-
+  private userDirection$:  Observable<string>;
   public queueSummary: any;
 
   constructor(
-    private queueSelectors: QueueSelectors
+    private queueSelectors: QueueSelectors,
+    private userSelectors: UserSelectors
   ) {
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
@@ -25,6 +27,7 @@ export class QmQueueSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   ngOnDestroy() {

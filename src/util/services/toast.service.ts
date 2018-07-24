@@ -10,7 +10,7 @@ export class ToastService {
     messageClass: 'qm-toast__message',
     easing: 'ease-in-out',
     closeButton: true,
-    timeOut: 500000
+    timeOut: 3000
   };
 
   private successOptions: Object = {

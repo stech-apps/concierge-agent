@@ -1,4 +1,4 @@
-<div class="qm-page-root qm-home">
+<div class="qm-page-root qm-home" dir="{{ userDirection$ | async }}">
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
     <qm-quick-serve *ngIf="isQuickServeEnable"></qm-quick-serve>

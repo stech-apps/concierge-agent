@@ -1,4 +1,4 @@
-<div *ngIf="services.length > 0" class="qm-quick-serve">
+<div *ngIf="services.length > 0" class="qm-quick-serve"  dir="{{ userDirection$ | async }}">
     <div class="qm-quick-serve__content">
         <div class="qm-quick-serve__header">{{ 'quick_serve' | translate }}</div>
         <div class="qm-quick-serve__list-container" *ngFor="let service of services">

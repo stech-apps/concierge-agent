@@ -39,6 +39,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
+      this.setDefaultServicePoint();
       if(bs.length === 1){
         this.onBranchSelect(bs[0]);
       }
@@ -63,17 +64,21 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.servicePointDispatchers.setOpenServicePoint(null);
 
+    this.setDefaultServicePoint();
+
+    this.selectedBranch = {
+      name: 'branch',
+      id: -1
+    };
+  }
+
+  setDefaultServicePoint(){
     this.selectedServicePoint = {
       name: 'service_point',
       id: -1,
       unitId: null,
       parameters: null,
       state: null
-    };
-
-    this.selectedBranch = {
-      name: 'branch',
-      id: -1
     };
   }
 
@@ -90,6 +95,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.servicePointDispatchers.fetchServicePointsByBranch(selectedBranch.id);
       this.selectedBranch = selectedBranch;
       this.branchDispatchers.selectBranch(selectedBranch);
+      this.setDefaultServicePoint();
     }
   }
 

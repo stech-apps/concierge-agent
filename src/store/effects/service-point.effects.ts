@@ -20,9 +20,9 @@ export class ServicePointEffects {
     getServices$: Observable<Action> = this.actions$
       .ofType(AllActions.FETCH_SERVICEPOINTS)
       .pipe(
-        switchMap(() =>
+        switchMap((action: AllActions.FetchServicePoints) =>
           toAction(
-            this.servicePointDataService.getServicePoints(),
+            this.servicePointDataService.getServicePoints(action.branchId),
             AllActions.FetchServicePointsSuccess,
             AllActions.FetchServicePointsFail
           )

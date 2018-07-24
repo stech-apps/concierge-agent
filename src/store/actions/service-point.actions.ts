@@ -5,8 +5,8 @@ import { IServicePoint } from 'src/models/IServicePoint';
 
 // Fetch service points
 export const FETCH_SERVICEPOINTS = '[ServicePoint] FETCH_SERVICEPOINT';
-export const FETCH__SERVICEPOINTS_FAIL = '[ServicePoint] FETCH__SERVICEPOINT_FAIL';
-export const FETCH__SERVICEPOINTS_SUCCESS = '[ServicePoint] FETCH__SERVICEPOINT_SUCCESS';
+export const FETCH_SERVICEPOINTS_FAIL = '[ServicePoint] FETCH_SERVICEPOINT_FAIL';
+export const FETCH_SERVICEPOINTS_SUCCESS = '[ServicePoint] FETCH_SERVICEPOINT_SUCCESS';
 export const SET_OPEN_SERVICE_POINT = '[ServicePoint] SET_OPEN_SERVICE_POINT';
 
 export class FetchServicePoints implements Action {
@@ -16,12 +16,12 @@ export class FetchServicePoints implements Action {
 }
 
 export class FetchServicePointsFail implements Action {
-  readonly type = FETCH__SERVICEPOINTS_FAIL;
+  readonly type = FETCH_SERVICEPOINTS_FAIL;
   constructor(public payload: Object) {}
 }
 
 export class FetchServicePointsSuccess implements Action {
-  readonly type = FETCH__SERVICEPOINTS_SUCCESS;
+  readonly type = FETCH_SERVICEPOINTS_SUCCESS;
   constructor(public payload: IServicePointResponse) {}
 }
 

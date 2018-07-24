@@ -32,7 +32,7 @@ export function reducer (
         error: null
       };
     }
-    case ServicePointActions.FETCH__SERVICEPOINTS_SUCCESS: {
+    case ServicePointActions.FETCH_SERVICEPOINTS_SUCCESS: {
       return {
         ...state,
         servicePoints: sortServicePoints(action.payload.servicePoints),
@@ -41,7 +41,7 @@ export function reducer (
         error: null
       };
     }
-    case ServicePointActions.FETCH__SERVICEPOINTS_FAIL: {
+    case ServicePointActions.FETCH_SERVICEPOINTS_FAIL: {
       return {
         ...state,
         loading: false,

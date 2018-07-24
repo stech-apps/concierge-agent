@@ -16,9 +16,9 @@ import { IServicePointResponse } from 'src/models/IServicePointResponse';
 export class ServicePointDataService {
     constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) { }
 
-    getServicePoints(): Observable<IServicePointResponse> {
+    getServicePoints(branchId: number): Observable<IServicePointResponse> {
         return this.http
-            .get<Array<IServicePoint>>(`${servicePoint}/branches/1/servicePoints/deviceTypes/SW_CONNECT_CONCIERGE/full`)
+            .get<Array<IServicePoint>>(`${servicePoint}/branches/${branchId}/servicePoints/deviceTypes/SW_CONNECT_CONCIERGE/full`)
             .pipe(map(sps => {
                 return {
                     servicePoints: sps

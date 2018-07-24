@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit } from '@angular/core';
@@ -21,12 +23,17 @@ export class QmHomeMenuComponent implements OnInit {
   isArriveAppointment = false;
   isEditAppointment = false;
   isCreateAppointment = false;
+  userDirection$: Observable<string>;
 
-  constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors) { }
+
+  constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private userSelectors: UserSelectors) { 
+   
+  }
 
   ngOnInit() {
     this.checkUserPermissions();
     this.checkUttPermissions();
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   checkUttPermissions() {

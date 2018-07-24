@@ -15,10 +15,10 @@ export function userRoleFactory(mods: { modules: string[]}) : UserRole {
         else if (mods.modules.includes(CONCIERGE_ROLE) || mods.modules.includes(CONNECT_CONCIERGE_ROLE)) {
           isVisitUserRole = mods.modules.includes(SERVICEPOINT_ROLE);
           isAppointmentUser = mods.modules.includes(CALENDAR_ROLE);
-          userRole = isVisitUserRole ? userRole & UserRole.VisitUserRole : userRole;
-          userRole = isAppointmentUser ? userRole & UserRole.AppointmentUserRole : userRole;
+          userRole = isVisitUserRole ? userRole | UserRole.VisitUserRole : userRole;
+          userRole = isAppointmentUser ? userRole | UserRole.AppointmentUserRole : userRole;
         }
 
         return userRole;
-    }
+}
 

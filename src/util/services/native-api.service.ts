@@ -85,7 +85,7 @@ export class NativeApiService {
           status = 0;
       }
 
-      if(status >= 0) {
+      if(status <= 0) {
           try {
               Android.logout();
           }

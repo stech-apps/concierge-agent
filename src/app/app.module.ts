@@ -1,3 +1,5 @@
+import { ServicePointSelectors } from './../store/services';
+
 import { QmCustomToastComponent } from './components/presentational/qm-custom-toast/qm-custom-toast.component';
 import { NativeApiService } from './../util/services/native-api.service';
 // Route guards
@@ -137,9 +139,15 @@ const toastrGlobalOptions = {
 export class AppModule {
   constructor( private translate: TranslateService, 
     private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
-    private router: Router, private platformDispatchers: PlatformDispatchers) {
+    private router: Router, private platformDispatchers: PlatformDispatchers, private servicePointSelectors: ServicePointSelectors,
+    private util: Util
+  ) {
     this.translate.setDefaultLang('connectConciergeMessages');
     this.platformDispatchers.updatePlatform(this.nativeApiService.getPlatform());
+
+    this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
+        this.util.setApplicationTheme(openSp);
+    });
 
     if(this.nativeApiService.isNativeBrowser()) {
       this.nativeApiService.showNativeLoader(false);

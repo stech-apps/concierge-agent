@@ -40,6 +40,7 @@ export class QEvents {
         this.unsubscribe();
       }
     });
+
     this.subscriptions.add(servicePointsSubscription);
   }
 

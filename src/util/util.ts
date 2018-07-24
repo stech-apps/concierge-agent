@@ -22,4 +22,19 @@ export class Util {
         }
         return 0;
     }
+
+    setApplicationTheme(servicePoint) {
+        if (servicePoint) {
+            let themeColor = servicePoint.parameters.highlightColor;
+            if (themeColor == "customized") {
+                themeColor = servicePoint.parameters.customizeHighlightColor;
+            }
+
+            //set color for app theme custom property
+            if (themeColor) {
+                let styles: any = getComputedStyle(document.documentElement);
+                document.documentElement.style.setProperty('--app-theme', themeColor);
+            }
+        }
+    }
 }

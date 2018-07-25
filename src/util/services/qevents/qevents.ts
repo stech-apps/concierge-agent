@@ -13,7 +13,8 @@ export enum PUBLIC_EVENTS {
     VISIT_REMOVE = "VISIT_REMOVE",
     VISIT_TRANSFER_TO_QUEUE = "VISIT_TRANSFER_TO_QUEUE",
     VISIT_TRANSFER_TO_SERVICE_POINT_POOL = "VISIT_TRANSFER_TO_SERVICE_POINT_POOL",
-    VISIT_TRANSFER_TO_USER_POOL = "VISIT_TRANSFER_TO_USER_POOL"
+    VISIT_TRANSFER_TO_USER_POOL = "VISIT_TRANSFER_TO_USER_POOL",
+    VISIT_END_TRANSACTION = "VISIT_END_TRANSACTION"
 }
 
 import { Injectable } from '@angular/core';
@@ -81,16 +82,15 @@ export class QEventsHelper {
             //appointment.updateAppointmentList(processedEvent);
             this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), true);
             break;
-        case PUBLIC_EVENTS.VISIT_RECYCLE:
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), true);
-            break;
         case PUBLIC_EVENTS.VISIT_NEXT:
         case PUBLIC_EVENTS.VISIT_REMOVE:
             this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), false);
             break;
         case PUBLIC_EVENTS.VISIT_TRANSFER_TO_QUEUE:
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, true), true);
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), false);
+            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), true);
+            if(this.isUpdateBothQueues(processedEvent.E.prm)){
+                this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, true), false);
+            }
             break;
         case PUBLIC_EVENTS.VISIT_TRANSFER_TO_SERVICE_POINT_POOL:
         case PUBLIC_EVENTS.VISIT_TRANSFER_TO_USER_POOL:
@@ -101,10 +101,19 @@ export class QEventsHelper {
       }
   }
 
+isUpdateBothQueues(eventData){
+    if(eventData.eventSiblings.includes(PUBLIC_EVENTS.VISIT_END_TRANSACTION)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}  
+
 buildVisitObject(eventData, isOriginQueue) : Visit{
-    let queueId = eventData.fromQueueLogicId;
+    let queueId = eventData.queueLogicId;
     if(isOriginQueue){
-        queueId = eventData.toQueueLogicId;
+        queueId = eventData.fromQueueLogicId;
     }
     let visit : Visit = {
         ticketId: eventData.ticket,

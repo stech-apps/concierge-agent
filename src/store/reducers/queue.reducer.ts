@@ -53,8 +53,27 @@ export function reducer(
     }
   }
 
-  function updateQueueInfo(queueList: Queue[], visit: Visit, isAddVisit: boolean): Queue[] {
-    return queueList;
+  function updateQueueInfo(queueSummary: any, visit: Visit, isAddedVisit: boolean): any {
+    let queueList : Queue[] = queueSummary.queues;
+    let queue = queueList.find(queue => queue.id === visit.queueId);
+    let index = queueList.indexOf(queue);
+    if(isAddedVisit){
+      queue.customers = queue.customers + 1;
+      queueSummary.totalCustomersWaiting = queueSummary.totalCustomersWaiting + 1;
+      if(queue.waitingTime < visit.waitingTime){
+        queue.waitingTime = visit.waitingTime;
+      }
+      if(queueSummary.maxWaitingTime < visit.waitingTime){
+        queueSummary.maxWaitingTime = visit.waitingTime;
+      }
+    }
+    else{
+      queue.customers = queue.customers - 1;
+      queueSummary.totalCustomersWaiting = queueSummary.totalCustomersWaiting - 1;
+    }
+    
+    queueSummary.queues[index] = queue;
+    return queueSummary;
   }
     
 }

@@ -59,6 +59,7 @@
         display: flex;
         align-items: center;
         position: relative;
+        overflow: hidden;
 
         @at-root [dir='rtl'] & {
             text-align: right;

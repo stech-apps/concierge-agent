@@ -3,11 +3,12 @@ import { IServicePoint } from './../../../../models/IServicePoint';
 import { IService } from './../../../../models/IService';
 import { IDropDownItem } from './../../../../models/IDropDownItem';
 import { IBranch } from './../../../../models/IBranch';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
-  BranchDispatchers
+  BranchDispatchers,
+  UserSelectors
 } from '../../../../../src/store';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
@@ -33,10 +34,12 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedBranch: IBranch;
   currentStatus: IUserStatus;
   privacyPolicyUrl: string = null;
+  userDirection$: Observable<string>;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-    private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService) {
+    private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
+    private userSelectors: UserSelectors) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
@@ -57,6 +60,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.subscriptions.add(servicePointsSubscription);
+    this.userDirection$ = this.userSelectors.userDirection$;
 
     const userStateSubscription = this.spService.fetchUserStatus().subscribe((status: any) => this.currentStatus = status);
     this.subscriptions.add(userStateSubscription);
@@ -108,6 +112,10 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     else {
       this.privacyPolicyUrl = '';
     }
+  }
+
+  collapseSiblingDropDowns(dd: any) {
+    dd.isExpanded = false;
   }
 
   onCancel() {

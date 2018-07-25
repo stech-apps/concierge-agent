@@ -1,4 +1,4 @@
-<div class="qm-dropdown">
+<div class="qm-dropdown" dir="{{userDirection$ | async}}">
   <button class="qm-dropdown-button" (click)="dropDownExpand()">
     <div class="qm-dropdown-button--label">{{caption | translate}}</div>
     <div class="qm-dropdown-button--arrow triangle-down"></div>

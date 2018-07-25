@@ -4,11 +4,9 @@
   min-height: 100vh;
   flex-direction: column;
   @include qm-background;
-
   &-cancel {
     cursor: pointer;
   }
-
   &-content {
     display: flex;
     flex-direction: column;
@@ -74,9 +72,9 @@
       vertical-align: -webkit-baseline-middle;
       padding-right: $standard-padding;
       margin-right: 0.7rem;
+
     }
   }
-
   .qm-privacy-policy {
     position: fixed;
     bottom: 1rem;
@@ -106,6 +104,12 @@
   font-size: $font-small;
   font-family: $secondary-font-light;
   margin-top: 10%;
+}
+
+[dir="rtl"] {
+  .qm-use-as-default__checkbox {
+    margin-left: 0.7rem;
+  }
 }
 
 @media screen and (max-width: 800px) {

@@ -76,6 +76,15 @@
       margin-right: 0.7rem;
     }
   }
+
+  .qm-privacy-policy {
+    position: fixed;
+    bottom: 1rem;
+    font-size: $font-small;
+    a {
+      color: $primary-text-color;
+    }
+  }
 }
 
 .qm-profile-ok {

@@ -31,7 +31,6 @@ export class Util {
                 themeColor = servicePoint.parameters.customizeHighlightColor;
             }
 
-
             //set color for app theme custom property
             if (themeColor) {
                 let styles: any = getComputedStyle(document.documentElement);

@@ -17,6 +17,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private queuePoll = null;
   private selectedBranch: IBranch;
   private queuePollIntervl = 60;
+  sortOrder = 'asc'; 
 
   constructor(
     private queueSelectors: QueueSelectors,

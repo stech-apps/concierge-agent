@@ -13,16 +13,6 @@
 
 $summary-border: 1px solid $dark-transparent44;
 
-[dir="rtl"] :host {
-  .qm-queue-summary {
-    &__left {
-      border: none;
-    }
-    &__right {
-      border-right: $summary-border;
-    }
-  }
-}
 
 .qm-queue-summary {
   &-label {
@@ -33,6 +23,7 @@ $summary-border: 1px solid $dark-transparent44;
   &--value {
     font-size: 2rem;
     padding-left: 1rem;
+
   }
   &__left {
     display: flex;
@@ -47,4 +38,22 @@ $summary-border: 1px solid $dark-transparent44;
     align-items: center;
     flex: 1;
   }
+}
+
+
+
+[dir="rtl"] :host {
+  .qm-queue-summary {
+    &__left {
+      border: none;
+    }
+    &__right {
+      border-right: $summary-border;
+    }
+
+    &--value { 
+        margin-right: 0.8rem;
+    }
+  }
+
 }

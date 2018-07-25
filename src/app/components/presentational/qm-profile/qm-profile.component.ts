@@ -104,11 +104,11 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onCancel() {
-    if(this.nativeApiService.isNativeBrowser){
-      window.location.href = APP_URL;
+    if(this.nativeApiService.isNativeBrowser()){
+      this.nativeApiService.logOut();
     }
     else{
-      this.nativeApiService.logOut();
+      window.location.href = APP_URL;
     }
   }
 

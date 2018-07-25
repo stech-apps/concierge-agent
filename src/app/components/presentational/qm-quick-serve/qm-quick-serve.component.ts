@@ -35,6 +35,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private userSelectors: UserSelectors
   ){
+    this.userDirection$ = this.userSelectors.userDirection$;
+    
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
 

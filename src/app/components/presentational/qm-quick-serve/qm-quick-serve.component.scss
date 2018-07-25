@@ -44,7 +44,7 @@
     }
 
     &__icon {
-        color: rgb(169, 2, 58);
+        color: var(--app-theme);
     }
 
     &__item {
@@ -60,6 +60,10 @@
         align-items: center;
         position: relative;
 
+        @at-root [dir='rtl'] & {
+            text-align: right;
+        }
+
         &__label {
             width: 100%;
             height: 2.5em;
@@ -70,6 +74,10 @@
             overflow: hidden;
             white-space: nowrap;
             margin: 0 15px;
+
+            @at-root [dir='rtl'] & {
+                text-align: right;
+            }
         }
     }
 
@@ -84,7 +92,7 @@
         border-style: solid;
         margin-bottom: 0.35em;
         background-color: var(--app-theme);
-        border-color: rgb(169, 2, 58);
+        border-color: var(--app-theme);
     }
 
     &__button {
@@ -98,7 +106,7 @@
         text-align: center;
         border-radius: 250px;
         color: #fff;
-        background-color: rgb(169, 2, 58);
+        background-color: var(--app-theme);
 
         &[disabled] {
             background-color: rgba(0, 0, 0, 0.5);

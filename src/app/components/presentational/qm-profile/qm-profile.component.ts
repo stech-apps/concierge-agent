@@ -32,6 +32,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedServicePoint: IServicePoint;
   selectedBranch: IBranch;
   currentStatus: IUserStatus;
+  privacyPolicyUrl: string = null;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
@@ -40,7 +41,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
       this.setDefaultServicePoint();
-      if(bs.length === 1){
+      if (bs.length === 1) {
         this.onBranchSelect(bs[0]);
       }
     });
@@ -48,9 +49,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => {
       this.servicePoints = sps;
-      if(sps.length === 1){
+      if (sps.length === 1) {
         this.onServicePointSelect(sps[0]);
-        if(this.branches.length === 1){
+        if (this.branches.length === 1) {
           this.onConfirmProfile();
         }
       }
@@ -72,7 +73,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  setDefaultServicePoint(){
+  setDefaultServicePoint() {
     this.selectedServicePoint = {
       name: 'service_point',
       id: -1,
@@ -101,13 +102,19 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onServicePointSelect(selectedSp: IServicePoint) {
     this.selectedServicePoint = selectedSp;
+    if (this.selectedServicePoint.parameters.privacyPolicy && this.selectedServicePoint.parameters.privacyPolicy.length > 0) {
+      this.privacyPolicyUrl = this.selectedServicePoint.parameters.privacyPolicy;
+    }
+    else {
+      this.privacyPolicyUrl = '';
+    }
   }
 
   onCancel() {
-    if(this.nativeApiService.isNativeBrowser()){
+    if (this.nativeApiService.isNativeBrowser()) {
       this.nativeApiService.logOut();
     }
-    else{
+    else {
       window.location.href = APP_URL;
     }
   }

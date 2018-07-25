@@ -1,11 +1,11 @@
 <div class="qm-queue-list">
   <div class="qm-queue-list__headers qm-flex-grid">
-    <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+    <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="sortQueueList()">
       <div>
         <i class="icon-queue" aria-hidden="true"></i>
       </div>
       <div>{{'ql_queue' | translate}}</div>
-      <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortOrder === 'asc' , 'icon-caret-down': sortOrder !== 'asc' }"></i></div>
+      <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
     </div>
     <div class="qm-queue-list-header-item qm-col qm-flex-grid">
       <div>

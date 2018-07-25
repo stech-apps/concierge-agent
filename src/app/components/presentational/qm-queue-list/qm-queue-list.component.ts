@@ -17,24 +17,24 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private queuePoll = null;
   private selectedBranch: IBranch;
   private queuePollIntervl = 60;
-  sortOrder = 'asc'; 
+  sortAscending = true;
 
   constructor(
     private queueSelectors: QueueSelectors,
     private queueDispatchers: QueueDispatchers,
     private branchSelectors: BranchSelectors
-  ) { 
-    
+  ) {
+
   }
 
   ngOnInit() {
-    const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs)=> {
+    const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueCollection = qs.queues;
     })
     this.subscriptions.add(queueListSubscription);
 
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
-      if(branch){
+      if (branch) {
         this.selectedBranch = branch;
         this.queueDispatchers.fetchQueueInfo(branch.id);
         this.setQueuePoll();
@@ -43,7 +43,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(branchSubscription);
   }
 
-  setQueuePoll(){
+  setQueuePoll() {
     if (this.queuePoll) {
       clearInterval(this.queuePoll);
     }
@@ -53,9 +53,30 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.queuePoll){
+    if (this.queuePoll) {
       clearInterval(this.queuePoll);
     }
     this.subscriptions.unsubscribe();
+  }
+
+  sortQueueList() {
+    this.sortAscending = !this.sortAscending;
+    if (this.queueCollection) {
+      // sort by name
+      this.queueCollection = this.queueCollection.sort((a, b) => {
+        var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
+        if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+          return -1;
+        }
+        if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+    }
+
   }
 }

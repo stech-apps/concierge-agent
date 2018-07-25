@@ -1,0 +1,32 @@
+<qm-auto-close>
+  <div class="qm-modal" dir="{{ userDirection$ | async }}" cdkTrapFocus>
+    <form class="qm-modal__box-container">
+      <div class="qm-modal__header">
+        <span class="qm-modal__headline">{{ title }}</span>
+      </div>
+      <div class="qm-modal__message-container" *ngIf="message && message.length > 0">
+        <div>
+          <div class=" qm-modal__message">
+            {{ message }}
+          </div>
+        </div>
+      </div>
+      <div class="qm-modal__button-container">
+
+        <button class="qm-modal__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()"
+          *ngIf="btnCancelText && btnCancelText.length > 0">
+          <span title="{{ btnCancelText }}">
+            {{ btnCancelText }}
+          </span>
+        </button>
+        <button type="button" class="qm-modal__primary-button btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose()"
+          *ngIf="btnOkText && btnOkText.length > 0">
+          <span title="{{ btnOkText }}">
+            {{ btnOkText }}
+          </span>
+        </button>
+
+      </div>
+    </form>
+  </div>
+</qm-auto-close>

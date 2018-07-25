@@ -1,0 +1,65 @@
+.qm-modal {
+  &__box-container {
+  }
+
+  &__header {
+    padding: rem(15px 10px );
+    text-align: center;
+  }
+
+  &__headline {
+    color: var(--app-theme);
+    font-size: rem(15px);
+    text-align: center;
+    @at-root [dir="rtl"] & {
+
+    }
+  }
+
+  &__message-container {
+    padding: rem(10px);
+    overflow: auto;
+  }
+
+  &__message {
+    text-align: center;
+    color: $black;
+    font-family: Montserrat-Light;
+  }
+
+  &__button-container {
+    display: flex;
+    flex-direction: row;
+    padding: rem(10px);
+    min-height: rem(65px);
+  }
+
+  &__primary-button {
+    background-color:var(--app-theme);
+    flex: 1;
+    color: $white;
+    font-family: Montserrat-Light;
+    font-size: rem(12px);
+    border: none;
+  }
+
+  &__secondary-button {
+    flex: 1;
+    background: $modal-secondary-button-background;
+    color: $white;
+    font-size: rem(12px);
+    border: none;
+    font-family: Montserrat-Light;
+    margin-right: rem(5px);
+    @at-root [dir="rtl"] & {
+      margin-left: rem(5px);
+    }
+  }
+}
+
+.modal-dialog {
+  max-width: rem(250px);
+}
+.btn-light-active-action:active {
+  opacity: 0.7 !important;
+}

@@ -71,6 +71,11 @@ import { QmHomeMenuComponent } from './components/containers/qm-home-menu/qm-hom
 import { QmQueueSummaryComponent } from './components/presentational/qm-queue-summary/qm-queue-summary.component';
 import { LoginService } from 'src/util/services/login.service';
 import { QmQueueListComponent } from './components/presentational/qm-queue-list/qm-queue-list.component';
+import { QmModalComponent } from './components/presentational/qm-modal/qm-modal.component';
+import { QmModalService } from './components/presentational/qm-modal/qm-modal.service';
+
+// Ng Bootstrap, used for modals
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -96,9 +101,13 @@ const toastrGlobalOptions = {
     QmQuickServeComponent,
     QmHomeMenuComponent,
     QmQueueSummaryComponent,
-    QmQueueListComponent
+    QmQueueListComponent,
+    QmModalComponent
   ],
-  entryComponents: [QmCustomToastComponent],
+  entryComponents: [
+    QmCustomToastComponent,
+    QmModalComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -120,7 +129,8 @@ const toastrGlobalOptions = {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     ...storeServices,
@@ -134,12 +144,13 @@ const toastrGlobalOptions = {
     Logout,
     SPService,
     Util,
-    LoginService
+    LoginService,
+    QmModalService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor( private translate: TranslateService, 
+  constructor( private translate: TranslateService,
     private licenseInfoDispatchers: LicenseDispatchers, private nativeApiService: NativeApiService,
     private router: Router, private platformDispatchers: PlatformDispatchers, private servicePointSelectors: ServicePointSelectors,
     private util: Util
@@ -158,6 +169,6 @@ export class AppModule {
     else {
       this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
       this.router.navigate(['/loading']);
-    }   
+    }
   }
 }

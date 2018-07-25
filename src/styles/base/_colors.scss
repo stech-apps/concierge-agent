@@ -4,6 +4,7 @@ $late-midnight-blue: rgba(26, 28, 51, 0.4);
 $medium-blue: #2c364f;
 $pale-blue: #334366;
 $qmatic-bordeaux: rgb(169, 2, 58);
+$danger-red: rgb(228, 0, 70);
 
 $pale-aquamarine: #03996C;
 $light-gray1: #f4f4f4;
@@ -97,3 +98,5 @@ $drop-down-box-shadow-color: $dark-transparent20;
 $drop-down-item-color: $black;
 //summary view
 $wating-list-background: $late-midnight-blue;
+$queue-indicator-red: $danger-red;
+$queue-indicator-yellow: rgb(255, 228, 91);

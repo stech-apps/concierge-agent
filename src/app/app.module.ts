@@ -1,3 +1,4 @@
+import { QueueIndicator } from './../util/services/queue-indication.helper';
 import { ServicePointSelectors } from './../store/services';
 
 import { QmCustomToastComponent } from './components/presentational/qm-custom-toast/qm-custom-toast.component';
@@ -128,6 +129,7 @@ const toastrGlobalOptions = {
     LicenseAuthGuard,
     QEvents,
     QEventsHelper,
+    QueueIndicator,
     AutoClose,
     Logout,
     SPService,

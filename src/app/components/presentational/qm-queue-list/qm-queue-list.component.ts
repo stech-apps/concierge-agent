@@ -1,3 +1,4 @@
+import { QueueIndicator } from './../../../../util/services/queue-indication.helper';
 import { Subscription } from 'rxjs';
 import { Queue } from './../../../../models/IQueue';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -22,7 +23,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   constructor(
     private queueSelectors: QueueSelectors,
     private queueDispatchers: QueueDispatchers,
-    private branchSelectors: BranchSelectors
+    private branchSelectors: BranchSelectors,
+    public queueIndicator: QueueIndicator
   ) {
 
   }

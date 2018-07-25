@@ -12,6 +12,27 @@
         cursor: pointer;
    }
 
+   .max-wait-time-container {
+       display: flex;
+       justify-content: center;
+   }
+
+   .max-wait-time {
+        font-size: 1.3rem;
+
+        &.gray-indicator {
+            visibility: hidden;            
+        }
+
+        &.red-indicator {
+            color: $queue-indicator-red;
+        }
+
+        &.yellow-indicator {
+            color: $queue-indicator-yellow;
+        }
+   }
+
     &__headers {
         justify-content: center;
         align-items: center;

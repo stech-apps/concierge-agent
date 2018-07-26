@@ -11,6 +11,7 @@ import { IBranch } from '../../models/IBranch';
 import { IServicePoint } from '../../models/IServicePoint';
 import { IAccount } from '../../models/IAccount';
 import { Router } from '@angular/router';
+import { QmModalService } from '../../app/components/presentational/qm-modal/qm-modal.service';
 
 @Injectable()
 export class LoginService {
@@ -30,7 +31,8 @@ export class LoginService {
         private servicePointDispatchers: ServicePointDispatchers,
         private servicePointSelectors: ServicePointSelectors,
         private router: Router,
-        private userStatusDispatcher: UserStatusDispatchers
+        private userStatusDispatcher: UserStatusDispatchers,
+        private confirmBox: QmModalService
     ) {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
         this.subscriptions.add(branchSubscription);
@@ -54,12 +56,12 @@ export class LoginService {
                     this.hijack();
                 }
                 else{
-                    this.hijack();
-                    // this.translateService.get('ongoing_session').subscribe(
-                    //     (label) => {
-                    //     this.toastService.infoToast(label);
-                    //     }
-                    // );
+                    let currentObj = this;
+                    this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'cancel', function(val: boolean){
+                        if(val){
+                            currentObj.hijack();
+                        }
+                    }, function(){});
                 }
             }
         })
@@ -72,11 +74,19 @@ export class LoginService {
                     this.confirm();
                 }
                 else{
-                    // this.translateService.get('ongoing_session').subscribe(
-                    //     (label) => {
-                    //     this.toastService.infoToast(label);
-                    //     }
-                    // );
+                    let currentObj = this;
+                    this.spService.getWorkstationUsers(this.selectedBranch, this.selectedServicePoint).subscribe((status: IAccount[]) => {
+                        if(status && status.length > 0 && status[0].id !== this.user.id){
+                            this.confirmBox.openForTransKeys('', 'message_hijack', 'ok', 'cancel', function(val: boolean){
+                                if(val){
+                                    currentObj.confirm();
+                                }
+                            }, function(){});
+                        }
+                        else{
+                            this.confirm();
+                        }
+                    })
                 }
             });
         }

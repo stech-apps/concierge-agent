@@ -30,6 +30,11 @@ export class SPService implements OnDestroy {
         .get(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}`);
   }
 
+  getWorkstationUsers(branch: IBranch, selectedServicePoint: IServicePoint){
+    return this.http
+        .get(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/users`);
+  }
+
   logout(force: boolean) {
     return this.http
         .put(`${servicePoint}/logout?force=${force}`, {})

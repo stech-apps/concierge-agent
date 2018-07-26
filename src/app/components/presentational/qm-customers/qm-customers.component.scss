@@ -30,12 +30,13 @@
 // header styles
 .qm-customer-header {
     display: flex;
-    background-color:$header-border-color   ;
+    background-color: var(--app-theme);  ;
     position: relative;
     justify-content: center;
     color: $header-text-color;
     height: 2.8rem;
     align-items: center;
+  
 }
 
 .customer-search{

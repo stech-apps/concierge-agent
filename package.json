@@ -5,7 +5,7 @@
     "ng": "ng",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "npm run ng-config-dev && ng serve --port 4100 --proxy-config proxy.config.json",
+    "start": "npm run ng-config-dev && ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "ng test",
     "build-war-dev": "npm run ng-config-dev && ng build --base-href /connectconcierge/ && gulp build:war:properties",

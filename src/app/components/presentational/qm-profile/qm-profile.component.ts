@@ -19,6 +19,7 @@ import { SPService } from '../../../../util/services/rest/sp.service';
 import { IUserStatus } from '../../../../models/IUserStatus';
 import { USER_STATE } from '../../../../util/q-state';
 import { LoginService } from 'src/util/services/login.service';
+import { Router } from '../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'qm-profile',
@@ -39,7 +40,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors) {
+    private userSelectors: UserSelectors, private router:Router) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
@@ -145,8 +146,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   // Temp function
-  // goToCustomer(){
-  //  this.router.navigate(['customers']);
-  //   console.log(this.branches)
-  // }
+  goToCustomer(){
+   this.router.navigate(['customers']);
+    console.log(this.branches)
+  }
 }

@@ -13,3 +13,4 @@ export * from './calendar-service';
 export * from './service-point';
 export * from './account';
 export * from './queue';
+export * from './customer';

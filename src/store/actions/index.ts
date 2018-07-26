@@ -12,3 +12,4 @@ export * from './service.actions';
 export * from './calendar-service.actions';
 export * from './service-point.actions';
 export * from './queue.actions';
+export * from './customer.actions';

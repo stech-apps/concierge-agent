@@ -33,6 +33,9 @@ import { effects } from '../store/effects';
 // Env
 import { environment } from '../environments/environment';
 
+//Forms
+import { FormGroup , FormControl , ReactiveFormsModule , FormsModule } from '@angular/forms';
+
 // Translations
 import {
   TranslateModule,
@@ -76,6 +79,10 @@ import { QmModalService } from './components/presentational/qm-modal/qm-modal.se
 
 // Ng Bootstrap, used for modals
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QmCustomersComponent } from './components/presentational/qm-customers/qm-customers.component';
+import { QmCustomerSearchComponent } from './components/presentational/qm-customer-search/qm-customer-search.component';
+import { QmCustomerCreateComponent } from './components/presentational/qm-customer-create/qm-customer-create.component';
+
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -102,15 +109,23 @@ const toastrGlobalOptions = {
     QmHomeMenuComponent,
     QmQueueSummaryComponent,
     QmQueueListComponent,
-    QmModalComponent
+    QmModalComponent,
+    QmCustomersComponent,
+    QmCustomerSearchComponent,
+    QmCustomerCreateComponent
+  
+  
   ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent
+    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     EffectsModule.forRoot(effects),
     StoreModule.forRoot(reducers),
     RouterModule.forRoot(

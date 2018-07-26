@@ -16,7 +16,7 @@
       "secure": false
     },
     "/bundle/*":{
-      "target": "http://localhost:4200",
+      "target": "http://localhost:4100",
       "secure": false,
       "pathRewrite": {
         "^/bundle": "/assets/i18n"

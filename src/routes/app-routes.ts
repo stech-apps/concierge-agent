@@ -1,4 +1,5 @@
 import { QmProfileComponent } from './../app/components/presentational/qm-profile/qm-profile.component';
+import { QmCustomersComponent } from './../app/components/presentational/qm-customers/qm-customers.component';
 import { QmAppPageNotFoundComponent } from './../app/components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
 import { QmAppComponent } from './../app/components/containers/qm-app/qm-app.component';
 import { QmAppLoaderComponent } from './../app/components/containers/qm-app-loader/qm-app-loader.component';
@@ -16,6 +17,7 @@ export const appRoutes: Routes = [
         { path: 'invalid-license', component: QmInvalidLicenseComponent },
         { path: 'home', component: QmHomeComponent },
         { path: 'profile', component: QmProfileComponent},
+        { path: 'customers', component: QmCustomersComponent},
         { path: '**', component: QmAppPageNotFoundComponent}
       ]
     }

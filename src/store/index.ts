@@ -12,7 +12,7 @@ import {
     AccountDataService, AccountDispatchers, PlatformSelectors, PlatformDispatchers, BranchSelectors,
     BranchDispatchers, BranchDataService, ServiceDispatchers, ServiceDataService, CalendarServiceDataService,
     CalendarServiceDispatchers, CalendarServiceSelectors, AccountSelectors, QueueDispatchers, QueueSelectors, QueueDataService,
-    ServicePointDataService, ServicePointDispatchers, ServicePointSelectors, ServiceSelectors
+    ServicePointDataService, ServicePointDispatchers, ServicePointSelectors, ServiceSelectors,CustomerDataService,CustomerDispatchers,CustomerSelector
  } from './services';
 
 
@@ -51,5 +51,9 @@ export const storeServices = [
     ServicePointSelectors,
     QueueDispatchers,
     QueueSelectors,
-    QueueDataService
+    QueueDataService,
+    CustomerDataService,
+    CustomerDispatchers,
+    CustomerSelector
+    
 ];

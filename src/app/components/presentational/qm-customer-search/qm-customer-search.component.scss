@@ -1,0 +1,55 @@
+@import '../../../../styles/base/_component-manifest.scss';
+.customer-table{
+    color: black;
+    text-align: left;
+    font-size: 0.9rem;
+    margin:auto;
+    width:100%;
+    table-layout: fixed;
+    
+      
+    .customer-table-header{
+        background-color: $dark-transparent12;
+        border-bottom: 3px solid $light-gray2;
+        font-size: 0.75rem;
+        margin: 5px;
+        
+    }
+
+    th{ 
+        height: 50px;
+        white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;width: 10%
+    }
+
+    td{
+        white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px; padding: 0px 10px 0px 10px;  width: 10%; height: 50px;
+    }
+
+    .customer-list{
+        background-color: white;
+        border-bottom: 1px solid $light-gray2;
+        height: 35px;
+        width: 80%;
+        padding:0;
+        margin:0;
+   
+    }
+
+    .svg-container {
+        width: 2.8em;
+        margin:0 auto;
+      }
+    svg{
+        display: inline-block; 
+        bottom: 0 auto;
+        vertical-align: middle;
+        text-align: center;
+        height: 50px;
+    }
+
+    .qm-td-col-1{
+        padding-left: 10%;
+        width: 20%
+    }
+    
+}   

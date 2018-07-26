@@ -9,6 +9,7 @@ import * as fromServices from './service.reducer';
 import * as fromServicePoints from './service-point.reducer';
 import * as fromUserStatus from './user-status.reducer';
 import * as fromQueue from './queue.reducer';
+import * as fromCustomer from './customer.reducer'
 
 export interface IAppState {
     systemInfo: fromSystemInfo.ISystemInfoState;
@@ -20,6 +21,7 @@ export interface IAppState {
     servicePoints: fromServicePoints.IServicePointState,
     userStatus: fromUserStatus.IUserStatusState,
     queue: fromQueue.IQueueState
+    customers: fromCustomer.ICustomerState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -31,5 +33,6 @@ export const reducers: ActionReducerMap<IAppState> = {
     services: fromServices.reducer,
     servicePoints: fromServicePoints.reducer,
     userStatus: fromUserStatus.reducer,
-    queue: fromQueue.reducer
+    queue: fromQueue.reducer,
+    customers:fromCustomer.reducer
 };

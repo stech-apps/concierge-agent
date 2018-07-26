@@ -117,6 +117,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   collapseSiblingDropDowns(dd: any) {
     dd.isExpanded = false;
   }
+  
 
   onCancel() {
     if (this.nativeApiService.isNativeBrowser()) {
@@ -142,4 +143,10 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loginService.login(this.selectedServicePoint);
     }
   }
+  
+  // Temp function
+  // goToCustomer(){
+  //  this.router.navigate(['customers']);
+  //   console.log(this.branches)
+  // }
 }

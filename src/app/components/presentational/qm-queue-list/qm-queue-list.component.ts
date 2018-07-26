@@ -32,6 +32,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueCollection = qs.queues;
+      this.sortQueueList();
     })
     this.subscriptions.add(queueListSubscription);
 

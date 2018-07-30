@@ -14,3 +14,5 @@ export * from './service-point';
 export * from './account';
 export * from './queue';
 export * from './customer';
+export * from './calendar-settings';
+export * from './reservation-expiry-timer';

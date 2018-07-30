@@ -10,6 +10,7 @@ import { AccountEffects } from './account.effects';
 import { ServiceEffects } from './service.effects';
 import { CalendarServiceEffects } from './calendar-service.effects';
 import {CustomerEffects} from './customer.effects'
+import { CalendarSettingsEffects } from './calendar-settings.effects';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -23,5 +24,6 @@ export const effects: any[] = [
     ServicePointEffects,
     QueueEffects,
     CalendarServiceEffects,
-    CustomerEffects
+    CustomerEffects,
+    CalendarSettingsEffects
 ];

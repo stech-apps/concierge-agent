@@ -13,3 +13,5 @@ export * from './calendar-service.actions';
 export * from './service-point.actions';
 export * from './queue.actions';
 export * from './customer.actions';
+export * from './calendar-settings.actions';
+export * from './reservation-expiry-timer.actions';

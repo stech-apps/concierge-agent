@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
@@ -26,7 +27,8 @@ export class QmHomeMenuComponent implements OnInit {
   userDirection$: Observable<string>;
 
 
-  constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private userSelectors: UserSelectors) { 
+  constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
+              private userSelectors: UserSelectors) { 
    
   }
 
@@ -74,5 +76,9 @@ export class QmHomeMenuComponent implements OnInit {
         this.isVisitUser = true;
       }
     });
+  }
+
+  handleMenuItemClick(route) {
+    this.router.navigate(['home/' + route]);
   }
 }

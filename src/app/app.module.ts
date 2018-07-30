@@ -1,5 +1,7 @@
-import { QueueIndicator } from "./../util/services/queue-indication.helper";
-import { ServicePointSelectors } from "./../store/services";
+import { QmFlowPanelTitle } from './components/containers/qm-flow-panel-header/qm-flow-panel-title.directive';
+import { QmFlowPanelResult } from './components/containers/qm-flow-panel-header/qm-flow-panel-result.directive';
+import { QueueIndicator } from './../util/services/queue-indication.helper';
+import { ServicePointSelectors } from './../store/services';
 
 import { QmCustomToastComponent } from "./components/presentational/qm-custom-toast/qm-custom-toast.component";
 import { NativeApiService } from "./../util/services/native-api.service";
@@ -84,6 +86,13 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { QmCustomersComponent } from "./components/presentational/qm-customers/qm-customers.component";
 import { QmCustomerSearchComponent } from "./components/presentational/qm-customer-search/qm-customer-search.component";
 import { QmCustomerCreateComponent } from "./components/presentational/qm-customer-create/qm-customer-create.component";
+import { QmFlowComponent } from './components/containers/qm-flow/qm-flow.component';
+import { QmFlowPanelComponent } from './components/containers/qm-flow-panel/qm-flow-panel.component';
+import { QmFlowPanelHeaderComponent } from './components/containers/qm-flow-panel-header/qm-flow-panel-header.component';
+import { QmCreateAppointmentComponent } from './components/presentational/qm-create-appointment/qm-create-appointment.component';
+import { QmSelectBranchComponent } from './components/presentational/qm-select-branch/qm-select-branch.component';
+import { QmFlowPanelContentComponent } from './components/containers/qm-flow-panel-content/qm-flow-panel-content.component';
+import { QmFlowPanelHeaderLeftDirective } from './components/containers/qm-flow-panel-header/qm-flow-panel-header-left.directive';
 
 import { QmReservationTimerComponent } from "./components/containers/qm-reservation-timer/qm-reservation-timer.component";
 import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-inputbox.component';
@@ -117,6 +126,15 @@ const toastrGlobalOptions = {
     QmQueueSummaryComponent,
     QmQueueListComponent,
     QmModalComponent,
+    QmFlowComponent,
+    QmFlowPanelComponent,
+    QmFlowPanelHeaderComponent,
+    QmFlowPanelResult,
+    QmFlowPanelTitle,
+    QmCreateAppointmentComponent,
+    QmSelectBranchComponent,
+    QmFlowPanelContentComponent,
+    QmFlowPanelHeaderLeftDirective,
     QmCustomersComponent,
     QmCustomerSearchComponent,
     QmCustomerCreateComponent,

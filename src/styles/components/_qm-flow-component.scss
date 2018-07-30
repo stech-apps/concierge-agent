@@ -1,0 +1,12 @@
+@import '../base/colors';
+
+
+.qm-flow-component-root {
+    background-color: $flow-background;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top:0;
+    left: 0;
+    @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
+}

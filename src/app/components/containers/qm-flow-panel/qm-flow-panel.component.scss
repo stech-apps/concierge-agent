@@ -1,0 +1,11 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
+.qm-flow-panel {
+    display: flex;
+    flex-direction: column;
+    &--active {
+        .qm-flow-panel-header  {
+            background-color: var(--app-theme);
+        }
+    }
+}

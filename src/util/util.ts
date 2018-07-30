@@ -4,6 +4,7 @@ import cssVars from 'css-vars-ponyfill';
 @Injectable()
 export class Util {
     constructor() {
+        window['x'] = this.setApplicationTheme;
     }
 
     compareVersions(baseVersion, currentVersion) {
@@ -25,6 +26,7 @@ export class Util {
     }
 
     setApplicationTheme(servicePoint) {
+        
         if (servicePoint) {
             let themeColor = servicePoint.parameters.highlightColor;
             if (themeColor == "customized") {

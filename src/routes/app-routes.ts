@@ -8,18 +8,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 import { QmInvalidLicenseComponent } from 'src/app/components/presentational/qm-invalid-license/qm-invalid-license.component';
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
+import { QmCreateAppointmentComponent } from 'src/app/components/presentational/qm-create-appointment/qm-create-appointment.component';
 export const appRoutes: Routes = [
-    {
-      path: '',
-      children: [
-        { path: 'loading', component: QmAppLoaderComponent },
-        { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
-        { path: 'invalid-license', component: QmInvalidLicenseComponent },
-        { path: 'home', component: QmHomeComponent },
-        { path: 'profile', component: QmProfileComponent},
-        { path: 'customers', component: QmCustomersComponent},
-        { path: '**', component: QmAppPageNotFoundComponent}
-      ]
-    }
-  ];
-  
+  {
+    path: '',
+    children: [
+      { path: 'loading', component: QmAppLoaderComponent },
+      { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
+      { path: 'invalid-license', component: QmInvalidLicenseComponent },
+
+      {
+        path: 'home', component: QmHomeComponent, children: [
+          { path: 'create-appointment', component: QmCreateAppointmentComponent }
+        ]
+      },
+      { path: 'profile', component: QmProfileComponent },
+ { path: 'customers', component: QmCustomersComponent},
+      { path: '**', component: QmAppPageNotFoundComponent }
+    ]
+  }
+];

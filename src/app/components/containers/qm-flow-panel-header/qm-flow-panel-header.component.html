@@ -1,0 +1,22 @@
+<div class="qm-flow-panel-header" [ngClass]="{'qm-flow-panel-header--active' : isActive }">
+  <div class="qm-flow-panel-header__left">
+    <ng-content select="qm-flow-panel-header-left"></ng-content>
+  </div>
+  <div class="qm-flow-panel-header__title">
+    <ng-content select="qm-flow-panel-title"></ng-content>
+  </div>
+  <div class="qm-flow-panel-header__result">
+    <ng-content select="qm-flow-panel-result"></ng-content>
+    <div class="qm-flow-panel-header-back" (click)="clickExit()" *ngIf="isShowExitFlow">
+        <svg  version="1.1" id="Lager_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.3 117.5" style="enable-background:new 0 0 122.3 117.5; fill: white" xml:space="preserve">
+          <style type="text/css">
+              .stback {
+                  fill: #FFFFFF;
+              }
+          </style>
+          <path class="stback" d="M95.9,34C85.3,26.4,73.5,22.6,60,21.6v0V0L0,37.2l60,37.2V52.9c28.9,3.6,50.3,29.2,50.1,59.5
+                c0,4.3,0.9,5,1.8,5.1c1.3,0.2,3.2-2.2,3.9-3.7C129.6,86.3,120.9,51.9,95.9,34z"></path>
+      </svg>
+    </div>
+  </div>  
+</div>

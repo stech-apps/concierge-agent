@@ -1,0 +1,6 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+:host {
+    color:black;
+    @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
+}

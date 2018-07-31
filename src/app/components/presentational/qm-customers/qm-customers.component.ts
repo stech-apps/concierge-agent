@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Subject, Observable } from 'rxjs';
-import { CustomerSelector,CustomerDispatchers } from '../../../../store';
+import { CustomerSelector,CustomerDispatchers, ServicePointSelectors } from '../../../../store';
 import { tap, distinctUntilChanged, debounceTime, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-qm-customers',
@@ -27,7 +28,9 @@ export class QmCustomersComponent implements OnInit {
   constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors: CustomerSelector,
-    private router:Router
+    private router:Router,
+    private servicePointSelectors:ServicePointSelectors,
+    private util:Util
   
   ) {
 
@@ -35,9 +38,14 @@ export class QmCustomersComponent implements OnInit {
     this.searchText$ = this.CustomerSelectors.searchText$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
     this.customerLooaded$ = this.CustomerSelectors.customerLoaded$
+
+   
    }
 
   ngOnInit() {
+    this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
+      this.util.setApplicationTheme(openSp);
+  });
     const searchInputSubscription = this.searchInput$
       .pipe(
         tap(val => this.immidiateActions(val)),

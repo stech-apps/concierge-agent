@@ -1,0 +1,49 @@
+<qm-auto-close>
+  <div class="qm-input-box" dir="{{ userDirection$ | async }}" cdkTrapFocus>
+    <form class="qm-input-box__container">
+      <div class="qm-input-box__header">
+        <span class="qm-input-box__headline">{{ title }}</span>
+      </div>
+      <!-- <div class="qm-input-box__inputboxes" *ngIf="inputBoxNames?.length > 0">
+        <div  *ngFor="let inputBoxName of inputBoxNames;let i = index" >
+          <div class="qm-input-box__row"> 
+            <label for="{{inputBoxName[0]}}" class="qm-input-box__inputbox-name qm-input-box__col-1">{{inputBoxName[0]}}</label> 
+                <input class="qm-input-box__col-2"  type="text" id="inputBox-i" name="q" [ngModel]="InputBoxIndex[i]" #InputBoxIndex[i]>
+            </div>
+        </div>
+      </div> -->
+      <form  [formGroup]="myform">
+       
+          <fieldset  class="form-group">
+            <label>Email</label>
+            <input type="email"
+                   class="form-control"
+                   formControlName="email" >
+          </fieldset>
+        
+          <fieldset  class="form-group">
+            <label>Password</label>
+            <input type="password"
+                   class="form-control"
+                   formControlName="password" >
+          </fieldset >
+        </form>
+
+      <div class="qm-modal__button-container">
+        <button class="qm-modal__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()"
+          *ngIf="btnCancelText && btnCancelText.length > 0">
+          <span title="{{ btnCancelText }}">
+            {{ btnCancelText }}
+          </span>
+        </button>
+        <button type="button" class="qm-modal__primary-button btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose()"
+          *ngIf="btnOkText && btnOkText.length > 0">
+          <span title="{{ btnOkText }}">
+            {{ btnOkText }}
+          </span>
+        </button>
+
+      </div>
+    </form>
+  </div>
+</qm-auto-close>

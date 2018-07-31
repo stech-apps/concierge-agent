@@ -86,6 +86,7 @@ import { QmCustomerSearchComponent } from "./components/presentational/qm-custom
 import { QmCustomerCreateComponent } from "./components/presentational/qm-customer-create/qm-customer-create.component";
 
 import { QmReservationTimerComponent } from "./components/containers/qm-reservation-timer/qm-reservation-timer.component";
+import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-inputbox.component';
 
 import { TimeUtils } from "../util/services/timeUtils.service";
 import { CalendarSettingsService } from "../store/services/calendar-settings/calendar-settings.service";
@@ -119,9 +120,17 @@ const toastrGlobalOptions = {
     QmCustomersComponent,
     QmCustomerSearchComponent,
     QmCustomerCreateComponent,
-    QmReservationTimerComponent
+    QmReservationTimerComponent,
+    QmInputboxComponent
+  
+  
   ],
-  entryComponents: [QmCustomToastComponent, QmModalComponent],
+  entryComponents: [
+    QmCustomToastComponent,
+    QmModalComponent,
+    QmInputboxComponent
+    
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,

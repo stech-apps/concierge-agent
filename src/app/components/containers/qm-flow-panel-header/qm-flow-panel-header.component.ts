@@ -39,6 +39,5 @@ export class QmFlowPanelHeaderComponent implements OnInit {
 
   clickExit() {
     this.onFlowExit.emit();
-
   }
 }

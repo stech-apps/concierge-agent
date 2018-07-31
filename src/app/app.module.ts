@@ -93,6 +93,7 @@ import { QmCreateAppointmentComponent } from './components/presentational/qm-cre
 import { QmSelectBranchComponent } from './components/presentational/qm-select-branch/qm-select-branch.component';
 import { QmFlowPanelContentComponent } from './components/containers/qm-flow-panel-content/qm-flow-panel-content.component';
 import { QmFlowPanelHeaderLeftDirective } from './components/containers/qm-flow-panel-header/qm-flow-panel-header-left.directive';
+import { QmCreateVisitComponent } from './components/presentational/qm-create-visit/qm-create-visit.component';
 
 import { QmReservationTimerComponent } from "./components/containers/qm-reservation-timer/qm-reservation-timer.component";
 import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-inputbox.component';
@@ -139,8 +140,8 @@ const toastrGlobalOptions = {
     QmCustomerSearchComponent,
     QmCustomerCreateComponent,
     QmReservationTimerComponent,
-    QmInputboxComponent
-  
+    QmInputboxComponent,
+    QmCreateVisitComponent
   
   ],
   entryComponents: [

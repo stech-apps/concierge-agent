@@ -45,4 +45,6 @@ export interface IUTTParameter {
     vipLvl3: boolean;
     visitQR: boolean;
     webUrl: string;
+    hideCustomer: boolean;
+    saveCustomerOption: string;
   }

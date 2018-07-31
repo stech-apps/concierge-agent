@@ -9,6 +9,7 @@ import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
 import { QmInvalidLicenseComponent } from 'src/app/components/presentational/qm-invalid-license/qm-invalid-license.component';
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 import { QmCreateAppointmentComponent } from 'src/app/components/presentational/qm-create-appointment/qm-create-appointment.component';
+import { QmCreateVisitComponent } from '../app/components/presentational/qm-create-visit/qm-create-visit.component';
 export const appRoutes: Routes = [
   {
     path: '',
@@ -19,7 +20,8 @@ export const appRoutes: Routes = [
 
       {
         path: 'home', component: QmHomeComponent, children: [
-          { path: 'create-appointment', component: QmCreateAppointmentComponent }
+          { path: 'create-appointment', component: QmCreateAppointmentComponent },
+          { path: 'create-visit', component: QmCreateVisitComponent }
         ]
       },
       { path: 'profile', component: QmProfileComponent },

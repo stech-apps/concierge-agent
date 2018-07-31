@@ -42,7 +42,8 @@
         width: 85%;
         margin: 0 auto;
         overflow: scroll;
-        max-height: calc(100vh - 380px);
+        max-height: calc(100vh - 390px);
+        -ms-overflow-style: none;
     }
 
     &__icon {
@@ -68,7 +69,7 @@
         }
 
         &__label {
-            width: 100%;
+            width: 90%;
             height: 2.5em;
             line-height: 2.5em;
             font-size: 14px;
@@ -114,5 +115,37 @@
         &[disabled] {
             background-color: rgba(0, 0, 0, 0.5);
         }
+    }
+
+    &__list-shadow-top {
+        position: relative;
+        top: 5px;
+        max-height: 8px;
+        height: 7px;
+        box-shadow: inset 0px 3px 4px rgba(0, 0, 0, 1);
+        opacity: 0.7;
+        margin-left: auto;
+        margin-right: auto;
+        content: "...";
+        text-overflow: initial;
+        color: transparent;
+        width: 85.5%;
+        z-index : 10;
+    }
+    
+    
+    &__list-shadow-bottom {
+        position: relative;
+        bottom: 5px;
+        max-height: 8px;
+        height: 7px;
+        box-shadow: inset 0px -3px 4px rgba(0, 0, 0, 1);
+        opacity: 0.7;
+        margin-left: auto;
+        margin-right: auto;
+        content: "...";
+        text-overflow: initial;
+        color: transparent;
+        width: 85.5%;
     }
 }

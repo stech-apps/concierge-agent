@@ -8,7 +8,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
   BranchDispatchers,
-  UserSelectors
+  UserSelectors,
+  UserStatusSelectors
 } from '../../../../../src/store';
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
@@ -33,14 +34,13 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   servicePoints: IServicePoint[] = new Array<IServicePoint>();
   selectedServicePoint: IServicePoint;
   selectedBranch: IBranch;
-  currentStatus: IUserStatus;
   privacyPolicyUrl: string = null;
   userDirection$: Observable<string>;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors, private router:Router) {
+    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
@@ -62,9 +62,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.subscriptions.add(servicePointsSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
-
-    const userStateSubscription = this.spService.fetchUserStatus().subscribe((status: any) => this.currentStatus = status);
-    this.subscriptions.add(userStateSubscription);
   }
 
   ngOnInit() {

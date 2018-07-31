@@ -1,7 +1,7 @@
 import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
 import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { SPService } from 'src/util/services/rest/sp.service';
@@ -17,13 +17,16 @@ import { IServiceConfiguration } from '../../../../models/IServiceConfiguration'
 })
 export class QmQuickServeComponent implements OnInit, OnDestroy {
 
+  @ViewChild('configServiceList') configServiceList: any;
+
   private subscriptions: Subscription = new Subscription();
   services: IServiceConfiguration[] = new Array<IServiceConfiguration>();
   selectedService: IService;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
   private userDirection$:  Observable<string>;
-  
+  private isBottomBarVisible: boolean;
+  private isTopBarVisible: boolean;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -57,17 +60,30 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(serviceSubscription);
 
-    const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => this.services = services);
+    const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => {
+      this.services = services;
+      if(services.length > 0){
+        setTimeout(() => {
+          this.checkShadow();
+        }, 1000);
+      }
+    });
     this.subscriptions.add(serviceConfigSubscription);
   }
 
   ngOnInit() {
     this.selectedService = null;
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.isBottomBarVisible = true;
+    this.isTopBarVisible = false;
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  checkShadow(){
+    this.onScroll(this.configServiceList.nativeElement);
   }
 
   onServiceSelect(selectedService: IService) {
@@ -88,5 +104,33 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  onScroll(eliment){
+    let scrollHeight = eliment.scrollHeight;
+    let scrollTop = eliment.scrollTop;
+    let viewHight = eliment.offsetHeight;
+
+    if((scrollTop + viewHight) > scrollHeight){
+      if(this.isBottomBarVisible){
+        this.isBottomBarVisible = false;
+      }
+    }
+    else{
+      if(!this.isBottomBarVisible){
+        this.isBottomBarVisible = true;
+      }
+    }
+
+    if(scrollTop === 0){
+      if(this.isTopBarVisible){
+        this.isTopBarVisible = false;
+      }
+    }
+    else{
+      if(!this.isTopBarVisible){
+        this.isTopBarVisible = true;
+      }
+    }
   }
 }

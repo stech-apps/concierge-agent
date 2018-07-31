@@ -11,5 +11,4 @@ export class QmCreateAppointmentComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

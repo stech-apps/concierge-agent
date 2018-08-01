@@ -1,9 +1,9 @@
-import { UserSelectors } from './../../../../store';
-import { NativeApiService } from 'src/util/services/native-api.service';
+import { UserSelectors } from '../../../../store';
+import { NativeApiService } from '../../../../util/services/native-api.service';
 import { Observable } from 'rxjs';
-import { ISystemInfo } from './../../../../models/ISystemInfo';
+import { ISystemInfo } from '../../../../models/ISystemInfo';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { SystemInfoSelectors } from 'src/store';
+import { SystemInfoSelectors } from '../../../../store';
 
 @Component({
   selector: 'qm-app',

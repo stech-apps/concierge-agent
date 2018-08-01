@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NgbActiveModal } from '../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AutoClose } from '../../../../util/services/autoclose.service';
-import { UserSelectors } from '../../../../store';
-import { element } from '../../../../../node_modules/protractor';
-import { FormGroup, FormControl, FormBuilder } from '../../../../../node_modules/@angular/forms';
+import { UserSelectors, CustomerDispatchers } from '../../../../store';
+import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, } from '@angular/forms';
+import { ICustomer } from '../../../../models/ICustomer';
 
 @Component({
   selector: 'qm-inputbox',
@@ -12,42 +12,39 @@ import { FormGroup, FormControl, FormBuilder } from '../../../../../node_modules
   styleUrls: ['./qm-inputbox.component.scss']
 })
 export class QmInputboxComponent implements OnInit {
-  myform:FormGroup;
-
-  title: string;
-  inputBoxNames: string[];
-  btnOkText: string;
-  btnCancelText: string;
+  customerCreateForm:FormGroup;
+  currentCustomer: ICustomer;
   userDirection$: Observable<string>;
-  InputBoxGlobalItems: string[][];
-  InputBoxIndex=[];
-
+  isOnupdate:boolean
 
   constructor(
     private activeModal:NgbActiveModal,
     private autoCloseService:AutoClose,
     private userSelectors:UserSelectors,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private customerDispatchers:CustomerDispatchers
+   
   ) {
    
    }
 
   ngOnInit() {
-   
-    const inputBoxItems = [];
-    this.userDirection$ = this.userSelectors.userDirection$;
-    this.inputBoxNames.forEach((element)=>{
-      inputBoxItems.push(element[0])
+    this.userDirection$ = this.userSelectors.userDirection$;   
+    this.customerCreateForm = new FormGroup({
+      firstName: new FormControl(),
+      lastName:new FormControl(),
+      phone:new FormControl(),
+      email:new FormControl()
     })
-    this.InputBoxGlobalItems = inputBoxItems 
-     this.myform = this.fb.group({
-       inputboxes:this.fb.array(this.InputBoxGlobalItems),
-        email:[''],
-        password: ['']
-       })
-   
-    // console.log('hello a ' + this.inputBoxNames); 
-   
+    if(this.isOnupdate){
+      console.log(this.currentCustomer.id);
+      this.customerCreateForm.patchValue({
+        firstName: this.currentCustomer.firstName,
+        lastName:this.currentCustomer.lastName,
+        // phone=this.currentCustomer.phone,
+        email:this.currentCustomer.email
+      })
+    }
   }
   
   public decline() {
@@ -55,9 +52,13 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public accept() {
-    this.activeModal.close(true);
-    console.log(this.myform.value);
-  
+    console.log(this.customerCreateForm.value);
+    this.activeModal.close(this.customerCreateForm.value); 
+    if(this.isOnupdate){
+
+    }else{
+    this.customerDispatchers.createCustomer(this.customerCreateForm.value);
+     }
   }
 
   public dismiss() {

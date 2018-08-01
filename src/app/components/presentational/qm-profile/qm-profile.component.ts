@@ -1,8 +1,8 @@
-import { NativeApiService } from './../../../../util/services/native-api.service';
-import { IServicePoint } from './../../../../models/IServicePoint';
-import { IService } from './../../../../models/IService';
-import { IDropDownItem } from './../../../../models/IDropDownItem';
-import { IBranch } from './../../../../models/IBranch';
+import { NativeApiService } from '../../../../util/services/native-api.service';
+import { IServicePoint } from '../../../../models/IServicePoint';
+import { IService } from '../../../../models/IService';
+import { IDropDownItem } from '../../../../models/IDropDownItem';
+import { IBranch } from '../../../../models/IBranch';
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
@@ -14,13 +14,13 @@ import {
 import { QEvents } from 'src/util/services/qevents/qevents.service'
 import { TranslateService } from '@ngx-translate/core';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ToastService } from 'src/util/services/toast.service';
-import { APP_URL } from "src/util/url-helper";
+import { ToastService } from '../../../../util/services/toast.service';
+import { APP_URL } from "../../../../util/url-helper";
 import { SPService } from '../../../../util/services/rest/sp.service';
 import { IUserStatus } from '../../../../models/IUserStatus';
 import { USER_STATE } from '../../../../util/q-state';
-import { LoginService } from 'src/util/services/login.service';
-import { Router } from '../../../../../node_modules/@angular/router';
+import { LoginService } from '../../../../util/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-profile',

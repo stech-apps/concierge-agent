@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { CustomerSelector,CustomerDispatchers, ServicePointSelectors } from '../../../../store';
-import { tap, distinctUntilChanged, debounceTime, filter } from 'rxjs/operators';
+import { tap, distinctUntilChanged, debounceTime, filter, throwIfEmpty } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Util } from '../../../../util/util';
+import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 
 @Component({
   selector: 'qm-qm-customers',
@@ -24,13 +25,17 @@ export class QmCustomersComponent implements OnInit {
   customerLoaded:boolean;
   customerLooaded$:Observable<boolean>;
   selectedUser:ICustomer;
+
+  newcustomer:ICustomer;
+
   private CHARACTER_THRESHOLD = 2;
   constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors: CustomerSelector,
     private router:Router,
     private servicePointSelectors:ServicePointSelectors,
-    private util:Util
+    private util:Util,
+    private confirmBox:CustomerUpdateService
   
   ) {
 
@@ -101,5 +106,9 @@ export class QmCustomersComponent implements OnInit {
   }
   closeWidow(){
     this.router.navigate(['profile']);
+  }
+
+  createNewCustomer(){
+    this.confirmBox.open();
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { LicenseInfoSelectors } from 'src/store';
+import { LicenseInfoSelectors } from '../../../../store';
 import { Subscription } from 'rxjs';
 
 @Component({

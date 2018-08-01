@@ -39,7 +39,8 @@ import {
   FormGroup,
   FormControl,
   ReactiveFormsModule,
-  FormsModule
+  FormsModule,
+  FormGroupDirective
 } from "@angular/forms";
 
 // Translations
@@ -101,6 +102,7 @@ import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-
 import { TimeUtils } from "../util/services/timeUtils.service";
 import { CalendarSettingsService } from "../store/services/calendar-settings/calendar-settings.service";
 import { NavigationStart, NavigationEnd } from '@angular/router';
+
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -192,7 +194,8 @@ const toastrGlobalOptions = {
     LoginService,
     QmModalService,
     TimeUtils,
-    CalendarSettingsService
+    CalendarSettingsService,
+    FormGroupDirective
   ],
   bootstrap: [AppComponent]
 })

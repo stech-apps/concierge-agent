@@ -5,10 +5,10 @@
   margin: auto; 
   position: relative;
   // overflow: auto;
-  width: 500px;
-  right: 0px;
+  width: 450px;
+  margin-left:-100px;
   &__header {
-    padding: rem(25px 20px );
+    padding: rem(40px 20px 5px 20px );
     text-align: center;
   }
 
@@ -21,14 +21,8 @@
     }
   }
 
-  &__inputboxes {
-    padding: rem(10px);
-    overflow: auto;
-    
-  }
-
   input {
-    padding: rem(8px);
+    padding: rem(12px);
     outline: none;
     border: 0;
     float: left;
@@ -39,33 +33,35 @@
     color: $black;
     font-size: rem(12px);
     text-align: right;
-    margin-right: 10px;
+    font-weight: bold;
+    margin-right: rem(8px);
   }
 
-  &__row{
-    display: flex;
-    flex-direction: row;
-    margin: 5px
-  }
-
+  &__row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
   &__col-1{
     float: left;
-    width: 30%;
-    // padding: rem(8px);
+    width: 40%;
+    margin-top: rem(12px);
+    text-align: right;
+    color: $black;
   }
 
   &__col-2{
     float: left;
     width: 60%;
-    // padding: rem(8px);
+    padding: rem(2px);
   }
   
   &__button-container {
     display: flex;
     flex-direction: row;
-    padding: rem(10px);
-    min-height: rem(65px);
+    margin: rem(0px 40px 20px 5px);
+    // min-height: rem(50px);
   }
 
   &__primary-button {
@@ -75,6 +71,8 @@
     font-family: Montserrat-Light;
     font-size: rem(12px);
     border: none;
+    padding: 15px;
+    margin-left: rem(15px);
   }
 
   &__secondary-button {
@@ -84,7 +82,8 @@
     font-size: rem(12px);
     border: none;
     font-family: Montserrat-Light;
-    margin-right: rem(5px);
+    margin-right: rem(15px);
+    padding: 15px;
     @at-root [dir="rtl"] & {
       margin-left: rem(5px);
     }

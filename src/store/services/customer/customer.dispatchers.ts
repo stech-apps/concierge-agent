@@ -22,6 +22,7 @@ export class CustomerDispatchers{
  
     createCustomer(customer:ICustomer){
         this.store.dispatch(new CustomerAction.CreateCustomer(customer));
+        console.log('a');
     }
 
     updateCustomer(customer:ICustomer){

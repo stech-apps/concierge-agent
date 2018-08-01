@@ -100,6 +100,7 @@ import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-
 
 import { TimeUtils } from "../util/services/timeUtils.service";
 import { CalendarSettingsService } from "../store/services/calendar-settings/calendar-settings.service";
+import { NavigationStart, NavigationEnd } from '@angular/router';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -212,6 +213,12 @@ export class AppModule {
 
     this.servicePointSelectors.openServicePoint$.subscribe(openSp => {
       this.util.setApplicationTheme(openSp);
+    });
+
+    this.router.events.subscribe((ev) => {
+      if(ev instanceof NavigationEnd){
+        this.util.setSelectedApplicationTheme();
+      }
     });
 
     if (this.nativeApiService.isNativeBrowser()) {

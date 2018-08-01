@@ -1,14 +1,16 @@
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ServicePointSelectors } from 'src/store/services';
 import { Subscription, Observable } from 'rxjs';
+import { Util } from 'src/util/util';
 
 @Component({
   selector: 'qm-qm-home',
   templateUrl: './qm-home.component.html',
   styleUrls: ['./qm-home.component.scss']
 })
-export class QmHomeComponent implements OnInit {
+export class QmHomeComponent implements OnInit, AfterViewInit
+{
 
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
@@ -16,7 +18,8 @@ export class QmHomeComponent implements OnInit {
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private util: Util
   ) { 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
@@ -24,10 +27,15 @@ export class QmHomeComponent implements OnInit {
       }
     });
     this.subscriptions.add(servicePointsSubscription);
+    this.util.setSelectedApplicationTheme();
   }
 
   ngOnInit() {
-    this.userDirection$ = this.userSelectors.userDirection$;
+    this.userDirection$ = this.userSelectors.userDirection$;   
+  }
+
+  ngAfterViewInit() {
+
   }
 
   ngOnDestroy() {

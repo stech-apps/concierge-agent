@@ -1,3 +1,4 @@
+import { Util } from './../../../../util/util';
 import { Router } from '@angular/router';
 import { Component, OnInit, ContentChildren, AfterContentInit } from '@angular/core';
 import { QmFlowPanelComponent } from 'src/app/components/containers/qm-flow-panel/qm-flow-panel.component';
@@ -12,7 +13,7 @@ import { HostBinding } from '@angular/core';
 })
 export class QmFlowComponent implements OnInit, AfterContentInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private util: Util) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
 
@@ -24,7 +25,6 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     const firstPanel = this.flowPanels.toArray()[0];
-
     firstPanel.isShowExitFlow = true;
     firstPanel.isHeaderVisible = true;
     firstPanel.isContentVisible = true;

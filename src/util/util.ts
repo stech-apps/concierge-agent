@@ -1,10 +1,12 @@
+import { ServicePointSelectors } from './../store/services';
 import { Injectable } from '@angular/core';
 import cssVars from 'css-vars-ponyfill';
 
 @Injectable()
 export class Util {
-    constructor() {
-        window['x'] = this.setApplicationTheme;
+    
+    constructor(private servicePointSelectors: ServicePointSelectors) {
+        window['x'] = this.setSelectedApplicationTheme.bind(this);
     }
 
     compareVersions(baseVersion, currentVersion) {
@@ -25,13 +27,25 @@ export class Util {
         return 0;
     }
 
+    setDefaultApplicationTheme() {
+        this.setApplicationTheme(null);
+    }  
+    
+    setSelectedApplicationTheme() {
+        this.servicePointSelectors.openServicePoint$.subscribe((sp)=> {
+            this.setApplicationTheme(sp);
+        }).unsubscribe();
+    } 
+
     setApplicationTheme(servicePoint) {
-        
+        let themeColor = '#a9023a';
+
         if (servicePoint) {
-            let themeColor = servicePoint.parameters.highlightColor;
+             themeColor = servicePoint.parameters.highlightColor;
             if (themeColor == "customized") {
                 themeColor = servicePoint.parameters.customizeHighlightColor;
             }
+        }
 
             //set color for app theme custom property
             if (themeColor) {
@@ -42,6 +56,8 @@ export class Util {
                 if (!(window["CSS"] && CSS.supports('color', 'var(--primary)'))) {
                     setTimeout(() => {
                         cssVars({
+                            onlyVars : true,
+                            preserve: true,
                             variables: {
                                 'app-theme': themeColor
                             }
@@ -49,6 +65,6 @@ export class Util {
                     }, 0);
                 }
             }
-        }
+        
     }
 }

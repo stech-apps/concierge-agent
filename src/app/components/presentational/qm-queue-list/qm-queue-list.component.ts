@@ -17,7 +17,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private queuePoll = null;
   private selectedBranch: IBranch;
-  private queuePollIntervl = 60;
+  private queuePollIntervl = 1;
   sortAscending = true;
 
   constructor(
@@ -43,6 +43,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
         this.setQueuePoll();
       }
     });
+
     this.subscriptions.add(branchSubscription);
   }
 
@@ -62,8 +63,12 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  sortQueueList() {
+  onSortClick() {
     this.sortAscending = !this.sortAscending;
+    this.sortQueueList();    
+  }
+
+  sortQueueList() {
     if (this.queueCollection) {
       // sort by name
       this.queueCollection = this.queueCollection.sort((a, b) => {

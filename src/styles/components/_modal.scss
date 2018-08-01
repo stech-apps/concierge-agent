@@ -1,9 +1,11 @@
+@import "../base/_component-manifest.scss";
+
 .qm-modal {
   &__box-container {
   }
 
   &__header {
-    padding: rem(15px 10px );
+    padding: rem(15px 10px);
     text-align: center;
   }
 
@@ -12,7 +14,6 @@
     font-size: rem(15px);
     text-align: center;
     @at-root [dir="rtl"] & {
-
     }
   }
 
@@ -24,23 +25,28 @@
   &__message {
     text-align: center;
     color: $black;
+    font-size: rem(16px);
     font-family: Montserrat-Light;
+    line-height: rem(20px);
+    font-weight: normal;
   }
 
   &__button-container {
     display: flex;
     flex-direction: row;
     padding: rem(10px);
-    min-height: rem(65px);
+    min-height: rem(45px);
   }
 
   &__primary-button {
-    background-color:var(--app-theme);
+    background-color: var(--app-theme);
     flex: 1;
     color: $white;
     font-family: Montserrat-Light;
     font-size: rem(12px);
     border: none;
+    min-height: rem(45px);
+    @include add-text-ellipsis;
   }
 
   &__secondary-button {
@@ -50,6 +56,8 @@
     font-size: rem(12px);
     border: none;
     font-family: Montserrat-Light;
+    min-height: rem(45px);
+    @include add-text-ellipsis;
     margin-right: rem(5px);
     @at-root [dir="rtl"] & {
       margin-left: rem(5px);
@@ -59,6 +67,7 @@
 
 .modal-dialog {
   max-width: rem(250px);
+  margin: 1.75rem auto;
 }
 .btn-light-active-action:active {
   opacity: 0.7 !important;

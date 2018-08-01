@@ -21,6 +21,7 @@ import { IUserStatus } from '../../../../models/IUserStatus';
 import { USER_STATE } from '../../../../util/q-state';
 import { LoginService } from '../../../../util/services/login.service';
 import { Router } from '@angular/router';
+import { PlatformSelectors } from 'src/store/services';
 
 @Component({
   selector: 'qm-profile',
@@ -40,7 +41,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors) {
+    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
@@ -140,6 +141,17 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     else {
       this.loginService.login(this.selectedServicePoint);
     }
+  }
+
+  showPrivacyPolicyUrl($event) {
+    this.platformSelectors.isMobile$.subscribe((isMobile)=> {
+      if(isMobile) {
+        this.nativeApiService.showPrivacy(this.privacyPolicyUrl);
+      }
+      else {
+        window.open(this.privacyPolicyUrl, "_blank");
+      }
+    }).unsubscribe();
   }
   
   // Temp function

@@ -18,7 +18,7 @@
     <p (click)="goToCustomer()"> customers</p>
     <!-- <hr> -->
     <div class="qm-privacy-policy" *ngIf="privacyPolicyUrl">
-      <a href="{{ privacyPolicyUrl}}"> {{ 'privacy_policy' | translate}}</a>
+      <div (click)="showPrivacyPolicyUrl()"> {{ 'privacy_policy' | translate}}</div>
     </div>
   </div>
 </div>

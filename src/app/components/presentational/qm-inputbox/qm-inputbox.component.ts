@@ -15,11 +15,13 @@ export class QmInputboxComponent implements OnInit {
   customerCreateForm:FormGroup;
   currentCustomer: ICustomer;
   userDirection$: Observable<string>;
-  isOnupdate:boolean
+  isOnupdate:boolean;
+  btnOkText: string;
+  btnCancelText: string;
 
   constructor(
     private activeModal:NgbActiveModal,
-    private autoCloseService:AutoClose,
+    public autoCloseService:AutoClose,
     private userSelectors:UserSelectors,
     private fb:FormBuilder,
     private customerDispatchers:CustomerDispatchers

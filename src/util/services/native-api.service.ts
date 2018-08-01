@@ -11,7 +11,7 @@ declare var webkit: any;
 export class NativeApiService {
 
   constructor(
-    private util : Util
+    private util: Util
   ) {
   }
 
@@ -39,10 +39,10 @@ export class NativeApiService {
   }
 
   isNativeBrowser(): boolean {
-    if(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)){
+    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
@@ -53,53 +53,83 @@ export class NativeApiService {
 
   getPlatform(): IPlatform {
     return {
-        isMobile : this.isNativeBrowser(),
-        userAgent: navigator.userAgent
+      isMobile: this.isNativeBrowser(),
+      userAgent: navigator.userAgent
     };
   }
 
-  logOut(){
+  showPrivacy(privacyUrl) {
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
       //support iOS 8 and above version
       try {
-          webkit.messageHandlers.userLogout.postMessage(true);
-      } catch(err) {
-          console.log("The native context does not exist yet", {class:"nativeApi" ,func:"logout", exception: err});
+        webkit.messageHandlers.showPrivacy.postMessage(privacyUrl);
+      } catch (err) {
+        console.log('The native context does not exist yet', {
+          class: "nativeApi",
+          func: "showPrivacy",
+          exception: err
+        });
+      }
+    } else if (navigator.userAgent.match(/Android/i)) {
+      try {
+        Android.showPrivacy(privacyUrl);
+      }
+      catch (err) {
+        console.log('The native context does not exist yet', {
+          class: "nativeApi",
+          func: "showPrivacy",
+          exception: err
+        });
       }
     }
-    else if (navigator.userAgent.match(/Android/i)){
+    else {
+      window.open(privacyUrl);
+    }
+
+  }
+
+  logOut() {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+      //support iOS 8 and above version
+      try {
+        webkit.messageHandlers.userLogout.postMessage(true);
+      } catch (err) {
+        console.log("The native context does not exist yet", { class: "nativeApi", func: "logout", exception: err });
+      }
+    }
+    else if (navigator.userAgent.match(/Android/i)) {
       var nativeAndroidVersion = "1.0.0.1";
       var nativeAppVersion = "0.0.0.0";
       try {
-          nativeAppVersion = Android.getNativeAppVersion();
+        nativeAppVersion = Android.getNativeAppVersion();
       }
-      catch(err) {
-          nativeAppVersion = "0.0.0.0";
+      catch (err) {
+        nativeAppVersion = "0.0.0.0";
       }
 
       var status = 0;
       try {
-          status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
+        status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
       }
-      catch(err) {
-          status = 0;
+      catch (err) {
+        status = 0;
       }
 
-      if(status <= 0) {
-          try {
-              Android.logout();
-          }
-          catch (err) {
-            window.location.href =  LOGOUT_URL;
-              console.log('The native context does not exist yet', {
-                  class: "nativeApi",
-                  func: "showErrorMessage",
-                  exception: err
-              });
-          }
+      if (status <= 0) {
+        try {
+          Android.logout();
+        }
+        catch (err) {
+          window.location.href = LOGOUT_URL;
+          console.log('The native context does not exist yet', {
+            class: "nativeApi",
+            func: "showErrorMessage",
+            exception: err
+          });
+        }
       }
       else {
-        window.location.href =  LOGOUT_URL;
+        window.location.href = LOGOUT_URL;
       }
     }
   }

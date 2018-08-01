@@ -41,6 +41,10 @@
         z-index: 1000;
         display: none;
 
+        @at-root [dir="rtl"] & {
+            text-align: right;
+        }
+
         &--expanded {
             display: block;
         }

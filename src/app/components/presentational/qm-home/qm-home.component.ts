@@ -14,6 +14,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit
 
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
+  isShowQueueView: boolean;
   userDirection$: Observable<string>;
 
   constructor(
@@ -24,6 +25,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.isQuickServeEnable = params.quickServe;
+        this.isShowQueueView = params.queueView;
       }
     });
     this.subscriptions.add(servicePointsSubscription);

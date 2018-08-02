@@ -2,7 +2,7 @@
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
     <qm-quick-serve *ngIf="isQuickServeEnable"></qm-quick-serve>
-    <div class="qm-home-summary-area">
+    <div class="qm-home-summary-area" *ngIf="isShowQueueView">
       <qm-queue-summary></qm-queue-summary>
       <qm-queue-list></qm-queue-list>
     </div>

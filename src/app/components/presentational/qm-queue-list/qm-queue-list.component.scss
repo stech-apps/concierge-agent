@@ -21,7 +21,7 @@
         font-size: 1.3rem;
 
         &.gray-indicator {
-            visibility: hidden;            
+            visibility: hidden;
         }
 
         &.red-indicator {
@@ -48,19 +48,32 @@
                 margin-left: 0.2rem;
             }
         }
-    } 
+    }
 
     &-header-item {
         display: flex;
         justify-content: center;
         align-items: center;
+        min-width: 0;
+
+        &-label {
+          @include add-text-ellipsis;
+          width:inherit;
+      }
     }
+
+
 
     &-body-row {
         justify-content: center;
         align-items: center;
         text-align: center;
         height: 3rem;
+
+        &-label {
+          @include add-text-ellipsis;
+          width:inherit;
+      }
     }
 
     background-color: $wating-list-background;

@@ -151,6 +151,7 @@ $rem-px-only: false !default;
   position: absolute;
 }
 //common style to add ellipsis to text
+//When use with flexbox use "min-width:0;" in parent to avoid style errors
 @mixin add-text-ellipsis {
   white-space: nowrap;
   width: 100%;

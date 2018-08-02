@@ -17,12 +17,13 @@ $summary-border: 1px solid $dark-transparent44;
 .qm-queue-summary {
   &-label {
     margin-left: ($standard-padding/2);
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include add-text-ellipsis;
+    width: inherit;
   }
   &--value {
     font-size: 2rem;
     padding-left: 1rem;
+    white-space: nowrap;
 
   }
   &__left {
@@ -31,12 +32,14 @@ $summary-border: 1px solid $dark-transparent44;
     align-items: center;
     flex: 1;
     border-right: $summary-border;
+    min-width: 0;
   }
   &__right {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
+    min-width: 0;
   }
 }
 
@@ -51,7 +54,7 @@ $summary-border: 1px solid $dark-transparent44;
       border-right: $summary-border;
     }
 
-    &--value { 
+    &--value {
         margin-right: 0.8rem;
     }
   }

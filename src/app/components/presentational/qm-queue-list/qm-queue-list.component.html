@@ -4,22 +4,22 @@
       <div>
         <i class="icon-queue" aria-hidden="true"></i>
       </div>
-      <div>{{'ql_queue' | translate}}</div>
+      <div class="qm-queue-list-header-item-label">{{'ql_queue' | translate}}</div>
       <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
     </div>
     <div class="qm-queue-list-header-item qm-col qm-flex-grid">
       <div>
         <i class="icon-customer-solid" aria-hidden="true"></i>
       </div>
-      <div>{{'ql_customer' | translate}}</div>
+      <div class="qm-queue-list-header-item-label">{{'ql_customer' | translate}}</div>
     </div>
-    <div class="qm-col"> {{ 'ql_max_wait_time' | translate}} </div>
-    <div class="qm-col"> {{ 'ql_est_wait_time' | translate}} </div>
+    <div class="qm-col qm-queue-list-header-item-label"> {{ 'ql_max_wait_time' | translate}} </div>
+    <div class="qm-col qm-queue-list-header-item-label"> {{ 'ql_est_wait_time' | translate}} </div>
   </div>
 
   <div class="qm-queue-list__body">
     <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection">
-        <div class="qm-col">{{q.queue}}</div>
+        <div class="qm-col qm-queue-list-body-row-label">{{q.queue}}</div>
         <div class="qm-col">{{q.customers }}</div>
         <div class="qm-col max-wait-time-container">
           <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>

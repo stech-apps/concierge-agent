@@ -1,0 +1,30 @@
+//qm-flow-sub-header
+.qm-flow-sub-header {
+    height: 2.8rem;
+    background-color: $app-theme;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+  
+    &__search {
+      height: rem(34px);
+      color: #111;
+      vertical-align: middle;
+      font-size: rem(14px);
+      line-height: rem(16px);
+      flex: 2;
+      width: 100%;
+      padding: 0.4rem 1rem;
+    }
+  
+    &__left {
+      flex: 1;
+    }
+  
+    &__right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }

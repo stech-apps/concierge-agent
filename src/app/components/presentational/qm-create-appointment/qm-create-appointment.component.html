@@ -5,23 +5,24 @@
       <qm-flow-panel-result>{{ selectedBranch.name }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-        <qm-select-branch (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
+      <qm-select-branch (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
+  <qm-flow-panel #ps [isHeaderVisible]="true">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-        
     </qm-flow-panel-content>
   </qm-flow-panel>
-
-  <qm-flow-panel #pa >
-      <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
-        <qm-flow-panel-title>{{ 'arrive_confirm' | translate}}</qm-flow-panel-title>
-        <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
-      </qm-flow-panel-header>
-    </qm-flow-panel>
+  <qm-flow-panel #pa [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
+      <qm-flow-panel-title>{{ 'date_and_time' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
+    </qm-flow-panel-header>
+    <qm-flow-panel-content>
+      <qm-appointment-time-select></qm-appointment-time-select>
+  </qm-flow-panel-content>
+  </qm-flow-panel>
 </qm-flow>

@@ -103,6 +103,7 @@ import { TimeUtils } from "../util/services/timeUtils.service";
 import { CalendarSettingsService } from "../store/services/calendar-settings/calendar-settings.service";
 import { NavigationStart, NavigationEnd } from '@angular/router';
 import { FilterBranchPipe } from './components/presentational/qm-select-branch/filter-branch.pipe';
+import { QmAppointmentTimeSelectComponent } from './components/presentational/qm-appointment-time-select/qm-appointment-time-select.component';
 
 
 // Global options for Toastr
@@ -146,7 +147,8 @@ const toastrGlobalOptions = {
     QmReservationTimerComponent,
     QmInputboxComponent,
     QmCreateVisitComponent,
-    FilterBranchPipe
+    FilterBranchPipe,
+    QmAppointmentTimeSelectComponent
   
   ],
   entryComponents: [

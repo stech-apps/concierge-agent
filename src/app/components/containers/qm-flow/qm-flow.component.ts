@@ -25,10 +25,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-   /* const firstPanel = this.flowPanels.toArray()[0];
+   const firstPanel = this.flowPanels.toArray()[0];
     firstPanel.isShowExitFlow = true;
-    firstPanel.isHeaderVisible = true;
-    firstPanel.isContentVisible = true;*/
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
@@ -47,9 +45,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
           fp.isHeaderVisible = false;
         }
       }
-    });
-
-    
+    });    
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {

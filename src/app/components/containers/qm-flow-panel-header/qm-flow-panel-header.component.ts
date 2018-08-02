@@ -37,7 +37,9 @@ export class QmFlowPanelHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  clickExit() {
+  clickExit($event) {
+    console.log($event);
+    $event.stopPropagation();
     this.onFlowExit.emit();
   }
 }

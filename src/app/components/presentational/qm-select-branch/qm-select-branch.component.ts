@@ -58,11 +58,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if(v) {
           this.branchDispatchers.selectBranch(branch);
+          this.onFlowNext.emit();
         }
       }, ()=> {});
-    }
-    else {
-      this.branchDispatchers.selectBranch(branch);
     }
   }
 

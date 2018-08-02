@@ -1,0 +1,13 @@
+@import '../base/colors';
+
+.qm-done-button {
+    width: 70px;
+    height: 35px;
+    line-height: 35px;
+    background: $primary-text-color;
+    color: black;
+    text-align: center;
+    margin-right: 1em;
+    font-size: 0.8em;
+    cursor: pointer;
+}

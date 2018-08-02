@@ -49,19 +49,15 @@ export class QmCustomToastComponent extends Toast {
     public domSanitizer: DomSanitizer
   ) {
     super(toastrService, toastPackage);
-
   }
 
   action(event: Event) {
     event.stopPropagation();
-
     this.toastPackage.triggerAction();
     return false;
   }
 
   ngOnInit() {
     this.iconSvg =  this.domSanitizer.bypassSecurityTrustHtml(this.iconSvg);
-  }
-
- 
+  } 
 }

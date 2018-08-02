@@ -12,7 +12,7 @@ export interface IBranchState {
 
 export const initialState: IBranchState = {
   branches: [],
-  selectedBranch: { id: -1, name: ''},
+  selectedBranch: { id: -1, name: '', isSkip: false},
   searchText: '',
   loading: false,
   loaded: false,

@@ -1,3 +1,4 @@
+import { QmModalService } from './../../presentational/qm-modal/qm-modal.service';
 import { Util } from './../../../../util/util';
 import { Router } from '@angular/router';
 import { Component, OnInit, ContentChildren, AfterContentInit } from '@angular/core';
@@ -13,7 +14,7 @@ import { HostBinding } from '@angular/core';
 })
 export class QmFlowComponent implements OnInit, AfterContentInit {
 
-  constructor(private router: Router, private util: Util) { }
+  constructor(private router: Router, private util: Util, private qmModalService: QmModalService) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
 
@@ -52,10 +53,18 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
-    this.exitFlow = true;
-    setTimeout(() => {
-      this.router.navigate(['home']);
-    }, 1000);
+
+    this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result)=> {
+      if(result) {
+        this.exitFlow = true;
+        setTimeout(() => {
+          this.router.navigate(['home']);
+        }, 1000);
+      }
+    }, ()=> {
+
+    });
+
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {

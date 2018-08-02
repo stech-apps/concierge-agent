@@ -72,7 +72,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.selectedBranch = {
       name: 'branch',
-      id: -1
+      id: -1,
+      isSkip: false
     };
   }
 

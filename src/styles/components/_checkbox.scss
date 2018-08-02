@@ -1,0 +1,68 @@
+.qm-checkbox__container {
+  position: relative;
+  display: flex;
+}
+
+.qm-option__checkbox:checked~.qm-option__checkbox-icon:before {
+  content: "\e95e";
+}
+
+.qm-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+  color: $primary-text-color;
+
+  &-label {
+    margin-bottom: 0rem;
+  }
+
+  &:checked {
+    &~.qm-checkbox__selector {
+      .qm-checkbox__selector-icon {
+        &:before {
+          content: "\e95e";
+          @at-root [dir='rtl'] & {
+            content: "\e960";
+          }
+        }
+      }
+    }
+  }
+
+  &__selector {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__selector-icon {
+    font-size: 2.2rem;
+    color: $primary-text-color;
+    &:before {
+      content: "\e961";
+      font-family: icomoon !important;
+      speak: none;
+      font-style: normal;
+      font-weight: 400;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    &-text {
+        font-family: sans-serif;
+        color: $primary-text-color;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <qm-flow #f>
-  <qm-flow-panel #pb [isActive]="true">
+  <qm-flow-panel #pb [isHeaderVisible]="true">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'select_branch_header' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{ selectedBranch.name }}</qm-flow-panel-result>
@@ -8,13 +8,13 @@
         <qm-select-branch (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel #ps >
+  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-        <qm-select-branch (onFlowNext)="f.onFlowNext(pa)"></qm-select-branch>
+        
     </qm-flow-panel-content>
   </qm-flow-panel>
 

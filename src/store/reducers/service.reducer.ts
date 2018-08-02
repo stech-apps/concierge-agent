@@ -12,6 +12,7 @@ export interface IServiceState {
   loading: boolean;
   loaded: boolean;
   error: Object;
+  serviceLoaded: boolean;
 }
 
 export const initialState: IServiceState = {
@@ -22,7 +23,8 @@ export const initialState: IServiceState = {
   searchText: '',
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  serviceLoaded: false
 };
 
 export function reducer (
@@ -40,10 +42,11 @@ export function reducer (
     case ServiceActions.FETCH_SERVICES_SUCCESS: {
       return {
         ...state,
-        services: action.payload,
+        services: sortServices(action.payload),
         loading: false,
         loaded: true,
-        error: null
+        error: null,
+        serviceLoaded: true
       };
     }
     case ServiceActions.FETCH_SERVICES_FAIL: {

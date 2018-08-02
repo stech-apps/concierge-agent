@@ -1,0 +1,74 @@
+@import '../../../../styles/base/_component-manifest.scss';
+//qm-flow-sub-header
+.qm-flow-sub-header {
+    height: 2.8rem;
+    background-color: $app-theme;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+  
+    &__search {
+      height: rem(34px);
+      color: #111;
+      vertical-align: middle;
+      font-size: rem(14px);
+      line-height: rem(16px);
+      flex: 2;
+      width: 100%;
+      padding: 0.4rem 1rem;
+    }
+  
+    &__left {
+      flex: 1;
+    }
+  
+    &__right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+.qm-service-list__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.5rem;
+    height: calc(100vh - 120px);
+    overflow: scroll;
+}
+
+.qm-service-list {
+
+    &__item {
+        color: #000;
+        background: #FFFFFF;
+        text-align: center;
+        height: 3.5em;
+        line-height: 3em;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+        max-width: 50%;
+        font-size: 0.8em;
+        font-weight: 500;
+        margin: rem(4px);
+        font-family: $primary-font-family;
+        width: 50%;
+        cursor: pointer;
+        position: relative;
+        letter-spacing: $extended-letter-spacing-2;
+
+        &--selected {
+            background-color: var(--app-theme);
+            color: $primary-text-color;
+        }
+
+        i {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}

@@ -17,7 +17,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private queuePoll = null;
   private selectedBranch: IBranch;
-  private queuePollIntervl = 1;
+  private queuePollIntervl = 60;
   sortAscending = true;
 
   constructor(
@@ -26,7 +26,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private branchSelectors: BranchSelectors,
     public queueIndicator: QueueIndicator
   ) {
-
+    
   }
 
   ngOnInit() {

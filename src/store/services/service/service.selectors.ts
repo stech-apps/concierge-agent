@@ -40,6 +40,11 @@ export const getSelectedServices = createSelector(
   (state: IServiceState) => state.selectedServices
 );
 
+export const isServiceLoaded = createSelector(
+  getServiceState,
+  (state: IServiceState) => state.serviceLoaded
+);
+
 @Injectable()
 export class ServiceSelectors {
   constructor(private store: Store<IAppState>) {}
@@ -48,4 +53,5 @@ export class ServiceSelectors {
   quickServices$ = this.store.select(getAllQuickServices);
   selectedServices$ = this.store.select(getSelectedServices);
   isQuickServiceEnable$ = this.store.select(isQuickServiceEnable);
+  isServiceLoaded$ = this.store.select(isServiceLoaded);
 }

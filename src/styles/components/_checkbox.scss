@@ -24,6 +24,10 @@
     margin-bottom: 0rem;
   }
 
+  &:input {
+    display: none;
+  }
+
   &:checked {
     &~.qm-checkbox__selector {
       .qm-checkbox__selector-icon {

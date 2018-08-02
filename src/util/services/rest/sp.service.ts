@@ -72,4 +72,8 @@ export class SPService implements OnDestroy {
           catchError(this.errorHandler.handleError())
         );
   }
+
+  createVisit(){
+    
+  }
 }

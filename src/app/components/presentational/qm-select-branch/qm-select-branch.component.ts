@@ -1,5 +1,7 @@
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { QmModalService } from './../qm-modal/qm-modal.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IBranchViewModel } from './../../../../models/IBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
@@ -16,6 +18,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   branches: IBranchViewModel[] = new Array<IBranchViewModel>();
   private subscriptions: Subscription = new Subscription();
   private selectedBranch: IBranch = new IBranch();
+  inputChanged: Subject<string> = new Subject<string>();
+  filterText: string = '';
 
   constructor(private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers, private qmModalService: QmModalService) {
 
@@ -39,6 +43,10 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(branchSubscription);
+
+    this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterBranches(text));
   }
 
   @Output()
@@ -68,6 +76,14 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  handleInput($event) {
+    this.inputChanged.next($event.target.value);
+  }
+
+  filterBranches(newFilter: string) {    
+   this.filterText = newFilter;
   }
 
   doneButtonClick() {

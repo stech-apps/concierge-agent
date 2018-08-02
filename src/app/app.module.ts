@@ -102,6 +102,7 @@ import { QmInputboxComponent } from './components/presentational/qm-inputbox/qm-
 import { TimeUtils } from "../util/services/timeUtils.service";
 import { CalendarSettingsService } from "../store/services/calendar-settings/calendar-settings.service";
 import { NavigationStart, NavigationEnd } from '@angular/router';
+import { FilterBranchPipe } from './components/presentational/qm-select-branch/filter-branch.pipe';
 
 
 // Global options for Toastr
@@ -144,7 +145,8 @@ const toastrGlobalOptions = {
     QmCustomerCreateComponent,
     QmReservationTimerComponent,
     QmInputboxComponent,
-    QmCreateVisitComponent
+    QmCreateVisitComponent,
+    FilterBranchPipe
   
   ],
   entryComponents: [

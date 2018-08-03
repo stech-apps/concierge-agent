@@ -21,6 +21,13 @@
     &__left {
       flex: 1;
     }
+
+    &__center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
   
     &__right {
       flex: 1;

@@ -1,0 +1,80 @@
+
+.qm-calendar{
+    font-family: $secondary-font-regular;
+    &-navs {
+        background-color: $app-theme;
+        display: flex;
+        color: $primary-text-color;
+        height: rem(50px);
+        justify-content: space-between;
+        align-items: center;
+        button {
+            height: 100%;
+            width: rem(50px);
+            background-color: $app-theme;
+            color: $primary-text-color;
+            border: none;
+            font-size: 2.2rem;
+            cursor: pointer;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+    
+    &-day-names {
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .qm-day-name{
+        flex: 1;
+        color: $app-theme;
+        font-weight: bold;
+        font-size: 0.8rem;
+        letter-spacing: $extended-letter-spacing;
+        display: flex;
+        justify-content: center;
+        height: 3rem;
+        align-items: center;
+        &:not(:last-child)  {
+            border-right: 1px solid #ccc;
+        }        
+    }
+
+    .qm-calendar-week {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .qm-week-date {
+        display: flex;
+        flex: 1; 
+        cursor: pointer;
+        &:not(:last-child)  {
+            border-right: 1px solid #ccc;
+        }   
+        &.selected {
+            background-color: $app-theme;
+            color: $primary-text-color;
+        }
+    }
+
+    .qm-date-text {
+        text-align: right;
+        height: 3rem;
+        width: 100%;
+        padding-right: calc(50% - 10px);
+        vertical-align: middle;
+        line-height: 3rem;
+        font-family: $secondary-font-light;
+    }
+
+    background-color: $calendar-background;
+}
+
+.qm-month-nav {
+    display: flex;
+    justify-content: space-between;
+}

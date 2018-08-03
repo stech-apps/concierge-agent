@@ -27,6 +27,9 @@ import { StoreModule, Store, ActionReducer, MetaReducer } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
+// Moment
+import { MomentModule } from 'angular2-moment';
+
 // Store setup
 import { reducers } from "../store/reducers";
 import { effects } from "../store/effects";
@@ -104,6 +107,8 @@ import { CalendarSettingsService } from "../store/services/calendar-settings/cal
 import { NavigationStart, NavigationEnd } from '@angular/router';
 import { FilterBranchPipe } from './components/presentational/qm-select-branch/filter-branch.pipe';
 import { QmAppointmentTimeSelectComponent } from './components/presentational/qm-appointment-time-select/qm-appointment-time-select.component';
+import { QmCalendarComponent } from './components/containers/qm-calendar/qm-calendar.component';
+import { QmTimeSlotsComponent } from './components/containers/qm-time-slots/qm-time-slots.component';
 import { QmSelectServiceComponent } from './components/presentational/qm-select-service/qm-select-service.component';
 import { QmCustomerSearchBarComponent } from './components/presentational/qm-customer-search-bar/qm-customer-search-bar.component';
 import { FilterServicePipe } from './components/presentational/qm-select-service/filter-service.pipe';
@@ -151,6 +156,8 @@ const toastrGlobalOptions = {
     QmCreateVisitComponent,
     FilterBranchPipe,
     QmAppointmentTimeSelectComponent,
+    QmCalendarComponent,
+    QmTimeSlotsComponent,
     QmSelectServiceComponent,
     QmCustomerSearchBarComponent,
     FilterServicePipe
@@ -164,6 +171,7 @@ const toastrGlobalOptions = {
   imports: [
     BrowserModule,
     HttpClientModule,
+    MomentModule,
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forRoot(effects),

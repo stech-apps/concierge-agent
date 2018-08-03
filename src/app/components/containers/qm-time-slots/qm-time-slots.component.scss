@@ -1,0 +1,48 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+.time-interval-container {
+    display: flex;
+}
+
+.qm-time-interval {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-gray7;
+    height: 2.5rem;
+    cursor: pointer;
+    letter-spacing: $extended-letter-spacing-2;
+
+    &:not(:last-child) {
+        border-right: 1px solid $light-gray8;
+    }
+
+    &--active {
+        background-color: $app-theme;
+        color: $primary-text-color;
+    }
+} 
+
+.qm-time-select-slot {
+    background-color: $primary-text-color;
+    display: flex;
+    justify-content: center;
+    height: 2.7rem;
+    align-items: center;
+    border-bottom: 1px solid $light-gray8;
+    letter-spacing: $extended-letter-spacing-2;
+    cursor: pointer;
+    &--active {
+        background-color: $app-theme;
+        color: $primary-text-color;
+    }
+}
+
+.qm-time-slot-list {
+    height: calc(100vh - 285px);
+    overflow-y: auto;
+    font-family: $primary-font-family;
+
+
+}

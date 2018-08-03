@@ -2,11 +2,11 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { QmModalService } from './../qm-modal/qm-modal.service';
 import { Observable, Subject } from 'rxjs';
-import { IBranchViewModel } from './../../../../models/IBranchViewModel';
+import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { BranchSelectors, BranchDispatchers } from 'src/store';
-import { IBranch } from 'src/models/IBranch';
+import { CalendarBranchSelectors, CalendarBranchDispatchers } from 'src/store';
+import { ICalendarBranch } from 'src/models/ICalendarBranch';
 
 @Component({
   selector: 'qm-select-branch',
@@ -15,16 +15,16 @@ import { IBranch } from 'src/models/IBranch';
 })
 export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
-  branches: IBranchViewModel[] = new Array<IBranchViewModel>();
+  branches: ICalendarBranchViewModel[] = new Array<ICalendarBranchViewModel>();
   private subscriptions: Subscription = new Subscription();
-  selectedBranch: IBranch = new IBranch();
+  selectedBranch: ICalendarBranch = new ICalendarBranch();
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
 
-  constructor(private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers, private qmModalService: QmModalService) {
+  constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
-      this.branches = <Array<IBranchViewModel>>bs;
+      this.branches = <Array<ICalendarBranchViewModel>>bs;
 
       const selectedBranchSub = this.branchSelectors.selectedBranch$.subscribe((sb) => {
 
@@ -53,11 +53,11 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
 
-  onToggleBranchSelection(branch: IBranchViewModel) {
+  onToggleBranchSelection(branch: ICalendarBranchViewModel) {
     if (this.selectedBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if(v) {
-          this.branchDispatchers.selectBranch(branch);
+          this.branchDispatchers.selectCalendarBranch(branch);
           this.onFlowNext.emit();
         }
       }, ()=> {});

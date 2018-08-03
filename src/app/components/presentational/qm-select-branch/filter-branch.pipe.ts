@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IBranchViewModel } from 'src/models/IBranchViewModel';
+import { ICalendarBranchViewModel } from 'src/models/ICalendarBranchViewModel';
 
 @Pipe({
   name: 'filterBranch'
 })
 export class FilterBranchPipe implements PipeTransform {
 
-  transform(branches: IBranchViewModel[], filterText?: any): any {
+  transform(branches: ICalendarBranchViewModel[], filterText?: any): any {
 
     if(!branches || !filterText) {
       return branches;

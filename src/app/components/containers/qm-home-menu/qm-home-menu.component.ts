@@ -4,7 +4,7 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers } from 'src/store';
 
 @Component({
   selector: 'qm-home-menu',
@@ -28,7 +28,7 @@ export class QmHomeMenuComponent implements OnInit {
 
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
-              private userSelectors: UserSelectors) { 
+              private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers) { 
    
   }
 
@@ -36,6 +36,10 @@ export class QmHomeMenuComponent implements OnInit {
     this.checkUserPermissions();
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
+
+    if(this.isAppointmentUser){
+      this.calendarBranchDispatcher.fetchCalendarBranches();
+    }
   }
 
   checkUttPermissions() {

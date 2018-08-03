@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const translateSubscription = this.translateService.get('branch').subscribe(
       (branchLabel: string) => {
-       this.branchDispatchers.selectBranch({id: -1, name: branchLabel, isSkip: false});
+       this.branchDispatchers.selectBranch({id: -1, name: branchLabel});
       }
     );  
     this.subscriptions.add(translateSubscription); 

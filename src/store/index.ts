@@ -3,11 +3,6 @@ export * from "./effects";
 export * from "./reducers";
 export * from "./services";
 
-export * from "./actions";
-export * from "./effects";
-export * from "./reducers";
-export * from "./services";
-
 import {
   SystemInfoDispatchers,
   SystemInfoDataService,
@@ -31,6 +26,9 @@ import {
   BranchSelectors,
   BranchDispatchers,
   BranchDataService,
+  CalendarBranchSelectors,
+  CalendarBranchDispatchers,
+  CalendarBranchDataService,
   ServiceDispatchers,
   ServiceDataService,
   CalendarServiceDataService,
@@ -78,6 +76,9 @@ export const storeServices = [
   BranchSelectors,
   BranchDispatchers,
   BranchDataService,
+  CalendarBranchSelectors,
+  CalendarBranchDispatchers,
+  CalendarBranchDataService,
   ServiceDispatchers,
   ServiceDataService,
   ServiceSelectors,

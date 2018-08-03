@@ -15,3 +15,4 @@ export * from './queue.actions';
 export * from './customer.actions';
 export * from './calendar-settings.actions';
 export * from './reservation-expiry-timer.actions';
+export * from './calendar-branch.actions';

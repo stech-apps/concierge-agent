@@ -14,6 +14,7 @@
       <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
+        <qm-select-service (onFlowNext)="setPanelClick()" [flowType]="flowType"></qm-select-service>
     </qm-flow-panel-content>
   </qm-flow-panel>
   <qm-flow-panel #pa [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">

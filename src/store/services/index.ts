@@ -16,3 +16,4 @@ export * from './queue';
 export * from './customer';
 export * from './calendar-settings';
 export * from './reservation-expiry-timer';
+export * from './calendar-branch';

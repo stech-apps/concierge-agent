@@ -24,10 +24,10 @@ export class CustomerUpdateService {
     });
     if(update){
       modalRef.componentInstance.isOnupdate = true;
-      console.log('true');
+   
     } else{
       modalRef.componentInstance.isOnupdate = false;
-      console.log('false');
+   
     }
     return modalRef.result;
   }

@@ -36,17 +36,19 @@ input::-ms-clear {
     color: $black;
     font-size: rem(15px);
     text-align: center;
-    @at-root [dir="rtl"] & {
-
-    }
   }
 
   &__inputbox-name {
+    display: block;
     color: $black;
     font-size: rem(12px);
     text-align: right;
     font-weight: bold;
     margin-right: rem(8px);
+    @at-root [dir="rtl"] & {
+      text-align: left;
+    }
+    
   }
 
   &__row:after {
@@ -59,14 +61,19 @@ input::-ms-clear {
     float: left;
     width: 40%;
     margin-top: rem(12px);
-    text-align: right;
     color: $black;
+    @at-root [dir="rtl"] & {
+      float: right;
+    }
   }
 
   &__col-2{
     float: left;
     width: 60%;
     padding: rem(2px);
+    @at-root [dir="rtl"] & {
+      float: right;
+    }
   }
   
   &__button-container {
@@ -104,5 +111,7 @@ input::-ms-clear {
       margin-left: rem(5px);
     }
   }
+
+  
 }
 

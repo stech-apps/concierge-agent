@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
-import { CustomerDispatchers, CustomerSelector } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, UserSelectors } from '../../../../store';
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { CustomerUpdateService } from '../../../../util/services/customer-update
   styleUrls: ['./qm-customer-search.component.scss']
 })
 export class QmCustomerSearchComponent implements OnInit {
+
+  @Input() title: string;
 
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
@@ -21,9 +23,11 @@ export class QmCustomerSearchComponent implements OnInit {
   constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors:CustomerSelector,
-    private confirmBox:CustomerUpdateService
+    private confirmBox:CustomerUpdateService,
+    private userSelectors:UserSelectors
   ) { 
-  
+    this.userDirection$ = this.userSelectors.userDirection$;
+    console.log(this.title);
   }
 
   ngOnInit() {

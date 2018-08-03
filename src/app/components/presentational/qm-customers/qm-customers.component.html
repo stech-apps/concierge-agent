@@ -1,11 +1,11 @@
-<div  class="qm-customers animated slideInUp faster" >
+<div  class="qm-customers animated slideInUp faster" dir="{{ userDirection$ | async }}">
+<i (click)="closeWidow()" class="qm-close-window icon-close" aria-hidden="true" ></i>
 <header class="qm-customer-header ">
 </header>
-<i (click)="closeWidow()" class="qm-close-window icon-close" aria-hidden="true" ></i>
 <br>
 <qm-customer-search-bar></qm-customer-search-bar>  
 <br>
-  <qm-qm-customer-search ></qm-qm-customer-search> 
+  <qm-qm-customer-search [title]="theTitle"></qm-qm-customer-search> 
   <hr>
 
 </div>

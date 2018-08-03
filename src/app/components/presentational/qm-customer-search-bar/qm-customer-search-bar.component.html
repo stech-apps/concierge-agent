@@ -1,4 +1,4 @@
-<div class="customer-search">
+<div class="customer-search" dir="{{ userDirection$ | async }}">
   <input type="search" placeholder="{{ 'search_for_customers' | translate }}" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value)"> 
   <i *ngIf="customerSearch.value!=''" (click)="resetSearch()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
   <span class="add-customer-button" (click)="createNewCustomer()">     

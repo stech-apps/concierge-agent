@@ -10,9 +10,10 @@
               <div class="qm-input-box__col-1" >
                 <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
               </div>
-              <div class="qm-input-box__col-2" >
+              <div class="qm-input-box__col-2">
+                  <i *ngIf="firstName.value!='' && [userDirection$ | async] =='rtl'" (click)="clearFirstName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                 <input  type="text" name='firstName' placeholder="{{'mandatory'|translate }}" formControlName = "firstName" #firstName maxlength="50" required autoFocus> 
-                <i *ngIf="firstName.value!=''" (click)="clearFirstName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+                  <i *ngIf="firstName.value!=''  && [userDirection$ | async] =='ltr'" (click)="clearFirstName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
               </div>
             </div>
             <div class="qm-input-box__row">
@@ -20,8 +21,9 @@
                     <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
                 </div>
                 <div class="qm-input-box__col-2" >
+                    <i *ngIf="lastName.value!='' && [userDirection$ | async] =='rtl'" (click)="clearLastName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                   <input type="text" name='lastName' formControlName = "lastName"  placeholder="{{'mandatory'|translate }}" #lastName  maxlength="50" required>
-                  <i *ngIf="lastName.value!=''" (click)="clearLastName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+                  <i *ngIf="lastName.value!='' && [userDirection$ | async] =='ltr'" (click)="clearLastName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                 </div>
               </div>
               <div class="qm-input-box__row">
@@ -29,8 +31,9 @@
                       <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
                   </div>
                   <div class="qm-input-box__col-2">
+                      <i *ngIf="phone.value!='' && [userDirection$ | async] =='rtl'" (click)="clearPhoneNum()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>    
                     <input type="text" name='phone' placeholder="{{'optional'|translate }}" formControlName = "phone" #phone>
-                    <i *ngIf="phone.value!=''" (click)="clearPhoneNum()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+                    <i *ngIf="phone.value!='' && [userDirection$ | async] =='ltr'" (click)="clearPhoneNum()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                   </div>
                 </div>
               <div class="qm-input-box__row">
@@ -38,8 +41,9 @@
                         <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
                     </div>
                     <div class="qm-input-box__col-2">
+                        <i *ngIf="email.value!=''&& [userDirection$ | async] =='rtl'" (click)="clearEmail()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                       <input type="text" name='email' placeholder="{{'optional'|translate }}" formControlName = "email" #email>
-                      <i *ngIf="email.value!=''" (click)="clearEmail()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+                      <i *ngIf="email.value!='' && [userDirection$ | async] =='ltr'" (click)="clearEmail()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                     </div>
               </div>
       </div>

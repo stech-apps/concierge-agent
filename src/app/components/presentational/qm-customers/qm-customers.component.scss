@@ -25,10 +25,9 @@
         flex-direction: column;
         overflow: hidden;
         background-color: $light-gray2  ;
-    }
 
-// header styles
-.qm-customer-header {
+    // header styles
+    .qm-customer-header {
     display: flex;
     background-color: var(--app-theme);  
     position: relative;
@@ -37,77 +36,27 @@
     height: 2.8rem;
     align-items: center;
   
-}
-
-.customer-search{
-    svg {
-         display: inline-block;
-        width: rem(30px);
-        margin: 0 auto;
-        bottom: 0 auto;
-        vertical-align: middle;
-        text-align: center;
-        .cls-sc-1,.cls-sc-2,.cls-sc-3{
-            fill:none;
-            stroke:#000;
-        }
-        .cls-sc-1{
-            stroke-linecap:round;
-            stroke-linejoin:round;
-        }
-        .cls-sc-1,.cls-sc-2{
-            stroke-width:1.5px;
-        }
-        .cls-sc-2,.cls-sc-3{
-            stroke-miterlimit:10;
-        }
-        
     }
 
-    input{
-        width:40%;
-        align-content: center;
-        padding: 0.5rem;
-        margin: 0 auto;
-        padding-left: 1em;
-        // height:100%; 
-        outline: none;
-        border: 0;
-    }
-    
-    .add-customer-button{
-        background-color:$white;
-        margin: 0.5rem;
-        align-items: center;
-        text-align: center;
-        color: $primary-text-color;
-        padding: 8px 20px 8px 20px;
-        cursor: pointer;
-        
     }
 
-    .qm-clear-search{
-        // float: right;
-        margin: 0px 10px 0px -25px;
-        position: relative;
+    .qm-close-window{
+        float: right;
+        position: absolute;
         z-index: 2;
-        color: black
-    }
+        cursor: pointer;
+        @at-root [dir="rtl"] & {
+                top:10px;
+                left: 10px;
+           }
+        @at-root [dir="ltr"] & {
+            top:10px;
+            right:10px;
+       }
 
-   
 
-    margin-top: 15px;
-    position: relative;
 }
 
-.qm-close-window{
-    float: right;
-    top:10px;
-    right: 10px;
-    position: absolute;
-    z-index: 2;
-    cursor: pointer;
-}
 
 
 

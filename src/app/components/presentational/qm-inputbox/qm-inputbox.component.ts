@@ -32,6 +32,7 @@ export class QmInputboxComponent implements OnInit {
     private customerSelectors:CustomerSelector 
   ) {
     this.currentCustomer$ = this.customerSelectors.currentCustomer$;
+   
    }
 
   ngOnInit() {
@@ -42,7 +43,6 @@ export class QmInputboxComponent implements OnInit {
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
     this.customers$ = this.customerSelectors.customer$;
-
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl('',Validators.required,whiteSpaceValidator),
       lastName:new FormControl('',Validators.required,whiteSpaceValidator),

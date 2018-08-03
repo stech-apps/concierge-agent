@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Subject, Observable } from 'rxjs';
-import { CustomerSelector,CustomerDispatchers, ServicePointSelectors } from '../../../../store';
+import { CustomerSelector,CustomerDispatchers, ServicePointSelectors, UserSelectors } from '../../../../store';
 import { tap, distinctUntilChanged, debounceTime, filter, throwIfEmpty } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Util } from '../../../../util/util';
@@ -34,10 +34,11 @@ export class QmCustomerSearchBarComponent implements OnInit {
     private CustomerSelectors: CustomerSelector,
     private servicePointSelectors:ServicePointSelectors,
     private util:Util,
-    private confirmBox:CustomerUpdateService
+    private confirmBox:CustomerUpdateService,
+    private userSelectors:UserSelectors
   
   ) {
-
+    this.userDirection$ = this.userSelectors.userDirection$;
     this.customers$ = this.CustomerSelectors.customer$;
     this.searchText$ = this.CustomerSelectors.searchText$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;

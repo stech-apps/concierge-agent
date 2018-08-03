@@ -41,6 +41,15 @@
 
 .qm-service-list {
 
+    &__header {
+        text-align: left;
+        width: 50%;
+
+        @at-root [dir='rtl'] & {
+            text-align: right;
+        }
+    }
+    
     &__item {
         color: #000;
         background: #FFFFFF;
@@ -62,6 +71,10 @@
         &--selected {
             background-color: var(--app-theme);
             color: $primary-text-color;
+        }
+
+        &--text{
+            text-overflow: ellipsis;
         }
 
         i {

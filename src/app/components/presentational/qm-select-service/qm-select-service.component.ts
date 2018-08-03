@@ -1,12 +1,15 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IServiceViewModel } from '../../../../models/IServiceViewModel';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'qm-select-service',
@@ -17,12 +20,14 @@ export class QmSelectServiceComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
   private serviceList: IService[];
-  filteredServiceList: IService[];
-  selectedServiceList: IService[];
-  mostFrequentServiceList: IService[];
+  filteredServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
+  selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
+  mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedBranch: IBranch;
   private isMultiServiceOn: boolean;
   private maxServiceSelection = 5;
+  filterText: string = '';
+  inputChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -47,8 +52,8 @@ export class QmSelectServiceComponent implements OnInit {
   ngOnInit() {
     if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
       const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
-        this.serviceList = services;
-        this.filteredServiceList = services;
+        this.serviceList = <Array<IServiceViewModel>>services;
+        this.filteredServiceList = <Array<IServiceViewModel>>services;
       });
       this.subscriptions.add(serviceSubscription);
 
@@ -68,9 +73,10 @@ export class QmSelectServiceComponent implements OnInit {
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       
     }
-    setTimeout(()=> {
-      this.onResultChange.emit('Selected Branch');
-    }, 1000);
+
+    this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterServices(text));
   }
 
   goToNext() {
@@ -81,7 +87,7 @@ export class QmSelectServiceComponent implements OnInit {
     this.subscriptions.unsubscribe();
   }
 
-  onServiceSelect(selectedService: IService, isRemove: boolean) {
+  onServiceSelect(selectedService: IServiceViewModel, isRemove: boolean) {
     if(this.selectedServiceList.length === 0 || (this.selectedServiceList.length < this.maxServiceSelection && this.isMultiServiceOn)){
       this.handleServiceList(selectedService, isRemove);
     }
@@ -100,7 +106,8 @@ export class QmSelectServiceComponent implements OnInit {
     }
   }
 
-  handleServiceList(selectedService: IService, isRemove: boolean){
+  handleServiceList(selectedService: IServiceViewModel, isRemove: boolean){
+    this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
     this.selectedServiceList.push(selectedService);
     if(isRemove){
       this.filteredServiceList = this.filteredServiceList.filter(
@@ -110,11 +117,35 @@ export class QmSelectServiceComponent implements OnInit {
     }
   }
 
-  onServiceRemove(selectedService: IService){
-
+  onServiceRemove(selectedService: IServiceViewModel){
+    this.selectedServiceList = this.selectedServiceList.filter(
+      (val: IService) =>
+        val.id !== selectedService.id
+    );
+    this.filteredServiceList.push(selectedService);
+    this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
+    this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
   }
+
+  handleInput($event) {
+    this.inputChanged.next($event.target.value);
+  }
+
+  filterServices(newFilter: string) {    
+    this.filterText = newFilter;
+   }
 
   doneButtonClick() {
     this.onFlowNext.emit();
+  }
+
+  sortServices(serviceList: IService[]): IService[] {
+    return serviceList.sort(
+      (service1: IService, service2: IService) => {
+        if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
+        if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
+        return 0;
+      }
+    );
   }
 }

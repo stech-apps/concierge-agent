@@ -106,7 +106,7 @@ import { FilterBranchPipe } from './components/presentational/qm-select-branch/f
 import { QmAppointmentTimeSelectComponent } from './components/presentational/qm-appointment-time-select/qm-appointment-time-select.component';
 import { QmSelectServiceComponent } from './components/presentational/qm-select-service/qm-select-service.component';
 import { QmCustomerSearchBarComponent } from './components/presentational/qm-customer-search-bar/qm-customer-search-bar.component';
-
+import { FilterServicePipe } from './components/presentational/qm-select-service/filter-service.pipe';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -152,8 +152,8 @@ const toastrGlobalOptions = {
     FilterBranchPipe,
     QmAppointmentTimeSelectComponent,
     QmSelectServiceComponent,
-    QmCustomerSearchBarComponent
-  
+    QmCustomerSearchBarComponent,
+    FilterServicePipe
   ],
   entryComponents: [
     QmCustomToastComponent,

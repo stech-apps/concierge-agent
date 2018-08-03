@@ -12,6 +12,10 @@
     &-label {
       margin-bottom: 0rem;
     }
+
+    &:input {
+        display: none;
+    }
   
     &:checked {
       &~.qm-switch__slider {
@@ -31,6 +35,7 @@
     }
   
     &__slider {
+        width: 60px;
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -61,6 +66,8 @@
             letter-spacing: 2px;
             font-size: 0.8rem;
             margin-bottom: 5px;
+            margin-top: 10px;
+            margin-left: 6px;
         }
     }
   }

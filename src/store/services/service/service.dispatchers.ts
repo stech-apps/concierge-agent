@@ -22,27 +22,7 @@ export class ServiceDispatchers {
     this.store.dispatch(new ServiceActions.FetchServiceGroups(queryString));
   }
 
-  filterServices(searchText: string) {
-    this.store.dispatch(new ServiceActions.FilterServices(searchText));
-  }
-
-  selectService(service: IService) {
-    this.store.dispatch(new ServiceActions.SelectService(service));
-  }
-
-  deselectService(service: IService) {
-    this.store.dispatch(new ServiceActions.DeselectService(service));
-  }
-
-  selectMultiService(service: IService) {
-    this.store.dispatch(new ServiceActions.SelectMultiService(service));
-  }
-
-  deselectServices() {
-    this.store.dispatch(new ServiceActions.DeselectServices);
-  }
-
-  resetFilterServices() {
-    this.store.dispatch(new ServiceActions.ResetFilterServices);
+  setSelectedServices(services: IService[]) {
+    this.store.dispatch(new ServiceActions.SetSelectedServices(services));
   }
 }

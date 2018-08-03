@@ -9,19 +9,13 @@ export const FETCH_SERVICES = '[Service] FETCH_SERVICES';
 export const FETCH_SERVICES_FAIL = '[Service] FETCH_SERVICES_FAIL';
 export const FETCH_SERVICES_SUCCESS = '[Service] FETCH_SERVICES_SUCCESS';
 
-export const SELECT_SERVICE = '[Service] SELECT_SERVICE';
-export const SELECT_MULTI_SERVICE = '[Service] SELECT_MULTI_SERVICE';
-export const DESELECT_SERVICE = '[Service] DESELECT_SERVICE';
-export const DESELECT_SERVICES = '[Service] DESELECT_SERVICES';
-export const FILTER_SERVICES = '[Service] FILTER_SERVICES';
-export const RESET_FILTER_SERVICES = '[Service] RESET_FILTER_SERVICES';
-
-export const LOAD_SELECTED_SERVICES = '[Service] LOAD_SELECTED_SERVICES';
+export const GET_SELECTED_SERVICES = '[Service] GET_SELECTED_SERVICES';
+export const SET_SELECTED_SERVICES = '[Service] SET_SELECTED_SERVICES';
+export const GET_FREQUENT_SERVICES = '[Service] GET_FREQUENT_SERVICES';
 
 export const FETCH_SERVICE_CONFIGURATION = '[Service] FETCH_SERVICE_CONFIGURATION';
 export const FETCH_SERVICE_CONFIGURATION_FAIL = '[Service] FETCH_SERVICE_CONFIGURATION_FAIL';
 export const FETCH_SERVICE_CONFIGURATION_SUCCESS = '[Service] FETCH_SERVICE_CONFIGURATION_SUCCESS';
-
 
 export class FetchServices implements Action {
   readonly type = FETCH_SERVICES;
@@ -53,36 +47,13 @@ export class FetchServiceConfigurationSuccess implements Action {
   constructor(public payload: IServiceConfiguration[]) {}
 }
 
-export class SelectService implements Action {
-  readonly type = SELECT_SERVICE;
-  constructor(public payload: IService) {}
+export class GetSelectedServices implements Action {
+  readonly type = GET_SELECTED_SERVICES;
+  constructor(public payload: IService[]) {}
 }
 
-export class DeselectService implements Action {
-  readonly type = DESELECT_SERVICE;
-  constructor(public payload: IService) {}
-}
-
-export class DeselectServices implements Action {
-  readonly type = DESELECT_SERVICES;
-}
-
-export class SelectMultiService implements Action {
-  readonly type = SELECT_MULTI_SERVICE;
-  constructor(public payload: IService) {}
-}
-
-export class FilterServices implements Action {
-  readonly type = FILTER_SERVICES;
-  constructor(public payload: string) {}
-}
-
-export class ResetFilterServices implements Action {
-  readonly type = RESET_FILTER_SERVICES;
-}
-
-export class LoadSelectedServices implements Action {
-  readonly type = LOAD_SELECTED_SERVICES;
+export class SetSelectedServices implements Action {
+  readonly type = SET_SELECTED_SERVICES;
   constructor(public payload: IService[]) {}
 }
 
@@ -93,10 +64,5 @@ export type AllServiceActions = FetchServices |
                                 FetchServiceConfiguration |
                                 FetchServiceConfigurationFail |
                                 FetchServiceConfigurationSuccess |
-                                SelectService |
-                                DeselectService |
-                                DeselectServices |
-                                SelectMultiService |
-                                FilterServices |
-                                ResetFilterServices |
-                                LoadSelectedServices;
+                                GetSelectedServices |
+                                SetSelectedServices;

@@ -79,49 +79,7 @@ export function reducer (
         error: action.payload
       };
     }
-    case ServiceActions.SELECT_SERVICE: {
-      return {
-        ...state,
-        selectedServices: [action.payload]
-      };
-    }
-    case ServiceActions.DESELECT_SERVICE: {
-      return {
-        ...state,
-        selectedServices: state.selectedServices.filter(
-          (service: IService) =>
-            service.id !== action.payload.id
-        )
-      };
-    }
-    case ServiceActions.DESELECT_SERVICES: {
-      return {
-        ...state,
-        selectedServices: []
-      };
-    }
-    case ServiceActions.SELECT_MULTI_SERVICE: {
-      return {
-        ...state,
-        selectedServices: [
-          ...state.selectedServices,
-          action.payload
-        ]
-      };
-    }
-    case ServiceActions.FILTER_SERVICES: {
-      return {
-        ...state,
-        searchText: action.payload
-      };
-    }
-    case ServiceActions.RESET_FILTER_SERVICES: {
-      return {
-        ...state,
-        searchText: ''
-      };
-    }
-    case ServiceActions.LOAD_SELECTED_SERVICES: {
+    case ServiceActions.SET_SELECTED_SERVICES: {
       return {
         ...state,
         selectedServices: action.payload

@@ -2,37 +2,33 @@
     <div class="qm-flow-sub-header__left">
         <div class="qm-switch__container">
             <label for="qm-switch" class="qm-switch-label">
-                <input id="qm-switch" class="qm-switch" type="checkbox" [(ngModel)]="selectedBranch.isSkip">
-                <div class="qm-switch__slider">
-                    <div class="qm-checkbox__selector-icon-text">{{ 'multi_service' | translate }}</div>
-                </div>
+                <input id="qm-switch" class="qm-switch" type="checkbox" [(ngModel)]="isMultiServiceOn">
+                <div class="qm-switch__slider"></div>
             </label>
+            <div class="qm-switch__slider-text">{{ 'multi_service' | translate }}</div>
         </div>
     </div>
-    <input type="text" class="qm-flow-sub-header__search" placeholder="{{'search_service' | translate}}" />
+    <input type="text" class="qm-flow-sub-header__search" (input)="handleInput($event)" placeholder="{{'search_service' | translate}}" />
     <div class="qm-flow-sub-header__right">
-        <div class="qm-done-button" (click)="doneButtonClick()">
+        <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="selectedServiceList && selectedServiceList.length > 0">
                 {{'banner_done_label' | translate }}
         </div>
     </div>
 </div>
 
 <div class="qm-service-list__container">
-    <div *ngIf="selectedServiceList && selectedServiceList.length > 0">
-        <div class="qm-service-list__item" (click)="onServiceRemove(service)" *ngFor="let service of selectedServiceList">
-            <div class="qm-service-list__item--text">{{ service.internalName }}</div>
-        </div>
+    <div class="qm-service-list__item qm-service-list__item--selected" *ngFor="let service of selectedServiceList">
+        <div class="qm-service-list__item--text">{{ service.internalName }}</div>
+        <button class="qm-action-btn qm-action-btn--only-icon" (click)="onServiceRemove(service)">
+            <i class="qm-action-btn__icon icon-close qm-search__icon" aria-hidden="true"></i>
+        </button>
     </div>
-    <div *ngIf="mostFrequentServiceList && mostFrequentServiceList.length > 0">
-        <div>{{ ('most_freq_services' | translate) }}</div>
-        <div class="qm-service-list__item" (click)="onServiceSelect(service, false)" *ngFor="let service of mostFrequentServiceList">
-            <div class="qm-service-list__item--text">{{ service.internalName }}</div>
-        </div>
+    <div class="qm-service-list__header" *ngIf="mostFrequentServiceList && mostFrequentServiceList.length > 0">{{ ('most_freq_services' | translate) }}</div>
+    <div class="qm-service-list__item" (click)="onServiceSelect(service, false)" *ngFor="let service of mostFrequentServiceList | filterService : filterText">
+        <div class="qm-service-list__item--text">{{ service.internalName }}</div>
     </div>
-    <div>
-        <div *ngIf="selectedBranch">{{ ('available_services' | translate) + ' ' + selectedBranch.name }}</div>
-        <div class="qm-service-list__item" (click)="onServiceSelect(service, true)" *ngFor="let service of filteredServiceList">
-            <div class="qm-service-list__item--text">{{ service.internalName }}</div>
-        </div>
+    <div class="qm-service-list__header" *ngIf="selectedBranch">{{ ('available_services' | translate) + ' ' + selectedBranch.name }}</div>
+    <div class="qm-service-list__item" (click)="onServiceSelect(service, true)" *ngFor="let service of filteredServiceList | filterService : filterText">
+        <div class="qm-service-list__item--text">{{ service.internalName }}</div>
     </div>
 </div>

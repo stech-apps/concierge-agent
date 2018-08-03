@@ -8,34 +8,38 @@
       <div style="padding: 20px">
           <div class="qm-input-box__row">
               <div class="qm-input-box__col-1" >
-                <p class="qm-input-box__inputbox-name">{{'first_name'|translate }}</p>
+                <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
               </div>
               <div class="qm-input-box__col-2" >
-                <input type="text" name='firstName' placeholder="{{'mandatory'|translate }}" formControlName = "firstName"> 
+                <input  type="text" name='firstName' placeholder="{{'mandatory'|translate }}" formControlName = "firstName" #firstName maxlength="50" required autoFocus> 
+                <i *ngIf="firstName.value!=''" (click)="clearFirstName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
               </div>
             </div>
             <div class="qm-input-box__row">
                 <div class="qm-input-box__col-1">
-                    <p class="qm-input-box__inputbox-name">{{'last_name'|translate }}</p>
+                    <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
                 </div>
                 <div class="qm-input-box__col-2" >
-                  <input type="text" name='lastName' formControlName = "lastName"  placeholder="{{'mandatory'|translate }}">
+                  <input type="text" name='lastName' formControlName = "lastName"  placeholder="{{'mandatory'|translate }}" #lastName  maxlength="50" required>
+                  <i *ngIf="lastName.value!=''" (click)="clearLastName()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                 </div>
               </div>
               <div class="qm-input-box__row">
                   <div class="qm-input-box__col-1">
-                      <p class="qm-input-box__inputbox-name">{{'phone'|translate }}</p>
+                      <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
                   </div>
                   <div class="qm-input-box__col-2">
-                    <input type="text" name='phone' placeholder="{{'optional'|translate }}" formControlName = "phone">
+                    <input type="text" name='phone' placeholder="{{'optional'|translate }}" formControlName = "phone" #phone>
+                    <i *ngIf="phone.value!=''" (click)="clearPhoneNum()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                   </div>
                 </div>
               <div class="qm-input-box__row">
                     <div class="qm-input-box__col-1">
-                        <p class="qm-input-box__inputbox-name">{{'email'|translate }}</p>
+                        <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
                     </div>
                     <div class="qm-input-box__col-2">
-                      <input type="text" name='email' placeholder="{{'optional'|translate }}" formControlName = "email">
+                      <input type="text" name='email' placeholder="{{'optional'|translate }}" formControlName = "email" #email>
+                      <i *ngIf="email.value!=''" (click)="clearEmail()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
                     </div>
               </div>
       </div>
@@ -46,12 +50,12 @@
           <div class="qm-input-box__col-2">
               <div class="qm-input-box__button-container">
                   <button class="qm-input-box__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()">
-                  <span title="{{ btnCancelText }}">
+                  <span>
                       CANCEL
                     </span>
                   </button>
-                  <button type="button" class="qm-input-box__primary-button btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose()">
-                    <span title="{{ btnOkText }}">
+                  <button type="button" class="qm-input-box__primary-button btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose() " [ngClass]="{'qm-input-box__valid-button': customerCreateForm.valid}">
+                    <span>
                     SAVE
                     </span>
                   </button>

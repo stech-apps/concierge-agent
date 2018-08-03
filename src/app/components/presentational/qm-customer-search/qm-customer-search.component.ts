@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
 import { CustomerDispatchers, CustomerSelector } from '../../../../store';
@@ -23,13 +23,13 @@ export class QmCustomerSearchComponent implements OnInit {
     private CustomerSelectors:CustomerSelector,
     private confirmBox:CustomerUpdateService
   ) { 
-    const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
-    this.subscriptions.add(customerSubscription);
-    this.customers$ = this.CustomerSelectors.customer$;
+  
   }
 
   ngOnInit() {
-    
+    const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
+    this.subscriptions.add(customerSubscription);
+    this.customers$ = this.CustomerSelectors.customer$;
   }
 
   ngOnDestroy() {
@@ -38,6 +38,8 @@ export class QmCustomerSearchComponent implements OnInit {
   }
   
   editCustomer(customer:ICustomer){
-    this.confirmBox.open(customer,'update');
+    this.confirmBox.open('update');
+    this.CustomerDispatchers.selectCustomers(customer);
+    console.log(customer);
   }
 }

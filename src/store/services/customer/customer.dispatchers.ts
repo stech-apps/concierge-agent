@@ -31,6 +31,7 @@ export class CustomerDispatchers{
 
     resetCurrentCustomer(){
         this.store.dispatch(new CustomerAction.ResetCurrentCustomer);
+    
     }
 
     updateCustomerSearchText(searchText:string){

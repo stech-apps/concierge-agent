@@ -1,3 +1,7 @@
+input::-ms-clear {
+  display: none;
+}
+
 .qm-input-box {  
   background-color: $light-gray2;
   display: block;
@@ -7,6 +11,22 @@
   // overflow: auto;
   width: 450px;
   margin-left:-100px;
+
+  input {
+    padding: rem(12px);
+    outline: none;
+    border: 0;
+    float: left;
+    // width: 100%;
+  }
+  input.ng-invalid.ng-touched {
+    background-color: #ffaab7;
+  }
+
+  .submitted .ng-invalid{
+    background-color: #ffaab7;
+  }
+
   &__header {
     padding: rem(40px 20px 5px 20px );
     text-align: center;
@@ -21,14 +41,6 @@
     }
   }
 
-  input {
-    padding: rem(12px);
-    outline: none;
-    border: 0;
-    float: left;
-    // width: 100%;
-  }
-  
   &__inputbox-name {
     color: $black;
     font-size: rem(12px);
@@ -64,8 +76,8 @@
     // min-height: rem(50px);
   }
 
-  &__primary-button {
-    background-color:var(--app-theme);
+  &__primary-button  {
+    background-color:$modal-secondary-button-background;
     flex: 1;
     color: $white;
     font-family: Montserrat-Light;
@@ -73,6 +85,10 @@
     border: none;
     padding: 15px;
     margin-left: rem(15px);
+  }
+
+  &__valid-button {
+    background-color:var(--app-theme);
   }
 
   &__secondary-button {

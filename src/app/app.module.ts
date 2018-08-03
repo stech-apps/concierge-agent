@@ -105,6 +105,8 @@ import { NavigationStart, NavigationEnd } from '@angular/router';
 import { FilterBranchPipe } from './components/presentational/qm-select-branch/filter-branch.pipe';
 import { QmAppointmentTimeSelectComponent } from './components/presentational/qm-appointment-time-select/qm-appointment-time-select.component';
 import { QmSelectServiceComponent } from './components/presentational/qm-select-service/qm-select-service.component';
+import { QmCustomerSearchBarComponent } from './components/presentational/qm-customer-search-bar/qm-customer-search-bar.component';
+
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -149,7 +151,9 @@ const toastrGlobalOptions = {
     QmCreateVisitComponent,
     FilterBranchPipe,
     QmAppointmentTimeSelectComponent,
-    QmSelectServiceComponent
+    QmSelectServiceComponent,
+    QmCustomerSearchBarComponent
+  
   ],
   entryComponents: [
     QmCustomToastComponent,

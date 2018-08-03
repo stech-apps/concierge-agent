@@ -17,11 +17,12 @@ export class QmSelectServiceComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
   private serviceList: IService[];
-  private filteredServiceList: IService[];
-  private selectedServiceList: IService[];
-  private mostFrequentServiceList: IService[];
-  private selectedBranch: IBranch;
+  filteredServiceList: IService[];
+  selectedServiceList: IService[];
+  mostFrequentServiceList: IService[];
+  selectedBranch: IBranch;
   private isMultiServiceOn: boolean;
+  private maxServiceSelection = 5;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -81,7 +82,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   onServiceSelect(selectedService: IService, isRemove: boolean) {
-    if(this.selectedServiceList.length === 0 || (this.selectedServiceList.length < 6 && this.isMultiServiceOn)){
+    if(this.selectedServiceList.length === 0 || (this.selectedServiceList.length < this.maxServiceSelection && this.isMultiServiceOn)){
       this.handleServiceList(selectedService, isRemove);
     }
     else if(this.selectedServiceList.length === 1 && !this.isMultiServiceOn){
@@ -111,5 +112,9 @@ export class QmSelectServiceComponent implements OnInit {
 
   onServiceRemove(selectedService: IService){
 
+  }
+
+  doneButtonClick() {
+    this.onFlowNext.emit();
   }
 }

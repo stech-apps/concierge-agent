@@ -12,4 +12,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit {
   ngOnInit() {
   }
 
+  handleInput($event){
+
+  }
 }

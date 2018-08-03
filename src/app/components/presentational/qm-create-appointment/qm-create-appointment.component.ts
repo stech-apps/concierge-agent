@@ -11,7 +11,7 @@ import { IBranch } from 'src/models/IBranch';
 export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
-  private selectedBranch: IBranch = new IBranch();
+  selectedBranch: IBranch = new IBranch();
 
   constructor(private branchSelectors: BranchSelectors) {
 

@@ -17,7 +17,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   branches: IBranchViewModel[] = new Array<IBranchViewModel>();
   private subscriptions: Subscription = new Subscription();
-  private selectedBranch: IBranch = new IBranch();
+  selectedBranch: IBranch = new IBranch();
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
 

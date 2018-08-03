@@ -15,8 +15,8 @@ export class QmCreateVisitComponent implements OnInit {
   @ViewChild('ps') ps: any;
 
   private subscriptions: Subscription = new Subscription();
-  private isCustomerFlowHidden: boolean;
-  private flowType = FLOW_TYPE.CREATE_VISIT;
+  isCustomerFlowHidden: boolean;
+  flowType = FLOW_TYPE.CREATE_VISIT;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors

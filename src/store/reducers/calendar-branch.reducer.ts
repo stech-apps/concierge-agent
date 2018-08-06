@@ -41,11 +41,9 @@ export function reducer (
         branches: sortBranches(action.payload.branchList),
         loading: false,
         loaded: true,
-        error: null,
-        selectedBranch: setSelectedBranch(state)
+        error: null
       };
     }
-
     case BranchActions.FETCH_CALENDAR_BRANCHES_FAIL: {
       return {
         ...state,
@@ -83,7 +81,7 @@ export function reducer (
     case BranchActions.SELECT_CALENDAR_BRANCH: {
       return {
         ...state,
-        selectedBranch: action.payload
+        selectedBranch: setSelectedBranch(state.branches, action.payload)
       };
     }
     case BranchActions.RESET_CALENDAR_BRANCH: {
@@ -125,9 +123,9 @@ function processBranches(currentBranchList: ICalendarBranch[], branchList: any):
   return sortBranches(fullBranchList);
 }
 
-function setSelectedBranch(state: ICalendarBranchState){
-  let calendarBranch = state.branches.filter(val => {
-    val.id === state.selectedBranch.id;
+function setSelectedBranch(branches: ICalendarBranch[], branch: ICalendarBranch){
+  let calendarBranch = branches.filter(val => {
+    return val.id === branch.id;
   })
   return calendarBranch[0];
 }

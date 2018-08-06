@@ -10,6 +10,7 @@ export interface ICalendarServiceState {
     loading: boolean;
     loaded: boolean;
     error: Object;
+    serviceLoaded: boolean;
   }
   
   export const initialState: ICalendarServiceState = {
@@ -19,7 +20,8 @@ export interface ICalendarServiceState {
     searchText: '',
     loading: false,
     loaded: false,
-    error: null
+    error: null,
+    serviceLoaded: false
   };
   
   export function reducer (
@@ -31,7 +33,8 @@ export interface ICalendarServiceState {
         return {
           ...state,
           loading: true,
-          error: null
+          error: null,
+          serviceLoaded: false
         };
       }
       case ServiceActions.FETCH_CALENDAR_SERVICES_SUCCESS: {
@@ -40,7 +43,8 @@ export interface ICalendarServiceState {
           services: sortServices(action.payload.serviceList),
           loading: false,
           loaded: true,
-          error: null
+          error: null,
+          serviceLoaded: true
         };
       }
       case ServiceActions.FETCH_CALENDAR_SERVICES_FAIL: {
@@ -71,6 +75,12 @@ export interface ICalendarServiceState {
           ...state,
           loading: false,
           error: action.payload
+        };
+      }
+      case ServiceActions.SET_SELECTED_CALENDAR_SERVICES: {
+        return {
+          ...state,
+          selectedServices: action.payload
         };
       }
       default: {

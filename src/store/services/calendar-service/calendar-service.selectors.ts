@@ -24,10 +24,16 @@ export const getServiceGroups = createSelector(
   (state: ICalendarServiceState) => state.serviceGroups
 );
 
+export const isCalendarServiceLoaded = createSelector(
+  getServiceState,
+  (state: ICalendarServiceState) => state.serviceLoaded
+);
+
 @Injectable()
 export class CalendarServiceSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   services$ = this.store.select(getAllServices);
   selectedServices$ = this.store.select(getSelectedCalendarServices);
+  isCalendarServiceLoaded$ = this.store.select(isCalendarServiceLoaded);
 }

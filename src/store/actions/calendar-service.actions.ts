@@ -11,6 +11,9 @@ export const FETCH_SERVICE_GROUPS = '[Calendar Service] FETCH_SERVICE_GROUPS';
 export const FETCH_SERVICE_GROUPS_FAIL = '[Calendar Service] FETCH_SERVICE_GROUPS_FAIL';
 export const FETCH_SERVICE_GROUPS_SUCCESS = '[Calendar Service] FETCH_SERVICE_GROUPS_SUCCESS';
 
+export const GET_SELECTED_CALENDAR_SERVICES = '[Calendar Service] GET_SELECTED_CALENDAR_SERVICES';
+export const SET_SELECTED_CALENDAR_SERVICES = '[Calendar Service] SET_SELECTED_CALENDAR_SERVICES';
+
 export class FetchCalendarServices implements Action {
     readonly type = FETCH_CALENDAR_SERVICES;
   }
@@ -40,6 +43,16 @@ export class FetchCalendarServices implements Action {
     constructor(public payload: IServiceGroup[]) {}
   }
 
+  export class GetSelectedCalendarServices implements Action {
+    readonly type = GET_SELECTED_CALENDAR_SERVICES;
+    constructor(public payload: ICalendarService[]) {}
+  }
+  
+  export class SetSelectedCalendarServices implements Action {
+    readonly type = SET_SELECTED_CALENDAR_SERVICES;
+    constructor(public payload: ICalendarService[]) {}
+  }
+
   // Action types
 export type AllCalendarServiceActions = 
                                     FetchCalendarServices |
@@ -47,4 +60,6 @@ export type AllCalendarServiceActions =
                                     FetchCalendarServicesSuccess |
                                     FetchServiceGroups |
                                     FetchServiceGroupsFail |
-                                    FetchServiceGroupsSuccess;
+                                    FetchServiceGroupsSuccess |
+                                    GetSelectedCalendarServices |
+                                    SetSelectedCalendarServices;

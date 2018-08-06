@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { Subscription, Subject } from 'rxjs';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IServiceViewModel } from '../../../../models/IServiceViewModel';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { ICalendarService } from '../../../../models/ICalendarService';
 
 @Component({
   selector: 'qm-select-service',
@@ -19,7 +20,7 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 export class QmSelectServiceComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
-  private serviceList: IService[];
+  private serviceList: ICalendarService[];
   filteredServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
@@ -28,6 +29,7 @@ export class QmSelectServiceComponent implements OnInit {
   private maxServiceSelection = 5;
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
+  newf: FLOW_TYPE.CREATE_APPOINTMENT;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -35,7 +37,10 @@ export class QmSelectServiceComponent implements OnInit {
     private branchSelectors: BranchSelectors,
     private qmModalService: QmModalService,
     private translateService: TranslateService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private calendarServiceSelectors: CalendarServiceSelectors,
+    private calendarServiceDispatchers: CalendarServiceDispatchers,
+    private calendarBranchSelectors: CalendarBranchSelectors,
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
@@ -71,7 +76,26 @@ export class QmSelectServiceComponent implements OnInit {
       this.subscriptions.add(serviceLoadedSubscription);
     }
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-      
+      const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
+        if(services.length > 0){
+          this.serviceList = <Array<IServiceViewModel>>services;
+          this.filteredServiceList = <Array<IServiceViewModel>>services;
+        }
+      });
+      this.subscriptions.add(calendarServiceSubscription);
+
+      const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
+        const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
+          if(branch.publicId){
+            this.selectedBranch = branch;
+            if(!val){
+              this.calendarServiceDispatchers.fetchServices(branch);
+            }
+          }
+        });
+        this.subscriptions.add(calendarBranchSubscription);
+      });
+      this.subscriptions.add(calendarServiceLoadedSubscription);
     }
 
     this.inputChanged
@@ -107,8 +131,13 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   handleServiceList(selectedService: IServiceViewModel, isRemove: boolean){
-    this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
     this.selectedServiceList.push(selectedService);
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
+    }
+    else{
+      this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+    }
     if(isRemove){
       this.filteredServiceList = this.filteredServiceList.filter(
         (val: IService) =>
@@ -124,7 +153,12 @@ export class QmSelectServiceComponent implements OnInit {
     );
     this.filteredServiceList.push(selectedService);
     this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
-    this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
+    }
+    else{
+      this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+    }
   }
 
   handleInput($event) {
@@ -139,12 +173,19 @@ export class QmSelectServiceComponent implements OnInit {
     this.onFlowNext.emit();
   }
 
-  sortServices(serviceList: IService[]): IService[] {
+  sortServices(serviceList: ICalendarService[]): ICalendarService[] {
     return serviceList.sort(
-      (service1: IService, service2: IService) => {
-        if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
-        if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
-        return 0;
+      (service1: ICalendarService, service2: ICalendarService) => {
+        if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+          if (service1.name.toLowerCase() < service2.name.toLowerCase() ) { return -1; }
+          if (service1.name.toLowerCase() > service2.name.toLowerCase() ) { return 1; }
+          return 0;
+        }
+        else{
+          if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
+          if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
+          return 0;
+        }
       }
     );
   }

@@ -1,6 +1,6 @@
-import { IService } from "src/models/IService";
+import { ICalendarService } from "src/models/ICalendarService";
 
-export class IServiceViewModel extends IService {
+export class IServiceViewModel extends ICalendarService {
     selected: boolean;
 }
   

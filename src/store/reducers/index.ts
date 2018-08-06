@@ -13,6 +13,7 @@ import * as fromCustomer from "./customer.reducer";
 import * as fromCalendarSettings from "./calendar-settings.reducer";
 import * as fromReservationTimer from "./reservation-expiry-timer.reducer";
 import * as fromCalendarBranches from "./calendar-branch.reducer";
+import * as fromCalendarServices from "./calendar-service.reducer";
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -28,6 +29,7 @@ export interface IAppState {
   calendarSettings: fromCalendarSettings.ICalendarSettingsState;
   reservationExpiryTimer: fromReservationTimer.IReservationTimerState;
   calendarBranches: fromCalendarBranches.ICalendarBranchState;
+  calendarServices: fromCalendarServices.ICalendarServiceState;
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -43,5 +45,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   customers: fromCustomer.reducer,
   calendarSettings: fromCalendarSettings.reducer,
   reservationExpiryTimer: fromReservationTimer.reducer,
-  calendarBranches: fromCalendarBranches.reducer
+  calendarBranches: fromCalendarBranches.reducer,
+  calendarServices: fromCalendarServices.reducer,
 };

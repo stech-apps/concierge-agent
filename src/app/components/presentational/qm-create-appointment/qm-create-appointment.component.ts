@@ -1,9 +1,10 @@
 import { Subscription } from 'rxjs';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers } from './../../../../store/services';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors } from './../../../../store/services';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
+import { ICalendarService } from '../../../../models/ICalendarService';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -15,15 +16,17 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   selectedBranch: IBranch = new IBranch();
   flowType = FLOW_TYPE.CREATE_APPOINTMENT;
+  selectedServices: ICalendarService[];
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, 
     private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors,
-    private branchDispatchers: BranchDispatchers) {
+    private branchDispatchers: BranchDispatchers,
+    private serviceSelectors: CalendarServiceSelectors) {
 
     const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
-      if(sb === undefined){
+      if(sb === undefined || sb.publicId.length === 0){
         this.setSelectedBranch();
       }
       else{
@@ -32,6 +35,13 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(selectedPublicBranchSub);
+
+    const servicesSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => {
+      if(services !== null){
+        this.selectedServices = services;
+      }
+    });
+    this.subscriptions.add(servicesSubscription);
   }
 
   ngOnInit() {

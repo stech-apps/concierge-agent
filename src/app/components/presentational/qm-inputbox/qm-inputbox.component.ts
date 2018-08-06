@@ -18,7 +18,8 @@ export class QmInputboxComponent implements OnInit {
   currentCustomer: ICustomer;
   currentCustomer$: Observable<ICustomer>;
   userDirection$: Observable<string>;
-  isOnupdate:boolean
+  isOnupdate:boolean;
+  isButtonPressed:boolean=false;
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
@@ -32,11 +33,11 @@ export class QmInputboxComponent implements OnInit {
     private customerSelectors:CustomerSelector 
   ) {
     this.currentCustomer$ = this.customerSelectors.currentCustomer$;
-   
+    this.userDirection$ = this.userSelectors.userDirection$;
    }
 
   ngOnInit() {
-    this.userDirection$ = this.userSelectors.userDirection$;
+   
     const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/)];
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
   
@@ -72,6 +73,9 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public accept() {
+    if(this.customerCreateForm.invalid){
+      console.log('a');
+    }
     if(this.customerCreateForm.valid){
       this.activeModal.close(this.customerCreateForm.value); 
       if(this.isOnupdate){
@@ -81,6 +85,7 @@ export class QmInputboxComponent implements OnInit {
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
       }
+    
     }
   
   updateList(customer:ICustomer){

@@ -22,10 +22,13 @@ input::-ms-clear {
   input.ng-invalid.ng-touched {
     background-color: #ffaab7;
   }
+  // input.ng-invalid.invalid-form{
+  //   background-color: #ffaab7;
+  // }
 
-  .submitted .ng-invalid{
-    background-color: #ffaab7;
-  }
+  // .submitted.ng-invalid{
+  //   background-color: #ffaab7;
+  // }
 
   &__header {
     padding: rem(40px 20px 5px 20px );
@@ -92,6 +95,9 @@ input::-ms-clear {
     border: none;
     padding: 15px;
     margin-left: rem(15px);
+  }
+  :focus{
+    outline: none; 
   }
 
   &__valid-button {

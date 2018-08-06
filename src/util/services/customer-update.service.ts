@@ -20,7 +20,9 @@ export class CustomerUpdateService {
     update?:string
      ): Promise<boolean> {
     const modalRef = this.modalService.open(QmInputboxComponent, {
-      centered: true
+      centered: true,
+      backdrop : 'static',
+      keyboard : false
     });
     if(update){
       modalRef.componentInstance.isOnupdate = true;

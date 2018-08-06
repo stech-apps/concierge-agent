@@ -1,5 +1,5 @@
 <div class="customer-search" dir="{{ userDirection$ | async }}">
-  <input type="search" placeholder="{{ 'search_for_customers' | translate }}" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value)"> 
+  <input type="search" placeholder="{{ 'search_for_customers' | translate }}" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value)" autocomplete="off"> 
   <i *ngIf="customerSearch.value!=''" (click)="resetSearch()" class="qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
   <span class="add-customer-button" (click)="createNewCustomer()">     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.73 29.5" height="30" width="40"><defs>

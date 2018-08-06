@@ -5,13 +5,13 @@ import { CustomerDispatchers, CustomerSelector, UserSelectors } from '../../../.
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 
 @Component({
-  selector: 'qm-qm-customer-search',
+  selector: 'qm-customer-search',
   templateUrl: './qm-customer-search.component.html',
   styleUrls: ['./qm-customer-search.component.scss']
 })
 export class QmCustomerSearchComponent implements OnInit {
 
-  @Input() title: string;
+  @Input() myData:string;
 
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
@@ -27,7 +27,11 @@ export class QmCustomerSearchComponent implements OnInit {
     private userSelectors:UserSelectors
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
-    console.log(this.title);
+    
+  }
+
+  ngAfterViewInit(){
+    console.log(this.myData);
   }
 
   ngOnInit() {

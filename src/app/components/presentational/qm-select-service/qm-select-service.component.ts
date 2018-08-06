@@ -24,7 +24,7 @@ export class QmSelectServiceComponent implements OnInit {
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedBranch: IBranch;
-  private isMultiServiceOn: boolean;
+  isMultiServiceOn: boolean;
   private maxServiceSelection = 5;
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();

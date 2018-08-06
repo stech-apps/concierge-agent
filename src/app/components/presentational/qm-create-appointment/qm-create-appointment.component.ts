@@ -30,4 +30,8 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+
+  setPanelClick(){
+    
+  }
 }

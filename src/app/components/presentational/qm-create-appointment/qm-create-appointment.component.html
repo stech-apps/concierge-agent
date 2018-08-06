@@ -1,6 +1,6 @@
 <qm-flow #f>
   <qm-flow-panel #pb [isHeaderVisible]="true">
-    <qm-flow-panel-header (click)="f.panelHeaderClick(pb)" (onFlowExit)="f.onFlowExit()">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'select_branch_header' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{ selectedBranch.name }}</qm-flow-panel-result>
     </qm-flow-panel-header>

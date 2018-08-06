@@ -1,8 +1,9 @@
 import { Subscription } from 'rxjs';
-import { BranchSelectors } from './../../../../store/services/branch/branch.selectors';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers } from './../../../../store/services';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
+import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -15,13 +16,22 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   selectedBranch: IBranch = new IBranch();
   flowType = FLOW_TYPE.CREATE_APPOINTMENT;
 
-  constructor(private branchSelectors: BranchSelectors) {
+  constructor(
+    private calendarBranchSelectors: CalendarBranchSelectors, 
+    private calendarBranchDispatchers: CalendarBranchDispatchers,
+    private branchSelectors: BranchSelectors,
+    private branchDispatchers: BranchDispatchers) {
 
-    const selectedBranchSub = this.branchSelectors.selectedBranch$.subscribe((sb) => {
-      this.selectedBranch = sb;
+    const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
+      if(sb === undefined){
+        this.setSelectedBranch();
+      }
+      else{
+        this.selectedBranch = sb;
+      }
     });
 
-    this.subscriptions.add(selectedBranchSub);
+    this.subscriptions.add(selectedPublicBranchSub);
   }
 
   ngOnInit() {
@@ -33,5 +43,21 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
   setPanelClick(){
     
+  }
+
+  setSelectedBranch(){
+    const selectedBranchSub = this.branchSelectors.selectedBranch$.subscribe((sb) => {
+      this.calendarBranchDispatchers.selectCalendarBranch(sb as ICalendarBranch);
+    });
+    this.subscriptions.add(selectedBranchSub);
+  }
+
+  branchHeaderClick(){
+    const serviceLoadedSubscription = this.calendarBranchSelectors.isPublicBranchesLoaded$.subscribe((val) => {
+      if(!val){
+        this.calendarBranchDispatchers.fetchPublicCalendarBranches();
+      }
+    });
+    this.subscriptions.add(serviceLoadedSubscription);
   }
 }

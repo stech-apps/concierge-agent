@@ -41,7 +41,8 @@ export function reducer (
         branches: sortBranches(action.payload.branchList),
         loading: false,
         loaded: true,
-        error: null
+        error: null,
+        selectedBranch: setSelectedBranch(state)
       };
     }
 
@@ -112,12 +113,21 @@ function sortBranches(branchList: any): ICalendarBranch[] {
 }
 
 function processBranches(currentBranchList: ICalendarBranch[], branchList: any): ICalendarBranch[] {
+  var aditionalList = [];
   branchList.forEach(val => {
-    console.log(currentBranchList.indexOf(val.publicId))
-    if(currentBranchList.indexOf(val.publicId) > 0){
-      console.log("kasun");
+    var elementPos = currentBranchList.map(function(x) {return x.publicId; }).indexOf(val.publicId);
+    if(elementPos < 0){
+      aditionalList.push(val);
     }
-  });
-  //var uniqEs6 = (arrArg) => arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos);
-  return sortBranches(currentBranchList.concat(branchList));
+  })
+
+  var fullBranchList = currentBranchList.concat(aditionalList);
+  return sortBranches(fullBranchList);
+}
+
+function setSelectedBranch(state: ICalendarBranchState){
+  let calendarBranch = state.branches.filter(val => {
+    val.id === state.selectedBranch.id;
+  })
+  return calendarBranch[0];
 }

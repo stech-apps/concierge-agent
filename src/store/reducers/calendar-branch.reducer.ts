@@ -9,6 +9,7 @@ export interface ICalendarBranchState {
   loading: boolean;
   loaded: boolean;
   error: Object;
+  publicBranchesLoaded: boolean;
 }
 
 export const initialState: ICalendarBranchState = {
@@ -18,7 +19,8 @@ export const initialState: ICalendarBranchState = {
   searchText: '',
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  publicBranchesLoaded: false
 };
 
 export function reducer (
@@ -50,6 +52,33 @@ export function reducer (
         error: action.payload
       };
     }
+
+    case BranchActions.FETCH_PUBLIC_CALENDAR_BRANCHES: {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        publicBranchesLoaded: false
+      };
+    }
+    case BranchActions.FETCH_PUBLIC_CALENDAR_BRANCHES_SUCCESS: {
+      return {
+        ...state,
+        branches: processBranches(state.branches, action.payload.branchList),
+        loading: false,
+        loaded: true,
+        error: null,
+        publicBranchesLoaded: true
+      };
+    }
+    case BranchActions.FETCH_PUBLIC_CALENDAR_BRANCHES_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    }
+
     case BranchActions.SELECT_CALENDAR_BRANCH: {
       return {
         ...state,
@@ -80,4 +109,15 @@ function sortBranches(branchList: any): ICalendarBranch[] {
       return 0;
     }
   );
+}
+
+function processBranches(currentBranchList: ICalendarBranch[], branchList: any): ICalendarBranch[] {
+  branchList.forEach(val => {
+    console.log(currentBranchList.indexOf(val.publicId))
+    if(currentBranchList.indexOf(val.publicId) > 0){
+      console.log("kasun");
+    }
+  });
+  //var uniqEs6 = (arrArg) => arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos);
+  return sortBranches(currentBranchList.concat(branchList));
 }

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { calendarPublicEndpoint, DataServiceError, servicePoint, calendarEndpoint } from '../data.service';
+import { ICalendarBranchResponse } from '../../../models/ICalendarBranchResponse';
 
 
 
@@ -13,15 +14,15 @@ import { calendarPublicEndpoint, DataServiceError, servicePoint, calendarEndpoin
 export class CalendarBranchDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
 
-  getCalendarBranches(): Observable<ICalendarBranch[]> {
+  getCalendarBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranch[]>(`${calendarEndpoint}/branches/`)
+      .get<ICalendarBranchResponse>(`${calendarEndpoint}/branches/`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 
-  getCalendarPublicBranches(): Observable<ICalendarBranch[]> {
+  getCalendarPublicBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranch[]>(`${calendarPublicEndpoint}/branches/`)
+      .get<ICalendarBranchResponse>(`${calendarPublicEndpoint}/branches/`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 }

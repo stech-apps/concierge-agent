@@ -17,10 +17,16 @@ export const getSelectedCalendarBranch = createSelector(
   (state: ICalendarBranchState) => state.selectedBranch
 );
 
+export const isPublicBranchesLoaded = createSelector(
+  getBranchState,
+  (state: ICalendarBranchState) => state.publicBranchesLoaded
+);
+
 @Injectable()
 export class CalendarBranchSelectors {
   constructor(private store: Store<IAppState>) {}
-
+  
   branches$ = this.store.select(getAllCalendarBranches);
   selectedBranch$ = this.store.select(getSelectedCalendarBranch);
+  isPublicBranchesLoaded$ = this.store.select(isPublicBranchesLoaded);
 }

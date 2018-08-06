@@ -28,4 +28,17 @@ export class CalendarBranchEffects {
           )
         )
       );
+
+    @Effect()
+    getPublicCalendarBranches$: Observable<Action> = this.actions$
+      .ofType(AllActions.FETCH_PUBLIC_CALENDAR_BRANCHES)
+      .pipe(
+        switchMap(() =>
+          toAction(
+            this.branchDataService.getCalendarPublicBranches(),
+            AllActions.FetchPublicCalendarBranchesSuccess,
+            AllActions.FetchPublicCalendarBranchesFail
+          )
+        )
+      );
 }

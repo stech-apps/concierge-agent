@@ -9,6 +9,10 @@ export const FETCH_CALENDAR_BRANCHES_FAIL = '[Calendar Branch] FETCH_CALENDAR_BR
 export const FETCH_CALENDAR_BRANCHES_SUCCESS = '[Calendar Branch] FETCH_CALENDAR_BRANCHES_SUCCESS';
 export const SELECT_CALENDAR_BRANCH = '[Calendar Branch] SELECT_CALENDAR_BRANCH';
 export const RESET_CALENDAR_BRANCH = '[Calendar Branch] RESET_CALENDAR_BRANCH';
+export const FETCH_PUBLIC_CALENDAR_BRANCHES = '[Calendar Branch] FETCH_PUBLIC_CALENDAR_BRANCHES';
+export const FETCH_PUBLIC_CALENDAR_BRANCHES_FAIL = '[Calendar Branch] FETCH_PUBLIC_CALENDAR_BRANCHES_FAIL';
+export const FETCH_PUBLIC_CALENDAR_BRANCHES_SUCCESS = '[Calendar Branch] FETCH_PUBLIC_CALENDAR_BRANCHES_SUCCESS';
+
 
 export class FetchCalendarBranches implements Action {
   readonly type = FETCH_CALENDAR_BRANCHES;
@@ -21,6 +25,20 @@ export class FetchCalendarBranchesFail implements Action {
 
 export class FetchCalendarBranchesSuccess implements Action {
   readonly type = FETCH_CALENDAR_BRANCHES_SUCCESS;
+  constructor(public payload: ICalendarBranchResponse) {}
+}
+
+export class FetchPublicCalendarBranches implements Action {
+  readonly type = FETCH_PUBLIC_CALENDAR_BRANCHES;
+}
+
+export class FetchPublicCalendarBranchesFail implements Action {
+  readonly type = FETCH_PUBLIC_CALENDAR_BRANCHES_FAIL;
+  constructor(public payload: Object) {}
+}
+
+export class FetchPublicCalendarBranchesSuccess implements Action {
+  readonly type = FETCH_PUBLIC_CALENDAR_BRANCHES_SUCCESS;
   constructor(public payload: ICalendarBranchResponse) {}
 }
 
@@ -37,4 +55,7 @@ export type AllCalendarBranchActions = FetchCalendarBranches |
                                FetchCalendarBranchesFail |
                                FetchCalendarBranchesSuccess | 
                                SelectCalendarBranch |
-                               ResetCalendarBranch;
+                               ResetCalendarBranch |
+                               FetchPublicCalendarBranches |
+                               FetchPublicCalendarBranchesFail |
+                               FetchPublicCalendarBranchesSuccess;

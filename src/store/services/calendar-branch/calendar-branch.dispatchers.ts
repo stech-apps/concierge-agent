@@ -13,6 +13,10 @@ export class CalendarBranchDispatchers {
     this.store.dispatch(new CalendarBranchActions.FetchCalendarBranches);
   }
 
+  fetchPublicCalendarBranches() {
+    this.store.dispatch(new CalendarBranchActions.FetchPublicCalendarBranches);
+  }
+
   selectCalendarBranch(branch: ICalendarBranch) {
     this.store.dispatch(new CalendarBranchActions.SelectCalendarBranch(branch));
   }

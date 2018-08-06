@@ -23,6 +23,13 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService) {
 
+    const serviceLoadedSubscription = this.branchSelectors.isPublicBranchesLoaded$.subscribe((val) => {
+      if(!val){
+        this.branchDispatchers.fetchPublicCalendarBranches();
+      }
+    });
+    this.subscriptions.add(serviceLoadedSubscription);
+
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = <Array<ICalendarBranchViewModel>>bs;
 

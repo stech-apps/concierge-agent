@@ -1,11 +1,12 @@
-<div class="time-interval-container">
-  <div *ngFor="let ti of timeIntervals" (click)="timeIntervalSelect(ti)" class="qm-time-interval" [ngClass]="{'qm-time-interval--active': ti.isActive}">
+<div class="time-category-container">
+  <div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 
+  [ngClass]="{'qm-time-category--active': ti.isActive}">
     {{ti.title}}
   </div>
 </div>
 
 <div class="qm-time-slot-list">
-  <div class="qm-time-select-slot" *ngFor="let ts of timeSlots" [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
+  <div class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : selectedCategory" [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
     {{ts.title}}
   </div>
 </div>

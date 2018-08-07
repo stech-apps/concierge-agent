@@ -5,12 +5,12 @@
   <div class="qm-flow-sub-header__center">
     <div class="qm-number-of-customers__text">{{ 'no_of_customers' | translate }}</div>
     <div class="qm-number-of-customers__numeric">
-      <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(1)">
-        <i class="icon-add"></i>
-      </div>
-      <div class="qm-number-of-customers__numeric-value">{{noOfCustomers}}</div>
       <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">
         <i class="icon-subtract"></i>
+      </div>
+      <div class="qm-number-of-customers__numeric-value">{{noOfCustomers}}</div>
+      <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(1)">
+        <i class="icon-add"></i>
       </div>
     </div>
   </div>
@@ -23,15 +23,15 @@
   <div class="qm-calendar-container">
     <div class="qm-calendar-header qm-time-header">{{selectedBranch.name}}</div>
     <div class="qm-calendar-placeholder">
-      <qm-calendar (onSelectDate)="onSelectDate($event)"></qm-calendar>      
+      <qm-calendar [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
     </div>
   </div>
 
   <div class="qm-appointment-time-select-slots">
-      <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
-      <div class="qm-time-slot-placeholder">
-          <qm-time-slots></qm-time-slots>
-      </div>
+    <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
+    <div class="qm-time-slot-placeholder">
+      <qm-time-slots (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+    </div>
   </div>
   <!--ngb-datepicker #dp [(ngModel)]="model" [outsideDays]="'hidden'" firstDayOfWeek="7" [displayMonths]="displayMonths" [navigation]="'arrows'"  (navigate)="date = $event.next"></ngb-datepicker-->
 </div>

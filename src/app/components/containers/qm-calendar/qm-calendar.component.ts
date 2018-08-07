@@ -20,6 +20,8 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   weeks: CalendarDate[][] = [];
   sortedDates: CalendarDate[] = [];
 
+  _preselectedDates : CalendarDate[] = [];
+
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
@@ -58,13 +60,16 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   selectDate(date: CalendarDate): void {
     this.onSelectDate.emit(date);
-    date.selected = !date.selected;
-    if(!this.multiSelect) {
-      this.selectedDates.forEach(d=> {
+    date.selected = true;
+    if (!this.multiSelect) {
+      this.selectedDates.forEach(d => {
         d.selected = false;
       });
 
-      this.selectedDates = [];
+      this._preselectedDates.forEach(d=> {
+        d.selected = false;
+      })
+
       this.selectedDates.push(date);
     }
   }
@@ -119,11 +124,20 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     return _.range(start, start + 42)
       .map((date: number): CalendarDate => {
         const d = moment(firstDayOfGrid).date(date);
-        return {
+
+        const isSelectedDay = this.isSelected(d);
+        
+        let calDay = {
           today: this.isToday(d),
-          selected: this.isSelected(d),
+          selected: isSelectedDay,
           mDate: d,
         };
+
+        if(isSelectedDay) {
+          this._preselectedDates.push(calDay);
+        }
+
+        return calDay;
       });
   }
 }

@@ -1,6 +1,7 @@
-export interface ITimeInterval {
+export interface ITimeSlotCategory {
     title: string,
     startTime: number,
     endTime: number,
-    isActive: boolean
+    isActive: boolean,
+    category?: number
 }

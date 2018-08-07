@@ -116,6 +116,7 @@ import { QmTimeSlotsComponent } from './components/containers/qm-time-slots/qm-t
 import { QmSelectServiceComponent } from './components/presentational/qm-select-service/qm-select-service.component';
 import { QmCustomerSearchBarComponent } from './components/presentational/qm-customer-search-bar/qm-customer-search-bar.component';
 import { FilterServicePipe } from './components/presentational/qm-select-service/filter-service.pipe';
+import { FilterTimeSlotPipe } from './components/containers/qm-time-slots/filter-time-slot.pipe';
 import { QmLoaderComponent } from './components/containers/qm-loader/qm-loader.component';
 import 'hammerjs'
 import * as Hammer from 'hammerjs';
@@ -179,6 +180,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmSelectServiceComponent,
     QmCustomerSearchBarComponent,
     FilterServicePipe,
+    FilterTimeSlotPipe,
     QmLoaderComponent  ],
   entryComponents: [
     QmCustomToastComponent,

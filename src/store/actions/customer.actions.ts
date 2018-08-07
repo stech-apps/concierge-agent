@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { ICustomer } from '../../models/ICustomer';
-import { ICustomerResponse } from '../../models/ICustomerResponse';
 
 
 //customer actions
@@ -51,7 +50,7 @@ export class FetchCustomersFail implements Action{
 
 export class FetchCustomersSuccess implements Action{
     readonly type = FETCH_CUSTOMERS_SUCCESS;
-    constructor (public payload:ICustomerResponse){}
+    constructor (public payload:ICustomer[]){}
 }
 
 export class ResetCustomers implements Action{

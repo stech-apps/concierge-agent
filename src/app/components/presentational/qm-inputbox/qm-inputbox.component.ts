@@ -24,6 +24,9 @@ export class QmInputboxComponent implements OnInit {
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
 
+  invalidFirstName:boolean;
+  invalidLastName:boolean;
+
   constructor(
     private activeModal:NgbActiveModal,
     public autoCloseService:AutoClose,
@@ -61,8 +64,8 @@ export class QmInputboxComponent implements OnInit {
       this.customerCreateForm.patchValue({
         firstName: this.currentCustomer.firstName,
         lastName:this.currentCustomer.lastName,
-        phone:this.currentCustomer.phone,
-        email:this.currentCustomer.email
+        phone:this.currentCustomer.properties.phoneNumber,
+        email:this.currentCustomer.properties.email
       })
     }
   }
@@ -73,8 +76,10 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public accept() {
-    if(this.customerCreateForm.invalid){
-      console.log('a');
+    if(this.customerCreateForm.controls.firstName.invalid){
+      this.invalidFirstName=true
+    }else if (this.customerCreateForm.controls.lastName.invalid){
+      this.invalidLastName=true
     }
     if(this.customerCreateForm.valid){
       this.activeModal.close(this.customerCreateForm.value); 
@@ -102,9 +107,8 @@ export class QmInputboxComponent implements OnInit {
     const customerSave:ICustomer={
       firstName: this.customerCreateForm.value.firstName.trim(),
       lastName: this.customerCreateForm.value.lastName.trim(),
-      name: this.customerCreateForm.value.firstName.trim()+'  '+this.customerCreateForm.value.lastName.trim(),
-      phone: this.customerCreateForm.value.phone.trim(),
-      email: this.customerCreateForm.value.email.trim()
+      properties:{phoneNumber: this.customerCreateForm.value.phone.trim(),
+      email: this.customerCreateForm.value.email.trim()}
     }
     return customerSave
   }

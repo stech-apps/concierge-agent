@@ -54,7 +54,7 @@ export class CustomerEffects{
           .ofType(CustomerActions.CREATE_CUSTOMER_SUCCESS)
           .pipe(
             tap((action: CustomerActions.CreateCustomerSuccess) =>             
-              this.translateService.get('customer_msg_created',{0:action.payload.name}).subscribe(
+              this.translateService.get('customer_msg_created',{0:action.payload.firstName+' '+action.payload.lastName}).subscribe(
                   (label:string) => this.toastService.successToast(label)
               ).unsubscribe()
             ),
@@ -92,7 +92,7 @@ export class CustomerEffects{
         .pipe(
             tap((action:CustomerActions.UpdateCUstomerSuccess)=>
             this.translateService.get('customer_msg_update').subscribe(
-                (label:string)=> this.toastService.successToast(`${label} ${action.payload.name}`)
+                (label:string)=> this.toastService.successToast(`${label}`)
             ).unsubscribe()
         ),
         switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>

@@ -9,11 +9,11 @@
   </tr>
 </thead>
 <tbody>
-    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0">
+    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)">
       <td class="qm-td-col-1">{{customer.lastName}}</td>
       <td >{{customer.firstName}}</td>
-      <td >{{customer.email}}</td>
-      <td >{{customer.phone}}</td>
+      <td >{{customer.properties.email}}</td>
+      <td >{{customer.properties.phoneNumber}}</td>
       <td> 
           <div class="svg-container" (click)="editCustomer(customer)">
           <svg clsas="edit_btn" enable-background="new 0 0 512 512"  viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="">
@@ -26,4 +26,7 @@
     </tr>  
 </tbody>
 </table>
-
+<div class="qm-loader-container" *ngIf="showLoading()" >
+  <qm-loader></qm-loader>
+</div>
+<h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>

@@ -17,18 +17,25 @@ input::-ms-clear {
     outline: none;
     border: 0;
     float: left;
+    padding-right: rem(30px)
     // width: 100%;
   }
+
   input.ng-invalid.ng-touched {
     background-color: #ffaab7;
   }
-  // input.ng-invalid.invalid-form{
-  //   background-color: #ffaab7;
-  // }
 
-  // .submitted.ng-invalid{
-  //   background-color: #ffaab7;
-  // }
+  input.ng-submitted {
+    background-color: #ffaab7;
+  }
+
+  input:focus{
+    background-color: white!important
+  }
+
+ 
+
+ 
 
   &__header {
     padding: rem(40px 20px 5px 20px );
@@ -119,5 +126,9 @@ input::-ms-clear {
   }
 
   
+}
+
+.invalid{
+  background-color: #ffaab7;
 }
 

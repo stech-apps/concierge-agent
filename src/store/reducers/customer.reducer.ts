@@ -66,7 +66,7 @@ export function reducer(
             return{
                 ...state,
                 customers: [
-                    ...action.payload.customerList
+                    ...action.payload
                   ],
                 loading:false,
                 loaded:true,

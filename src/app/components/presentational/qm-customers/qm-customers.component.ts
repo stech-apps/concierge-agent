@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from '../../../../../node_modules/rxjs';
 import { UserSelectors } from '../../../../store';
+
 @Component({
   selector: 'qm-qm-customers',
   templateUrl: './qm-customers.component.html',
@@ -23,5 +24,8 @@ export class QmCustomersComponent implements OnInit {
     this.router.navigate(['profile']);
   }
 
+  onLongPress(){
+    console.log('long press');
+  }
 
 }

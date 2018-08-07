@@ -31,12 +31,7 @@
         border-color:transparent;
       
     }
-    td:focus{
-        background-color: red;
-    }
-
-    
-
+  
     .customer-list{
         background-color: white;
         border-bottom: 1px solid $light-gray2;
@@ -45,6 +40,9 @@
         padding:0;
         margin:0;
    
+    }
+    .customer-list:active{
+        background-color:$light-gray2;
     }
 
     .svg-container {
@@ -64,4 +62,19 @@
         width: 20%
     }
     
-}   
+   
+}
+.qm-loader-container {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    height: 200px;
+    margin-top: -100px; /* half of you height */
+    width: 400px;
+    margin-left: -200px; /* half of you width */
+  }
+.customer-list-not-found{
+    padding: 80px;
+    color: black;
+    font-size: 0.8em;
+}

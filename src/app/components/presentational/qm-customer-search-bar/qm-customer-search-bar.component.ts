@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { CustomerSelector,CustomerDispatchers, ServicePointSelectors, UserSelectors } from '../../../../store';
@@ -6,6 +6,7 @@ import { tap, distinctUntilChanged, debounceTime, filter, throwIfEmpty } from 'r
 import { Router } from '@angular/router';
 import { Util } from '../../../../util/util';
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
+import { EventEmitter } from '../../../../../node_modules/protractor';
 
 @Component({
   selector: 'qm-customer-search-bar',
@@ -13,6 +14,7 @@ import { CustomerUpdateService } from '../../../../util/services/customer-update
   styleUrls: ['./qm-customer-search-bar.component.scss']
 })
 export class QmCustomerSearchBarComponent implements OnInit {
+
 
   subscriptions :Subscription = new Subscription();
   searchInput$ : Subject<string> = new Subject<string>();
@@ -23,10 +25,10 @@ export class QmCustomerSearchBarComponent implements OnInit {
   customers$: Observable<ICustomer[]>
   customerLoading$:Observable<boolean>;
   customerLoaded:boolean;
-  customerLooaded$:Observable<boolean>;
+  customerLoaded$:Observable<boolean>;
   selectedUser:ICustomer;
-
   newcustomer:ICustomer;
+  
 
   private CHARACTER_THRESHOLD = 2;
   constructor(
@@ -42,7 +44,7 @@ export class QmCustomerSearchBarComponent implements OnInit {
     this.customers$ = this.CustomerSelectors.customer$;
     this.searchText$ = this.CustomerSelectors.searchText$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
-    this.customerLooaded$ = this.CustomerSelectors.customerLoaded$
+    this.customerLoaded$ = this.CustomerSelectors.customerLoaded$
 
    
    }
@@ -59,7 +61,7 @@ export class QmCustomerSearchBarComponent implements OnInit {
         filter(text => text.length >= this.CHARACTER_THRESHOLD)
       ).subscribe((searchText:string)=> this.handleCustomerSearch(searchText));
 
-    const customerLoadedSubscription = this.customerLooaded$.subscribe(
+    const customerLoadedSubscription = this.customerLoaded$.subscribe(
       (customerLoaded:boolean)=> (this.customerLoaded= customerLoaded)
     )
     const customerSubscription = this.customers$.subscribe(

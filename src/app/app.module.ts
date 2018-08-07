@@ -38,6 +38,9 @@ import { effects } from "../store/effects";
 // Env
 import { environment } from "../environments/environment";
 
+
+
+
 //Forms
 import {
   FormGroup,
@@ -113,6 +116,12 @@ import { QmTimeSlotsComponent } from './components/containers/qm-time-slots/qm-t
 import { QmSelectServiceComponent } from './components/presentational/qm-select-service/qm-select-service.component';
 import { QmCustomerSearchBarComponent } from './components/presentational/qm-customer-search-bar/qm-customer-search-bar.component';
 import { FilterServicePipe } from './components/presentational/qm-select-service/filter-service.pipe';
+import { QmLoaderComponent } from './components/containers/qm-loader/qm-loader.component';
+import 'hammerjs'
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -120,6 +129,14 @@ const toastrGlobalOptions = {
   autoDismiss: true,
   iconClasses: {}
 };
+
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      // override hammerjs default configuration
+      'press': {time: 2000}      
+  }
+}
+
 
 @NgModule({
   declarations: [
@@ -161,8 +178,8 @@ const toastrGlobalOptions = {
     QmTimeSlotsComponent,
     QmSelectServiceComponent,
     QmCustomerSearchBarComponent,
-    FilterServicePipe
-  ],
+    FilterServicePipe,
+    QmLoaderComponent  ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent,
@@ -213,7 +230,11 @@ const toastrGlobalOptions = {
     TimeUtils,
     CalendarSettingsService,
     FormGroupDirective,
-    BookingHelperService
+    BookingHelperService,
+    { 
+      provide: HAMMER_GESTURE_CONFIG, 
+      useClass: MyHammerConfig 
+    }
   ],
   bootstrap: [AppComponent]
 })

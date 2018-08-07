@@ -12,6 +12,11 @@ import { CustomerUpdateService } from '../../../../util/services/customer-update
 export class QmCustomerSearchComponent implements OnInit {
 
   @Input() myData:string;
+  customersLoading: boolean;
+  customerLoading$:Observable<boolean>;
+  customerLoaded:boolean;
+  customerLoaded$:Observable<boolean>;
+  hello:string='';
 
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
@@ -27,6 +32,8 @@ export class QmCustomerSearchComponent implements OnInit {
     private userSelectors:UserSelectors
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.customerLoading$ = this.CustomerSelectors.customerLoading$;
+    this.customerLoaded$ = this.CustomerSelectors.customerLoaded$
     
   }
 
@@ -38,7 +45,17 @@ export class QmCustomerSearchComponent implements OnInit {
     const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
     this.customers$ = this.CustomerSelectors.customer$;
+
+    const customerLoadedSubscription = this.customerLoaded$.subscribe(
+      (customerLoaded:boolean)=> (this.customerLoaded= customerLoaded)
+    )
+    const customersLoadingSubscription = this.customerLoading$.subscribe(
+      (customersLoading:boolean)=> (this.customersLoading= customersLoading)
+    )
+    this.subscriptions.add(customerLoadedSubscription);
+    this.subscriptions.add(customersLoadingSubscription);
   }
+  
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -50,4 +67,13 @@ export class QmCustomerSearchComponent implements OnInit {
     this.CustomerDispatchers.selectCustomers(customer);
     console.log(customer);
   }
+
+  showLoading() {
+    return !this.customerLoaded && this.customersLoading;
+  }
+
+  showNoResults() {
+    return this.customerLoaded && this.customers.length === 0;
+  }
+  
 }

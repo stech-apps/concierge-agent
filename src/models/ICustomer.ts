@@ -1,11 +1,13 @@
+import { ICustomerProperty } from "./ICustomerProperty";
+
 export interface ICustomer {
   id?: number;
-  publicId?: string;
   firstName: string;
   lastName: string;
-  name: string;
-  email?: string;
-  phone?: string;
-  dateOfBirth?: string | number;
-  }
-  
+  properties: ICustomerProperty;
+  publicId?: string;
+  lastInteractionTimestamp?: string;
+  deletionTimestamp?: string;
+  retentionPolicy?: string;
+  name?: string;
+}

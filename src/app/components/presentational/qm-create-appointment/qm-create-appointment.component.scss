@@ -1,11 +1,30 @@
 @import "../../../../styles/base/_component-manifest.scss";
-
 :host {
-    color:black;
-    @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
+  color: black;
+  @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
 }
 
 .qm-reservation-expiry-timer {
-   position: fixed;
-   bottom: 10px;
+  position: fixed;
+  bottom: 10px;
+  font-size: 2em;
+  display: inline-block;
+  padding: 14px;
+  background: #f8f8f8;
+  color: #5E5C5C;
+  padding-top: 0.2em;
+  padding-bottom: 0.7em;
+  z-index: 99999;
+  line-height: 0.8em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 1em;
+  text-align: center;
+  cursor: move;
+  
+  .qm-expire-counter__label {
+    font-size: 16px;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    max-width: 175px;
+  }
 }

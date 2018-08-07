@@ -147,7 +147,7 @@ export class QmSelectServiceComponent implements OnInit {
       }
     }
 
-    if(this.selectedServiceList.length === 1){
+    if(this.selectedServiceList.length === 1 && !(this.isMultiServiceOn)){
       this.doneButtonClick();
     }
   }

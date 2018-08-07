@@ -34,12 +34,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1.5rem;
     height: calc(100vh - 120px);
     overflow: scroll;
 }
 
 .qm-service-list {
+
+    &__item-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    &__selected-item-container {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    &__index-item {
+        color: #FFFFFF;
+        width: 25%;
+        text-align: center;
+    }
 
     &__header {
         text-align: left;
@@ -71,7 +92,15 @@
         &--selected {
             background-color: var(--app-theme);
             color: $primary-text-color;
+
+            &__btn {
+                color: white;
+                .qm-action-btn__icon {
+                    font-size: rem(15px);
+                  }
+            }
         }
+
 
         &--text{
             text-overflow: ellipsis;

@@ -37,7 +37,7 @@ export class QmHomeMenuComponent implements OnInit {
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
 
-    if(this.isAppointmentUser){
+    if(this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)){
       this.calendarBranchDispatcher.fetchCalendarBranches();
     }
   }

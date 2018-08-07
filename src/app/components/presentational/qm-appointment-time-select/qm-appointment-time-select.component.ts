@@ -112,7 +112,6 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   onTimeSlotSelect(timeSlot: ITimeSlot) {
-
     const bookingInformation: IBookingInformation = {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
@@ -121,11 +120,11 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       time: timeSlot.title
     };
 
-
     const appointment: IAppointment = {
       services: this.selectedServices
     };
 
+    this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
     this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
     this.onFlowNext.emit();
   }

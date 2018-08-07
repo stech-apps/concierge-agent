@@ -6,7 +6,7 @@ import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { ReservationExpiryTimerSelectors, CalendarBranchSelectors, CalendarBranchDispatchers, 
-         BranchSelectors, BranchDispatchers, CalendarServiceSelectors } from 'src/store';
+         BranchSelectors, BranchDispatchers, CalendarServiceSelectors, TimeslotSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -20,15 +20,17 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   flowType = FLOW_TYPE.CREATE_APPOINTMENT;
   selectedServices: ICalendarService[];
   public showExpiryReservationTime$: Observable<Boolean>;
+  public selectedTimeSlot$: Observable<string>;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers,
-    private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors) {
+    private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors,
+    private timeSlotSelectors: TimeslotSelectors) {
       
-      this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
-
-    
+      this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$; 
+      
+      this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
       const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
       if (sb === undefined || sb.publicId.length === 0){
         this.setSelectedBranch();
@@ -45,6 +47,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
         this.selectedServices = services;
       }
     });
+
     this.subscriptions.add(servicesSubscription);
   }
 

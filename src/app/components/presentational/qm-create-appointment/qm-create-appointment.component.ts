@@ -23,7 +23,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors,
     private branchDispatchers: BranchDispatchers,
-    private serviceSelectors: CalendarServiceSelectors) {
+    private calendarServiceSelectors: CalendarServiceSelectors) {
 
     const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
       if(sb === undefined || sb.publicId.length === 0){
@@ -36,7 +36,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(selectedPublicBranchSub);
 
-    const servicesSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => {
+    const servicesSubscription = this.calendarServiceSelectors.selectedServices$.subscribe((services) => {
       if(services !== null){
         this.selectedServices = services;
       }

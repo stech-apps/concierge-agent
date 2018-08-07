@@ -1,9 +1,11 @@
+import { IService } from './../../../../models/IService';
+import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { IBookingInformation } from './../../../../models/IBookingInformation';
 import { TimeslotSelectors } from './../../../../store/services/timeslot/timeslot.selectors';
 import { CalendarDate } from './../../containers/qm-calendar/qm-calendar.component';
 import { IBranch } from 'src/models/IBranch';
 import { Subscription } from 'rxjs';
-import { BranchSelectors, TimeslotDispatchers } from 'src/store';
+import { BranchSelectors, TimeslotDispatchers, CalendarBranchSelectors, ServiceSelectors } from 'src/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BookingHelperService } from 'src/util/services/booking-helper.service';
 
@@ -16,17 +18,24 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
   noOfCustomers: number = 1;
   private subscriptions: Subscription = new Subscription();
-  selectedBranch: IBranch = new IBranch();
+  selectedBranch: ICalendarBranch = new ICalendarBranch();
+  selectedServices: IService[] = [];
 
   private selectedTime: string;
 
   constructor(private branchSelectors: BranchSelectors, private timeSlotSelectors: TimeslotSelectors, private timeSlotDispatchers: TimeslotDispatchers,
-              private bookingHelperService: BookingHelperService) {
-    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((sb) => {
-        this.selectedBranch = sb;
+              private bookingHelperService: BookingHelperService, private calendarBranchSelectors: CalendarBranchSelectors,
+              private serviceSelectors: ServiceSelectors) {
+    const branchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((cb)=> {
+      this.selectedBranch = cb;
+    });
+
+    const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe((s)=> {
+      this.selectedServices = s;
     });
 
     this.subscriptions.add(branchSubscription);
+    this.subscriptions.add(serviceSubscription);
   }
 
   ngOnInit() {
@@ -38,14 +47,20 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
   onSelectDate(date: CalendarDate) {
     const bookingInformation: IBookingInformation = {
-      branchPublicId: '',
-      serviceQuery: '',
+      branchPublicId: this.selectedBranch.publicId,
+      serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: date.mDate.toString(),
+      date: date.mDate.format('YYYY-MM-DD'),
       time: this.selectedTime
     };
 
     this.timeSlotDispatchers.getTimeslots(bookingInformation);
+  }
+
+  getServicesQueryString(): string {
+    return this.selectedServices.reduce((queryString, service: IService) => {
+      return queryString + `;servicePublicId=${service.id}`;
+    }, '');
   }
 
   changeCustomerCount(step){

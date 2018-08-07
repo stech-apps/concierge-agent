@@ -50,7 +50,7 @@ export class QmSelectServiceComponent implements OnInit {
   onResultChange:  EventEmitter<any> = new EventEmitter();
 
   @Output()
-  onFlowNext:  EventEmitter<any> = new EventEmitter();
+  onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
   
   @Input()
   flowType: FLOW_TYPE;

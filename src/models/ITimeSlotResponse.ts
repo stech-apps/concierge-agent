@@ -1,4 +1,4 @@
-export interface ITimeslotResponse {
+export interface ITimeSlotResponse {
     times: string[];
   }
   

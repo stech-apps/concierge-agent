@@ -11,6 +11,7 @@ import { IServiceViewModel } from '../../../../models/IServiceViewModel';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ICalendarService } from '../../../../models/ICalendarService';
+import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 
 @Component({
   selector: 'qm-select-service',
@@ -134,29 +135,40 @@ export class QmSelectServiceComponent implements OnInit {
     this.selectedServiceList.push(selectedService);
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
+      this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
     }
     else{
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+      if(isRemove){
+        this.filteredServiceList = this.filteredServiceList.filter(
+          (val: IService) =>
+            val.id !== selectedService.id
+        );
+      }
     }
-    if(isRemove){
-      this.filteredServiceList = this.filteredServiceList.filter(
-        (val: IService) =>
-          val.id !== selectedService.id
-      );
+
+    if(this.selectedServiceList.length === 1){
+      this.doneButtonClick();
     }
   }
 
   onServiceRemove(selectedService: IServiceViewModel){
-    this.selectedServiceList = this.selectedServiceList.filter(
-      (val: IService) =>
-        val.id !== selectedService.id
-    );
-    this.filteredServiceList.push(selectedService);
-    this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.selectedServiceList = this.selectedServiceList.filter(
+        (val: ICalendarService) =>
+          val.publicId !== selectedService.publicId
+      );
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
+      this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
     }
     else{
+      this.selectedServiceList = this.selectedServiceList.filter(
+        (val: IService) =>
+          val.id !== selectedService.id
+      );
+      this.filteredServiceList.push(selectedService);
+      this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
+      
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
     }
   }

@@ -40,7 +40,7 @@ export interface ICalendarServiceState {
       case ServiceActions.FETCH_CALENDAR_SERVICES_SUCCESS: {
         return {
           ...state,
-          services: sortServices(action.payload.serviceList),
+          services: sortServices(action.payload[0].services),
           loading: false,
           loaded: true,
           error: null,
@@ -64,7 +64,7 @@ export interface ICalendarServiceState {
       case ServiceActions.FETCH_SERVICE_GROUPS_SUCCESS: {
         return {
           ...state,
-          serviceGroups: action.payload,
+          services: processServices(state.selectedServices, action.payload[0].services),
           loading: false,
           loaded: true,
           error: null
@@ -101,5 +101,17 @@ export interface ICalendarServiceState {
         return 0;
       }
     );
+  }
+
+  function processServices(selectedServiceList: ICalendarService[], serviceList: any): ICalendarService[] {
+    var remainList = [];
+    serviceList.forEach(val => {
+      var elementPos = selectedServiceList.map(function(x) {return x.publicId; }).indexOf(val.publicId);
+      if(elementPos < 0){
+        remainList.push(val);
+      }
+    })
+    
+    return sortServices(remainList);
   }
   

@@ -18,10 +18,6 @@ export class ServiceDispatchers {
     this.store.dispatch(new ServiceActions.FetchServiceConfiguration(branch, services));
   }
 
-  fetchServiceGroups(queryString: string) {
-    this.store.dispatch(new ServiceActions.FetchServiceGroups(queryString));
-  }
-
   setSelectedServices(services: IService[]) {
     this.store.dispatch(new ServiceActions.SetSelectedServices(services));
   }

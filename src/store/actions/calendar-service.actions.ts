@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { ICalendarService } from '../../models/ICalendarService';
 import { ICalendarServiceResponse } from '../../models/ICalendarServiceResponse';
 import { IServiceGroup } from '../../models/IServiceGroup';
+import { ICalendarBranch } from '../../models/ICalendarBranch';
 
 export const FETCH_CALENDAR_SERVICES = '[Calendar Service] FETCH_CALENDAR_SERVICES';
 export const FETCH_CALENDAR_SERVICES_FAIL = '[Calendar Service] FETCH_CALENDAR_SERVICES_FAIL';
@@ -16,6 +17,7 @@ export const SET_SELECTED_CALENDAR_SERVICES = '[Calendar Service] SET_SELECTED_C
 
 export class FetchCalendarServices implements Action {
     readonly type = FETCH_CALENDAR_SERVICES;
+    constructor(public payload: ICalendarBranch) {}
   }
   
   export class FetchCalendarServicesFail implements Action {
@@ -30,7 +32,7 @@ export class FetchCalendarServices implements Action {
   
   export class FetchServiceGroups implements Action {
     readonly type = FETCH_SERVICE_GROUPS;
-    constructor(public payload: string) {}
+    constructor(public payload: ICalendarService[], public branch: ICalendarBranch) {}
   }
   
   export class FetchServiceGroupsFail implements Action {
@@ -40,7 +42,7 @@ export class FetchCalendarServices implements Action {
   
   export class FetchServiceGroupsSuccess implements Action {
     readonly type = FETCH_SERVICE_GROUPS_SUCCESS;
-    constructor(public payload: IServiceGroup[]) {}
+    constructor(public payload: ICalendarServiceResponse) {}
   }
 
   export class GetSelectedCalendarServices implements Action {

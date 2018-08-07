@@ -8,25 +8,32 @@ import {
   calendarEndpoint,
   calendarPublicEndpoint,
   DataServiceError,
-  servicePoint
+  servicePoint,
+  calendarPublicEndpointV2
 } from '../data.service';
 
 import { IServiceGroup } from '../../../models/IServiceGroup';
 import { ICalendarServiceResponse } from '../../../models/ICalendarServiceResponse';
+import { ICalendarBranch } from '../../../models/ICalendarBranch';
+import { ICalendarService } from '../../../models/ICalendarService';
 
 @Injectable()
 export class CalendarServiceDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
 
-  getCalendarServices(): Observable<ICalendarServiceResponse> {
+  getCalendarServices(branch: ICalendarBranch): Observable<ICalendarServiceResponse> {
     return this.http
-      .get<ICalendarServiceResponse>(`${calendarPublicEndpoint}/services/`)
+      .get<ICalendarServiceResponse>(`${calendarPublicEndpointV2}/branches/${branch.publicId}/services/groups`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 
-  getServiceGroups(servicePublicIds: string): Observable<IServiceGroup[]> {
+  getServiceGroups(services: ICalendarService[], branch: ICalendarBranch): Observable<ICalendarServiceResponse> {
+    var serviceIds = ""
+    services.forEach(val => {
+      serviceIds = serviceIds + 'servicePublicId=' + val.publicId + ';';
+    })
     return this.http
-      .get<IServiceGroup[]>(`${calendarPublicEndpoint}/services/groups${servicePublicIds}`)
+      .get<ICalendarServiceResponse>(`${calendarPublicEndpointV2}/branches/${branch.publicId}/services/groups;${serviceIds}`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 }

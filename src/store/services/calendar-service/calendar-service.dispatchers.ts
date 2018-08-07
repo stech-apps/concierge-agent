@@ -11,11 +11,11 @@ export class CalendarServiceDispatchers {
   constructor(private store: Store<IAppState>) {}
 
   fetchServices(branch: ICalendarBranch) {
-    this.store.dispatch(new ServiceActions.FetchCalendarServices);
+    this.store.dispatch(new ServiceActions.FetchCalendarServices(branch));
   }
 
-  fetchServiceGroups(queryString: string) {
-    this.store.dispatch(new ServiceActions.FetchServiceGroups(queryString));
+  fetchServiceGroups(services: ICalendarService[], branch: ICalendarBranch) {
+    this.store.dispatch(new ServiceActions.FetchServiceGroups(services, branch));
   }
 
   setSelectedServices(services: ICalendarService[]) {

@@ -20,9 +20,9 @@ export class CalendarServiceEffects {
     getCalendarServices$: Observable<Action> = this.actions$
       .ofType(AllActions.FETCH_CALENDAR_SERVICES)
       .pipe(
-        switchMap(() =>
+        switchMap((action: AllActions.FetchCalendarServices) =>
           toAction(
-            this.serviceDataService.getCalendarServices(),
+            this.serviceDataService.getCalendarServices(action.payload),
             AllActions.FetchCalendarServicesSuccess,
             AllActions.FetchCalendarServicesFail
           )
@@ -35,7 +35,7 @@ export class CalendarServiceEffects {
       .pipe(
         switchMap((action: AllActions.FetchServiceGroups) =>
           toAction(
-            this.serviceDataService.getServiceGroups(action.payload),
+            this.serviceDataService.getServiceGroups(action.payload, action.branch),
             AllActions.FetchServiceGroupsSuccess,
             AllActions.FetchServiceGroupsFail
           )

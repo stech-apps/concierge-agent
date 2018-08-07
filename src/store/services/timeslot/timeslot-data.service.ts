@@ -5,15 +5,15 @@ import {Observable} from 'rxjs';
 
 import { calendarPublicEndpointV2, DataServiceError } from '../data.service';
 import { IBookingInformation } from '../../../models/IBookingInformation';
-import { ITimeslotResponse } from '../../../models/ITimeslotResponse';
+import { ITimeSlotResponse } from '../../../models/ITimeSlotResponse';
 
 @Injectable()
 export class TimeslotDataService {
   constructor(private http: HttpClient) {}
 
-  getTimeslots(bookingInformation: IBookingInformation): Observable<ITimeslotResponse> {
+  getTimeslots(bookingInformation: IBookingInformation): Observable<ITimeSlotResponse> {
     return this.http
-      .get<ITimeslotResponse>
+      .get<ITimeSlotResponse>
       (
         `${calendarPublicEndpointV2}/branches/`
         + `${bookingInformation.branchPublicId}/dates/`

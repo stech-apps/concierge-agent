@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { IBookingInformation } from '../../models/IBookingInformation';
-import { ITimeslotResponse } from '../../models/ITimeslotResponse';
+import { ITimeSlotResponse } from '../../models/ITimeSlotResponse';
 
 export const FETCH_TIMESLOTS = '[Timeslot] FETCH_TIMESLOTS';
 export const FETCH_TIMESLOTS_FAIL = '[Timeslot] FETCH_TIMESLOTS_FAIL';
@@ -21,7 +21,7 @@ export class FetchTimeslotsFail implements Action {
 
 export class FetchTimeslotsSuccess implements Action {
   readonly type = FETCH_TIMESLOTS_SUCCESS;
-  constructor(public payload: ITimeslotResponse) {}
+  constructor(public payload: ITimeSlotResponse) {}
 }
 
 export class SelectTimeslot implements Action {

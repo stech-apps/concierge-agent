@@ -60,7 +60,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   selectDate(date: CalendarDate): void {
     this.onSelectDate.emit(date);
-    date.selected = true;
+
     if (!this.multiSelect) {
       this.selectedDates.forEach(d => {
         d.selected = false;
@@ -68,8 +68,9 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
       this._preselectedDates.forEach(d=> {
         d.selected = false;
-      })
-
+      });
+      
+      date.selected = true;
       this.selectedDates.push(date);
     }
   }

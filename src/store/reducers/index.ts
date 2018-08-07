@@ -15,6 +15,7 @@ import * as fromReservationTimer from "./reservation-expiry-timer.reducer";
 import * as fromCalendarBranches from "./calendar-branch.reducer";
 import * as fromCalendarServices from "./calendar-service.reducer";
 import * as fromTimeslot from "./timeslot.reducer";
+import * as fromReserve from './reserve.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -32,6 +33,7 @@ export interface IAppState {
   calendarBranches: fromCalendarBranches.ICalendarBranchState;
   calendarServices: fromCalendarServices.ICalendarServiceState;
   timeslot: fromTimeslot.ITimeslotState;
+  reserved: fromReserve.IReserveState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -49,5 +51,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   reservationExpiryTimer: fromReservationTimer.reducer,
   calendarBranches: fromCalendarBranches.reducer,
   calendarServices: fromCalendarServices.reducer,
-  timeslot: fromTimeslot.reducer
+  timeslot: fromTimeslot.reducer,
+  reserved: fromReserve.reducer
 };

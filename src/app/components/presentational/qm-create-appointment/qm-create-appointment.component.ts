@@ -1,10 +1,12 @@
-import { Subscription } from 'rxjs';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors } from './../../../../store/services';
+import { Subscription, Observable } from 'rxjs';
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
+import { ReservationExpiryTimerSelectors, CalendarBranchSelectors, CalendarBranchDispatchers, 
+         BranchSelectors, BranchDispatchers, CalendarServiceSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -17,19 +19,21 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   selectedBranch: IBranch = new IBranch();
   flowType = FLOW_TYPE.CREATE_APPOINTMENT;
   selectedServices: ICalendarService[];
+  public showExpiryReservationTime$: Observable<Boolean>;
 
   constructor(
-    private calendarBranchSelectors: CalendarBranchSelectors, 
-    private calendarBranchDispatchers: CalendarBranchDispatchers,
-    private branchSelectors: BranchSelectors,
-    private branchDispatchers: BranchDispatchers,
-    private calendarServiceSelectors: CalendarServiceSelectors) {
+    private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
+    private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers,
+    private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors) {
+      
+      this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
 
-    const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
-      if(sb === undefined || sb.publicId.length === 0){
+    
+      const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
+      if (sb === undefined || sb.publicId.length === 0){
         this.setSelectedBranch();
       }
-      else{
+      else {
         this.selectedBranch = sb;
       }
     });

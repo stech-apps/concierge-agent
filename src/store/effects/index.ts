@@ -13,6 +13,7 @@ import {CustomerEffects} from './customer.effects'
 import { CalendarSettingsEffects } from './calendar-settings.effects';
 import { TimeslotEffects } from './timeslot.effects';
 import { CalendarBranchEffects } from './calendar-branch.effects';
+import { ReserveEffects } from './reserve.effects';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -29,5 +30,6 @@ export const effects: any[] = [
     CustomerEffects,
     CalendarSettingsEffects,
     TimeslotEffects,
-    CalendarBranchEffects
+    CalendarBranchEffects,
+    ReserveEffects
 ];

@@ -18,3 +18,4 @@ export * from './calendar-settings';
 export * from './reservation-expiry-timer';
 export * from './timeslot';
 export * from './calendar-branch';
+export * from './reserve';

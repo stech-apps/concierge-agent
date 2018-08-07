@@ -4,3 +4,8 @@
     color:black;
     @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
 }
+
+.qm-reservation-expiry-timer {
+   position: fixed;
+   bottom: 10px;
+}

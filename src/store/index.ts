@@ -1,4 +1,3 @@
-import { TimeslotSelectors } from './services/timeslot/timeslot.selectors';
 export * from "./actions";
 export * from "./effects";
 export * from "./reducers";
@@ -52,7 +51,11 @@ import {
   ReservationExpiryTimerDispatchers,
   ReservationExpiryTimerSelectors,
   TimeslotDataService,
-  TimeslotDispatchers
+  TimeslotDispatchers,
+  TimeslotSelectors,
+  ReserveSelectors,
+  ReserveDispatchers,
+  ReserveDataService
 } from "./services";
 
 export const storeServices = [
@@ -104,5 +107,8 @@ export const storeServices = [
   ReservationExpiryTimerSelectors,
   TimeslotDataService,
   TimeslotDispatchers,
-  TimeslotSelectors
+  TimeslotSelectors,
+  ReserveDataService,
+  ReserveDispatchers,
+  ReserveSelectors
 ];

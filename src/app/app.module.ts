@@ -1,3 +1,4 @@
+import { BookingHelperService } from './../util/services/booking-helper.service';
 import { QmFlowPanelTitle } from './components/containers/qm-flow-panel-header/qm-flow-panel-title.directive';
 import { QmFlowPanelResult } from './components/containers/qm-flow-panel-header/qm-flow-panel-result.directive';
 import { QueueIndicator } from './../util/services/queue-indication.helper';
@@ -211,7 +212,8 @@ const toastrGlobalOptions = {
     QmModalService,
     TimeUtils,
     CalendarSettingsService,
-    FormGroupDirective
+    FormGroupDirective,
+    BookingHelperService
   ],
   bootstrap: [AppComponent]
 })

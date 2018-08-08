@@ -26,7 +26,7 @@ const getBranchesSearchText = createSelector(
 
 @Injectable()
 export class BranchSelectors {
-  constructor(private store: Store<IAppState>) {}
+  constructor(private store: Store<IAppState>) {}  
 
   branches$ = this.store.select(getAllBranches);
   selectedBranch$ = this.store.select(getSelectedBranch);

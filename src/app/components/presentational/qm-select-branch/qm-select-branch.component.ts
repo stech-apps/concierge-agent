@@ -21,6 +21,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
 
+  @Output()
+  onFlowNext: EventEmitter<any> = new EventEmitter();
+
   constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService) {
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
@@ -36,6 +39,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
           else {
             b.selected = false;
           }
+
+          b.isSkip = true;
         });
       });
 
@@ -45,22 +50,18 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(branchSubscription);
 
     this.inputChanged
-    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
-    .subscribe(text => this.filterBranches(text));
+      .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+      .subscribe(text => this.filterBranches(text));
   }
-
-  @Output()
-  onFlowNext: EventEmitter<any> = new EventEmitter();
-
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
     if (this.selectedBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
-        if(v) {
+        if (v) {
           this.branchDispatchers.selectCalendarBranch(branch);
           this.onFlowNext.emit();
         }
-      }, ()=> {});
+      }, () => { });
     }
   }
 
@@ -80,8 +81,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     this.inputChanged.next($event.target.value);
   }
 
-  filterBranches(newFilter: string) {    
-   this.filterText = newFilter;
+  filterBranches(newFilter: string) {
+    this.filterText = newFilter;
   }
 
   doneButtonClick() {

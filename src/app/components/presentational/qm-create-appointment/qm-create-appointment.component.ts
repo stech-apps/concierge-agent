@@ -7,7 +7,7 @@ import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { ReservationExpiryTimerSelectors, CalendarBranchSelectors, CalendarBranchDispatchers, 
-         BranchSelectors, BranchDispatchers, CalendarServiceSelectors, TimeslotSelectors } from 'src/store';
+         BranchSelectors, BranchDispatchers, CalendarServiceSelectors, TimeslotSelectors, ServicePointSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -23,15 +23,15 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   public showExpiryReservationTime$: Observable<Boolean>;
   public selectedTimeSlot$: Observable<string>;
   public selectedDate$: Observable<Moment>;
+  public multiBranchEnabled = true;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers,
     private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors,
-    private timeSlotSelectors: TimeslotSelectors) {
+    private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors) {
       
-      this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$; 
-      
+      this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
       this.selectedDate$ = this.timeSlotSelectors.selectedDate$;
       const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
@@ -44,6 +44,14 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(selectedPublicBranchSub);
+
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+        this.multiBranchEnabled = params.mltyBrnch;
+      }
+    });
+
+    this.subscriptions.add(servicePointsSubscription);
 
     const servicesSubscription = this.calendarServiceSelectors.selectedServices$.subscribe((services) => {
       if(services !== null){

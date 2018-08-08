@@ -5,7 +5,7 @@
       <qm-flow-panel-result>{{selectedBranch.selected ? selectedBranch.name : '' }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-select-branch (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
+      <qm-select-branch [isVisible]="pb.isContentVisible" (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
     </qm-flow-panel-content>
   </qm-flow-panel>
   <qm-flow-panel #ps [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true">

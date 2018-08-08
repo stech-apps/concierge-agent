@@ -11,7 +11,7 @@ import {
   ReserveDispatchers, ReservationExpiryTimerDispatchers, CalendarSettingsSelectors, ReservationExpiryTimerSelectors, 
   CalendarSettingsDispatchers
 } from 'src/store';
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { BookingHelperService } from 'src/util/services/booking-helper.service';
 import { ICalendarService } from 'src/models/ICalendarService';
 import * as moment from 'moment';

@@ -4,7 +4,7 @@ import { QmModalService } from './../qm-modal/qm-modal.service';
 import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy, Input } from '@angular/core';
 import { CalendarBranchSelectors, CalendarBranchDispatchers } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 
@@ -20,6 +20,21 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   selectedBranch: ICalendarBranch = new ICalendarBranch();
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
+  searchText: string = '';
+
+  private _isVisible: boolean;
+
+  @Input() set isVisible(value: boolean) {
+    this._isVisible = value;
+
+    if(value) {
+      this.onFlowStepActivated();  
+   }
+ }
+ 
+ get isVisible(): boolean {  
+     return this._isVisible;  
+ }
 
   constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService) {
 
@@ -72,6 +87,11 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+  }
+
+  onFlowStepActivated() {
+    this.searchText = '';
+    this.filterText = '';
   }
 
   goToNext() {

@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { Subscription, Observable } from 'rxjs';
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
@@ -24,6 +24,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   public selectedTimeSlot$: Observable<string>;
   public selectedDate$: Observable<Moment>;
   public multiBranchEnabled = true;
+
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,

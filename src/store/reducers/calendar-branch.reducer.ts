@@ -15,7 +15,7 @@ export interface ICalendarBranchState {
 export const initialState: ICalendarBranchState = {
   branches: [],
   loginBranch: null,
-  selectedBranch: { id: -1, name: '', isSkip: false, publicId: '', qpId:-1},
+  selectedBranch: { id: -1, name: '', publicId: '', qpId:-1},
   searchText: '',
   loading: false,
   loaded: false,

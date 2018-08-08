@@ -21,7 +21,8 @@ const initialState = {
   },
   loading: false,
   loaded: false,
-  error:  null
+  error:  null,
+  
 };
 
 

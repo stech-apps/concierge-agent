@@ -12,6 +12,7 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 @Component({
   selector: 'qm-select-service',
@@ -42,6 +43,7 @@ export class QmSelectServiceComponent implements OnInit {
     private calendarServiceSelectors: CalendarServiceSelectors,
     private calendarServiceDispatchers: CalendarServiceDispatchers,
     private calendarBranchSelectors: CalendarBranchSelectors,
+    private localStorage: LocalStorage
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
@@ -102,6 +104,18 @@ export class QmSelectServiceComponent implements OnInit {
     this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterServices(text));
+
+    let storeKey: STORAGE_SUB_KEY;
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_CA;
+    }
+    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_CV;
+    }
+    else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_AA;
+    }
+    this.isMultiServiceOn = this.localStorage.getSettingForKey(storeKey);
   }
 
   goToNext() {
@@ -183,6 +197,20 @@ export class QmSelectServiceComponent implements OnInit {
 
   doneButtonClick() {
     this.onFlowNext.emit();
+  }
+
+  onSwitchChange(){
+    let storeKey: STORAGE_SUB_KEY;
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_CA;
+    }
+    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_CV;
+    }
+    else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_AA;
+    }
+    this.localStorage.setSettings(storeKey, this.isMultiServiceOn)
   }
 
   sortServices(serviceList: ICalendarService[]): ICalendarService[] {

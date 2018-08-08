@@ -21,7 +21,8 @@ import { IUserStatus } from '../../../../models/IUserStatus';
 import { USER_STATE } from '../../../../util/q-state';
 import { LoginService } from '../../../../util/services/login.service';
 import { Router } from '@angular/router';
-import { PlatformSelectors } from 'src/store/services';
+import { PlatformSelectors, AccountDispatchers } from 'src/store/services';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 @Component({
   selector: 'qm-profile',
@@ -37,17 +38,23 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedBranch: IBranch;
   privacyPolicyUrl: string = null;
   userDirection$: Observable<string>;
+  isEnableUseDefault: boolean;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors) {
+    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
+
+      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
       this.setDefaultServicePoint();
       if (bs.length === 1) {
         this.onBranchSelect(bs[0]);
+      }
+      else{
+        this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_BRANCH);
       }
     });
     this.subscriptions.add(branchSubscription);
@@ -59,6 +66,13 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.branches.length === 1) {
           this.onConfirmProfile();
         }
+      }
+      else{
+        this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_WORKSTATION);
+      }
+
+      if(this.isEnableUseDefault && this.selectedBranch && this.selectedServicePoint){
+        this.onConfirmProfile();
       }
     });
     this.subscriptions.add(servicePointsSubscription);
@@ -152,6 +166,33 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         window.open(this.privacyPolicyUrl, "_blank");
       }
     }).unsubscribe();
+  }
+
+  checkPreviousSelection(key: STORAGE_SUB_KEY){
+    var previousSelection = this.localStorage.getSettings();
+    if(previousSelection.length === 0){
+      return
+    }
+    if(key === STORAGE_SUB_KEY.ACTIVE_BRANCH){
+      var priviousBranchSelection = this.branches.filter(val => {
+        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_BRANCH]
+      })
+      if(priviousBranchSelection.length > 0){
+        this.onBranchSelect(priviousBranchSelection[0]);
+      }
+    }
+    if(key === STORAGE_SUB_KEY.ACTIVE_WORKSTATION){
+      var priviousWorksationSelection = this.servicePoints.filter(val => {
+        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_WORKSTATION]
+      })
+      if(priviousWorksationSelection.length > 0){
+        this.onServicePointSelect(priviousWorksationSelection[0]);
+      }
+    }
+  }
+
+  onSwitchChange(){
+    this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
   }
   
   // Temp function

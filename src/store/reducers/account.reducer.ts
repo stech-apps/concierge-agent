@@ -8,6 +8,7 @@ export interface IAccountState {
   loading: boolean;
   loaded: boolean;
   error: Object;
+  useDefaultStatus: boolean;
 }
 
 const initialState = {
@@ -20,12 +21,13 @@ const initialState = {
     direction: '',
     status: '',
     fullName: '',
-    modules: []
+    modules: [],
   },
   userRole: UserRole.None,
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  useDefaultStatus: false
 };
 
 export function reducer(
@@ -60,6 +62,12 @@ export function reducer(
         error: {
           ...action.payload
         }
+      };
+    }
+    case AccountActions.SET_USE_DEFAULT_STATUS: {
+      return {
+        ...state,
+        useDefaultStatus: action.payload
       };
     }
     default: {

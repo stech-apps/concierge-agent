@@ -38,9 +38,15 @@ const getUserRole = createSelector(
   (state: IAccountState) => state.userRole
 );
 
+const getUseDefaultStatus = createSelector(
+  getUserState,
+  (state: IAccountState) => state.useDefaultStatus
+);
+
 @Injectable()
 export class AccountSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   userRole$ = this.store.select(getUserRole);
+  useDefaultStatus$ = this.store.select(getUseDefaultStatus);
 }

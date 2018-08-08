@@ -12,6 +12,7 @@ import { IServicePoint } from '../../models/IServicePoint';
 import { IAccount } from '../../models/IAccount';
 import { Router } from '@angular/router';
 import { QmModalService } from '../../app/components/presentational/qm-modal/qm-modal.service';
+import { LocalStorage } from '../local-storage';
 
 @Injectable()
 export class LoginService {
@@ -32,7 +33,8 @@ export class LoginService {
         private servicePointSelectors: ServicePointSelectors,
         private router: Router,
         private userStatusDispatcher: UserStatusDispatchers,
-        private confirmBox: QmModalService
+        private confirmBox: QmModalService,
+        private localStorage: LocalStorage
     ) {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
         this.subscriptions.add(branchSubscription);
@@ -110,6 +112,7 @@ export class LoginService {
                     this.resetUserSession();
                 }
                 this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
+                this.localStorage.setInitialSettings();
                 this.router.navigate(['home']);
             }
         })

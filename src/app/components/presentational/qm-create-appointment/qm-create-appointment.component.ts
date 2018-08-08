@@ -8,6 +8,7 @@ import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { ReservationExpiryTimerSelectors, CalendarBranchSelectors, CalendarBranchDispatchers, 
          BranchSelectors, BranchDispatchers, CalendarServiceSelectors, TimeslotSelectors, ServicePointSelectors } from 'src/store';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -30,8 +31,13 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers,
     private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors,
-    private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors) {
+    private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors, private localStorage: LocalStorage) {
       
+      var isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
+      if(isFlowSkip){
+        
+      }
+
       this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
       this.selectedDate$ = this.timeSlotSelectors.selectedDate$;

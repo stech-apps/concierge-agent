@@ -8,6 +8,8 @@ export const FETCH_ACCOUNT_INFO_FAIL = '[Account] FETCH_ACCOUNT_INFO_FAIL';
 export const FETCH_ACCOUNT_INFO_SUCCESS =
   '[Account] FETCH_ACCOUNT_INFO_SUCCESS';
 
+export const SET_USE_DEFAULT_STATUS = '[Account] SET_USE_DEFAULT_STATUS';
+
 export class FetchAccountInfo implements Action {
   readonly type = FETCH_ACCOUNT_INFO;
 }
@@ -22,8 +24,14 @@ export class FetchAccountInfoSuccess implements Action {
   constructor(public payload: { data: IAccount; userRole: UserRole }) {}
 }
 
+export class SetUseDefaultStatus implements Action {
+  readonly type = SET_USE_DEFAULT_STATUS;
+  constructor(public payload: boolean) {}
+}
+
 // Action types
 export type AllAccountActions =
   | FetchAccountInfo
   | FetchAccountInfoFail
-  | FetchAccountInfoSuccess;
+  | FetchAccountInfoSuccess
+  | SetUseDefaultStatus;

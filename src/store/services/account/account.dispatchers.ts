@@ -12,4 +12,8 @@ export class AccountDispatchers {
   fetchAccountInfo() {
     this.store.dispatch(new AccountActions.FetchAccountInfo());
   }
+
+  setUseDefaultStatus(value: boolean) {
+    this.store.dispatch(new AccountActions.SetUseDefaultStatus(value));
+  }
 }

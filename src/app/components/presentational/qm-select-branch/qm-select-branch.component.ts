@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy, Input } from '@angular/core';
 import { CalendarBranchSelectors, CalendarBranchDispatchers } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 @Component({
   selector: 'qm-select-branch',
@@ -20,6 +21,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   selectedBranch: ICalendarBranch = new ICalendarBranch();
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
+  isFlowSkip: boolean = true;
   searchText: string = '';
 
   private _isVisible: boolean;
@@ -36,7 +38,12 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
      return this._isVisible;  
  }
 
-  constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService) {
+  @Output()
+  onFlowNext: EventEmitter<any> = new EventEmitter();
+
+  constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService, private localStorage: LocalStorage) {
+
+    this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = <Array<ICalendarBranchViewModel>>bs;
@@ -64,10 +71,6 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterBranches(text));
   }
-
-  @Output()
-  onFlowNext: EventEmitter<any> = new EventEmitter();
-
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
     if (this.selectedBranch['selected'] && this.selectedBranch.id != branch.id) {
@@ -112,5 +115,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   doneButtonClick() {
     this.onFlowNext.emit();
+  }
+
+  onSwitchChange(){
+    this.localStorage.setSettings(STORAGE_SUB_KEY.BRANCH_SKIP, this.isFlowSkip);
   }
 }

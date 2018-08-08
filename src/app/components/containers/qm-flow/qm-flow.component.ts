@@ -25,39 +25,49 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-   const firstPanel = this.flowPanels.toArray()[0];
+    const firstPanel = this.flowPanels.toArray()[0];
     firstPanel.isShowExitFlow = true;
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
     let panelFound = false;
-    this.flowPanels.forEach(fp => {     
-      if(fp.id == flowPanel.id) {
-        flowPanel.isActive = true;
-        flowPanel.isContentVisible = true;
-        flowPanel.isHeaderVisible = true;
+
+    if (flowPanel.isContentVisible) {
+      let panelArray = this.flowPanels.toArray();
+      let panelIndex = panelArray.indexOf(flowPanel);
+      let nextPanel = panelArray[++panelIndex];
+      this.onFlowNext(nextPanel);
+      return;
+    }
+
+    this.flowPanels.forEach(fp => {
+      if (fp.id == flowPanel.id) {
+        fp.isActive = true;
+        fp.isContentVisible = true;
+        fp.isHeaderVisible = true;
         panelFound = true;
       }
       else {
         fp.isActive = false;
-        if(panelFound) {
+        //hide the next panels
+        if (panelFound) {
           fp.isContentVisible = false;
           fp.isHeaderVisible = false;
         }
       }
-    });    
+    });
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
 
-    this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result)=> {
-      if(result) {
+    this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
+      if (result) {
         this.exitFlow = true;
         setTimeout(() => {
           this.router.navigate(['home']);
         }, 1000);
       }
-    }, ()=> {
+    }, () => {
 
     });
 

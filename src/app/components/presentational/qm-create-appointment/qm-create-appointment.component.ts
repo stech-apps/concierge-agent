@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { Subscription, Observable } from 'rxjs';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -21,6 +22,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   selectedServices: ICalendarService[];
   public showExpiryReservationTime$: Observable<Boolean>;
   public selectedTimeSlot$: Observable<string>;
+  public selectedDate$: Observable<Moment>;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
@@ -31,6 +33,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
       this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$; 
       
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
+      this.selectedDate$ = this.timeSlotSelectors.selectedDate$;
       const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
       if (sb === undefined || sb.publicId.length === 0){
         this.setSelectedBranch();

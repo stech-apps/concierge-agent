@@ -32,6 +32,11 @@ const getTimeslotsError = createSelector(
   (state: ITimeslotState) => state.error
 );
 
+const getSelectedDate = createSelector(
+  getTimeslotState,
+  (state: ITimeslotState) => state.selectedDate
+);
+
 
 @Injectable()
 export class TimeslotSelectors {
@@ -39,6 +44,7 @@ export class TimeslotSelectors {
   // selectors$
   times$ = this.store.select(getTimeslots);
   selectedTime$ = this.store.select(getSelectedTimeslot);
+  selectedDate$ = this.store.select(getSelectedDate);
   timeslotsLoading$ = this.store.select(getTimeslotsLoading);
   timeslotsLoaded$ = this.store.select(getTimeslotsLoaded);
   timeslotsError$ = this.store.select(getTimeslotsError);

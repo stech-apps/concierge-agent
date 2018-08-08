@@ -1,11 +1,13 @@
 import { Action } from '@ngrx/store';
 import { IBookingInformation } from '../../models/IBookingInformation';
 import { ITimeSlotResponse } from '../../models/ITimeSlotResponse';
+import * as moment from 'moment';
 
 export const FETCH_TIMESLOTS = '[Timeslot] FETCH_TIMESLOTS';
 export const FETCH_TIMESLOTS_FAIL = '[Timeslot] FETCH_TIMESLOTS_FAIL';
 export const FETCH_TIMESLOTS_SUCCESS = '[Timeslot] FETCH_TIMESLOTS_SUCCESS';
 export const SELECT_TIMESLOT = '[Timeslot] SELECT_TIMESLOT';
+export const SELECT_TIMESLOT_DATE= '[Timeslot] SELECT_TIMESLOT_DATE';
 export const DESELECT_TIMESLOT = '[Timeslot] DESELECT_TIMESLOT';
 export const RESET_TIMESLOTS = '[Timeslot] RESET_TIMESLOTS';
 
@@ -22,6 +24,11 @@ export class FetchTimeslotsFail implements Action {
 export class FetchTimeslotsSuccess implements Action {
   readonly type = FETCH_TIMESLOTS_SUCCESS;
   constructor(public payload: ITimeSlotResponse) {}
+}
+
+export class SelectTimeSlotDate implements Action {
+  readonly type = SELECT_TIMESLOT_DATE;
+  constructor(public payload: moment.Moment) {}
 }
 
 export class SelectTimeslot implements Action {
@@ -42,5 +49,6 @@ export type AllTimeslotActions = FetchTimeslots |
                               FetchTimeslotsFail |
                               FetchTimeslotsSuccess |
                               SelectTimeslot |
-                              DeselectTimeslot |
+                              DeselectTimeslot | 
+                              SelectTimeSlotDate |
                               ResetTimeslots;

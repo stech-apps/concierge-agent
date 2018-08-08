@@ -21,7 +21,7 @@
   <qm-flow-panel #pa [isHeaderVisible]="true">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'date_and_time' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result>{{ selectedTimeSlot$ | async}}</qm-flow-panel-result>
+      <qm-flow-panel-result>{{ (selectedDate$ | async).format('YYYY-MM-DD')}} {{ selectedTimeSlot$ | async}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-appointment-time-select></qm-appointment-time-select>

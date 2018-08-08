@@ -1,8 +1,10 @@
 import * as TimeslotActions from '../actions';
+import * as moment from 'moment';
 
 export interface ITimeslotState {
   times: string[];
   selectedTime: string;
+  selectedDate?: moment.Moment;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -11,6 +13,7 @@ export interface ITimeslotState {
 export const initialState: ITimeslotState = {
   times: [],
   selectedTime: null,
+  selectedDate: null,
   loading: false,
   loaded: false,
   error: null
@@ -56,6 +59,12 @@ export function reducer (
       return {
         ...state,
         selectedTime: action.payload
+      };
+    }
+    case TimeslotActions.SELECT_TIMESLOT_DATE: {
+      return {
+        ...state,
+        selectedDate: action.payload
       };
     }
     case TimeslotActions.DESELECT_TIMESLOT: {

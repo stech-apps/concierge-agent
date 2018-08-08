@@ -8,7 +8,8 @@ import { IBranch } from 'src/models/IBranch';
 import { Subscription, Observable } from 'rxjs';
 import {
   BranchSelectors, TimeslotDispatchers, CalendarBranchSelectors, ServiceSelectors, CalendarServiceSelectors,
-  ReserveDispatchers, ReservationExpiryTimerDispatchers, CalendarSettingsSelectors, ReservationExpiryTimerSelectors
+  ReserveDispatchers, ReservationExpiryTimerDispatchers, CalendarSettingsSelectors, ReservationExpiryTimerSelectors, 
+  CalendarSettingsDispatchers
 } from 'src/store';
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { BookingHelperService } from 'src/util/services/booking-helper.service';
@@ -51,7 +52,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     private bookingHelperService: BookingHelperService, private calendarBranchSelectors: CalendarBranchSelectors,
     private calendarServiceSelectors: CalendarServiceSelectors, private reserveDispatchers: ReserveDispatchers,
     private calendarSettingsSelectors: CalendarSettingsSelectors, private reserveSelectors: ReserveSelectors,
-    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers) {
+    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers, private calendarSettingsDispatchers: CalendarSettingsDispatchers) {
 
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -64,15 +65,12 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     });
 
 
-
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {
       this.selectedServices = s;
       if (this.selectedServices.length > 0) {
         this.onSelectDate(this.selectedDates[0]);
       }
     });
-
-
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(serviceSubscription);
@@ -88,6 +86,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const appointmentSubscription = this.reservedAppointment$.subscribe(
       (app: IAppointment) => {
         if (app) {
+          this.calendarSettingsDispatchers.fetchCalendarSettingsInfo();
           this.reservationExpiryTimerDispatchers.showReservationExpiryTimer();
           this.reservationExpiryTimerDispatchers.setReservationExpiryTimer(
             this.settingReservationExpiryTime
@@ -100,6 +99,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
 
     this.subscriptions.add(appointmentSubscription);
+    this.timeSlotDispatchers.selectTimeslotDate(this.selectedDates[0].mDate);
   }
 
   ngOnDestroy() {
@@ -108,6 +108,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
   onSelectDate(date: CalendarDate) {
     this.currentlyActiveDate = date;
+    this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
     this.getTimeSlots();
   }
 

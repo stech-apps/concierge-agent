@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import * as TimeslotActions from '../../actions';
 import { IBookingInformation } from '../../../models/IBookingInformation';
+import { Moment } from 'moment';
 
 @Injectable()
 export class TimeslotDispatchers {
@@ -15,6 +16,10 @@ export class TimeslotDispatchers {
 
   selectTimeslot(time: string) {
     this.store.dispatch(new TimeslotActions.SelectTimeslot(time));
+  }
+
+  selectTimeslotDate(date: Moment) {
+    this.store.dispatch(new TimeslotActions.SelectTimeSlotDate(date));
   }
 
   deselectTimeslot() {

@@ -12,7 +12,7 @@
   </div>
   <input type="text" class="qm-flow-sub-header__search" (input)="handleInput($event)" placeholder="{{'branch_search_placeholder' | translate}}" />
   <div class="qm-flow-sub-header__right">
-    <div class="qm-done-button" (click)="doneButtonClick()">
+    <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="selectedBranch.selected">
       {{'banner_done_label' | translate }}
     </div>
   </div>

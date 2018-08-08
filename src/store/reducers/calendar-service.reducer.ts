@@ -40,7 +40,7 @@ export interface ICalendarServiceState {
       case ServiceActions.FETCH_CALENDAR_SERVICES_SUCCESS: {
         return {
           ...state,
-          services: sortServices(action.payload[0].services),
+          services: action.payload[0]? sortServices(action.payload[0].services): [],
           loading: false,
           loaded: true,
           error: null,

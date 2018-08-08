@@ -2,7 +2,7 @@
   <qm-flow-panel #pb [isHeaderVisible]="multiBranchEnabled">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'select_branch_header' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result>{{ selectedBranch.name }}</qm-flow-panel-result>
+      <qm-flow-panel-result>{{selectedBranch.selected ? selectedBranch.name : '' }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-select-branch (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>

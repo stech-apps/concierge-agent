@@ -1,14 +1,14 @@
 <qm-flow #f>
-  <qm-flow-panel #pb [isHeaderVisible]="multiBranchEnabled">
+  <qm-flow-panel #pb [isHeaderVisible]="multiBranchEnabled" [isContentVisible]="!isFlowSkip" [isActive]="!isFlowSkip">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'select_branch_header' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result>{{selectedBranch.selected ? selectedBranch.name : '' }}</qm-flow-panel-result>
+      <qm-flow-panel-result>{{selectedBranch ? selectedBranch.name : '' }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-select-branch [isVisible]="pb.isContentVisible" (onFlowNext)="f.onFlowNext(ps)"></qm-select-branch>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel #ps [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true">
+  <qm-flow-panel #ps [isHeaderVisible]="true" [isActive]="isFlowSkip" [isContentVisible]="isFlowSkip">
     <qm-flow-panel-header  (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{ selectedServices[0].name }}</qm-flow-panel-result>

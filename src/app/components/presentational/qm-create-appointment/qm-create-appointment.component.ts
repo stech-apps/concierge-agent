@@ -25,7 +25,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   public selectedTimeSlot$: Observable<string>;
   public selectedDate$: Observable<Moment>;
   public multiBranchEnabled = true;
-
+  public isFlowSkip = true;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
@@ -33,9 +33,9 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors,
     private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors, private localStorage: LocalStorage) {
       
-      var isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
-      if(isFlowSkip){
-        
+      this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
+      if(this.isFlowSkip === undefined){
+        this.isFlowSkip = true;
       }
 
       this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;

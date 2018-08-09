@@ -73,6 +73,7 @@ export class QmInputboxComponent implements OnInit {
 
   public decline() {
     this.activeModal.close(false);
+    this.customerDispatchers.resetCurrentCustomer();
   }
 
   public accept() {
@@ -90,7 +91,7 @@ export class QmInputboxComponent implements OnInit {
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
       }
-    
+      this.customerDispatchers.resetCurrentCustomer();
     }
   
   updateList(customer:ICustomer){

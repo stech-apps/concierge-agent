@@ -78,12 +78,13 @@ input::-ms-clear {
   }
 
   &__col-2{
-    float: left;
+    display: flex;
+    // float: right;
     width: 60%;
     padding: rem(2px);
-    @at-root [dir="rtl"] & {
-      float: right;
-    }
+    // @at-root [dir="rtl"] & {
+    //   float: left;
+    // }
   }
   
   &__button-container {
@@ -131,4 +132,17 @@ input::-ms-clear {
 .invalid{
   background-color: #ffaab7;
 }
+
+.qm-clear-search{   
+  display: inline-block;
+  vertical-align: middle;
+  margin:10px 10px -10px -25px;
+  z-index: 2;
+  color: black;
+  cursor: pointer;
+  @at-root [dir="rtl"] & {
+     margin:10px -25px 10px 10px;
+    }
+}
+
 

@@ -1,0 +1,19 @@
+<div class="qm-flow-sub-header">
+  <div class="customer-search-component">
+  <qm-customer-search-bar></qm-customer-search-bar>
+</div>
+</div>
+<div class="qm-service-list__container">
+  <div class="qm-identify__customer-select-container">
+  
+  <span class="qm-flow-selected-customer" *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span>
+  <i *ngIf="currentCustomer" (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
+    
+  <span class="padding-class"></span>  
+</div>
+  
+  <div class="customer-search-list-container">
+  <qm-customer-search></qm-customer-search>
+  </div>
+
+</div>

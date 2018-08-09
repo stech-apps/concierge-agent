@@ -122,6 +122,7 @@ import { QmLoaderComponent } from './components/containers/qm-loader/qm-loader.c
 import 'hammerjs'
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { QmIdentifyCustomerComponent } from './components/presentational/qm-identify-customer/qm-identify-customer.component';
 
 
 
@@ -135,7 +136,7 @@ const toastrGlobalOptions = {
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
       // override hammerjs default configuration
-      'press': {time: 2000}      
+      'press': {time: 1000}      
   }
 }
 
@@ -182,7 +183,9 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmCustomerSearchBarComponent,
     FilterServicePipe,
     FilterTimeSlotPipe,
-    QmLoaderComponent  ],
+    QmLoaderComponent,
+    QmLoaderComponent,
+    QmIdentifyCustomerComponent  ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent,

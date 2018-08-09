@@ -27,6 +27,16 @@
       <qm-appointment-time-select></qm-appointment-time-select>
   </qm-flow-panel-content>
   </qm-flow-panel>
+
+  <qm-flow-panel #pa [isHeaderVisible]="true">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
+      <qm-flow-panel-title>{{ 'identify_customer' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-result *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</qm-flow-panel-result>
+    </qm-flow-panel-header>
+    <qm-flow-panel-content>
+      <qm-identify-customer></qm-identify-customer>
+  </qm-flow-panel-content>
+  </qm-flow-panel>
 </qm-flow>
 <div class="qm-reservation-expiry-timer" *ngIf="showExpiryReservationTime$ | async">
   <qm-reservation-timer ></qm-reservation-timer>

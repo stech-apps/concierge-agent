@@ -1,14 +1,13 @@
 import { Moment } from 'moment';
-import { Subscription, Observable } from 'rxjs';
-
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors, CustomerDispatchers, CustomerSelector, ReservationExpiryTimerSelectors,TimeslotSelectors, ServicePointSelectors } from './../../../../store/services';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
-import { ReservationExpiryTimerSelectors, CalendarBranchSelectors, CalendarBranchDispatchers, 
-         BranchSelectors, BranchDispatchers, CalendarServiceSelectors, TimeslotSelectors, ServicePointSelectors } from 'src/store';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { ICustomer } from '../../../../models/ICustomer';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -26,18 +25,23 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   public selectedDate$: Observable<Moment>;
   public multiBranchEnabled = true;
   public isFlowSkip = true;
+  currentCustomer: ICustomer;
+  currentCustomer$: Observable<ICustomer>;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
     private branchSelectors: BranchSelectors, private branchDispatchers: BranchDispatchers,
     private calendarServiceSelectors: CalendarServiceSelectors, private reservationExpiryTimerSelectors: ReservationExpiryTimerSelectors,
-    private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors, private localStorage: LocalStorage) {
-      
+    private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors, private localStorage: LocalStorage,
+    private serviceSelectors: CalendarServiceSelectors,
+    private customerDispatchers:CustomerDispatchers,
+    private customerSelectors:CustomerSelector) {
+         
       this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
       if(this.isFlowSkip === undefined){
         this.isFlowSkip = true;
       }
-
+  
       this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
       this.selectedDate$ = this.timeSlotSelectors.selectedDate$;
@@ -67,8 +71,13 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(servicesSubscription);
+
+    this.currentCustomer$ = this.customerSelectors.currentCustomer$;
+    const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => this.currentCustomer = customer);
+    this.subscriptions.add(customerSubscription);
   }
 
+  
   ngOnInit() {
   }
 

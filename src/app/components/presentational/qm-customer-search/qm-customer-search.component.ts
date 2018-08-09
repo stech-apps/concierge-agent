@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
-import { CustomerDispatchers, CustomerSelector, UserSelectors } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, UserSelectors, ServicePointSelectors } from '../../../../store';
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 
 @Component({
@@ -20,6 +20,8 @@ export class QmCustomerSearchComponent implements OnInit {
   height:string="calc(100vh - "+ this.reminingHeight+ ')';
   currentCustomer: ICustomer;
   currentCustomer$: Observable<ICustomer>;
+  multiBranchEnabled:boolean=false;
+
 
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
@@ -32,12 +34,20 @@ export class QmCustomerSearchComponent implements OnInit {
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors:CustomerSelector,
     private confirmBox:CustomerUpdateService,
-    private userSelectors:UserSelectors
+    private userSelectors:UserSelectors,
+    private servicePointSelectors: ServicePointSelectors
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
     this.customerLoaded$ = this.CustomerSelectors.customerLoaded$;
     this.currentCustomer$ = this.CustomerSelectors.currentCustomer$;
+
+    
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+        this.multiBranchEnabled = params.mltyBrnch;
+      }
+    });
  
     
   }
@@ -48,13 +58,21 @@ export class QmCustomerSearchComponent implements OnInit {
 
   ngOnInit() {
     const currentCustomerSubscription = this.CustomerSelectors.currentCustomer$.subscribe((customer) => {this.currentCustomer = customer;
-    if(this.currentCustomer){
+    if(this.currentCustomer && this.multiBranchEnabled){
       this.reminingHeight='344px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
-    } else{
+    } else if(!this.currentCustomer && this.multiBranchEnabled){
       this.reminingHeight='301px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
-    }}
+    } else if(!this.currentCustomer && !this.multiBranchEnabled){
+      this.reminingHeight='257px';
+      this.height="calc(100vh - "+ this.reminingHeight+ ')';
+    } else if(this.currentCustomer && !this.multiBranchEnabled){
+      this.reminingHeight='294px';
+      this.height="calc(100vh - "+ this.reminingHeight+ ')';
+    }
+  
+  }
   );
     this.subscriptions.add(currentCustomerSubscription);
 

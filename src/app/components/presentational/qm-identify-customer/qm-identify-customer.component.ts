@@ -9,7 +9,7 @@ import { CustomerDispatchers, CustomerSelector } from '../../../../store';
   styleUrls: ['./qm-identify-customer.component.scss']
 })
 export class QmIdentifyCustomerComponent implements OnInit {
-
+  
   currentCustomer: ICustomer;
   currentCustomer$: Observable<ICustomer>;
   private subscriptions : Subscription = new Subscription();

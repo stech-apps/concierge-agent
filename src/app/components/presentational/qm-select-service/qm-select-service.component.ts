@@ -62,6 +62,8 @@ export class QmSelectServiceComponent implements OnInit {
       const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
         this.serviceList = <Array<IServiceViewModel>>services;
         this.filteredServiceList = <Array<IServiceViewModel>>services;
+
+        this.checkMostFrequentService();
       });
       this.subscriptions.add(serviceSubscription);
 
@@ -228,5 +230,30 @@ export class QmSelectServiceComponent implements OnInit {
         }
       }
     );
+  }
+
+  checkMostFrequentService(){
+    var serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
+    if(serviceIds === null || serviceIds === undefined){
+      return
+    }
+    var currentList = [];
+    this.serviceList.forEach(val => {
+      var elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
+      if(elementPos >= 0){
+        currentList.push(val);
+      }
+    })
+
+    this.mostFrequentServiceList = currentList;
+  }
+
+  setMostFrequentService(){
+    var currentList = [];
+    this.selectedServiceList.forEach(val => {
+      currentList.push(val.id);
+    })
+
+    this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, currentList);
   }
 }

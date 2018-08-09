@@ -3,6 +3,7 @@ import { UserSelectors, BranchSelectors, ServicePointSelectors, AccountSelectors
 import { IAccount } from '../models/IAccount';
 import { IBranch } from '../models/IBranch';
 import { IServicePoint } from '../models/IServicePoint';
+import { IService } from '../models/IService';
 
 export enum STORAGE_KEY {
     SETTINGS = "SETTINGS",
@@ -23,6 +24,11 @@ export enum STORAGE_SUB_KEY {
     ACTIVE_BRANCH = "active_branch",
     SERVICES = "services"
 }
+
+export interface IUserService {
+    user: number;
+    services: IService[];
+  }
 
 @Injectable()
 export class LocalStorage {
@@ -91,6 +97,38 @@ export class LocalStorage {
         var storedUser = store[STORAGE_SUB_KEY.USER_ID];
         if(storedUser && (storedUser !== this.currentUser.id)){
             this.removeItem(STORAGE_KEY.SETTINGS);
+        }
+    }
+
+    setStoreValue(key: STORAGE_SUB_KEY, value: any){
+        var store = this.getStore();
+        var userArray = [];
+        if(store[key] === undefined){
+            store[key] = userArray;
+        }
+        else{
+            userArray = store[key].filter(val => {
+                return val.user !== this.currentUser.id;
+            });
+        }
+        const userObj = { user: this.currentUser.id, services: value }
+        userArray.push(userObj);
+        store[key] = userArray;
+        this.setValue(STORAGE_KEY.STORE, store);
+    }
+
+    getStore(){
+        return this.getValue(STORAGE_KEY.STORE);
+    }
+
+    getStoreForKey(key: STORAGE_SUB_KEY){
+        var store = this.getStore();
+        var storeSub = store[key];
+        if(storeSub){
+            var userStore = storeSub.filter(val => {
+                return val.user === this.currentUser.id;
+            });
+            return userStore[0].services;
         }
     }
 }

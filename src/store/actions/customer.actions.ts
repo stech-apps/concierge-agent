@@ -18,6 +18,9 @@ export const CREATE_CUSTOMER_SUCCESS= '[Customer] CREATE_CUSTOMER_SUCCESS';
 export const UPDATE_CUSTOMER= '[Customer] UPDATE_CUSTOMER';
 export const UPDATE_CUSTOMER_FAIL= '[Customer] UPDATE_CUSTOMER_FAIL';
 export const UPDATE_CUSTOMER_SUCCESS= '[Customer] UPDATE_CUSTOMER_SUCCESS';
+export const UPDATE_CUSTOMER_NO_TOAST= '[Customer] UPDATE_CUSTOMER_NO_TOAST';
+export const UPDATE_CUSTOMER_NO_TOAST_FAIL= '[Customer] UPDATE_CUSTOMER_NO_TOAST_FAIL';
+export const UPDATE_CUSTOMER_NO_TOAST_SUCCESS= '[Customer] UPDATE_CUSTOMER_NO_TOAST_SUCCESS';
 
 export class UpdateCustomerSearchText implements Action{
     readonly type = UPDATE_CUSTOMER_SEARCH_TEXT;
@@ -82,7 +85,21 @@ export class UpdateCUstomerSuccess implements Action{
     constructor (public payload:ICustomer){}
 }
 
+export class UpdateCustomerWithoutToast implements Action{
+    readonly type = UPDATE_CUSTOMER_NO_TOAST;
+    constructor (public payload:ICustomer){}
+}
+
+export class  UpdateCustomerWithoutToastFail implements Action{
+    readonly type = UPDATE_CUSTOMER_NO_TOAST_FAIL;
+    constructor (public payload:object){}
+}
+export class UpdateCustomerWithoutToastSuccess implements Action{
+    readonly type = UPDATE_CUSTOMER_NO_TOAST_SUCCESS;
+    constructor (public payload:ICustomer){}
+}
+
 
 export type AllCustomerActions = UpdateCustomerSearchText | ResetCustomerSearchText |SelectCustomer |ResetCurrentCustomer
             |FetchCustomers|FetchCustomersFail|FetchCustomersSuccess | ResetCustomers| CreateCustomer | CreateCustomerFail | CreateCustomerSuccess
-            |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess;
+            |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess|UpdateCustomerWithoutToast|UpdateCustomerWithoutToastFail|UpdateCustomerWithoutToastSuccess;

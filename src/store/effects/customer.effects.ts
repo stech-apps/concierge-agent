@@ -111,5 +111,43 @@ export class CustomerEffects{
             }
         ));
 
+        @Effect()
+        updateCustomerWithoutToast$:Observable<Action> = this.actions$
+        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST)
+        .pipe(
+            switchMap((action:CustomerActions.UpdateCustomerWithoutToast)=>{
+                return toAction(
+                    this.customerDataService.updateCustomer(action.payload),
+                    CustomerActions.UpdateCustomerWithoutToastSuccess,
+                    CustomerActions.UpdateCustomerWithoutToastFail
+                )
+            })
+        );
+
+        
+        @Effect()
+        updateCustomerWithoutToastSuccess$: Observable<Action> = this.actions$
+        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_SUCCESS)
+        .pipe(
+            tap((action:CustomerActions.UpdateCUstomerSuccess)=>{
+                
+            }
+   
+        ),
+        switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
+        [new CustomerActions.SelectCustomer(action.payload)]
+        )
+        );
+
+  
+        @Effect({dispatch:false})
+        updateCustomerWithoutToastFail$: Observable<Action> = this.actions$
+        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_FAIL)
+        .pipe(
+            tap((action:CustomerActions.UpdateCustomerFail)=>{
+           
+            }
+        ));
+
        
 }

@@ -1,0 +1,56 @@
+@import "../../../../styles/base/_component-manifest.scss";
+.qm-checkout-view {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    background-color: #bdbdbd;
+    flex-shrink: 0;
+    flex-grow: 1;
+
+
+  }
+  &__option-container {
+    display: inline-flex;
+    flex-direction: row;
+  width: 100%;
+  
+  }
+  &__option {
+  
+    display: flex;
+    flex-direction: column;
+    padding: rem(8px);
+    width: 100%;
+    height: rem(6em);
+    background-color: $qmatic-bordeaux;
+    margin: 0.1em;
+    align-items: center;
+    justify-content: center;
+
+    .icon{
+      height:rem(25px);
+      width:rem(25px);
+     
+    }
+
+    .text{
+   
+      margin-top: rem(25px)
+    }
+  }
+
+  &__button-container {
+    display: inline-flex;
+    flex-direction: row;
+    margin-top: 0.15em;
+  }
+
+  &__button {
+    width: 100%;
+height: rem(6em);
+    border: none;
+    color:  $black;
+  }
+}

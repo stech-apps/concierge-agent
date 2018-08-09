@@ -124,6 +124,9 @@ import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { QmIdentifyCustomerComponent } from './components/presentational/qm-identify-customer/qm-identify-customer.component';
 
+import { QmCheckoutViewComponent } from './components/presentational/qm-checkout-view/qm-checkout-view.component';
+import { QmCheckoutViewConfirmModalComponent } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.component';
+import { QmCheckoutViewConfirmModalService } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service';
 
 
 // Global options for Toastr
@@ -185,12 +188,18 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FilterTimeSlotPipe,
     QmLoaderComponent,
     QmLoaderComponent,
-    QmIdentifyCustomerComponent  ],
+    QmIdentifyCustomerComponent,
+    QmLoaderComponent,
+    QmCheckoutViewComponent,
+    QmCheckoutViewConfirmModalComponent
+
+  ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent,
-    QmInputboxComponent
-    
+    QmInputboxComponent,
+    QmCheckoutViewConfirmModalComponent
+
   ],
   imports: [
     BrowserModule,
@@ -241,7 +250,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     { 
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 
-    }
+    },
+    QmCheckoutViewConfirmModalService
   ],
   bootstrap: [AppComponent]
 })

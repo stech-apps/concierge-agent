@@ -41,5 +41,10 @@ export class CustomerDispatchers{
         this.store.dispatch(new CustomerAction.ResetCustomerSearchText);
     }
 
+    updateCustomerWithoutToast(customer:ICustomer){
+        this.store.dispatch(new CustomerAction.UpdateCustomerWithoutToast(customer));
+    }
+
+
 }
 

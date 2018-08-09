@@ -20,7 +20,7 @@ export interface IUTTParameter {
     fetchAppointment: boolean;
     gapFromTime: number;
     gapToTime: number;
-    highlightColor: number;
+    highlightColor: string;
     mdNotes: boolean;
     mltyBrnch: boolean;
     mltyService: boolean;

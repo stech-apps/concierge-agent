@@ -1,7 +1,12 @@
 <div class="qm-flow-sub-header">
   <div class="customer-search-component">
-  <qm-customer-search-bar></qm-customer-search-bar>
-</div>
+    <qm-customer-search-bar></qm-customer-search-bar>
+  </div>
+  <div class="qm-flow-sub-header__right">
+      <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="currentCustomer">
+              {{'banner_done_label' | translate }}
+      </div>
+  </div>
 </div>
 <div class="qm-service-list__container">
   <div class="qm-identify__customer-select-container">

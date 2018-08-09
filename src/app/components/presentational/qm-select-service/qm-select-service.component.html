@@ -1,6 +1,6 @@
 <div class="qm-flow-sub-header">
     <div class="qm-flow-sub-header__left">
-        <div class="qm-switch__container">
+        <div *ngIf="multiServiceEnabled" class="qm-switch__container">
             <label for="qm-switch" class="qm-switch-label">
                 <input id="qm-switch" class="qm-switch" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isMultiServiceOn">
                 <div class="qm-switch__slider"></div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { Subscription, Subject } from 'rxjs';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
@@ -32,6 +32,7 @@ export class QmSelectServiceComponent implements OnInit {
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
   newf: FLOW_TYPE.CREATE_APPOINTMENT;
+  multiServiceEnabled: boolean;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -43,7 +44,8 @@ export class QmSelectServiceComponent implements OnInit {
     private calendarServiceSelectors: CalendarServiceSelectors,
     private calendarServiceDispatchers: CalendarServiceDispatchers,
     private calendarBranchSelectors: CalendarBranchSelectors,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private servicePointSelectors: ServicePointSelectors
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
@@ -59,6 +61,7 @@ export class QmSelectServiceComponent implements OnInit {
 
   ngOnInit() {
     if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      this.multiServiceEnabled = true;
       const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
         this.serviceList = <Array<IServiceViewModel>>services;
         this.filteredServiceList = <Array<IServiceViewModel>>services;
@@ -101,6 +104,13 @@ export class QmSelectServiceComponent implements OnInit {
         this.subscriptions.add(calendarBranchSubscription);
       });
       this.subscriptions.add(calendarServiceLoadedSubscription);
+
+      const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+        if(params){
+          this.multiServiceEnabled = params.mltyService;;
+        }
+      });
+      this.subscriptions.add(servicePointsSubscription);
     }
 
     this.inputChanged

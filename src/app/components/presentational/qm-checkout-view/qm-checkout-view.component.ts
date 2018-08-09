@@ -9,6 +9,7 @@ import {
 import { ServicePointSelectors,CustomerSelector } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
+import { FLOW_TYPE } from "../../../../util/flow-state";
 
 
 @Component({
@@ -17,7 +18,7 @@ import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-m
   styleUrls: ["./qm-checkout-view.component.scss"]
 })
 export class QmCheckoutViewComponent implements OnInit, OnDestroy {
-  @Input() viewType: string;
+  @Input() flowType: FLOW_TYPE;
  customerEmail: string;
   customerSms: string;
 
@@ -79,19 +80,19 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    switch (this.viewType) {
-      case CREATE_APPOINTMENT:
+    switch (this.flowType) {
+      case FLOW_TYPE.CREATE_APPOINTMENT:
         this.emailActionEnabled = true;
         this.smsActionEnabled = true;
         this.buttonText = "CREATE APPOINTMENT";
         break;
-      case ARRIVE_APPOINTMENT:
+      case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.ticketActionEnabled = true;
         this.smsActionEnabled = true;
         this.ticketlessActionEnabled = true;
         this.buttonText = "ARRIVE";
         break;
-      case CREATE_VISIT:
+      case FLOW_TYPE.CREATE_VISIT:
         this.ticketActionEnabled = true;
         this.smsActionEnabled = true;
         this.ticketlessActionEnabled = true;

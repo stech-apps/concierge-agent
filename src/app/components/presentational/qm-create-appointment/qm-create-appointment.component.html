@@ -36,12 +36,12 @@
         <qm-identify-customer (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
     </qm-flow-panel-content>
     </qm-flow-panel>
-    <qm-flow-panel #px [isHeaderVisible]="true">
+    <qm-flow-panel #px [isHeaderVisible]="true" >
         <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
           <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
-          <qm-checkout-view></qm-checkout-view>
+          <qm-checkout-view [flowType]="flowType"></qm-checkout-view>
       </qm-flow-panel-content>
       </qm-flow-panel>
 </qm-flow>

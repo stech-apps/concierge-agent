@@ -85,10 +85,8 @@ export class QmSelectServiceComponent implements OnInit {
     }
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
-        if(services.length > 0){
-          this.serviceList = <Array<IServiceViewModel>>services;
-          this.filteredServiceList = <Array<IServiceViewModel>>services;
-        }
+        this.serviceList = <Array<IServiceViewModel>>services;
+        this.filteredServiceList = <Array<IServiceViewModel>>services;
       });
       this.subscriptions.add(calendarServiceSubscription);
 
@@ -141,6 +139,11 @@ export class QmSelectServiceComponent implements OnInit {
   onServiceSelect(selectedService: IServiceViewModel, isRemove: boolean) {
     if(this.selectedServiceList.length === 0 || (this.selectedServiceList.length < this.maxServiceSelection && this.isMultiServiceOn)){
       this.handleServiceList(selectedService, isRemove);
+    }
+    else if(!this.multiServiceEnabled){
+      this.translateService.get('limit_max_service').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
     }
     else if(this.selectedServiceList.length === 1 && !this.isMultiServiceOn){
       this.qmModalService.openForTransKeys('', 'enable_multi_serv_switch', 'yes', 'no', (v) => {

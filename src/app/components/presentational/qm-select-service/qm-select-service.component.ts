@@ -54,6 +54,20 @@ export class QmSelectServiceComponent implements OnInit {
 
   onResultChange:  EventEmitter<any> = new EventEmitter();
 
+  private _isVisible: boolean;
+
+  @Input() set isVisible(value: boolean) {
+    this._isVisible = value;
+
+    if(value) {
+      this.onFlowStepActivated();  
+   }
+ }
+ 
+ get isVisible(): boolean {  
+     return this._isVisible;  
+ }
+
   @Output()
   onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
   
@@ -127,6 +141,11 @@ export class QmSelectServiceComponent implements OnInit {
       storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_AA;
     }
     this.isMultiServiceOn = this.localStorage.getSettingForKey(storeKey);
+  }
+
+  onFlowStepActivated() {
+    this.searchText = '';
+    this.filterText = '';
   }
 
   goToNext() {

@@ -22,7 +22,9 @@ export class QmCheckoutViewConfirmModalService {
     btnCancelText: string,
   ): Promise<boolean> {
     const modalRef = this.modalService.open(QmCheckoutViewConfirmModalComponent, {
-      centered: true
+      centered: true,
+      backdrop : 'static',
+      keyboard : false
     });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.themeColor = themeColor;

@@ -84,19 +84,19 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       case FLOW_TYPE.CREATE_APPOINTMENT:
         this.emailActionEnabled = true;
         this.smsActionEnabled = true;
-        this.buttonText = "CREATE APPOINTMENT";
+        this.buttonText = "create_appointment_action";
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.ticketActionEnabled = true;
         this.smsActionEnabled = true;
         this.ticketlessActionEnabled = true;
-        this.buttonText = "ARRIVE";
+        this.buttonText = "checkin_appointment";
         break;
       case FLOW_TYPE.CREATE_VISIT:
         this.ticketActionEnabled = true;
         this.smsActionEnabled = true;
         this.ticketlessActionEnabled = true;
-        this.buttonText = "CREATE VISIT";
+        this.buttonText = "create_visit";
         break;
       default:
         break;

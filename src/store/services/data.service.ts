@@ -13,7 +13,7 @@ export const ERROR_CODE = 'error_code';
 export class DataServiceError<T> {
   public errorCode: string = '0';
 
-  constructor(public responseData: any, public requestData: T) {
+  constructor(public responseData: any, public requestData?: T) {
     this.parseErrors(responseData);
   }
 

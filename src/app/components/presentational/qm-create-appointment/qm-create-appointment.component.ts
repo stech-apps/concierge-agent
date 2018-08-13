@@ -41,6 +41,9 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
       if(this.isFlowSkip === undefined){
         this.isFlowSkip = true;
       }
+      if(this.isFlowSkip === false){
+        this.branchHeaderClick();
+      }
   
       this.showExpiryReservationTime$ = this.reservationExpiryTimerSelectors.showReservationExpiryTime$;
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
@@ -97,11 +100,11 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   }
 
   branchHeaderClick(){
-    const serviceLoadedSubscription = this.calendarBranchSelectors.isPublicBranchesLoaded$.subscribe((val) => {
+    const publicBranchSubscription = this.calendarBranchSelectors.isPublicBranchesLoaded$.subscribe((val) => {
       if(!val){
         this.calendarBranchDispatchers.fetchPublicCalendarBranches();
       }
     });
-    this.subscriptions.add(serviceLoadedSubscription);
+    this.subscriptions.add(publicBranchSubscription);
   }
 }

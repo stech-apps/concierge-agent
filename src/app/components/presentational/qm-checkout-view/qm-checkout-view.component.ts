@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import {
@@ -6,19 +6,28 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors,CustomerSelector } from "../../../../store";
+import { ServicePointSelectors,CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
 import { FLOW_TYPE } from "../../../../util/flow-state";
-
+import { CalendarService } from "../../../../util/services/rest/calendar.service";
+import { IAppointment } from "../../../../models/IAppointment";
+import { ICustomer } from "../../../../models/ICustomer";
+import { Q_ERROR_CODE } from "../../../../util/q-error";
+import { ToastService } from '../../../../util/services/toast.service';
 
 @Component({
   selector: "qm-checkout-view",
   templateUrl: "./qm-checkout-view.component.html",
   styleUrls: ["./qm-checkout-view.component.scss"]
 })
+
 export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Input() flowType: FLOW_TYPE;
+
+  @Output()
+  onFlowExit:  EventEmitter<any> = new EventEmitter<any>();
+
  customerEmail: string;
   customerSms: string;
 
@@ -50,8 +59,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   buttonText: string;
 
+  private selectedAppointment: IAppointment;
+  private selectedCustomer: ICustomer;
+  private selectedDate: string;
+  private selectedTime: string;
 
-  constructor(servicePointSelectors: ServicePointSelectors, private customerSelector:CustomerSelector, private translate: TranslateService, private qmCheckoutViewConfirmModalService: QmCheckoutViewConfirmModalService) {
+  constructor(
+    servicePointSelectors: ServicePointSelectors, 
+    private customerSelector:CustomerSelector, 
+    private translate: TranslateService, 
+    private qmCheckoutViewConfirmModalService: QmCheckoutViewConfirmModalService,
+    private calendarService: CalendarService,
+    private reserveSelectors: ReserveSelectors,
+    private translateService: TranslateService,
+    private toastService: ToastService,
+    private timeSlotSelectors: TimeslotSelectors
+  ) {
     this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
@@ -70,13 +93,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
         if (customer) {
+         this.selectedCustomer = customer;
          this.customerEmail=customer.properties.email;
          this.customerSms=customer.properties.phoneNumber;
         
         }
-      })
-      .unsubscribe();
+      });
     this.subscriptions.add(customerSubscription);
+
+    const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => this.selectedAppointment = appointment);
+    this.subscriptions.add(appointmentSubscription);
   }
 
   ngOnInit() {
@@ -112,7 +138,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
       this.themeColor, 'ok', 'cancel',
       (result: boolean) => {
-     
+        if(result){
+          this.handleCheckoutCompletion();
+        }
       },
       () => { }, null);
 
@@ -189,6 +217,57 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.ticketlessSelected = true;
     this.ticketlessColor = this.themeColor;
     this.buttonEnabled = true;
+  }
+
+  handleCheckoutCompletion(){
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.setCreateAppointment();
+    }
+    else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      this.setAriveAppointment();
+    }
+    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      this.setCreateVisit();
+    }
+  }
+
+  setCreateAppointment(){
+    this.calendarService.createAppointment(this.selectedAppointment, "", this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
+      if(result){
+        this.showSussessMessage();
+        this.onFlowExit.emit();
+      }
+     }, error => {
+        const err = new DataServiceError(error, null);
+        if(err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND){
+          this.calendarService.bookAppointment(this.selectedAppointment, "", this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
+            this.showSussessMessage();
+            this.onFlowExit.emit();
+          }, error => {
+            this.showErrorMessage();
+          })
+        }
+       });
+  }
+
+  setCreateVisit(){
+
+  }
+
+  setAriveAppointment(){
+
+  }
+
+  showSussessMessage(){
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.toastService.infoToast("Appointment Created");
+    }
+  }
+
+  showErrorMessage(){
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.toastService.infoToast("Fail to create Appointment");
+    }
   }
 
 }

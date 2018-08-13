@@ -67,4 +67,12 @@ export class Util {
             }
         
     }
+
+    replaceCharcter(value: string){
+        return value.replace(/^\s+|\s+$/g, "").replace(/\n/g, "\\n").replace(/\\/g, "\\\\").replace(/"/g, "\\\""); 
+    }
+
+    buildPhoneNumber(number: string){
+        return number.replace("+", "");
+    }
 }

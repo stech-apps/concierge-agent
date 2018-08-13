@@ -59,17 +59,24 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
-
-    this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
-      if (result) {
-        this.exitFlow = true;
+    if(result){
+      this.exitFlow = true;
         setTimeout(() => {
           this.router.navigate(['home']);
         }, 1000);
-      }
-    }, () => {
-
-    });
+    }
+    else{
+      this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
+        if (result) {
+          this.exitFlow = true;
+          setTimeout(() => {
+            this.router.navigate(['home']);
+          }, 1000);
+        }
+      }, () => {
+  
+      });
+    }
 
   }
 

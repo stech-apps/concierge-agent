@@ -1,6 +1,6 @@
 import { ICustomer } from './ICustomer';
-import { IBranch } from './IBranch';
-import { IService } from './IService';
+import { ICalendarBranch } from './ICalendarBranch';
+import { ICalendarService } from './ICalendarService';
 
 export interface IAppointment {
   publicId?: string;
@@ -11,8 +11,8 @@ export interface IAppointment {
   numberOfCustomers?: number;
   custom?: string;
   customers?: ICustomer[];
-  branch?: IBranch;
-  services?: IService[];
+  branch?: ICalendarBranch;
+  services?: ICalendarService[];
   title?: string;
   notes?: string;
   allDay?: boolean;

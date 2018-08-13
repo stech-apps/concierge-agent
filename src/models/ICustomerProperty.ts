@@ -3,4 +3,6 @@ export interface ICustomerProperty {
     email?: string;
     gender?: string;
     dateOfBirth?: string;
+    publicId?: string;
+    created?: string;
   }

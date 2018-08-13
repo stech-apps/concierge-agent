@@ -44,10 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
        this.branchDispatchers.selectBranch({id: -1, name: branchLabel});
       }
     );  
-    this.subscriptions.add(translateSubscription); 
-
-    console.log('setting toast container', this.toastContainer);
-    
+    this.subscriptions.add(translateSubscription);
+    console.log('setting toast container', this.toastContainer);    
     this.toastService.setToastContainer(this.toastContainer);
   }
 

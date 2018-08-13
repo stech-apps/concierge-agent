@@ -2,7 +2,7 @@
   <div class="qm-flow-sub-header__left">
       <div class="qm-checkbox__container">
         <label for="qm-checkbox" class="qm-checkbox-label">
-          <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
+          <input id="qm-checkbox"class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
           <div class="qm-checkbox__selector">
               <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
               <div class="qm-checkbox__selector-icon-text">{{ 'skip_branch_label' | translate }}</div>
@@ -10,7 +10,7 @@
         </label>
       </div>
   </div>
-  <input type="text" class="qm-flow-sub-header__search" [(ngModel)]="searchText" (input)="handleInput($event)" placeholder="{{'branch_search_placeholder' | translate}}" />
+  <input type="text" class="qm-flow-sub-header__search"  qmClearInput [(ngModel)]="searchText" (input)="handleInput($event)" placeholder="{{'branch_search_placeholder' | translate}}" />
   <div class="qm-flow-sub-header__right">
     <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="selectedBranch">
       {{'banner_done_label' | translate }}

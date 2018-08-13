@@ -1,3 +1,5 @@
+import { QmClearInputButtonComponent } from './directives/qm-clear-input-button/qm-clear-input-button.component';
+import { QmClearInputDirective } from './directives/qm-clear-input.directive';
 import { BookingHelperService } from './../util/services/booking-helper.service';
 import { QmFlowPanelTitle } from './components/containers/qm-flow-panel-header/qm-flow-panel-title.directive';
 import { QmFlowPanelResult } from './components/containers/qm-flow-panel-header/qm-flow-panel-result.directive';
@@ -191,14 +193,16 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmIdentifyCustomerComponent,
     QmLoaderComponent,
     QmCheckoutViewComponent,
-    QmCheckoutViewConfirmModalComponent
-
+    QmCheckoutViewConfirmModalComponent,
+    QmClearInputDirective,
+    QmClearInputButtonComponent
   ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent,
     QmInputboxComponent,
-    QmCheckoutViewConfirmModalComponent
+    QmCheckoutViewConfirmModalComponent,
+    QmClearInputButtonComponent
 
   ],
   imports: [

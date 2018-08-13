@@ -51,12 +51,12 @@
               <div class="qm-input-box__button-container">
                   <button class="qm-input-box__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()">
                   <span>
-                      CANCEL
+                      {{'cancel'|translate}}
                     </span>
                   </button>
                     <button type="button" class="qm-input-box__primary-button btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose() " [ngClass]="{'qm-input-box__valid-button': customerCreateForm.valid}">
                     <span>
-                    SAVE
+                    {{'save'|translate}}
                     </span>
                   </button>
                 </div>

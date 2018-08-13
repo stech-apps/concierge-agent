@@ -96,12 +96,12 @@ input::-ms-clear {
 
   &__primary-button  {
     background-color:$modal-secondary-button-background;
-    flex: 1;
     color: $white;
     font-family: Montserrat-Light;
     font-size: rem(12px);
     border: none;
     padding: 15px;
+    width: 105px;
     margin-left: rem(15px);
   }
   :focus{
@@ -113,7 +113,7 @@ input::-ms-clear {
   }
 
   &__secondary-button {
-    flex: 1;
+  
     background: $modal-secondary-button-background;
     color: $white;
     font-size: rem(12px);
@@ -121,6 +121,7 @@ input::-ms-clear {
     font-family: Montserrat-Light;
     margin-right: rem(15px);
     padding: 15px;
+    width: 105px;
     @at-root [dir="rtl"] & {
       margin-left: rem(5px);
     }

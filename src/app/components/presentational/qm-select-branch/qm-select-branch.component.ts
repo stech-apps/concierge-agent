@@ -18,7 +18,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   branches: ICalendarBranchViewModel[] = new Array<ICalendarBranchViewModel>();
   private subscriptions: Subscription = new Subscription();
-  selectedBranch: ICalendarBranch = new ICalendarBranch();
+  currentBranch: ICalendarBranch = new ICalendarBranch();
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
   isFlowSkip: boolean = true;
@@ -54,7 +54,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
         this.branches.forEach((b) => {
           if (b.id === sb.id) {
             b.selected = true;
-            this.selectedBranch = b;
+            this.currentBranch = b;
           }
           else {
             b.selected = false;
@@ -73,7 +73,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
-    if (this.selectedBranch['selected'] && this.selectedBranch.id != branch.id) {
+    if (this.currentBranch['selected'] && this.currentBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if(v) {
           branch.selected = !branch.selected;

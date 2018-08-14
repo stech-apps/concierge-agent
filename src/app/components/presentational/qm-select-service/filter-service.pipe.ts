@@ -10,15 +10,15 @@ export class FilterServicePipe implements PipeTransform {
   transform(services: IServiceViewModel[], args?: any): any {
     var filterText = args[0];
     var flowType = args[1];
-    if(!services || !filterText) {
+    if (!services || !filterText) {
       return services;
     }
 
-    if(flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+    if (flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       return services.filter(s => s.name.toUpperCase().search(filterText.toUpperCase()) != -1);
-  }
-  else{
+    }
+    else {
       return services.filter(s => s.internalName.toUpperCase().search(filterText.toUpperCase()) != -1);
-  }
+    }
   }
 }

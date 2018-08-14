@@ -17,7 +17,7 @@ import { ICustomer } from '../../../../models/ICustomer';
 export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
-  selectedBranch: IBranch = new IBranch();
+  currentBranch: IBranch = new IBranch();
   flowType = FLOW_TYPE.CREATE_APPOINTMENT;
   selectedServices: ICalendarService[];
   public showExpiryReservationTime$: Observable<Boolean>;
@@ -53,7 +53,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
         this.setSelectedBranch();
       }
       else {
-        this.selectedBranch = sb;
+        this.currentBranch = sb;
       }
     });
 

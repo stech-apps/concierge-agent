@@ -31,6 +31,11 @@ const getCustomersLoaded = createSelector(
     (state:ICustomerState)=> state.loaded
 );
 
+export const getTempCustomer= createSelector(
+    getCustomerState,
+    (state:ICustomerState)=> state.tempCustomer
+)
+
 @Injectable()
 export class CustomerSelector{
     constructor(private store: Store<IAppState>){}
@@ -40,4 +45,5 @@ export class CustomerSelector{
     customerLoaded$ = this.store.select(getCustomersLoaded);
     currentCustomer$ = this.store.select(getCurrentCustomer);
     searchText$ = this.store.select(getSearchText);
+    tempCustomer$ = this.store.select(getTempCustomer);
 }

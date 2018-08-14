@@ -1,6 +1,6 @@
 <qm-flow #f>
   <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
-    <qm-flow-panel-header (click)="f.panelHeaderClick(pb)" (onFlowExit)="f.onFlowExit()">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{  selectedServices[0].internalName }}</qm-flow-panel-result>
       <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
@@ -9,13 +9,14 @@
         <qm-select-service (onFlowNext)="setPanelClick()" [flowType]="flowType"></qm-select-service>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel *ngIf="!isCustomerFlowHidden" #pc>
+  <qm-flow-panel *ngIf="!isCustomerFlowHidden" #pc [isHeaderVisible]="isCustomerHeaderVisible">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pc)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'identify_customer' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' + currentCustomer.lastName }}</qm-flow-panel-result>
+      <qm-flow-panel-result>{{ currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0) === true ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-customer (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
+      <qm-identify-customer *ngIf="isCustomerStoreDB" (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
+      <qm-visit-customer-create *ngIf="!isCustomerStoreDB" (onFlowNext)="f.onFlowNext(px)"></qm-visit-customer-create>
     </qm-flow-panel-content>
   </qm-flow-panel>
 

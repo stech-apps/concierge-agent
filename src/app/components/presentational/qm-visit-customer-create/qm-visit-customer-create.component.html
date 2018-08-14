@@ -1,0 +1,67 @@
+<div class="qm-flow-sub-header">
+    <div class="qm-flow-sub-header__left">
+        <div class="qm-checkbox__container">
+          <label for="qm-checkbox" class="qm-checkbox-label">
+            <input id="qm-checkbox"class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
+            <div class="qm-checkbox__selector">
+                <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
+                <div class="qm-checkbox__selector-icon-text">{{ 'skip_branch_label' | translate }}</div>
+            </div>
+          </label>
+        </div>
+    </div>
+    <div class="qm-flow-sub-header__right">
+      <div class="qm-done-button" (click)="doneButtonClick()">
+        {{'banner_done_label' | translate }}
+      </div>
+    </div>
+</div>
+  
+  <div>
+      <div class="qm-identify__customer-select-container" *ngIf="currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 || currentCustomer.phone.length > 0 || currentCustomer.email.length > 0) === true">
+          <span class="qm-flow-selected-customer">{{ currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</span>
+          <i (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
+            
+          <span class="padding-class"></span>  
+        </div>
+      <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
+          <div style="padding: 20px">
+              <div class="qm-input-box__row">
+                  <div class="qm-input-box__col-1" >
+                    <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
+                  </div>
+                  <div class="qm-input-box__col-2">
+                      <input  type="text" name='firstName' formControlName = "firstName" #firstName maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                      <i *ngIf="firstName.value!=''" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="qm-input-box__row">
+                    <div class="qm-input-box__col-1">
+                        <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
+                    </div>
+                    <div class="qm-input-box__col-2" >
+                      <input type="text" name='lastName' formControlName = "lastName" #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <i *ngIf="lastName.value!=''" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div class="qm-input-box__row">
+                      <div class="qm-input-box__col-1">
+                          <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
+                      </div>
+                      <div class="qm-input-box__col-2">
+                        <input type="text" name='phone' minlength="8" formControlName = "phone" #phone>
+                        <i *ngIf="phone.value!=''" (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  <div class="qm-input-box__row">
+                        <div class="qm-input-box__col-1">
+                            <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
+                        </div>
+                        <div class="qm-input-box__col-2">
+                          <input type="text" name='email' formControlName = "email" #email>
+                          <i *ngIf="email.value!=''" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                        </div>
+                  </div>
+          </div>
+        </form>
+  </div>

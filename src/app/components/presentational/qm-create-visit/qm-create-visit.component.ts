@@ -4,6 +4,12 @@ import { Subscription } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { IService } from '../../../../models/IService';
 import { ICustomer } from '../../../../models/ICustomer';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+
+export enum CUSTOMER_SAVE_OPTION {
+  DB = "db",
+  VISIT = "visit"
+}
 
 @Component({
   selector: 'qm-qm-create-visit',
@@ -15,22 +21,34 @@ export class QmCreateVisitComponent implements OnInit {
   @ViewChild('f') f: any;
   @ViewChild('pc') pc: any;
   @ViewChild('px') px: any;
-  @ViewChild('pb') pb: any;
 
   private subscriptions: Subscription = new Subscription();
   isCustomerFlowHidden: boolean;
   flowType = FLOW_TYPE.CREATE_VISIT;
   selectedServices: IService[];
   currentCustomer: ICustomer;
+  isCustomerStoreDB: boolean;
+  isFlowSkip: boolean = false;
+  isCustomerHeaderVisible: boolean = false;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private serviceSelectors: ServiceSelectors,
-    private customerSelectors: CustomerSelector
+    private customerSelectors: CustomerSelector,
+    private localStorage: LocalStorage
   ) {
+
+    this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
+
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params !== null && params !== undefined){
         this.isCustomerFlowHidden = params.hideCustomer;
+        if(params.saveCustomerOption === CUSTOMER_SAVE_OPTION.VISIT){
+          this.isCustomerStoreDB = false;
+        }
+        else{
+          this.isCustomerStoreDB = true;
+        }
       }
     });
     this.subscriptions.add(servicePointsSubscription);
@@ -48,6 +66,11 @@ export class QmCreateVisitComponent implements OnInit {
       }
     });
     this.subscriptions.add(customerSubscription);
+
+    const tempCustomerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
+      this.currentCustomer = customer;
+    });
+    this.subscriptions.add(tempCustomerSubscription);
   }
 
   ngOnInit() {
@@ -58,8 +81,11 @@ export class QmCreateVisitComponent implements OnInit {
   }
 
   setPanelClick(){
-    if(this.isCustomerFlowHidden){
+    if(this.isCustomerFlowHidden || this.isFlowSkip){
       this.f.onFlowNext(this.px);
+      if(!(this.isCustomerFlowHidden)){
+        this.isCustomerHeaderVisible = true;
+      }
     }
     else{
       this.f.onFlowNext(this.pc);

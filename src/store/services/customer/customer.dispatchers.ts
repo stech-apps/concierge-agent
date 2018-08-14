@@ -45,6 +45,13 @@ export class CustomerDispatchers{
         this.store.dispatch(new CustomerAction.UpdateCustomerWithoutToast(customer));
     }
 
+    setTempCustomers(customer:ICustomer){
+        this.store.dispatch(new CustomerAction.SetTempCustomer(customer));
+    }
+
+    resetTempCustomer(){
+        this.store.dispatch(new CustomerAction.ResetTempCustomer());
+    }
 
 }
 

@@ -157,6 +157,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   onServiceSelect(selectedService: IServiceViewModel, isRemove: boolean) {
+    this.onFlowStepActivated();
     if(this.selectedServiceList.length === 0 || (this.selectedServiceList.length < this.maxServiceSelection && this.isMultiServiceOn)){
       this.handleServiceList(selectedService, isRemove);
     }

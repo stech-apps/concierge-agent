@@ -8,6 +8,7 @@ export interface ICustomerState{
     loading:boolean;
     loaded:boolean;
     error:Object;
+    tempCustomer: ICustomer;
 }
 
 export const initialState:ICustomerState={
@@ -16,7 +17,8 @@ export const initialState:ICustomerState={
     searchText:'',
     loading:false,
     loaded:false,
-    error:null
+    error:null,
+    tempCustomer: null
 };
 
 export function reducer(
@@ -91,6 +93,18 @@ export function reducer(
               loaded: false
             };
           }
+        case CustomerActions.SET_TEMP_CUSTOMER:{
+            return {
+                ...state,
+                tempCustomer:action.payload
+            };
+        }
+        case CustomerActions.RESET_TEMP_CUSTOMER:{
+            return {
+                ...state,
+                tempCustomer:null
+            };
+        }
         default:{
             return state;
         }

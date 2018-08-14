@@ -8,7 +8,7 @@ import { FLOW_TYPE } from '../../../../util/flow-state';
 export class FilterServicePipe implements PipeTransform {
 
   transform(services: IServiceViewModel[], args?: any): any {
-    var filterText = args[0];
+    var filterText = args[0].trim();
     var flowType = args[1];
     if (!services || !filterText) {
       return services;

@@ -5,7 +5,7 @@ export interface ICustomer {
   qpId?: number;
   firstName: string;
   lastName: string;
-  properties: ICustomerProperty;
+  properties?: ICustomerProperty;
   publicId?: string;
   lastInteractionTimestamp?: string;
   deletionTimestamp?: string;

@@ -130,6 +130,7 @@ import { QmIdentifyCustomerComponent } from './components/presentational/qm-iden
 import { QmCheckoutViewComponent } from './components/presentational/qm-checkout-view/qm-checkout-view.component';
 import { QmCheckoutViewConfirmModalComponent } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.component';
 import { QmCheckoutViewConfirmModalService } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service';
+import { QmVisitCustomerCreateComponent } from './components/presentational/qm-visit-customer-create/qm-visit-customer-create.component';
 
 import { AngularDraggableModule } from 'angular2-draggable';
 
@@ -197,7 +198,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmCheckoutViewComponent,
     QmCheckoutViewConfirmModalComponent,
     QmClearInputDirective,
-    QmClearInputButtonComponent
+    QmClearInputButtonComponent,
+    QmVisitCustomerCreateComponent
   ],
   entryComponents: [
     QmCustomToastComponent,

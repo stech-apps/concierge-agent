@@ -107,4 +107,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(publicBranchSubscription);
   }
+
+  moveReservationTimer($event) {
+  }
 }

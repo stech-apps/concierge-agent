@@ -59,6 +59,9 @@
             background-color: $app-theme;
             color: $primary-text-color;
         }
+        &.disabled {
+            color: $light-gray9;
+        }
     }
 
     .qm-date-text {

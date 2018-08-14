@@ -20,12 +20,12 @@
       <div *ngFor="let week of weeks" class="qm-calendar-week">
         <ng-container *ngFor="let day of week">
           <div class="qm-week-date disabled" *ngIf="!isSelectedMonth(day.mDate)">
-            <div class="qm-date-text">{{ day.mDate.date() }}</div>
+            <div class="qm-date-text"></div>
           </div>
           <div class="qm-week-date enabled"
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day)"
-               [ngClass]="{ today: day.today, selected: day.selected }">
+               [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled }">
             <div class="qm-date-text">{{ day.mDate.date() }}</div>
           </div>
         </ng-container>

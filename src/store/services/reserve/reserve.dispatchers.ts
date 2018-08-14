@@ -22,7 +22,12 @@ export class ReserveDispatchers {
     this.store.dispatch(new ReserveActions.ReserveAppointment(payload));
   }
 
+  fetchReservableDates(bookintInformation: IBookingInformation) {
+    this.store.dispatch(new ReserveActions.FetchReservableDates(bookintInformation));
+  }
+
   // unreserveAppointment(bookingInformation: IBookingInformation, appointment: IAppointment) {
   //   this.store.dispatch(new ReserveActions.UnreserveAppointment(date));
   // }
+
 }

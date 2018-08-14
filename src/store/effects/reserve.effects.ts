@@ -1,3 +1,4 @@
+
 import { GlobalErrorHandler } from './../../util/services/global-error-handler.service';
 import { ToastService } from './../../util/services/toast.service';
 import { Injectable } from '@angular/core';
@@ -43,6 +44,19 @@ export class ReserveEffects {
         )
       )
     );
+
+    @Effect()
+    fetchReservableDates$: Observable<any> = this.actions$
+    .ofType(ReserveActions.FETCH_RESERVABLE_DATES)
+      .pipe(
+        switchMap((action: AllActions.FetchReservableDates) =>
+          toAction(
+            this.reserveDataService.fetchReservableDates(action.payload),
+            AllActions.FetchReservableDatesSuccess,
+            AllActions.FetchReservableDatesFail
+          )
+        )
+      );
 
   @Effect()
   unreserveAppointment$: Observable<Action> = this.actions$

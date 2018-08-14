@@ -6,6 +6,7 @@ export interface CalendarDate {
   mDate: moment.Moment;
   selected?: boolean;
   today?: boolean;
+  disabled?: boolean;
 }
 
 @Component({
@@ -20,11 +21,12 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   weeks: CalendarDate[][] = [];
   sortedDates: CalendarDate[] = [];
 
-  _preselectedDates : CalendarDate[] = [];
-
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
+  @Input() enabledDates: moment.Moment[] = [];
+
+  private _currentCalendarDates: CalendarDate[] = [];
 
   constructor() { }
 
@@ -33,11 +35,14 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedDates &&
+    if ((changes.selectedDates &&
       changes.selectedDates.currentValue &&
-      changes.selectedDates.currentValue.length > 1) {
+      changes.selectedDates.currentValue.length > 1) || (changes.enabledDates.currentValue.length > 0)) {
       // sort on date changes for better performance when range checking
-      this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
+
+      if(changes.selectedDates) {
+        this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
+      }
       this.generateCalendar();
     }
   }
@@ -59,19 +64,18 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   selectDate(date: CalendarDate): void {
+    if(date.disabled) {
+      return;
+    }
     this.onSelectDate.emit(date);
 
     if (!this.multiSelect) {
-      this.selectedDates.forEach(d => {
-        d.selected = false;
-      });
-
-      this._preselectedDates.forEach(d=> {
+      this._currentCalendarDates.forEach(d => {
         d.selected = false;
       });
       
       date.selected = true;
-      this.selectedDates.push(date);
+      //this.selectedDates.push(date);
     }
   }
 
@@ -118,7 +122,19 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     this.weeks = weeks;
   }
 
+  isDisabledDay(d: moment.Moment) {
+    let isDisabled = true;
+    this.enabledDates.forEach(ed => {
+      if(ed.isSame(d, 'day')){
+        isDisabled = false;
+      }
+    });
+
+    return isDisabled;
+  }
+
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
+    this._currentCalendarDates = [];
     const firstOfMonth = moment(currentMoment).startOf('month').day();
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
     const start = firstDayOfGrid.date();
@@ -131,13 +147,15 @@ export class QmCalendarComponent implements OnInit, OnChanges {
         let calDay = {
           today: this.isToday(d),
           selected: isSelectedDay,
+          disabled: this.isDisabledDay(d),
           mDate: d,
         };
 
         if(isSelectedDay) {
-          this._preselectedDates.push(calDay);
+          this.selectDate(calDay);
         }
 
+        this._currentCalendarDates.push(calDay);
         return calDay;
       });
   }

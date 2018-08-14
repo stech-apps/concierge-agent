@@ -33,7 +33,7 @@ export class QmSelectServiceComponent implements OnInit {
   inputChanged: Subject<string> = new Subject<string>();
   newf: FLOW_TYPE.CREATE_APPOINTMENT;
   multiServiceEnabled: boolean;
-  searchText: string = '';
+  searchText: string;
 
   constructor(
     private serviceSelectors: ServiceSelectors,

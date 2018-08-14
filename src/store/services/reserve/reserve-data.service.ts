@@ -1,3 +1,4 @@
+import { IBookingInformation } from './../../../models/IBookingInformation';
 import { GlobalErrorHandler } from './../../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -8,10 +9,9 @@ import {
   calendarPublicEndpointV2,
   calendarPublicEndpoint,
   DataServiceError
-} from '../data.service';
+} from '../data.service';  
 
 import { IAppointment } from '../../../models/IAppointment';
-import { IBookingInformation } from '../../../models/IBookingInformation';
 
 
 @Injectable()
@@ -36,6 +36,18 @@ export class ReserveDataService {
   unreserveAppointment(reservationPublicId: string) {
     return this.http
             .delete<IAppointment>(`${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
+            .pipe(catchError(this.errorHandler.handleError()));
+  }
+
+  fetchReservableDates(bookingInformation: IBookingInformation): any {
+    return this.http
+            .get<IAppointment>(
+              `${calendarPublicEndpointV2}`
+              + `/branches/${bookingInformation.branchPublicId}/`
+              + `dates;`
+              + `${bookingInformation.serviceQuery};` 
+              + `numberOfCustomers=${bookingInformation.numberOfCustomers}`
+            )
             .pipe(catchError(this.errorHandler.handleError()));
   }
 }

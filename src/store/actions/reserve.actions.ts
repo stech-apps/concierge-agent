@@ -7,6 +7,10 @@ export const RESERVE_APPOINTMENT = '[Reserve] RESERVE_APPOINTMENT';
 export const RESERVE_APPOINTMENT_FAIL = '[Reserve] RESERVE_APPOINTMENT_FAIL';
 export const RESERVE_APPOINTMENT_SUCCESS = '[Reserve] RESERVE_APPOINTMENT_SUCCESS';
 
+export const FETCH_RESERVABLE_DATES = '[Reserve] FETCH_RESERVABLE_DATES';
+export const FETCH_RESERVABLE_DATES_FAIL = '[Reserve] FETCH_RESERVABLE_DATES_FAIL';
+export const FETCH_RESERVABLE_DATES_SUCCESS = '[Reserve] FETCH_RESERVABLE_DATES_SUCCESS';
+
 export const UNRESERVE_APPOINTMENT = '[Reserve] UNRESERVE_APPOINTMENT';
 export const UNRESERVE_APPOINTMENT_FAIL = '[Reserve] UNRESERVE_APPOINTMENT_FAIL';
 export const UNRESERVE_APPOINTMENT_SUCCESS = '[Reserve] UNRESERVE_APPOINTMENT_SUCCESS';
@@ -27,6 +31,21 @@ export class ReserveAppointmentFail implements Action {
 export class ReserveAppointmentSuccess implements Action {
   readonly type = RESERVE_APPOINTMENT_SUCCESS;
   constructor(public payload: IAppointment) {}
+}
+
+export class FetchReservableDates implements Action {
+  readonly type = FETCH_RESERVABLE_DATES;
+  constructor(public payload: IBookingInformation) {}
+}
+
+export class FetchReservableDatesFail implements Action {
+  readonly type = FETCH_RESERVABLE_DATES_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class FetchReservableDatesSuccess implements Action {
+  readonly type = FETCH_RESERVABLE_DATES_SUCCESS;
+  constructor(public payload: any) {}
 }
 
 export class UnreserveAppointment implements Action {
@@ -53,4 +72,7 @@ export type AllReserveActions = ReserveAppointment |
                                 UnreserveAppointment |
                                 UnreserveAppointmentFail |
                                 UnreserveAppointmentSuccess |
-                                ResetReservedAppointment;
+                                ResetReservedAppointment|
+                                FetchReservableDates | 
+                                FetchReservableDatesSuccess |
+                                FetchReservableDatesFail;

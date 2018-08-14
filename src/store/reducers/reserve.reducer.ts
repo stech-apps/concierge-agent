@@ -1,8 +1,11 @@
+import { FETCH_RESERVABLE_DATES_FAIL } from './../actions/reserve.actions';
 import { IAppointment } from '../../models/IAppointment';
 import * as ReserveActions from '../actions';
+import * as moment from 'moment';
 
 export interface IReserveState {
   reservedAppointment: IAppointment;
+  reservableDates?: moment.Moment[]
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -10,6 +13,7 @@ export interface IReserveState {
 
 export const initialState: IReserveState = {
   reservedAppointment: null,
+  reservableDates: [],
   loading: false,
   loaded: false,
   error: null
@@ -67,6 +71,23 @@ export function reducer(
         error: action.payload
       };
     }
+    case ReserveActions.FETCH_RESERVABLE_DATES_SUCCESS: {
+      return {
+        ...state,
+        reservableDates: parseReservableDates(action.payload.dates),
+        loading: false,
+        loaded: true,
+        error: null
+      };
+    }
+    case ReserveActions.FETCH_RESERVABLE_DATES_FAIL: {
+      return {
+        ...state,
+        reservableDates: [],
+        loading: false,
+        error: action.payload
+      };
+    }
     case ReserveActions.RESET_RESERVED_APPOINTMENT: {
       return {
         ...state,
@@ -76,5 +97,18 @@ export function reducer(
     default: {
       return state;
     }
+  }
+}
+
+function parseReservableDates(dates: string[]): moment.Moment[] {
+
+  if (dates.length > 0) {
+
+    return dates.map((d) => {
+      return moment(d)
+    });
+  }
+  else {
+    return [];
   }
 }

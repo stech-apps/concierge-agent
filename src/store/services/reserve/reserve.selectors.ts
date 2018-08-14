@@ -27,6 +27,11 @@ const getReserveError = createSelector(
   (state: IReserveState) => state.error
 );
 
+const getReservableDates = createSelector(
+  getReserveState,
+  (state: IReserveState) => state.reservableDates
+);
+
 @Injectable()
 export class ReserveSelectors {
   constructor(
@@ -37,4 +42,5 @@ export class ReserveSelectors {
   reserveLoading$ = this.store.select(getReserveLoading);
   reserveLoaded$ = this.store.select(getReserveLoaded);
   reserveError$ = this.store.select(getReserveError);
+  reservableDates$ = this.store.select(getReservableDates);
 }

@@ -36,4 +36,6 @@ export class CalendarServiceDataService {
       .get<ICalendarServiceResponse>(`${calendarPublicEndpointV2}/branches/${branch.publicId}/services/groups;${serviceIds}`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
+
+
 }

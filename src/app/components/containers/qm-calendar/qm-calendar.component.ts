@@ -81,7 +81,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       });
       
       date.selected = true;
-      //this.selectedDates.push(date);
+      this.selectedDates[0] = date;
     }
   }
 

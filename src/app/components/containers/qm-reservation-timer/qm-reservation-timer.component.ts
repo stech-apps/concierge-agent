@@ -94,6 +94,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
             this.toastService.errorToast(res);
           });
         translateSubscription.unsubscribe();
+        this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       }
 
       // Stop timer when hit 0

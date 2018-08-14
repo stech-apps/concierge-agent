@@ -9,7 +9,7 @@ import { Subscription, Observable } from 'rxjs';
 import {
   BranchSelectors, TimeslotDispatchers, CalendarBranchSelectors, ServiceSelectors, CalendarServiceSelectors,
   ReserveDispatchers, ReservationExpiryTimerDispatchers, CalendarSettingsSelectors, ReservationExpiryTimerSelectors, 
-  CalendarSettingsDispatchers
+  CalendarSettingsDispatchers,UserSelectors
 } from 'src/store';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { BookingHelperService } from 'src/util/services/booking-helper.service';
@@ -38,6 +38,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private settingReservationExpiryTime: number;
   public showExpiryReservationTime$: Observable<Boolean>;
   public reservableDates: moment.Moment[] = [];
+  public userDirection$: Observable<string>;
   selectedTime$: Observable<Moment>;
 
   selectedServices: ICalendarService[] = [];
@@ -55,12 +56,14 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     private bookingHelperService: BookingHelperService, private calendarBranchSelectors: CalendarBranchSelectors,
     private calendarServiceSelectors: CalendarServiceSelectors, private reserveDispatchers: ReserveDispatchers,
     private calendarSettingsSelectors: CalendarSettingsSelectors, private reserveSelectors: ReserveSelectors,
-    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers, private calendarSettingsDispatchers: CalendarSettingsDispatchers) {
+    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers, private calendarSettingsDispatchers: CalendarSettingsDispatchers,
+  private userSelectors: UserSelectors) {
 
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.reservedAppointment$ = this.reserveSelectors.reservedAppointment$;
     this.getExpiryReservationTime$ = this.calendarSettingsSelectors.getReservationExpiryTime$;
+    this.userDirection$ = this.userSelectors.userDirection$;
 
 
     const branchSubscription = this.branchSubscription$.subscribe((cb) => {

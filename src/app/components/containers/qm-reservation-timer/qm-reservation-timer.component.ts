@@ -79,7 +79,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       // 2min before expire show message "Timer about the expire!!"
       if (onGoingTime === 120) {
         const translateSubscription = this.translate
-          .get("label.reservation.timer.soonexpire")
+          .get("warning_message_on_cancel_reservation")
           .subscribe((res: string) => {
             this.toastService.errorToast(res);
           });
@@ -89,7 +89,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       // After timer expired show message "Timer has expired!!"
       if (onGoingTime === 0) {
         const translateSubscription = this.translate
-          .get("label.reservation.timer.expired")
+          .get("reservation_cancelled")
           .subscribe((res: string) => {
             this.toastService.errorToast(res);
           });

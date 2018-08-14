@@ -3,7 +3,11 @@
 .qm-number-of-customers {
     &__text {
         color: $primary-text-color;
-        font-size: 0.7rem;    
+        font-size: 0.7rem;
+        @at-root [dir="rtl"] & {
+            margin-left: rem($standard-margin / 2);
+         }
+        
     }
     &__numeric {
         display: flex;

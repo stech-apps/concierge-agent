@@ -84,7 +84,7 @@ export class ReserveEffects {
     tap(
       (action: ReserveActions.ReserveAppointmentFail) => {
         if (action.payload.errorCode === ERROR_CODE_TIMESLOT_TAKEN) {
-          this.translateService.get('error.timeslot.taken').subscribe(
+          this.translateService.get('time_slot_already_taken').subscribe(
             (label: string) => {
               this.toastService.errorToast(label);
             }

@@ -1,10 +1,10 @@
-<div class="qm-calendar">
+<div class="qm-calendar" dir="{{ userDirection$ | async }}">
   <div class="qm-calendar-navs">
       <button (click)="prevMonth()">
         <i class="icon-caret-left"></i>
       </button>
       <div>
-          <span class="p4">{{ currentDate.format('MMMM') }}</span><span>  {{ currentDate.format('YYYY') }}</span>
+          <span class="p4">{{ 'calendar.month.' + currentDate.format('MMMM').toLowerCase() | translate }}</span><span>  {{ currentDate.format('YYYY') }}</span>
       </div> 
         
       <button (click)="nextMonth()"><i class="icon-caret-right"></i></button>

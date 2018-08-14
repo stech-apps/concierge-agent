@@ -1,6 +1,9 @@
+
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'underscore';
+import { Observable } from 'rxjs';
+import { UserSelectors } from 'src/store';
 
 export interface CalendarDate {
   mDate: moment.Moment;
@@ -17,9 +20,10 @@ export interface CalendarDate {
 export class QmCalendarComponent implements OnInit, OnChanges {
 
   currentDate = moment();
-  dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  dayNames = ['calendar.weekday.sun', 'calendar.weekday.mon', 'calendar.weekday.tue', 'calendar.weekday.wed', 'calendar.weekday.thu', 'calendar.weekday.fri', 'calendar.weekday.sat'];
   weeks: CalendarDate[][] = [];
   sortedDates: CalendarDate[] = [];
+  userDirection$ :Observable<string>;
 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
@@ -28,7 +32,9 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   private _currentCalendarDates: CalendarDate[] = [];
 
-  constructor() { }
+  constructor(private userSelectors: UserSelectors) {
+    this.userDirection$ = this.userSelectors.userDirection$;
+   }
 
   ngOnInit(): void {
     this.generateCalendar();

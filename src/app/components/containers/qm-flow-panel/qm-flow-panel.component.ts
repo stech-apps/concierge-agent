@@ -3,6 +3,7 @@ import { QmFlowPanelHeaderComponent } from './../qm-flow-panel-header/qm-flow-pa
 import { QmPageHeaderComponent } from './../qm-page-header/qm-page-header.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { ContentChild } from '@angular/core';
+import { QmFlowPanelResult } from 'src/app/components/containers/qm-flow-panel-header/qm-flow-panel-result.directive';
 
 let _uniqueIdCounter = 0;
 
@@ -15,6 +16,7 @@ export class QmFlowPanelComponent implements OnInit {
 
   @ContentChild(QmFlowPanelHeaderComponent) header: QmFlowPanelHeaderComponent;
   @ContentChild(QmFlowPanelContentComponent) content: QmFlowPanelContentComponent;
+  @ContentChild(QmFlowPanelResult) resultContainer: QmFlowPanelResult;
 
   id: string = `qm-flow-panel-${_uniqueIdCounter++}`;
 
@@ -33,7 +35,7 @@ export class QmFlowPanelComponent implements OnInit {
   isHeaderVisible: boolean;
 
   @Input()
-  result: any;
+  result: string;
 
   @Input()
   get isShowExitFlow(): boolean {
@@ -61,6 +63,10 @@ export class QmFlowPanelComponent implements OnInit {
     if(this.header) {
       this.header.isActive = isActive;
     }
+  }
+
+  hasResult() {
+    return this.resultContainer && this.resultContainer.result && this.resultContainer.result.length > 0;
   }
 
   ngOnInit() {

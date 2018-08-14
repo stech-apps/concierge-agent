@@ -21,6 +21,10 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   private subscriptions : Subscription = new Subscription();
   customerCreateForm: FormGroup;
   isFlowSkip: boolean = false;
+  invalidFirstName: string;
+  invalidLastName: string;
+  accept: any;
+
 
   constructor(
     private fb: FormBuilder,

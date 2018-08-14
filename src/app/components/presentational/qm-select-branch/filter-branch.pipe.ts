@@ -12,6 +12,6 @@ export class FilterBranchPipe implements PipeTransform {
       return branches;
     }
 
-    return branches.filter(b => b.name.toUpperCase().search(filterText.toUpperCase()) != -1);
+    return branches.filter(b => b.name.toUpperCase().search(filterText.toUpperCase()) != -1 || b.selected);
   }
 }

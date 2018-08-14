@@ -1,5 +1,5 @@
 <qm-flow #f>
-  <qm-flow-panel #pb [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
+  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{  selectedServices[0].internalName }}</qm-flow-panel-result>
@@ -9,19 +9,22 @@
         <qm-select-service (onFlowNext)="setPanelClick()" [flowType]="flowType"></qm-select-service>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel *ngIf="!isCustomerFlowHidden" #ps>
-    <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
+  <qm-flow-panel *ngIf="!isCustomerFlowHidden" #pc>
+    <qm-flow-panel-header (click)="f.panelHeaderClick(pc)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'identify_customer' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result>{{'test'}}</qm-flow-panel-result>
+      <qm-flow-panel-result *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' + currentCustomer.lastName }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-        <qm-select-branch (onFlowNext)="f.onFlowNext(pa)"></qm-select-branch>
+      <qm-identify-customer (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #pa>
-      <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
-        <qm-flow-panel-title>{{ 'issue_ticket' | translate}}</qm-flow-panel-title>
-      </qm-flow-panel-header>
-    </qm-flow-panel>
+  <qm-flow-panel #px>
+    <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
+      <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
+    </qm-flow-panel-header>
+    <qm-flow-panel-content>
+      <qm-checkout-view [flowType]="flowType" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
+    </qm-flow-panel-content>
+  </qm-flow-panel>
 </qm-flow>

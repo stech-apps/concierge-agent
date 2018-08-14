@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ServicePointSelectors, ServiceSelectors } from 'src/store/services';
+import { ServicePointSelectors, ServiceSelectors, CustomerSelector } from 'src/store/services';
 import { Subscription } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { IService } from '../../../../models/IService';
+import { ICustomer } from '../../../../models/ICustomer';
 
 @Component({
   selector: 'qm-qm-create-visit',
@@ -12,17 +13,19 @@ import { IService } from '../../../../models/IService';
 export class QmCreateVisitComponent implements OnInit {
 
   @ViewChild('f') f: any;
-  @ViewChild('pa') pa: any;
-  @ViewChild('ps') ps: any;
+  @ViewChild('pc') pc: any;
+  @ViewChild('px') px: any;
 
   private subscriptions: Subscription = new Subscription();
   isCustomerFlowHidden: boolean;
   flowType = FLOW_TYPE.CREATE_VISIT;
   selectedServices: IService[];
+  currentCustomer: ICustomer;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
-    private serviceSelectors: ServiceSelectors
+    private serviceSelectors: ServiceSelectors,
+    private customerSelectors: CustomerSelector
   ) {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params !== null && params !== undefined){
@@ -37,6 +40,13 @@ export class QmCreateVisitComponent implements OnInit {
       }
     });
     this.subscriptions.add(servicesSubscription);
+
+    const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
+      if(customer){
+        this.currentCustomer = customer;
+      }
+    });
+    this.subscriptions.add(customerSubscription);
   }
 
   ngOnInit() {
@@ -48,10 +58,10 @@ export class QmCreateVisitComponent implements OnInit {
 
   setPanelClick(){
     if(this.isCustomerFlowHidden){
-      this.f.onFlowNext(this.pa);
+      this.f.onFlowNext(this.px);
     }
     else{
-      this.f.onFlowNext(this.ps);
+      this.f.onFlowNext(this.pc);
     }
   }
 }

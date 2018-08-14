@@ -5,3 +5,10 @@ export enum FLOW_TYPE {
     CREATE_VISIT = "CREATE_VISIT",
     EDIT_VIST = "EDIT_VIST"
 }
+
+export enum VIP_LEVEL {
+    VIP_1 = "VIP level 1",
+    VIP_2 = "VIP level 2",
+    VIP_3 = "VIP level 3",
+    NONE = "NONE"
+}

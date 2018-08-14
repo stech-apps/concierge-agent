@@ -10,7 +10,8 @@ import * as moment from 'moment';
 export enum NOTIFICATION_TYPE {
   email = "email",
   sms = "sms",
-  both = "both"
+  both = "both",
+  none = "none"
 }
 
 @Injectable()

@@ -6,15 +6,19 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors,CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors } from "../../../../store";
+import { ServicePointSelectors,CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
-import { FLOW_TYPE } from "../../../../util/flow-state";
+import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
 import { CalendarService } from "../../../../util/services/rest/calendar.service";
 import { IAppointment } from "../../../../models/IAppointment";
 import { ICustomer } from "../../../../models/ICustomer";
 import { Q_ERROR_CODE } from "../../../../util/q-error";
 import { ToastService } from '../../../../util/services/toast.service';
+import { SPService } from "../../../../util/services/rest/sp.service";
+import { IBranch } from "../../../../models/IBranch";
+import { IServicePoint } from "../../../../models/IServicePoint";
+import { IService } from "../../../../models/IService";
 
 @Component({
   selector: "qm-checkout-view",
@@ -61,11 +65,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   private selectedAppointment: IAppointment;
   private selectedCustomer: ICustomer;
-  private selectedDate: string;
-  private selectedTime: string;
+  private selectedBranch: IBranch;
+  private selectedServicePoint: IServicePoint;
+  private selectedServices: IService[];
 
   constructor(
-    servicePointSelectors: ServicePointSelectors, 
+    private servicePointSelectors: ServicePointSelectors, 
     private customerSelector:CustomerSelector, 
     private translate: TranslateService, 
     private qmCheckoutViewConfirmModalService: QmCheckoutViewConfirmModalService,
@@ -73,9 +78,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private reserveSelectors: ReserveSelectors,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private timeSlotSelectors: TimeslotSelectors
+    private timeSlotSelectors: TimeslotSelectors,
+    private spService: SPService,
+    private branchSelector: BranchSelectors,
+    private serviceSelectors: ServiceSelectors
   ) {
-    this.uttParameters$ = servicePointSelectors.uttParameters$;
+    this.uttParameters$ = this.servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
@@ -126,6 +134,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         break;
       default:
         break;
+    }
+
+    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
+      this.subscriptions.add(branchSubscription);
+
+      const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => this.selectedServices = services);
+      this.subscriptions.add(serviceSubscription);
+
+      const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
+      this.subscriptions.add(servicePointSubscription);
     }
 
   }
@@ -245,13 +264,20 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
             this.onFlowExit.emit();
           }, error => {
             this.showErrorMessage();
+            this.onFlowExit.emit();
           })
         }
        });
   }
 
   setCreateVisit(){
-
+    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled).subscribe((result) => {
+      this.showSussessMessage();
+      this.onFlowExit.emit();
+    }, error => {
+      this.showErrorMessage();
+      this.onFlowExit.emit();
+    })
   }
 
   setAriveAppointment(){
@@ -262,11 +288,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.toastService.infoToast("Appointment Created");
     }
+    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      this.toastService.infoToast("Visit Created");
+    }
   }
 
   showErrorMessage(){
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.toastService.infoToast("Fail to create Appointment");
+    }
+    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      this.toastService.infoToast("Fail to create visit");
     }
   }
 

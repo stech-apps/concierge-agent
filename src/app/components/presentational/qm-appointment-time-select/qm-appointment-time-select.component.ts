@@ -47,7 +47,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     selected: true
   }];
 
-  private selectedTime: string;
+  selectedTime: string;
 
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();

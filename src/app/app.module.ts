@@ -131,6 +131,7 @@ import { QmCheckoutViewComponent } from './components/presentational/qm-checkout
 import { QmCheckoutViewConfirmModalComponent } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.component';
 import { QmCheckoutViewConfirmModalService } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service';
 
+import { AngularDraggableModule } from 'angular2-draggable';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -231,7 +232,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
       }
     }),
     BrowserAnimationsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AngularDraggableModule
   ],
   providers: [
     ...storeServices,

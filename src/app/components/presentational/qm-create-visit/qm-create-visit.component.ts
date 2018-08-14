@@ -15,6 +15,7 @@ export class QmCreateVisitComponent implements OnInit {
   @ViewChild('f') f: any;
   @ViewChild('pc') pc: any;
   @ViewChild('px') px: any;
+  @ViewChild('pb') pb: any;
 
   private subscriptions: Subscription = new Subscription();
   isCustomerFlowHidden: boolean;

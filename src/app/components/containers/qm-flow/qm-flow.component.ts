@@ -58,6 +58,14 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     });
   }
 
+  hideAllPanels() {
+    this.flowPanels.forEach(fp => {
+        fp.isActive = false;
+        fp.isContentVisible = false
+        fp.isHeaderVisible = false;
+      });
+  }
+
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
     if(result){
       this.exitFlow = true;
@@ -69,6 +77,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
         if (result) {
           this.exitFlow = true;
+          this.hideAllPanels();
           setTimeout(() => {
             this.router.navigate(['home']);
           }, 1000);

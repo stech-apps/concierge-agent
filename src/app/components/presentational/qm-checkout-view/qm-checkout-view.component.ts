@@ -76,6 +76,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
   private selectedServices: IService[];
+  private tempCustomer: ICustomer;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -126,6 +127,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => this.selectedAppointment = appointment);
     this.subscriptions.add(appointmentSubscription);
+
+    const tempCustomerSubscription = this.customerSelector.tempCustomer$.subscribe((customer) => {
+      if(customer){
+        this.tempCustomer = customer;
+        this.customerEmail=customer.email;
+        this.customerSms=customer.phone;
+      }
+    });
+    this.subscriptions.add(tempCustomerSubscription);
   }
 
   ngOnInit() {
@@ -306,8 +316,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  setCreateVisit() {
-    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE, this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled).subscribe((result) => {
+  setCreateVisit(){
+    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled, this.tempCustomer).subscribe((result) => {
       this.showSussessMessage();
       this.onFlowExit.emit();
     }, error => {

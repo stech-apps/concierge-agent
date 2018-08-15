@@ -9,6 +9,8 @@ import {
   Validators
 } from '@angular/forms';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from '../../../../util/services/toast.service';
 
 @Component({
   selector: 'qm-visit-customer-create',
@@ -30,7 +32,9 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     private fb: FormBuilder,
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private translateService: TranslateService,
+    private toastService: ToastService
   ) { 
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
@@ -53,8 +57,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
   
     this.customerCreateForm = new FormGroup({
-      firstName: new FormControl('',Validators.required),
-      lastName:new FormControl('',Validators.required),
+      firstName: new FormControl(''),
+      lastName:new FormControl(''),
       phone:new FormControl('',phoneValidators),
       email:new FormControl('',emailValidators)
     })
@@ -71,8 +75,15 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   }
 
   doneButtonClick() {
-    this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
-    //this.onFlowNext.emit();
+    if(this.customerCreateForm.invalid){
+      this.translateService.get('invalied_customer_details').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+    }
+    else{
+      this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
+      this.onFlowNext.emit();
+    }
   }
 
   prepareSaveCustomer(): ICustomer {

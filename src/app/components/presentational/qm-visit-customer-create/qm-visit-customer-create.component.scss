@@ -37,6 +37,15 @@
     margin-left: 27.6%
 }
 
+.qm-input-box{
+    &__extend{
+        margin-left: auto;
+        margin-top: 4rem;
+        width: 60%;
+        background-color: #e8e8e8;
+    }
+}
+
 .padding-class{
     width: 70px;
 }

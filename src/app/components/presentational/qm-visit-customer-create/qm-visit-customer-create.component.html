@@ -24,15 +24,16 @@
             
           <span class="padding-class"></span>  
         </div>
+        <div class="qm-input-box qm-input-box__extend" dir="{{ userDirection$ | async }}">
       <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
-          <div style="padding: 20px">
+          <div class="qm-input-box__input-section">
               <div class="qm-input-box__row">
                   <div class="qm-input-box__col-1" >
                     <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
                   </div>
                   <div class="qm-input-box__col-2">
-                      <input  type="text" name='firstName' formControlName = "firstName" #firstName maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                      <i *ngIf="firstName.value!=''" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                      <input  type="text" name='firstName' formControlName = "firstName" #firstName maxlength="50" [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                      <i *ngIf="firstName.value.trim()" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                   </div>
                 </div>
                 <div class="qm-input-box__row">
@@ -40,8 +41,8 @@
                         <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
                     </div>
                     <div class="qm-input-box__col-2" >
-                      <input type="text" name='lastName' formControlName = "lastName" #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                      <i *ngIf="lastName.value!=''" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
+                      <input type="text" name='lastName' formControlName = "lastName" #lastName  maxlength="50" [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <i *ngIf="lastName.value.trim()" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
                     </div>
                   </div>
                   <div class="qm-input-box__row">
@@ -50,7 +51,7 @@
                       </div>
                       <div class="qm-input-box__col-2">
                         <input type="text" name='phone' minlength="8" formControlName = "phone" #phone>
-                        <i *ngIf="phone.value!=''" (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                        <i *ngIf="phone.value.trim()"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                       </div>
                     </div>
                   <div class="qm-input-box__row">
@@ -59,9 +60,10 @@
                         </div>
                         <div class="qm-input-box__col-2">
                           <input type="text" name='email' formControlName = "email" #email>
-                          <i *ngIf="email.value!=''" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                          <i *ngIf="email.value.trim()" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                         </div>
                   </div>
           </div>
         </form>
+      </div>
   </div>

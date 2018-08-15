@@ -108,10 +108,10 @@ export class QmSelectServiceComponent implements OnInit {
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
         const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
           if(branch.publicId){
-            this.selectedBranch = branch;
-            if(!val){
+            if(this.selectedBranch && this.selectedBranch !== branch || !val){
               this.calendarServiceDispatchers.fetchServices(branch);
             }
+            this.selectedBranch = branch;
           }
         });
         this.subscriptions.add(calendarBranchSubscription);
@@ -194,6 +194,7 @@ export class QmSelectServiceComponent implements OnInit {
           (val: IService) =>
             val.id !== selectedService.id
         );
+        this.checkMostFrequentService();
       }
     }
 
@@ -216,6 +217,8 @@ export class QmSelectServiceComponent implements OnInit {
         (val: IService) =>
           val.id !== selectedService.id
       );
+
+      this.checkMostFrequentService();
       this.filteredServiceList.push(selectedService);
       this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
       
@@ -266,8 +269,21 @@ export class QmSelectServiceComponent implements OnInit {
     );
   }
 
+  getMostFrequnetServices(){
+    var serviceIds = null;
+    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
+    }
+    else{
+      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
+    }
+
+    return serviceIds;
+  }
+
   checkMostFrequentService(){
-    var serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
+    var serviceIds = this.getMostFrequnetServices();
+    
     if(serviceIds === null || serviceIds === undefined){
       return
     }
@@ -279,7 +295,19 @@ export class QmSelectServiceComponent implements OnInit {
       }
     })
 
-    this.mostFrequentServiceList = currentList;
+    if(this.selectedServiceList.length > 0){
+      var tempList = [];
+      currentList.forEach(val => {
+        var elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
+        if(elementPos < 0){
+          tempList.push(val);
+        }
+      })
+      this.mostFrequentServiceList = tempList;
+    }
+    else{
+      this.mostFrequentServiceList = currentList;
+    }
   }
 
   setMostFrequentService(){

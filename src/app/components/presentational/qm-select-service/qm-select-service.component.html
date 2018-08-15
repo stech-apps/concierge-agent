@@ -30,7 +30,7 @@
     </div>
     <div class="qm-service-list__item-container">
         <div class="qm-service-list__header" *ngIf="mostFrequentServiceList && mostFrequentServiceList.length > 0 && (mostFrequentServiceList | filterService: [filterText, flowType]).length > 0">{{ ('most_freq_services' | translate) }}</div>
-        <div class="qm-service-list__item" (click)="onServiceSelect(service, false)" *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]">
+        <div class="qm-service-list__item" (click)="onServiceSelect(service, true)" *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]">
             <div class="qm-service-list__item--text">{{ service.internalName }}</div>
         </div>
     </div>

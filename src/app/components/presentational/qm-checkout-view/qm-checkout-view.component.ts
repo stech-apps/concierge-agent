@@ -25,6 +25,7 @@ import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
 import { QmModalService } from "../qm-modal/qm-modal.service";
 import * as moment from 'moment';
 import { forEach } from "@angular/router/src/utils/collection";
+import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
 
 
 @Component({
@@ -94,7 +95,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private serviceSelectors: ServiceSelectors,
     private qmNotesModalService: QmNotesModalService, private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, private qmModalService: QmModalService,
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
-    private customerDispatcher: CustomerDispatchers
+    private customerDispatcher: CustomerDispatchers,
+    private localStorage: LocalStorage
   ) {
     this.uttParameters$ = this.servicePointSelectors.uttParameters$;
 
@@ -322,10 +324,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   setCreateVisit(){
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled, this.tempCustomer).subscribe((result) => {
       this.showSussessMessage(result);
+      this.saveFrequentService();
       this.clearSelectedValues();
       this.onFlowExit.emit();
     }, error => {
       this.showErrorMessage();
+      this.saveFrequentService();
       this.clearSelectedValues();
       this.onFlowExit.emit();
     })
@@ -404,6 +408,21 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
 
 
+  }
+
+  saveFrequentService(){
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      var serviceList = [];
+      this.selectedServices.forEach(val => {
+        serviceList.push(val.id);
+      })
+      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, serviceList);
+      }
+      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, serviceList);
+      }
+    }
   }
 
   private buildDate(time: string){

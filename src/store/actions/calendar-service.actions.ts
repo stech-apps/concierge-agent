@@ -64,4 +64,4 @@ export type AllCalendarServiceActions =
                                     FetchServiceGroupsFail |
                                     FetchServiceGroupsSuccess |
                                     GetSelectedCalendarServices |
-                                    SetSelectedCalendarServices;
+                                    SetSelectedCalendarServices;                

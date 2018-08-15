@@ -18,3 +18,4 @@ export * from './reservation-expiry-timer.actions';
 export * from './timeslot.actions';
 export * from './calendar-branch.actions';
 export * from './reserve.actions';
+export * from './information-message-box.actions'

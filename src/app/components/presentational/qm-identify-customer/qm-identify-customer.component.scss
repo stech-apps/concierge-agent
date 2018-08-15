@@ -12,8 +12,10 @@
     background:var(--app-theme);
     color: $white;
     display: flex;
-    padding: 0.5rem;
-    width: 55%;
+    padding: 0.5rem 0rem;
+   width: 100%;
+   display: table-cell;
+//    margin: auto
 
 }
 
@@ -21,7 +23,7 @@
   display: flex;
   display: inline-block;
   vertical-align: middle;
-  margin:10px 10px -10px -25px;
+  margin:0px 10px 0px -25px;
   z-index: 2;
   color: white;
   cursor: pointer;
@@ -34,9 +36,16 @@
 .qm-identify__customer-select-container{
     margin-top:10px;
     display: flex;
-    margin-left: 27.6%
 }
 
-.padding-class{
-    width: 70px;
+.qm-selected-customer-container{
+    margin: auto;width: 40%;display: table;
+}
+
+.qm-customer-padding-class-1{
+    padding-left: 37px;
+    display: table-cell
+}
+.qm-customer-padding-class-2{
+    padding-left: 115px;
 }

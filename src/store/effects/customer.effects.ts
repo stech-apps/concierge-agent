@@ -15,10 +15,7 @@ const toAction = CustomerActions.toAction();
 export class CustomerEffects{
     constructor( 
         private actions$ : Actions,
-        private customerDataService:CustomerDataService,
-        private toastService:ToastService,
-        private translateService:TranslateService,
-        private globalErrorHandler:GlobalErrorHandler
+        private customerDataService:CustomerDataService
     ){}
 
     @Effect()
@@ -53,11 +50,6 @@ export class CustomerEffects{
         selectCustomerAfterCreation$: Observable<Action> = this.actions$
           .ofType(CustomerActions.CREATE_CUSTOMER_SUCCESS)
           .pipe(
-            tap((action: CustomerActions.CreateCustomerSuccess) =>             
-              this.translateService.get('customer_msg_created',{0:action.payload.firstName+' '+action.payload.lastName}).subscribe(
-                  (label:string) => this.toastService.successToast(label)
-              ).unsubscribe()
-            ),
             switchMap((action:CustomerActions.CreateCustomerSuccess)=>
             [new CustomerActions.SelectCustomer(action.payload)]
           ));
@@ -65,13 +57,7 @@ export class CustomerEffects{
         @Effect({dispatch:false})
         createCustomerFailed$: Observable<Action> = this.actions$
             .ofType(CustomerActions.CREATE_CUSTOMER_FAIL)
-            .pipe(
-              tap((action: CustomerActions.CreateCustomerFail) =>             
-                {
-                    this.globalErrorHandler
-                        .showError('customer_msg_created_error',action.payload);
-                }
-              ))
+            .pipe()
         
         @Effect()
         updateCustomer$:Observable<Action> = this.actions$
@@ -90,11 +76,6 @@ export class CustomerEffects{
         selectCustomerAfterUpdate$: Observable<Action> = this.actions$
         .ofType(CustomerActions.UPDATE_CUSTOMER_SUCCESS)
         .pipe(
-            tap((action:CustomerActions.UpdateCUstomerSuccess)=>
-            this.translateService.get('customer_msg_update').subscribe(
-                (label:string)=> this.toastService.successToast(`${label}`)
-            ).unsubscribe()
-        ),
         switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
         [new CustomerActions.SelectCustomer(action.payload)]
         )
@@ -104,12 +85,7 @@ export class CustomerEffects{
         @Effect({dispatch:false})
         updateCustomerFailed$: Observable<Action> = this.actions$
         .ofType(CustomerActions.UPDATE_CUSTOMER_FAIL)
-        .pipe(
-            tap((action:CustomerActions.UpdateCustomerFail)=>{
-                this.globalErrorHandler
-                .showError('customer_msg_update_error',action.payload);
-            }
-        ));
+        .pipe();
 
         @Effect()
         updateCustomerWithoutToast$:Observable<Action> = this.actions$
@@ -129,11 +105,6 @@ export class CustomerEffects{
         updateCustomerWithoutToastSuccess$: Observable<Action> = this.actions$
         .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_SUCCESS)
         .pipe(
-            tap((action:CustomerActions.UpdateCUstomerSuccess)=>{
-                
-            }
-   
-        ),
         switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
         [new CustomerActions.SelectCustomer(action.payload)]
         )
@@ -143,11 +114,7 @@ export class CustomerEffects{
         @Effect({dispatch:false})
         updateCustomerWithoutToastFail$: Observable<Action> = this.actions$
         .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_FAIL)
-        .pipe(
-            tap((action:CustomerActions.UpdateCustomerFail)=>{
-           
-            }
-        ));
+        .pipe();
 
        
 }

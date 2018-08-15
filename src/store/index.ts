@@ -55,7 +55,9 @@ import {
   TimeslotSelectors,
   ReserveSelectors,
   ReserveDispatchers,
-  ReserveDataService
+  ReserveDataService,
+  InfoMsgBoxSelector,
+  InfoMsgDispatchers
 } from "./services";
 
 export const storeServices = [
@@ -110,5 +112,7 @@ export const storeServices = [
   TimeslotSelectors,
   ReserveDataService,
   ReserveDispatchers,
-  ReserveSelectors
+  ReserveSelectors,
+  InfoMsgBoxSelector,
+  InfoMsgDispatchers
 ];

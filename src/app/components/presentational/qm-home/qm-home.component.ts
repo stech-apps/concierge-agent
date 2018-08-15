@@ -1,8 +1,11 @@
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ServicePointSelectors } from 'src/store/services';
+import { ServicePointSelectors, CustomerSelector } from 'src/store/services';
 import { Subscription, Observable } from 'rxjs';
 import { Util } from 'src/util/util';
+import { IMessageBox } from '../../../../models/IMessageBox';
+import { InfoMsgDispatchers } from '../../../../store/services/Infomation-message-box/info-msg-box.dispatchers';
+import { InfoMsgBoxSelector } from '../../../../store/services/Infomation-message-box/info-msg-box.selectors';
 
 @Component({
   selector: 'qm-qm-home',
@@ -16,12 +19,20 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   isQuickServeEnable: boolean;
   isShowQueueView: boolean;
   userDirection$: Observable<string>;
+  MessageBoxInfo:IMessageBox;
+  MessageBoxInfo$:Observable<IMessageBox>;
+  SampleValue:IMessageBox;
+  
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private userSelectors: UserSelectors,
-    private util: Util
+    private util: Util,
+    private InfoMsgBoxSelectors:InfoMsgBoxSelector,
+    private InfoMsgBoxDispatcher:InfoMsgDispatchers
+    
   ) { 
+    this.MessageBoxInfo$=this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;   
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.isQuickServeEnable = params.quickServe;
@@ -34,6 +45,11 @@ export class QmHomeComponent implements OnInit, AfterViewInit
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;   
+    const MsgBoxSubscription = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$.subscribe((info) => {
+      this.MessageBoxInfo = info;
+    });
+  this.subscriptions.add(MsgBoxSubscription);
+
   }
 
   ngAfterViewInit() {
@@ -43,5 +59,6 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+
 
 }

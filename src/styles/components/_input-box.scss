@@ -17,7 +17,8 @@ input::-ms-clear {
     outline: none;
     border: 0;
     float: left;
-    padding-right: rem(30px)
+    padding-right: rem(30px);
+    padding-left: rem(25px);
     // width: 100%;
   }
 
@@ -36,6 +37,10 @@ input::-ms-clear {
  
 
  
+  &__input-section{
+    padding: 20px;
+    // background-color: rebeccapurple;
+  }
 
   &__header {
     padding: rem(40px 20px 5px 20px );
@@ -58,6 +63,7 @@ input::-ms-clear {
     @at-root [dir="rtl"] & {
       text-align: left;
     }
+    white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
     
   }
 
@@ -79,19 +85,16 @@ input::-ms-clear {
 
   &__col-2{
     display: flex;
-    // float: right;
+   
     width: 60%;
     padding: rem(2px);
-    // @at-root [dir="rtl"] & {
-    //   float: left;
-    // }
+ 
   }
   
   &__button-container {
     display: flex;
     flex-direction: row;
-    margin: rem(0px 40px 20px 5px);
-    // min-height: rem(50px);
+    margin: rem(0px 0px 20px 0px);
   }
 
   &__primary-button  {
@@ -103,6 +106,8 @@ input::-ms-clear {
     padding: 15px;
     width: 105px;
     margin-left: rem(15px);
+    float: left;
+    white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
   }
   :focus{
     outline: none; 
@@ -122,10 +127,13 @@ input::-ms-clear {
     margin-right: rem(15px);
     padding: 15px;
     width: 105px;
+    float: right;
+    white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
     @at-root [dir="rtl"] & {
       margin-left: rem(5px);
     }
   }
+  
 
   
 }

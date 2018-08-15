@@ -11,14 +11,21 @@
 </div>
 </div>
 <div class="qm-service-list__container">
+  
+  <div>
+  <div>
   <div class="qm-identify__customer-select-container">
-  
-  <span class="qm-flow-selected-customer" *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span>
-  <i *ngIf="currentCustomer" (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
-    
-  <span class="padding-class"></span>  
-</div>
-  
+      <div class="qm-selected-customer-container">
+      <span class="qm-flow-selected-customer" *ngIf="currentCustomer"> <span style="margin-left: 10px">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span></span>
+      <i *ngIf="currentCustomer" (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
+      <span class="qm-customer-padding-class-1"></span>  
+    </div>
+    <span class="qm-customer-padding-class-2"></span>  
+  </div>  
+  </div>
+
+  </div>
+
   <div class="customer-search-list-container">
   <qm-customer-search></qm-customer-search>
   </div>

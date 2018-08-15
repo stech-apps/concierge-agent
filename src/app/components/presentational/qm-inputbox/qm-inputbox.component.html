@@ -5,14 +5,14 @@
         <span class="qm-input-box__headline" *ngIf="!isOnupdate">{{'create_customer'|translate }}</span>
         <span class="qm-input-box__headline" *ngIf="isOnupdate">{{'edit_customer'|translate }}</span>
       </div>
-      <div style="padding: 20px">
+      <div class="qm-input-box__input-section">
           <div class="qm-input-box__row">
               <div class="qm-input-box__col-1" >
                 <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
               </div>
               <div class="qm-input-box__col-2">
                   <input  type="text" name='firstName' placeholder="{{'mandatory'|translate }}" formControlName = "firstName" #firstName maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                  <i *ngIf="firstName.value!=''" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                  <i *ngIf="firstName.value.trim()" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
               </div>
             </div>
             <div class="qm-input-box__row">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="qm-input-box__col-2" >
                   <input type="text" name='lastName' formControlName = "lastName"  placeholder="{{'mandatory'|translate }}" #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                  <i *ngIf="lastName.value!=''" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
+                  <i *ngIf="lastName.value.trim()" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
                 </div>
               </div>
               <div class="qm-input-box__row">
@@ -30,7 +30,7 @@
                   </div>
                   <div class="qm-input-box__col-2">
                     <input type="text" name='phone' placeholder="{{'optional'|translate }}" minlength="8" formControlName = "phone" #phone>
-                    <i *ngIf="phone.value!=''"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                    <i *ngIf="phone.value.trim()"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                   </div>
                 </div>
               <div class="qm-input-box__row">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="qm-input-box__col-2">
                       <input type="text" name='email' placeholder="{{'optional'|translate }}" formControlName = "email" #email>
-                      <i *ngIf="email.value!=''" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                      <i *ngIf="email.value.trim()" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                     </div>
               </div>
       </div>

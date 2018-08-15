@@ -16,6 +16,7 @@ import * as fromCalendarBranches from "./calendar-branch.reducer";
 import * as fromCalendarServices from "./calendar-service.reducer";
 import * as fromTimeslot from "./timeslot.reducer";
 import * as fromReserve from './reserve.reducer';
+import * as fromInfoMsgBox from  './message-box.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -33,7 +34,9 @@ export interface IAppState {
   calendarBranches: fromCalendarBranches.ICalendarBranchState;
   calendarServices: fromCalendarServices.ICalendarServiceState;
   timeslot: fromTimeslot.ITimeslotState;
-  reserved: fromReserve.IReserveState
+  reserved: fromReserve.IReserveState;
+  infoMsgBox:fromInfoMsgBox.IMessageInfoState
+
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -52,5 +55,7 @@ export const reducers: ActionReducerMap<IAppState> = {
   calendarBranches: fromCalendarBranches.reducer,
   calendarServices: fromCalendarServices.reducer,
   timeslot: fromTimeslot.reducer,
-  reserved: fromReserve.reducer
+  reserved: fromReserve.reducer,
+  infoMsgBox:fromInfoMsgBox.reducer
+  
 };

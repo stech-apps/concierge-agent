@@ -3,6 +3,7 @@ import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
 import { CustomerDispatchers, CustomerSelector, UserSelectors, ServicePointSelectors } from '../../../../store';
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-customer-search',
@@ -25,17 +26,20 @@ export class QmCustomerSearchComponent implements OnInit {
 
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
+  currentRoute:string;
 
    private subscriptions : Subscription = new Subscription();
    userDirection$: Observable<string>; 
    inputBoxArray: string[][];
+
 
   constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors:CustomerSelector,
     private confirmBox:CustomerUpdateService,
     private userSelectors:UserSelectors,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private router: Router
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
@@ -57,20 +61,30 @@ export class QmCustomerSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentRoute=this.router.url;
+    console.log(this.router.url)
     const currentCustomerSubscription = this.CustomerSelectors.currentCustomer$.subscribe((customer) => {this.currentCustomer = customer;
-    if(this.currentCustomer && this.multiBranchEnabled){
+    if(this.currentRoute=="/home/create-appointment" && this.currentCustomer && this.multiBranchEnabled){
       this.reminingHeight='344px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
-    } else if(!this.currentCustomer && this.multiBranchEnabled){
+    } else if(this.currentRoute=="/home/create-appointment" && !this.currentCustomer && this.multiBranchEnabled){
       this.reminingHeight='301px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
-    } else if(!this.currentCustomer && !this.multiBranchEnabled){
+    } else if(this.currentRoute=="/home/create-appointment" && !this.currentCustomer && !this.multiBranchEnabled){
       this.reminingHeight='257px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
-    } else if(this.currentCustomer && !this.multiBranchEnabled){
+    } else if( this.currentRoute=="/home/create-appointment" && this.currentCustomer && !this.multiBranchEnabled){
       this.reminingHeight='294px';
       this.height="calc(100vh - "+ this.reminingHeight+ ')';
+    }  else if(this.currentRoute=="/home/create-visit" && this.currentCustomer){
+      this.reminingHeight='252px';
+      this.height="calc(100vh - "+ this.reminingHeight+ ')';
+    } else if(this.currentRoute=="/home/create-visit" && !this.currentCustomer){
+      this.reminingHeight='211px';
+      this.height="calc(100vh - "+ this.reminingHeight+ ')';
     }
+
+
   
   }
   );

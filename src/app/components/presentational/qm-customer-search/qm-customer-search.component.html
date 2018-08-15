@@ -26,9 +26,9 @@
           </td>
     </tr>  
 </tbody>
+<h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
 </div>
 </table>
 <div class="qm-loader-container" *ngIf="showLoading()" >
   <qm-loader></qm-loader>
 </div>
-<h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>

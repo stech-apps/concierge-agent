@@ -80,13 +80,15 @@
     color: black;
     font-size: 0.8em;
     position: absolute;
-    margin-top: -50vh;
+    padding-top: 50px;
     left: 0;
     right: 0;
     margin-left: 50%;
 }
 
 tbody{
+    
+    overflow:hidden;    
     overflow-y: auto;
 }
 

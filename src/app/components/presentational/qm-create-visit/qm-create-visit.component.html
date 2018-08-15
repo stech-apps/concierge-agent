@@ -15,7 +15,7 @@
       <qm-flow-panel-result>{{ currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0) === true ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-customer *ngIf="isCustomerStoreDB" (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
+      <qm-identify-customer *ngIf="isCustomerStoreDB" (onFlowNext)="f.onFlowNext(px)" [flowType]="flowType"></qm-identify-customer>
       <qm-visit-customer-create *ngIf="!isCustomerStoreDB" (onFlowNext)="f.onFlowNext(px)"></qm-visit-customer-create>
     </qm-flow-panel-content>
   </qm-flow-panel>

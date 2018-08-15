@@ -33,7 +33,7 @@
         <qm-flow-panel-result *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</qm-flow-panel-result>
       </qm-flow-panel-header>
       <qm-flow-panel-content>
-        <qm-identify-customer (onFlowNext)="f.onFlowNext(px)"></qm-identify-customer>
+        <qm-identify-customer (onFlowNext)="f.onFlowNext(px)" [flowType]="flowType"></qm-identify-customer>
     </qm-flow-panel-content>
     </qm-flow-panel>
     <qm-flow-panel #px>

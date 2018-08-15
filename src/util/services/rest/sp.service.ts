@@ -90,7 +90,7 @@ export class SPService implements OnDestroy {
     var params = { 
       "notificationType" : sms.length > 0 ? NOTIFICATION_TYPE.sms : NOTIFICATION_TYPE.none, 
       "appId" : "concierge", 
-      "print" : isTicketPrint ? "1" : "0" }
+      "print" : isTicketPrint ? "0" : "0" }
     
     if(sms.length > 0){
       params["phoneNumber"] = this.util.buildPhoneNumber(sms);
@@ -107,7 +107,7 @@ export class SPService implements OnDestroy {
     if(tempCustomer && tempCustomer.email && tempCustomer.email.length > 0){
       params["email"] = tempCustomer.email;
     }
-    if(tempCustomer && tempCustomer.firstName.length > 0 || tempCustomer.lastName.length > 0){
+    if(tempCustomer && ((tempCustomer.firstName && tempCustomer.firstName.length > 0) || (tempCustomer.lastName && tempCustomer.lastName.length > 0))){
       params["customers"] = tempCustomer.firstName + " " + tempCustomer.lastName;
     }
 

@@ -15,7 +15,7 @@
   </div>
   <div>
   <div class="qm-flow-sub-header__right">
-      <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="currentCustomer">
+      <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="(flowType === 'CREATE_APPOINTMENT' && currentCustomer) || flowType !== 'CREATE_APPOINTMENT'">
               {{'banner_done_label' | translate }}
       </div>
   </div>

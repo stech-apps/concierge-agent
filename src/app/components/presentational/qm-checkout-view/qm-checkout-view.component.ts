@@ -349,7 +349,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       });
     }
     else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      this.toastService.infoToast("Visit Created");
+      this.translateService.get('visit_created').subscribe(v => {
+        var successMessage = { 
+          firstLineName: v,
+          firstLineText: result.ticketId,
+          icon:"correct"
+        }
+        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+      });
     }
   }
 

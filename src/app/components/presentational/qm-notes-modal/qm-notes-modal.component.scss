@@ -1,0 +1,95 @@
+@import "../../../../styles/base/_component-manifest.scss";
+.qm-notes-modal {
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  min-height: 23em;
+  background-color: #d3d3d3;
+ 
+  &__header {
+    display: flex;
+    flex-direction: column;
+    padding: rem(15px 10px);
+justify-content: end;
+    width: 100%;
+  }
+
+  &__header-text {
+    color: #000000;
+    font-family: Montserrat-Light;
+    letter-spacing: 1px;
+    font-size: rem(11px);
+    text-align: right;
+    @include add-text-ellipsis;
+ 
+  }
+
+  &__header-char-count {
+      margin-top: rem(10px);
+    color: #000000;
+    font-family: Montserrat-Light;
+    letter-spacing: 1px;
+    font-size: rem(11px);
+    text-align: right;
+
+ 
+  }
+
+  &__text-container {
+margin: 10px;
+.textarea {
+    width: 100%;
+    min-height: 200px;
+}
+
+  }
+   
+
+  &__button-container {
+    display: flex ;
+    flex-direction: row;
+    // padding: rem(10px);
+    // min-height: rem(45px);
+  }
+
+  &__primary-button {
+    background-color: var(--app-theme);
+    flex: 1;
+    font-family: Montserrat-Light;
+    font-size: 1em;
+    line-height: 4em;
+    margin: 1em .5em;
+    font-weight: 700;
+    text-align: center;
+    color: $white;
+    @include add-text-ellipsis;
+  }
+
+  &__secondary-button {
+    flex: 1;
+    background-color: $modal-secondary-button-background;
+    font-family: Montserrat-Light;
+    font-size: 1em;
+    line-height: 4em;
+    margin: 1em .5em;
+    font-weight: 700;
+    color: $white;
+    text-align: center;
+    @include add-text-ellipsis;
+    margin-right: rem(15px);
+    @at-root [dir="rtl"] & {
+      margin-left: rem(15px);
+    }
+  }
+}
+
+.modal-dialog {
+  margin: 1.75rem auto;
+ 
+
+
+}
+
+.btn-light-active-action:active {
+  opacity: 0.7 !important;
+}

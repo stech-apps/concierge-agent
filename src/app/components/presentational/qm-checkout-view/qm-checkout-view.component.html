@@ -1,5 +1,14 @@
 <div class="qm-checkout-view">
 <div class="qm-checkout-view__container">
+
+    <div *ngIf="isNoteEnabled" class="qm-checkout-view__note-container">
+        <div class="label">{{ 'notes' | translate }}</div>
+        <div class="input-container">
+          <input readonly class = "input" (click)="onNoteClicked()"   [ngModel]="noteTextStr" /> 
+          <i *ngIf="noteTextStr.length > 0" class="clear-icon icon-close" (click)="deleteNote()"></i>
+        </div>
+          </div>
+
   <div class="qm-checkout-view__option-container">
     <div *ngIf="emailActionEnabled" class="qm-checkout-view__option" [ngStyle]="{'background-color': emailColor}" (click)="onEmailSelected()">
 

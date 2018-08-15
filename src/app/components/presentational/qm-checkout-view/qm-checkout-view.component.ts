@@ -6,7 +6,7 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors,CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors } from "../../../../store";
+import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
 import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
@@ -19,6 +19,11 @@ import { SPService } from "../../../../util/services/rest/sp.service";
 import { IBranch } from "../../../../models/IBranch";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
+import { NoteSelectors, NoteDispatchers } from "../../../../store";
+
+import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
+import { QmModalService } from "../qm-modal/qm-modal.service";
+
 
 @Component({
   selector: "qm-checkout-view",
@@ -30,9 +35,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Input() flowType: FLOW_TYPE;
 
   @Output()
-  onFlowExit:  EventEmitter<any> = new EventEmitter<any>();
+  onFlowExit: EventEmitter<any> = new EventEmitter<any>();
 
- customerEmail: string;
+  customerEmail: string;
   customerSms: string;
 
   private subscriptions: Subscription = new Subscription();
@@ -55,13 +60,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   uttParameters$: Observable<IUTTParameter>;
   themeColor: string = "#a9023a";
   whiteColor: string = "#ffffff";
-  blackColor:string = "#000000";
+  blackColor: string = "#000000";
   ticketColor: string = this.whiteColor;
   smsColor: string = this.whiteColor;
   emailColor: string = this.whiteColor;
   ticketlessColor: string = this.whiteColor;
 
   buttonText: string;
+  isNoteEnabled: boolean = false;
+  noteText$: Observable<string>;
+  noteTextStr: string = '';
 
   private selectedAppointment: IAppointment;
   private selectedCustomer: ICustomer;
@@ -70,9 +78,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedServices: IService[];
 
   constructor(
-    private servicePointSelectors: ServicePointSelectors, 
-    private customerSelector:CustomerSelector, 
-    private translate: TranslateService, 
+    private servicePointSelectors: ServicePointSelectors,
+    private customerSelector: CustomerSelector,
+    private translate: TranslateService,
     private qmCheckoutViewConfirmModalService: QmCheckoutViewConfirmModalService,
     private calendarService: CalendarService,
     private reserveSelectors: ReserveSelectors,
@@ -81,13 +89,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private timeSlotSelectors: TimeslotSelectors,
     private spService: SPService,
     private branchSelector: BranchSelectors,
-    private serviceSelectors: ServiceSelectors
+    private serviceSelectors: ServiceSelectors,
+    private qmNotesModalService: QmNotesModalService, private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, private qmModalService: QmModalService
   ) {
     this.uttParameters$ = this.servicePointSelectors.uttParameters$;
+
+    this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
           this.themeColor = uttParameters.highlightColor;
+          this.isNoteEnabled = uttParameters.mdNotes;
 
           if (this.themeColor === "customized") {
             this.themeColor = uttParameters.customizeHighlightColor;
@@ -97,14 +109,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       .unsubscribe();
     this.subscriptions.add(uttSubscription);
 
-    
+
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
         if (customer) {
-         this.selectedCustomer = customer;
-         this.customerEmail=customer.properties.email;
-         this.customerSms=customer.properties.phoneNumber;
-        
+          this.selectedCustomer = customer;
+          this.customerEmail = customer.properties.email;
+          this.customerSms = customer.properties.phoneNumber;
+
+          this.customerEmail = customer.properties.email;
+          this.customerSms = customer.properties.phoneNumber;
+
         }
       });
     this.subscriptions.add(customerSubscription);
@@ -136,7 +151,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
       this.subscriptions.add(branchSubscription);
 
@@ -153,13 +168,34 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  onNoteClicked() {
+    this.qmNotesModalService.openForTransKeys(this.noteTextStr,
+      this.themeColor, 'save', 'cancel',
+      (result: boolean) => {
+        if (result) {
+          this.noteText$ = this.noteSelectors.getNote$;
+          this.noteText$.subscribe(
+            (text) => {
+
+              this.noteTextStr = text;
+            }
+          ).unsubscribe;
+        }
+
+      },
+      () => { }, null);
+
+
+  }
+
   onButtonPressed() {
     this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
       this.themeColor, 'ok', 'cancel',
       (result: boolean) => {
-        if(result){
+        if (result) {
           this.handleCheckoutCompletion();
         }
+
       },
       () => { }, null);
 
@@ -238,40 +274,40 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.buttonEnabled = true;
   }
 
-  handleCheckoutCompletion(){
-    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+  handleCheckoutCompletion() {
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.setCreateAppointment();
     }
-    else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+    else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       this.setAriveAppointment();
     }
-    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+    else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.setCreateVisit();
     }
   }
 
-  setCreateAppointment(){
+  setCreateAppointment() {
     this.calendarService.createAppointment(this.selectedAppointment, "", this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
-      if(result){
+      if (result) {
         this.showSussessMessage();
         this.onFlowExit.emit();
       }
-     }, error => {
-        const err = new DataServiceError(error, null);
-        if(err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND){
-          this.calendarService.bookAppointment(this.selectedAppointment, "", this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
-            this.showSussessMessage();
-            this.onFlowExit.emit();
-          }, error => {
-            this.showErrorMessage();
-            this.onFlowExit.emit();
-          })
-        }
-       });
+    }, error => {
+      const err = new DataServiceError(error, null);
+      if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
+        this.calendarService.bookAppointment(this.selectedAppointment, "", this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
+          this.showSussessMessage();
+          this.onFlowExit.emit();
+        }, error => {
+          this.showErrorMessage();
+          this.onFlowExit.emit();
+        })
+      }
+    });
   }
 
-  setCreateVisit(){
-    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled).subscribe((result) => {
+  setCreateVisit() {
+    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE, this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled).subscribe((result) => {
       this.showSussessMessage();
       this.onFlowExit.emit();
     }, error => {
@@ -280,26 +316,45 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     })
   }
 
-  setAriveAppointment(){
+  setAriveAppointment() {
 
   }
 
-  showSussessMessage(){
-    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+  showSussessMessage() {
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.toastService.infoToast("Appointment Created");
     }
-    else if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+    else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.toastService.infoToast("Visit Created");
     }
   }
 
-  showErrorMessage(){
-    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+  showErrorMessage() {
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.toastService.infoToast("Fail to create Appointment");
     }
-    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.toastService.infoToast("Fail to create visit");
     }
   }
 
+
+  deleteNote() {
+
+    this.qmModalService.openForTransKeys('', 'delete_current_note', 'yes', 'no', (result) => {
+      if (result) {
+        this.noteDispatchers.saveNote(
+          {
+            text: ''
+          }
+        );
+
+      }
+    }, () => {
+
+    });
+
+
+
+  }
 }

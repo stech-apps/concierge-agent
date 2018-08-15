@@ -132,6 +132,8 @@ import { QmCheckoutViewConfirmModalComponent } from './components/presentational
 import { QmCheckoutViewConfirmModalService } from './components/presentational/qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service';
 import { QmVisitCustomerCreateComponent } from './components/presentational/qm-visit-customer-create/qm-visit-customer-create.component';
 import { QmMessageBoxComponent } from './components/containers/qm-message-box/qm-message-box.component';
+import { QmNotesModalComponent } from './components/presentational/qm-notes-modal/qm-notes-modal.component';
+import { QmNotesModalService } from './components/presentational/qm-notes-modal/qm-notes-modal.service';
 
 
 import { AngularDraggableModule } from 'angular2-draggable';
@@ -203,14 +205,15 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmClearInputButtonComponent,
     QmVisitCustomerCreateComponent,
     QmMessageBoxComponent,
-
+    QmNotesModalComponent
   ],
   entryComponents: [
     QmCustomToastComponent,
     QmModalComponent,
     QmInputboxComponent,
     QmCheckoutViewConfirmModalComponent,
-    QmClearInputButtonComponent
+    QmClearInputButtonComponent,
+    QmNotesModalComponent
 
   ],
   imports: [
@@ -265,7 +268,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 
     },
-    QmCheckoutViewConfirmModalService
+    QmCheckoutViewConfirmModalService,
+    QmNotesModalService
   ],
   bootstrap: [AppComponent]
 })

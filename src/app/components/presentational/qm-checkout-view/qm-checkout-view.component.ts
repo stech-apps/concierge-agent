@@ -6,7 +6,7 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors, InfoMsgDispatchers } from "../../../../store";
+import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
 import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
@@ -93,7 +93,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private branchSelector: BranchSelectors,
     private serviceSelectors: ServiceSelectors,
     private qmNotesModalService: QmNotesModalService, private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, private qmModalService: QmModalService,
-    private infoMsgBoxDispatcher: InfoMsgDispatchers
+    private infoMsgBoxDispatcher: InfoMsgDispatchers,
+    private customerDispatcher: CustomerDispatchers
   ) {
     this.uttParameters$ = this.servicePointSelectors.uttParameters$;
 
@@ -299,6 +300,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
       if (result) {
         this.showSussessMessage(result);
+        this.clearSelectedValues();
         this.onFlowExit.emit();
       }
     }, error => {
@@ -306,9 +308,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
         this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
           this.showSussessMessage(result);
+          this.clearSelectedValues();
           this.onFlowExit.emit();
         }, error => {
           this.showErrorMessage();
+          this.clearSelectedValues();
           this.onFlowExit.emit();
         })
       }
@@ -318,9 +322,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   setCreateVisit(){
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled, this.tempCustomer).subscribe((result) => {
       this.showSussessMessage(result);
+      this.clearSelectedValues();
       this.onFlowExit.emit();
     }, error => {
       this.showErrorMessage();
+      this.clearSelectedValues();
       this.onFlowExit.emit();
     })
   }
@@ -334,7 +340,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.translateService.get(['appointment_for_service','created_on_branch', 'appointment_time']).subscribe(v => {
         var serviceName = ""
         result.services.forEach(val => {
-          serviceName = serviceName + ", " + val.name;
+          if(serviceName.length > 0){
+            serviceName = serviceName + ", " + val.name;
+          }
+          else{
+            serviceName = val.name;
+          }
         })
         var successMessage = { 
           firstLineName: v.appointment_for_service,
@@ -369,6 +380,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  clearSelectedValues(){
+    this.customerDispatcher.resetCurrentCustomer();
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
+      this.customerDispatcher.resetTempCustomer();
+    }
+  }
 
   deleteNote() {
 

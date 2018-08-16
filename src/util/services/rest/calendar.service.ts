@@ -25,23 +25,23 @@ export class CalendarService implements OnDestroy {
     
   }
 
-  createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string){
+  createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
       var body = { 
           "title" : "appointment", 
           "notes" : this.util.replaceCharcter(notes), 
           "customers" : [this.buildCustomerObject(customer)], 
-          "custom" : this.buildCustomObject(email, sms) }
+          "custom" : this.buildCustomObject(email, sms, notificationType) }
     return this.http
      .post(`${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body);
   }
 
-  bookAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string){
+  bookAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
     var body = { 
         "title" : "appointment", 
         "notes" : this.util.replaceCharcter(notes), 
         "services" : appointment.services,
         "customers" : [this.buildCustomerObject(customer)], 
-        "custom" : this.buildCustomObject(email, sms) }
+        "custom" : this.buildCustomObject(email, sms, notificationType) }
   return this.http
    .post(`${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body);
 }
@@ -56,14 +56,7 @@ private buildTime(appointment: IAppointment){
     return timeObj;
 }
 
-  private buildCustomObject(email: string, sms: string){
-    var notificationType = NOTIFICATION_TYPE.both;
-    if(email.length > 0 && sms.length === 0){
-      notificationType = NOTIFICATION_TYPE.email;
-    }
-    else if(email.length === 0 && sms.length > 0){
-      notificationType = NOTIFICATION_TYPE.sms;
-    }
+  private buildCustomObject(email: string, sms: string, notificationType: NOTIFICATION_TYPE){
     var custom = "{\"notificationType\":\"" + notificationType +  "\"";
     if(sms.length > 0){
       custom = custom + ",\"phoneNumber\":\"" + this.util.buildPhoneNumber(sms) + "\"";

@@ -5,6 +5,25 @@
       <qm-flow-panel-result>sdsfjlk</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-appointment></qm-identify-appointment>
+      <qm-identify-appointment (onFlowNext)="f.onFlowNext(px)"></qm-identify-appointment>
     </qm-flow-panel-content>
   </qm-flow-panel>
+  <qm-flow-panel #ps>
+      <qm-flow-panel-header  (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
+        <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
+        <!-- <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{ selectedServices[0].name }}</qm-flow-panel-result>
+        <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result> -->
+      </qm-flow-panel-header>
+      <qm-flow-panel-content>
+          <qm-select-service (onFlowNext)="f.onFlowNext(px)" [flowType]="flowType"></qm-select-service>
+      </qm-flow-panel-content>
+    </qm-flow-panel>
+    <qm-flow-panel #px>
+        <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
+          <qm-flow-panel-title>{{ 'arrive_confirm' | translate}}</qm-flow-panel-title>
+        </qm-flow-panel-header>
+        <qm-flow-panel-content>
+          <qm-checkout-view [flowType]="flowType" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
+      </qm-flow-panel-content>
+      </qm-flow-panel>
+</qm-flow>  

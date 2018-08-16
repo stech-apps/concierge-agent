@@ -10,7 +10,7 @@ import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceE
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
 import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
-import { CalendarService } from "../../../../util/services/rest/calendar.service";
+import { CalendarService, NOTIFICATION_TYPE } from "../../../../util/services/rest/calendar.service";
 import { IAppointment } from "../../../../models/IAppointment";
 import { ICustomer } from "../../../../models/ICustomer";
 import { Q_ERROR_CODE } from "../../../../util/q-error";
@@ -80,6 +80,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   noteText$: Observable<string>;
   noteTextStr: string = '';
+  selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
 
   private selectedAppointment: IAppointment;
   private selectedCustomer: ICustomer;
@@ -360,7 +361,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateAppointment() {
-    this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
+    this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
       if (result) {
         this.showSussessMessage(result);
         this.clearSelectedValues();
@@ -369,7 +370,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }, error => {
       const err = new DataServiceError(error, null);
       if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
-        this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms).subscribe(result => {
+        this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
           this.showSussessMessage(result);
           this.clearSelectedValues();
           this.onFlowExit.emit();
@@ -383,7 +384,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateVisit(){
-    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, "", VIP_LEVEL.NONE,this.selectedCustomer, this.customerSms, this.ticketlessActionEnabled, this.tempCustomer).subscribe((result) => {
+    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.selectedCustomer, this.customerSms, this.ticketSelected, this.tempCustomer, this.getNotificationType()).subscribe((result) => {
       this.showSussessMessage(result);
       this.saveFrequentService();
       this.clearSelectedValues();
@@ -471,6 +472,21 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   }
 
+  getNotificationType() : NOTIFICATION_TYPE{
+    var notificationType = NOTIFICATION_TYPE.none;
+    if(this.smsSelected && this.emailSelected){
+      notificationType = NOTIFICATION_TYPE.both;
+    }
+    else if(this.smsSelected){
+      notificationType = NOTIFICATION_TYPE.sms;
+    }
+    else if(this.emailSelected){
+      notificationType = NOTIFICATION_TYPE.email;
+    }
+
+    return notificationType;
+  }
+
   saveFrequentService(){
     if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       var serviceList = [];
@@ -494,17 +510,20 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.vipLevel1Checked ? this.vipLevel1Checked = false : this.vipLevel1Checked = true;
     this.vipLevel2Checked = false;
     this.vipLevel3Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_1;
   }
 
   onVip2Clicked(){
     this.vipLevel2Checked ? this.vipLevel2Checked = false : this.vipLevel2Checked = true;
     this.vipLevel1Checked = false;
     this.vipLevel3Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_2;
   }
 
   onVip3Clicked(){
     this.vipLevel3Checked ? this.vipLevel3Checked = false : this.vipLevel3Checked = true;
     this.vipLevel2Checked = false;
     this.vipLevel1Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_3;
   }
 }

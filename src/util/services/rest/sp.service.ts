@@ -77,31 +77,31 @@ export class SPService implements OnDestroy {
         );
   }
 
-  createVisit(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, customer: ICustomer, sms: string, isTicketPrint: boolean, tempCustomer: ICustomer){
+  createVisit(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, customer: ICustomer, sms: string, isTicketPrint: boolean, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE){
     var body = { 
         "services" : this.buildService(services), 
         "customers" : customer ? [customer.id] : [], 
-        "parameters" : this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer) }
+        "parameters" : this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType) }
   return this.http
    .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body);
   }
 
-  private buildParametersObject(sms: string, isTicketPrint: boolean, notes: string, vipLevel: VIP_LEVEL, tempCustomer: ICustomer){
+  private buildParametersObject(sms: string, isTicketPrint: boolean, notes: string, vipLevel: VIP_LEVEL, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE){
     var params = { 
-      "notificationType" : sms.length > 0 ? NOTIFICATION_TYPE.sms : NOTIFICATION_TYPE.none, 
+      "notificationType" : notificationType, 
       "appId" : "concierge", 
-      "print" : isTicketPrint ? "0" : "0" }
+      "print" : isTicketPrint ? "1" : "0" }
     
-    if(sms.length > 0){
+    if(sms && sms.length > 0){
       params["phoneNumber"] = this.util.buildPhoneNumber(sms);
     }
-    if(notes.length > 0){
+    if(notes && notes.length > 0){
       params["custom1"] = this.util.replaceCharcter(notes);
     }
     if(vipLevel !== VIP_LEVEL.NONE){
       params["level"] = vipLevel;
     }
-    if(sms.length === 0 && tempCustomer && tempCustomer.phone && tempCustomer.phone.length > 0){
+    if((sms && sms.length === 0) || tempCustomer && tempCustomer.phone && tempCustomer.phone.length > 0){
       params["phoneNumber"] = this.util.buildPhoneNumber(tempCustomer.phone);
     }
     if(tempCustomer && tempCustomer.email && tempCustomer.email.length > 0){

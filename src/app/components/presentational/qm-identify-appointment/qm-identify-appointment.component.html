@@ -238,4 +238,36 @@
       </div>
     </div>
   </div>
+  <div class="qm-identify-appointment__table-container">
+    <table class="qm-identify-appointment__customer-table" dir="{{ userDirection$ | async }}" >
+        <thead class="qm-identify-appointment__customer-table__header">
+        <tr>
+          <th class="qm-identify-appointment__customer-table__col-5"></th>
+          <th class="qm-identify-appointment__customer-table__col-10" >{{ 'time' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-10">{{ 'date' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-10">{{ 'id' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-20">{{ 'service' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-5"></th>
+        </tr>
+      </thead>
+      
+      <tbody *ngIf="tempCustomers.length!=0" class="qm-identify-appointment__tbody" [style.max-height]="height">
+          <tr  class="qm-identify-appointment__customer-table__list" *ngFor="let customer of tempCustomers" tabindex="0">
+            <td class="qm-identify-appointment__customer-table__col-5"></td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{customer.time}}</td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{customer.date}}</td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{customer.id}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{customer.firstName}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{customer.lastName}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{customer.service}}</td>
+            <td class="qm-identify-appointment__customer-table__col-5"></td>
+          </tr>  
+        </tbody>
+      
+      </table>
+
+    
+  </div>
 </div>

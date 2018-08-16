@@ -12,8 +12,19 @@ import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-app
   animations: IDENTIFY_APPOINTMENT_ANIMATIONS
 
 })
+
 export class QmIdentifyAppointmentComponent implements OnInit {
 
+  tempCustomer:{
+  time?:string;
+  date?:string;
+  id?:string;
+  firstName?:string;
+  lastName?:string;
+  service?:string
+}
+
+  tempCustomers:any;
   selectedSearchIcon: string;
   searchPlaceHolderKey: string;
   showSearchInput: boolean;
@@ -25,6 +36,7 @@ export class QmIdentifyAppointmentComponent implements OnInit {
 
   fromTimeController : FormControl;
   toTimeController : FormControl;
+  height:string;
 
 
   constructor() { }
@@ -39,6 +51,12 @@ export class QmIdentifyAppointmentComponent implements OnInit {
     this.toTimeController =  new FormControl('', (control: FormControl) => {
       return this.getTimeSelectionValidity(this.fromTime, control.value);
     });
+    this.tempCustomer={time:'11:09',date:'2018-05-10', id:'2096', firstName:'john',lastName:'david',service:'service 1'}
+    this.tempCustomers=[this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
+      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
+      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
+      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer]
+    this.height = 'calc(100vh - 230px)';
   }
 
   setInitialTime() {

@@ -75,7 +75,7 @@
     &__header {
         display: flex;
         color: $black;
-        height: 5rem;
+        height: 3.5rem;
         letter-spacing: 3px;
         div {
             flex: 1;
@@ -93,6 +93,35 @@
 
 
       }
+  }
+
+  .qm-command-buttons-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    button {
+
+      color: $white;
+      height: 45px;
+      width: 112.5px;
+      line-height: 44.5px;
+      text-align: center;
+      border: none;
+      font-size: rem(12px);
+      letter-spacing: 1px;
+      cursor: pointer;
+
+      &.ok {
+        background-color: $app-theme;
+      }
+
+      &.cancel {
+        background-color: #8e8e8e ;
+        font-family: Montserrat-Light;
+        margin-right: 0.75rem;
+      }
+    }
   }
 }
 

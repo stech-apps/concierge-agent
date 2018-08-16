@@ -215,7 +215,7 @@
 
   </div>
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" qmClearInput [(ngModel)]="searchText" [placeholder]="(searchPlaceHolderKey | translate) || ''" />
+    <input type="text"(change)="onSearchInputChange()" [formControl]="searchInputController" qmClearInput  [placeholder]="(searchPlaceHolderKey | translate) || ''" />
     <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
       <div class="qm-duration-control__header">
         <div class="left">
@@ -229,9 +229,7 @@
       <div class="qm-step-controls-container" >
           <ngb-timepicker [ngClass]="{'invalid-time': fromTimeController.errors?.invalidTime}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
           <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
-
       </div>
-
       <div class="qm-command-buttons-container">
         <button class="cancel">{{'cancel' | translate}}</button>
         <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>

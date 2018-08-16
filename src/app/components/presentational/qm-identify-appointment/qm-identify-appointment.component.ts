@@ -1,8 +1,15 @@
+import { IBranch } from 'src/models/IBranch';
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
+import { AppointmentDispatchers, BranchSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -13,7 +20,7 @@ import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-app
 
 })
 
-export class QmIdentifyAppointmentComponent implements OnInit {
+export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   tempCustomer:{
   time?:string;
@@ -33,13 +40,20 @@ export class QmIdentifyAppointmentComponent implements OnInit {
   isSearchInputOpen: boolean;
   fromTime: NgbTimeStruct;
   toTime: NgbTimeStruct;
+  inputChanged: Subject<string> = new Subject<string>();
+  fromTimeController: FormControl;
+  toTimeController: FormControl;
+  subscriptions: Subscription = new Subscription();
+  searchInputController = new FormControl();
+  selectedBranch: IBranch;
+  readonly SEARCH_STATES = {
+    DURATION: 'duration'
+  };
 
-  fromTimeController : FormControl;
-  toTimeController : FormControl;
   height:string;
 
-
-  constructor() { }
+  constructor(private appointmentDispatchers: AppointmentDispatchers,
+    private branchSelectors: BranchSelectors) { }
 
   ngOnInit() {
     this.inputAnimationState = 'out';
@@ -48,7 +62,7 @@ export class QmIdentifyAppointmentComponent implements OnInit {
       return this.getTimeSelectionValidity(control.value, this.toTime);
     });
 
-    this.toTimeController =  new FormControl('', (control: FormControl) => {
+    this.toTimeController = new FormControl('', (control: FormControl) => {
       return this.getTimeSelectionValidity(this.fromTime, control.value);
     });
     this.tempCustomer={time:'11:09',date:'2018-05-10', id:'2096', firstName:'john',lastName:'david',service:'service 1'}
@@ -57,6 +71,20 @@ export class QmIdentifyAppointmentComponent implements OnInit {
       this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
       this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer]
     this.height = 'calc(100vh - 230px)';
+
+    this.inputChanged
+      .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+      .subscribe(text => this.searchApointments(text));
+
+    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((br) => {
+      this.selectedBranch = br;
+    });
+
+    this.subscriptions.add(branchSubscription);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   setInitialTime() {
@@ -103,8 +131,30 @@ export class QmIdentifyAppointmentComponent implements OnInit {
 
   onSelectTime() {
     this.isSearchInputOpen = true;
-    this.searchText = `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}` ;
+    this.searchText = `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}`;
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
+    this.searchInputController.setValue( `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}`);
+    this.searchApointments(this.searchText);
+  }
+
+  searchApointments(searchText) {
+    let searchQuery: any = {
+      branchId: this.selectedBranch.id
+    };
+
+    if (this.selectedSearchIcon === this.SEARCH_STATES.DURATION) {
+      searchQuery = {
+        ...searchQuery,
+        toDate: `${moment().format('YYYY-MM-DD')}T${this.fromTime.hour}:${this.fromTime.minute}`,
+        fromDate: `${moment().format('YYYY-MM-DD')}T${this.toTime.hour}:${this.toTime.minute}`
+      };
+    }
+
+    this.appointmentDispatchers.searchAppointments(searchQuery);
+  }
+
+  onSearchInputChange() {
+    this.inputChanged.next(this.searchText);
   }
 }

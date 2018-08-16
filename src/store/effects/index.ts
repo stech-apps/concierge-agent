@@ -1,3 +1,4 @@
+import { AppointmentEffects } from './appointment.effects';
 import { QueueEffects } from './queue.effects';
 import { ServicePointEffects } from './service-point.effects';
 import { BranchEffects } from './branch.effects';
@@ -31,5 +32,6 @@ export const effects: any[] = [
     CalendarSettingsEffects,
     TimeslotEffects,
     CalendarBranchEffects,
-    ReserveEffects
+    ReserveEffects,
+    AppointmentEffects
 ];

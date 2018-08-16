@@ -23,11 +23,11 @@ export class AppointmentDataService {
     let searchQuery = `${restEndpoint}/appointment/appointments/search?branchId=${appointmentSearch.branchId}`;
 
     if(appointmentSearch.fromDate) {
-      searchQuery += `&fromDate= ${appointmentSearch.fromDate}`;
+      searchQuery += `&fromDate=${appointmentSearch.fromDate}`;
     }
 
     if(appointmentSearch.toDate) {
-      searchQuery += `&toDate= ${appointmentSearch.toDate}`;
+      searchQuery += `&toDate=${appointmentSearch.toDate}`;
     }
     
     return this.http

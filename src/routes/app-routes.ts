@@ -10,6 +10,7 @@ import { QmInvalidLicenseComponent } from 'src/app/components/presentational/qm-
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 import { QmCreateAppointmentComponent } from 'src/app/components/presentational/qm-create-appointment/qm-create-appointment.component';
 import { QmCreateVisitComponent } from '../app/components/presentational/qm-create-visit/qm-create-visit.component';
+import { QmArriveAppointmentComponent } from 'src/app/components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
 export const appRoutes: Routes = [
   {
     path: '',
@@ -21,7 +22,8 @@ export const appRoutes: Routes = [
       {
         path: 'home', component: QmHomeComponent, children: [
           { path: 'create-appointment', component: QmCreateAppointmentComponent },
-          { path: 'create-visit', component: QmCreateVisitComponent }
+          { path: 'create-visit', component: QmCreateVisitComponent },
+          { path: 'arrive-appointment', component: QmArriveAppointmentComponent }
         ]
       },
       { path: 'profile', component: QmProfileComponent },

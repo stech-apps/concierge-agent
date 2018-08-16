@@ -1,7 +1,7 @@
 
 .qm-clear-input-button {
   position: absolute;
-  color: rgba(0, 0, 0, 0.42);
+  color: rgb(0, 0, 0);
   top: 50%;
   right: 0.5rem;
   transform: translateY(-50%);
@@ -17,6 +17,6 @@
   }
 
   .qm-action-btn__icon {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }

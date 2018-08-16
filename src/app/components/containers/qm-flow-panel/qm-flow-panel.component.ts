@@ -66,7 +66,9 @@ export class QmFlowPanelComponent implements OnInit {
   }
 
   hasResult() {
-    return this.resultContainer && this.resultContainer.result && this.resultContainer.result.length > 0;
+    return this.resultContainer 
+           && this.resultContainer.result 
+           && this.resultContainer.result.length > 0;
   }
 
   ngOnInit() {

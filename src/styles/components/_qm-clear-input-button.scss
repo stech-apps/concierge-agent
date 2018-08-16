@@ -1,3 +1,9 @@
 qm-clear-input-button {
     position: relative;
 }
+
+.qm-identify-appointment {
+    qm-clear-input-button {
+        right: -50%;
+    }
+}

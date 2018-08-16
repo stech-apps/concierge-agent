@@ -137,6 +137,8 @@ import { QmNotesModalService } from './components/presentational/qm-notes-modal/
 
 
 import { AngularDraggableModule } from 'angular2-draggable';
+import { QmArriveAppointmentComponent } from './components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
+import { QmIdentifyAppointmentComponent } from './components/presentational/qm-identify-appointment/qm-identify-appointment.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -203,6 +205,9 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmCheckoutViewConfirmModalComponent,
     QmClearInputDirective,
     QmClearInputButtonComponent,
+    QmVisitCustomerCreateComponent,
+    QmArriveAppointmentComponent,
+    QmIdentifyAppointmentComponent,
     QmVisitCustomerCreateComponent,
     QmMessageBoxComponent,
     QmNotesModalComponent

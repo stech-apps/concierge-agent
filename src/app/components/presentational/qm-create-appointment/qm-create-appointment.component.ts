@@ -75,8 +75,11 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(servicesSubscription);
 
-    this.currentCustomer$ = this.customerSelectors.currentCustomer$;
-    const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => this.currentCustomer = customer);
+    const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
+      if(customer){
+        this.currentCustomer = customer;
+      }
+    });
     this.subscriptions.add(customerSubscription);
   }
 

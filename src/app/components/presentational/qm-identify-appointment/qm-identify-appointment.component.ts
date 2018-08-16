@@ -45,26 +45,29 @@ export class QmIdentifyAppointmentComponent implements OnInit {
     this.inputAnimationState = 'out';
   }
 
-  toggleInputAnimationState(): void {
-      this.inputAnimationState = this.inputAnimationState === 'out' ? this.selectedSearchIcon : 'out';
-  }
 
   onSearchButtonClick(searchButton) {
     this.isSearchInputOpen = !this.isSearchInputOpen;
-    this.selectedSearchIcon = searchButton;
+    
     this.searchText = ''
     if(searchButton == 'id') {
       this.searchPlaceHolderKey = 'please_enter_id_and_press_enter';  
-      this.showSearchInput = true;    
     }
     else if(searchButton === 'customer'){
       this.searchPlaceHolderKey = 'please_enter_customer_attributes';
-      this.showSearchInput = true;
     }
     else {
-      this.showSearchInput = false;
-      
     }
-    this.toggleInputAnimationState();
+
+    if(this.inputAnimationState == 'out') {
+      this.inputAnimationState = searchButton;
+    } else if(this.inputAnimationState == searchButton ) {
+      this.inputAnimationState = 'out';
+    }
+    else {
+      this.inputAnimationState = searchButton;
+    }
+
+    this.selectedSearchIcon = searchButton;
   }
 }

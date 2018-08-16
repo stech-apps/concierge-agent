@@ -38,11 +38,86 @@
         border: 0;
         background-color: transparent;
         outline: none;
+        @include add-text-ellipsis;
       }
       .clear-icon {
         padding: 8px;
         font-size: 12px;
       }
+    }
+  }
+
+  &__vip-container {
+    margin-top: .8em;
+    margin-bottom: .8em;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    .vip-label {
+      white-space: nowrap;
+      font-weight: 900;
+      font-size: smaller;
+      justify-content: center;
+      @include add-text-ellipsis;
+      width: auto;
+    }
+    .radio-container{
+ 
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+     
+      
+     .level{
+       flex: 1;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       .checkbox-container{
+        width: 30px;
+        height: 30px;
+        background: #c9c9c9;
+        margin: 10px 0px;
+        border-radius: 100%;
+        display: flex;
+        float: none !important;
+        margin: 0.5em auto;
+        border: 2px solid #bababa;
+        // transition: all .2s ease;
+        align-items: center;
+        justify-content: center;
+
+        .checkbox {
+          display: block!important;
+          width: 60px;
+          height: 80px;
+          position: absolute;
+        
+          opacity: 0;
+        }
+
+        .label {
+          display: block;
+          align-self: flex-end;
+          width: 12px;
+          height: 12px;
+          border-radius: 100px;
+          // transition: all .2s ease;
+          cursor: pointer;
+          z-index: 1;
+          background: transparent;
+        }
+ 
+      }
+
+        .label{
+
+          font-size: .85em;
+        }
+     }
+
     }
   }
 

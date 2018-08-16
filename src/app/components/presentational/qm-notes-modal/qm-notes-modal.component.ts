@@ -5,7 +5,7 @@ import { Observable,Subscription } from "rxjs";
 import { UserSelectors } from "./../../../../store/services/user/user.selectors";
 import { NoteSelectors, NoteDispatchers } from "../../../../store";
 import { INote } from "../../../../models/INote";
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,Validators } from '@angular/forms';
 
 @Component({
   selector: 'qm-notes-modal',
@@ -36,18 +36,20 @@ export class QmNotesModalComponent implements OnInit,OnDestroy{
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
     this.noteForm = new FormGroup({
-      note: new FormControl(this.text)
+      note: new FormControl(this.text,[Validators.maxLength(1000)])
 
     })
 
     this.charCount = 1000 -  this.noteForm.get('note').value.length;
 
     const noteSubscription = this.noteForm.get('note').valueChanges.subscribe(() => {
-      if (this.noteForm.controls['note'].dirty) {
+      if (this.noteForm.controls['note'].dirty && this.noteForm.controls['note'].valid) {
         this.charCount = 1000 -  this.noteForm.get('note').value.length;
         if(this.noteForm.controls['note'].value === ''){
    
         }
+      } else {
+
       }
     });
     this.subscriptions.add(noteSubscription);
@@ -59,6 +61,7 @@ export class QmNotesModalComponent implements OnInit,OnDestroy{
   }
 
   public accept() {
+    this.noteForm.controls['note'].patchValue(this.noteForm.controls['note'].value.trim());
     if(this.noteForm.controls['note'].value === ''){
 
       return;

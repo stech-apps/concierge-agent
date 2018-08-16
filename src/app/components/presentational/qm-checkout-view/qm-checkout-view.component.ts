@@ -20,6 +20,7 @@ import { IBranch } from "../../../../models/IBranch";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
 import { NoteSelectors, NoteDispatchers } from "../../../../store";
+import { FormGroup, FormControl, FormBuilder,Validators } from '@angular/forms';
 
 import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
 import { QmModalService } from "../qm-modal/qm-modal.service";
@@ -44,10 +45,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   customerSms: string;
 
   private subscriptions: Subscription = new Subscription();
+
   ticketActionEnabled: boolean = false;
   smsActionEnabled: boolean = false;
   emailActionEnabled: boolean = false;
   ticketlessActionEnabled: boolean = false;
+  isNoteEnabled: boolean = false;
+  isVipLvl1Enabled:boolean = false;
+  isVipLvl2Enabled:boolean = false;
+  isVipLvl3Enabled:boolean = false;
+
   buttonEnabled = false;
 
   ticketSelected: boolean = false;
@@ -58,7 +65,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
   isArriveAppointment: boolean = false;
-  isNoteBoxVisible: boolean = false;
+
 
   uttParameters$: Observable<IUTTParameter>;
   themeColor: string = "#a9023a";
@@ -70,7 +77,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ticketlessColor: string = this.whiteColor;
 
   buttonText: string;
-  isNoteEnabled: boolean = false;
+
   noteText$: Observable<string>;
   noteTextStr: string = '';
 
@@ -80,6 +87,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedServicePoint: IServicePoint;
   private selectedServices: IService[];
   private tempCustomer: ICustomer;
+
+  radioForm: FormGroup;
+  vipLevel1Checked:boolean ;
+  vipLevel2Checked:boolean;
+  vipLevel3Checked:boolean ;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -106,6 +118,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         if (uttParameters) {
           this.themeColor = uttParameters.highlightColor;
           this.isNoteEnabled = uttParameters.mdNotes;
+          this.isVipLvl1Enabled = uttParameters.vipLvl1;
+          this.isVipLvl2Enabled = uttParameters.vipLvl2;
+          this.isVipLvl3Enabled = uttParameters.vipLvl3;
+          this.smsActionEnabled = uttParameters.sndSMS;
+          this.emailActionEnabled = uttParameters.sndEmail;
+          this.ticketActionEnabled = uttParameters.printerEnable;
+          this.ticketlessActionEnabled = uttParameters.ticketLess;
 
           if (this.themeColor === "customized") {
             this.themeColor = uttParameters.customizeHighlightColor;
@@ -143,20 +162,27 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
-        this.emailActionEnabled = true;
-        this.smsActionEnabled = true;
+      this.ticketlessActionEnabled=false;
+      this.ticketActionEnabled=false;
+      this.isVipLvl1Enabled = false;
+      this.isVipLvl2Enabled= false;
+      this.isVipLvl3Enabled = false;
+        // this.emailActionEnabled = true;
+        // this.smsActionEnabled = true;
         this.buttonText = "create_appointment_action";
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
-        this.ticketActionEnabled = true;
-        this.smsActionEnabled = true;
-        this.ticketlessActionEnabled = true;
+      this.emailActionEnabled = false;
+        // this.ticketActionEnabled = true;
+        // this.smsActionEnabled = true;
+        // this.ticketlessActionEnabled = true;
         this.buttonText = "checkin_appointment";
         break;
       case FLOW_TYPE.CREATE_VISIT:
-        this.ticketActionEnabled = true;
-        this.smsActionEnabled = true;
-        this.ticketlessActionEnabled = true;
+      this.emailActionEnabled = false;
+        // this.ticketActionEnabled = true;
+        // this.smsActionEnabled = true;
+        // this.ticketlessActionEnabled = true;
         this.buttonText = "create_visit";
         break;
       default:
@@ -173,6 +199,37 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
     }
+    // this.radioForm = new FormGroup({
+    //   vipLevel1: new FormControl(''),
+    //   vipLevel2: new FormControl(''),
+    //   vipLevel3: new FormControl('')
+
+    // })
+
+    // const radioFormSubscription = this.radioForm.valueChanges.subscribe(() => {
+
+    //   if(this.radioForm.controls['vipLevel1'].touched ){
+    //     this.radioForm.controls['vipLevel2'].patchValue(false,{ emitEvent: false });
+    //     this.radioForm.controls['vipLevel3'].patchValue(false, { emitEvent: false });
+    //     this.radioForm.controls['vipLevel1'].markAsUntouched({ onlySelf: true });
+    //   }
+
+    //   if(this.radioForm.controls['vipLevel2'].touched ){
+    //     this.radioForm.controls['vipLevel1'].patchValue(false,{ emitEvent: false });
+    //     this.radioForm.controls['vipLevel3'].patchValue(false, { emitEvent: false });
+    //     this.radioForm.controls['vipLevel2'].markAsUntouched({ onlySelf: true });
+    //   }
+
+    //   if(this.radioForm.controls['vipLevel3'].touched ){
+    //     this.radioForm.controls['vipLevel2'].patchValue(false,{ emitEvent: false });
+    //     this.radioForm.controls['vipLevel1'].patchValue(false, { emitEvent: false });
+    //     this.radioForm.controls['vipLevel3'].markAsUntouched({ onlySelf: true });
+    //   }
+   
+    // });
+    // this.subscriptions.add(radioFormSubscription);
+
+
 
   }
 
@@ -201,6 +258,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onButtonPressed() {
+    if(this.ticketlessSelected){
+      this.handleCheckoutCompletion();
+      return;
+    }
     this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
       this.themeColor, 'ok', 'cancel',
       (result: boolean) => {
@@ -428,5 +489,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private buildDate(time: string){
     let dateObj = moment(time).format("YYYY-MM-DD, HH:mm");
     return dateObj;
+  }
+  onVip1Clicked(){
+    this.vipLevel1Checked ? this.vipLevel1Checked = false : this.vipLevel1Checked = true;
+    this.vipLevel2Checked = false;
+    this.vipLevel3Checked = false;
+  }
+
+  onVip2Clicked(){
+    this.vipLevel2Checked ? this.vipLevel2Checked = false : this.vipLevel2Checked = true;
+    this.vipLevel1Checked = false;
+    this.vipLevel3Checked = false;
+  }
+
+  onVip3Clicked(){
+    this.vipLevel3Checked ? this.vipLevel3Checked = false : this.vipLevel3Checked = true;
+    this.vipLevel2Checked = false;
+    this.vipLevel1Checked = false;
   }
 }

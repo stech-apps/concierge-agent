@@ -12,6 +12,15 @@ input::-ms-clear {
   width: 450px;
   margin-left:-100px;
 
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+
   input {
     padding: rem(12px);
     outline: none;
@@ -19,7 +28,7 @@ input::-ms-clear {
     float: left;
     padding-right: rem(30px);
     padding-left: rem(25px);
-    // width: 100%;
+    width: 100%;
   }
 
   input.ng-invalid.ng-touched {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
-import { CustomerDispatchers, CustomerSelector, InfoMsgDispatchers } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, InfoMsgDispatchers, UserSelectors } from '../../../../store';
 import { IMessageBox } from '../../../../models/IMessageBox';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
@@ -18,12 +18,14 @@ export class QmIdentifyCustomerComponent implements OnInit {
   SampleValue:IMessageBox
   private subscriptions : Subscription = new Subscription();
   isFlowSkip: boolean = false;
+  userDirection$: Observable<string>;
 
   constructor(
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
     private InfoMsgBoxDispatcher:InfoMsgDispatchers,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private userSelectors: UserSelectors,
   ) { 
     this.isFlowSkip = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
     this.currentCustomer$ = this.customerSelectors.currentCustomer$;
@@ -41,6 +43,7 @@ export class QmIdentifyCustomerComponent implements OnInit {
         this.doneButtonClick();
        
       }
+      this.userDirection$ = this.userSelectors.userDirection$;   
     });
     this.subscriptions.add(customerSubscription);
   }

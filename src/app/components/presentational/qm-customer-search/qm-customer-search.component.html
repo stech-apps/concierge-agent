@@ -8,8 +8,8 @@
     <th></th>
   </tr>
 </thead>
-<div class="body-container" [style.height]="height">
-<tbody *ngIf="customers.length!=0" class="tbody">
+
+<tbody *ngIf="customers.length!=0" class="tbody" [style.max-height]="height">
     <tr  class="customer-list qm-td-col-1" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" (click)="selectCustomer(customer)">
       <td>{{customer.lastName}}</td>
       <td >{{customer.firstName}}</td>
@@ -27,7 +27,7 @@
     </tr>  
 </tbody>
 <h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
-</div>
+
 </table>
 <div class="qm-loader-container" *ngIf="showLoading()" >
   <qm-loader></qm-loader>

@@ -25,9 +25,9 @@
   
   <div>
   <div>
-  <div class="qm-identify__customer-select-container">
+  <div class="qm-identify__customer-select-container"  dir="{{ userDirection$ | async }}" >
       <div class="qm-selected-customer-container">
-      <span class="qm-flow-selected-customer" *ngIf="currentCustomer"> <span style="margin-left: 10px">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span></span>
+      <span class="qm-flow-selected-customer" *ngIf="currentCustomer"> <span class="qm-current-customer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span></span>
       <i *ngIf="currentCustomer" (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
       <span class="qm-customer-padding-class-1"></span>  
     </div>

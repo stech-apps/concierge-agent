@@ -1,14 +1,16 @@
 @import '../../../../styles/base/_component-manifest.scss';
 .customer-table{
     color: black;
-    text-align: left;
+    // text-align: left;
     font-size: 0.9rem;
-    margin:auto;
+    // margin:auto;
     width:100%;
-    table-layout: fixed;
+    // table-layout: fixed;
+    
     :focus{
         outline: none; 
     }
+ 
     
     .customer-table-header{
         background-color: $dark-transparent12;
@@ -18,10 +20,19 @@
         
     }
 
+    tr{
+      display: table;
+      width: 100%;
+    }
     th{ 
         height: 50px;
-        white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;width: 20%; padding: 0px 10px 0px 85px;
-        
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow: hidden;
+        max-width:1px;
+        width: 20%;
+        padding: 0px 10px 0px 85px;
+       
     }
     
     td{
@@ -29,6 +40,10 @@
         outline-style:none;
         box-shadow:none;
         border-color:transparent;
+        @at-root [dir="rtl"] & {
+            text-align: right;
+       
+           }
       
     }
   
@@ -36,7 +51,7 @@
         background-color: white;
         border-bottom: 1px solid $light-gray2;
         height: 35px;
-        width: 80%;
+        width: 100%;
         padding:0;
         margin:0;
    
@@ -57,10 +72,6 @@
         height: 50px;
     }
     
-    .qm-td-col-1{
-        padding-left: 10%;
-        
-    }
    .customer-table-edit-background{
     fill:var(--app-theme);
    }
@@ -87,15 +98,10 @@
 }
 
 tbody{
-    
-    overflow:hidden;    
+    display: block;
     overflow-y: auto;
+    width: 100%;
 }
 
-.body-container{
-    width: 500%;
-    display: flex;
-    flex-direction: column;
-}
 
 

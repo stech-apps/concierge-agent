@@ -27,6 +27,8 @@
     height: 7rem;
     background-color: transparent;
     display: flex;
+    position: relative;
+    z-index: 2000;
     justify-content: center;
     align-items: center;
     margin-right: auto;
@@ -68,6 +70,7 @@
 
   .qm-duration-control {
     position: absolute;
+    z-index: 1041;
     width: 100%;
     background-color: lightgrey;
     overflow: hidden;
@@ -122,6 +125,16 @@
         margin-right: 0.75rem;
       }
     }
+  }
+
+
+  .identify-appointment-backdrop {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
   }
 }
 

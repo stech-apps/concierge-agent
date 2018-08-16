@@ -37,6 +37,7 @@ export class QmIdentifyAppointmentComponent implements OnInit {
   showSearchInput: boolean;
   searchText: string;
   inputAnimationState: string;
+  isSearchInputOpen: boolean;
 
   constructor() { }
 
@@ -49,6 +50,7 @@ export class QmIdentifyAppointmentComponent implements OnInit {
   }
 
   onSearchButtonClick(searchButton) {
+    this.isSearchInputOpen = !this.isSearchInputOpen;
     this.selectedSearchIcon = searchButton;
     this.searchText = ''
     if(searchButton == 'id') {

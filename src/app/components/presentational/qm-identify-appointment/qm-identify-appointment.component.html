@@ -1,4 +1,7 @@
 <div class="qm-identify-appointment">
+  <div class="identify-appointment-backdrop" *ngIf="isSearchInputOpen">
+
+  </div>
   <div class="qm-identify-appointment__search-container">
     <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'id' }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.58 73.8">

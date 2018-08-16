@@ -18,11 +18,11 @@ export const CREATE_CUSTOMER_SUCCESS= '[Customer] CREATE_CUSTOMER_SUCCESS';
 export const UPDATE_CUSTOMER= '[Customer] UPDATE_CUSTOMER';
 export const UPDATE_CUSTOMER_FAIL= '[Customer] UPDATE_CUSTOMER_FAIL';
 export const UPDATE_CUSTOMER_SUCCESS= '[Customer] UPDATE_CUSTOMER_SUCCESS';
-export const UPDATE_CUSTOMER_NO_TOAST= '[Customer] UPDATE_CUSTOMER_NO_TOAST';
-export const UPDATE_CUSTOMER_NO_TOAST_FAIL= '[Customer] UPDATE_CUSTOMER_NO_TOAST_FAIL';
-export const UPDATE_CUSTOMER_NO_TOAST_SUCCESS= '[Customer] UPDATE_CUSTOMER_NO_TOAST_SUCCESS';
 export const SET_TEMP_CUSTOMER = '[Customer] SET_TEMP_CUSTOMER';
 export const RESET_TEMP_CUSTOMER = '[Customer] RESET_TEMP_CUSTOMER';
+export const UPDATE_CUSTOMER_PARTIALLY = '[Customer] UPDATE_CUSTOMER_PARTIALLY';
+export const UPDATE_CUSTOMER_PARTIALLY_SUCCESS = '[Customer] UPDATE_CUSTOMER_PARTIALLY_SUCCESS';
+export const UPDATE_CUSTOMER_PARTIALLY_FAIL = '[Customer] UPDATE_CUSTOMER_PARTIALLY_FAIL';
 
 export class UpdateCustomerSearchText implements Action{
     readonly type = UPDATE_CUSTOMER_SEARCH_TEXT;
@@ -87,20 +87,6 @@ export class UpdateCUstomerSuccess implements Action{
     constructor (public payload:ICustomer){}
 }
 
-export class UpdateCustomerWithoutToast implements Action{
-    readonly type = UPDATE_CUSTOMER_NO_TOAST;
-    constructor (public payload:ICustomer){}
-}
-
-export class  UpdateCustomerWithoutToastFail implements Action{
-    readonly type = UPDATE_CUSTOMER_NO_TOAST_FAIL;
-    constructor (public payload:object){}
-}
-export class UpdateCustomerWithoutToastSuccess implements Action{
-    readonly type = UPDATE_CUSTOMER_NO_TOAST_SUCCESS;
-    constructor (public payload:ICustomer){}
-}
-
 export class SetTempCustomer implements Action{
     readonly type = SET_TEMP_CUSTOMER;
     constructor(public payload: ICustomer) {}
@@ -110,8 +96,24 @@ export class ResetTempCustomer implements Action{
     readonly type = RESET_TEMP_CUSTOMER;
 }
 
+export class UpdateCustomerPartially implements Action{
+    readonly type = UPDATE_CUSTOMER_PARTIALLY;
+    constructor (public payload:ICustomer){}
+}
+export class  UpdateCustomerPartiallyFail implements Action{
+    readonly type = UPDATE_CUSTOMER_PARTIALLY_FAIL;
+    constructor (public payload:object){}
+}
+export class UpdateCUstomerPartiallySuccess implements Action{
+    readonly type = UPDATE_CUSTOMER_PARTIALLY_SUCCESS;
+    constructor (public payload:ICustomer){}
+}
+
 
 export type AllCustomerActions = UpdateCustomerSearchText | ResetCustomerSearchText |SelectCustomer |ResetCurrentCustomer
             |FetchCustomers|FetchCustomersFail|FetchCustomersSuccess | ResetCustomers| CreateCustomer | CreateCustomerFail | CreateCustomerSuccess
-            |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess|UpdateCustomerWithoutToast|UpdateCustomerWithoutToastFail|UpdateCustomerWithoutToastSuccess
-            | SetTempCustomer | ResetTempCustomer;
+            |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess
+            | SetTempCustomer | ResetTempCustomer
+            | UpdateCustomerPartially
+            | UpdateCustomerPartiallyFail
+            | UpdateCUstomerPartiallySuccess ;

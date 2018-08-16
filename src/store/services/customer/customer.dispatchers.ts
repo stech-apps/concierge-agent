@@ -41,16 +41,16 @@ export class CustomerDispatchers{
         this.store.dispatch(new CustomerAction.ResetCustomerSearchText);
     }
 
-    updateCustomerWithoutToast(customer:ICustomer){
-        this.store.dispatch(new CustomerAction.UpdateCustomerWithoutToast(customer));
-    }
-
     setTempCustomers(customer:ICustomer){
         this.store.dispatch(new CustomerAction.SetTempCustomer(customer));
     }
 
     resetTempCustomer(){
         this.store.dispatch(new CustomerAction.ResetTempCustomer());
+    }
+
+    updateCustomerPartially(customer:ICustomer){
+        this.store.dispatch(new CustomerAction.UpdateCustomerPartially(customer));
     }
 
 }

@@ -88,33 +88,17 @@ export class CustomerEffects{
         .pipe();
 
         @Effect()
-        updateCustomerWithoutToast$:Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST)
+        updateCustomerPartailly$:Observable<Action> = this.actions$
+        .ofType(CustomerActions.UPDATE_CUSTOMER_PARTIALLY)
         .pipe(
-            switchMap((action:CustomerActions.UpdateCustomerWithoutToast)=>{
+            switchMap((action:CustomerActions.UpdateCustomerPartially)=>{
                 return toAction(
                     this.customerDataService.updateCustomer(action.payload),
-                    CustomerActions.UpdateCustomerWithoutToastSuccess,
-                    CustomerActions.UpdateCustomerWithoutToastFail
+                    CustomerActions.UpdateCUstomerPartiallySuccess,
+                    CustomerActions.UpdateCustomerPartiallyFail
                 )
             })
         );
-
-        
-        @Effect()
-        updateCustomerWithoutToastSuccess$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_SUCCESS)
-        .pipe(
-        switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
-        [new CustomerActions.SelectCustomer(action.payload)]
-        )
-        );
-
-  
-        @Effect({dispatch:false})
-        updateCustomerWithoutToastFail$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_NO_TOAST_FAIL)
-        .pipe();
 
        
 }

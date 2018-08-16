@@ -109,7 +109,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     if (this.customer && this.confirmModalForm.controls['phone'].valid && this.confirmModalForm.controls['phone'].value != '') {
 
       this.showPhoneTick = true;
-      this.customerDispatchers.updateCustomerWithoutToast(this.preparedCustomer());
+      this.customerDispatchers.updateCustomerPartially(this.preparedCustomer());
       return true;
     } else {
 
@@ -123,7 +123,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     if (this.customer && this.confirmModalForm.controls['email'].valid && this.confirmModalForm.controls['email'].value != '') {
 
       this.showEmailTick = true;
-      this.customerDispatchers.updateCustomerWithoutToast(this.preparedCustomer());
+      this.customerDispatchers.updateCustomerPartially(this.preparedCustomer());
       return true;
     } else {
 

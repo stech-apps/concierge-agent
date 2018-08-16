@@ -61,14 +61,16 @@ export class QmCreateVisitComponent implements OnInit {
     this.subscriptions.add(servicesSubscription);
 
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
-      if(customer){
+      if(this.isCustomerStoreDB){
         this.currentCustomer = customer;
       }
     });
     this.subscriptions.add(customerSubscription);
 
     const tempCustomerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
-      this.currentCustomer = customer;
+      if(!this.isCustomerStoreDB){
+        this.currentCustomer = customer;
+      }
     });
     this.subscriptions.add(tempCustomerSubscription);
   }

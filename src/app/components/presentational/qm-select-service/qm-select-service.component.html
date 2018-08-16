@@ -16,9 +16,9 @@
     </div>
 </div>
 
-<div class="qm-service-list__container">
-    <div class="qm-service-list__item-container" *ngFor="let service of selectedServiceList; let rowId = index">
-        <div class="qm-service-list__selected-item-container">
+<div [ngClass]="flowType === 'CREATE_APPOINTMENT' ? 'qm-service-list__container' : 'qm-service-list__container-ext'">
+    <div class="qm-service-list__item-container">
+        <div class="qm-service-list__selected-item-container" *ngFor="let service of selectedServiceList; let rowId = index">
                 <div class="qm-service-list__index-item">{{ rowId + 1 }}</div>
                 <div class="qm-service-list__item qm-service-list__item--selected">
                     <div class="qm-service-list__item--text">{{ flowType === 'CREATE_APPOINTMENT' ? service.name : service.internalName }}</div>

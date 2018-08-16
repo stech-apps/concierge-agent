@@ -43,6 +43,12 @@ ngb-timepicker {
     font-size: 4vw;
     padding: 39px 0px;
   }
+
+  &.invalid-time {
+    input {
+      background-color: #F5A9A9;
+    }
+  }
 }
 .NoteModalClass .modal-dialog {
     max-width: 30em;

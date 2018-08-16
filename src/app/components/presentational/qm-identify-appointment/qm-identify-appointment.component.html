@@ -1,5 +1,5 @@
 <div class="qm-identify-appointment">
-  <div class="identify-appointment-backdrop" *ngIf="isSearchInputOpen">
+  <div class="identify-appointment-backdrop" *ngIf="isSearchInputOpen || selectedSearchIcon === 'duration' || selectedSearchIcon === 'customer'">
 
   </div>
   <div class="qm-identify-appointment__search-container">
@@ -226,9 +226,10 @@
         </div>
       </div>
 
-      <div class="qm-step-controls-container">
-          <ngb-timepicker [(ngModel)]="fromTime"></ngb-timepicker>
-          <ngb-timepicker [(ngModel)]="toTime"></ngb-timepicker>
+      <div class="qm-step-controls-container" >
+          <ngb-timepicker [ngClass]="{'invalid-time': fromTimeController.errors?.invalidTime}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
+          <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
+
       </div>
 
       <div class="qm-command-buttons-container">

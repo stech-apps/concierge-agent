@@ -1,34 +1,16 @@
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
-import { trigger, state, style, transition, animate} from '@angular/animations';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 
 @Component({
   selector: 'qm-identify-appointment',
   templateUrl: './qm-identify-appointment.component.html',
   styleUrls: ['./qm-identify-appointment.component.scss'],
 
-  animations: [
-    trigger('slideInOut', [
-      state('id', style({
-        height: '42px',
-      })),
-      state('customer', style({
-        height: '42px',
-      })),
-      state('duration', style({
-        height: '350px',
-      })),
-      state('out', style({
-        height: '0px',
-        'padding-top': '0',
-        'padding-bottom': '0'
-      })),
-      transition('out => customer', animate('500ms ease-in-out')),
-      transition('customer => out', animate('500ms ease-in-out')),
-      transition('id => out', animate('500ms ease-in-out')),
-      transition('out => id', animate('500ms ease-in-out'))
-    ])
-  ]
-  
+  animations: IDENTIFY_APPOINTMENT_ANIMATIONS
+
 })
 export class QmIdentifyAppointmentComponent implements OnInit {
 
@@ -38,30 +20,59 @@ export class QmIdentifyAppointmentComponent implements OnInit {
   searchText: string;
   inputAnimationState: string;
   isSearchInputOpen: boolean;
+  fromTime: NgbTimeStruct;
+  toTime: NgbTimeStruct;
+
+  fromTimeController : FormControl;
+  toTimeController : FormControl;
+
 
   constructor() { }
 
   ngOnInit() {
     this.inputAnimationState = 'out';
+    this.setInitialTime();
+    this.fromTimeController = new FormControl('', (control: FormControl) => {
+      return this.getTimeSelectionValidity(control.value, this.toTime);
+    });
+
+    this.toTimeController =  new FormControl('', (control: FormControl) => {
+      return this.getTimeSelectionValidity(this.fromTime, control.value);
+    });
   }
 
+  setInitialTime() {
+    let currentTime = moment();
+    this.fromTime = { hour: parseInt(currentTime.format('HH')), minute: parseInt(currentTime.format('mm')), second: 0 };
+    this.toTime = { hour: parseInt(currentTime.format('HH')) + 1, minute: parseInt(currentTime.format('mm')), second: 0 };
+  }
+
+  getTimeSelectionValidity(fromTime, toTime) {
+    let validationConfig = null;
+    if (fromTime.hour > toTime.hour) {
+      validationConfig = { invalidTime: true };
+    }
+    if (fromTime.hour == toTime.hour && fromTime.minute >= toTime.minute) {
+      validationConfig = { invalidTime: true };
+    }
+    return validationConfig;
+  }
 
   onSearchButtonClick(searchButton) {
     this.isSearchInputOpen = !this.isSearchInputOpen;
-    
-    this.searchText = ''
-    if(searchButton == 'id') {
-      this.searchPlaceHolderKey = 'please_enter_id_and_press_enter';  
+    this.searchText = '';
+    if (searchButton == 'id') {
+      this.searchPlaceHolderKey = 'please_enter_id_and_press_enter';
     }
-    else if(searchButton === 'customer'){
+    else if (searchButton === 'customer') {
       this.searchPlaceHolderKey = 'please_enter_customer_attributes';
     }
     else {
     }
 
-    if(this.inputAnimationState == 'out') {
+    if (this.inputAnimationState == 'out') {
       this.inputAnimationState = searchButton;
-    } else if(this.inputAnimationState == searchButton ) {
+    } else if (this.inputAnimationState == searchButton) {
       this.inputAnimationState = 'out';
     }
     else {

@@ -8,6 +8,9 @@ export const IDENTIFY_APPOINTMENT_ANIMATIONS = [
       state('customer', style({
         height: '42px',
       })),
+      state('input', style({
+        height: '42px',
+      })),
       state('duration', style({
         height: '350px',
       })),
@@ -20,6 +23,7 @@ export const IDENTIFY_APPOINTMENT_ANIMATIONS = [
       transition('customer => out', animate('500ms ease-in-out')),
       transition('customer => id', animate('500ms ease-in-out')),
       transition('duration => customer', animate('500ms ease-in-out')),
+      transition('duration => input', animate('500ms ease-in-out')),
       transition('id => out', animate('500ms ease-in-out')),
       transition('out => id', animate('500ms ease-in-out'))
     ])

@@ -20,3 +20,4 @@ export * from './calendar-branch.actions';
 export * from './reserve.actions';
 export * from './information-message-box.actions'
 export * from './note.actions';
+export * from './appointment.actions';

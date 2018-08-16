@@ -81,4 +81,12 @@ export class QmIdentifyAppointmentComponent implements OnInit {
 
     this.selectedSearchIcon = searchButton;
   }
+
+
+  onSelectTime() {
+    this.isSearchInputOpen = true;
+    this.searchText = `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}` ;
+    this.inputAnimationState = 'input';
+    this.selectedSearchIcon = '';
+  }
 }

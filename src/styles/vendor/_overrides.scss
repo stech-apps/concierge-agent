@@ -1,8 +1,6 @@
 ngb-timepicker {
-
   display: flex;
   justify-content: center;
-  
   input[type="text"] {
     width: 60px;
     height: 4.5rem;
@@ -32,6 +30,22 @@ ngb-timepicker {
     border: none;
     cursor: pointer;
     outline: none;
+    &:focus {
+      outline: none;
+    }
+
+    &p:nth-of-type(2) {
+      &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        cursor: pointer;
+        border-left: 35px solid transparent;
+        border-right: 35px solid transparent;
+        border-bottom: 50px solid #555;
+      }
+    }
   }
   .ngb-tp-spacer {
     width: 1px;
@@ -43,14 +57,13 @@ ngb-timepicker {
     font-size: 4vw;
     padding: 39px 0px;
   }
-
   &.invalid-time {
     input {
       background-color: #F5A9A9;
     }
   }
 }
+
 .NoteModalClass .modal-dialog {
-    max-width: 30em;
-  
-  }
+  max-width: 30em;
+}

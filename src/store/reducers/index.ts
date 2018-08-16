@@ -18,6 +18,7 @@ import * as fromTimeslot from "./timeslot.reducer";
 import * as fromReserve from './reserve.reducer';
 import * as fromInfoMsgBox from './message-box.reducer';
 import * as fromNotes from './note.reducer';
+import * as fromAppointments from './appointment.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -38,6 +39,7 @@ export interface IAppState {
   reserved: fromReserve.IReserveState;
   infoMsgBox: fromInfoMsgBox.IMessageInfoState;
   note: fromNotes.INoteState
+  appointments: fromAppointments.IAppointmentState,
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -58,5 +60,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   timeslot: fromTimeslot.reducer,
   reserved: fromReserve.reducer,
   infoMsgBox: fromInfoMsgBox.reducer,
-  note: fromNotes.reducer
+  note: fromNotes.reducer,
+  appointments: fromAppointments.reducer,
 };

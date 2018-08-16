@@ -59,7 +59,11 @@ import {
   InfoMsgBoxSelector,
   InfoMsgDispatchers,
   NoteDispatchers,
-  NoteSelectors
+  NoteSelectors,
+  AppointmentSelectors,
+  AppointmentDataService,
+  AppointmentDispatchers
+
 } from "./services";
 
 export const storeServices = [
@@ -118,5 +122,8 @@ export const storeServices = [
   InfoMsgBoxSelector,
   InfoMsgDispatchers,
   NoteDispatchers,
-  NoteSelectors
+  NoteSelectors,
+  AppointmentSelectors,
+  AppointmentDataService,
+  AppointmentDispatchers
 ];

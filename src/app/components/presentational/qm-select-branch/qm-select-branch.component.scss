@@ -36,6 +36,11 @@
             right: 5%;
             top: 50%;
             transform: translateY(-50%);
+
+            @at-root [dir='rtl'] & {
+                left: 5%;
+                right: auto;
+            }
         }
     }
 }

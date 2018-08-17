@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { QmClearInputDirective } from './../../../directives/qm-clear-input.directive';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { Subscription, Subject } from 'rxjs';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors } from '../../../../../src/store';
@@ -34,6 +35,7 @@ export class QmSelectServiceComponent implements OnInit {
   newf: FLOW_TYPE.CREATE_APPOINTMENT;
   multiServiceEnabled: boolean;
   searchText: string;
+  @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -146,6 +148,7 @@ export class QmSelectServiceComponent implements OnInit {
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';
+    this.clearInputDirective.updateButtonVisibility('');
   }
 
   goToNext() {

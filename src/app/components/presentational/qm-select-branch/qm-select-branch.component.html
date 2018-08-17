@@ -1,4 +1,4 @@
-<div class="qm-flow-sub-header">
+<div class="qm-flow-sub-header" dir="{{ userDirection$ | async}}">
   <div class="qm-flow-sub-header__left">
       <div class="qm-checkbox__container">
         <label for="qm-checkbox" class="qm-checkbox-label">
@@ -17,7 +17,7 @@
     </div>
   </div>
 </div>
-<div class="qm-branch-list__container">
+<div class="qm-branch-list__container" dir="{{ userDirection$ | async}}">
   <div *ngFor="let b of branches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-branch-list__item--selected': b.id === currentBranch.id && currentBranch.selected}">
    <div class="qm-branch-list__item--text">{{b.name}}</div>
     <i class="icon-check" *ngIf="b.selected"></i>

@@ -1,11 +1,12 @@
+import { QmClearInputDirective } from './../../../directives/qm-clear-input.directive';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { QmModalService } from './../qm-modal/qm-modal.service';
 import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, EventEmitter, Output, OnDestroy, Input } from '@angular/core';
-import { CalendarBranchSelectors, CalendarBranchDispatchers } from 'src/store';
+import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } from '@angular/core';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
@@ -23,6 +24,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   filterText: string = '';
   isFlowSkip: boolean = true;
   searchText: string = '';
+  userDirection$: Observable<string>;
+  @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
   private _isVisible: boolean;
 
@@ -41,7 +44,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
-  constructor(private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService, private localStorage: LocalStorage) {
+  constructor(private userSelectors: UserSelectors ,private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService, private localStorage: LocalStorage) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
 
@@ -67,6 +70,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(branchSubscription);
 
+    this.userDirection$ = this.userSelectors.userDirection$;
     this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterBranches(text));
@@ -99,6 +103,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';
+    this.clearInputDirective.updateButtonVisibility('');
   }
 
   goToNext() {

@@ -89,6 +89,7 @@ export class QmSelectServiceComponent implements OnInit {
 
       const serviceLoadedSubscription = this.serviceSelectors.isServiceLoaded$.subscribe((val) => {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
+        
           if(branch){
             this.selectedBranch = branch;
             if(!val){
@@ -110,9 +111,9 @@ export class QmSelectServiceComponent implements OnInit {
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
         const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
           if(branch.publicId){
-            if(this.selectedBranch && this.selectedBranch !== branch || !val){
+            //if(this.selectedBranch && this.selectedBranch !== branch || !val){
               this.calendarServiceDispatchers.fetchServices(branch);
-            }
+            //}
             this.selectedBranch = branch;
           }
         });

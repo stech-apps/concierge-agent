@@ -1,5 +1,5 @@
 <div class="qm-identify-appointment">
-  <div class="identify-appointment-backdrop" *ngIf="isSearchInputOpen || selectedSearchIcon === 'duration' || selectedSearchIcon === 'customer'">
+  <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
 
   </div>
   <div class="qm-identify-appointment__search-container">
@@ -215,20 +215,21 @@
 
   </div>
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text"(change)="onSearchInputChange()" [formControl]="searchInputController" qmClearInput  [placeholder]="(searchPlaceHolderKey | translate) || ''" />
+    <input type="text" (change)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" qmClearInput [placeholder]="(searchPlaceHolderKey | translate) || ''"
+    />
     <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
       <div class="qm-duration-control__header">
         <div class="left">
-            {{'from' | translate}}
+          {{'from' | translate}}
         </div>
         <div class="right">
-            {{'to' | translate}}
+          {{'to' | translate}}
         </div>
       </div>
 
-      <div class="qm-step-controls-container" >
-          <ngb-timepicker [ngClass]="{'invalid-time': fromTimeController.errors?.invalidTime}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
-          <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
+      <div class="qm-step-controls-container">
+        <ngb-timepicker [ngClass]="{'invalid-time': fromTimeController.errors?.invalidTime}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
+        <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
       </div>
       <div class="qm-command-buttons-container">
         <button class="cancel">{{'cancel' | translate}}</button>
@@ -241,7 +242,7 @@
         <thead class="qm-identify-appointment__customer-table__header">
         <tr>
           <th class="qm-identify-appointment__customer-table__col-5"></th>
-          <th class="qm-identify-appointment__customer-table__col-10" >{{ 'time' | translate }}</th>
+          <th class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
           <th class="qm-identify-appointment__customer-table__col-10">{{ 'date' | translate }}</th>
           <th class="qm-identify-appointment__customer-table__col-10">{{ 'id' | translate }}</th>
           <th class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
@@ -250,22 +251,19 @@
           <th class="qm-identify-appointment__customer-table__col-5"></th>
         </tr>
       </thead>
-      
-      <tbody *ngIf="tempCustomers.length!=0" class="qm-identify-appointment__tbody" [style.max-height]="height">
-          <tr  class="qm-identify-appointment__customer-table__list" *ngFor="let customer of tempCustomers" tabindex="0">
-            <td class="qm-identify-appointment__customer-table__col-5"></td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{customer.time}}</td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{customer.date}}</td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{customer.id}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{customer.firstName}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{customer.lastName}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{customer.service}}</td>
-            <td class="qm-identify-appointment__customer-table__col-5"></td>
-          </tr>  
-        </tbody>
-      
-      </table>
 
-    
+      <tbody *ngIf="appointments.length!=0" class="qm-identify-appointment__tbody" [style.max-height]="height">
+        <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0">
+          <td class="qm-identify-appointment__customer-table__col-5"></td>
+          <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime)}}</td>
+          <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.startTime)}}</td>
+          <td class="qm-identify-appointment__customer-table__col-10">{{app.id}}</td>
+          <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
+          <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
+          <td class="qm-identify-appointment__customer-table__col-20">{{app.services[0]?.name}}</td>
+          <td class="qm-identify-appointment__customer-table__col-5"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -22,10 +22,10 @@ export function reducer(
     action: AppointmentActions.AllAppointmentActions
 ): IAppointmentState {
     switch (action.type) {
-        case AppointmentActions.SEARCH_APPOINTMENTS: {
+        case AppointmentActions.SEARCH_APPOINTMENTS_SUCCESS: {
             return {
-                appointments: action.payload.appointmentList,
                 ...state,
+                appointments: action.payload,
                 loading: true,
                 error: null
             };

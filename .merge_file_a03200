@@ -9,8 +9,7 @@ import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
-import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors } from 'src/store';
-import { IAppointment } from 'src/models/IAppointment';
+import { AppointmentDispatchers, BranchSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -20,20 +19,8 @@ import { IAppointment } from 'src/models/IAppointment';
   animations: IDENTIFY_APPOINTMENT_ANIMATIONS
 
 })
-
 export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
-  tempCustomer:{
-  time?:string;
-  date?:string;
-  id?:string;
-  firstName?:string;
-  lastName?:string;
-  service?:string
-}
-
-  showModalBackDrop: boolean;
-  tempCustomers:any;
   selectedSearchIcon: string;
   searchPlaceHolderKey: string;
   showSearchInput: boolean;
@@ -48,17 +35,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
   searchInputController = new FormControl();
   selectedBranch: IBranch;
-  currentSearchState: string;
   readonly SEARCH_STATES = {
     DURATION: 'duration'
   };
 
-  appointments: IAppointment[] = [];
-
-  height:string;
 
   constructor(private appointmentDispatchers: AppointmentDispatchers,
-    private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors) { }
+    private branchSelectors: BranchSelectors) { }
 
   ngOnInit() {
     this.inputAnimationState = 'out';
@@ -70,13 +53,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.toTimeController = new FormControl('', (control: FormControl) => {
       return this.getTimeSelectionValidity(this.fromTime, control.value);
     });
-    /*this.tempCustomer={time:'11:09',date:'2018-05-10', id:'2096', firstName:'john',lastName:'david',service:'service 1'}
-    this.tempCustomers=[this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
-      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
-      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,
-      this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer,this.tempCustomer]
-      */
-    this.height = 'calc(100vh - 230px)';
 
     this.inputChanged
       .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
@@ -86,12 +62,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.selectedBranch = br;
     });
 
-    const appointmentSubscription = this.appointmentSelectors.appointments$.subscribe((apps) => {
-      this.appointments = apps;
-    });
-
     this.subscriptions.add(branchSubscription);
-    this.subscriptions.add(appointmentSubscription);
   }
 
   ngOnDestroy() {
@@ -102,14 +73,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     let currentTime = moment();
     this.fromTime = { hour: parseInt(currentTime.format('HH')), minute: parseInt(currentTime.format('mm')), second: 0 };
     this.toTime = { hour: parseInt(currentTime.format('HH')) + 1, minute: parseInt(currentTime.format('mm')), second: 0 };
-  }
-
-  getTime(timeString) {
-    return moment(timeString).format('HH:mm');
-  }
-
-  getDate(timeString) {
-    return moment(timeString).format('YYYY-MM-DD');
   }
 
   getTimeSelectionValidity(fromTime, toTime) {
@@ -132,6 +95,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     else if (searchButton === 'customer') {
       this.searchPlaceHolderKey = 'please_enter_customer_attributes';
     }
+    else {
+    }
 
     if (this.inputAnimationState == 'out') {
       this.inputAnimationState = searchButton;
@@ -142,15 +107,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.inputAnimationState = searchButton;
     }
 
-    if (this.selectedSearchIcon != searchButton) {
-      this.showModalBackDrop = true;
-      this.selectedSearchIcon = searchButton;
-      this.currentSearchState = searchButton;
-    }
-    else {
-        this.showModalBackDrop = false;   
-        this.selectedSearchIcon = '';   
-    }    
+    this.selectedSearchIcon = searchButton;
   }
 
 
@@ -161,8 +118,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.selectedSearchIcon = '';
     this.searchInputController.setValue( `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}`);
     this.searchApointments(this.searchText);
-    this.showModalBackDrop = false;
-    
   }
 
   searchApointments(searchText) {
@@ -170,11 +125,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       branchId: this.selectedBranch.id
     };
 
-    if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
+    if (this.selectedSearchIcon === this.SEARCH_STATES.DURATION) {
       searchQuery = {
         ...searchQuery,
-        fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute,2)}`,
-        toDate: `${moment().format('YYYY-MM-DD')}T${ this.pad(this.toTime.hour,2)}:${this.pad(this.toTime.minute, 2)}`
+        toDate: `${moment().format('YYYY-MM-DD')}T${this.fromTime.hour}:${this.fromTime.minute}`,
+        fromDate: `${moment().format('YYYY-MM-DD')}T${this.toTime.hour}:${this.toTime.minute}`
       };
     }
 
@@ -183,10 +138,5 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSearchInputChange() {
     this.inputChanged.next(this.searchText);
-  }
-
-  pad(n, width, z = '0') {
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 }

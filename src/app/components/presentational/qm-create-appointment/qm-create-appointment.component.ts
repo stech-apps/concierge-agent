@@ -49,12 +49,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
       this.selectedTimeSlot$ = this.timeSlotSelectors.selectedTime$;
       this.selectedDate$ = this.timeSlotSelectors.selectedDate$;
       const selectedPublicBranchSub = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
-      if (sb === undefined || sb.publicId.length === 0){
-        this.setSelectedBranch();
-      }
-      else {
-        this.currentBranch = sb;
-      }
+        this.currentBranch = sb;      
     });
 
     this.subscriptions.add(selectedPublicBranchSub);

@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } from '@angular/core';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors } from 'src/store';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
@@ -17,7 +17,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 })
 export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
-  branches: ICalendarBranchViewModel[] = new Array<ICalendarBranchViewModel>();
+  calendarBranches: ICalendarBranchViewModel[] = new Array<ICalendarBranchViewModel>();
   private subscriptions: Subscription = new Subscription();
   currentBranch: ICalendarBranch = new ICalendarBranch();
   inputChanged: Subject<string> = new Subject<string>();
@@ -25,6 +25,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   isFlowSkip: boolean = true;
   searchText: string = '';
   userDirection$: Observable<string>;
+
   @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
   private _isVisible: boolean;
@@ -38,37 +39,54 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
  }
  
  get isVisible(): boolean {  
-     return this._isVisible;  
+     return this._isVisible;
  }
 
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
-  constructor(private userSelectors: UserSelectors ,private branchSelectors: CalendarBranchSelectors, private branchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService, private localStorage: LocalStorage) {
+  constructor(private userSelectors: UserSelectors, private calendarBranchSelectors: CalendarBranchSelectors,
+    private calendarBranchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService,
+    private branchSelectors: BranchSelectors,
+    private localStorage: LocalStorage) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
 
-    const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
-      this.branches = <Array<ICalendarBranchViewModel>>bs;
+    if(this.isFlowSkip === undefined) {
+      this.isFlowSkip = true;
+    }
 
-      const selectedBranchSub = this.branchSelectors.selectedBranch$.subscribe((sb) => {
+    const calendarBranchSubscription = this.calendarBranchSelectors.branches$.subscribe((bs) => {
+      this.calendarBranches = <Array<ICalendarBranchViewModel>>bs;
 
-        
-        this.branches.forEach((b) => {
-          if (b.id === sb.id && this.isFlowSkip) {
-            b.selected = true;
-            this.currentBranch = b;
-          }
-          else {
-            b.selected = false;
-          }
-        });
+      this.branchSelectors.selectedBranch$.subscribe((spBranch)=> {
+        //if flow is skipped then use the service point branch as current branch
+        if(this.isFlowSkip) { 
+
+          this.calendarBranches.forEach((cb) => {
+            if (spBranch.id === cb.id) {
+             this.currentBranch = cb;
+            }
+          });          
+        }
       });
 
-      this.subscriptions.add(selectedBranchSub);
+      const selectedCalendarBranch = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
+
+        if(this.calendarBranches.length > 0 ) {
+          this.calendarBranches.forEach((b) => {
+            if (b.id === sb.id && this.isFlowSkip) {
+             this.currentBranch = sb;
+            }
+          });
+        }
+      });
+      
+      this.subscriptions.add(selectedCalendarBranch);      
     });
 
-    this.subscriptions.add(branchSubscription);
+
+    this.subscriptions.add(calendarBranchSubscription);
 
     this.userDirection$ = this.userSelectors.userDirection$;
     this.inputChanged
@@ -77,22 +95,23 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
-    if (this.currentBranch['selected'] && this.currentBranch.id != branch.id) {
+    if (this.currentBranch.id && this.currentBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if(v) {
-          branch.selected = !branch.selected;
-          this.branchDispatchers.selectCalendarBranch(branch);
-
+          this.calendarBranchDispatchers.selectCalendarBranch(branch);
+          this.currentBranch = branch;
+          this.onFlowNext.emit();
         }
       }, ()=> {});
     }
-    else {
-      branch.selected = !branch.selected;
-      this.branchDispatchers.selectCalendarBranch(branch);
+    else if(this.currentBranch.id === branch.id) { //same branch selected
+      this.calendarBranchDispatchers.selectCalendarBranch({} as ICalendarBranch);
+      this.currentBranch = {} as ICalendarBranch;
     }
-
-    if(branch.selected) {
-      this.onFlowNext.emit();
+    else if (!this.currentBranch.id) {
+      this.currentBranch = branch;
+      this.calendarBranchDispatchers.selectCalendarBranch(branch);
+      this.onFlowNext.next();
     }
   }
 

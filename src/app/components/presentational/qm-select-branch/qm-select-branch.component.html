@@ -12,14 +12,14 @@
   </div>
   <input type="text" class="qm-flow-sub-header__search"  qmClearInput [(ngModel)]="searchText" (input)="handleInput($event)" placeholder="{{'branch_search_placeholder' | translate}}" />
   <div class="qm-flow-sub-header__right">
-    <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="currentBranch && currentBranch.selected">
+    <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="currentBranch && currentBranch.id">
       {{'banner_done_label' | translate }}
     </div>
   </div>
 </div>
 <div class="qm-branch-list__container" dir="{{ userDirection$ | async}}">
-  <div *ngFor="let b of branches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-branch-list__item--selected': b.id === currentBranch.id && currentBranch.selected}">
+  <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-branch-list__item--selected': b.id === currentBranch.id}">
    <div class="qm-branch-list__item--text">{{b.name}}</div>
-    <i class="icon-check" *ngIf="b.selected"></i>
+    <i class="icon-check" *ngIf="b.id === currentBranch.id"></i>
   </div>
 </div>

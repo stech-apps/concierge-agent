@@ -127,5 +127,5 @@ function setSelectedBranch(branches: ICalendarBranch[], branch: ICalendarBranch)
   let calendarBranch = branches.filter(val => {
     return val.id === branch.id;
   })
-  return calendarBranch[0];
+  return calendarBranch[0] || {} as ICalendarBranch;
 }

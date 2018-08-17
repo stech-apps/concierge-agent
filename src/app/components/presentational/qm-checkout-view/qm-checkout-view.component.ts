@@ -1,3 +1,5 @@
+import { ICalendarBranch } from './../../../../models/ICalendarBranch';
+import { IBranch } from './../../../../models/IBranch';
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
@@ -6,7 +8,7 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers } from "../../../../store";
+import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers, BranchDispatchers, ServiceDispatchers } from "../../../../store";
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
 import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
@@ -16,7 +18,6 @@ import { ICustomer } from "../../../../models/ICustomer";
 import { Q_ERROR_CODE } from "../../../../util/q-error";
 import { ToastService } from '../../../../util/services/toast.service';
 import { SPService } from "../../../../util/services/rest/sp.service";
-import { IBranch } from "../../../../models/IBranch";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
 import { NoteSelectors, NoteDispatchers } from "../../../../store";
@@ -27,6 +28,7 @@ import { QmModalService } from "../qm-modal/qm-modal.service";
 import * as moment from 'moment';
 import { forEach } from "@angular/router/src/utils/collection";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
+import { CalendarBranchDispatchers, CalendarServiceDispatchers } from 'src/store/services';
 
 
 @Component({
@@ -106,10 +108,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private spService: SPService,
     private branchSelector: BranchSelectors,
     private serviceSelectors: ServiceSelectors,
-    private qmNotesModalService: QmNotesModalService, private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, private qmModalService: QmModalService,
+    private qmNotesModalService: QmNotesModalService, 
+    private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, 
+    private qmModalService: QmModalService,
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private customerDispatcher: CustomerDispatchers,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private branchDispatcher: CalendarBranchDispatchers,
+    private serviceDispatchers: CalendarServiceDispatchers
   ) {
     this.uttParameters$ = this.servicePointSelectors.uttParameters$;
 
@@ -335,6 +341,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
       if (result) {
         this.showSussessMessage(result);
+        this.branchDispatcher.selectCalendarBranch({} as ICalendarBranch);
+        this.serviceDispatchers.setSelectedServices([]);
         this.clearSelectedValues();
         this.onFlowExit.emit();
       }

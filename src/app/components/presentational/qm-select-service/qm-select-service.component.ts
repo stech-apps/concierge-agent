@@ -109,17 +109,23 @@ export class QmSelectServiceComponent implements OnInit {
       this.subscriptions.add(calendarServiceSubscription);
 
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
-        const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
-          if(branch.publicId){
-            //if(this.selectedBranch && this.selectedBranch !== branch || !val){
-              this.calendarServiceDispatchers.fetchServices(branch);
-            //}
-            this.selectedBranch = branch;
-          }
-        });
-        this.subscriptions.add(calendarBranchSubscription);
+       
       });
       this.subscriptions.add(calendarServiceLoadedSubscription);
+
+
+      // calendar branch subscription
+
+      const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
+        if(branch.publicId){
+          //if(!this.selectedBranch && this.selectedBranch !== branch || !val){
+            this.calendarServiceDispatchers.fetchServices(branch);
+          //}
+          this.selectedBranch = branch;
+        }
+      });
+      this.subscriptions.add(calendarBranchSubscription);
+
 
       const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
         if(params){

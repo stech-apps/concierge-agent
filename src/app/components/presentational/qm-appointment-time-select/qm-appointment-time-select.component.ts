@@ -73,7 +73,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {
       this.selectedServices = s;
-      if (this.selectedServices.length > 0) {
+      if (this.selectedServices.length > 0 && this.selectedBranch && this.selectedBranch.id) {
         this.fetchReservableDates();
         this.onSelectDate(this.selectedDates[0]);
       }

@@ -10,13 +10,13 @@
        margin: auto; vertical-align: middle;
     }
     &__container{
-        position: fixed;
+        position: absolute;
         top: 12vh;
         left: 22%;
         right: 25%;
         margin: auto;
         max-width: 45% ;
-        min-height: 60% ;
+        min-height: 30% ;
         max-height: 80% ;
         padding: 2%;
         min-width: 45%;

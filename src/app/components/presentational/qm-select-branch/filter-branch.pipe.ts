@@ -8,7 +8,7 @@ export class FilterBranchPipe implements PipeTransform {
 
   transform(branches: ICalendarBranchViewModel[], filterText?: any): any {
 
-    if(!branches || !filterText) {
+    if(!branches || !filterText || !filterText.trim()) {
       return branches;
     }
 

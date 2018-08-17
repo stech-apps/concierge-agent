@@ -52,7 +52,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
         
         this.branches.forEach((b) => {
-          if (b.id === sb.id) {
+          if (b.id === sb.id && this.isFlowSkip) {
             b.selected = true;
             this.currentBranch = b;
           }
@@ -78,13 +78,17 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
         if(v) {
           branch.selected = !branch.selected;
           this.branchDispatchers.selectCalendarBranch(branch);
-          this.onFlowNext.emit();
+
         }
       }, ()=> {});
     }
     else {
       branch.selected = !branch.selected;
       this.branchDispatchers.selectCalendarBranch(branch);
+    }
+
+    if(branch.selected) {
+      this.onFlowNext.emit();
     }
   }
 

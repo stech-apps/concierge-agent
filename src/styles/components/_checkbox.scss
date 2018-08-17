@@ -33,9 +33,6 @@
       .qm-checkbox__selector-icon {
         &:before {
           content: "\e95e";
-          @at-root [dir='rtl'] & {
-            content: "\e960";
-          }
         }
       }
     }

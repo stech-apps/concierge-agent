@@ -54,7 +54,7 @@ export class QmClearInputDirective implements OnInit  {
   }
 
   updateButtonVisibility(inputText: string) {
-    if (inputText) {
+    if (inputText && inputText.trim()) {
       this.componentRef.instance.isVisible = true;
     } else {
       this.componentRef.instance.isVisible = false;

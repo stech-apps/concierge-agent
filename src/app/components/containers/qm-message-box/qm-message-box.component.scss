@@ -1,35 +1,49 @@
 .qm-msg-box{
-    display: table;height: 88vh; width: 100%; margin-top: 15vh;
-    margin: auto
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    left: 0;
+    font: sans-serif 
 
     &__main-container{
-        display: table-cell; vertical-align: middle;
+       margin: auto; vertical-align: middle;
     }
     &__container{
-        padding: 20px 10px ; margin-left: auto; margin-right: auto; width: 80vh; background-color: white; 
+        position: fixed;
+        top: 12vh;
+        left: 22%;
+        right: 25%;
+        margin: auto;
+        max-width: 45% ;
+        min-height: 60% ;
+        max-height: 80% ;
+        padding: 2%;
+        min-width: 45%;
+        background-color: white;
     }
     &__first-line-name{
-        color: black;font-size: 1.35rem;text-align: center;left: 0;right: 0;margin: auto
+        color: black;font-size: 130%;text-align: center;left: 0;right: 0;margin: auto
     }
     &__first-line-text{
-        color: black;font-size: 1.7rem;text-align: center;left: 0;right: 0;margin: auto
+        color: black;font-size: 150%;text-align: center;left: 0;right: 0;margin: auto
     }
     &__second-line-name{
-        color: black;font-size: 1.35rem;text-align: center;padding-top: 30px;left: 0;right: 0;margin: auto
+        color: black;font-size: 130%;text-align: center;padding-top: 20px;left: 0;right: 0;margin: auto
     }
     &__second-line-text{
-        color: black;font-size: 1.7rem;text-align: center;left: 0;right: 0;margin: auto
+        color: black;font-size: 150%;text-align: center;left: 0;right: 0;margin: auto
     }
     &__icon-container{
-        text-align: center;padding: 10px;margin-top: 20px
+        text-align: center;padding: 10px;margin-top: 20px;
     }
     &__icon{
         width: 100px
     }
     &__last-line-name{
-        color: black;font-size: 1.35rem;text-align: center;padding-top: 30px;left: 0;right: 0;margin: auto
+        color: black;font-size: 130%;text-align: center;padding-top: 10px;left: 0;right: 0;margin: auto
     }
     &__last-line-text{
-        color: black;font-size: 1.35rem;text-align: center;left: 0;right: 0;margin: auto
+        color: black;font-size: 140%;text-align: center;left: 0;right: 0;margin: auto
     }
 }

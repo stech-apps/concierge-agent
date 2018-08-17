@@ -12,6 +12,7 @@
 </thead>
 
 <tbody *ngIf="customers.length!=0" class="tbody" [style.max-height]="height">
+  <tr></tr>
     <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" (click)="selectCustomer(customer)">
       <td style="width: 5%"></td>
       <td style="width: 20%">{{customer.lastName}}</td>

@@ -50,7 +50,9 @@ export class QmCustomerSearchComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.multiBranchEnabled = params.mltyBrnch;
+        console.log(params);
       }
+     
     });
  
     

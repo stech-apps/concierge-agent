@@ -117,4 +117,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   hasValidLicense(): boolean {
     return this.isValidLicense;
   }
+  editClick(){
+    this.router.navigate(['profile']);
+  }
 }

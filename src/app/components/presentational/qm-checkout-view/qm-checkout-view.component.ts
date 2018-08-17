@@ -20,7 +20,7 @@ import { IBranch } from "../../../../models/IBranch";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
 import { NoteSelectors, NoteDispatchers } from "../../../../store";
-import { FormGroup, FormControl, FormBuilder,Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
 import { QmModalService } from "../qm-modal/qm-modal.service";
@@ -51,9 +51,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   emailActionEnabled: boolean = false;
   ticketlessActionEnabled: boolean = false;
   isNoteEnabled: boolean = false;
-  isVipLvl1Enabled:boolean = false;
-  isVipLvl2Enabled:boolean = false;
-  isVipLvl3Enabled:boolean = false;
+  isVipLvl1Enabled: boolean = false;
+  isVipLvl2Enabled: boolean = false;
+  isVipLvl3Enabled: boolean = false;
 
   buttonEnabled = false;
 
@@ -90,9 +90,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private tempCustomer: ICustomer;
 
   radioForm: FormGroup;
-  vipLevel1Checked:boolean ;
-  vipLevel2Checked:boolean;
-  vipLevel3Checked:boolean ;
+  vipLevel1Checked: boolean;
+  vipLevel2Checked: boolean;
+  vipLevel3Checked: boolean;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -151,10 +151,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.add(appointmentSubscription);
 
     const tempCustomerSubscription = this.customerSelector.tempCustomer$.subscribe((customer) => {
-      if(customer){
+      if (customer) {
         this.tempCustomer = customer;
-        this.customerEmail=customer.email;
-        this.customerSms=customer.phone;
+        this.customerEmail = customer.email;
+        this.customerSms = customer.phone;
       }
     });
     this.subscriptions.add(tempCustomerSubscription);
@@ -163,24 +163,24 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
-      this.ticketlessActionEnabled=false;
-      this.ticketActionEnabled=false;
-      this.isVipLvl1Enabled = false;
-      this.isVipLvl2Enabled= false;
-      this.isVipLvl3Enabled = false;
+        this.ticketlessActionEnabled = false;
+        this.ticketActionEnabled = false;
+        this.isVipLvl1Enabled = false;
+        this.isVipLvl2Enabled = false;
+        this.isVipLvl3Enabled = false;
         // this.emailActionEnabled = true;
         // this.smsActionEnabled = true;
         this.buttonText = "create_appointment_action";
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
-      this.emailActionEnabled = false;
+        this.emailActionEnabled = false;
         // this.ticketActionEnabled = true;
         // this.smsActionEnabled = true;
         // this.ticketlessActionEnabled = true;
         this.buttonText = "checkin_appointment";
         break;
       case FLOW_TYPE.CREATE_VISIT:
-      this.emailActionEnabled = false;
+        this.emailActionEnabled = false;
         // this.ticketActionEnabled = true;
         // this.smsActionEnabled = true;
         // this.ticketlessActionEnabled = true;
@@ -200,36 +200,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
     }
-    // this.radioForm = new FormGroup({
-    //   vipLevel1: new FormControl(''),
-    //   vipLevel2: new FormControl(''),
-    //   vipLevel3: new FormControl('')
-
-    // })
-
-    // const radioFormSubscription = this.radioForm.valueChanges.subscribe(() => {
-
-    //   if(this.radioForm.controls['vipLevel1'].touched ){
-    //     this.radioForm.controls['vipLevel2'].patchValue(false,{ emitEvent: false });
-    //     this.radioForm.controls['vipLevel3'].patchValue(false, { emitEvent: false });
-    //     this.radioForm.controls['vipLevel1'].markAsUntouched({ onlySelf: true });
-    //   }
-
-    //   if(this.radioForm.controls['vipLevel2'].touched ){
-    //     this.radioForm.controls['vipLevel1'].patchValue(false,{ emitEvent: false });
-    //     this.radioForm.controls['vipLevel3'].patchValue(false, { emitEvent: false });
-    //     this.radioForm.controls['vipLevel2'].markAsUntouched({ onlySelf: true });
-    //   }
-
-    //   if(this.radioForm.controls['vipLevel3'].touched ){
-    //     this.radioForm.controls['vipLevel2'].patchValue(false,{ emitEvent: false });
-    //     this.radioForm.controls['vipLevel1'].patchValue(false, { emitEvent: false });
-    //     this.radioForm.controls['vipLevel3'].markAsUntouched({ onlySelf: true });
-    //   }
-   
-    // });
-    // this.subscriptions.add(radioFormSubscription);
-
 
 
   }
@@ -259,19 +229,20 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onButtonPressed() {
-    if(this.ticketlessSelected){
+    if (this.smsSelected || this.emailSelected){
+      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
+        this.themeColor, 'ok', 'cancel',
+        (result: boolean) => {
+          if (result) {
+            this.handleCheckoutCompletion();
+          }
+        },
+        () => { }, null);
+    } else {
       this.handleCheckoutCompletion();
       return;
     }
-    this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
-      this.themeColor, 'ok', 'cancel',
-      (result: boolean) => {
-        if (result) {
-          this.handleCheckoutCompletion();
-        }
 
-      },
-      () => { }, null);
 
 
   }
@@ -403,22 +374,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   showSussessMessage(result: any) {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      this.translateService.get(['appointment_for_service','created_on_branch', 'appointment_time']).subscribe(v => {
+      this.translateService.get(['appointment_for_service', 'created_on_branch', 'appointment_time']).subscribe(v => {
         var serviceName = ""
         result.services.forEach(val => {
-          if(serviceName.length > 0){
+          if (serviceName.length > 0) {
             serviceName = serviceName + ", " + val.name;
           }
-          else{
+          else {
             serviceName = val.name;
           }
         })
-        var successMessage = { 
+        var successMessage = {
           firstLineName: v.appointment_for_service,
           firstLineText: serviceName,
           SecondLineName: v.created_on_branch,
           SecondLineText: result.branch.name,
-          icon:"correct",
+          icon: "correct",
           LastLineName: v.appointment_time,
           LastLineText: this.buildDate(result.start)
         }
@@ -427,10 +398,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
     else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.translateService.get('visit_created').subscribe(v => {
-        var successMessage = { 
+        var successMessage = {
           firstLineName: v,
           firstLineText: result.ticketId,
-          icon:"correct"
+          icon: "correct"
         }
         this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
       });
@@ -446,7 +417,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  clearSelectedValues(){
+  clearSelectedValues() {
     this.customerDispatcher.resetCurrentCustomer();
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.customerDispatcher.resetTempCustomer();
@@ -493,34 +464,34 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.selectedServices.forEach(val => {
         serviceList.push(val.id);
       })
-      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
         this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, serviceList);
       }
-      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
         this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, serviceList);
       }
     }
   }
 
-  private buildDate(time: string){
+  private buildDate(time: string) {
     let dateObj = moment(time).format("YYYY-MM-DD, HH:mm");
     return dateObj;
   }
-  onVip1Clicked(){
+  onVip1Clicked() {
     this.vipLevel1Checked ? this.vipLevel1Checked = false : this.vipLevel1Checked = true;
     this.vipLevel2Checked = false;
     this.vipLevel3Checked = false;
     this.selectedVIPLevel = VIP_LEVEL.VIP_1;
   }
 
-  onVip2Clicked(){
+  onVip2Clicked() {
     this.vipLevel2Checked ? this.vipLevel2Checked = false : this.vipLevel2Checked = true;
     this.vipLevel1Checked = false;
     this.vipLevel3Checked = false;
     this.selectedVIPLevel = VIP_LEVEL.VIP_2;
   }
 
-  onVip3Clicked(){
+  onVip3Clicked() {
     this.vipLevel3Checked ? this.vipLevel3Checked = false : this.vipLevel3Checked = true;
     this.vipLevel2Checked = false;
     this.vipLevel1Checked = false;

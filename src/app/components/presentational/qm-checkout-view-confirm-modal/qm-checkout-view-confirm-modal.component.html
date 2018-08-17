@@ -8,27 +8,27 @@
       <div class="qm-confirm-modal__inputs-container">
 
         <div *ngIf="isEmailEnabled" class="email-container">
-          <div class="input-box-and-clear-button" [ngStyle]="{'background-color':  confirmModalForm.get('email').valid   ? '#ffffff' : '#F5A9A9'}">
+          <div class="input-box-and-clear-button" [ngStyle]="{'background-color':  confirmModalForm.get('email').valid || email.value ===''  ? '#ffffff' : '#F5A9A9'}">
             <input 
             type="text" class="input-box"   name='email' placeholder="{{'type_email'|translate }}" formControlName = "email" #email 
             />
             <i *ngIf="email.value!='' " class="clear-icon icon-close" (click)="clearEmail()"></i>
           </div>
           <div class="validate-icon btn-light-active-action" :active>
-            <i  [ngClass]="showEmailTick ? 'icon-check':'icon-refresh'" (click)="validateEmail()"></i>
+            <i [ngClass]="showEmailTick ? 'icon-check':'icon-refresh'" (click)="validateEmail()"></i>
           </div>
         </div>
 
         <div *ngIf="isSmsEnabled" class="sms-container">
-         <div class="input-box-and-clear-button" [ngStyle]="{'background-color': confirmModalForm.get('phone').valid ? '#ffffff' : '#F5A9A9'}">
+         <div class="input-box-and-clear-button" [ngStyle]="{'background-color': confirmModalForm.get('phone').valid || phone.value ==='' ? '#ffffff' : '#F5A9A9'}">
             <input  
             type="text" class="input-box" (ngModelChange)="phoneValidated=true" name='phone' placeholder="{{'type_mobile_number'|translate }}" minlength="8" formControlName = "phone" #phone
             />
             <i *ngIf="phone.value!='' " class="clear-icon icon-close" (click)="clearPhone()"></i>
           </div>
          
-          <div class="validate-icon btn-light-active-action :active">
-            <i [ngClass]="showPhoneTick?'icon-check':'icon-refresh'" (click)="validatePhone()" ></i>
+          <div *ngIf="customer!=null" class="validate-icon btn-light-active-action :active">
+            <i  [ngClass]="showPhoneTick?'icon-check':'icon-refresh'" (click)="validatePhone()" ></i>
           </div>
         </div>
 

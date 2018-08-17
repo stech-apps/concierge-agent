@@ -105,6 +105,13 @@ export function reducer(
                 tempCustomer:null
             };
         }
+
+        case CustomerActions.RESET_TEMP_CUSTOMER:{
+            return {
+                ...state,
+                tempCustomer:null
+            };
+        }
         default:{
             return state;
         }

@@ -123,4 +123,12 @@ export class SPService implements OnDestroy {
     return tempArr;
   }
 
+  updateCustomerPartially(customer: ICustomer){
+   
+    return this.http
+    .put<ICustomer>(`${servicePoint}/customers/${customer.id}`,customer)
+  }
+
+
+
 }

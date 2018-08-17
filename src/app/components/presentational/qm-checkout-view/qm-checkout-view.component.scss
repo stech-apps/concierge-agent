@@ -54,15 +54,16 @@
     display: inline-flex;
     align-items: center;
     .vip-label {
+      flex: 1;
       white-space: nowrap;
       font-weight: 900;
       font-size: smaller;
-      justify-content: center;
       @include add-text-ellipsis;
       width: auto;
+      text-align: center;
     }
     .radio-container{
- 
+ flex: 5;
       display: flex;
       flex-direction: row;
       width: 100%;

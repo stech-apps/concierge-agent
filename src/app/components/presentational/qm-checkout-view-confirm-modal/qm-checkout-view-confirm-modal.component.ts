@@ -2,12 +2,13 @@ import { AutoClose } from "./../../../../util/services/autoclose.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, Subscription } from "rxjs";
-import {  UserSelectors } from "./../../../../store/services/user/user.selectors";
+import { UserSelectors } from "./../../../../store/services/user/user.selectors";
 import { ServicePointSelectors } from "../../../../store";
 import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators } from '@angular/forms';
 import { CustomerSelector, CustomerDispatchers } from "../../../../store";
 import { Util } from '../../../../util/util';
 import { ICustomer } from '../../../../models/ICustomer';
+import { SPService } from "../../../../util/services/rest/sp.service";
 
 @Component({
   selector: 'qm-checkout-view-confirm-modal',
@@ -38,7 +39,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors,
     private customerSelector: CustomerSelector,
     private servicePointSelectors: ServicePointSelectors,
-    private util:Util,
+    private spService: SPService,
+    private util: Util,
     private customerDispatchers: CustomerDispatchers
   ) {
     const customerSubscription = this.customerSelector.currentCustomer$
@@ -73,7 +75,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       this.util.setApplicationTheme(openSp);
     })
     this.subscriptions.add(themeSubscription);
-    
+
     const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/), Validators.required];
     const emailValidators = [Validators.pattern(/^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/), Validators.required];
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -98,14 +100,19 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
         this.showEmailTick = false;
       }
     });
-    this.subscriptions.add( emailSubscription );
+    this.subscriptions.add(emailSubscription);
 
     const phoneSubscription = this.confirmModalForm.get('phone').valueChanges.subscribe(() => {
       if (this.confirmModalForm.controls['phone'].dirty) {
         this.showPhoneTick = false;
       }
     });
-    this.subscriptions.add( phoneSubscription );
+    this.subscriptions.add(phoneSubscription);
+
+    //disable email validation in create visit flow 
+    if(!this.isEmailEnabled){
+      this.confirmModalForm.get('email').disable();
+    }
   }
 
   ngOnDestroy() {
@@ -114,32 +121,44 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   validatePhone(): boolean {
 
-
     this.confirmModalForm.controls['phone'].patchValue(this.confirmModalForm.controls['phone'].value.trim());
     if (this.customer && this.confirmModalForm.controls['phone'].valid && this.confirmModalForm.controls['phone'].value != '') {
-
-      this.showPhoneTick = true;
-      this.customerDispatchers.updateCustomerPartially(this.preparedCustomer());
+      this.updateCustomer(this.preparedCustomer(), false);
       return true;
     } else {
-
-      this.showPhoneTick = false;
       return false;
+
     }
   }
   validateEmail(): boolean {
 
     this.confirmModalForm.controls['email'].patchValue(this.confirmModalForm.controls['email'].value.trim());
     if (this.customer && this.confirmModalForm.controls['email'].valid && this.confirmModalForm.controls['email'].value != '') {
-
-      this.showEmailTick = true;
-      this.customerDispatchers.updateCustomerPartially(this.preparedCustomer());
+      this.updateCustomer(this.preparedCustomer(), true);
       return true;
     } else {
 
-      this.showEmailTick = false;
       return false;
     }
+  }
+
+  updateCustomer(customer: ICustomer, fromEmail: boolean) {
+    this.spService.updateCustomerPartially(customer).subscribe(
+      result => {
+        this.customerDispatchers.selectCustomers(customer);
+        this.updateCustomerSuccess(fromEmail);
+
+      }, error => {
+
+      }
+    )
+
+  }
+
+  updateCustomerSuccess(fromEmail: boolean) {
+
+    fromEmail ? this.showEmailTick = true : this.showPhoneTick = true;
+
   }
 
 
@@ -186,8 +205,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       ...this.customer,
       id: this.customer.id,
       properties: {
-        phoneNumber: this.isSmsEnabled && this.showPhoneTick ? this.confirmModalForm.value.phone.trim() : this.customer.properties.phoneNumber,
-        email: this.isEmailEnabled && this.showEmailTick ? this.confirmModalForm.value.email.trim() : this.customer.properties.email
+        phoneNumber: this.isSmsEnabled ? this.confirmModalForm.value.phone.trim() : this.customer.properties.phoneNumber,
+        email: this.isEmailEnabled ? this.confirmModalForm.value.email.trim() : this.customer.properties.email
       }
 
     }

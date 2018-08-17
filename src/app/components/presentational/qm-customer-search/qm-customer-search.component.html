@@ -1,21 +1,24 @@
 <table class="customer-table" dir="{{ userDirection$ | async }}" >
   <thead class="customer-table-header">
-  <tr class="qm-td-col-1">
-    <th >{{ 'last_name' | translate }}</th>
-    <th>{{ 'first_name' | translate }}</th>
-    <th>{{ 'email' | translate }}</th>
-    <th>{{ 'phone_number' | translate }}</th>
-    <th></th>
+  <tr>
+    <th style="width: 5%;"></th>
+    <th style="width: 20%;">{{ 'last_name' | translate }}</th>
+    <th style="width: 20%">{{ 'first_name' | translate }}</th>
+    <th style="width: 20%">{{ 'email' | translate }}</th>
+    <th style="width: 20%">{{ 'phone_number' | translate }}</th>
+    <th style="width: 10%"></th>
+    <th style="width: 5%"></th>
   </tr>
 </thead>
 
 <tbody *ngIf="customers.length!=0" class="tbody" [style.max-height]="height">
-    <tr  class="customer-list qm-td-col-1" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" (click)="selectCustomer(customer)">
-      <td>{{customer.lastName}}</td>
-      <td >{{customer.firstName}}</td>
-      <td >{{customer.properties.email}}</td>
-      <td >{{customer.properties.phoneNumber}}</td>
-      <td> 
+    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" (click)="selectCustomer(customer)">
+      <td style="width: 5%"></td>
+      <td style="width: 20%">{{customer.lastName}}</td>
+      <td style="width: 20%">{{customer.firstName}}</td>
+      <td style="width: 20%">{{customer.properties.email}}</td>
+      <td style="width: 20%">{{customer.properties.phoneNumber}}</td>
+      <td style="width: 10%"> 
           <div class="svg-container" (click)="editCustomer(customer)">
           <svg clsas="edit_btn" enable-background="new 0 0 512 512"  viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="">
             <g id="Layer_1_1_">
@@ -24,7 +27,9 @@
             <g><path d="M337.1,138c-3.1,0-6.2,1.2-8.6,3.6L307.9,164l40,40l22.6-20.5c4.8-4.8,4.8-12.5,0-17.2l-24.7-24.7C343.2,139.2,340.1,138,337.1,138L337.1,138z" fill="none" stroke="#FFFFFF" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="16"></path></g></g></svg>
             </div>
           </td>
+          <td style="width: 4vw"></td>
     </tr>  
+    
 </tbody>
 <h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
 

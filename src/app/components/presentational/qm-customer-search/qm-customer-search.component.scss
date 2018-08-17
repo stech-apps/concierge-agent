@@ -1,12 +1,9 @@
 @import '../../../../styles/base/_component-manifest.scss';
 .customer-table{
     color: black;
-    // text-align: left;
     font-size: 0.9rem;
-    // margin:auto;
     width:100%;
-    // table-layout: fixed;
-    
+  
     :focus{
         outline: none; 
     }
@@ -31,14 +28,14 @@
         overflow: hidden;
         max-width:1px;
         width: 20%;
-        padding: 0px 10px 0px 85px;
-       
+        text-align: left;
     }
     
     td{
-        white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px; padding: 0px 10px 0px 85px; width: 1%;  height: 50px;
+        white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;  height: 50px;
         outline-style:none;
         box-shadow:none;
+        text-align: left;
         border-color:transparent;
         @at-root [dir="rtl"] & {
             text-align: right;

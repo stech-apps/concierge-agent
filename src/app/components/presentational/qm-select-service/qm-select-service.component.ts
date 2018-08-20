@@ -28,7 +28,6 @@ export class QmSelectServiceComponent implements OnInit {
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedBranch: IBranch;
-  selectedCaledarBranch: ICalendarBranch;
   isMultiServiceOn: boolean;
   private maxServiceSelection = 5;
   filterText: string = '';
@@ -112,17 +111,17 @@ export class QmSelectServiceComponent implements OnInit {
       // calendar branch subscription
 
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
-        if(this.selectedCaledarBranch !== branch){
+        if(this.selectedBranch as ICalendarBranch !== branch){
           this.calendarServiceDispatchers.removeFetchService();
         }
-        this.selectedCaledarBranch = branch;
+        this.selectedBranch = branch;
       });
       this.subscriptions.add(calendarBranchSubscription);
 
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
         if(!val){
           this.selectedServiceList = [];
-          this.calendarServiceDispatchers.fetchServices(this.selectedCaledarBranch);
+          this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
         }
       });
       this.subscriptions.add(calendarServiceLoadedSubscription);

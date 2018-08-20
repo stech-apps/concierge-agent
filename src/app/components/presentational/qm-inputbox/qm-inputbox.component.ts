@@ -117,6 +117,9 @@ export class QmInputboxComponent implements OnInit {
   }
 
   trimCustomer():ICustomer{
+    if(this.editCustomer.phone== this.countrycode){
+      this.customerCreateForm.value.phone = "";
+    }
     const customerSave:ICustomer={
       firstName: this.customerCreateForm.value.firstName.trim(),
       lastName: this.customerCreateForm.value.lastName.trim(),
@@ -128,23 +131,14 @@ export class QmInputboxComponent implements OnInit {
 
 
   preparedCustomer():ICustomer{
-    if(this.isOnupdate && this.editCustomer.phone!= this.countrycode){
+    if(this.isOnupdate){
       const customerToSave : ICustomer = {
         ...this.editCustomer,
         ...this.trimCustomer(),
         id:this.editCustomer.id
       }
       return customerToSave
-    } else if(this.isOnupdate && this.editCustomer.phone== this.countrycode){
-      this.editCustomer.phone=""
-      const customerToSave : ICustomer = {
-        ...this.editCustomer,
-        ...this.trimCustomer(),
-        id:this.editCustomer.id
-      }
-      return customerToSave
-    }
-    else{
+    }else{
       const customerToSave : ICustomer = {
         ...this.trimCustomer()
       }

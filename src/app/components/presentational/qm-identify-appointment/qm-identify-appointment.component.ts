@@ -9,8 +9,9 @@ import * as moment from 'moment';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
-import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors } from 'src/store';
+import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers } from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
+import { ICustomer } from 'src/models/ICustomer';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -61,7 +62,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   height:string;
 
   constructor(private appointmentDispatchers: AppointmentDispatchers,
-    private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors) { }
+    private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors,
+    private arriveAppointmentDispatchers: ArriveAppointmentDispatchers
+  ) { }
 
   ngOnInit() {
     this.inputAnimationState = 'out';
@@ -193,7 +196,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
-  onAppointmentSelect(){
+  onAppointmentSelect(selectedCustomer: ICustomer){
+    this.arriveAppointmentDispatchers.SelectArrivedCustomer(selectedCustomer);
     this.onFlowNext.emit();
   }
 }

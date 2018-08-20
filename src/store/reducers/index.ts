@@ -19,6 +19,7 @@ import * as fromReserve from './reserve.reducer';
 import * as fromInfoMsgBox from './message-box.reducer';
 import * as fromNotes from './note.reducer';
 import * as fromAppointments from './appointment.reducer';
+import * as fromArriveAppointment from './arrive-appointment.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -40,6 +41,7 @@ export interface IAppState {
   infoMsgBox: fromInfoMsgBox.IMessageInfoState;
   note: fromNotes.INoteState
   appointments: fromAppointments.IAppointmentState,
+  arriveAppointment: fromArriveAppointment.IArriveAppointmentState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -62,4 +64,5 @@ export const reducers: ActionReducerMap<IAppState> = {
   infoMsgBox: fromInfoMsgBox.reducer,
   note: fromNotes.reducer,
   appointments: fromAppointments.reducer,
+  arriveAppointment: fromArriveAppointment.reducer
 };

@@ -253,7 +253,7 @@
       </thead>
 
       <tbody *ngIf="appointments.length!=0" class="qm-identify-appointment__tbody" [style.max-height]="height">
-        <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect()">
+        <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect(app.customers[0])">
           <td class="qm-identify-appointment__customer-table__col-5"></td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime)}}</td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.startTime)}}</td>

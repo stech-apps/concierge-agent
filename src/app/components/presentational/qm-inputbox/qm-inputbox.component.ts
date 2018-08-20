@@ -43,9 +43,12 @@ export class QmInputboxComponent implements OnInit {
 
   ngOnInit() {
 
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      this.countrycode = params.countryCode;
+    });
     
-   
-    const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/)];
+    const countryValidators = [Validators.pattern(this.countrycode)];
+    const phoneValidators = [Validators.pattern(/^[0-9\+\s]{7}[0-9\+\s]+$/)]; 
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
   
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
@@ -72,14 +75,13 @@ export class QmInputboxComponent implements OnInit {
         email:this.editCustomer.properties.email
       })
     }
-    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      this.countrycode = params.countryCode;
-      if(params.countryCode && !this.editCustomer){
+
+      if(this.countrycode && !this.editCustomer){
         this.customerCreateForm.patchValue({
-          phone:params.countryCode
+          phone:this.countrycode
         })
       }
-    });
+   
   }
 
 

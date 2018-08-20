@@ -1,9 +1,5 @@
 .qm-msg-box{
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    top: 0px;
-    left: 0;
+    height: 100%;position: absolute;z-index: 100;
     font: sans-serif 
 
     &__main-container{
@@ -91,4 +87,25 @@
 
     }
 
+}
+
+@media only screen and (max-width: 600px) {
+    .qm-msg-box__first-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__first-line-text{
+        font-size: 100%;
+    }
+    .qm-msg-box__second-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__second-line-text{
+        font-size: 100%;
+    }
+    .qm-msg-box__last-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__last-line-text{
+        font-size: 100%;
+    }
 }

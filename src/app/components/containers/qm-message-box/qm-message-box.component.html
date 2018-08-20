@@ -1,6 +1,6 @@
-
-    <div  *ngIf="MessageBoxInfo" style="height: 100%;position: absolute;z-index: 100;" (click)="resetValue()">
-      <div style="height: 100vh;width: 100%;">
+<div style="width: 100%;height: 100%;position: absolute;z-index: 200" (click)="resetValue()">
+    <div  *ngIf="MessageBoxInfo" class="qm-msg-box" >
+      <div style="height: 100vh;width: 100%;" >
           <div class="message_view_content_box">
               <div>
                   <div *ngIf="MessageBoxInfo.firstLineName" class="qm-msg-box__first-line-name">  {{MessageBoxInfo.firstLineName}}</div>
@@ -19,6 +19,7 @@
                     </div>       
         </div>
       </div>
+    </div>
       
 
     </div>

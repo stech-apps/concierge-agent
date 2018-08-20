@@ -1,7 +1,7 @@
 <div class="qm-page-root qm-home" dir="{{ userDirection$ | async }}">
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
-      <qm-message-box></qm-message-box>
+      <qm-message-box *ngIf="MessageBoxInfo" style="width: 100%;height: 100vh;position: absolute;z-index: 2;"></qm-message-box>
     <qm-quick-serve *ngIf="isQuickServeEnable && !MessageBoxInfo"></qm-quick-serve>
     <div class="qm-home-summary-area" *ngIf="isShowQueueView && !MessageBoxInfo">
       <qm-queue-summary></qm-queue-summary>

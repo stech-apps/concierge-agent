@@ -19,6 +19,9 @@ export class CustomerDispatchers{
     selectCustomers(customer:ICustomer){
         this.store.dispatch(new CustomerAction.SelectCustomer(customer));
     }
+    editCustomers(customer:ICustomer){
+        this.store.dispatch(new CustomerAction.EditCustomer(customer));
+    }
  
     createCustomer(customer:ICustomer){
         this.store.dispatch(new CustomerAction.CreateCustomer(customer));

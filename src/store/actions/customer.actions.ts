@@ -7,6 +7,7 @@ import { ICustomer } from '../../models/ICustomer';
 export const UPDATE_CUSTOMER_SEARCH_TEXT = '[Customer] UPDATE_CUSTOMER_SEARCH_TEXT';
 export const RESET_CUSTOMER_SEARCH_TEXT = '[Customer] RESET_CUSTOMER_SEARCH_TEXT';
 export const SELECT_CUSTOMER = '[Customer] SELECT_CUSTOMER';
+export const EDIT_CUSTOMER = '[Customer] EDIT_CUSTOMER';
 export const RESET_CURRENT_CUSTOMER = '[Customer] RESET_CURRENT_CUSTOMER';
 export const FETCH_CUSTOMERS= '[Customer] FETCH_CUSTOMERS';
 export const FETCH_CUSTOMERS_FAIL= '[Customer] FETCH_CUSTOMERS_FAIL';
@@ -39,6 +40,11 @@ export class SelectCustomer implements Action{
 
 }
 
+export class EditCustomer implements Action{
+    readonly type = EDIT_CUSTOMER;
+    constructor(public payload: ICustomer) {}
+
+}
 export class ResetCurrentCustomer implements Action{
     readonly type = RESET_CURRENT_CUSTOMER
 }
@@ -110,7 +116,7 @@ export class UpdateCUstomerPartiallySuccess implements Action{
 }
 
 
-export type AllCustomerActions = UpdateCustomerSearchText | ResetCustomerSearchText |SelectCustomer |ResetCurrentCustomer
+export type AllCustomerActions = UpdateCustomerSearchText | ResetCustomerSearchText |SelectCustomer|EditCustomer |ResetCurrentCustomer
             |FetchCustomers|FetchCustomersFail|FetchCustomersSuccess | ResetCustomers| CreateCustomer | CreateCustomerFail | CreateCustomerSuccess
             |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess
             | SetTempCustomer | ResetTempCustomer

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
 import { CustomerDispatchers, CustomerSelector, UserSelectors, ServicePointSelectors } from '../../../../store';
 import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 import { Router } from '@angular/router';
+import { EventEmitter } from '../../../../../node_modules/protractor';
 
 @Component({
   selector: 'qm-customer-search',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class QmCustomerSearchComponent implements OnInit {
 
   @Input() myData:string;
+  // @Output() isEdit = new EventEmitter
   customersLoading: boolean;
   customerLoading$:Observable<boolean>;
   customerLoaded:boolean;
@@ -21,6 +23,9 @@ export class QmCustomerSearchComponent implements OnInit {
   height:string="calc(100vh - "+ this.reminingHeight+ ')';
   currentCustomer: ICustomer;
   currentCustomer$: Observable<ICustomer>;
+  editCustomers: ICustomer;
+  editCustomers$: Observable<ICustomer>;
+  
   multiBranchEnabled:boolean=false;
 
 
@@ -116,7 +121,7 @@ export class QmCustomerSearchComponent implements OnInit {
   
   editCustomer(customer:ICustomer){
     this.confirmBox.open('update');
-    this.CustomerDispatchers.selectCustomers(customer);
+    this.CustomerDispatchers.editCustomers(customer);
     console.log(customer);
   }
 

@@ -13,12 +13,12 @@
 
 <tbody *ngIf="customers.length!=0" class="tbody" [style.max-height]="height">
   <tr></tr>
-    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" (click)="selectCustomer(customer)">
-      <td style="width: 5%"></td>
-      <td style="width: 20%">{{customer.lastName}}</td>
-      <td style="width: 20%">{{customer.firstName}}</td>
-      <td style="width: 20%">{{customer.properties.email}}</td>
-      <td style="width: 20%">{{customer.properties.phoneNumber}}</td>
+    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" >
+      <td style="width: 5%" (click)="selectCustomer(customer)"></td>
+      <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.lastName}}</td>
+      <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.firstName}}</td>
+      <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.properties.email}}</td>
+      <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.properties.phoneNumber}}</td>
       <td style="width: 10%"> 
           <div class="svg-container" (click)="editCustomer(customer)">
           <svg clsas="edit_btn" enable-background="new 0 0 512 512"  viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="">
@@ -28,7 +28,7 @@
             <g><path d="M337.1,138c-3.1,0-6.2,1.2-8.6,3.6L307.9,164l40,40l22.6-20.5c4.8-4.8,4.8-12.5,0-17.2l-24.7-24.7C343.2,139.2,340.1,138,337.1,138L337.1,138z" fill="none" stroke="#FFFFFF" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="16"></path></g></g></svg>
             </div>
           </td>
-          <td style="width: 4vw"></td>
+          <td style="width: 4vw" (click)="selectCustomer(customer)"></td>
     </tr>  
     
 </tbody>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AutoClose } from '../../../../util/services/autoclose.service';
-import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector } from '../../../../store';
+import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
 import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, } from '@angular/forms';
 import { ICustomer } from '../../../../models/ICustomer';
 import { first } from '../../../../../node_modules/rxjs/operators';
@@ -15,8 +15,9 @@ import { whiteSpaceValidator } from '../../../../util/custom-form-validators';
 })
 export class QmInputboxComponent implements OnInit {
   customerCreateForm:FormGroup;
-  currentCustomer: ICustomer;
-  currentCustomer$: Observable<ICustomer>;
+  countrycode:string;
+  editCustomer: ICustomer;
+  editCustomer$: Observable<ICustomer>;
   userDirection$: Observable<string>;
   isOnupdate:boolean;
   isButtonPressed:boolean=false;
@@ -28,6 +29,7 @@ export class QmInputboxComponent implements OnInit {
   invalidLastName:boolean;
 
   constructor(
+    private servicePointSelectors: ServicePointSelectors,
     private activeModal:NgbActiveModal,
     public autoCloseService:AutoClose,
     private userSelectors:UserSelectors,
@@ -35,11 +37,13 @@ export class QmInputboxComponent implements OnInit {
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector 
   ) {
-    this.currentCustomer$ = this.customerSelectors.currentCustomer$;
+    this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;
    }
 
   ngOnInit() {
+
+    
    
     const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/)];
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
@@ -54,20 +58,28 @@ export class QmInputboxComponent implements OnInit {
       email:new FormControl('',emailValidators)
     })
 
-    let currentCustomerSubscription = null;
+    let editCustomerSubscription = null;
     if(this.isOnupdate){  
-      currentCustomerSubscription = this.currentCustomer$.subscribe(
-        (currentCustomer:ICustomer)=>{
-          this.currentCustomer = currentCustomer;
+      editCustomerSubscription = this.editCustomer$.subscribe(
+        (editCustomer:ICustomer)=>{
+          this.editCustomer = editCustomer;
         }
       )
       this.customerCreateForm.patchValue({
-        firstName: this.currentCustomer.firstName,
-        lastName:this.currentCustomer.lastName,
-        phone:this.currentCustomer.properties.phoneNumber,
-        email:this.currentCustomer.properties.email
+        firstName: this.editCustomer.firstName,
+        lastName:this.editCustomer.lastName,
+        phone:this.editCustomer.properties.phoneNumber,
+        email:this.editCustomer.properties.email
       })
     }
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      this.countrycode = params.countryCode;
+      if(params.countryCode && !this.editCustomer){
+        this.customerCreateForm.patchValue({
+          phone:params.countryCode
+        })
+      }
+    });
   }
 
 
@@ -116,14 +128,23 @@ export class QmInputboxComponent implements OnInit {
 
 
   preparedCustomer():ICustomer{
-    if(this.isOnupdate){
+    if(this.isOnupdate && this.editCustomer.phone!= this.countrycode){
       const customerToSave : ICustomer = {
-        ...this.currentCustomer,
+        ...this.editCustomer,
         ...this.trimCustomer(),
-        id:this.currentCustomer.id
+        id:this.editCustomer.id
       }
       return customerToSave
-    }else{
+    } else if(this.isOnupdate && this.editCustomer.phone== this.countrycode){
+      this.editCustomer.phone=""
+      const customerToSave : ICustomer = {
+        ...this.editCustomer,
+        ...this.trimCustomer(),
+        id:this.editCustomer.id
+      }
+      return customerToSave
+    }
+    else{
       const customerToSave : ICustomer = {
         ...this.trimCustomer()
       }

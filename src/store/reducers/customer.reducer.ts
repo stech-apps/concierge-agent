@@ -9,6 +9,7 @@ export interface ICustomerState{
     loaded:boolean;
     error:Object;
     tempCustomer: ICustomer;
+    editCustomer:ICustomer;
 }
 
 export const initialState:ICustomerState={
@@ -18,7 +19,8 @@ export const initialState:ICustomerState={
     loading:false,
     loaded:false,
     error:null,
-    tempCustomer: null
+    tempCustomer: null,
+    editCustomer:null
 };
 
 export function reducer(
@@ -48,6 +50,14 @@ export function reducer(
             };
             }
         
+        
+        case CustomerActions.EDIT_CUSTOMER:{
+                return {
+                    ...state,
+                    editCustomer:action.payload
+                };
+                }
+            
         case CustomerActions.RESET_CURRENT_CUSTOMER:{
             return{
                 ...state,

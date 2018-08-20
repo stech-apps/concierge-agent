@@ -19,4 +19,5 @@ export interface IAppointment {
   blocking?: boolean;
   end?: string;
   deleted?: boolean;
+  qpId?: number;
 }

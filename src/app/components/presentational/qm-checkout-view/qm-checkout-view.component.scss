@@ -22,7 +22,11 @@
       flex: 1;
       font-weight: 900;
       font-size: smaller;
-      text-align: center;
+      text-align: left;
+
+      @at-root [dir="rtl"] & {
+        text-align: right;
+      }
     }
     .input-container{
       flex: 5;
@@ -60,7 +64,7 @@
       font-size: smaller;
       @include add-text-ellipsis;
       width: auto;
-      text-align: center;
+      text-align: left;
     }
     .radio-container{
  flex: 5;
@@ -120,6 +124,94 @@
      }
 
     }
+  }
+
+  &__details-container {
+    padding: 1em 0.2em 1em 0.2em;
+     width: 100%;
+      max-width: 100%;
+       position: relative;
+       -webkit-touch-callout: none; /* iOS Safari */
+       -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Firefox */
+           -ms-user-select: none; /* Internet Explorer/Edge */
+               user-select: none; /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
+    
+   
+  
+
+      .toggleview-container{
+        display: inline-flex;
+        flex-direction: row;
+        
+        .detail-label {
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 2px;
+    }
+
+    .arrow-up {
+      margin-left: 5px;
+align-self: center;
+      width: 0; 
+      height: 0; 
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid black;
+    }
+    
+    .arrow-down {
+      margin-left: 5px;
+      align-self: center;
+      width: 0; 
+      height: 0; 
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid black;
+    }
+      }
+
+     
+      
+        .table-container{
+          width:100%;
+
+        
+
+          .table {
+            width: 100%;
+            table-layout: fixed;
+
+            .tr{
+             
+            }
+
+            .label {
+             
+              text-align: left;
+              font-size: 12px;
+              padding: 5px;
+              letter-spacing: 2px;
+              @include add-text-ellipsis;
+              width: 30%;
+             }
+
+             .value {
+          
+              text-align: left;
+              font-size: 12px;
+              padding: 5px;
+              letter-spacing: 2px;
+              @include add-text-ellipsis;
+              width:70%;
+            }
+          }
+
+        
+       
+        }
   }
 
 

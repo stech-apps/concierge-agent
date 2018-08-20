@@ -20,7 +20,7 @@
         </div>
 
         <div *ngIf="isSmsEnabled" class="sms-container">
-         <div class="input-box-and-clear-button" [ngStyle]="{'background-color': confirmModalForm.get('phone').valid || phone.value ==='' ? '#ffffff' : '#F5A9A9'}">
+         <div class="input-box-and-clear-button" [ngStyle]="{'background-color': phoneColor }">
             <input  
             type="text" class="input-box" (ngModelChange)="phoneValidated=true" name='phone' placeholder="{{'type_mobile_number'|translate }}" minlength="8" formControlName = "phone" #phone
             />

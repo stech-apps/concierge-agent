@@ -21,7 +21,7 @@ import { SPService } from "../../../../util/services/rest/sp.service";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
 import { NoteSelectors, NoteDispatchers } from "../../../../store";
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
 
 import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
 import { QmModalService } from "../qm-modal/qm-modal.service";
@@ -38,6 +38,7 @@ import { CalendarBranchDispatchers, CalendarServiceDispatchers } from 'src/store
 
 export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Input() flowType: FLOW_TYPE;
+  flowTypeStr:string ;
 
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
@@ -89,11 +90,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedServicePoint: IServicePoint;
   private selectedServices: IService[];
   private tempCustomer: ICustomer;
-
-  radioForm: FormGroup;
   vipLevel1Checked: boolean;
   vipLevel2Checked: boolean;
   vipLevel3Checked: boolean;
+
+  serviceStr: string;
+  isExpanded: boolean = true;
+  appTime:string;
+  appId:number;
+  appCustomer:string;
+  appServices:string;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -116,7 +122,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private branchDispatcher: CalendarBranchDispatchers,
     private serviceDispatchers: CalendarServiceDispatchers
   ) {
-    this.uttParameters$ = this.servicePointSelectors.uttParameters$;
 
     this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
@@ -163,6 +168,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(tempCustomerSubscription);
+
   }
 
   ngOnInit() {
@@ -173,23 +179,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.isVipLvl1Enabled = false;
         this.isVipLvl2Enabled = false;
         this.isVipLvl3Enabled = false;
-        // this.emailActionEnabled = true;
-        // this.smsActionEnabled = true;
         this.buttonText = "create_appointment_action";
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.emailActionEnabled = false;
-        // this.ticketActionEnabled = true;
-        // this.smsActionEnabled = true;
-        // this.ticketlessActionEnabled = true;
-        this.buttonText = "checkin_appointment";
+        this.flowTypeStr = FLOW_TYPE.CREATE_APPOINTMENT;
+        this.buttonText = "arrive";
         break;
       case FLOW_TYPE.CREATE_VISIT:
         this.emailActionEnabled = false;
-        // this.ticketActionEnabled = true;
-        // this.smsActionEnabled = true;
-        // this.ticketlessActionEnabled = true;
-        this.buttonText = "create_visit";
+        this.buttonText = "checkin";
         break;
       default:
         break;
@@ -206,12 +205,56 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.subscriptions.add(servicePointSubscription);
     }
 
+    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+    this.genarateAppointmentData(this.selectedAppointment);
+    }
 
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+
+  genarateAppointmentData(appointment: IAppointment) {
+
+   this.appTime = this.setAppTime();
+    this.appId = this.setAppID();
+   this.appCustomer =  this.setAppCustomer();
+  this.appServices = this.setAppServices();
+
+  }
+
+  setAppTime():string {
+    if (this.selectedAppointment.start) {
+      var startTime = this.selectedAppointment.start.split(".")[0].split("T")[1].slice(0,5);
+      return startTime;
+  } 
+  return null;
+  }
+
+  setAppID():number {
+return this.selectedAppointment.qpId;
+  }
+
+  setAppCustomer():string {
+   return this.selectedAppointment.customers[0].firstName + this.selectedAppointment.customers[0].lastName;
+  }
+
+  setAppServices():string {
+     let temp:string;
+    this.selectedAppointment.services.forEach( (service , index) =>{
+      if(index >=  this.selectedAppointment.services.length){
+        temp = temp.concat(", ").concat(service.name);
+      }
+     
+    })
+    return temp;
+  }
+
+  toggleCollapse(){
+    this.isExpanded ? this.isExpanded = false : this.isExpanded = true;
+  }
+
 
   onNoteClicked() {
     this.qmNotesModalService.openForTransKeys(this.noteTextStr,
@@ -234,7 +277,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onButtonPressed() {
-    if (this.smsSelected || this.emailSelected){
+    if (this.smsSelected || this.emailSelected) {
       this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
         this.themeColor, 'ok', 'cancel',
         (result: boolean) => {
@@ -361,7 +404,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  setCreateVisit(){
+  setCreateVisit() {
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.selectedCustomer, this.customerSms, this.ticketSelected, this.tempCustomer, this.getNotificationType()).subscribe((result) => {
       this.showSussessMessage(result);
       this.saveFrequentService();
@@ -457,22 +500,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   }
 
-  getNotificationType() : NOTIFICATION_TYPE{
+  getNotificationType(): NOTIFICATION_TYPE {
     var notificationType = NOTIFICATION_TYPE.none;
-    if(this.smsSelected && this.emailSelected){
+    if (this.smsSelected && this.emailSelected) {
       notificationType = NOTIFICATION_TYPE.both;
     }
-    else if(this.smsSelected){
+    else if (this.smsSelected) {
       notificationType = NOTIFICATION_TYPE.sms;
     }
-    else if(this.emailSelected){
+    else if (this.emailSelected) {
       notificationType = NOTIFICATION_TYPE.email;
     }
 
     return notificationType;
   }
 
-  saveFrequentService(){
+  saveFrequentService() {
     if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       var serviceList = [];
       this.selectedServices.forEach(val => {

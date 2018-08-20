@@ -30,6 +30,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   showEmailTick: boolean = false;
   showPhoneTick: boolean = false;
   customer: ICustomer;
+  countryCode:string;
+  phoneColor:string = "#ffffff";
 
 
 
@@ -66,6 +68,19 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       .unsubscribe();
     this.subscriptions.add(tempCustomerSubscription);
 
+
+
+    const uttSubscription = this. servicePointSelectors.uttParameters$
+      .subscribe(uttParameters => {
+        if (uttParameters) {
+          this.countryCode = uttParameters.countryCode;
+
+
+        }
+      })
+      .unsubscribe();
+    this.subscriptions.add(uttSubscription);
+
   }
 
   ngOnInit() {
@@ -75,7 +90,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.add(themeSubscription);
 
-    const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/), Validators.required];
+    const phoneValidators = [Validators.pattern(/^\+?\d+$/), Validators.required];
     const emailValidators = [Validators.pattern(/^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/), Validators.required];
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -87,7 +102,12 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       this.confirmModalForm.patchValue({
         phone: this.customerSms
       })
+    }else if(this.countryCode!=''){
+      this.confirmModalForm.patchValue({
+        phone: this.countryCode
+      })
     }
+
     if (this.customerEmail != null) {
       this.confirmModalForm.patchValue({
         email: this.customerEmail
@@ -102,6 +122,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     this.subscriptions.add(emailSubscription);
 
     const phoneSubscription = this.confirmModalForm.get('phone').valueChanges.subscribe(() => {
+      this.setphoneColor(this.confirmModalForm.controls['phone'].value);
       if (this.confirmModalForm.controls['phone'].dirty) {
         this.showPhoneTick = false;
       }
@@ -121,7 +142,11 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   validatePhone(): boolean {
 
     this.confirmModalForm.controls['phone'].patchValue(this.confirmModalForm.controls['phone'].value.trim());
-    if (this.customer && this.confirmModalForm.controls['phone'].valid && this.confirmModalForm.controls['phone'].value != '') {
+    if (this.customer && this.confirmModalForm.controls['phone'].valid && this.validatePhoneNo(this.confirmModalForm.controls['phone'].value)
+    ) {
+      // if(this.countryCode!=''{
+        
+      // })
       this.updateCustomer(this.preparedCustomer(), false);
       return true;
     } else {
@@ -163,7 +188,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   clearPhone() {
     this.confirmModalForm.patchValue({
-      phone: ''
+      
+      phone: this.countryCode != '' ? this.countryCode : ''
     });
 
     this.showPhoneTick = false;
@@ -211,4 +237,20 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     }
     return customerSave
   }
+
+  validatePhoneNo(phoneNo:string):boolean {
+    if (!isNaN(Number.parseInt(phoneNo) ) && (phoneNo.trim().length > 15 || phoneNo.trim().length < 8)) {
+        return false;
+    }
+    return true;
+}
+
+setphoneColor(phoneNo:string){
+  if(this.countryCode === null){
+    phoneNo != '' || (this.validatePhoneNo(phoneNo) && this.confirmModalForm.controls['phone'].valid )? this.phoneColor='#ffffff' : this.phoneColor='#F5A9A9';
+  } else if (this.countryCode != null){
+    phoneNo.length === this.countryCode.length || ( phoneNo.length > this.countryCode.length && this.validatePhoneNo(phoneNo) && this.confirmModalForm.controls['phone'].valid )  ? this.phoneColor='#ffffff' : this.phoneColor='#F5A9A9';
+  }
+}
+
 }

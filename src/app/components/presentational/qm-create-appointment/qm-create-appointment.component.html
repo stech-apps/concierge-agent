@@ -21,7 +21,7 @@
   <qm-flow-panel #pa>
     <qm-flow-panel-header (click)="f.panelHeaderClick(pa)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'date_and_time' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result>{{ (selectedTimeSlot$ | async)?.length > 0 ? (selectedDate$ | async).format('YYYY-MM-DD') + ' ' + (selectedTimeSlot$ | async) :  ''}}</qm-flow-panel-result>
+      <qm-flow-panel-result *ngIf="(selectedTimeSlot$ | async)?.length > 0">{{  (selectedDate$ | async).format('YYYY-MM-DD') + ' ' + (selectedTimeSlot$ | async) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-appointment-time-select (onFlowNext)="f.onFlowNext(pc)"></qm-appointment-time-select>

@@ -1,12 +1,8 @@
 .qm-msg-box{
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    top: 0px;
-    left: 0;
+    height: 100%;position: absolute;z-index: 100;
     font: sans-serif 
 
-    &__main-container {
+    &__main-container{
        margin: auto; vertical-align: middle;
     }
     &__container{
@@ -45,5 +41,71 @@
     }
     &__last-line-text{
         color: black;font-size: 140%;text-align: center;left: 0;right: 0;margin: auto
+    }
+
+
+
+    
+}
+@media screen and (orientation: landscape) {
+    .message_view_content_box {
+        position: fixed;
+        top: 44%;
+        left: 50%;
+        margin: auto;
+        max-width: 70% !important;
+        max-height: 60% !important;
+        padding: 1em 2em 1em 2em;
+        min-width: 40%;
+        background-color: white;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+    }
+
+}
+
+@media screen and (orientation: portrait) {
+    .message_view_content_box {
+        position: fixed;
+        top: 42%;
+        left: 50%;
+        margin: auto;
+        max-width: 80% !important;
+        max-height: 60% !important;
+        padding: 1em 2em 1em 2em;
+        min-width: 50%;
+        background-color: white;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+    .qm-msg-box__first-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__first-line-text{
+        font-size: 100%;
+    }
+    .qm-msg-box__second-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__second-line-text{
+        font-size: 100%;
+    }
+    .qm-msg-box__last-line-name {
+        font-size: 90%;
+    }
+    .qm-msg-box__last-line-text{
+        font-size: 100%;
     }
 }

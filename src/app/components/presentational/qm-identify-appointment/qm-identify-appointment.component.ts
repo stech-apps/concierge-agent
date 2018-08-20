@@ -162,10 +162,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSelectTime() {
     this.isSearchInputOpen = true;
-    this.searchText = `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}`;
+    this.searchText = `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`;
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
-    this.searchInputController.setValue( `${this.fromTime.hour} : ${this.fromTime.minute} - ${this.toTime.hour} : ${this.toTime.minute}`);
+    this.searchInputController.setValue( `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
     this.searchApointments(this.searchText);
     this.showModalBackDrop = false;
     

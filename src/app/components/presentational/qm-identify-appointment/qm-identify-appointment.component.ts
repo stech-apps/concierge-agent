@@ -196,8 +196,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
-  onAppointmentSelect(selectedCustomer: ICustomer){
-    this.arriveAppointmentDispatchers.SelectArrivedCustomer(selectedCustomer);
+  onAppointmentSelect(appointment: IAppointment){
+    this.arriveAppointmentDispatchers.selectAppointment(appointment);
     this.onFlowNext.emit();
   }
 }

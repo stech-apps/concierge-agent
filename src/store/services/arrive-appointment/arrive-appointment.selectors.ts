@@ -7,13 +7,13 @@ import { IArriveAppointmentState } from 'src/store/reducers/arrive-appointment.r
 // selectors
 const getAppointmentState = createFeatureSelector<IArriveAppointmentState>('arriveAppointment');
 
-const getArrivedCustomer = createSelector(
+const getAppointment = createSelector(
   getAppointmentState,
-  (state: IArriveAppointmentState) => state.customer
+  (state: IArriveAppointmentState) => state.selectedAppointment
 );
 
 @Injectable()
 export class ArriveAppointmentSelectors {
   constructor(private store: Store<IAppState>) {}
-  arrivedCustomer$ = this.store.select(getArrivedCustomer);
+  selectedAppointment$ = this.store.select(getAppointment);
 }

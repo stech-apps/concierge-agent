@@ -2,7 +2,7 @@ import { QmClearInputDirective } from './../../../directives/qm-clear-input.dire
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { Subscription, Subject } from 'rxjs';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors, ArriveAppointmentSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
@@ -48,7 +48,8 @@ export class QmSelectServiceComponent implements OnInit {
     private calendarServiceDispatchers: CalendarServiceDispatchers,
     private calendarBranchSelectors: CalendarBranchSelectors,
     private localStorage: LocalStorage,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private appointmentSelectors: ArriveAppointmentSelectors
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
@@ -133,6 +134,15 @@ export class QmSelectServiceComponent implements OnInit {
         }
       });
       this.subscriptions.add(servicePointsSubscription);
+    }
+
+    if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+      const appointmentSubscription = this.appointmentSelectors.selectedAppointment$.subscribe((appointment) => {
+        if(appointment){
+          this.selectedServiceList = <Array<IServiceViewModel>>appointment.services;
+        }
+      });
+      this.subscriptions.add(appointmentSubscription);
     }
 
     this.inputChanged

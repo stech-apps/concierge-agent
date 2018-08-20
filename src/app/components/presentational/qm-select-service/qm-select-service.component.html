@@ -21,7 +21,7 @@
         <div class="qm-service-list__selected-item-container" *ngFor="let service of selectedServiceList; let rowId = index">
                 <div class="qm-service-list__index-item">{{ rowId + 1 }}</div>
                 <div class="qm-service-list__item qm-service-list__item--selected">
-                    <div class="qm-service-list__item--text">{{ flowType === 'CREATE_APPOINTMENT' ? service.name : service.internalName }}</div>
+                    <div class="qm-service-list__item--text">{{ flowType === 'CREATE_VISIT' ? service.internalName : service.name }}</div>
                     <button class="qm-action-btn qm-action-btn--only-icon qm-service-list__item--selected__btn" (click)="onServiceRemove(service)">
                         <i class="qm-action-btn__icon icon-close qm-search__icon" aria-hidden="true"></i>
                     </button>

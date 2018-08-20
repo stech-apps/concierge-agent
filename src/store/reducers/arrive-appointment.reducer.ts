@@ -1,15 +1,16 @@
 import { ICustomer } from './../../models/ICustomer';
 import * as ArriveAppointmentActions from '../actions';
+import { IAppointment } from '../../models/IAppointment';
 
 export interface IArriveAppointmentState {
-  customer: ICustomer;
+  selectedAppointment: IAppointment;
   loading: boolean;
   loaded: boolean;
   error: Object;
 }
 
 const initialState = {
-    customer: null,
+  selectedAppointment: null,
   loading: false,
   loaded: false,
   error: null
@@ -20,10 +21,10 @@ export function reducer(
   action: ArriveAppointmentActions.AllArriveAppointmentActions
 ): IArriveAppointmentState {
   switch (action.type) {
-    case ArriveAppointmentActions.SELECT_ARRIVED_CUSTOMER: {
+    case ArriveAppointmentActions.SELECT_APPOINTMENT: {
       return {
         ...state,
-        customer: action.payload,
+        selectedAppointment: action.payload,
         loading: true,
         error: null
       };

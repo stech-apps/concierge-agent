@@ -1,5 +1,3 @@
-import { ICustomer } from './../../../models/ICustomer';
-import { SelectArrivedCustomer } from './../../actions/arrive-appointment.actions';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -11,7 +9,7 @@ import { IAppointment } from '../../../models/IAppointment';
 export class ArriveAppointmentDispatchers {
   constructor(private store: Store<IAppState>) {}
 
-  SelectArrivedCustomer(customer: ICustomer) {
-    this.store.dispatch(new ArriveAppointmentActions.SelectArrivedCustomer(customer));
+  selectAppointment(appointment: IAppointment) {
+    this.store.dispatch(new ArriveAppointmentActions.SelectAppointment(appointment));
   }
 }

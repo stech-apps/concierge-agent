@@ -1,14 +1,14 @@
 import { ICustomer } from './../../models/ICustomer';
 import { UserRole } from 'src/models/UserPermissionsEnum';
 import { Action } from '@ngrx/store';
+import { IAppointment } from '../../models/IAppointment';
 
-export const SELECT_ARRIVED_CUSTOMER = '[ArriveAppointment] SELECT_ARRIVED_CUSTOMER';
+export const SELECT_APPOINTMENT = '[ArriveAppointment] SELECT_APPOINTMENT';
 
-export class SelectArrivedCustomer implements Action {
-  readonly type = SELECT_ARRIVED_CUSTOMER;
-  constructor(public payload: ICustomer) {}
+export class SelectAppointment implements Action {
+  readonly type = SELECT_APPOINTMENT;
+  constructor(public payload: IAppointment) {}
 }
 
 // Action types
-export type AllArriveAppointmentActions =
-  | SelectArrivedCustomer;
+export type AllArriveAppointmentActions = SelectAppointment;

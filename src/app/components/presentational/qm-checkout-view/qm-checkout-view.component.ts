@@ -28,7 +28,7 @@ import { QmModalService } from "../qm-modal/qm-modal.service";
 import * as moment from 'moment';
 import { forEach } from "@angular/router/src/utils/collection";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
-import { CalendarBranchDispatchers, CalendarServiceDispatchers } from 'src/store/services';
+import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmentSelectors } from 'src/store/services';
 
 @Component({
   selector: "qm-checkout-view",
@@ -120,7 +120,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private customerDispatcher: CustomerDispatchers,
     private localStorage: LocalStorage,
     private branchDispatcher: CalendarBranchDispatchers,
-    private serviceDispatchers: CalendarServiceDispatchers
+    private serviceDispatchers: CalendarServiceDispatchers,
+    private arriveAppointmentSelectors: ArriveAppointmentSelectors
   ) {
 
     this.uttParameters$ = servicePointSelectors.uttParameters$;
@@ -157,7 +158,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       });
     this.subscriptions.add(customerSubscription);
 
-    const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => this.selectedAppointment = appointment);
+    const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => {
+      if(appointment){
+        this.selectedAppointment = appointment;
+      }
+    });
     this.subscriptions.add(appointmentSubscription);
 
     const tempCustomerSubscription = this.customerSelector.tempCustomer$.subscribe((customer) => {
@@ -168,6 +173,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(tempCustomerSubscription);
+
+    const selectedAppointmentSubscription = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
+      if(appointment){
+        this.selectedAppointment = appointment;
+        this.genarateAppointmentData(this.selectedAppointment);
+      }
+    }); 
+    this.subscriptions.add(selectedAppointmentSubscription);
 
   }
 
@@ -194,7 +207,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
       this.subscriptions.add(branchSubscription);
 
@@ -204,11 +217,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
     }
-
-    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-    this.genarateAppointmentData(this.selectedAppointment);
-    }
-
   }
 
   ngOnDestroy() {
@@ -233,7 +241,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppID():number {
-return this.selectedAppointment.qpId;
+return this.selectedAppointment.id;
   }
 
   setAppCustomer():string {
@@ -419,7 +427,17 @@ return this.selectedAppointment.qpId;
   }
 
   setAriveAppointment() {
-
+    this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
+      this.showSussessMessage(result);
+      this.saveFrequentService();
+      this.clearSelectedValues();
+      this.onFlowExit.emit();
+    }, error => {
+      this.showErrorMessage(error);
+      this.saveFrequentService();
+      this.clearSelectedValues();
+      this.onFlowExit.emit();
+    })
   }
 
   showSussessMessage(result: any) {
@@ -456,6 +474,16 @@ return this.selectedAppointment.qpId;
         this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
       });
     }
+    else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      this.translateService.get('arrived').subscribe(v => {
+        var successMessage = {
+          firstLineName: v,
+          firstLineText: result.ticketId,
+          icon: "correct"
+        }
+        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+      });
+    }
   }
 
   showErrorMessage(error: any) {
@@ -471,6 +499,9 @@ return this.selectedAppointment.qpId;
         
       }
       this.toastService.infoToast("Fail to create visit");
+    }
+    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      this.toastService.infoToast("Fail to arrive Appointment");
     }
   }
 

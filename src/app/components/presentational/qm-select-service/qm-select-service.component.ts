@@ -140,6 +140,7 @@ export class QmSelectServiceComponent implements OnInit {
       const appointmentSubscription = this.appointmentSelectors.selectedAppointment$.subscribe((appointment) => {
         if(appointment){
           this.selectedServiceList = <Array<IServiceViewModel>>appointment.services;
+          this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
         }
       });
       this.subscriptions.add(appointmentSubscription);

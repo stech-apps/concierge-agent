@@ -11,6 +11,7 @@ import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
 import { NOTIFICATION_TYPE } from './calendar.service';
 import { VIP_LEVEL } from '../../flow-state';
+import { IAppointment } from '../../../models/IAppointment';
 
 
 @Injectable()
@@ -82,6 +83,16 @@ export class SPService implements OnDestroy {
         "services" : this.buildService(services), 
         "customers" : customer ? [customer.id] : [], 
         "parameters" : this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType) }
+  return this.http
+   .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body);
+  }
+
+  arriveAppointment(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, sms: string, isTicketPrint: boolean, notificationType: NOTIFICATION_TYPE, appointment: IAppointment){
+    var body = { 
+        "services" : this.buildService(services), 
+        "customers" : [appointment.customers[0].id], 
+        "appointmentId" : appointment.id,
+        "parameters" : this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, null, notificationType) }
   return this.http
    .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body);
   }

@@ -19,13 +19,9 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   isServiceHeaderVisibe: boolean;
 
-  @ViewChild('f') f: any;
-  @ViewChild('ps') ps: any;
-  @ViewChild('px') px: any;
-
   constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors) {
 
-    const selectedCustomerSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
+    const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if(appointment){
         this.selectedCustomer = appointment.customers[0];
         this.selectedServices = appointment.services;
@@ -33,7 +29,7 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.subscriptions.add(selectedCustomerSub)
+    this.subscriptions.add(selectedAppointmentSub)
   }
 
   ngOnInit() {

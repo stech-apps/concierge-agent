@@ -30,8 +30,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   showEmailTick: boolean = false;
   showPhoneTick: boolean = false;
   customer: ICustomer;
-  countryCode:string;
-  phoneColor:string = "#ffffff";
+  countryCode: string;
+  phoneColor: string = "#ffffff";
 
 
 
@@ -70,7 +70,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
 
 
-    const uttSubscription = this. servicePointSelectors.uttParameters$
+    const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
           this.countryCode = uttParameters.countryCode;
@@ -90,7 +90,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.add(themeSubscription);
 
-    const phoneValidators = [Validators.pattern(/^\+?\d+$/), Validators.required];
+    const phoneValidators = [Validators.pattern(/^\+?\d+$/), Validators.required, Validators.minLength(9), Validators.maxLength(14)];
     const emailValidators = [Validators.pattern(/^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/), Validators.required];
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -98,11 +98,19 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       phone: new FormControl('', phoneValidators),
       email: new FormControl('', emailValidators)
     })
-    if (this.customerSms != null) {
-      this.confirmModalForm.patchValue({
-        phone: this.customerSms
-      })
-    }else if(this.countryCode!=''){
+    if (this.customerSms != undefined) {
+      if (this.customerSms === '' && this.countryCode != '') {
+        this.confirmModalForm.patchValue({
+          phone: this.countryCode
+        })
+
+      } else {
+        this.confirmModalForm.patchValue({
+          phone: this.customerSms
+        })
+      }
+
+    } else if (this.countryCode != '') {
       this.confirmModalForm.patchValue({
         phone: this.countryCode
       })
@@ -129,9 +137,11 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(phoneSubscription);
 
-    //disable email validation in create visit flow 
-    if(!this.isEmailEnabled){
+
+    if (!this.isEmailEnabled) {
       this.confirmModalForm.get('email').disable();
+    } else if (!this.isSmsEnabled) {
+      this.confirmModalForm.get('phone').disable();
     }
   }
 
@@ -142,11 +152,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   validatePhone(): boolean {
 
     this.confirmModalForm.controls['phone'].patchValue(this.confirmModalForm.controls['phone'].value.trim());
-    if (this.customer && this.confirmModalForm.controls['phone'].valid && this.validatePhoneNo(this.confirmModalForm.controls['phone'].value)
-    ) {
-      // if(this.countryCode!=''{
-        
-      // })
+    if (this.customer && this.confirmModalForm.controls['phone'].valid) {
+
       this.updateCustomer(this.preparedCustomer(), false);
       return true;
     } else {
@@ -188,7 +195,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   clearPhone() {
     this.confirmModalForm.patchValue({
-      
+
       phone: this.countryCode != '' ? this.countryCode : ''
     });
 
@@ -238,19 +245,14 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     return customerSave
   }
 
-  validatePhoneNo(phoneNo:string):boolean {
-    if (!isNaN(Number.parseInt(phoneNo) ) && (phoneNo.trim().length > 15 || phoneNo.trim().length < 8)) {
-        return false;
-    }
-    return true;
-}
 
-setphoneColor(phoneNo:string){
-  if(this.countryCode === null){
-    phoneNo != '' || (this.validatePhoneNo(phoneNo) && this.confirmModalForm.controls['phone'].valid )? this.phoneColor='#ffffff' : this.phoneColor='#F5A9A9';
-  } else if (this.countryCode != null){
-    phoneNo.length === this.countryCode.length || ( phoneNo.length > this.countryCode.length && this.validatePhoneNo(phoneNo) && this.confirmModalForm.controls['phone'].valid )  ? this.phoneColor='#ffffff' : this.phoneColor='#F5A9A9';
+
+  setphoneColor(phoneNo: string) {
+    if (this.countryCode === null) {
+      phoneNo === '' || this.confirmModalForm.controls['phone'].valid ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
+    } else if (this.countryCode != null) {
+      phoneNo == '' || phoneNo === this.countryCode || (phoneNo.length > this.countryCode.length && this.confirmModalForm.controls['phone'].valid) ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
+    }
   }
-}
 
 }

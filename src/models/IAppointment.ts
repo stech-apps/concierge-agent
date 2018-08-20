@@ -21,4 +21,5 @@ export interface IAppointment {
   deleted?: boolean;
   qpId?: number;
   id?: number;
+  startTime?;
 }

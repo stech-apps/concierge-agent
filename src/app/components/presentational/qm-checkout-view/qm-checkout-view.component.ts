@@ -28,7 +28,8 @@ import { QmModalService } from "../qm-modal/qm-modal.service";
 import * as moment from 'moment';
 import { forEach } from "@angular/router/src/utils/collection";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
-import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmentSelectors } from 'src/store/services';
+import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors } from 'src/store/services';
+
 
 @Component({
   selector: "qm-checkout-view",
@@ -38,10 +39,12 @@ import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmen
 
 export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Input() flowType: FLOW_TYPE;
-  flowTypeStr:string ;
+  flowTypeStr: string;
 
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
+
+  userDirection$: Observable<string>;
 
   customerEmail: string;
   customerSms: string;
@@ -96,10 +99,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   serviceStr: string;
   isExpanded: boolean = true;
-  appTime:string;
-  appId:number;
-  appCustomer:string;
-  appServices:string;
+  appTime: string;
+  appId: number;
+  appCustomer: string;
+  appServices: string;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -113,15 +116,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private spService: SPService,
     private branchSelector: BranchSelectors,
     private serviceSelectors: ServiceSelectors,
-    private qmNotesModalService: QmNotesModalService, 
-    private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers, 
+    private qmNotesModalService: QmNotesModalService,
+    private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers,
     private qmModalService: QmModalService,
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private customerDispatcher: CustomerDispatchers,
     private localStorage: LocalStorage,
     private branchDispatcher: CalendarBranchDispatchers,
     private serviceDispatchers: CalendarServiceDispatchers,
-    private arriveAppointmentSelectors: ArriveAppointmentSelectors
+    private arriveAppointmentSelectors: ArriveAppointmentSelectors,
+    private userSelectors :UserSelectors
   ) {
 
     this.uttParameters$ = servicePointSelectors.uttParameters$;
@@ -185,6 +189,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.userDirection$ = this.userSelectors.userDirection$;
+
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
         this.ticketlessActionEnabled = false;
@@ -196,7 +203,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.emailActionEnabled = false;
-        this.flowTypeStr = FLOW_TYPE.CREATE_APPOINTMENT;
+        this.flowTypeStr = FLOW_TYPE.ARRIVE_APPOINTMENT;
         this.buttonText = "arrive";
         break;
       case FLOW_TYPE.CREATE_VISIT:
@@ -217,6 +224,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
     }
+
+    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment != null) {
+      this.genarateAppointmentData(this.selectedAppointment);
+    }
+
   }
 
   ngOnDestroy() {
@@ -225,41 +237,43 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   genarateAppointmentData(appointment: IAppointment) {
 
-   this.appTime = this.setAppTime();
+    this.appTime = this.setAppTime();
     this.appId = this.setAppID();
-   this.appCustomer =  this.setAppCustomer();
-  this.appServices = this.setAppServices();
+    this.appCustomer = this.setAppCustomer();
+    this.appServices = this.setAppServices();
 
   }
 
-  setAppTime():string {
-    if (this.selectedAppointment.start) {
-      var startTime = this.selectedAppointment.start.split(".")[0].split("T")[1].slice(0,5);
+  setAppTime(): string {
+    if (this.selectedAppointment.startTime ) {
+      var startTime = this.selectedAppointment.startTime.split(".")[0].split("T")[1].slice(0, 5);
       return startTime;
-  } 
-  return null;
+    }
+    return null;
   }
 
   setAppID():number {
 return this.selectedAppointment.id;
   }
 
-  setAppCustomer():string {
-   return this.selectedAppointment.customers[0].firstName + this.selectedAppointment.customers[0].lastName;
+  setAppCustomer(): string {
+    return this.selectedAppointment.customers[0].firstName +" "+this.selectedAppointment.customers[0].lastName;
   }
 
-  setAppServices():string {
-     let temp:string;
-    this.selectedAppointment.services.forEach( (service , index) =>{
-      if(index >=  this.selectedAppointment.services.length){
-        temp = temp.concat(", ").concat(service.name);
+  setAppServices(): string {
+    let temp: string='';
+    this.selectedAppointment.services.forEach((service, index) => {
+      if ( this.selectedAppointment.services.length === 1) {
+        temp = service.name;
+      }else if(index < this.selectedAppointment.services.length) {
+        temp = temp + ", "+service.name;
       }
-     
+
     })
     return temp;
   }
 
-  toggleCollapse(){
+  toggleCollapse() {
     this.isExpanded ? this.isExpanded = false : this.isExpanded = true;
   }
 
@@ -492,11 +506,11 @@ return this.selectedAppointment.id;
       this.toastService.infoToast("Fail to create Appointment");
     }
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      if(error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT){
+      if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
 
       }
-      else if(err.errorCode === Q_ERROR_CODE.PRINTER_ERROR){
-        
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR) {
+
       }
       this.toastService.infoToast("Fail to create visit");
     }

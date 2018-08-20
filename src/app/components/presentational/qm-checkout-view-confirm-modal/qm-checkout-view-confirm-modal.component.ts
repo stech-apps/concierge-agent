@@ -61,7 +61,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
           this.customer = customer;
           this.customerEmail = customer.email;
           this.customerSms = customer.phone;
-
         }
       })
       .unsubscribe();

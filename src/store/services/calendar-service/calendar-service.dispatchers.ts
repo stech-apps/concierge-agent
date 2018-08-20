@@ -22,4 +22,8 @@ export class CalendarServiceDispatchers {
   setSelectedServices(services: ICalendarService[]) {
     this.store.dispatch(new ServiceActions.SetSelectedCalendarServices(services));
   }
+
+  removeFetchService(){
+    this.store.dispatch(new ServiceActions.RemoveFetchServices());
+  }
 }

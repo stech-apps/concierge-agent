@@ -6,7 +6,7 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors } from 'src/store';
@@ -52,6 +52,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readonly SEARCH_STATES = {
     DURATION: 'duration'
   };
+
+  @Output()
+  onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
 
   appointments: IAppointment[] = [];
 
@@ -188,5 +191,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   pad(n, width, z = '0') {
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
+
+  onAppointmentSelect(){
+    this.onFlowNext.emit();
   }
 }

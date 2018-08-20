@@ -15,7 +15,7 @@ import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
 import { CalendarService, NOTIFICATION_TYPE } from "../../../../util/services/rest/calendar.service";
 import { IAppointment } from "../../../../models/IAppointment";
 import { ICustomer } from "../../../../models/ICustomer";
-import { Q_ERROR_CODE } from "../../../../util/q-error";
+import { Q_ERROR_CODE, ERROR_STATUS } from "../../../../util/q-error";
 import { ToastService } from '../../../../util/services/toast.service';
 import { SPService } from "../../../../util/services/rest/sp.service";
 import { IServicePoint } from "../../../../models/IServicePoint";
@@ -29,7 +29,6 @@ import * as moment from 'moment';
 import { forEach } from "@angular/router/src/utils/collection";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
 import { CalendarBranchDispatchers, CalendarServiceDispatchers } from 'src/store/services';
-
 
 @Component({
   selector: "qm-checkout-view",
@@ -354,7 +353,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.clearSelectedValues();
           this.onFlowExit.emit();
         }, error => {
-          this.showErrorMessage();
+          this.showErrorMessage(error);
           this.clearSelectedValues();
           this.onFlowExit.emit();
         })
@@ -369,7 +368,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.clearSelectedValues();
       this.onFlowExit.emit();
     }, error => {
-      this.showErrorMessage();
+      this.showErrorMessage(error);
       this.saveFrequentService();
       this.clearSelectedValues();
       this.onFlowExit.emit();
@@ -416,11 +415,18 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  showErrorMessage() {
+  showErrorMessage(error: any) {
+    const err = new DataServiceError(error, null);
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.toastService.infoToast("Fail to create Appointment");
     }
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
+      if(error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT){
+
+      }
+      else if(err.errorCode === Q_ERROR_CODE.PRINTER_ERROR){
+        
+      }
       this.toastService.infoToast("Fail to create visit");
     }
   }

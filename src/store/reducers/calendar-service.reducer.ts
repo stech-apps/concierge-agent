@@ -83,6 +83,12 @@ export interface ICalendarServiceState {
           selectedServices: action.payload
         };
       }
+      case ServiceActions.REMOVE_FETCH_SERVICES: {
+        return {
+          ...state,
+          serviceLoaded : false
+        };
+      }
       default: {
           return state;
       }

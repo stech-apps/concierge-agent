@@ -28,6 +28,7 @@ export class QmSelectServiceComponent implements OnInit {
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedBranch: IBranch;
+  selectedCaledarBranch: ICalendarBranch;
   isMultiServiceOn: boolean;
   private maxServiceSelection = 5;
   filterText: string = '';
@@ -108,23 +109,23 @@ export class QmSelectServiceComponent implements OnInit {
       });
       this.subscriptions.add(calendarServiceSubscription);
 
-      const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
-       
-      });
-      this.subscriptions.add(calendarServiceLoadedSubscription);
-
-
       // calendar branch subscription
 
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
-        if(branch.publicId){
-          //if(!this.selectedBranch && this.selectedBranch !== branch || !val){
-            this.calendarServiceDispatchers.fetchServices(branch);
-          //}
-          this.selectedBranch = branch;
+        if(this.selectedCaledarBranch !== branch){
+          this.calendarServiceDispatchers.removeFetchService();
         }
+        this.selectedCaledarBranch = branch;
       });
       this.subscriptions.add(calendarBranchSubscription);
+
+      const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
+        if(!val){
+          this.selectedServiceList = [];
+          this.calendarServiceDispatchers.fetchServices(this.selectedCaledarBranch);
+        }
+      });
+      this.subscriptions.add(calendarServiceLoadedSubscription);
 
 
       const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {

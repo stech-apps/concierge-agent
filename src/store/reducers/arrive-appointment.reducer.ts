@@ -29,6 +29,15 @@ export function reducer(
         error: null
       };
     }
+
+    case ArriveAppointmentActions.DESELECT_APPOINTMENT: {
+      return {
+        ...state,
+        selectedAppointment: {},
+        loading: true,
+        error: null
+      };
+    }
     default: {
       return state;
     }

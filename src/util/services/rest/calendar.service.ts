@@ -47,12 +47,12 @@ export class CalendarService implements OnDestroy {
 }
 
 private buildDate(appointment: IAppointment){
-    let dateObj = moment(appointment.start).format("YYYY-MM-DD");
+    let dateObj = moment(appointment.startTime).format("YYYY-MM-DD");
     return dateObj;
 }
 
 private buildTime(appointment: IAppointment){
-    let timeObj = moment(appointment.start).format("HH:mm");
+    let timeObj = moment(appointment.startTime).format("HH:mm");
     return timeObj;
 }
 

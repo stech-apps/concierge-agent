@@ -211,12 +211,11 @@
         {{'scan_qr' | translate }}
       </div>
     </button>
-
-
   </div>
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" (change)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" qmClearInput [placeholder]="(searchPlaceHolderKey | translate) || ''"
+    <input type="text" (keyup.enter)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" qmClearInput [placeholder]="(searchPlaceHolderKey | translate) || ''"
     />
+
     <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
       <div class="qm-duration-control__header">
         <div class="left">
@@ -237,6 +236,14 @@
       </div>
     </div>
   </div>
+
+  <div class="qm-selected-appointment-container" *ngIf="selectedAppointment">
+      <div class="qm-selected-appointment">
+          <div class="qm-selected-appointment-text">{{getSelectedAppointmentInfo()}}</div>
+          <i class="icon-close" (click)="deselectAppointment()"></i>
+      </div>
+  </div>
+
   <div class="qm-identify-appointment__table-container">
     <table class="qm-identify-appointment__customer-table">
         <thead class="qm-identify-appointment__customer-table__header">
@@ -252,7 +259,7 @@
         </tr>
       </thead>
 
-      <tbody *ngIf="appointments.length!=0" class="qm-identify-appointment__tbody" [style.max-height]="height">
+      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection" class="qm-identify-appointment__tbody" [style.max-height]="height">
         <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect(app)">
           <td class="qm-identify-appointment__customer-table__col-5"></td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime)}}</td>

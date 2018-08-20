@@ -29,6 +29,10 @@ export class AppointmentDataService {
     if(appointmentSearch.toDate) {
       searchQuery += `&toDate=${appointmentSearch.toDate}`;
     }
+
+    if(appointmentSearch.id) {
+      searchQuery = `${restEndpoint}/appointment/branches/${appointmentSearch.branchId}/appointments/${appointmentSearch.id}`;
+    }
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)

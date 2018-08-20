@@ -25,7 +25,7 @@ export function reducer(
         case AppointmentActions.SEARCH_APPOINTMENTS_SUCCESS: {
             return {
                 ...state,
-                appointments: action.payload,
+                appointments: Array.isArray(action.payload) ? action.payload : [action.payload],
                 loading: true,
                 error: null
             };

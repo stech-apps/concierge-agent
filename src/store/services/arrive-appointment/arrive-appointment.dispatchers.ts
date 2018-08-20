@@ -12,4 +12,8 @@ export class ArriveAppointmentDispatchers {
   selectAppointment(appointment: IAppointment) {
     this.store.dispatch(new ArriveAppointmentActions.SelectAppointment(appointment));
   }
+
+  deselectAppointment() {
+    this.store.dispatch(new ArriveAppointmentActions.DeselectAppointment());
+  }
 }

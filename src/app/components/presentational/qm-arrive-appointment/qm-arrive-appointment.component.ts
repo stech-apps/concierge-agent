@@ -22,7 +22,7 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
   constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors) {
 
     const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
-      if(appointment){
+      if(appointment && appointment.customers ){
         this.selectedCustomer = appointment.customers[0];
         this.selectedServices = appointment.services;
         this.isServiceHeaderVisibe = true;

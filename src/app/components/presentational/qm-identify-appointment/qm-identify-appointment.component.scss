@@ -23,9 +23,6 @@
       left: 0px;
       height: 42px;
     }
-
-    
-  
   }
   &__search-container {
     height: 7rem;
@@ -42,16 +39,11 @@
       height: 3rem;
     }
   }
-
-  &__table-container{
+  &__table-container {
     color: black;
     margin-top: 10px;
     font-size: 0.8em;
-   
   }
-
-
-
   .qm-search-icon {
     +.qm-search-icon {
       margin-left: 3px;
@@ -81,7 +73,6 @@
       margin-top: 0.4rem;
     }
   }
-
   .qm-duration-control {
     position: absolute;
     z-index: 1041;
@@ -91,35 +82,29 @@
     top: 0px;
     left: 0px;
     &__header {
+      display: flex;
+      color: $black;
+      height: 3.5rem;
+      letter-spacing: 3px;
+      div {
+        flex: 1;
         display: flex;
-        color: $black;
-        height: 3.5rem;
-        letter-spacing: 3px;
-        div {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
-
   .qm-step-controls-container {
-      display: flex;
-      ngb-timepicker {
-          flex: 1;
-
-
-      }
+    display: flex;
+    ngb-timepicker {
+      flex: 1;
+    }
   }
-
-  .qm-command-buttons-container{
+  .qm-command-buttons-container {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-
     button {
-
       color: $white;
       height: 45px;
       width: 112.5px;
@@ -129,101 +114,122 @@
       font-size: rem(12px);
       letter-spacing: 1px;
       cursor: pointer;
-
       &.ok {
         background-color: $app-theme;
       }
-
       &.cancel {
-        background-color: #8e8e8e ;
+        background-color: #8e8e8e;
         font-family: Montserrat-Light;
         margin-right: 0.75rem;
       }
-
-      
     }
   }
-
-
   .identify-appointment-backdrop {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
   }
-  &__customer-table{
+  &__customer-table {
     color: black;
     font-size: 0.9rem;
-    width:100%;
-    :focus{
-      outline: none; 
-    }  
-    &__header{
+    width: 100%;
+    :focus {
+      outline: none;
+    }
+    &__header {
       background-color: $dark-transparent12;
       border-bottom: 3px solid $light-gray2;
       font-size: 0.75rem;
-      margin: 5px;  
+      margin: 5px;
     }
-
-   
-    &__list{
+    &__list {
       background-color: white;
       border-bottom: 1px solid $light-gray2;
       height: 35px;
       width: 100%;
-      padding:0;
-      margin:0;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
     }
-    &__list:active{
-        background-color:$light-gray2;
+    &__list:active {
+      background-color: $light-gray2;
     }
-    &__col-5{
+    &__col-5 {
       width: 5%;
     }
-    &__col-10{
+    &__col-10 {
       width: 10%;
     }
-    &__col-20{
+    &__col-20 {
       width: 20%;
     }
-
-
-
-   }
-
-     &__tbody{
-      display: block;
-      overflow-y: auto;
-      width: 100%;
-     }
-     tr{
-      display: table;
-      width: 100%;
+  }
+  &__tbody {
+    display: block;
+    overflow-y: auto;
+    width: 100%;
+  }
+  tr {
+    display: table;
+    width: 100%;
+  }
+  th {
+    height: 50px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 1px;
+  }
+  td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 1px;
+    height: 50px;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    @at-root [dir="rtl"] & {
+      text-align: right;
     }
-    th{ 
-      height: 50px;
-      white-space: nowrap;
-      text-overflow:ellipsis;
-      overflow: hidden;
-      max-width:1px;
-      }
-    td{
-      white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;  height: 50px;
-      outline-style:none;
-      box-shadow:none;
-      border-color:transparent;
-      @at-root [dir="rtl"] & {
-          text-align: right; 
-         }
-    
-      }
+  }
+  .qm-selected-appointment-container {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    width: 65%;
+  }
+
+  .qm-selected-appointment {
+    width: calc(80% + 8px);    
+    background-color: $app-theme;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 3rem;
+      top: 12px;
+      cursor: pointer;
+    }
+
+    &-text {
+      line-height: 2.5rem;
+      vertical-align: middle;
+      font-family: $secondary-font-light;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 0.8em;
+    }
+  }
 }
 
-
-:host   >>>   input {
+:host>>>input {
   width: 50px;
 }
-
-

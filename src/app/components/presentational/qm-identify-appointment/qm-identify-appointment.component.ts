@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
-import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers } from 'src/store';
+import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers, ServicePointSelectors } from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
 
@@ -51,7 +51,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   selectedBranch: IBranch;
   currentSearchState: string;
   readonly SEARCH_STATES = {
-    DURATION: 'duration'
+    DURATION: 'duration',
+    INITIAL: 'initial'
   };
 
   @Output()
@@ -63,8 +64,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   constructor(private appointmentDispatchers: AppointmentDispatchers,
     private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors,
-    private arriveAppointmentDispatchers: ArriveAppointmentDispatchers
-  ) { }
+    private arriveAppointmentDispatchers: ArriveAppointmentDispatchers,
+    private servicePointSelectors: ServicePointSelectors
+  ) { 
+
+    this.currentSearchState = this.SEARCH_STATES.INITIAL;
+
+  }
 
   ngOnInit() {
     this.inputAnimationState = 'out';
@@ -86,7 +92,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     this.inputChanged
       .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
-      .subscribe(text => this.searchApointments(text));
+      .subscribe(text => this.searchApointments());
 
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((br) => {
       this.selectedBranch = br;
@@ -98,6 +104,20 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentSubscription);
+
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+       this.fromTime.hour = parseInt(moment().add( -1* params.gapFromTime, 'minutes').format('HH'));
+       this.fromTime.minute = parseInt(moment().add( -1* params.gapFromTime, 'minutes').format('mm'));
+
+       this.toTime.hour = parseInt(moment().add( params.gapToTime, 'minutes').format('HH'));
+       this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
+      }
+    });
+
+    this.subscriptions.add(servicePointsSubscription);
+
+    this.searchApointments()
   }
 
   ngOnDestroy() {
@@ -166,17 +186,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
     this.searchInputController.setValue( `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
-    this.searchApointments(this.searchText);
+    this.searchApointments();
     this.showModalBackDrop = false;
     
   }
 
-  searchApointments(searchText) {
+  searchApointments() {
     let searchQuery: any = {
       branchId: this.selectedBranch.id
     };
 
-    if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
+    if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState === this.SEARCH_STATES.INITIAL) {
       searchQuery = {
         ...searchQuery,
         fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute,2)}`,

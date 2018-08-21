@@ -1,4 +1,4 @@
-<div class="qm-checkout-view" >
+<div class="qm-checkout-view"  dir="{{userDirection$ | async}}">
   <div class="qm-checkout-view__container">
 
     <div *ngIf="isNoteEnabled" class="qm-checkout-view__note-container">
@@ -42,13 +42,13 @@
 
     </div>
 
-    <div *ngIf = "flowTypeStr === 'ARRIVE_APPOINTMENT'" class="qm-checkout-view__details-container">
+    <div *ngIf="flowTypeStr === 'ARRIVE_APPOINTMENT'" class="qm-checkout-view__details-container">
       <div (click)="toggleCollapse()">
 
         <div style="width: 100%">
           <div class="toggleview-container">
             <span class="detail-label" translate="app_details"></span>
-            <div [ngClass]= "!isExpanded ? 'arrow-down' : 'arrow-up'"></div>
+            <div [ngClass]="!isExpanded ? 'arrow-down' : 'arrow-up'"></div>
           </div>
 
           <div *ngIf="isExpanded" class="table-container">

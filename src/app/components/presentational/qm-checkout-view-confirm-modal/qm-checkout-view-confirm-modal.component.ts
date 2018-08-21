@@ -1,14 +1,13 @@
-import { AutoClose } from "./../../../../util/services/autoclose.service";
+
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, Subscription } from "rxjs";
-import { UserSelectors } from "./../../../../store/services/user/user.selectors";
-import { ServicePointSelectors } from "../../../../store";
-import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators } from '@angular/forms';
-import { CustomerSelector, CustomerDispatchers } from "../../../../store";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomerSelector, CustomerDispatchers, UserSelectors, ServicePointSelectors } from "../../../../store";
 import { Util } from '../../../../util/util';
 import { ICustomer } from '../../../../models/ICustomer';
 import { SPService } from "../../../../util/services/rest/sp.service";
+import { AutoClose } from "./../../../../util/services/autoclose.service";
 
 @Component({
   selector: 'qm-checkout-view-confirm-modal',
@@ -51,7 +50,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
           this.customer = customer;
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
-
         }
       })
       .unsubscribe();
@@ -68,23 +66,17 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       .unsubscribe();
     this.subscriptions.add(tempCustomerSubscription);
 
-
-
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
           this.countryCode = uttParameters.countryCode;
-
-
         }
       })
       .unsubscribe();
     this.subscriptions.add(uttSubscription);
-
   }
 
   ngOnInit() {
-
     const themeSubscription = this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
       this.util.setApplicationTheme(openSp);
     })
@@ -148,27 +140,22 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-
   validatePhone(): boolean {
-
     this.confirmModalForm.controls['phone'].patchValue(this.confirmModalForm.controls['phone'].value.trim());
     if (this.customer && this.confirmModalForm.controls['phone'].valid) {
-
       this.updateCustomer(this.preparedCustomer(), false);
       return true;
     } else {
       return false;
-
     }
   }
-  validateEmail(): boolean {
 
+  validateEmail(): boolean {
     this.confirmModalForm.controls['email'].patchValue(this.confirmModalForm.controls['email'].value.trim());
     if (this.customer && this.confirmModalForm.controls['email'].valid && this.confirmModalForm.controls['email'].value != '') {
       this.updateCustomer(this.preparedCustomer(), true);
       return true;
     } else {
-
       return false;
     }
   }
@@ -178,27 +165,20 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       result => {
         this.customerDispatchers.selectCustomers(customer);
         this.updateCustomerSuccess(fromEmail);
-
       }, error => {
-
       }
     )
-
   }
 
   updateCustomerSuccess(fromEmail: boolean) {
-
     fromEmail ? this.showEmailTick = true : this.showPhoneTick = true;
-
   }
 
 
   clearPhone() {
     this.confirmModalForm.patchValue({
-
       phone: this.countryCode != '' ? this.countryCode : ''
     });
-
     this.showPhoneTick = false;
   }
 
@@ -206,25 +186,18 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     this.confirmModalForm.patchValue({
       email: ''
     });
-
     this.showEmailTick = false;
   }
   public decline() {
     this.activeModal.close(false);
-
   }
 
   public accept() {
-
     if (this.confirmModalForm.valid) {
       this.customerEmail = this.confirmModalForm.controls['email'].value;
       this.customerSms = this.confirmModalForm.controls['phone'].value;
       this.activeModal.close(this.confirmModalForm.value);
-
     }
-
-
-
   }
 
   public dismiss() {
@@ -240,7 +213,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
         phoneNumber: this.isSmsEnabled ? this.confirmModalForm.value.phone.trim() : this.customer.properties.phoneNumber,
         email: this.isEmailEnabled ? this.confirmModalForm.value.email.trim() : this.customer.properties.email
       }
-
     }
     return customerSave
   }

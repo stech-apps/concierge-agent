@@ -1,6 +1,6 @@
 <qm-auto-close>
   <div class="qm-confirm-modal " dir="{{ userDirection$ | async }}" cdkTrapFocus>
-    <form class="qm-confirm-modal__box-container"  [formGroup]="confirmModalForm" (keyup.enter)="accept()" autocomplete="off">
+    <form class="qm-confirm-modal__box-container" [formGroup]="confirmModalForm" (keyup.enter)="accept()" autocomplete="off">
       <div class="qm-confirm-modal__header">
         <span class="qm-confirm-modal__header-text">{{ title }}</span>
       </div>
@@ -9,8 +9,7 @@
 
         <div *ngIf="isEmailEnabled" class="email-container">
           <div class="input-box-and-clear-button" [ngStyle]="{'background-color':  confirmModalForm.get('email').valid || email.value ===''  ? '#ffffff' : '#F5A9A9'}">
-            <input 
-            type="text" class="input-box"   name='email' placeholder="{{'type_email'|translate }}" formControlName = "email" #email 
+            <input type="text" class="input-box" name='email' placeholder="{{'type_email'|translate }}" formControlName="email" #email
             />
             <i *ngIf="email.value!='' " class="clear-icon icon-close" (click)="clearEmail()"></i>
           </div>
@@ -20,15 +19,14 @@
         </div>
 
         <div *ngIf="isSmsEnabled" class="sms-container">
-         <div class="input-box-and-clear-button" [ngStyle]="{'background-color': phoneColor }">
-            <input  
-            type="text" class="input-box"  name='phone' placeholder="{{'type_mobile_number'|translate }}" minlength="8" formControlName = "phone" #phone
-            />
+          <div class="input-box-and-clear-button" [ngStyle]="{'background-color': phoneColor }">
+            <input type="text" class="input-box" name='phone' placeholder="{{'type_mobile_number'|translate }}" minlength="8" formControlName="phone"
+              #phone />
             <i *ngIf="phone.value!='' " class="clear-icon icon-close" (click)="clearPhone()"></i>
           </div>
-         
+
           <div *ngIf="customer!=null" class="validate-icon btn-light-active-action :active">
-            <i  [ngClass]="showPhoneTick?'icon-check':'icon-refresh'" (click)="validatePhone()" ></i>
+            <i [ngClass]="showPhoneTick?'icon-check':'icon-refresh'" (click)="validatePhone()"></i>
           </div>
         </div>
 
@@ -41,8 +39,8 @@
             {{ btnCancelText }}
           </span>
         </button>
-        <button type="button" class="qm-confirm-modal__primary-button btn-light-active-action :active" [ngStyle]=" {'background-color': confirmModalForm.valid  ? themeColor : '#8e8e8e'}" (click)="accept(); autoCloseService.refreshAutoClose()"
-          *ngIf="btnOkText && btnOkText.length > 0">
+        <button type="button" class="qm-confirm-modal__primary-button btn-light-active-action :active" [ngStyle]=" {'background-color': confirmModalForm.valid  ? themeColor : '#8e8e8e'}"
+          (click)="accept(); autoCloseService.refreshAutoClose()" *ngIf="btnOkText && btnOkText.length > 0">
           <span title="{{ btnOkText }}">
             {{ btnOkText }}
           </span>

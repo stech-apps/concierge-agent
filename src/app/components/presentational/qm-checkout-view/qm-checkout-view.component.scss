@@ -1,267 +1,237 @@
 @import "../../../../styles/base/_component-manifest.scss";
 .qm-checkout-view {
-  width:100%;
-  margin-top: rem(2em);
-  display: flex;
-  justify-content: center;
-  color: #000000;
-
-  &__container {
+    width: 100%;
+    margin-top: rem(2em);
     display: flex;
-    flex-direction: column;
-    padding: 0;
-    width: 60%;
-  }
-
-  &__note-container {
-    height: 45px;
-    margin-bottom:rem(15px); 
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    .label {
-      flex: 1;
-      font-weight: 900;
-      font-size: smaller;
-      text-align: left;
-
-      @at-root [dir="rtl"] & {
-        text-align: right;
-      }
-    }
-    .input-container{
-      flex: 5;
-      display: inline-flex;
-      flex-direction: row;
-      width: 100%;
-      align-items: center;
-      background: $white;
-      .input {
-        padding: 5px;
-        height: 45px;
-        width: 100%;
-        border: 0;
-        background-color: transparent;
-        outline: none;
-        @include add-text-ellipsis;
-      }
-      .clear-icon {
-        padding: 8px;
-        font-size: 12px;
-      }
-    }
-  }
-
-  &__vip-container {
-    margin-top: .8em;
-    margin-bottom: .8em;
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    .vip-label {
-      flex: 1;
-      white-space: nowrap;
-      font-weight: 900;
-      font-size: smaller;
-      @include add-text-ellipsis;
-      width: auto;
-      text-align: left;
-
-      @at-root [dir="rtl"] & {
-        text-align: right;
-      }
-    }
-    .radio-container{
- flex: 5;
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      align-items: center;
-     
-      
-     .level{
-       flex: 1;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       justify-content: center;
-       .checkbox-container{
-        width: 30px;
-        height: 30px;
-        background: #c9c9c9;
-        margin: 10px 0px;
-        border-radius: 100%;
+    justify-content: center;
+    color: #000000;
+    &__container {
         display: flex;
-        float: none !important;
-        margin: 0.5em auto;
-        border: 2px solid #bababa;
-        // transition: all .2s ease;
-        align-items: center;
-        justify-content: center;
-
-        .checkbox {
-          display: block!important;
-          width: 60px;
-          height: 80px;
-          position: absolute;
-        
-          opacity: 0;
-        }
-
-        .label {
-          display: block;
-          align-self: flex-end;
-          width: 12px;
-          height: 12px;
-          border-radius: 100px;
-          // transition: all .2s ease;
-          cursor: pointer;
-          z-index: 1;
-          background: transparent;
-        }
- 
-      }
-
-        .label{
-
-          font-size: .85em;
-        }
-     }
-
+        flex-direction: column;
+        padding: 0;
+        width: 60%;
     }
-  }
-
-  &__details-container {
-    padding: 1em 0.2em 1em 0.2em;
-     width: 100%;
-      max-width: 100%;
-       position: relative;
-       -webkit-touch-callout: none; /* iOS Safari */
-       -webkit-user-select: none; /* Safari */
-        -khtml-user-select: none; /* Konqueror HTML */
-          -moz-user-select: none; /* Firefox */
-           -ms-user-select: none; /* Internet Explorer/Edge */
-               user-select: none; /* Non-prefixed version, currently
+    &__note-container {
+        height: 45px;
+        margin-bottom: rem(15px);
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        .label {
+            flex: 1;
+            font-weight: 900;
+            font-size: smaller;
+            text-align: left;
+            @at-root [dir="rtl"] & {
+                text-align: right;
+            }
+        }
+        .input-container {
+            flex: 5;
+            display: inline-flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+            background: $white;
+            .input {
+                padding: 5px;
+                height: 45px;
+                width: 100%;
+                border: 0;
+                background-color: transparent;
+                outline: none;
+                @include add-text-ellipsis;
+            }
+            .clear-icon {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+    }
+    &__vip-container {
+        margin-top: .8em;
+        margin-bottom: .8em;
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        .vip-label {
+            flex: 1;
+            white-space: nowrap;
+            font-weight: 900;
+            font-size: smaller;
+            @include add-text-ellipsis;
+            width: auto;
+            text-align: left;
+            @at-root [dir="rtl"] & {
+                text-align: right;
+            }
+        }
+        .radio-container {
+            flex: 5;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+            .level {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                .checkbox-container {
+                    width: 30px;
+                    height: 30px;
+                    background: #c9c9c9;
+                    margin: 10px 0px;
+                    border-radius: 100%;
+                    display: flex;
+                    float: none !important;
+                    margin: 0.5em auto;
+                    border: 2px solid #bababa;
+                    align-items: center;
+                    justify-content: center;
+                    .checkbox {
+                        display: block !important;
+                        width: 60px;
+                        height: 80px;
+                        position: absolute;
+                        opacity: 0;
+                    }
+                    .label {
+                        display: block;
+                        align-self: flex-end;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 100px;
+                        cursor: pointer;
+                        z-index: 1;
+                        background: transparent;
+                    }
+                }
+                .label {
+                    font-size: .85em;
+                }
+            }
+        }
+    }
+    &__details-container {
+        padding: 1em 0.2em 1em 0.2em;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
                                      supported by Chrome and Opera */
-    
-   
-  
-
-      .toggleview-container{
+        .toggleview-container {
+            display: inline-flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-start;
+            @at-root [dir="rtl"] & {
+                text-align: right;
+            }
+            .detail-label {
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 2px;
+            }
+            .arrow-up {
+                margin-left: 5px;
+                align-self: center;
+                width: 0;
+                height: 0;
+                border-left: 7px solid transparent;
+                border-right: 7px solid transparent;
+                border-bottom: 7px solid black;
+            }
+            .arrow-down {
+                margin-left: 5px;
+                align-self: center;
+                width: 0;
+                height: 0;
+                border-left: 7px solid transparent;
+                border-right: 7px solid transparent;
+                border-top: 7px solid black;
+            }
+        }
+        .table-container {
+            width: 100%;
+            .table {
+                width: 100%;
+                table-layout: fixed;
+                .tr {}
+                .label {
+                    text-align: left;
+                    font-size: 12px;
+                    padding: 5px;
+                    letter-spacing: 2px;
+                    @include add-text-ellipsis;
+                    width: 30%;
+                    @at-root [dir="rtl"] & {
+                        text-align: right;
+                    }
+                }
+                .value {
+                    text-align: left;
+                    font-size: 12px;
+                    padding: 5px;
+                    letter-spacing: 2px;
+                    @include add-text-ellipsis;
+                    width: 70%;
+                    @at-root [dir="rtl"] & {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+    &__option-container {
+        background-color: #bdbdbd;
         display: inline-flex;
         flex-direction: row;
-        
-        .detail-label {
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 2px;
+        width: 100%;
     }
-
-    .arrow-up {
-      margin-left: 5px;
-align-self: center;
-      width: 0; 
-      height: 0; 
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-bottom: 7px solid black;
-    }
-    
-    .arrow-down {
-      margin-left: 5px;
-      align-self: center;
-      width: 0; 
-      height: 0; 
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-top: 7px solid black;
-    }
-      }
-
-     
-      
-        .table-container{
-          width:100%;
-
-        
-
-          .table {
-            width: 100%;
-            table-layout: fixed;
-
-            .tr{
-             
-            }
-
-            .label {
-             
-              text-align: left;
-              font-size: 12px;
-              padding: 5px;
-              letter-spacing: 2px;
-              @include add-text-ellipsis;
-              width: 30%;
-             }
-
-             .value {
-          
-              text-align: left;
-              font-size: 12px;
-              padding: 5px;
-              letter-spacing: 2px;
-              @include add-text-ellipsis;
-              width:70%;
-            }
-          }
-
-        
-       
+    &__option {
+        display: flex;
+        flex-direction: column;
+        padding: rem(8px);
+        width: 100%;
+        background-color: $qmatic-bordeaux;
+        margin: rem(0.1em);
+        align-items: center;
+        justify-content: center;
+        .icon {
+            height: rem(25px);
+            width: rem(25px);
+            margin-top: rem(1.5em);
         }
-  }
-
-
-  &__option-container {
-    background-color: #bdbdbd;
-    display: inline-flex;
-    flex-direction: row;
-  width: 100%;
-  }
-  &__option {
-  
-    display: flex;
-    flex-direction: column;
-    padding: rem(8px);
-    width: 100%;
-    // height: rem(6em);
-    background-color: $qmatic-bordeaux;
-    margin: rem(0.1em);
-    align-items: center;
-    justify-content: center;
-
-    .icon{
-      height:rem(25px);
-      width:rem(25px);
-      margin-top: rem(1.5em);
+        .text {
+            margin-top: rem(1em);
+            text-align: center;
+            @include add-text-ellipsis;
+        }
     }
-    .text{
-      margin-top: rem(1em);
-      text-align: center;
-      @include add-text-ellipsis;
+    &__button-container {
+        background-color: #bdbdbd;
+        display: inline-flex;
+        flex-direction: row;
+        margin-top: rem(0.1em);
     }
-  }
-
-  &__button-container {
-    background-color: #bdbdbd;
-    display: inline-flex;
-    flex-direction: row;
-    margin-top: rem(0.1em);
-  }
-
-  &__button {
-    width: 100%;
-height: rem(6em);
-    border: none;
-    color:  $black;
-    @include add-text-ellipsis;
-  }
+    &__button {
+        width: 100%;
+        height: rem(6em);
+        border: none;
+        color: $black;
+        @include add-text-ellipsis;
+    }
 }

@@ -1,5 +1,3 @@
-import { ICalendarBranch } from './../../../../models/ICalendarBranch';
-import { IBranch } from './../../../../models/IBranch';
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
@@ -8,27 +6,44 @@ import {
   CREATE_APPOINTMENT,
   ARRIVE_APPOINTMENT
 } from "./../../../../constants/utt-parameters";
-import { ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors, ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers, BranchDispatchers, ServiceDispatchers } from "../../../../store";
+import {
+  ServicePointSelectors,
+  CustomerSelector,
+  ReserveSelectors,
+  DataServiceError,
+  TimeslotSelectors,
+  BranchSelectors,
+  ServiceSelectors,
+  InfoMsgDispatchers,
+  CustomerDispatchers,
+  NoteSelectors,
+  NoteDispatchers,
+  CalendarBranchDispatchers,
+  CalendarServiceDispatchers,
+  ArriveAppointmentSelectors,
+  UserSelectors
+} from "../../../../store";
+import { ICalendarBranch } from './../../../../models/ICalendarBranch';
+import { IBranch } from './../../../../models/IBranch';
 import { IUTTParameter } from "../../../../models/IUTTParameter";
-import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
-import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
-import { CalendarService, NOTIFICATION_TYPE } from "../../../../util/services/rest/calendar.service";
 import { IAppointment } from "../../../../models/IAppointment";
 import { ICustomer } from "../../../../models/ICustomer";
-import { Q_ERROR_CODE, ERROR_STATUS } from "../../../../util/q-error";
-import { ToastService } from '../../../../util/services/toast.service';
-import { SPService } from "../../../../util/services/rest/sp.service";
 import { IServicePoint } from "../../../../models/IServicePoint";
 import { IService } from "../../../../models/IService";
-import { NoteSelectors, NoteDispatchers } from "../../../../store";
 
-
+import { QmCheckoutViewConfirmModalService } from "../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service";
+import { ToastService } from '../../../../util/services/toast.service';
+import { SPService } from "../../../../util/services/rest/sp.service";
 import { QmNotesModalService } from "../qm-notes-modal/qm-notes-modal.service";
 import { QmModalService } from "../qm-modal/qm-modal.service";
-import * as moment from 'moment';
-import { forEach } from "@angular/router/src/utils/collection";
+import { CalendarService, NOTIFICATION_TYPE } from "../../../../util/services/rest/calendar.service";
+
+import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
+import { Q_ERROR_CODE, ERROR_STATUS } from "../../../../util/q-error";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
-import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors } from 'src/store/services';
+
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -40,16 +55,15 @@ import { CalendarBranchDispatchers, CalendarServiceDispatchers, ArriveAppointmen
 export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Input() flowType: FLOW_TYPE;
   flowTypeStr: string;
-
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
 
+  private subscriptions: Subscription = new Subscription();
+  uttParameters$: Observable<IUTTParameter>;
   userDirection$: Observable<string>;
 
   customerEmail: string;
   customerSms: string;
-
-  private subscriptions: Subscription = new Subscription();
 
   ticketActionEnabled: boolean = false;
   smsActionEnabled: boolean = false;
@@ -59,20 +73,20 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   isVipLvl1Enabled: boolean = false;
   isVipLvl2Enabled: boolean = false;
   isVipLvl3Enabled: boolean = false;
-
   buttonEnabled = false;
 
   ticketSelected: boolean = false;
   smsSelected: boolean = false;
   emailSelected: boolean = false;
   ticketlessSelected: boolean = false;
+  vipLevel1Checked: boolean;
+  vipLevel2Checked: boolean;
+  vipLevel3Checked: boolean;
 
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
   isArriveAppointment: boolean = false;
 
-
-  uttParameters$: Observable<IUTTParameter>;
   themeColor: string = "#a9023a";
   whiteColor: string = "#ffffff";
   blackColor: string = "#000000";
@@ -82,21 +96,18 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ticketlessColor: string = this.whiteColor;
 
   buttonText: string;
-
   noteText$: Observable<string>;
   noteTextStr: string = '';
-  selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
 
+  selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
   private selectedAppointment: IAppointment;
   private selectedCustomer: ICustomer;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
   private selectedServices: IService[];
   private tempCustomer: ICustomer;
-  vipLevel1Checked: boolean;
-  vipLevel2Checked: boolean;
-  vipLevel3Checked: boolean;
 
+  //variables related to expandable appintment details view
   serviceStr: string;
   isExpanded: boolean = true;
   appTime: string;
@@ -112,12 +123,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private reserveSelectors: ReserveSelectors,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private timeSlotSelectors: TimeslotSelectors,
     private spService: SPService,
     private branchSelector: BranchSelectors,
     private serviceSelectors: ServiceSelectors,
     private qmNotesModalService: QmNotesModalService,
-    private noteSelectors: NoteSelectors, private noteDispatchers: NoteDispatchers,
+    private noteSelectors: NoteSelectors,
+    private noteDispatchers: NoteDispatchers,
     private qmModalService: QmModalService,
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private customerDispatcher: CustomerDispatchers,
@@ -125,8 +136,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private branchDispatcher: CalendarBranchDispatchers,
     private serviceDispatchers: CalendarServiceDispatchers,
     private arriveAppointmentSelectors: ArriveAppointmentSelectors,
-    private userSelectors :UserSelectors
+    private userSelectors: UserSelectors
   ) {
+    this.userDirection$ = this.userSelectors.userDirection$;
 
     this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
@@ -157,13 +169,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.selectedCustomer = customer;
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
-
         }
       });
     this.subscriptions.add(customerSubscription);
 
     const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => {
-      if(appointment){
+      if (appointment) {
         this.selectedAppointment = appointment;
       }
     });
@@ -179,18 +190,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.add(tempCustomerSubscription);
 
     const selectedAppointmentSubscription = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
-      if(appointment){
+      if (appointment) {
         this.selectedAppointment = appointment;
-        this.genarateAppointmentData(this.selectedAppointment);
+        this.genarateAppointmentData();
       }
-    }); 
+    });
     this.subscriptions.add(selectedAppointmentSubscription);
 
   }
 
   ngOnInit() {
-
-    this.userDirection$ = this.userSelectors.userDirection$;
 
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
@@ -226,7 +235,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment != null) {
-      this.genarateAppointmentData(this.selectedAppointment);
+      this.genarateAppointmentData();
     }
 
   }
@@ -235,48 +244,38 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  genarateAppointmentData(appointment: IAppointment) {
-
+  genarateAppointmentData() {
     this.appTime = this.setAppTime();
     this.appId = this.setAppID();
     this.appCustomer = this.setAppCustomer();
     this.appServices = this.setAppServices();
-
   }
 
-  setAppTime():string {
+  setAppTime(): string {
     if (this.selectedAppointment.startTime) {
-      var startTime = this.selectedAppointment.startTime.split(".")[0].split("T")[1].slice(0,5);
+      var startTime = this.selectedAppointment.startTime.split(".")[0].split("T")[1].slice(0, 5);
       return startTime;
     }
     return null;
   }
 
-  setAppID():number {
-return this.selectedAppointment.id;
+  setAppID(): number {
+    return this.selectedAppointment.id;
   }
 
   setAppCustomer(): string {
-    return this.selectedAppointment.customers[0].firstName +" "+this.selectedAppointment.customers[0].lastName;
+    return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
   }
 
   setAppServices(): string {
-    let temp: string='';
-    this.selectedAppointment.services.forEach((service, index) => {
-      if ( this.selectedAppointment.services.length === 1) {
-        temp = service.name;
-      }else if(index < this.selectedAppointment.services.length) {
-        temp = temp + ", "+service.name;
-      }
-
-    })
-    return temp;
+    return this.selectedAppointment.services.map(service => {
+      return service.name;
+    }).join(", ");
   }
 
   toggleCollapse() {
     this.isExpanded ? this.isExpanded = false : this.isExpanded = true;
   }
-
 
   onNoteClicked() {
     this.qmNotesModalService.openForTransKeys(this.noteTextStr,
@@ -295,7 +294,19 @@ return this.selectedAppointment.id;
       },
       () => { }, null);
 
+  }
 
+  deleteNote() {
+    this.qmModalService.openForTransKeys('', 'delete_current_note', 'yes', 'no', (result) => {
+      if (result) {
+        this.noteDispatchers.saveNote(
+          {
+            text: ''
+          }
+        );
+      }
+    }, () => {
+    });
   }
 
   onButtonPressed() {
@@ -312,9 +323,6 @@ return this.selectedAppointment.id;
       this.handleCheckoutCompletion();
       return;
     }
-
-
-
   }
 
   onEmailSelected() {
@@ -389,6 +397,29 @@ return this.selectedAppointment.id;
     this.buttonEnabled = true;
   }
 
+
+  onVip1Clicked() {
+    this.vipLevel1Checked ? this.vipLevel1Checked = false : this.vipLevel1Checked = true;
+    this.vipLevel2Checked = false;
+    this.vipLevel3Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_1;
+  }
+
+  onVip2Clicked() {
+    this.vipLevel2Checked ? this.vipLevel2Checked = false : this.vipLevel2Checked = true;
+    this.vipLevel1Checked = false;
+    this.vipLevel3Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_2;
+  }
+
+  onVip3Clicked() {
+    this.vipLevel3Checked ? this.vipLevel3Checked = false : this.vipLevel3Checked = true;
+    this.vipLevel2Checked = false;
+    this.vipLevel1Checked = false;
+    this.selectedVIPLevel = VIP_LEVEL.VIP_3;
+  }
+
+
   handleCheckoutCompletion() {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.setCreateAppointment();
@@ -404,7 +435,7 @@ return this.selectedAppointment.id;
   setCreateAppointment() {
     this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
       if (result) {
-        this.showSussessMessage(result);
+        this.showSuccessMessage(result);
         this.branchDispatcher.selectCalendarBranch({} as ICalendarBranch);
         this.serviceDispatchers.setSelectedServices([]);
         this.clearSelectedValues();
@@ -414,7 +445,7 @@ return this.selectedAppointment.id;
       const err = new DataServiceError(error, null);
       if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
         this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
-          this.showSussessMessage(result);
+          this.showSuccessMessage(result);
           this.clearSelectedValues();
           this.onFlowExit.emit();
         }, error => {
@@ -428,7 +459,7 @@ return this.selectedAppointment.id;
 
   setCreateVisit() {
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.selectedCustomer, this.customerSms, this.ticketSelected, this.tempCustomer, this.getNotificationType()).subscribe((result) => {
-      this.showSussessMessage(result);
+      this.showSuccessMessage(result);
       this.saveFrequentService();
       this.clearSelectedValues();
       this.onFlowExit.emit();
@@ -442,7 +473,7 @@ return this.selectedAppointment.id;
 
   setAriveAppointment() {
     this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
-      this.showSussessMessage(result);
+      this.showSuccessMessage(result);
       this.saveFrequentService();
       this.clearSelectedValues();
       this.onFlowExit.emit();
@@ -454,7 +485,7 @@ return this.selectedAppointment.id;
     })
   }
 
-  showSussessMessage(result: any) {
+  showSuccessMessage(result: any) {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.translateService.get(['appointment_for_service', 'created_on_branch', 'appointment_time']).subscribe(v => {
         var serviceName = ""
@@ -526,24 +557,7 @@ return this.selectedAppointment.id;
     }
   }
 
-  deleteNote() {
 
-    this.qmModalService.openForTransKeys('', 'delete_current_note', 'yes', 'no', (result) => {
-      if (result) {
-        this.noteDispatchers.saveNote(
-          {
-            text: ''
-          }
-        );
-
-      }
-    }, () => {
-
-    });
-
-
-
-  }
 
   getNotificationType(): NOTIFICATION_TYPE {
     var notificationType = NOTIFICATION_TYPE.none;
@@ -579,24 +593,6 @@ return this.selectedAppointment.id;
     let dateObj = moment(time).format("YYYY-MM-DD, HH:mm");
     return dateObj;
   }
-  onVip1Clicked() {
-    this.vipLevel1Checked ? this.vipLevel1Checked = false : this.vipLevel1Checked = true;
-    this.vipLevel2Checked = false;
-    this.vipLevel3Checked = false;
-    this.selectedVIPLevel = VIP_LEVEL.VIP_1;
-  }
 
-  onVip2Clicked() {
-    this.vipLevel2Checked ? this.vipLevel2Checked = false : this.vipLevel2Checked = true;
-    this.vipLevel1Checked = false;
-    this.vipLevel3Checked = false;
-    this.selectedVIPLevel = VIP_LEVEL.VIP_2;
-  }
 
-  onVip3Clicked() {
-    this.vipLevel3Checked ? this.vipLevel3Checked = false : this.vipLevel3Checked = true;
-    this.vipLevel2Checked = false;
-    this.vipLevel1Checked = false;
-    this.selectedVIPLevel = VIP_LEVEL.VIP_3;
-  }
 }

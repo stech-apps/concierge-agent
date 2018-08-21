@@ -10,21 +10,21 @@ export class QmCheckoutViewConfirmModalService {
     private modalService: NgbModal,
     private translate: TranslateService
   ) {
-    
+
   }
 
   private open(
     title: string,
-    isEmailEnabled:boolean,
-    isSmsEnabled:boolean,
-    themeColor:string,
+    isEmailEnabled: boolean,
+    isSmsEnabled: boolean,
+    themeColor: string,
     btnOkText: string,
     btnCancelText: string,
   ): Promise<boolean> {
     const modalRef = this.modalService.open(QmCheckoutViewConfirmModalComponent, {
       centered: true,
-      backdrop : 'static',
-      keyboard : false
+      backdrop: 'static',
+      keyboard: false
     });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.themeColor = themeColor;
@@ -37,9 +37,9 @@ export class QmCheckoutViewConfirmModalService {
 
   public openForTransKeys(
     titleKey: string,
-    isEmailEnabled:boolean,
-    isSmsEnabled:boolean,
-    themeColor:string,
+    isEmailEnabled: boolean,
+    isSmsEnabled: boolean,
+    themeColor: string,
     btnOkTextKey: string,
     btnCancelTextKey: string,
     confirmCallback: (result: boolean) => void,
@@ -50,13 +50,13 @@ export class QmCheckoutViewConfirmModalService {
       .get([titleKey, btnOkTextKey, btnCancelTextKey], interpolatedKeys)
       .subscribe(translations => {
         this.open(
-          translations[titleKey],  
-           isEmailEnabled,
+          translations[titleKey],
+          isEmailEnabled,
           isSmsEnabled,
           themeColor,
           translations[btnOkTextKey],
           translations[btnCancelTextKey],
-       
+
         )
           .then(confirmed => {
             confirmCallback(confirmed);

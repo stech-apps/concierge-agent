@@ -12,6 +12,10 @@ export class CustomerDispatchers{
         this.store.dispatch(new CustomerAction.FetchCustomers(searchText));
     }
 
+    fetchAppointmentCustomers(searchText:string){
+        this.store.dispatch(new CustomerAction.FetchAppointmentCustomers(searchText));
+    }
+
     resetCustomers(){
         this.store.dispatch(new CustomerAction.ResetCustomers);
     }

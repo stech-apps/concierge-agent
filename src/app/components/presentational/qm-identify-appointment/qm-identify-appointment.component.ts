@@ -125,7 +125,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
 
-    const customerSearchSubscription = this.customerSelectors.customer$.subscribe((customers)=> {
+    const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers)=> {
         this.searchedCustomers =  customers;
     });
 
@@ -145,7 +145,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(servicePointsSubscription);
-
     this.searchApointments()
   }
 
@@ -242,6 +241,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     } 
     
     this.selectedAppointment = null;
+    this.isSearchInputReadOnly = false;
     this.arriveAppointmentDispatchers.deselectAppointment();
   }
 
@@ -301,7 +301,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showCustomerAutoComplete() {
     this.showCustomerResults = true;
-    this.customerDispatchers.fetchCustomers(this.searchText);
+    this.customerDispatchers.fetchAppointmentCustomers(this.searchText);
   }
 
   pad(n, width, z = '0') {

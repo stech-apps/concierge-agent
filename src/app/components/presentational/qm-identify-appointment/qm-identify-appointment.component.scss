@@ -266,6 +266,10 @@
       padding-left: 0.5rem;
       cursor: pointer;
 
+      &:active {
+        background: #eaeaea;
+      }
+
       .qm-cutomer-item-name, .qm-cutomer-item-email, .qm-cutomer-item-phone {
           display: flex;
           padding-top: 0.5rem;

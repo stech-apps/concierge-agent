@@ -4,7 +4,7 @@ import { GlobalErrorHandler } from "../../../util/services/global-error-handler.
 import { Observable } from "../../../../node_modules/rxjs";
 import { catchError } from "../../../../node_modules/rxjs/operators";
 import { ICustomer } from "../../../models/ICustomer";
-import { servicePoint } from '../data.service';
+import { servicePoint, restEndpoint } from '../data.service';
 
 @Injectable()
 export class CustomerDataService{
@@ -15,6 +15,12 @@ export class CustomerDataService{
         .get<ICustomer[]>(`${servicePoint}/customers/search?text=${encodeURIComponent(searchText)}`)        
         .pipe(catchError(this.errorHandler.handleError()));
     }
+
+    getAppointmentCustomers(searchText:string):Observable<ICustomer[]>{
+        return this.http
+       .get<ICustomer[]>(`${restEndpoint}/appointment/customers/search?text=${encodeURIComponent(searchText)}`)        
+       .pipe(catchError(this.errorHandler.handleError()));
+   }
 
     createCustomer(customer:ICustomer):Observable<ICustomer>{
         return this.http

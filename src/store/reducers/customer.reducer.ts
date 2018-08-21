@@ -3,6 +3,7 @@ import * as CustomerActions from '../actions'
 
 export interface ICustomerState{
     customers:ICustomer[];
+    appointmentCustomers? : ICustomer[];
     currentCustomer: ICustomer;
     searchText:string;
     loading:boolean;
@@ -14,6 +15,7 @@ export interface ICustomerState{
 
 export const initialState:ICustomerState={
     customers:[],
+    appointmentCustomers: [],
     currentCustomer:null,
     searchText:'',
     loading:false,
@@ -95,6 +97,27 @@ export function reducer(
             };
         }
 
+        case CustomerActions.FETCH_APPOINTMENT_CUSTOMERS_SUCCESS:{
+            return{
+                ...state,
+                appointmentCustomers: [
+                    ...action.payload
+                  ],
+                loading:false,
+                loaded:true,
+                error:null,
+            };
+        }
+
+        case CustomerActions.FETCH_APPOINTMENT_CUSTOMERS_FAIL:{
+            return{
+                ...state,
+                loading:false,
+                loaded:false,
+                error:action.payload
+            };
+        }
+
         case CustomerActions.RESET_CUSTOMERS: {
             return {
               ...state,
@@ -102,7 +125,7 @@ export function reducer(
               loading: false,
               loaded: false
             };
-          }
+        }
         case CustomerActions.SET_TEMP_CUSTOMER:{
             return {
                 ...state,

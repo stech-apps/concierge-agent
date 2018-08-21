@@ -31,6 +31,20 @@ export class CustomerEffects{
           }
         )
       );
+
+      @Effect()
+      getAppointmentCustomers$: Observable<Action> = this.actions$
+        .ofType(CustomerActions.FETCH_APPOINTMENT_CUSTOMERS)
+        .pipe(
+          switchMap((action: CustomerActions.FetchCustomers) => {
+              return toAction(
+                this.customerDataService.getAppointmentCustomers(action.payload),
+                CustomerActions.FetchAppointmentCustomersSuccess,
+                CustomerActions.FetchAppointmentCustomersFail
+              );
+            }
+          )
+        );
     
       @Effect()
       createCustomer$: Observable<Action> = this.actions$

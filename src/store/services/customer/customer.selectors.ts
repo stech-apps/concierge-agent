@@ -16,6 +16,11 @@ export const getCurrentCustomer= createSelector(
     (state:ICustomerState)=> state.currentCustomer
 )
 
+export const getAppointmentSearchCustomers= createSelector(
+    getCustomerState,
+    (state:ICustomerState) => state.appointmentCustomers
+)
+
 export const getEditCustomer= createSelector(
     getCustomerState,
     (state:ICustomerState)=> state.editCustomer
@@ -53,4 +58,5 @@ export class CustomerSelector{
     editCustomer$ = this.store.select(getEditCustomer);
     searchText$ = this.store.select(getSearchText);
     tempCustomer$ = this.store.select(getTempCustomer);
+    appointmentSearchCustomers$ = this.store.select(getAppointmentSearchCustomers);
 }

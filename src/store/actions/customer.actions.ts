@@ -25,6 +25,10 @@ export const UPDATE_CUSTOMER_PARTIALLY = '[Customer] UPDATE_CUSTOMER_PARTIALLY';
 export const UPDATE_CUSTOMER_PARTIALLY_SUCCESS = '[Customer] UPDATE_CUSTOMER_PARTIALLY_SUCCESS';
 export const UPDATE_CUSTOMER_PARTIALLY_FAIL = '[Customer] UPDATE_CUSTOMER_PARTIALLY_FAIL';
 
+export const FETCH_APPOINTMENT_CUSTOMERS = '[Customer] FETCH_APPOINTMENT_CUSTOMERS';
+export const FETCH_APPOINTMENT_CUSTOMERS_SUCCESS = '[Customer] FETCH_APPOINTMENT_CUSTOMERS_SUCCESS';
+export const FETCH_APPOINTMENT_CUSTOMERS_FAIL = '[Customer] FETCH_APPOINTMENT_CUSTOMERS_FAIL';
+
 export class UpdateCustomerSearchText implements Action{
     readonly type = UPDATE_CUSTOMER_SEARCH_TEXT;
     constructor(public payload:string){}
@@ -61,6 +65,21 @@ export class FetchCustomersFail implements Action{
 
 export class FetchCustomersSuccess implements Action{
     readonly type = FETCH_CUSTOMERS_SUCCESS;
+    constructor (public payload:ICustomer[]){}
+}
+
+export class FetchAppointmentCustomers implements Action{
+    readonly type = FETCH_APPOINTMENT_CUSTOMERS;
+    constructor(public payload:string){}
+}
+
+export class FetchAppointmentCustomersFail implements Action{
+    readonly type = FETCH_APPOINTMENT_CUSTOMERS_FAIL;
+    constructor(public payload:Object){}
+}
+
+export class FetchAppointmentCustomersSuccess implements Action{
+    readonly type = FETCH_APPOINTMENT_CUSTOMERS_SUCCESS;
     constructor (public payload:ICustomer[]){}
 }
 
@@ -120,6 +139,7 @@ export type AllCustomerActions = UpdateCustomerSearchText | ResetCustomerSearchT
             |FetchCustomers|FetchCustomersFail|FetchCustomersSuccess | ResetCustomers| CreateCustomer | CreateCustomerFail | CreateCustomerSuccess
             |UpdateCustomer|UpdateCustomerFail|UpdateCUstomerSuccess
             | SetTempCustomer | ResetTempCustomer
+            |FetchAppointmentCustomers | FetchAppointmentCustomersSuccess | FetchAppointmentCustomersFail
             | UpdateCustomerPartially
             | UpdateCustomerPartiallyFail
             | UpdateCUstomerPartiallySuccess ;

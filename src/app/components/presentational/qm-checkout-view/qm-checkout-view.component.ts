@@ -534,20 +534,94 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   showErrorMessage(error: any) {
     const err = new DataServiceError(error, null);
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      this.toastService.infoToast("Fail to create Appointment");
+      if (error.status === ERROR_STATUS.INTERNAL_ERROR){
+        if (err.errorMsg.length > 0){
+          this.toastService.infoToast(err.errorMsg.split(':')[1] + '.');
+        }
+        else{
+          this.showTostMessage('request_fail');
+        }
+      }
+      else if (error.status === ERROR_STATUS.BAD_REQUEST){
+        this.showTostMessage('booking_appointment_error');
+      }
+      else{
+        this.showTostMessage('request_fail');
+      }
     }
+
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
-
+        if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR){
+          this.showTostMessage('printer_error');
+        } 
+        else if (err.errorMsg.length > 0){
+          this.toastService.infoToast(err.errorMsg.split(':')[1] + '.');
+        }
+        else{
+          this.showTostMessage('request_fail');
+        }
       }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR) {
-
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM){
+        this.showTostMessage('paper_jam');
       }
-      this.toastService.infoToast("Fail to create visit");
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+        this.showTostMessage('out_of_paper');
+      }
+      else {
+        this.showTostMessage('visit_timeout');
+      }
+
+      if(err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+        this.translateService.get('visit_create_fail').subscribe(v => {
+          var successMessage = {
+            firstLineName: v,
+            icon: "error"
+          }
+          this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+        });
+      }
     }
+
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      this.toastService.infoToast("Fail to arrive Appointment");
+      if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
+        if (err.errorCode === Q_ERROR_CODE.APPOINTMENT_USED_VISIT){
+          this.showTostMessage('appointment_already_used');
+        } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR){
+          this.showTostMessage('printer_error');
+        } else{
+          this.showTostMessage('request_fail');
+        }
+      }
+      else if (error.status === ERROR_STATUS.NOT_FOUND){
+        this.showTostMessage('appointment_not_found_detail');
+      }
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM){
+        this.showTostMessage('paper_jam');
+      }
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+        this.showTostMessage('out_of_paper');
+      }
+      else {
+        this.showTostMessage('visit_timeout');
+      }
+
+      if(err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+        this.translateService.get('arrive_appointment_fail').subscribe(v => {
+          var successMessage = {
+            firstLineName: v,
+            icon: "error"
+          }
+          this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+        });
+      }
     }
+  }
+
+  showTostMessage(msgKey : string){
+    this.translateService.get(msgKey).subscribe(v => {
+      this.toastService.infoToast(v);
+    });
   }
 
   clearSelectedValues() {

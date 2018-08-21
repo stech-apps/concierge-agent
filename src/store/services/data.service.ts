@@ -10,9 +10,11 @@ export const qsystemEndpoint = '/qsystem/rest';
 export const applicationId = 'connectconcierge';
 
 export const ERROR_CODE = 'error_code';
+export const ERROR_MESSAGE = 'error_message';
 
 export class DataServiceError<T> {
   public errorCode: string = '0';
+  public errorMsg: string = '';
 
   constructor(public responseData: any, public requestData?: T) {
     this.parseErrors(responseData);
@@ -21,6 +23,7 @@ export class DataServiceError<T> {
   private parseErrors(responseData: HttpErrorResponse) {
     if (responseData) {
       this.errorCode = responseData.headers.get(ERROR_CODE) || '0';
+      this.errorMsg = responseData.headers.get(ERROR_MESSAGE) || '';
     }
   }
 }

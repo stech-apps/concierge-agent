@@ -50,7 +50,8 @@
     "rxjs": "^6.2.1",
     "underscore": "^1.9.1",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "angular-moment-timezone": "^1.7.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",

@@ -160,7 +160,12 @@ export class QmSelectServiceComponent implements OnInit {
     else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
       storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_AA;
     }
-    this.isMultiServiceOn = this.localStorage.getSettingForKey(storeKey);
+    if(this.multiServiceEnabled){
+      this.isMultiServiceOn = this.localStorage.getSettingForKey(storeKey);
+    }
+    else{
+      this.isMultiServiceOn = false;
+    }
   }
 
   onFlowStepActivated() {

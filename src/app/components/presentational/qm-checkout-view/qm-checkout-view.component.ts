@@ -42,9 +42,7 @@ import { FLOW_TYPE, VIP_LEVEL } from "../../../../util/flow-state";
 import { Q_ERROR_CODE, ERROR_STATUS } from "../../../../util/q-error";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
 
-import * as moment from 'moment';
-
-
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: "qm-checkout-view",
@@ -499,12 +497,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         })
         var successMessage = {
           firstLineName: v.appointment_for_service,
-          firstLineText: serviceName,
+          firstLineText: serviceName.toUpperCase(),
           SecondLineName: v.created_on_branch,
-          SecondLineText: result.branch.name,
+          SecondLineText: result.branch.name.toUpperCase(),
           icon: "correct",
           LastLineName: v.appointment_time,
-          LastLineText: this.buildDate(result.start)
+          LastLineText: this.buildDate(result)
         }
         this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
       });
@@ -536,7 +534,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR){
         if (err.errorMsg.length > 0){
-          this.toastService.infoToast(err.errorMsg.split(':')[1] + '.');
+          this.toastService.infoToast(err.errorMsg);
         }
         else{
           this.showTostMessage('request_fail');
@@ -556,7 +554,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showTostMessage('printer_error');
         } 
         else if (err.errorMsg.length > 0){
-          this.toastService.infoToast(err.errorMsg.split(':')[1] + '.');
+          this.toastService.infoToast(err.errorMsg);
         }
         else{
           this.showTostMessage('request_fail');
@@ -663,8 +661,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private buildDate(time: string) {
-    let dateObj = moment(time).format("YYYY-MM-DD, HH:mm");
+  private buildDate(appointment: IAppointment) {
+    let dateObj = moment(appointment.startTime).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DD, HH:mm');
     return dateObj;
   }
 

@@ -63,26 +63,13 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
         //if flow is skipped then use the service point branch as current branch
         if(this.isFlowSkip) { 
           this.calendarBranches.forEach((cb) => {
-            if (spBranch.id === cb.id) {
+            if (spBranch.id === cb.qpId) {
              this.currentBranch = cb;
              this.calendarBranchDispatchers.selectCalendarBranch(cb);
             }
           });          
         }
-      });
-
-      const selectedCalendarBranch = this.calendarBranchSelectors.selectedBranch$.subscribe((sb) => {
-
-        if(this.calendarBranches.length > 0 ) {
-          this.calendarBranches.forEach((b) => {
-            if (b.id === sb.id && !this.isFlowSkip) {
-             this.currentBranch = sb;
-            }
-          });
-        }
-      });
-      
-      this.subscriptions.add(selectedCalendarBranch);      
+      });      
     });
 
 

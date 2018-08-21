@@ -4,5 +4,6 @@ export class ICalendarBranch extends IBranch {
     publicId: string;
     qpId: number;
     selected?: boolean;
+    fullTimeZone?: string;
 }
   

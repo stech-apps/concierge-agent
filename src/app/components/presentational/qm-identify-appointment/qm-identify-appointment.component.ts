@@ -263,6 +263,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.selectedSearchIcon = '';
     this.isSearchInputReadOnly = false;
+    this.appointments = [];
   }
 
   searchApointments() {

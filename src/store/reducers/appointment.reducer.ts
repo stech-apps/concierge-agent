@@ -30,6 +30,14 @@ export function reducer(
                 error: null
             };
         }
+
+        case AppointmentActions.SEARCH_APPOINTMENTS_FAIL: {
+            return {
+                ...state,
+                loading: true,
+                error: action.payload
+            };
+        }
         default: {
             return state;
         }

@@ -1,3 +1,4 @@
+import { ToastService } from './../../../../util/services/toast.service';
 import { SelectAppointment } from './../../../../store/actions/arrive-appointment.actions';
 import { IBranch } from 'src/models/IBranch';
 import { Subscription } from 'rxjs';
@@ -10,10 +11,12 @@ import * as moment from 'moment';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
-import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers, ServicePointSelectors } from 'src/store';
+import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
+         ServicePointSelectors } from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -71,7 +74,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   constructor(private appointmentDispatchers: AppointmentDispatchers,
     private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors,
     private arriveAppointmentDispatchers: ArriveAppointmentDispatchers,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private toastService: ToastService, private translateService: TranslateService
   ) { 
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
@@ -111,8 +115,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
 
+    const appointmentErrorSub = this.appointmentSelectors.appointmentsError$.subscribe((error: any)=> {
+      if(error && error.responseData && error.responseData['status'] === 404) {
+        this.translateService.get('appointment_not_found').subscribe(
+          (notfoundString: string) => {
+           this.toastService.infoToast(notfoundString);
+          }
+        ).unsubscribe();  
+      }
+    });
+
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentSubscription);
+    this.subscriptions.add(appointmentErrorSub);
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
@@ -199,8 +214,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.selectedSearchIcon = '';
     this.searchInputController.setValue( `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
     this.searchApointments();
-    this.showModalBackDrop = false;
-    
+    this.showModalBackDrop = false;    
+  }
+
+  clearInput() {
+    this.searchText = '';
+    this.showModalBackDrop = false;   
+    this.isSearchInputOpen = false; 
+    this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
+    this.selectedSearchIcon = '';
   }
 
   searchApointments() {
@@ -237,6 +259,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   onAppointmentSelect(appointment: IAppointment){
     this.arriveAppointmentDispatchers.selectAppointment(appointment);
     this.selectedAppointment = appointment;
+    this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.onFlowNext.emit();
   }
 

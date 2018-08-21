@@ -213,8 +213,10 @@
     </button>
   </div>
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" (keyup.enter)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" qmClearInput [placeholder]="(searchPlaceHolderKey | translate) || ''"
+    <input type="text" (keyup.enter)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
     />
+
+    <i class="icon-close qm-arrive-searchinput-close" *ngIf="searchText" (click)="clearInput()"></i>
 
     <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
       <div class="qm-duration-control__header">

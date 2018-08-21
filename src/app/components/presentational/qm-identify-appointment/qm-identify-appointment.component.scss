@@ -228,6 +228,15 @@
       font-size: 0.8em;
     }
   }
+
+  .qm-arrive-searchinput-close {
+    position: absolute;
+    right : 1rem;
+    color: $black;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
 }
 
 :host>>>input {

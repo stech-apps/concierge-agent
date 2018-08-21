@@ -36,7 +36,7 @@ export class AppointmentDataService {
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)
-      .pipe(catchError(this.errorHandler.handleError()));
+      .pipe((catchError)(this.errorHandler.handleError()));
   }
 
   deleteAppointment(appointment: IAppointment) {

@@ -45,6 +45,15 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
     private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
 
+      this.servicePointDispatchers.setOpenServicePoint(null);
+
+      this.setDefaultServicePoint();
+  
+      this.selectedBranch = {
+        name: 'branch',
+        id: -1
+      };
+      
       this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
 
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
@@ -80,14 +89,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.servicePointDispatchers.setOpenServicePoint(null);
-
-    this.setDefaultServicePoint();
-
-    this.selectedBranch = {
-      name: 'branch',
-      id: -1
-    };
+       
+  
   }
 
   setDefaultServicePoint() {
@@ -106,6 +109,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.nativeApiService.showNativeLoader(false);
+    
   }
 
   onBranchSelect(selectedBranch: IBranch) {

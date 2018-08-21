@@ -24,7 +24,6 @@ export class QmInputboxComponent implements OnInit {
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
-
   invalidFirstName:boolean;
   invalidLastName:boolean;
 
@@ -46,14 +45,14 @@ export class QmInputboxComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       this.countrycode = params.countryCode;
     });
-    
-    const countryValidators = [Validators.pattern(this.countrycode)];
-    const phoneValidators = [Validators.pattern(/^[0-9\+\s]{7}[0-9\+\s]+$/)]; 
+
+    const phoneValidators = [Validators.pattern(this.regexvalue())]; 
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
-  
+ 
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
     this.customers$ = this.customerSelectors.customer$;
+    
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl('',Validators.required,whiteSpaceValidator),
       lastName:new FormControl('',Validators.required,whiteSpaceValidator),
@@ -62,6 +61,7 @@ export class QmInputboxComponent implements OnInit {
     })
 
     let editCustomerSubscription = null;
+ 
     if(this.isOnupdate){  
       editCustomerSubscription = this.editCustomer$.subscribe(
         (editCustomer:ICustomer)=>{
@@ -76,7 +76,7 @@ export class QmInputboxComponent implements OnInit {
       })
     }
 
-      if(this.countrycode && !this.editCustomer){
+    if(this.countrycode && !this.isOnupdate){
         this.customerCreateForm.patchValue({
           phone:this.countrycode
         })
@@ -84,6 +84,12 @@ export class QmInputboxComponent implements OnInit {
    
   }
 
+  public regexvalue(){
+    let firstRegx = /^([0-9]{7}[0-9])+|/;
+    let lastRegx = /$/;
+    let regex = new RegExp(firstRegx.source + this.countrycode +lastRegx.source);
+    return regex
+  }
 
   public decline() {
     this.activeModal.close(false);
@@ -119,7 +125,7 @@ export class QmInputboxComponent implements OnInit {
   }
 
   trimCustomer():ICustomer{
-    if(this.editCustomer.phone== this.countrycode){
+    if(this.customerCreateForm.value.phone== this.countrycode){
       this.customerCreateForm.value.phone = "";
     }
     const customerSave:ICustomer={

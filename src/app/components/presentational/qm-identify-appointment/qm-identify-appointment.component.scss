@@ -281,6 +281,37 @@
       }
     }
   }
+
+  .qm-appointment-refresh {
+    position: absolute;
+    width: 2.75rem;
+    background: none;
+    border: none;
+    right:11.25%;
+    transform: translateX(50%);
+    top: 5.5rem;
+    cursor: pointer;
+
+    &:focus, &:active {
+      outline: none;
+    }
+
+    &--disabled {
+      fill: none;
+      stroke: #bdbdbd;
+      stroke-linecap: round;
+      stroke-miterlimit: 10;
+      stroke-width: 6px;
+    }
+
+    &--enabled {
+      fill: none;
+      stroke: #000;
+      stroke-linecap: round;
+      stroke-miterlimit: 10;
+      stroke-width: 6px;
+    }
+  }
 }
 
 :host>>>input {

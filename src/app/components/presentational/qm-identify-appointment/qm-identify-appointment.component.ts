@@ -11,8 +11,10 @@ import * as moment from 'moment';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
-import { AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
-         ServicePointSelectors, CustomerDispatchers, CustomerSelector} from 'src/store';
+import {
+  AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector
+} from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
@@ -29,18 +31,18 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
-  tempCustomer:{
-  time?:string;
-  date?:string;
-  id?:string;
-  firstName?:string;
-  lastName?:string;
-  service?:string
-}
+  tempCustomer: {
+    time?: string;
+    date?: string;
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    service?: string
+  }
 
   showModalBackDrop: boolean;
   searchedCustomers: ICustomer[] = [];
-  tempCustomers:any;
+  tempCustomers: any;
   selectedSearchIcon: string;
   searchPlaceHolderKey: string;
   showSearchInput: boolean;
@@ -62,19 +64,23 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readonly INITIAL_ANIMATION_STATE = 'out';
   isSearchInputReadOnly: boolean = false;
   showCustomerResults: boolean = false;
+  enableAppointmentLoad: boolean = true;
+  
   readonly SEARCH_STATES = {
     DURATION: 'duration',
     INITIAL: 'initial',
     CUSTOMER: 'customer',
+    REFRESH: 'refresh',
     ID: 'id'
   };
+  isFetchBlock: boolean = false;
 
   @Output()
-  onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
+  onFlowNext: EventEmitter<any> = new EventEmitter<any>();
 
   appointments: IAppointment[] = [];
 
-  height:string;
+  height: string;
 
   constructor(private appointmentDispatchers: AppointmentDispatchers,
     private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors,
@@ -82,10 +88,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector
-  ) { 
+  ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
-
   }
 
   ngOnInit() {
@@ -101,7 +106,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.height = 'calc(100vh - 230px)';
 
     this.inputChanged
-      .subscribe(text => this.searchApointments());
+      .subscribe(text => this.searchAppointments());
 
     this.customerInputChanged
       .pipe(debounceTime(500 || 0))
@@ -115,18 +120,27 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.handleAppointmentResponse(apps);
     });
 
-    const appointmentErrorSub = this.appointmentSelectors.appointmentsError$.subscribe((error: any)=> {
-      if(error && error.responseData && error.responseData['status'] === 404) {
-        this.translateService.get('appointment_not_found').subscribe(
-          (notfoundString: string) => {
-           this.toastService.infoToast(notfoundString);
-          }
-        ).unsubscribe();  
+    const uttSubscription = this.servicePointSelectors.uttParameters$
+    .subscribe(uttParameters => {
+      if (uttParameters) {
+        this.enableAppointmentLoad = uttParameters.fetchAppointment;
       }
     });
 
-    const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers)=> {
-        this.searchedCustomers =  customers;
+  this.subscriptions.add(uttSubscription);
+
+    const appointmentErrorSub = this.appointmentSelectors.appointmentsError$.subscribe((error: any) => {
+      if (error && error.responseData && error.responseData['status'] === 404) {
+        this.translateService.get('appointment_not_found').subscribe(
+          (notfoundString: string) => {
+            this.toastService.infoToast(notfoundString);
+          }
+        ).unsubscribe();
+      }
+    });
+
+    const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers) => {
+      this.searchedCustomers = customers;
     });
 
     this.subscriptions.add(branchSubscription);
@@ -135,24 +149,24 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(customerSearchSubscription);
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if(params){
-       this.fromTime.hour = parseInt(moment().add( -1* params.gapFromTime, 'minutes').format('HH'));
-       this.fromTime.minute = parseInt(moment().add( -1* params.gapFromTime, 'minutes').format('mm'));
+      if (params) {
+        this.fromTime.hour = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('HH'));
+        this.fromTime.minute = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('mm'));
 
-       this.toTime.hour = parseInt(moment().add( params.gapToTime, 'minutes').format('HH'));
-       this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
+        this.toTime.hour = parseInt(moment().add(params.gapToTime, 'minutes').format('HH'));
+        this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
       }
     });
 
     this.subscriptions.add(servicePointsSubscription);
-    this.searchApointments()
+    this.searchAppointments()
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
     this.appointments = apps;
 
     // in id selection go to 
-    if(this.SEARCH_STATES.ID == this.currentSearchState && apps.length === 1) {
+    if (this.SEARCH_STATES.ID == this.currentSearchState && apps.length === 1) {
       this.selectedAppointment = apps[0];
       this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
       this.showAppointmentCollection = false;
@@ -160,19 +174,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.showModalBackDrop = false;
     }
 
-    if((!apps || !apps.length)) {
+    if ((!apps || !apps.length)) {
 
-      if(this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
+      if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
         this.translateService.get('no_appointments_for_customer').subscribe(
           (noappointments: string) => {
-           this.toastService.infoToast(noappointments);
+            this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
       }
-      else if(this.currentSearchState === this.SEARCH_STATES.DURATION) {
+      else if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
         this.translateService.get('no_appointments').subscribe(
           (noappointments: string) => {
-           this.toastService.infoToast(noappointments);
+            this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
       }
@@ -236,10 +250,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.currentSearchState = searchButton;
     }
     else {
-        this.showModalBackDrop = false;   
-        this.selectedSearchIcon = '';   
-    } 
-    
+      this.showModalBackDrop = false;
+      this.selectedSearchIcon = '';
+    }
+
     this.selectedAppointment = null;
     this.isSearchInputReadOnly = false;
     this.arriveAppointmentDispatchers.deselectAppointment();
@@ -251,22 +265,22 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.searchText = `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`;
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
-    this.searchInputController.setValue( `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
-    this.searchApointments();
-    this.showModalBackDrop = false;    
+    this.searchInputController.setValue(`${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
+    this.searchAppointments();
+    this.showModalBackDrop = false;
   }
 
   clearInput() {
     this.searchText = '';
-    this.showModalBackDrop = false;   
-    this.isSearchInputOpen = false; 
+    this.showModalBackDrop = false;
+    this.isSearchInputOpen = false;
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.selectedSearchIcon = '';
     this.isSearchInputReadOnly = false;
     this.appointments = [];
   }
 
-  searchApointments() {
+  searchAppointments() {
     let searchQuery: any = {
       branchId: this.selectedBranch.id
     };
@@ -274,14 +288,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState === this.SEARCH_STATES.INITIAL) {
       searchQuery = {
         ...searchQuery,
-        fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute,2)}`,
-        toDate: `${moment().format('YYYY-MM-DD')}T${ this.pad(this.toTime.hour,2)}:${this.pad(this.toTime.minute, 2)}`
+        fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
+        toDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`
       };
     }
-    else if(this.currentSearchState === this.SEARCH_STATES.ID) {
+    else if (this.currentSearchState === this.SEARCH_STATES.ID) {
       searchQuery = {
         ...searchQuery,
-       id: this.searchText  
+        id: this.searchText
       };
     }
 
@@ -289,13 +303,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onEnterPressed() {
-    if(this.currentSearchState !== this.SEARCH_STATES.CUSTOMER) {
+    if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER) {
       this.inputChanged.next(this.searchText);
     }
   }
 
   onSeachTextChanged() {
-    if(this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
+    if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
       this.customerInputChanged.next();
     }
   }
@@ -310,7 +324,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
-  onAppointmentSelect(appointment: IAppointment){
+  onAppointmentSelect(appointment: IAppointment) {
     this.arriveAppointmentDispatchers.selectAppointment(appointment);
     this.selectedAppointment = appointment;
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
@@ -321,7 +335,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   getSelectedAppointmentInfo() {
     let animationInfo = '';
 
-    if(this.selectedAppointment) {
+    if (this.selectedAppointment) {
       animationInfo = `${this.selectedAppointment.customers[0].firstName} `;
       animationInfo += `${this.selectedAppointment.customers[0].lastName} - `;
       animationInfo += `${this.selectedAppointment.startTime.replace('T', ' ')}`;
@@ -343,5 +357,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.appointmentDispatchers.searchAppointments({
       customerId: customer.id
     })
+  }
+
+  refreshAppointments() {
+    if(this.isFetchBlock === false) {
+      this.currentSearchState = this.SEARCH_STATES.REFRESH;
+      this.searchAppointments();
+      setTimeout(() => {    //<<<---    using ()=> syntax
+        this.isFetchBlock = false;
+      }, 30000);
+  
+      this.isFetchBlock = true;
+    }
   }
 }

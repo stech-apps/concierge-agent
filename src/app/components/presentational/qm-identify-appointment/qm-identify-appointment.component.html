@@ -212,6 +212,53 @@
       </div>
     </button>
   </div>
+
+  <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()">
+      <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
+        <defs>
+            <style>.refreshBtnStyleEnable {
+                fill: none;
+                stroke: #000;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+                stroke-width: 6px;
+            }</style>
+        </defs>
+        <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+                <path class="refreshBtnStyleEnable" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87"/>
+                <polygon points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75"/>
+                <path class="refreshBtnStyleEnable" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09"/>
+                <polygon points="0 61.97 2.65 38.18 21.92 52.37 0 61.97"/>
+            </g>
+        </g>
+    </svg>
+
+    <svg *ngIf="isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
+        <defs>
+            <style>.refreshBtnStyleDisable-1 {
+                fill: none;
+                stroke: #bdbdbd;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+                stroke-width: 6px;
+            }
+
+            .refreshBtnStyleDisable-2 {
+                fill: #bdbdbd;
+            }</style>
+        </defs>
+        <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+                <path class="refreshBtnStyleDisable-1" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87"/>
+                <polygon class="refreshBtnStyleDisable-2" points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75"/>
+                <path class="refreshBtnStyleDisable-1" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09"/>
+                <polygon class="refreshBtnStyleDisable-2" points="0 61.97 2.65 38.18 21.92 52.37 0 61.97"/>
+            </g>
+        </g>
+    </svg>
+  </button>
+
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
     <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
     />

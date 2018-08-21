@@ -33,6 +33,10 @@ export class AppointmentDataService {
     if(appointmentSearch.id) {
       searchQuery = `${restEndpoint}/appointment/branches/${appointmentSearch.branchId}/appointments/${appointmentSearch.id}`;
     }
+
+    if(appointmentSearch.customerId) {
+      searchQuery = `${restEndpoint}/appointment/customers/${appointmentSearch.customerId}/appointments`;
+    }
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)

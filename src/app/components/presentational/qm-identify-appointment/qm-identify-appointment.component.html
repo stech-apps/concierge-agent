@@ -213,9 +213,8 @@
     </button>
   </div>
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" (keyup.enter)="onSearchInputChange()" [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
+    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
     />
-
     <i class="icon-close qm-arrive-searchinput-close" *ngIf="searchText" (click)="clearInput()"></i>
 
     <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
@@ -239,16 +238,46 @@
     </div>
   </div>
 
-  <div class="qm-selected-appointment-container" *ngIf="selectedAppointment">
-      <div class="qm-selected-appointment">
-          <div class="qm-selected-appointment-text">{{getSelectedAppointmentInfo()}}</div>
-          <i class="icon-close" (click)="deselectAppointment()"></i>
+  <div class="qm-customer-search-results" *ngIf="showCustomerResults">
+    <div class="qm-cutomer-item" (click)="onCustomerSelect(c)" *ngFor="let c of searchedCustomers">
+      <div class="qm-cutomer-item-name">
+        <div class="qm-cutomer-item-name__label">
+          {{ 'name' | translate}}
+        </div>
+        <div class="qm-customer-item-name__value">
+          {{c.firstName + ' ' + c.lastName}}
+        </div>
       </div>
+      <div class="qm-cutomer-item-email">
+        <div class="qm-customer-item-email__label">
+          {{ 'email' | translate}} 
+        </div>
+        <div class="qm-customer-item-email__value">
+          {{ c.properties.email }} </div>
+
+      </div>
+      <div class="qm-cutomer-item-phone">
+        <div class="qm-customer-item-email__label">
+          {{'mobile_number' | translate }}
+        </div>
+        <div class="qm-customer-item-email__value">
+          {{ c.properties.phoneNumber }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="qm-selected-appointment-container" *ngIf="selectedAppointment">
+    <div class="qm-selected-appointment">
+      <div class="qm-selected-appointment-text">{{getSelectedAppointmentInfo()}}</div>
+      <i class="icon-close" (click)="deselectAppointment()"></i>
+    </div>
   </div>
 
   <div class="qm-identify-appointment__table-container">
     <table class="qm-identify-appointment__customer-table">
-        <thead class="qm-identify-appointment__customer-table__header">
+      <thead class="qm-identify-appointment__customer-table__header">
         <tr>
           <th class="qm-identify-appointment__customer-table__col-5"></th>
           <th class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>

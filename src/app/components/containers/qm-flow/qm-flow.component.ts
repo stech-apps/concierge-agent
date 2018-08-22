@@ -99,6 +99,10 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     this.flowPanels.forEach(fp => {
       fp.isActive = false;
       fp.isContentVisible = false;
+
+      if(!fp.headerVisibilityOverridden && fp.index < panel.index) {
+        fp.isHeaderVisible = true;
+      }
     });
 
     panel.isActive = true;

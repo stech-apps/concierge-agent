@@ -18,9 +18,13 @@ export class QmFlowPanelComponent implements OnInit {
   @ContentChild(QmFlowPanelContentComponent) content: QmFlowPanelContentComponent;
   @ContentChild(QmFlowPanelResult) resultContainer: QmFlowPanelResult;
 
-  id: string = `qm-flow-panel-${_uniqueIdCounter++}`;
+  index: number = _uniqueIdCounter++;
+  id: string = `qm-flow-panel-${this.index}`;
 
   constructor() { }
+
+  @Input()
+  headerVisibilityOverridden : boolean;
 
   @Input()
   title: string;

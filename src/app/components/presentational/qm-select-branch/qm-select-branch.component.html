@@ -18,8 +18,8 @@
   </div>
 </div>
 <div class="qm-branch-list__container" dir="{{ userDirection$ | async}}">
-  <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-branch-list__item--selected': b.id === currentBranch.id}">
+  <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-branch-list__item--selected': b.publicId === currentBranch.publicId}">
    <div class="qm-branch-list__item--text">{{b.name}}</div>
-    <i class="icon-check" *ngIf="b.id === currentBranch.id"></i>
+    <i class="icon-check" *ngIf="b.publicId === currentBranch.publicId"></i>
   </div>
 </div>

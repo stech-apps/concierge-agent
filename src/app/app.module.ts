@@ -81,6 +81,7 @@ import { QmAutoCloseComponent } from "./components/containers/qm-auto-close/qm-a
 import { AutoClose } from "../util/services/autoclose.service";
 import { QmHomeComponent } from "src/app/components/presentational/qm-home/qm-home.component";
 import { Logout } from "./../util/services/logout.service";
+import { Recycle } from "./../util/services/recycle.service";
 import { QmSideMenuComponent } from "./components/containers/qm-side-menu/qm-side-menu.component";
 import { SPService } from "./../util/services/rest/sp.service";
 import { CalendarService } from "./../util/services/rest/calendar.service";
@@ -259,6 +260,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QueueIndicator,
     AutoClose,
     Logout,
+    Recycle,
     SPService,
     CalendarService,
     Util,

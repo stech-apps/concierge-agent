@@ -5,6 +5,7 @@ import { Component, OnInit, ContentChildren, AfterContentInit } from '@angular/c
 import { QmFlowPanelComponent } from 'src/app/components/containers/qm-flow-panel/qm-flow-panel.component';
 import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
+import { Recycle } from '../../../../util/services/recycle.service';
 
 @Component({
   selector: 'qm-flow',
@@ -14,7 +15,12 @@ import { HostBinding } from '@angular/core';
 })
 export class QmFlowComponent implements OnInit, AfterContentInit {
 
-  constructor(private router: Router, private util: Util, private qmModalService: QmModalService) { }
+  constructor(
+    private router: Router, 
+    private util: Util, 
+    private qmModalService: QmModalService,
+    private recycleService: Recycle
+  ) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
 
@@ -70,6 +76,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     if(result){
       this.exitFlow = true;
         setTimeout(() => {
+          this.recycleService.clearCache();
           this.router.navigate(['home']);
         }, 1000);
     }
@@ -78,6 +85,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
         if (result) {
           this.exitFlow = true;
           setTimeout(() => {
+            this.recycleService.clearCache();
             this.router.navigate(['home']);
           }, 1000);
         }
@@ -85,7 +93,6 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   
       });
     }
-
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {

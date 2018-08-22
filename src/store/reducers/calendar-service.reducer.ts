@@ -14,7 +14,7 @@ export interface ICalendarServiceState {
   }
   
   export const initialState: ICalendarServiceState = {
-    services: [],
+    services: null,
     serviceGroups: [],
     selectedServices: [],
     searchText: '',

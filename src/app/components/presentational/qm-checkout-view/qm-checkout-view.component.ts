@@ -442,7 +442,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.showSuccessMessage(result);
         this.branchDispatcher.selectCalendarBranch({} as ICalendarBranch);
         this.serviceDispatchers.setSelectedServices([]);
-        this.clearSelectedValues();
         this.onFlowExit.emit();
       }
     }, error => {
@@ -450,11 +449,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
         this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
           this.showSuccessMessage(result);
-          this.clearSelectedValues();
           this.onFlowExit.emit();
         }, error => {
           this.showErrorMessage(error);
-          this.clearSelectedValues();
           this.onFlowExit.emit();
         })
       }
@@ -465,12 +462,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.selectedCustomer, this.customerSms, this.ticketSelected, this.tempCustomer, this.getNotificationType()).subscribe((result) => {
       this.showSuccessMessage(result);
       this.saveFrequentService();
-      this.clearSelectedValues();
       this.onFlowExit.emit();
     }, error => {
       this.showErrorMessage(error);
       this.saveFrequentService();
-      this.clearSelectedValues();
       this.onFlowExit.emit();
     })
   }
@@ -479,12 +474,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
       this.showSuccessMessage(result);
       this.saveFrequentService();
-      this.clearSelectedValues();
       this.onFlowExit.emit();
     }, error => {
       this.showErrorMessage(error);
       this.saveFrequentService();
-      this.clearSelectedValues();
       this.onFlowExit.emit();
     })
   }
@@ -627,15 +620,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.toastService.infoToast(v);
     });
   }
-
-  clearSelectedValues() {
-    this.customerDispatcher.resetCurrentCustomer();
-    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      this.customerDispatcher.resetTempCustomer();
-    }
-  }
-
-
 
   getNotificationType(): NOTIFICATION_TYPE {
     var notificationType = NOTIFICATION_TYPE.none;

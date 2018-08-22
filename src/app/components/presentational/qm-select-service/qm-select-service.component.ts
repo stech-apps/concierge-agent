@@ -90,7 +90,6 @@ export class QmSelectServiceComponent implements OnInit {
 
       const serviceLoadedSubscription = this.serviceSelectors.isServiceLoaded$.subscribe((val) => {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
-        
           if(branch){
             this.selectedBranch = branch;
             if(!val){
@@ -103,26 +102,36 @@ export class QmSelectServiceComponent implements OnInit {
       this.subscriptions.add(serviceLoadedSubscription);
     }
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-      const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
-        this.serviceList = <Array<IServiceViewModel>>services;
-        this.filteredServiceList = <Array<IServiceViewModel>>services;
-      });
-      this.subscriptions.add(calendarServiceSubscription);
-
       // calendar branch subscription
 
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
-        if(this.selectedBranch as ICalendarBranch !== branch){
-          this.calendarServiceDispatchers.removeFetchService();
+        if((this.selectedBranch as ICalendarBranch) !== branch){
+          if(this.selectedBranch !== undefined){
+            this.calendarServiceDispatchers.removeFetchService();
+          }
+          if(branch.id != -1 && this.serviceList === null){
+            this.selectedServiceList = [];
+            this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
+          }
         }
         this.selectedBranch = branch;
       });
       this.subscriptions.add(calendarBranchSubscription);
 
+      const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
+        this.serviceList = <Array<IServiceViewModel>>services;
+        if(this.serviceList !== null){
+          this.filteredServiceList = <Array<IServiceViewModel>>services;
+        }
+      });
+      this.subscriptions.add(calendarServiceSubscription);
+
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
         if(!val){
-          this.selectedServiceList = [];
-          this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
+          if(this.selectedBranch.id != -1){
+            this.selectedServiceList = [];
+            this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
+          }
         }
       });
       this.subscriptions.add(calendarServiceLoadedSubscription);
@@ -201,6 +210,11 @@ export class QmSelectServiceComponent implements OnInit {
       }, ()=> {});
     }
     else if(this.selectedServiceList.length === 5){
+      this.translateService.get('limit_max_service').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+    }
+    else{
       this.translateService.get('limit_max_service').subscribe(v => {
         this.toastService.infoToast(v);
       });

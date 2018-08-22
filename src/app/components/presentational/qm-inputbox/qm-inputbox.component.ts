@@ -43,7 +43,9 @@ export class QmInputboxComponent implements OnInit {
   ngOnInit() {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
       this.countrycode = params.countryCode;
+    }
     });
 
     const phoneValidators = [Validators.pattern(this.regexvalue())]; 
@@ -77,6 +79,11 @@ export class QmInputboxComponent implements OnInit {
     }
 
     if(this.countrycode && !this.isOnupdate){
+        this.customerCreateForm.patchValue({
+          phone:this.countrycode
+        })
+      }
+       else if(this.countrycode && this.isOnupdate && !this.editCustomer.properties.phoneNumber){
         this.customerCreateForm.patchValue({
           phone:this.countrycode
         })

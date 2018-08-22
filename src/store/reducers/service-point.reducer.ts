@@ -6,6 +6,7 @@ import { IServicePoint } from 'src/models/IServicePoint';
 export interface IServicePointState {
   servicePoints: IServicePoint[];
   openServicePoint: IServicePoint;
+  previousServicePoint:IServicePoint;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -14,6 +15,7 @@ export interface IServicePointState {
 export const initialState: IServicePointState = {
   servicePoints: [],
   openServicePoint: null,
+  previousServicePoint:null,
   loading: false,
   loaded: false,
   error: null
@@ -54,6 +56,13 @@ export function reducer (
         openServicePoint: action.servicePoint,
       };
     }
+    case ServicePointActions.SET_PREVIOUS_SERVICE_POINT: {
+      return {
+        ...state,
+        previousServicePoint: action.servicePoint,
+      };
+    }
+
     default: {
         return state;
     }

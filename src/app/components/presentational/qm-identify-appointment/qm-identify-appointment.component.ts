@@ -321,6 +321,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.showCustomerResults = true;
     this.customerDispatchers.fetchAppointmentCustomers(this.searchText);
   }
+  onSearchInputChange() {
+    this.inputChanged.next(this.searchText);
+  }
 
   pad(n, width, z = '0') {
     n = n + '';

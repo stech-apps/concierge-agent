@@ -17,4 +17,9 @@ export class ServicePointDispatchers {
   setOpenServicePoint(servicePoint: IServicePoint) {
     this.store.dispatch(new ServicePointActions.SetOpenServicePoint(servicePoint));
   }
+  setPreviousServicePoint(servicePoint: IServicePoint) {
+    this.store.dispatch(new ServicePointActions.SetPreviousServicePoint(servicePoint));
+  }
+
+  
 }

@@ -7,6 +7,7 @@ export const FETCH_BRANCHES = '[Branch] FETCH_BRANCHES';
 export const FETCH_BRANCHES_FAIL = '[Branch] FETCH_BRANCHES_FAIL';
 export const FETCH_BRANCHES_SUCCESS = '[Branch] FETCH_BRANCHES_SUCCESS';
 export const SELECT_BRANCH = '[Branch] SELECT_BRANCH';
+export const SELECT_PREVIOUS_BRANCH = '[Branch] SELECT_PREVIOUS_BRANCH';
 export const DESELECT_BRANCH = '[Branch] DESELECT_BRANCH';
 
 export const FILTER_BRANCHES = '[Branch] FILTER_BRANCHES';
@@ -30,6 +31,10 @@ export class FetchBranchesSuccess implements Action {
 
 export class SelectBranch implements Action {
   readonly type = SELECT_BRANCH;
+  constructor(public payload: IBranch) {}
+}
+export class SelectPreviousBranch implements Action {
+  readonly type = SELECT_PREVIOUS_BRANCH;
   constructor(public payload: IBranch) {}
 }
 
@@ -59,4 +64,5 @@ export type AllBranchActions = FetchBranches |
                                 ResetFilterBranches |
                                 SelectBranch |
                                 DeselectBranch |
-                                LoadSelectedBranch;
+                                LoadSelectedBranch|
+                                SelectPreviousBranch;

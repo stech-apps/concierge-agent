@@ -8,6 +8,7 @@ export const FETCH_SERVICEPOINTS = '[ServicePoint] FETCH_SERVICEPOINT';
 export const FETCH_SERVICEPOINTS_FAIL = '[ServicePoint] FETCH_SERVICEPOINT_FAIL';
 export const FETCH_SERVICEPOINTS_SUCCESS = '[ServicePoint] FETCH_SERVICEPOINT_SUCCESS';
 export const SET_OPEN_SERVICE_POINT = '[ServicePoint] SET_OPEN_SERVICE_POINT';
+export const SET_PREVIOUS_SERVICE_POINT = '[ServicePoint] SET_PREVIOUS_SERVICE_POINT';
 
 export class FetchServicePoints implements Action {
   readonly type = FETCH_SERVICEPOINTS;
@@ -30,9 +31,15 @@ export class SetOpenServicePoint implements Action {
   constructor(public servicePoint: IServicePoint) {
   }
 }
+export class SetPreviousServicePoint implements Action {
+  readonly type = SET_PREVIOUS_SERVICE_POINT;
+  constructor(public servicePoint: IServicePoint) {
+  }
+}
 
 // Action types
 export type AllServicePointActions = FetchServicePoints
                         | FetchServicePointsFail
                         | FetchServicePointsSuccess
-                        | SetOpenServicePoint;
+                        | SetOpenServicePoint
+                        | SetPreviousServicePoint;

@@ -29,23 +29,25 @@ export class QmHomeMenuComponent implements OnInit {
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
               private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers) { 
+                this.checkUserPermissions();
+                this.checkUttPermissions();
+                this.userDirection$ = this.userSelectors.userDirection$;
+            
+                if(this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)){
+                  this.calendarBranchDispatcher.fetchCalendarBranches();
+                }
    
   }
 
   ngOnInit() {
-    this.checkUserPermissions();
-    this.checkUttPermissions();
-    this.userDirection$ = this.userSelectors.userDirection$;
-
-    if(this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)){
-      this.calendarBranchDispatcher.fetchCalendarBranches();
-    }
+   
   }
 
+  
   checkUttPermissions() {
     this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
 
-      if (this.isVisitUser) {
+      if (this.isVisitUser && uttpParams) {
         this.isCreateVisit = uttpParams[CREATE_VISIT];
         this.isEditVisit = uttpParams[EDIT_VISIT];
       }
@@ -54,7 +56,7 @@ export class QmHomeMenuComponent implements OnInit {
         this.isEditVisit = false;
       }
 
-      if (this.isAppointmentUser) {
+      if (this.isAppointmentUser && uttpParams) {
         this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
         this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
         this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];

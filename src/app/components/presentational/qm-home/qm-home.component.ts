@@ -1,11 +1,13 @@
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ServicePointSelectors, CustomerSelector } from 'src/store/services';
+import { ServicePointSelectors, CustomerSelector, BranchDispatchers, BranchSelectors } from 'src/store/services';
 import { Subscription, Observable } from 'rxjs';
 import { Util } from 'src/util/util';
 import { IMessageBox } from '../../../../models/IMessageBox';
 import { InfoMsgDispatchers } from '../../../../store/services/Infomation-message-box/info-msg-box.dispatchers';
 import { InfoMsgBoxSelector } from '../../../../store/services/Infomation-message-box/info-msg-box.selectors';
+import { IServicePoint } from '../../../../models/IServicePoint';
+import { IBranch } from '../../../../models/IBranch';
 
 @Component({
   selector: 'qm-qm-home',
@@ -22,6 +24,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   MessageBoxInfo:IMessageBox;
   MessageBoxInfo$:Observable<IMessageBox>;
   SampleValue:IMessageBox;
+  navServicePoint:IServicePoint;
+  SelectedBranch:IBranch;
+  previousBranch:IBranch;
   
 
   constructor(
@@ -29,7 +34,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit
     private userSelectors: UserSelectors,
     private util: Util,
     private InfoMsgBoxSelectors:InfoMsgBoxSelector,
-    private InfoMsgBoxDispatcher:InfoMsgDispatchers
+    private InfoMsgBoxDispatcher:InfoMsgDispatchers,
+    private branchDispatchers:BranchDispatchers,
+    private branchSelectors:BranchSelectors
     
   ) { 
     this.MessageBoxInfo$=this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;   
@@ -50,15 +57,25 @@ export class QmHomeComponent implements OnInit, AfterViewInit
     });
   this.subscriptions.add(MsgBoxSubscription);
 
+  const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
+    this.navServicePoint = spo
+  }
+);
+this.subscriptions.add(navServiceSubscription);
   }
 
   ngAfterViewInit() {
+    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch)=>{
+      this.SelectedBranch = branch
+    })
+    this.subscriptions.add(branchSubscription);
+    this.branchDispatchers.selectPreviousBranch(this.SelectedBranch);
 
+  
+    
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-
-
 }

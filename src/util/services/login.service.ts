@@ -112,6 +112,7 @@ export class LoginService {
                     this.resetUserSession();
                 }
                 this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
+                this.servicePointDispatchers.setPreviousServicePoint(this.selectedServicePoint);
                 this.localStorage.setInitialSettings();
                 this.router.navigate(['home']);
             }

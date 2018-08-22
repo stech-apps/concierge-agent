@@ -3,6 +3,7 @@ import * as BranchActions from '../actions';
 
 export interface IBranchState {
   branches: IBranch[];
+  previousSelectedBranch:IBranch;
   selectedBranch: IBranch;
   searchText: string;
   loading: boolean;
@@ -16,7 +17,8 @@ export const initialState: IBranchState = {
   searchText: '',
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  previousSelectedBranch:null
 };
 
 export function reducer (
@@ -54,6 +56,14 @@ export function reducer (
         selectedBranch: action.payload
       };
     }
+
+    case BranchActions.SELECT_PREVIOUS_BRANCH: {
+      return {
+        ...state,
+        previousSelectedBranch: action.payload
+      };
+    }
+
     case BranchActions.DESELECT_BRANCH: {
       return {
         ...state,

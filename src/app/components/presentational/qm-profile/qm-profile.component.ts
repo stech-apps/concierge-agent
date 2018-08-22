@@ -23,6 +23,7 @@ import { LoginService } from '../../../../util/services/login.service';
 import { Router } from '@angular/router';
 import { PlatformSelectors, AccountDispatchers } from 'src/store/services';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { servicePoint } from '../../../../store/services/data.service';
 
 @Component({
   selector: 'qm-profile',
@@ -35,27 +36,31 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   branches: IBranch[] = new Array<IBranch>();
   servicePoints: IServicePoint[] = new Array<IServicePoint>();
   selectedServicePoint: IServicePoint;
+  navServicePoint:IServicePoint ;
   selectedBranch: IBranch;
   privacyPolicyUrl: string = null;
   userDirection$: Observable<string>;
   isEnableUseDefault: boolean;
+  previousBranch:IBranch;
 
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
     private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
 
-      this.servicePointDispatchers.setOpenServicePoint(null);
+             
+      // this.servicePointDispatchers.setOpenServicePoint(null);
+    
 
       this.setDefaultServicePoint();
-  
+     
       this.selectedBranch = {
         name: 'branch',
         id: -1
       };
-      
-      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
 
+      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
+      
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
       this.setDefaultServicePoint();
@@ -65,10 +70,12 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_BRANCH);
       }
-    });
+});
     this.subscriptions.add(branchSubscription);
 
+    
     const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => {
+     
       this.servicePoints = sps;
       if (sps.length === 1) {
         this.onServicePointSelect(sps[0]);
@@ -78,6 +85,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       else{
         this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_WORKSTATION);
+        
       }
 
       if(this.isEnableUseDefault && this.selectedBranch && this.selectedServicePoint){
@@ -86,14 +94,24 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.subscriptions.add(servicePointsSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
+
   }
 
   ngOnInit() {
-       
+   const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
+      this.navServicePoint = spo
+    }
+  );
+  this.subscriptions.add(navServiceSubscription);
   
-  }
+  const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
+      this.previousBranch = branch;
+  })
+  this.subscriptions.add(previousBranchSubscription);
+}
 
   setDefaultServicePoint() {
+   
     this.selectedServicePoint = {
       name: 'service_point',
       id: -1,
@@ -110,6 +128,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.nativeApiService.showNativeLoader(false);
     
+    
   }
 
   onBranchSelect(selectedBranch: IBranch) {
@@ -122,6 +141,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onServicePointSelect(selectedSp: IServicePoint) {
+    
     this.selectedServicePoint = selectedSp;
     if (this.selectedServicePoint.parameters.privacyPolicy && this.selectedServicePoint.parameters.privacyPolicy.length > 0) {
       this.privacyPolicyUrl = this.selectedServicePoint.parameters.privacyPolicy;
@@ -137,12 +157,20 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   
 
   onCancel() {
-    if (this.nativeApiService.isNativeBrowser()) {
-      this.nativeApiService.logOut();
+    if(this.previousBranch){
+      this.branchDispatchers.selectBranch(this.previousBranch);
+      this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
+      this.router.navigate(['home']);
+    } else{
+
+      if (this.nativeApiService.isNativeBrowser()) {
+        this.nativeApiService.logOut();
+      }
+      else {
+        window.location.href = APP_URL;
+      }
     }
-    else {
-      window.location.href = APP_URL;
-    }
+  
   }
 
   onConfirmProfile() {

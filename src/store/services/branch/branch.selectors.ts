@@ -18,6 +18,10 @@ export const getSelectedBranch = createSelector(
   getBranchState,
   (state: IBranchState) => state.selectedBranch
 );
+export const getPreviousSelectedBranch = createSelector(
+  getBranchState,
+  (state: IBranchState) => state.previousSelectedBranch
+);
 
 const getBranchesSearchText = createSelector(
   getBranchState,
@@ -30,4 +34,5 @@ export class BranchSelectors {
 
   branches$ = this.store.select(getAllBranches);
   selectedBranch$ = this.store.select(getSelectedBranch);
+  selectPreviousBranch$ = this.store.select(getPreviousSelectedBranch);
 }

@@ -22,6 +22,11 @@ const getOpenServicePoint = createSelector(
   (state: IServicePointState) => state.openServicePoint
 );
 
+const getPreviousServicePoint = createSelector(
+  getServicePointState,
+  (state: IServicePointState) => state.previousServicePoint
+);
+
 const getUttParameters = createSelector(
   getOpenServicePoint,
   (state: IServicePoint) => {
@@ -36,6 +41,7 @@ const getUttParameters = createSelector(
 export class ServicePointSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
+  previousServicePoint$ = this.store.select(getPreviousServicePoint)
   servicePoints$ = this.store.select(getAllServicePoints); 
   openServicePoint$ = this.store.select(getOpenServicePoint);  
   uttParameters$ = this.store.select(getUttParameters);

@@ -24,6 +24,10 @@ export class BranchDispatchers {
   selectBranch(branch: IBranch) {
     this.store.dispatch(new BranchActions.SelectBranch(branch));
   }
+  
+  selectPreviousBranch(branch: IBranch) {
+    this.store.dispatch(new BranchActions.SelectPreviousBranch(branch));
+  }
 
   deselectBranch() {
     this.store.dispatch(new BranchActions.DeselectBranch);

@@ -21,7 +21,6 @@
       top: 0;
       left: 0px;
       height: 42px;
-
       &:focus {
         outline: none;
       }
@@ -46,35 +45,6 @@
     color: black;
     margin-top: 10px;
     font-size: 0.8em;
-  }
-  .qm-search-icon {
-    +.qm-search-icon {
-      margin-left: 3px;
-    }
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: rem(105px);
-    width: 100%;
-    background-color: $search-bar-background;
-    border: none;
-    cursor: pointer;
-    &--selected {
-      background-color: $app-theme;
-      .qm-search-icon__text {
-        color: $search-bar-background;
-      }
-      svg {
-        fill: $search-bar-background;
-      }
-    }
-    &__text {
-      color: $seach-bar-text-color;
-      font-family: $secondary-font-light;
-      font-size: 0.6rem;
-      margin-top: 0.4rem;
-    }
   }
   .qm-duration-control {
     position: absolute;
@@ -101,30 +71,6 @@
     display: flex;
     ngb-timepicker {
       flex: 1;
-    }
-  }
-  .qm-command-buttons-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    button {
-      color: $white;
-      height: 45px;
-      width: 112.5px;
-      line-height: 44.5px;
-      text-align: center;
-      border: none;
-      font-size: rem(12px);
-      letter-spacing: 1px;
-      cursor: pointer;
-      &.ok {
-        background-color: $app-theme;
-      }
-      &.cancel {
-        background-color: #8e8e8e;
-        font-family: Montserrat-Light;
-        margin-right: 0.75rem;
-      }
     }
   }
   .identify-appointment-backdrop {
@@ -207,21 +153,18 @@
     align-items: center;
     width: $appointment-identify-searchbar-width;
   }
-
   .qm-selected-appointment {
-    width:100%;    
+    width: 100%;
     background-color: $app-theme;
     padding-left: 3rem;
     padding-right: 3rem;
     position: relative;
-
     i {
       position: absolute;
       right: 3rem;
       top: 12px;
       cursor: pointer;
     }
-
     &-text {
       line-height: 2.5rem;
       vertical-align: middle;
@@ -231,17 +174,19 @@
       font-size: 0.8em;
     }
   }
-
   .qm-arrive-searchinput-close {
     position: absolute;
-    right : 1rem;
+    right: 1rem;
     color: $black;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    @at-root [dir="rtl"] & {
+      left: 5%;
+      right: auto;
+    }
   }
-
-  .qm-customer-search-results  {
+  .qm-customer-search-results {
     position: absolute;
     color: black;
     width: $appointment-identify-searchbar-width;
@@ -251,7 +196,6 @@
     left: 50%;
     transform: translateX(-50%);
     flex-direction: column;
-
     .qm-cutomer-item {
       width: 95%;
       margin: 0 auto 2.5% auto;
@@ -265,37 +209,34 @@
       font-size: 0.8rem;
       padding-left: 0.5rem;
       cursor: pointer;
-
       &:active {
         background: #eaeaea;
       }
-
-      .qm-cutomer-item-name, .qm-cutomer-item-email, .qm-cutomer-item-phone {
-          display: flex;
-          padding-top: 0.5rem;
-          padding-bottom: 0.5rem;
-
-          div[class$="__label"] {
-            width: 10rem;
+      .qm-cutomer-item-name,
+      .qm-cutomer-item-email,
+      .qm-cutomer-item-phone {
+        display: flex;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        div[class$="__label"] {
+          width: 10rem;
         }
       }
     }
   }
-
   .qm-appointment-refresh {
     position: absolute;
     width: 2.75rem;
     background: none;
     border: none;
-    right:11.25%;
+    right: 11.25%;
     transform: translateX(50%);
     top: 5.5rem;
     cursor: pointer;
-
-    &:focus, &:active {
+    &:focus,
+    &:active {
       outline: none;
     }
-
     &--disabled {
       fill: none;
       stroke: #bdbdbd;
@@ -303,7 +244,6 @@
       stroke-miterlimit: 10;
       stroke-width: 6px;
     }
-
     &--enabled {
       fill: none;
       stroke: #000;
@@ -311,6 +251,91 @@
       stroke-miterlimit: 10;
       stroke-width: 6px;
     }
+  }
+}
+
+.qm-arrive-searchinput-close {
+  @at-root [dir="rtl"] & {
+    left: 5%;
+    right: auto;
+  }
+}
+
+.qm-command-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  button {
+    color: $white;
+    height: 45px;
+    width: 112.5px;
+    line-height: 44.5px;
+    text-align: center;
+    border: none;
+    font-size: rem(12px);
+    letter-spacing: 1px;
+    cursor: pointer;
+    &.ok {
+      background-color: $app-theme;
+    }
+    &.cancel {
+      background-color: #8e8e8e;
+      font-family: Montserrat-Light;
+      margin-right: 0.75rem;
+      @at-root [dir="rtl"] & {
+        margin-left: 0.75rem;
+      }
+    }
+  }
+}
+
+.qm-search-icon {
+  +.qm-search-icon {
+    margin-left: 3px;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: rem(105px);
+  width: 100%;
+  background-color: $search-bar-background;
+  border: none;
+  cursor: pointer;
+  &--selected {
+    background-color: $app-theme;
+    .qm-search-icon__text {
+      color: $search-bar-background;
+    }
+    svg {
+      fill: $search-bar-background;
+    }
+  }
+  &__text {
+    color: $seach-bar-text-color;
+    font-family: $secondary-font-light;
+    font-size: 0.6rem;
+    margin-top: 0.4rem;
+  }
+}
+
+@at-root [dir="rtl"] {
+  .qm-search-icon {
+    +.qm-search-icon {
+      margin-right: 3px;
+      margin-left: 0;
+    }
+  }
+  .qm-identify-appointment__search-input {
+    input {
+      padding-left: 0;
+      padding-right: 1rem;
+    }
+  }
+  .qm-customer-item-name__value,
+  .qm-customer-item-email__value,
+  .qm-customer-item-phone__value {
+    padding-right: 4rem;
   }
 }
 

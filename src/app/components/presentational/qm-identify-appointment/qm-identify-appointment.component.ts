@@ -1,7 +1,7 @@
 import { ToastService } from './../../../../util/services/toast.service';
 import { SelectAppointment } from './../../../../store/actions/arrive-appointment.actions';
 import { IBranch } from 'src/models/IBranch';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
@@ -13,7 +13,7 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
   AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
-  ServicePointSelectors, CustomerDispatchers, CustomerSelector
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors
 } from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
@@ -65,6 +65,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isSearchInputReadOnly: boolean = false;
   showCustomerResults: boolean = false;
   enableAppointmentLoad: boolean = true;
+  userDirection$: Observable<string> = new Observable<string>();
   
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -87,10 +88,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private arriveAppointmentDispatchers: ArriveAppointmentDispatchers,
     private servicePointSelectors: ServicePointSelectors,
     private toastService: ToastService, private translateService: TranslateService,
-    private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector
+    private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
+    private userSelectors: UserSelectors
   ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   ngOnInit() {
@@ -159,7 +162,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(servicePointsSubscription);
-    this.searchAppointments()
+    this.searchAppointments();
+
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
@@ -175,7 +179,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
 
     if ((!apps || !apps.length)) {
-
       if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
         this.translateService.get('no_appointments_for_customer').subscribe(
           (noappointments: string) => {

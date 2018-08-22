@@ -75,7 +75,6 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.selectedServices = s;
       if (this.selectedServices.length > 0 && this.selectedBranch && this.selectedBranch.id) {
         this.fetchReservableDates();
-        this.onSelectDate(this.selectedDates[0]);
       }
     });
 
@@ -136,11 +135,13 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
-    this.currentlyActiveDate = date;
-    this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
-    this.getTimeSlots();
-    this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
-    this.timeSlotDispatchers.selectTimeslot(null);
+    if(this.selectedServices && this.selectedServices.length > 0){
+      this.currentlyActiveDate = date;
+      this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
+      this.getTimeSlots();
+      this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
+      this.timeSlotDispatchers.selectTimeslot(null);
+    }
   }
 
   doneButtonClick() {

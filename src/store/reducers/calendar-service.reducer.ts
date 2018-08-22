@@ -40,7 +40,7 @@ export interface ICalendarServiceState {
       case ServiceActions.FETCH_CALENDAR_SERVICES_SUCCESS: {
         return {
           ...state,
-          services: action.payload[0]? sortServices(action.payload[0].services): [],
+          services: sortServices(concatService(action.payload)),
           loading: false,
           loaded: true,
           error: null,
@@ -64,7 +64,7 @@ export interface ICalendarServiceState {
       case ServiceActions.FETCH_SERVICE_GROUPS_SUCCESS: {
         return {
           ...state,
-          services: processServices(state.selectedServices, action.payload[0].services),
+          services: processServices(state.selectedServices, concatService(action.payload)),
           loading: false,
           loaded: true,
           error: null
@@ -119,5 +119,23 @@ export interface ICalendarServiceState {
     })
     
     return sortServices(remainList);
+  }
+
+  function concatService(services: any){
+    var tempArr = [];
+    services.forEach(element => {
+      var merged = [].concat.apply([], element.services);
+      tempArr.push(...merged);
+    });
+
+    return removeDuplicates(tempArr);
+  }
+
+  function removeDuplicates(arr) {
+    let obj = {};
+    return Object.keys(arr.reduce((prev, next) => {
+      if(!obj[next['publicId']]) obj[next['publicId']] = next; 
+      return obj;
+    }, obj)).map((i) => obj[i]);
   }
   

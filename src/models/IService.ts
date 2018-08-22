@@ -5,4 +5,5 @@ export class IService {
     internalDescription: string;
     externalDescription: string
     targetTransactionTime: number;
+    isBind: boolean;
   }

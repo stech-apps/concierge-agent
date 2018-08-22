@@ -250,8 +250,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppTime(): string {
-    if (this.selectedAppointment.start) {
-      var startTime = this.selectedAppointment.start.split(".")[0].split("T")[1].slice(0, 5);
+    if (this.selectedAppointment.startTime) {
+      var startTime = this.selectedAppointment.startTime.split("T")[1].slice(0, 5);
       return startTime;
     }
     return null;

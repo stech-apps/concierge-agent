@@ -21,8 +21,8 @@
         <div class="qm-service-list__selected-item-container" *ngFor="let service of selectedServiceList; let rowId = index">
                 <div class="qm-service-list__index-item">{{ rowId + 1 }}</div>
                 <div class="qm-service-list__item qm-service-list__item--selected">
-                    <div class="qm-service-list__item--text">{{ flowType === 'CREATE_VISIT' ? service.internalName : service.name }}</div>
-                    <button class="qm-action-btn qm-action-btn--only-icon qm-service-list__item--selected__btn" (click)="onServiceRemove(service)">
+                    <div class="qm-service-list__item--text">{{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
+                    <button *ngIf="!(service.isBind)" class="qm-action-btn qm-action-btn--only-icon qm-service-list__item--selected__btn" (click)="onServiceRemove(service)">
                         <i class="qm-action-btn__icon icon-close qm-search__icon" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -38,7 +38,7 @@
         <div class="qm-service-list__header" *ngIf="selectedBranch && (filteredServiceList | filterService: [filterText, flowType]).length > 0">{{ ('available_services' | translate) + ' ' + selectedBranch.name }}</div>
         <div class="qm-service-list__header" *ngIf="selectedBranch && filteredServiceList.length === 0 && flowType === 'CREATE_APPOINTMENT'">{{ ('no_bookable_service' | translate) + ' ' + selectedBranch.name }}</div>
         <div class="qm-service-list__item" (click)="onServiceSelect(service, true)" *ngFor="let service of filteredServiceList | filterService : [filterText, flowType]">
-            <div class="qm-service-list__item--text">{{ flowType === 'CREATE_APPOINTMENT' ? service.name : service.internalName }}</div>
+            <div class="qm-service-list__item--text">{{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
         </div>
     </div>
 </div>

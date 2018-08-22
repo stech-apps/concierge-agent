@@ -149,7 +149,11 @@ export class QmSelectServiceComponent implements OnInit {
       const appointmentSubscription = this.appointmentSelectors.selectedAppointment$.subscribe((appointment) => {
         if(appointment){
           this.selectedServiceList = <Array<IServiceViewModel>>appointment.services;
+          this.selectedServiceList.forEach(val => {
+            val.isBind = true;
+          })
           this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+          this.checkAvaibleServices();
         }
       });
       this.subscriptions.add(appointmentSubscription);
@@ -263,6 +267,19 @@ export class QmSelectServiceComponent implements OnInit {
       this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
       
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
+    }
+  }
+
+  checkAvaibleServices(){
+    if(this.selectedServiceList.length > 0){
+      var tempList = [];
+      this.serviceList.forEach(val => {
+        var elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
+        if(elementPos < 0){
+          tempList.push(val);
+        }
+      })
+      this.filteredServiceList = tempList;
     }
   }
 

@@ -7,7 +7,7 @@ export interface IAppointment {
   status?: number;
   created?: number;
   updated?: number;
-  startTime?: string;
+  start?: string;
   numberOfCustomers?: number;
   custom?: string;
   customers?: ICustomer[];

@@ -250,8 +250,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppTime(): string {
-    if (this.selectedAppointment.startTime) {
-      var startTime = this.selectedAppointment.startTime.split(".")[0].split("T")[1].slice(0, 5);
+    if (this.selectedAppointment.start) {
+      var startTime = this.selectedAppointment.start.split(".")[0].split("T")[1].slice(0, 5);
       return startTime;
     }
     return null;
@@ -662,7 +662,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   private buildDate(appointment: IAppointment) {
-    let dateObj = moment(appointment.startTime).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DD, HH:mm');
+    let dateObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DD, HH:mm');
     return dateObj;
   }
 

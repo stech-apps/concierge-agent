@@ -5,7 +5,7 @@ import { DataServiceError, calendarEndpoint, calendarPublicEndpoint, calendarPub
 import { IAppointment } from '../../../models/IAppointment';
 import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -47,12 +47,12 @@ export class CalendarService implements OnDestroy {
 }
 
 private buildDate(appointment: IAppointment){
-    let dateObj = moment(appointment.startTime).format("YYYY-MM-DD");
+    let dateObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format("YYYY-MM-DD");
     return dateObj;
 }
 
 private buildTime(appointment: IAppointment){
-    let timeObj = moment(appointment.startTime).format("HH:mm");
+    let timeObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format("HH:mm");
     return timeObj;
 }
 

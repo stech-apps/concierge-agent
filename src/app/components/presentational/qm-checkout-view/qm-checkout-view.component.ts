@@ -311,8 +311,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.smsSelected || this.emailSelected) {
       this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
         this.themeColor, 'ok', 'cancel',
-        (result: boolean) => {
+        (result : any) => {
           if (result) {
+            if(result.email){
+              this.customerEmail = result.email;
+            }
+            if(result.phone){
+              this.customerSms = result.phone;
+            }
             this.handleCheckoutCompletion();
           }
         },

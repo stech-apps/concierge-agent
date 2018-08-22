@@ -8,6 +8,7 @@ export interface IAppointment {
   created?: number;
   updated?: number;
   start?: string;
+  startTime?: string;
   numberOfCustomers?: number;
   custom?: string;
   customers?: ICustomer[];
@@ -18,6 +19,7 @@ export interface IAppointment {
   allDay?: boolean;
   blocking?: boolean;
   end?: string;
+  endTime?: string;
   deleted?: boolean;
   qpId?: number;
   id?: number;

@@ -58,10 +58,10 @@ private buildTime(appointment: IAppointment){
 
   private buildCustomObject(email: string, sms: string, notificationType: NOTIFICATION_TYPE){
     var custom = "{\"notificationType\":\"" + notificationType +  "\"";
-    if(sms.length > 0){
+    if(sms && sms.length > 0){
       custom = custom + ",\"phoneNumber\":\"" + this.util.buildPhoneNumber(sms) + "\"";
     }
-    if(email.length > 0){
+    if(email && email.length > 0){
       custom = custom + ",\"email\":\"" + email + "\"";
     }
     custom = custom + ",\"appId\":\"concierge\"}";

@@ -128,7 +128,12 @@ export class LocalStorage {
             var userStore = storeSub.filter(val => {
                 return val.user === this.currentUser.id;
             });
-            return userStore[0].services;
+            if(userStore.length > 0){
+                return userStore[0].services;
+            }
+            else{
+                return [];
+            }
         }
     }
 }

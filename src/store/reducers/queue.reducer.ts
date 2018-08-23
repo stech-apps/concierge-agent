@@ -77,5 +77,5 @@ export function reducer(
     queueSummary.queues[index] = queue;
     return queueSummary;
   }
-}}
+    }}
 }

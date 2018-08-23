@@ -1,4 +1,21 @@
 @import '../../../../styles/base/_component-manifest.scss';
+.qm-flow-sub-header {
+  height: 2.8rem;
+  background-color: $app-theme;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1rem;
+
+  &__right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+
+
 .qm-identify-appointment {
   &__search-input {
     width: $appointment-identify-searchbar-width;
@@ -228,6 +245,7 @@
     position: absolute;
     width: 35px;
     height: 35px; 
+    margin-top: 30px;
   
     svg {
       width: 28px;

@@ -1,6 +1,13 @@
+<div class="qm-flow-sub-header" *ngIf = "selectedCustomer">
+  <div class="qm-flow-sub-header__right">
+      <div class="qm-done-button" (click) = "onDone()" >
+              {{'banner_done_label' | translate }}
+      </div>  
+  </div>
+</div>
+
 <div class="qm-identify-appointment" dir="{{userDirection$ | async}}">
   <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
-
   </div>
   <div class="qm-identify-appointment__search-container">
     <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'id' }">

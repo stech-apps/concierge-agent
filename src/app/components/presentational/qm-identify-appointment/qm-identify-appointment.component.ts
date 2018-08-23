@@ -13,7 +13,7 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
   AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
-  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors, ArriveAppointmentSelectors
 } from 'src/store';
 import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
@@ -66,7 +66,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showCustomerResults: boolean = false;
   enableAppointmentLoad: boolean = true;
   userDirection$: Observable<string> = new Observable<string>();
-  
+  selectedCustomer:ICustomer;
+
   readonly SEARCH_STATES = {
     DURATION: 'duration',
     INITIAL: 'initial',
@@ -89,7 +90,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private arriveAppointmentSelectors:ArriveAppointmentSelectors
+    
   ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
@@ -97,6 +100,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
+      if(appointment && appointment.customers ){
+        this.selectedCustomer = appointment.customers[0];
+      }
+    });
+    this.subscriptions.add(selectedAppointmentSub);
+
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.setInitialTime();
     this.fromTimeController = new FormControl('', (control: FormControl) => {
@@ -375,5 +385,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   
       this.isFetchBlock = true;
     }
+  }
+
+  onDone(){
+    this.onFlowNext.emit();   
   }
 }

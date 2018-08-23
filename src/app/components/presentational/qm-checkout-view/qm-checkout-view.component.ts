@@ -232,7 +232,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.subscriptions.add(servicePointSubscription);
     }
 
-    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment != null) {
+    if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment) {
       this.genarateAppointmentData();
     }
 
@@ -243,10 +243,20 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   genarateAppointmentData() {
-    this.appTime = this.setAppTime();
-    this.appId = this.setAppID();
-    this.appCustomer = this.setAppCustomer();
+    if(this.selectedAppointment.start){
+      this.appTime = this.setAppTime();
+    }
+    if(this.selectedAppointment.id){
+      this.appId = this.setAppID();
+    }
+    if(this.selectedAppointment.customers){
+      this.appCustomer = this.setAppCustomer();
+    }
+    if(this.selectedAppointment.services){
     this.appServices = this.setAppServices();
+    }
+  
+   
   }
 
   setAppTime(): string {
@@ -262,7 +272,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppCustomer(): string {
-    return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
+      return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;    
   }
 
   setAppServices(): string {

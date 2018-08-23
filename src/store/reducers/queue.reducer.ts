@@ -54,6 +54,8 @@ export function reducer(
   }
 
   function updateQueueInfo(queueSummary: any, visit: Visit, isAddedVisit: boolean): any {
+    if(queueSummary){
+    if(queueSummary.queues){
     let queueList : Queue[] = queueSummary.queues;
     let queue = queueList.find(queue => queue.id === visit.queueId);
     let index = queueList.indexOf(queue);
@@ -75,5 +77,5 @@ export function reducer(
     queueSummary.queues[index] = queue;
     return queueSummary;
   }
-    
+}}
 }

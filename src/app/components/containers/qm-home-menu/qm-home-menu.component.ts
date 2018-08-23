@@ -5,6 +5,8 @@ import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit } from '@angular/core';
 import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers } from 'src/store';
+import { ToastService } from '../../../../util/services/toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'qm-home-menu',
@@ -17,6 +19,8 @@ export class QmHomeMenuComponent implements OnInit {
   //user permissions
   isVisitUser = false;
   isAppointmentUser = false;
+  isAllOutputMethodsDisabled:boolean;
+  printerEnabled:boolean;
 
   // final flow permissions
   isCreateVisit = false;
@@ -25,10 +29,12 @@ export class QmHomeMenuComponent implements OnInit {
   isEditAppointment = false;
   isCreateAppointment = false;
   userDirection$: Observable<string>;
+  
 
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
-              private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers) { 
+              private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
+              private toastService: ToastService, private translateService: TranslateService) { 
                 this.checkUserPermissions();
                 this.checkUttPermissions();
                 this.userDirection$ = this.userSelectors.userDirection$;
@@ -46,6 +52,12 @@ export class QmHomeMenuComponent implements OnInit {
   
   checkUttPermissions() {
     this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
+      if(uttpParams){
+      if(!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess){
+        this.isAllOutputMethodsDisabled = true;
+      }
+      this.printerEnabled = uttpParams.printerEnable;
+    }
 
       if (this.isVisitUser && uttpParams) {
         this.isCreateVisit = uttpParams[CREATE_VISIT];
@@ -85,6 +97,19 @@ export class QmHomeMenuComponent implements OnInit {
   }
 
   handleMenuItemClick(route) {
+    if(this.isAllOutputMethodsDisabled && route == 'create-appointment'){
+      this.translateService.get('all_methods_disabled').subscribe(v=>{
+        this.toastService.infoToast(v); 
+      })}else if(this.isAllOutputMethodsDisabled && route == 'arrive-appointment' && !this.printerEnabled){
+        this.translateService.get('all_methods_disabled').subscribe(v=>{
+          this.toastService.infoToast(v); 
+        })}else if(this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled){
+          this.translateService.get('all_methods_disabled').subscribe(v=>{
+            this.toastService.infoToast(v); 
+          })}
+
+    else{
     this.router.navigate(['home/' + route]);
+  }
   }
 }

@@ -33,6 +33,7 @@ export class QmMessageBoxComponent implements OnInit {
 
   resetValue(){
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
+    console.log(this.MessageBoxInfo)
   }
 
 

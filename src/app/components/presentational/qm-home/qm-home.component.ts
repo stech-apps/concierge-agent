@@ -23,10 +23,10 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   userDirection$: Observable<string>;
   MessageBoxInfo:IMessageBox;
   MessageBoxInfo$:Observable<IMessageBox>;
-  SampleValue:IMessageBox;
   navServicePoint:IServicePoint;
   SelectedBranch:IBranch;
   previousBranch:IBranch;
+  
   
 
   constructor(
@@ -41,7 +41,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   ) { 
     this.MessageBoxInfo$=this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;   
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      console.log(params);
       if(params){
+      
         this.isQuickServeEnable = params.quickServe;
         this.isShowQueueView = params.queueView;
       }
@@ -51,6 +53,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   }
 
   ngOnInit() {
+    
     this.userDirection$ = this.userSelectors.userDirection$;   
     const MsgBoxSubscription = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$.subscribe((info) => {
       this.MessageBoxInfo = info;
@@ -78,4 +81,8 @@ this.subscriptions.add(navServiceSubscription);
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+  resetValue(){
+    this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
+  }
+
 }

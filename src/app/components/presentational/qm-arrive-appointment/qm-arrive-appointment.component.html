@@ -8,7 +8,7 @@
       <qm-identify-appointment dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-identify-appointment>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  <qm-flow-panel [isHeaderVisible]="isServiceHeaderVisibe"  #ps>
+  <qm-flow-panel [isHeaderVisible]="isServiceHeaderVisibe && !ia.isActive"  [headerVisibilityOverridden]="true"  #ps>
       <qm-flow-panel-header  (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
         <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
         <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{ selectedServices[0].name }}</qm-flow-panel-result>

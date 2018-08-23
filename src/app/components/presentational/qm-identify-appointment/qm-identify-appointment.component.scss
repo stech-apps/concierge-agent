@@ -226,7 +226,13 @@
   }
   .qm-appointment-refresh {
     position: absolute;
-    width: 2.75rem;
+    width: 35px;
+    height: 35px; 
+  
+    svg {
+      width: 28px;
+      height: 28px; 
+    }
     background: none;
     border: none;
     right: 11.25%;
@@ -342,3 +348,11 @@
 :host>>>input {
   width: 50px;
 }
+
+/* IE 11 */
+@media all and (-ms-high-contrast:none) {
+  :host {
+    display: block;
+  }
+}
+

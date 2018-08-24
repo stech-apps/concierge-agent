@@ -16,15 +16,13 @@
     </div>
 </div>
 
-<div [ngClass]="flowType === 'CREATE_APPOINTMENT' ? 'qm-service-list__container' : 'qm-service-list__container-ext'">
+<div [ngClass]="flowType === 'CREATE_APPOINTMENT' ? 'qm-service-list__container' : 'qm-service-list__container-ext'" dir="{{ userDirection$ | async }}">
     <div class="qm-service-list__item-container">
         <div class="qm-service-list__selected-item-container" *ngFor="let service of selectedServiceList; let rowId = index">
                 <div class="qm-service-list__index-item">{{ rowId + 1 }}</div>
                 <div class="qm-service-list__item qm-service-list__item--selected">
                     <div class="qm-service-list__item--text">{{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
-                    <button *ngIf="!(service.isBind)" class="qm-action-btn qm-action-btn--only-icon qm-service-list__item--selected__btn" (click)="onServiceRemove(service)">
-                        <i class="qm-action-btn__icon icon-close qm-search__icon" aria-hidden="true"></i>
-                    </button>
+                        <i class="icon-close qm-search__icon" aria-hidden="true" (click)="onServiceRemove(service)"></i>
                 </div>
         </div>    
     </div>

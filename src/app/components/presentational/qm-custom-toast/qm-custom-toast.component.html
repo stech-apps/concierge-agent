@@ -3,7 +3,7 @@
       {{ title }}
     </div>
 
-    <span [innerHtml]="iconSvg" class="qm-toast-icon"></span>
+    <span [innerHtml]="iconSvg" class="qm-toast-icon"></span> 
     <span *ngIf="message && options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
       [innerHTML]="message">
     </span>

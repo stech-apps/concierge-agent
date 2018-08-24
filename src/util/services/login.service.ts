@@ -115,13 +115,14 @@ export class LoginService {
     }
 
     confirm(){
+        this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
         this.spService.login(this.selectedBranch, this.selectedServicePoint, this.user).subscribe((status: IUserStatus) => {
             if(status){
                 this.userStatusDispatcher.setUserStatus(status);
                 if(status.workProfileId != null){
                     this.resetUserSession();
                 }
-                this.servicePointDispatchers.setOpenServicePoint(this.selectedServicePoint);
+              
                 this.servicePointDispatchers.setPreviousServicePoint(this.selectedServicePoint);
                 this.localStorage.setInitialSettings();
                 this.router.navigate(['home']);

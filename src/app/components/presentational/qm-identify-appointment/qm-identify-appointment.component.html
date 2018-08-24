@@ -286,7 +286,7 @@
         <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
       </div>
       <div class="qm-command-buttons-container">
-        <button class="cancel">{{'cancel' | translate}}</button>
+        <button class="cancel" (click)= "onCancel()">{{'cancel' | translate}}</button>
         <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>
       </div>
     </div>

@@ -36,18 +36,18 @@ export class QmHomeMenuComponent implements OnInit {
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
               private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
-              private toastService: ToastService, private translateService: TranslateService, private queueService: QueueService, private recycleService: Recycle) { 
-                this.checkUserPermissions();
+              private toastService: ToastService, private translateService: TranslateService) { 
+               
+  }
+
+  ngOnInit() {
+    this.checkUserPermissions();
                 this.checkUttPermissions();
                 this.userDirection$ = this.userSelectors.userDirection$;
             
                 if(this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)){
                   this.calendarBranchDispatcher.fetchCalendarBranches();
                 }
-   
-  }
-
-  ngOnInit() {
    
   }
 

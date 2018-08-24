@@ -1,8 +1,8 @@
 import { QmClearInputDirective } from './../../../directives/qm-clear-input.directive';
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
-import { Subscription, Subject } from 'rxjs';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors, ArriveAppointmentSelectors } from '../../../../../src/store';
+import { Subscription, Subject, Observable } from 'rxjs';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors, ArriveAppointmentSelectors, UserSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
@@ -35,6 +35,7 @@ export class QmSelectServiceComponent implements OnInit {
   newf: FLOW_TYPE.CREATE_APPOINTMENT;
   multiServiceEnabled: boolean;
   searchText: string;
+  userDirection$: Observable<string>; 
   @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
   constructor(
@@ -49,10 +50,12 @@ export class QmSelectServiceComponent implements OnInit {
     private calendarBranchSelectors: CalendarBranchSelectors,
     private localStorage: LocalStorage,
     private servicePointSelectors: ServicePointSelectors,
-    private appointmentSelectors: ArriveAppointmentSelectors
+    private appointmentSelectors: ArriveAppointmentSelectors,
+    private userSelectors:UserSelectors
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
+    this.userDirection$ = this.userSelectors.userDirection$
   }
 
   onResultChange:  EventEmitter<any> = new EventEmitter();

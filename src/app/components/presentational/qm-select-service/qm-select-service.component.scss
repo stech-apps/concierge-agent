@@ -103,7 +103,7 @@
             background-color: var(--app-theme);
             color: $primary-text-color;
             margin-left: 0;
-            margin-right: 0;
+            margin-right: 0;    
 
             &__btn {
                 color: white;
@@ -120,9 +120,14 @@
 
         i {
             position: absolute;
-            right: 5%;
             top: 50%;
             transform: translateY(-50%);
+            @at-root [dir='rtl'] & {
+                left: 5%;   
+            }
+            @at-root [dir='ltr'] & {
+                right: 5%;   
+            }
         }
     }
 }

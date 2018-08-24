@@ -22,11 +22,20 @@ export function reducer(
     action: AppointmentActions.AllAppointmentActions
 ): IAppointmentState {
     switch (action.type) {
+
+        case AppointmentActions.SEARCH_APPOINTMENTS: {
+            return {
+                ...state,
+                loaded: false
+            };
+        }
+
         case AppointmentActions.SEARCH_APPOINTMENTS_SUCCESS: {
             return {
                 ...state,
                 appointments: Array.isArray(action.payload) ? action.payload : [action.payload],
                 loading: true,
+                loaded: true,
                 error: null
             };
         }

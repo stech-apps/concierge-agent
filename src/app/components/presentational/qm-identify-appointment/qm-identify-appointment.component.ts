@@ -91,7 +91,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
     private userSelectors: UserSelectors,
-    private arriveAppointmentSelectors:ArriveAppointmentSelectors
+    private arriveAppointmentSelectors:ArriveAppointmentSelectors,
     
   ) {
 
@@ -174,6 +174,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(servicePointsSubscription);
     this.searchAppointments();
 
+    const appointmentsLoadedSub = this.appointmentSelectors.appointmentsLoaded$.subscribe(isLoaded => {
+        if(isLoaded && (this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState === this.SEARCH_STATES.REFRESH) && this.appointments.length===0){
+          this.translateService.get('no_appointments').subscribe(
+            (noappointments: string) => {
+              this.toastService.infoToast(noappointments);
+            }
+          ).unsubscribe();
+        }
+    });
+    this.subscriptions.add(appointmentsLoadedSub);
+
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
@@ -202,8 +213,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
-      }
-
+      }    
     }
   }
 

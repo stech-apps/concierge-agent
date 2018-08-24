@@ -33,7 +33,7 @@ export function reducer(
     case ArriveAppointmentActions.DESELECT_APPOINTMENT: {
       return {
         ...state,
-        selectedAppointment: {},
+        selectedAppointment: null,
         loading: true,
         error: null
       };

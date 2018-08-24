@@ -3,7 +3,7 @@ import { OnDestroy } from '@angular/core';
 import { ICustomer } from './../../../../models/ICustomer';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
-import { ArriveAppointmentSelectors, UserSelectors } from 'src/store';
+import { ArriveAppointmentSelectors, UserSelectors, ServiceSelectors } from 'src/store';
 import { ICalendarService } from '../../../../models/ICalendarService';
 
 @Component({
@@ -20,7 +20,7 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
   isServiceHeaderVisibe: boolean;
   userDirection$: Observable<string>;
 
-  constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors, private userSelectors: UserSelectors) {
+  constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors, private userSelectors: UserSelectors, private serviceSelector: ServiceSelectors) {
 
     const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if(appointment && appointment.customers ){
@@ -32,6 +32,13 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(selectedAppointmentSub);
     this.userDirection$ = userSelectors.userDirection$;
+
+    const servicesSubscription = this.serviceSelector.selectedServices$.subscribe((services) => {
+      if(services !== null){
+        this.selectedServices = services as ICalendarService[];
+      }
+    });
+    this.subscriptions.add(servicesSubscription);
   }
 
   ngOnInit() {

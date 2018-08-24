@@ -48,15 +48,18 @@ export class Recycle {
   }
 
   clearCache(){
-    if(this.selectedCalendarBranch && this.selectedCalendarBranch.qpId !== this.selectedBranch.id || this.isCalendarServiceSelected){
-      this.calendarServiceDispatcher.removeFetchService();
-    }
       this.customerDispatcher.resetCurrentCustomer();
       this.customerDispatcher.resetTempCustomer();
       this.timeSlotDispatchers.resetTimeslots();
-      this.calendarServiceDispatcher.setSelectedServices([]);
       this.serviceDispatcher.setSelectedServices([]);
       this.arriveAppointmentDispatcher.deselectAppointment();
       this.expireTimer.hideReservationExpiryTimer();
+  }
+
+  removeInitialCalendarCache(){
+    if(this.selectedCalendarBranch && this.selectedCalendarBranch.qpId !== this.selectedBranch.id || this.isCalendarServiceSelected){
+      this.calendarServiceDispatcher.removeFetchService();
+    }
+    this.calendarServiceDispatcher.setSelectedServices([]);
   }
 }

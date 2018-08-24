@@ -455,8 +455,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
       if (result) {
         this.showSuccessMessage(result);
-        this.branchDispatcher.selectCalendarBranch({} as ICalendarBranch);
-        this.serviceDispatchers.setSelectedServices([]);
         this.onFlowExit.emit();
       }
     }, error => {

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SPService } from '../services/rest/sp.service';
-import { CustomerDispatchers, CalendarServiceDispatchers, TimeslotDispatchers, ServiceDispatchers, CalendarBranchSelectors, BranchSelectors, ArriveAppointmentDispatchers, CalendarServiceSelectors } from '../../store/index';
+import { CustomerDispatchers, CalendarServiceDispatchers, TimeslotDispatchers, ServiceDispatchers, CalendarBranchSelectors, BranchSelectors, ArriveAppointmentDispatchers, CalendarServiceSelectors, ReservationExpiryTimerDispatchers, ReserveDispatchers } from '../../store/index';
 import { ICalendarBranch } from '../../models/ICalendarBranch';
 import { IBranch } from '../../models/IBranch';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,9 @@ export class Recycle {
     private calendarBranchSelector: CalendarBranchSelectors,
     private branchSelectors: BranchSelectors,
     private arriveAppointmentDispatcher: ArriveAppointmentDispatchers,
-    private calendarServiceSelectors: CalendarServiceSelectors
+    private calendarServiceSelectors: CalendarServiceSelectors,
+    private expireTimer: ReservationExpiryTimerDispatchers,
+    private reserveDispatcher: ReserveDispatchers
   ) {
     var branchSubscription = this.branchSelectors.selectedBranch$.subscribe((spBranch)=> this.selectedBranch = spBranch);
     var calendarBranchSubscription = this.calendarBranchSelector.selectedBranch$.subscribe((branch)=> this.selectedCalendarBranch = branch);
@@ -55,5 +57,6 @@ export class Recycle {
       this.calendarServiceDispatcher.setSelectedServices([]);
       this.serviceDispatcher.setSelectedServices([]);
       this.arriveAppointmentDispatcher.deselectAppointment();
+      this.expireTimer.hideReservationExpiryTimer();
   }
 }

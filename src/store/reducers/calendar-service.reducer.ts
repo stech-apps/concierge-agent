@@ -11,6 +11,7 @@ export interface ICalendarServiceState {
     loaded: boolean;
     error: Object;
     serviceLoaded: boolean;
+    serviceSelectionCompleted: boolean;
   }
   
   export const initialState: ICalendarServiceState = {
@@ -21,7 +22,8 @@ export interface ICalendarServiceState {
     loading: false,
     loaded: false,
     error: null,
-    serviceLoaded: false
+    serviceLoaded: false,
+    serviceSelectionCompleted: false
   };
   
   export function reducer (
@@ -34,7 +36,8 @@ export interface ICalendarServiceState {
           ...state,
           loading: true,
           error: null,
-          serviceLoaded: false
+          serviceLoaded: false,
+          serviceSelectionCompleted: false
         };
       }
       case ServiceActions.FETCH_CALENDAR_SERVICES_SUCCESS: {
@@ -44,7 +47,8 @@ export interface ICalendarServiceState {
           loading: false,
           loaded: true,
           error: null,
-          serviceLoaded: true
+          serviceLoaded: true,
+          serviceSelectionCompleted: false
         };
       }
       case ServiceActions.FETCH_CALENDAR_SERVICES_FAIL: {
@@ -58,7 +62,8 @@ export interface ICalendarServiceState {
         return {
           ...state,
           loading: true,
-          error: null
+          error: null,
+          serviceSelectionCompleted: false
         };
       }
       case ServiceActions.FETCH_SERVICE_GROUPS_SUCCESS: {
@@ -67,7 +72,8 @@ export interface ICalendarServiceState {
           services: processServices(state.selectedServices, concatService(action.payload)),
           loading: false,
           loaded: true,
-          error: null
+          error: null,
+          serviceSelectionCompleted: false
         };
       }
       case ServiceActions.FETCH_SERVICE_GROUPS_FAIL: {
@@ -80,13 +86,20 @@ export interface ICalendarServiceState {
       case ServiceActions.SET_SELECTED_CALENDAR_SERVICES: {
         return {
           ...state,
-          selectedServices: action.payload
+          selectedServices: action.payload,
+          serviceSelectionCompleted: false
         };
       }
       case ServiceActions.REMOVE_FETCH_SERVICES: {
         return {
           ...state,
           serviceLoaded : false
+        };
+      }
+      case ServiceActions.SERVICES_SELECTION_COMPLETED: {
+        return {
+          ...state,
+          serviceSelectionCompleted : true
         };
       }
       default: {

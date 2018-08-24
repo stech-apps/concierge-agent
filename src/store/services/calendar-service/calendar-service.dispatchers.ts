@@ -26,4 +26,8 @@ export class CalendarServiceDispatchers {
   removeFetchService(){
     this.store.dispatch(new ServiceActions.RemoveFetchServices());
   }
+
+  setCalendarServiceSelected(val: boolean){
+    this.store.dispatch(new ServiceActions.ServiceSelectionCompleted(val));
+  }
 }

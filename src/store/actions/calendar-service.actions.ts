@@ -16,6 +16,7 @@ export const GET_SELECTED_CALENDAR_SERVICES = '[Calendar Service] GET_SELECTED_C
 export const SET_SELECTED_CALENDAR_SERVICES = '[Calendar Service] SET_SELECTED_CALENDAR_SERVICES';
 
 export const REMOVE_FETCH_SERVICES = '[Service] REMOVE_FETCH_SERVICES';
+export const SERVICES_SELECTION_COMPLETED = '[Service] SERVICES_SELECTION_COMPLETED';
 
 export class FetchCalendarServices implements Action {
     readonly type = FETCH_CALENDAR_SERVICES;
@@ -61,6 +62,11 @@ export class FetchCalendarServices implements Action {
     readonly type = REMOVE_FETCH_SERVICES;
   }
 
+  export class ServiceSelectionCompleted implements Action {
+    readonly type = SERVICES_SELECTION_COMPLETED;
+    constructor(public payload: boolean) {}
+  }
+
   // Action types
 export type AllCalendarServiceActions = 
                                     FetchCalendarServices |
@@ -71,4 +77,5 @@ export type AllCalendarServiceActions =
                                     FetchServiceGroupsSuccess |
                                     GetSelectedCalendarServices |
                                     SetSelectedCalendarServices |
-                                    RemoveFetchServices;                
+                                    RemoveFetchServices |
+                                    ServiceSelectionCompleted;                

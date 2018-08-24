@@ -295,6 +295,7 @@ export class QmSelectServiceComponent implements OnInit {
    }
 
   doneButtonClick() {
+    this.calendarServiceDispatchers.setCalendarServiceSelected(true);
     this.onFlowNext.emit();
   }
 

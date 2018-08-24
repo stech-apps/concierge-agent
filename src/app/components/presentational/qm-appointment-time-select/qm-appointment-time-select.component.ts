@@ -73,18 +73,22 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {
       this.selectedServices = s;
-      if (this.selectedServices.length > 0 && this.selectedBranch && this.selectedBranch.id) {
-        this.fetchReservableDates();
-      }
     });
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[])=> {
         this.reservableDates = dates;
     });
+
+    const serviceSelectionSubscription = this.calendarServiceSelectors.isCalendarServiceSelected$.subscribe((val) => {
+      if (val && this.selectedServices.length > 0 && this.selectedBranch && this.selectedBranch.id) {
+        this.fetchReservableDates();
+      }
+    });
    
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(serviceSubscription);
     this.subscriptions.add(reservableDatesSub);
+    this.subscriptions.add(serviceSelectionSubscription);
   }
 
   ngOnInit() {

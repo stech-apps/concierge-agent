@@ -676,7 +676,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
     }
 
-    var tempList = serviceIds.concat(serviceList);
+    var tempList = serviceList;
+    if(serviceIds){
+      serviceList.concat(serviceIds);
+    }
 
     return this.removeDuplicates(tempList);
   }

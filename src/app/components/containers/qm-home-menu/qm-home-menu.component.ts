@@ -8,6 +8,7 @@ import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers } fr
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { QueueService } from '../../../../util/services/queue.service';
+import { Recycle } from '../../../../util/services/recycle.service';
 
 @Component({
   selector: 'qm-home-menu',
@@ -35,7 +36,7 @@ export class QmHomeMenuComponent implements OnInit {
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
               private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
-              private toastService: ToastService, private translateService: TranslateService, private queueService: QueueService) { 
+              private toastService: ToastService, private translateService: TranslateService, private queueService: QueueService, private recycleService: Recycle) { 
                 this.checkUserPermissions();
                 this.checkUttPermissions();
                 this.userDirection$ = this.userSelectors.userDirection$;
@@ -110,6 +111,7 @@ export class QmHomeMenuComponent implements OnInit {
           })}
 
     else{
+      this.recycleService.clearCache();
       this.queueService.stopQueuePoll();
       this.router.navigate(['home/' + route]);
   }

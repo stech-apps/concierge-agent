@@ -68,6 +68,16 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(serviceSubscription);
+
+    const selectedServiceSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => {
+      if(services.length > 0){
+        this.selectedService = services[0];
+      }
+      else{
+        this.selectedService = null;
+      }
+    });
+    this.subscriptions.add(selectedServiceSubscription);
   }
 
   ngOnInit() {
@@ -86,11 +96,13 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   }
 
   onServiceSelect(selectedService: IService) {
-    if(this.selectedService){
+    if(this.selectedService === selectedService){
       this.selectedService = null;
+      this.serviceDispatchers.setSelectedServices([]);
     }
     else{
       this.selectedService = selectedService;
+      this.serviceDispatchers.setSelectedServices([selectedService]);
     }
   }
 

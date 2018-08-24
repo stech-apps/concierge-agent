@@ -190,7 +190,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const selectedAppointmentSubscription = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if (appointment) {
         this.selectedAppointment = appointment;
-        if(this.selectedAppointment.customers.length > 0){
+        if(this.selectedAppointment && this.selectedAppointment.customers && this.selectedAppointment.customers.length > 0){
           this.customerDispatcher.selectCustomers(this.selectedAppointment.customers[0]);
           this.selectedCustomer = this.selectedAppointment.customers[0];
           this.customerSms = this.selectedCustomer.properties.phoneNumber;

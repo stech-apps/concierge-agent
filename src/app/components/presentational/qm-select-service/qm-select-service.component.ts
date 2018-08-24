@@ -111,6 +111,7 @@ export class QmSelectServiceComponent implements OnInit {
           }
           if(branch.id != -1 && this.serviceList === null){
             this.selectedServiceList = [];
+            this.calendarServiceDispatchers.setSelectedServices([]);
             this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
           }
         }
@@ -130,6 +131,7 @@ export class QmSelectServiceComponent implements OnInit {
         if(!val){
           if(this.selectedBranch.id != -1){
             this.selectedServiceList = [];
+            this.calendarServiceDispatchers.setSelectedServices([]);
             this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
           }
         }

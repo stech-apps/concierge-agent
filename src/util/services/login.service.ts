@@ -21,6 +21,8 @@ export class LoginService {
     private selectedServicePoint: IServicePoint;
     private user: IAccount
     private isSingleSession: boolean;
+    private previousBranch:IBranch;
+   
 
     constructor(
         private spService: SPService,
@@ -34,10 +36,15 @@ export class LoginService {
         private router: Router,
         private userStatusDispatcher: UserStatusDispatchers,
         private confirmBox: QmModalService,
-        private localStorage: LocalStorage
+        private localStorage: LocalStorage,
+        
     ) {
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
         this.subscriptions.add(branchSubscription);
+        const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
+            this.previousBranch = branch;
+        })
+        this.subscriptions.add(previousBranchSubscription)
 
         const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
         this.subscriptions.add(userSubscription);
@@ -57,7 +64,10 @@ export class LoginService {
                 if(status.userState === USER_STATE.NO_STARTED_USER_SESSION || status.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION){
                     this.hijack();
                 }
-                else{
+                else  if(this.previousBranch){
+                    this.hijack();
+                }else
+                {
                     let currentObj = this;
                     this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'cancel', function(val: boolean){
                         if(val){

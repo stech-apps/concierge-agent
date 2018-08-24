@@ -60,6 +60,10 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       };
 
       this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
+      const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
+        this.previousBranch = branch;
+    })
+    this.subscriptions.add(previousBranchSubscription);
       
     const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
       this.branches = bs;
@@ -88,7 +92,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         
       }
 
-      if(this.isEnableUseDefault && this.selectedBranch && this.selectedServicePoint){
+      if(this.isEnableUseDefault && this.selectedBranch && this.selectedServicePoint && !this.previousBranch){
         this.onConfirmProfile();
       }
     });
@@ -104,10 +108,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   );
   this.subscriptions.add(navServiceSubscription);
   
-  const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
-      this.previousBranch = branch;
-  })
-  this.subscriptions.add(previousBranchSubscription);
+ 
 }
 
   setDefaultServicePoint() {

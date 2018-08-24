@@ -653,12 +653,34 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         serviceList.push(val.id);
       })
       if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, serviceList);
+        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, this.getMostFrequnetServices(serviceList));
       }
       else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, serviceList);
+        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, this.getMostFrequnetServices(serviceList));
       }
     }
+  }
+
+  getMostFrequnetServices(serviceList: any){
+    var serviceIds = null;
+    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
+    }
+    else{
+      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
+    }
+
+    var tempList = serviceIds.concat(serviceList);
+
+    return this.removeDuplicates(tempList);
+  }
+
+  removeDuplicates(arr) {
+    let obj = {};
+    return Object.keys(arr.reduce((prev, next) => {
+      if(!obj[next]) obj[next] = next; 
+      return obj;
+    }, obj)).map((i) => obj[i]);
   }
 
   private buildDate(appointment: IAppointment) {

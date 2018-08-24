@@ -190,6 +190,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const selectedAppointmentSubscription = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if (appointment) {
         this.selectedAppointment = appointment;
+        if(this.selectedAppointment.customers.length > 0){
+          this.customerDispatcher.selectCustomers(this.selectedAppointment.customers[0]);
+          this.selectedCustomer = this.selectedAppointment.customers[0];
+          this.customerSms = this.selectedCustomer.properties.phoneNumber;
+        }
         this.genarateAppointmentData();
       }
     });
@@ -243,7 +248,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   genarateAppointmentData() {
-    if(this.selectedAppointment.start){
+    if(this.selectedAppointment.startTime){
       this.appTime = this.setAppTime();
     }
     if(this.selectedAppointment.id){
@@ -481,7 +486,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAriveAppointment() {
-    this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
+    var aditionalList = this.selectedServices.filter(val => {
+      return !(val.isBind)
+    })
+    this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, aditionalList, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
       this.showSuccessMessage(result);
       this.saveFrequentService();
       this.onFlowExit.emit();

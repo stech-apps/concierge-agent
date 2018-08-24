@@ -43,22 +43,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
 
-    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
-      this.selectedBranch = branch;
-      if(branch){
-        this.serviceDispatchers.fetchServices(branch);
-      }
-    });
+    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
     this.subscriptions.add(branchSubscription);
-
-    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
-      var serviceDispatchers = this.serviceDispatchers;
-      var selectedBranch = this.selectedBranch;
-      if(services && services.length > 0 && this.selectedBranch){
-        serviceDispatchers.fetchServiceConfiguration(selectedBranch, services);
-      }
-    });
-    this.subscriptions.add(serviceSubscription);
 
     const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => {
       this.services = services;
@@ -69,6 +55,19 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(serviceConfigSubscription);
+
+    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
+      var serviceDispatchers = this.serviceDispatchers;
+      var selectedBranch = this.selectedBranch;
+      var quickService = this.services;
+      if(services.length === 0){
+        this.serviceDispatchers.fetchServices(selectedBranch);
+      }
+      if(services && services.length > 0 && selectedBranch && quickService.length === 0){
+        serviceDispatchers.fetchServiceConfiguration(selectedBranch, services);
+      }
+    });
+    this.subscriptions.add(serviceSubscription);
   }
 
   ngOnInit() {

@@ -26,6 +26,10 @@ export class ReserveDispatchers {
     this.store.dispatch(new ReserveActions.FetchReservableDates(bookintInformation));
   }
 
+  resetReserveAppointment(){
+    this.store.dispatch(new ReserveActions.ResetReservedAppointment);
+  }
+
   // unreserveAppointment(bookingInformation: IBookingInformation, appointment: IAppointment) {
   //   this.store.dispatch(new ReserveActions.UnreserveAppointment(date));
   // }

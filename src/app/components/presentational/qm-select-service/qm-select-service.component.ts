@@ -2,7 +2,7 @@ import { QmClearInputDirective } from './../../../directives/qm-clear-input.dire
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { Subscription, Subject, Observable } from 'rxjs';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors, ArriveAppointmentSelectors, UserSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, BranchSelectors, CalendarBranchSelectors, CalendarServiceDispatchers, CalendarServiceSelectors, ServicePointSelectors, ArriveAppointmentSelectors, TimeslotDispatchers, ReserveDispatchers, UserSelectors } from '../../../../../src/store';
 import { IService } from '../../../../models/IService';
 import { IBranch } from '../../../../models/IBranch';
 import { QmModalService } from './../qm-modal/qm-modal.service';
@@ -51,7 +51,9 @@ export class QmSelectServiceComponent implements OnInit {
     private localStorage: LocalStorage,
     private servicePointSelectors: ServicePointSelectors,
     private appointmentSelectors: ArriveAppointmentSelectors,
-    private userSelectors:UserSelectors
+    private userSelectors:UserSelectors,
+    private timeSlotDispatchers: TimeslotDispatchers,
+    private reserveDispatcher: ReserveDispatchers
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
@@ -234,6 +236,8 @@ export class QmSelectServiceComponent implements OnInit {
   handleServiceList(selectedService: IServiceViewModel, isRemove: boolean){
     this.selectedServiceList.push(selectedService);
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+      this.timeSlotDispatchers.resetTimeslots();
+      this.reserveDispatcher.resetReserveAppointment();
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
       this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
     }

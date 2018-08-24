@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } from '@angular/core';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors } from 'src/store';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors, TimeslotDispatchers, ReserveDispatchers } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
@@ -48,7 +48,10 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   constructor(private userSelectors: UserSelectors, private calendarBranchSelectors: CalendarBranchSelectors,
     private calendarBranchDispatchers: CalendarBranchDispatchers, private qmModalService: QmModalService,
     private branchSelectors: BranchSelectors,
-    private localStorage: LocalStorage) {
+    private localStorage: LocalStorage,
+    private timeSlotDispatchers: TimeslotDispatchers,
+    private reserveDispatcher: ReserveDispatchers
+  ) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
 
@@ -87,7 +90,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
         if(v) {
           this.calendarBranchDispatchers.selectCalendarBranch(branch);
           this.currentBranch = branch;
-          this.onFlowNext.emit();
+          this.goToNext();
         }
       }, ()=> {});
     }
@@ -98,7 +101,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     else if (!this.currentBranch.id) {
       this.currentBranch = branch;
       this.calendarBranchDispatchers.selectCalendarBranch(branch);
-      this.onFlowNext.next();
+      this.goToNext();
     }
   }
 
@@ -113,6 +116,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   goToNext() {
+    this.timeSlotDispatchers.resetTimeslots();
+    this.reserveDispatcher.resetReserveAppointment();
     this.onFlowNext.emit();
   }
 

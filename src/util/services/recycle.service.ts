@@ -54,6 +54,7 @@ export class Recycle {
       this.serviceDispatcher.setSelectedServices([]);
       this.arriveAppointmentDispatcher.deselectAppointment();
       this.expireTimer.hideReservationExpiryTimer();
+      this.reserveDispatcher.resetReserveAppointment();
   }
 
   removeInitialCalendarCache(){

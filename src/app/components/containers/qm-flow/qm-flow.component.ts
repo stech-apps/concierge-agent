@@ -77,9 +77,9 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
     if(result){
       this.exitFlow = true;
+      this.recycleService.clearCache();
+      this.queueService.setQueuePoll();
         setTimeout(() => {
-          this.recycleService.clearCache();
-          this.queueService.setQueuePoll();
           this.router.navigate(['home']);
         }, 1000);
     }
@@ -87,9 +87,9 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
         if (result) {
           this.exitFlow = true;
+          this.recycleService.clearCache();
+          this.queueService.setQueuePoll();
           setTimeout(() => {
-            this.recycleService.clearCache();
-            this.queueService.setQueuePoll();
             this.router.navigate(['home']);
           }, 1000);
         }

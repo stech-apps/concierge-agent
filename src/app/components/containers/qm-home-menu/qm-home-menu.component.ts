@@ -36,8 +36,7 @@ export class QmHomeMenuComponent implements OnInit {
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
               private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
-              private toastService: ToastService, private translateService: TranslateService, private queueService: QueueService, private recycleService: Recycle) { 
-               
+              private toastService: ToastService, private translateService: TranslateService, private recycleService: Recycle, private queueService: QueueService) { 
                
   }
 

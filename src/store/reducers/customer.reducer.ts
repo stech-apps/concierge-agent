@@ -97,6 +97,16 @@ export function reducer(
             };
         }
 
+        case CustomerActions.FETCH_APPOINTMENT_CUSTOMERS:{
+            return{
+                ...state,
+                loading:true,
+                loaded:false,
+                error:null,
+            };
+        }
+
+
         case CustomerActions.FETCH_APPOINTMENT_CUSTOMERS_SUCCESS:{
             return{
                 ...state,

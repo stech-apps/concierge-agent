@@ -117,6 +117,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedAppointmentSub);
+    const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe((value) => {
+      this.isSearchedCustomerLoaded = value;
+    });
+  
+    const customerSearchLoadingSubscription = this.customerSelectors.customerLoading$.subscribe((value) => {
+      this.isSearchedCustomerLoading = value;
+    });
+
+    this.subscriptions.add(customerSearchLoadedSubscription);
+    this.subscriptions.add(customerSearchLoadingSubscription);
 
     const loadedSubscription = this.appointmentSelectors.appointmentsLoaded$.subscribe((load)=>{
         this.isLoaded = load;
@@ -183,16 +193,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.searchedCustomers = customers;
     });
 
-    const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe((value) => {
-      this.isSearchedCustomerLoaded = value;
-    });
   
-    const customerSearchLoadingSubscription = this.customerSelectors.customerLoading$.subscribe((value) => {
-      this.isSearchedCustomerLoading = value;
-    });
-
-    this.subscriptions.add(customerSearchLoadedSubscription);
-    this.subscriptions.add(customerSearchLoadingSubscription);
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentSubscription);

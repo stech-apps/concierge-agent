@@ -416,4 +416,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   onDone(){
     this.onFlowNext.emit();   
   }
+
+  onCancel(){
+    this.inputAnimationState = '';
+     this.selectedSearchIcon = '';
+     this.showModalBackDrop = false;
+  }
 }

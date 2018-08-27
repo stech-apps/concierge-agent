@@ -41,9 +41,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit
   ) { 
     this.MessageBoxInfo$=this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;   
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      console.log(params);
       if(params){
-      
         this.isQuickServeEnable = params.quickServe;
         this.isShowQueueView = params.queueView;
       }
@@ -58,24 +56,20 @@ export class QmHomeComponent implements OnInit, AfterViewInit
     const MsgBoxSubscription = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$.subscribe((info) => {
       this.MessageBoxInfo = info;
     });
-  this.subscriptions.add(MsgBoxSubscription);
-
-  const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
+    this.subscriptions.add(MsgBoxSubscription);
+    const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
     this.navServicePoint = spo
-  }
-);
-this.subscriptions.add(navServiceSubscription);
+    }
+    );
+    this.subscriptions.add(navServiceSubscription);
   }
 
-  ngAfterViewInit() {
+ngAfterViewInit() {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch)=>{
       this.SelectedBranch = branch
     })
     this.subscriptions.add(branchSubscription);
     this.branchDispatchers.selectPreviousBranch(this.SelectedBranch);
-
-  
-    
   }
 
   ngOnDestroy() {

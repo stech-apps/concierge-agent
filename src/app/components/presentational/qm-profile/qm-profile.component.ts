@@ -175,12 +175,12 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onConfirmProfile() {
-    if (this.selectedBranch.id === -1) {
+    if (this.selectedBranch.id === -1 && !this.isEnableUseDefault) {
       this.translateService.get('no_branch_set').subscribe(v => {
         this.toastService.infoToast(v);
       });
     }
-    else if (this.selectedServicePoint.id === -1) {
+    else if (this.selectedServicePoint.id === -1 && !this.isEnableUseDefault) {
       this.translateService.get('no_workstation_set').subscribe(v => {
         this.toastService.infoToast(v);
       });

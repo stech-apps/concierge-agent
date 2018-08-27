@@ -75,6 +75,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     REFRESH: 'refresh',
     ID: 'id'
   };
+
+  readonly CREATED_APPOINTMENT_STATE = 'CREATED';
+
   isFetchBlock: boolean = false;
 
   @Output()
@@ -180,10 +183,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
-    this.appointments = apps;
+
+    if(apps && apps.length > 0) {
+      this.appointments = apps.filter(ap=> ap.status === this.CREATED_APPOINTMENT_STATE);
+    }
+    else {
+      this.appointments = [];
+    }
 
     // in id selection go to 
-    if (this.SEARCH_STATES.ID == this.currentSearchState && apps.length === 1) {
+    if (this.SEARCH_STATES.ID == this.currentSearchState &&  this.appointments.length === 1) {
       this.selectedAppointment = apps[0];
       this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
       this.showAppointmentCollection = false;
@@ -191,7 +200,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.showModalBackDrop = false;
     }
 
-    if ((!apps || !apps.length)) {
+    if ((!this.appointments || !this.appointments.length)) {
       if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
         this.translateService.get('no_appointments_for_customer').subscribe(
           (noappointments: string) => {
@@ -206,7 +215,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
         ).unsubscribe();
       }
-
     }
   }
 

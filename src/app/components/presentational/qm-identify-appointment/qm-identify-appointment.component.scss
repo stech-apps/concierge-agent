@@ -6,15 +6,12 @@
   justify-content: center;
   align-items: center;
   padding-left: 1rem;
-
   &__right {
     flex: 1;
     display: flex;
     justify-content: flex-end;
   }
 }
-
-
 
 .qm-identify-appointment {
   &__search-input {
@@ -189,6 +186,9 @@
       font-weight: 700;
       letter-spacing: 1px;
       font-size: 0.8em;
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
     }
   }
   .qm-arrive-searchinput-close {
@@ -244,12 +244,11 @@
   .qm-appointment-refresh {
     position: absolute;
     width: 35px;
-    height: 35px; 
+    height: 35px;
     margin-top: 30px;
-  
     svg {
       width: 28px;
-      height: 28px; 
+      height: 28px;
     }
     background: none;
     border: none;
@@ -367,10 +366,23 @@
   width: 50px;
 }
 
+.qm-selected-appointment-text {
+  @at-root [dir='rtl'] & {
+    text-align: right;
+  }
+
+
+}
+
+[dir='rtl'] .qm-selected-appointment .icon-close{
+  left : 1rem;
+  right: auto;
+}
+
 /* IE 11 */
+
 @media all and (-ms-high-contrast:none) {
   :host {
     display: block;
   }
 }
-

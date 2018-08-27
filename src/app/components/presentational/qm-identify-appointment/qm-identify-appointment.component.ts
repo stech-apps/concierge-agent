@@ -111,7 +111,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(selectedAppointmentSub);
 
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
-    this.setInitialTime();
+    this.setDefaultDuration();
     this.fromTimeController = new FormControl('', (control: FormControl) => {
       return this.getTimeSelectionValidity(control.value, this.toTime);
     });
@@ -224,7 +224,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.inputChanged.unsubscribe();
   }
 
-  setInitialTime() {
+  setDefaultDuration() {
     let currentTime = moment();
     this.fromTime = { hour: parseInt(currentTime.format('HH')), minute: parseInt(currentTime.format('mm')), second: 0 };
     this.toTime = { hour: parseInt(currentTime.format('HH')) + 1, minute: parseInt(currentTime.format('mm')), second: 0 };
@@ -257,6 +257,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
     else if (searchButton === 'customer') {
       this.searchPlaceHolderKey = 'please_enter_customer_attributes';
+    }
+    else if (searchButton === 'duration') {
+     this.setDefaultDuration();
     }
 
     if (this.inputAnimationState == this.INITIAL_ANIMATION_STATE) {

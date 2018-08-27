@@ -371,14 +371,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   getSelectedAppointmentInfo() {
-    let animationInfo = '';
+    let appointmentInfo = '';
 
     if (this.selectedAppointment) {
-      animationInfo = `${this.selectedAppointment.customers[0].firstName} `;
-      animationInfo += `${this.selectedAppointment.customers[0].lastName} - `;
-      animationInfo += `${this.selectedAppointment.startTime.replace('T', ' ')}`;
+      appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
+      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
+      appointmentInfo += `${this.selectedAppointment.startTime.replace('T', ' ').slice(0,-3)}`;
     }
-    return animationInfo;
+    return appointmentInfo;
   }
 
   deselectAppointment() {

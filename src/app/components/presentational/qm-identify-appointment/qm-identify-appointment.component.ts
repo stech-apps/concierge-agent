@@ -67,6 +67,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   enableAppointmentLoad: boolean = true;
   userDirection$: Observable<string> = new Observable<string>();
   selectedCustomer:ICustomer;
+  invalidDateSelected: boolean;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -228,6 +229,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     let currentTime = moment();
     this.fromTime = { hour: parseInt(currentTime.format('HH')), minute: parseInt(currentTime.format('mm')), second: 0 };
     this.toTime = { hour: parseInt(currentTime.format('HH')) + 1, minute: parseInt(currentTime.format('mm')), second: 0 };
+    this.invalidDateSelected = false;
   }
 
   getTime(timeString) {
@@ -238,13 +240,18 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return moment(timeString).format('YYYY-MM-DD');
   }
 
-  getTimeSelectionValidity(fromTime, toTime) {
+  getTimeSelectionValidity(fromTime, toTime, isFromTime = true) {
     let validationConfig = null;
     if (fromTime.hour > toTime.hour) {
       validationConfig = { invalidTime: true };
+      this.invalidDateSelected = true;
     }
-    if (fromTime.hour == toTime.hour && fromTime.minute >= toTime.minute) {
+    else if (fromTime.hour == toTime.hour && fromTime.minute >= toTime.minute) {
       validationConfig = { invalidTime: true };
+      this.invalidDateSelected = true;
+    }
+    else {
+      this.invalidDateSelected = false;
     }
     return validationConfig;
   }

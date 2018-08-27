@@ -282,8 +282,8 @@
       </div>
 
       <div class="qm-step-controls-container">
-        <ngb-timepicker [ngClass]="{'invalid-time': fromTimeController.errors?.invalidTime}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
-        <ngb-timepicker [ngClass]="{'invalid-time': toTimeController.errors?.invalidTime}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
+        <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
+        <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
       </div>
       <div class="qm-command-buttons-container">
         <button class="cancel" (click)= "onCancel()">{{'cancel' | translate}}</button>

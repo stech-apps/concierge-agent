@@ -91,7 +91,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
     private userSelectors: UserSelectors,
-    private arriveAppointmentSelectors:ArriveAppointmentSelectors,
+    private arriveAppointmentSelectors:ArriveAppointmentSelectors
     
   ) {
 
@@ -162,29 +162,21 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(customerSearchSubscription);
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if (params) {
-        this.fromTime.hour = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('HH'));
-        this.fromTime.minute = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('mm'));
-
-        this.toTime.hour = parseInt(moment().add(params.gapToTime, 'minutes').format('HH'));
-        this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
-      }
+     this.readAppointmentFetchTimePeriodFromUtt(params);
     });
 
     this.subscriptions.add(servicePointsSubscription);
     this.searchAppointments();
+  }
 
-    const appointmentsLoadedSub = this.appointmentSelectors.appointmentsLoaded$.subscribe(isLoaded => {
-        if(isLoaded && (this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState === this.SEARCH_STATES.REFRESH) && this.appointments.length===0){
-          this.translateService.get('no_appointments').subscribe(
-            (noappointments: string) => {
-              this.toastService.infoToast(noappointments);
-            }
-          ).unsubscribe();
-        }
-    });
-    this.subscriptions.add(appointmentsLoadedSub);
+  readAppointmentFetchTimePeriodFromUtt(params: any) {
+    if (params) {
+      this.fromTime.hour = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('HH'));
+      this.fromTime.minute = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('mm'));
 
+      this.toTime.hour = parseInt(moment().add(params.gapToTime, 'minutes').format('HH'));
+      this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
+    }
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
@@ -213,7 +205,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
-      }    
+      }
+
     }
   }
 
@@ -308,7 +301,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       branchId: this.selectedBranch.id
     };
 
-    if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState === this.SEARCH_STATES.INITIAL) {
+    if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState === this.SEARCH_STATES.INITIAL || 
+      this.currentSearchState === this.SEARCH_STATES.REFRESH) {
       searchQuery = {
         ...searchQuery,
         fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
@@ -387,22 +381,21 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   refreshAppointments() {
     if(this.isFetchBlock === false) {
-      this.currentSearchState = this.SEARCH_STATES.REFRESH;
-      this.searchAppointments();
-      setTimeout(() => {    //<<<---    using ()=> syntax
-        this.isFetchBlock = false;
-      }, 30000);
-  
-      this.isFetchBlock = true;
+      const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+        this.readAppointmentFetchTimePeriodFromUtt(params);
+
+        this.currentSearchState = this.SEARCH_STATES.REFRESH;
+        this.searchAppointments();
+        setTimeout(() => {    //<<<---    using ()=> syntax
+          this.isFetchBlock = false;
+        }, 30000);
+    
+        this.isFetchBlock = true;
+       }).unsubscribe();
     }
   }
 
   onDone(){
     this.onFlowNext.emit();   
-  }
-  onCancel(){
-   this.inputAnimationState = '';
-    this.selectedSearchIcon = '';
-    this.showModalBackDrop = false;
   }
 }

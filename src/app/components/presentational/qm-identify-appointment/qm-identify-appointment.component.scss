@@ -419,3 +419,19 @@
     display: block;
   }
 }
+
+.qm-loader-container{
+  padding-top: 30px;
+}
+
+.qm-customer-search-loader{
+  position: absolute;
+    color: white !important;
+    width: $appointment-identify-searchbar-width;
+    display: flex;
+    z-index: 1041;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    padding-top: 90px;
+}

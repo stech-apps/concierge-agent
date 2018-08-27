@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'qm-loader',
@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./qm-loader.component.scss']
 })
 export class QmLoaderComponent implements OnInit {
+  
+  @Input() color:string;
+  fontColor :string;
+  
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit() {
+  
+  }
+  clickedbutton(){
+    console.log(this.color);
   }
 
 }

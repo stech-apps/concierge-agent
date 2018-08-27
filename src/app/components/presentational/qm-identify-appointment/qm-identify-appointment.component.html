@@ -271,8 +271,12 @@
         <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>
       </div>
     </div>
+  </div>  
+ 
+  <div class="qm-customer-search-loader" *ngIf = "showLoadingCustomers() && searchText" >
+      <qm-loader [color]="white"></qm-loader>
+      
   </div>
-
   <div class="qm-customer-search-results" *ngIf="showCustomerResults">
     <div class="qm-cutomer-item" (click)="onCustomerSelect(c)" *ngFor="let c of searchedCustomers">
       <div class="qm-cutomer-item-name">
@@ -328,8 +332,9 @@
           <th class="qm-identify-appointment__customer-table__col-5"></th>
         </tr>
       </thead>
+     
 
-      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection" class="qm-identify-appointment__tbody" [style.max-height]="height">
+      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody" [style.max-height]="height">
         <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect(app)">
           <td class="qm-identify-appointment__customer-table__col-5"></td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime)}}</td>
@@ -341,6 +346,10 @@
           <td class="qm-identify-appointment__customer-table__col-5"></td>
         </tr>
       </tbody>
+      
+      <div class="qm-loader-container" *ngIf= "showLoading()" >
+        <qm-loader [color]="black"></qm-loader>
+      </div>
     </table>
   </div>
 </div>

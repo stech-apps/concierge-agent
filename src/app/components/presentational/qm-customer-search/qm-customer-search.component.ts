@@ -27,6 +27,7 @@ export class QmCustomerSearchComponent implements OnInit {
   editCustomers$: Observable<ICustomer>;
   
   multiBranchEnabled:boolean=false;
+  black:string = "black"
 
 
   customers: ICustomer[];

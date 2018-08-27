@@ -69,6 +69,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   customerNotFound: boolean = false;
   selectedCustomer:ICustomer;
   invalidDateSelected: boolean;
+  isLoaded:boolean;
+  isLoading:boolean;
+  isSearchedCustomerLoaded:boolean;
+  isSearchedCustomerLoading:boolean;
+  white:string = "white"
+  black:string = "black"
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -111,6 +117,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedAppointmentSub);
+
+    const loadedSubscription = this.appointmentSelectors.appointmentsLoaded$.subscribe((load)=>{
+        this.isLoaded = load;
+    })
+    this.subscriptions.add(loadedSubscription);
+
+    const loadingSubscription = this.appointmentSelectors.appointmentsLoading$.subscribe((load)=>{
+      this.isLoading = load;
+  })
+  this.subscriptions.add(loadingSubscription);
 
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.setDefaultDuration();
@@ -166,6 +182,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
       this.searchedCustomers = customers;
     });
+
+    const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe((value) => {
+      this.isSearchedCustomerLoaded = value;
+    });
+  
+    const customerSearchLoadingSubscription = this.customerSelectors.customerLoading$.subscribe((value) => {
+      this.isSearchedCustomerLoading = value;
+    });
+
+    this.subscriptions.add(customerSearchLoadedSubscription);
+    this.subscriptions.add(customerSearchLoadingSubscription);
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentSubscription);
@@ -440,4 +467,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
      this.selectedSearchIcon = '';
      this.showModalBackDrop = false;
   }
+
+  showLoading() {
+    return !this.isLoaded && this.isLoading;
+  }
+
+  showLoadingCustomers() {
+    return !this.isSearchedCustomerLoaded && this.isSearchedCustomerLoading;
+  }
+
 }

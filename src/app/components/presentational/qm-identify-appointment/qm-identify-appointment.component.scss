@@ -199,7 +199,7 @@
     transform: translateY(-50%);
     cursor: pointer;
     @at-root [dir="rtl"] & {
-      left: 5%;
+      left: 1rem;
       right: auto;
     }
   }
@@ -377,6 +377,19 @@
 [dir='rtl'] .qm-selected-appointment .icon-close{
   left : 1rem;
   right: auto;
+}
+
+.qm-customer-not-found {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  width: $appointment-identify-searchbar-width;
+  background-color: $app-theme;
+  font-size: 0.8rem;
+  height: 2.5rem;
+  position: relative;
 }
 
 /* IE 11 */

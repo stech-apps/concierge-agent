@@ -66,6 +66,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showCustomerResults: boolean = false;
   enableAppointmentLoad: boolean = true;
   userDirection$: Observable<string> = new Observable<string>();
+  customerNotFound: boolean = false;
   selectedCustomer:ICustomer;
   invalidDateSelected: boolean;
 
@@ -157,6 +158,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers) => {
+      if(!customers || customers.length === 0 && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
+        this.customerNotFound = true;
+      }
+      else {
+        this.customerNotFound = false;
+      }
       this.searchedCustomers = customers;
     });
 
@@ -290,6 +297,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     this.selectedAppointment = null;
     this.isSearchInputReadOnly = false;
+    this.customerNotFound = false;
+    this.showCustomerResults = false;
+    this.searchedCustomers = [];
     this.arriveAppointmentDispatchers.deselectAppointment();
   }
 
@@ -311,7 +321,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.selectedSearchIcon = '';
     this.isSearchInputReadOnly = false;
+    this.customerNotFound = false;
     this.appointments = [];
+    this.showCustomerResults = false;
+    this.searchedCustomers = [];
   }
 
   searchAppointments() {
@@ -345,7 +358,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSeachTextChanged() {
     if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
-      this.customerInputChanged.next();
+      this.customerNotFound = false;
+      if(this.searchText && this.searchText.length >=2) {
+        this.customerInputChanged.next();
+      }
     }
   }
 

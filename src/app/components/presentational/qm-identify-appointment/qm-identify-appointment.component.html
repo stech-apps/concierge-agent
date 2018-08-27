@@ -329,6 +329,10 @@
     </div>
   </div>
 
+  <div class="qm-customer-not-found" *ngIf="customerNotFound">
+      {{'customer_not_found' | translate }}
+  </div>
+
   <div class="qm-identify-appointment__table-container">
     <table class="qm-identify-appointment__customer-table">
       <thead class="qm-identify-appointment__customer-table__header">

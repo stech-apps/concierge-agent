@@ -30,7 +30,7 @@ export class ReserveDataService {
               + `/times/${bookingInformation.time}/reserve;`
               + `numberOfCustomers=${bookingInformation.numberOfCustomers}`, appointment
             )
-            .pipe(catchError(this.errorHandler.handleError()));
+            .pipe(catchError(this.errorHandler.handleError({bookingInformation: bookingInformation, appointment: appointment})));
   }
 
   unreserveAppointment(reservationPublicId: string) {

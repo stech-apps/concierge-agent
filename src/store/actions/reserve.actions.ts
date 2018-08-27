@@ -13,6 +13,7 @@ export const FETCH_RESERVABLE_DATES_SUCCESS = '[Reserve] FETCH_RESERVABLE_DATES_
 
 export const UNRESERVE_APPOINTMENT = '[Reserve] UNRESERVE_APPOINTMENT';
 export const UNRESERVE_APPOINTMENT_FAIL = '[Reserve] UNRESERVE_APPOINTMENT_FAIL';
+export const RESERVE_APPOINTMENT_FAILIURE_REPORT = '[Reserve] RESERVE_APPOINTMENT_FAILIURE_REPORT';
 export const UNRESERVE_APPOINTMENT_SUCCESS = '[Reserve] UNRESERVE_APPOINTMENT_SUCCESS';
 
 export const RESET_RESERVED_APPOINTMENT = '[Reserve] RESET_RESERVED_APPOINTMENT';
@@ -25,6 +26,11 @@ export class ReserveAppointment implements Action {
 
 export class ReserveAppointmentFail implements Action {
   readonly type = RESERVE_APPOINTMENT_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class ReserveAppointmentFailureReport implements Action {
+  readonly type = RESERVE_APPOINTMENT_FAILIURE_REPORT;
   constructor(public payload: any) {}
 }
 
@@ -75,4 +81,5 @@ export type AllReserveActions = ReserveAppointment |
                                 ResetReservedAppointment|
                                 FetchReservableDates | 
                                 FetchReservableDatesSuccess |
+                                ReserveAppointmentFailureReport |
                                 FetchReservableDatesFail;

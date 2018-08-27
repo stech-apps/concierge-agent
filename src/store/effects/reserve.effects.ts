@@ -95,16 +95,12 @@ export class ReserveEffects {
       }
     ),
     switchMap((action: ReserveActions.ReserveAppointmentFail) => {
-      const serviceQuery = action.payload.appointment.services.reduce((queryString, service: IService) => {
-        return queryString + `;servicePublicId=${service.id}`;
-      }, '');
 
       const bookingInformation: IBookingInformation = {
-        ...action.payload.bookingInformation,
-        serviceQuery
+        ...action.payload.requestData.bookingInformation
       };
 
-      return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation)];
+      return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation), new ReserveActions.ReserveAppointmentFailureReport(action.payload)];
     })
     );
 }

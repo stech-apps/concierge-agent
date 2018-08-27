@@ -40,10 +40,11 @@ export function reducer(
         error: null
       };
     }
-    case ReserveActions.RESERVE_APPOINTMENT_FAIL: {
+    case ReserveActions.RESERVE_APPOINTMENT_FAILIURE_REPORT: {
       return {
         ...state,
         loading: false,
+        reservedAppointment: null,
         error: action.payload
       };
     }

@@ -392,6 +392,26 @@
   position: relative;
 }
 
+.refreshBtnStyleDisable-1 {
+  fill: none;
+  stroke: #bdbdbd;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 6px;
+}
+
+.refreshBtnStyleDisable-2 {
+  fill: #bdbdbd;
+}
+
+.refreshBtnStyleEnable {
+  fill: none;
+  stroke: #000;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 6px;
+}
+
 /* IE 11 */
 
 @media all and (-ms-high-contrast:none) {

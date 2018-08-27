@@ -23,6 +23,8 @@ ngb-timepicker {
     align-items: center;
     justify-content: center;
   }
+
+
   button {
     width: 60px;
     height: 60px;
@@ -61,6 +63,10 @@ ngb-timepicker {
       background-color: #F5A9A9;
     }
   }
+}
+
+[dir="rtl"] ngb-timepicker .ngb-tp {
+  flex-direction: row-reverse;
 }
 
 .NoteModalClass .modal-dialog {

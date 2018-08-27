@@ -209,7 +209,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
         ).unsubscribe();
       }
-      else if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
+      else if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState == this.SEARCH_STATES.REFRESH) {
         this.translateService.get('no_appointments').subscribe(
           (noappointments: string) => {
             this.toastService.infoToast(noappointments);
@@ -296,10 +296,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSelectTime() {
     this.isSearchInputOpen = true;
-    this.searchText = `${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`;
+    this.searchText = `${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
-    this.searchInputController.setValue(`${this.fromTime.hour}:${this.fromTime.minute} - ${this.toTime.hour}:${this.toTime.minute}`);
+    this.searchInputController.setValue(`${this.pad(this.fromTime.hour, 2)}:${ this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute,2 )}`);
     this.searchAppointments();
     this.showModalBackDrop = false;
   }
@@ -330,7 +330,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     else if (this.currentSearchState === this.SEARCH_STATES.ID) {
       searchQuery = {
         ...searchQuery,
-        id: this.searchText
+        id: (this.searchText || '').trim()
       };
     }
 
@@ -399,6 +399,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   refreshAppointments() {
     if(this.isFetchBlock === false) {
+      this.selectedSearchIcon = '';
+      this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
       const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
         this.readAppointmentFetchTimePeriodFromUtt(params);
 

@@ -371,13 +371,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
 
-      let calculatedFromTime = moment().add(-1* this.fromTime.hour, 'hours').add(-1* this.fromTime.minute, 'minutes');
-      let calculatedToTime = moment().add(this.toTime.hour, 'hours').add(this.toTime.minute, 'minutes');
-
+      let now = moment();     
       searchQuery = {
         ...searchQuery,
-        fromDate: `${calculatedFromTime.format('YYYY-MM-DD')}T${calculatedFromTime.format('HH')}:${calculatedFromTime.format('mm')}`,
-        toDate: `${calculatedToTime.format('YYYY-MM-DD')}T${calculatedToTime.format('HH')}:${calculatedToTime.format('mm')}`
+        fromDate: `${now.format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
+        toDate: `${now.format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`
       };
     }
     else if (this.currentSearchState === this.SEARCH_STATES.INITIAL ||

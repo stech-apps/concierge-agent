@@ -30,6 +30,7 @@ export class QmCreateVisitComponent implements OnInit {
   isCustomerStoreDB: boolean;
   isFlowSkip: boolean = false;
   isCustomerHeaderVisible: boolean = false;
+  
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -61,6 +62,7 @@ export class QmCreateVisitComponent implements OnInit {
     this.subscriptions.add(servicesSubscription);
 
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
+      this.currentCustomer = customer;
       if(this.isCustomerStoreDB){
         this.currentCustomer = customer;
       }
@@ -93,4 +95,8 @@ export class QmCreateVisitComponent implements OnInit {
       this.f.onFlowNext(this.pc);
     }
   }
+
+  isFlowSkipCheck(){
+    this.isFlowSkip = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
+}
 }

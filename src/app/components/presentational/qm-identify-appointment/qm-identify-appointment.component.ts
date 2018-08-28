@@ -360,8 +360,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.selectedSearchIcon = '';
     this.isSearchInputReadOnly = false;
     this.customerNotFound = false;
-    this.appointments = [];
-    this.showCustomerResults = false;
   }
 
   searchAppointments() {
@@ -413,7 +411,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showCustomerAutoComplete() {
     this.showCustomerResults = true;
-    this.customerDispatchers.fetchAppointmentCustomers(this.searchText);
+    this.customerDispatchers.fetchAppointmentCustomers((this.searchText|| '').trim());
   }
   onSearchInputChange() {
     this.inputChanged.next(this.searchText);

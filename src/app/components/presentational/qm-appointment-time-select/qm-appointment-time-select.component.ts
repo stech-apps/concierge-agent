@@ -122,6 +122,12 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.subscriptions.add(appointmentSubscription);
     this.subscriptions.add(timeSlotSubscription);
     this.timeSlotDispatchers.selectTimeslotDate(this.selectedDates[0].mDate);
+
+    this.reserveSelectors.reservedAppointment$.subscribe((alreadyReserved)=> {
+      if(alreadyReserved) {
+        this.onFlowNext.emit();
+      }
+    });
   }
 
   fetchReservableDates() {
@@ -169,11 +175,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
     this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
 
-    this.reserveSelectors.reservedAppointment$.subscribe((alreadyReserved)=> {
-      if(!alreadyReserved) {
-        this.onFlowNext.emit();
-      }
-    }).unsubscribe();
+
   }
 
   private getTimeSlots() {

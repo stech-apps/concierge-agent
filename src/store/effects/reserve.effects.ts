@@ -100,7 +100,7 @@ export class ReserveEffects {
         ...action.payload.requestData.bookingInformation
       };
 
-      return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation), new ReserveActions.ReserveAppointmentFailureReport(action.payload)];
+      return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation)];
     })
     );
 }

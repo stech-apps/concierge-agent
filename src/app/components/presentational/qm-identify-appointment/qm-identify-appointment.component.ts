@@ -19,6 +19,7 @@ import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
 import { TranslateService } from '@ngx-translate/core';
+import { Moment } from 'moment-timezone';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -73,8 +74,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   isSearchedCustomerLoaded: boolean;
   isSearchedCustomerLoading: boolean;
-  white: string = "white"
-  black: string = "black"
+  white: string = "white";
+  black: string = "black";
+  uttFromTime: Moment;
+  uttToTime: Moment;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -193,8 +196,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.searchedCustomers = customers;
     });
 
-
-
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentSubscription);
     this.subscriptions.add(appointmentErrorSub);
@@ -202,10 +203,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       this.readAppointmentFetchTimePeriodFromUtt(params);
+      this.searchAppointments();
     });
 
     this.subscriptions.add(servicePointsSubscription);
-    this.searchAppointments();
 
     const appointmentsLoadedSub = this.appointmentSelectors.appointmentsLoaded$.subscribe(isLoaded => {
       if (isLoaded && (this.currentSearchState === this.SEARCH_STATES.INITIAL ) && this.appointments.length === 0) {
@@ -221,11 +222,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   readAppointmentFetchTimePeriodFromUtt(params: any) {
     if (params) {
-      this.fromTime.hour = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('HH'));
-      this.fromTime.minute = parseInt(moment().add(-1 * params.gapFromTime, 'minutes').format('mm'));
-
-      this.toTime.hour = parseInt(moment().add(params.gapToTime, 'minutes').format('HH'));
-      this.toTime.minute = parseInt(moment().add(params.gapToTime, 'minutes').format('mm'));
+      this.uttFromTime = moment().add(-1 * params.gapFromTime, 'minutes');
+      this.uttToTime = moment().add( params.gapFromTime, 'minutes');
     }
   }
 
@@ -371,13 +369,24 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       branchId: this.selectedBranch.id
     };
 
-    if (this.currentSearchState === this.SEARCH_STATES.DURATION || this.currentSearchState === this.SEARCH_STATES.INITIAL ||
-      this.currentSearchState === this.SEARCH_STATES.REFRESH) {
+    if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
+
+      let calculatedFromTime = moment().add(-1* this.fromTime.hour, 'hours').add(-1* this.fromTime.minute, 'minutes');
+      let calculatedToTime = moment().add(this.toTime.hour, 'hours').add(this.toTime.minute, 'minutes');
+
       searchQuery = {
         ...searchQuery,
-        fromDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
-        toDate: `${moment().format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`
+        fromDate: `${calculatedFromTime.format('YYYY-MM-DD')}T${calculatedFromTime.format('HH')}:${calculatedFromTime.format('mm')}`,
+        toDate: `${calculatedToTime.format('YYYY-MM-DD')}T${calculatedToTime.format('HH')}:${calculatedToTime.format('mm')}`
       };
+    }
+    else if (this.currentSearchState === this.SEARCH_STATES.INITIAL ||
+      this.currentSearchState === this.SEARCH_STATES.REFRESH) {
+        searchQuery = {
+          ...searchQuery,
+          fromDate: `${this.uttFromTime.format('YYYY-MM-DD')}T${this.uttFromTime.format('HH')}:${this.uttFromTime.format('mm')}`,
+          toDate: `${this.uttToTime.format('YYYY-MM-DD')}T${this.uttToTime.format('HH')}:${this.uttToTime.format('mm')}`
+        };
     }
     else if (this.currentSearchState === this.SEARCH_STATES.ID) {
       searchQuery = {

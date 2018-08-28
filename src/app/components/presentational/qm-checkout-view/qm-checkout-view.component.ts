@@ -260,8 +260,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if(this.selectedAppointment.services){
     this.appServices = this.setAppServices();
     }
-  
-   
+
+    if(this.selectedAppointment.properties.notes) {
+      this.noteTextStr = this.selectedAppointment.properties.notes;
+    }  
   }
 
   setAppTime(): string {

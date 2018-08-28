@@ -340,6 +340,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.showCustomerResults = false;
     this.searchedCustomers = [];
     this.arriveAppointmentDispatchers.deselectAppointment();
+    this.appointments = [];
   }
 
 
@@ -363,7 +364,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.customerNotFound = false;
     this.appointments = [];
     this.showCustomerResults = false;
-    this.searchedCustomers = [];
   }
 
   searchAppointments() {

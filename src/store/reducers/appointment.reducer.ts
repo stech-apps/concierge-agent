@@ -26,7 +26,8 @@ export function reducer(
         case AppointmentActions.SEARCH_APPOINTMENTS: {
             return {
                 ...state,
-                loaded: false
+                loaded: false,
+                loading: true
             };
         }
 
@@ -34,7 +35,7 @@ export function reducer(
             return {
                 ...state,
                 appointments: Array.isArray(action.payload) ? action.payload : [action.payload],
-                loading: true,
+                loading: false,
                 loaded: true,
                 error: null
             };
@@ -43,7 +44,8 @@ export function reducer(
         case AppointmentActions.SEARCH_APPOINTMENTS_FAIL: {
             return {
                 ...state,
-                loading: true,
+                loading: false,
+                loaded: true,
                 error: action.payload
             };
         }

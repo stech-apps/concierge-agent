@@ -175,7 +175,6 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
     this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
 
-
   }
 
   private getTimeSlots() {

@@ -17,8 +17,8 @@ import { QueueService } from '../../../../util/services/queue.service';
 export class QmFlowComponent implements OnInit, AfterContentInit {
 
   constructor(
-    private router: Router, 
-    private util: Util, 
+    private router: Router,
+    private util: Util,
     private qmModalService: QmModalService,
     private recycleService: Recycle,
     private queueService: QueueService
@@ -68,22 +68,22 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
 
   private hideAllPanels() {
     this.flowPanels.forEach(fp => {
-        fp.isActive = false;
-        fp.isContentVisible = false
-        fp.isHeaderVisible = false;
-      });
+      fp.isActive = false;
+      fp.isContentVisible = false
+      fp.isHeaderVisible = false;
+    });
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
-    if(result){
+    if (result) {
       this.exitFlow = true;
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
-        setTimeout(() => {
-          this.router.navigate(['home']);
-        }, 1000);
+      setTimeout(() => {
+        this.router.navigate(['home']);
+      }, 1000);
     }
-    else{
+    else {
       this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
         if (result) {
           this.exitFlow = true;
@@ -94,17 +94,22 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
           }, 1000);
         }
       }, () => {
-  
+
       });
     }
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
-    this.flowPanels.forEach(fp => {
+
+    let panelsCollection = this.flowPanels.toArray();
+
+    let panelIndex = panelsCollection.indexOf(panel);
+
+    this.flowPanels.forEach((fp, index) => {
       fp.isActive = false;
       fp.isContentVisible = false;
 
-      if(!fp.headerVisibilityOverridden && fp.index < panel.index) {
+      if (!fp.headerVisibilityOverridden && index < panelIndex) {
         fp.isHeaderVisible = true;
       }
     });

@@ -40,8 +40,7 @@ export class QmIdentifyCustomerComponent implements OnInit {
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
       if(customer){
-        this.doneButtonClick();
-       
+        this.doneButtonClick();       
       }
       this.userDirection$ = this.userSelectors.userDirection$;   
     });

@@ -1,28 +1,32 @@
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
-import { Component, OnInit } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers } from 'src/store';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors } from 'src/store';
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Recycle } from '../../../../util/services/recycle.service';
+import { CalendarService } from '../../../../util/services/rest/calendar.service';
+import { ICalendarBranch } from '../../../../models/ICalendarBranch';
+import { ICalendarBranchCentralResponse } from '../../../../models/ICalendarBranchCentralResponse';
 
 @Component({
   selector: 'qm-home-menu',
   templateUrl: './qm-home-menu.component.html',
   styleUrls: ['./qm-home-menu.component.scss']
 })
-export class QmHomeMenuComponent implements OnInit {
+export class QmHomeMenuComponent implements OnInit, OnDestroy {
+
 
 
   //user permissions
   isVisitUser = false;
   isAppointmentUser = false;
-  isAllOutputMethodsDisabled:boolean;
-  printerEnabled:boolean;
+  isAllOutputMethodsDisabled: boolean;
+  printerEnabled: boolean;
 
   // final flow permissions
   isCreateVisit = false;
@@ -31,35 +35,36 @@ export class QmHomeMenuComponent implements OnInit {
   isEditAppointment = false;
   isCreateAppointment = false;
   userDirection$: Observable<string>;
-  
+
+  private subscriptions: Subscription = new Subscription();
 
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
-              private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
-              private toastService: ToastService, private translateService: TranslateService, private recycleService: Recycle, private queueService: QueueService) { 
-               
+    private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
+    private toastService: ToastService, private translateService: TranslateService, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors) {
+
   }
 
   ngOnInit() {
     this.checkUserPermissions();
-                this.checkUttPermissions();
-                this.userDirection$ = this.userSelectors.userDirection$;
-            
-                if(this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)){
-                  this.calendarBranchDispatcher.fetchCalendarBranches();
-                }
-   
+    this.checkUttPermissions();
+    this.userDirection$ = this.userSelectors.userDirection$;
+
+    if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)) {
+      this.calendarBranchDispatcher.fetchCalendarBranches();
+    }
+
   }
 
-  
+
   checkUttPermissions() {
     this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
-      if(uttpParams){
-      if(!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess){
-        this.isAllOutputMethodsDisabled = true;
+      if (uttpParams) {
+        if (!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess) {
+          this.isAllOutputMethodsDisabled = true;
+        }
+        this.printerEnabled = uttpParams.printerEnable;
       }
-      this.printerEnabled = uttpParams.printerEnable;
-    }
 
       if (this.isVisitUser && uttpParams) {
         this.isCreateVisit = uttpParams[CREATE_VISIT];
@@ -99,22 +104,53 @@ export class QmHomeMenuComponent implements OnInit {
   }
 
   handleMenuItemClick(route) {
-    if(this.isAllOutputMethodsDisabled && route == 'create-appointment'){
-      this.translateService.get('all_methods_disabled').subscribe(v=>{
-        this.toastService.infoToast(v); 
-      })}else if(this.isAllOutputMethodsDisabled && route == 'arrive-appointment' && !this.printerEnabled){
-        this.translateService.get('all_methods_disabled').subscribe(v=>{
-          this.toastService.infoToast(v); 
-        })}else if(this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled){
-          this.translateService.get('all_methods_disabled').subscribe(v=>{
-            this.toastService.infoToast(v); 
-          })}
+    // initial check for central connectivity
+    if (route === 'create-appointment') {
+      let calendarBranchId: number;
+      const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
+      this.subscriptions.add(selectedBranchSub);
+      if (calendarBranchId && calendarBranchId > 0) {
+        this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
+          value => {
+            if (value && calendarBranchId === value.branch.id) {
 
-    else{
+              this.handleUttRequirements(route);
+            } else {
+              this.translateService.get('no_central_access').subscribe(v => {
+                this.toastService.infoToast(v);
+              })
+            }
+          }
+        );
+      }
+    }else {
+      this.handleUttRequirements(route);
+    }
+
+  }
+
+  handleUttRequirements(route) {
+    if (this.isAllOutputMethodsDisabled && route == 'create-appointment') {
+      this.translateService.get('all_methods_disabled').subscribe(v => {
+        this.toastService.infoToast(v);
+      })
+    } else if (this.isAllOutputMethodsDisabled && route == 'arrive-appointment' && !this.printerEnabled) {
+      this.translateService.get('all_methods_disabled').subscribe(v => {
+        this.toastService.infoToast(v);
+      })
+    } else if (this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled) {
+      this.translateService.get('all_methods_disabled').subscribe(v => {
+        this.toastService.infoToast(v);
+      })
+    }
+    else {
       this.recycleService.clearCache();
       this.recycleService.removeInitialCalendarCache();
       this.queueService.stopQueuePoll();
       this.router.navigate(['home/' + route]);
+    }
   }
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

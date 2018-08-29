@@ -34,6 +34,24 @@ const getSystemInfoLicenseCompanyName = createSelector(
   (state: ISystemInfo) => state.licenseCompanyName
 );
 
+const getSystemInfoHost = createSelector(
+  getSystemInfo,
+  (state: ISystemInfo) => state.host
+);
+
+const getSystemInfoHostAddress = createSelector(
+  getSystemInfo,
+  (state: ISystemInfo) => {
+    state.protocol + "://" + state.host + ":" + state.port;
+  }
+);
+
+
+const getDistributedAgentStatus = createSelector(
+  getSystemInfoState,
+  (state: ISystemInfoState) => state.isDistributedAgent
+);
+
 
 @Injectable()
 export class SystemInfoSelectors {
@@ -44,4 +62,7 @@ export class SystemInfoSelectors {
   systemInfoReleaseName$ = this.store.select(getSystemInfoReleaseName);
   systemInfoProductVersion$ = this.store.select(getSystemInfoProductVersion);
   systemInfoLicenseCompanyName$ = this.store.select(getSystemInfoLicenseCompanyName);
+  systemInfoHost$ = this.store.select(getSystemInfoHost);
+  systemInfoHostAddress$ = this.store.select(getSystemInfoHostAddress);
+  DistributedAgentStatus$ = this.store.select(getDistributedAgentStatus);
 }

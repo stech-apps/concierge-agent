@@ -6,4 +6,5 @@ export class IService {
     externalDescription: string
     targetTransactionTime: number;
     isBind: boolean;
+    name:string;
   }

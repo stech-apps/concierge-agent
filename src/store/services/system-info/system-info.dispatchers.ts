@@ -12,4 +12,8 @@ export class SystemInfoDispatchers {
   fetchSystemInfo() {
     this.store.dispatch(new SystemInfoActions.FetchSystemInfo);
   }
+
+  setDistributedAgent() {
+    this.store.dispatch(new SystemInfoActions.SetDistributedAgent);
+  }
 }

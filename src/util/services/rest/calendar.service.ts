@@ -6,6 +6,7 @@ import { IAppointment } from '../../../models/IAppointment';
 import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
 import * as moment from 'moment-timezone';
+import { ICalendarBranchCentralResponse } from '../../../models/ICalendarBranchCentralResponse';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -114,4 +115,9 @@ private buildTime(appointment: IAppointment){
 
     return customerInfo;
   }
+
+  getBranchWithPublicId(branchId:number){
+  return this.http
+  .get<ICalendarBranchCentralResponse>(`${calendarEndpoint}/branches/${branchId}`)
+}
 }

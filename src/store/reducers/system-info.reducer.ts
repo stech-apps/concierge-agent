@@ -6,6 +6,7 @@ export interface ISystemInfoState {
   loading: boolean;
   loaded: boolean;
   error: Object;
+  isDistributedAgent: boolean;
 }
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
   },
   loading: false,
   loaded: false,
-  error:  null
+  error: null,
+  isDistributedAgent: false
 };
 
 
@@ -41,8 +43,8 @@ export function reducer(
       return {
         ...state,
         data: {
-            ...state.data,
-            ...action.payload
+          ...state.data,
+          ...action.payload
         },
         loading: false,
         loaded: true,
@@ -50,16 +52,24 @@ export function reducer(
       };
     }
     case SystemInfoActions.FETCH_SYSTEM_INFO_FAIL: {
-  
+
       return {
         ...state,
         loading: false,
         loaded: false,
         error: {
-            ...action.payload
+          ...action.payload
         }
       };
     }
+
+    case SystemInfoActions.SET_DISTRIBUTED_AGENT: {
+      return {
+        ...state,
+        isDistributedAgent: true
+      };
+    }
+
     default: {
       return state;
     }

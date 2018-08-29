@@ -88,6 +88,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   };
 
   readonly CREATED_APPOINTMENT_STATE = 'CREATED';
+  readonly ARRIVED_APPOINTMENT_STATE = 'ARRIVED';
 
   isFetchBlock: boolean = false;
 
@@ -209,7 +210,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(servicePointsSubscription);
 
     const appointmentsLoadedSub = this.appointmentSelectors.appointmentsLoaded$.subscribe(isLoaded => {
-      if (isLoaded && (this.currentSearchState === this.SEARCH_STATES.INITIAL ) && this.appointments.length === 0) {
+      if (isLoaded && (this.currentSearchState === this.SEARCH_STATES.INITIAL) && this.appointments.length === 0) {
         this.translateService.get('no_appointments').subscribe(
           (noappointments: string) => {
             this.toastService.infoToast(noappointments);
@@ -223,7 +224,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readAppointmentFetchTimePeriodFromUtt(params: any) {
     if (params) {
       this.uttFromTime = moment().add(-1 * params.gapFromTime, 'minutes');
-      this.uttToTime = moment().add( params.gapFromTime, 'minutes');
+      this.uttToTime = moment().add(params.gapFromTime, 'minutes');
     }
   }
 
@@ -236,13 +237,24 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.appointments = [];
     }
 
-    // in id selection go to 
-    if (this.SEARCH_STATES.ID == this.currentSearchState && this.appointments.length === 1) {
-      this.selectedAppointment = apps[0];
-      this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
-      this.showAppointmentCollection = false;
-      this.onAppointmentSelect(this.selectedAppointment);
-      this.showModalBackDrop = false;
+    // in id search handle id search cases
+    if (this.SEARCH_STATES.ID == this.currentSearchState) {
+      if (this.appointments.length === 1) {
+        this.selectedAppointment = apps[0];
+        this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
+        this.showAppointmentCollection = false;
+        this.onAppointmentSelect(this.selectedAppointment);
+        this.showModalBackDrop = false;
+      }
+
+      // search appointment is already arrived? then notifiy user
+      if(apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE).length > 0) {
+        this.translateService.get('appointment_arrived').subscribe(
+          (noappointments: string) => {
+            this.toastService.infoToast(noappointments);
+          }
+        ).unsubscribe();
+      }
     }
 
     if ((!this.appointments || !this.appointments.length)) {
@@ -369,7 +381,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
 
-      let now = moment();     
+      let now = moment();
       searchQuery = {
         ...searchQuery,
         fromDate: `${now.format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
@@ -378,11 +390,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
     else if (this.currentSearchState === this.SEARCH_STATES.INITIAL ||
       this.currentSearchState === this.SEARCH_STATES.REFRESH) {
-        searchQuery = {
-          ...searchQuery,
-          fromDate: `${this.uttFromTime.format('YYYY-MM-DD')}T${this.uttFromTime.format('HH')}:${this.uttFromTime.format('mm')}`,
-          toDate: `${this.uttToTime.format('YYYY-MM-DD')}T${this.uttToTime.format('HH')}:${this.uttToTime.format('mm')}`
-        };
+      searchQuery = {
+        ...searchQuery,
+        fromDate: `${this.uttFromTime.format('YYYY-MM-DD')}T${this.uttFromTime.format('HH')}:${this.uttFromTime.format('mm')}`,
+        toDate: `${this.uttToTime.format('YYYY-MM-DD')}T${this.uttToTime.format('HH')}:${this.uttToTime.format('mm')}`
+      };
     }
     else if (this.currentSearchState === this.SEARCH_STATES.ID) {
       searchQuery = {
@@ -411,7 +423,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showCustomerAutoComplete() {
     this.showCustomerResults = true;
-    this.customerDispatchers.fetchAppointmentCustomers((this.searchText|| '').trim());
+    this.customerDispatchers.fetchAppointmentCustomers((this.searchText || '').trim());
   }
   onSearchInputChange() {
     this.inputChanged.next(this.searchText);

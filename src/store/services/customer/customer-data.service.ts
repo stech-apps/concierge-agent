@@ -1,19 +1,38 @@
 import { Injectable } from "../../../../node_modules/@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { GlobalErrorHandler } from "../../../util/services/global-error-handler.service";
-import { Observable } from "../../../../node_modules/rxjs";
+import { Observable, throwError, empty } from "../../../../node_modules/rxjs";
 import { catchError } from "../../../../node_modules/rxjs/operators";
 import { ICustomer } from "../../../models/ICustomer";
-import { servicePoint, restEndpoint } from '../data.service';
+import { servicePoint, restEndpoint, DataServiceError } from '../data.service';
+import { ToastService } from "../../../util/services/toast.service";
+import { TranslateService } from "../../../../node_modules/@ngx-translate/core";
 
 @Injectable()
 export class CustomerDataService{
-    constructor(private http:HttpClient, private errorHandler:GlobalErrorHandler){}
+    constructor(private http:HttpClient, private errorHandler:GlobalErrorHandler,private toastService:ToastService, private translateService:TranslateService){}
 
     getCustomers(searchText:string):Observable<ICustomer[]>{
          return this.http
         .get<ICustomer[]>(`${servicePoint}/customers/search?text=${encodeURIComponent(searchText)}`)        
-        .pipe(catchError(this.errorHandler.handleError()));
+        .pipe(catchError(
+            err => {
+         const errorKey =  'no_central_access';
+                const error = new DataServiceError(err, null);
+                if (error.errorCode === "3123") {
+                  //  this.toastService.errorToast("There is no WebSocket connection for requested name [null]");
+                    this.translateService.get(["errorKey"],{}).subscribe(
+                        (msgs: string[]) => {
+                            this.toastService.errorToast(msgs[errorKey]);
+                        }
+                        ).unsubscribe();
+                    this.errorHandler.handleError();
+                    return empty();
+                } else
+                this.errorHandler.handleError();
+                
+            }
+        ));
     }
 
     getAppointmentCustomers(searchText:string):Observable<ICustomer[]>{

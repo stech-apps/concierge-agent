@@ -22,7 +22,7 @@
                 <div class="qm-service-list__index-item">{{ rowId + 1 }}</div>
                 <div class="qm-service-list__item qm-service-list__item--selected">
                     <div class="qm-service-list__item--text">{{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
-                        <i class="icon-close qm-search__icon" aria-hidden="true" (click)="onServiceRemove(service)"></i>
+                        <i *ngIf="!(service.isBind)" class="icon-close qm-search__icon" aria-hidden="true" (click)="onServiceRemove(service)"></i>
                 </div>
         </div>    
     </div>

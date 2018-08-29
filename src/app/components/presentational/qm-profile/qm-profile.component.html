@@ -8,7 +8,7 @@
     <qm-drop-down #sdd (onExpand)="collapseSiblingDropDowns(bdd)"  [caption]="selectedServicePoint?.name" (itemClick)="onServicePointSelect($event)" [items]="servicePoints" labelProperty="name"></qm-drop-down>
 
     <div class="qm-use-as-default">
-      <input type="checkbox" class="qm-use-as-default__checkbox" (change)="onSwitchChange()" [(ngModel)]="isEnableUseDefault"/>
+      <input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/>
       <span>{{ 'use_as_default' | translate }}</span>
     </div>
     <div class="qm-profile-ok" (click)="onConfirmProfile()">{{ 'ok' | translate}}</div>

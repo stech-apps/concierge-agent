@@ -10,7 +10,7 @@ export class ToastService {
     messageClass: 'qm-toast__message',
     easing: 'ease-in-out',
     closeButton: true,
-    timeOut: 3000
+    timeOut: 0
   };
 
   private successOptions: Object = {
@@ -27,6 +27,7 @@ export class ToastService {
   private errorOptions: Object = {
     ...this.toastrOptions,
     enableHtml: true,
+  
     toastClass: 'toast qm-toast qm-toast--danger'
   };
 
@@ -51,7 +52,7 @@ export class ToastService {
   }
 
   successToast(text: string) {
-    return this.toastrService.success(text, '', this.successOptions);
+    return this.toastrService.success('<h1 style = "color:red">'+text + '</h1>', '', this.successOptions);
   }
 
   infoToast(text: string) {

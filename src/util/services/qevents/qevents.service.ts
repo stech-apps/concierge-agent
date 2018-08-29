@@ -30,7 +30,7 @@ export class QEvents {
 
     const servicePointsSubscription = this.servicePointSelectors.openServicePoint$.subscribe((sp) => {
       if(sp){
-        if(this.openServicePoint && sp !== this.openServicePoint){
+        if(this.openServicePoint && (sp !== this.openServicePoint)){
           this.unsubscribe();
         }
         this.openServicePoint = sp;
@@ -120,4 +120,7 @@ export class QEvents {
 
     this.cometd.clearListeners();
   }
+
+
+
 }

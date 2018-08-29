@@ -47,10 +47,20 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
     private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
+      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
+      console.log(this.isEnableUseDefault);
+      
+      
+      const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
+        this.navServicePoint = spo
+      }
+    );
+    this.subscriptions.add(navServiceSubscription);
 
-             
-      // this.servicePointDispatchers.setOpenServicePoint(null);
+      this.servicePointDispatchers.setOpenServicePoint(null);
     
+      
+  
 
       this.setDefaultServicePoint();
      
@@ -59,7 +69,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         id: -1
       };
 
-      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
+    
       const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
         this.previousBranch = branch;
     })
@@ -102,11 +112,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-   const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
-      this.navServicePoint = spo
-    }
-  );
-  this.subscriptions.add(navServiceSubscription);
+
   
  
 }
@@ -175,6 +181,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onConfirmProfile() {
+    this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
     if (this.selectedBranch.id === -1 && !this.isEnableUseDefault) {
       this.translateService.get('no_branch_set').subscribe(v => {
         this.toastService.infoToast(v);
@@ -224,9 +231,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onSwitchChange(){
-    this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
-  }
+  // onSwitchChange(){
+  //   this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
+  // }
   
   // Temp function
   goToCustomer(){

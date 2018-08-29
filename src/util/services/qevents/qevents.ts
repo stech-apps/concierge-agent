@@ -21,13 +21,17 @@ import { Injectable } from '@angular/core';
 import { NativeApiService } from '../../services/native-api.service'
 import { LOGOUT_URL } from '../../url-helper';
 import { Visit } from '../../../models/IVisit';
-import { QueueDispatchers } from '../../../store';
+import { QueueDispatchers, ServicePointSelectors } from '../../../store';
+import { servicePoint } from '../../../store/services/data.service';
+import { IServicePoint } from '../../../models/IServicePoint';
 
 @Injectable()
 export class QEventsHelper {
+    currentServicePoint:IServicePoint
   constructor(
     private nativeApi: NativeApiService,
-    private queueDispatchers: QueueDispatchers
+    private queueDispatchers: QueueDispatchers,
+    private ServicePointSelectors:ServicePointSelectors
   ) {
   }
 
@@ -56,18 +60,25 @@ export class QEventsHelper {
         || typeof processedEvent.E.evnt === "undefined") {
         return;
       }
-
+      
       switch (processedEvent.E.evnt) {
-        case PUBLIC_EVENTS.USER_SERVICE_POINT_SESSION_END:
+        // case PUBLIC_EVENTS.USER_SERVICE_POINT_SESSION_END:   
         case PUBLIC_EVENTS.USER_SESSION_END:
         case PUBLIC_EVENTS.RESET:
+        
+            const servicePointSubs = this.ServicePointSelectors.openServicePoint$.subscribe((val)=>
+                this.currentServicePoint = val
+            
+        )
+            console.log(this.currentServicePoint);
+        
             if(this.nativeApi.isNativeBrowser()){
                 this.nativeApi.logOut();
             }
             else{
                 window.location.href =  LOGOUT_URL;
             }
-            break;
+            break;  
         case PUBLIC_EVENTS.PRINTER_ISSUE:
             var errorCode = processedEvent.E.prm.error_code;
             var errorMsg = processedEvent.E.prm.error_msg;

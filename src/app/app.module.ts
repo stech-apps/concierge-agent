@@ -145,8 +145,10 @@ import { QmIdentifyAppointmentComponent } from './components/presentational/qm-i
 // Global options for Toastr
 const toastrGlobalOptions = {
   maxOpened: 3,
+  preventDuplicates: true,
   autoDismiss: true,
-  iconClasses: {}
+  iconClasses: {},
+  class:'toast-msg'
 };
 
 export class MyHammerConfig extends HammerGestureConfig  {

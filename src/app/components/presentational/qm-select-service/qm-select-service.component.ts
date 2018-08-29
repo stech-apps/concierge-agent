@@ -88,7 +88,6 @@ export class QmSelectServiceComponent implements OnInit {
       const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
         this.serviceList = <Array<IServiceViewModel>>services;
         this.filteredServiceList = <Array<IServiceViewModel>>services;
-
         this.checkMostFrequentService();
       });
       this.subscriptions.add(serviceSubscription);
@@ -161,6 +160,7 @@ export class QmSelectServiceComponent implements OnInit {
           })
           this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
           this.checkAvaibleServices();
+          this.checkMostFrequentService();
         }
       });
       this.subscriptions.add(appointmentSubscription);

@@ -77,9 +77,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   smsSelected: boolean = false;
   emailSelected: boolean = false;
   ticketlessSelected: boolean = false;
-  vipLevel1Checked: boolean;
-  vipLevel2Checked: boolean;
-  vipLevel3Checked: boolean;
+  vipLevel1Checked: boolean = false;
+  vipLevel2Checked: boolean = false;
+  vipLevel3Checked: boolean = false;
 
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
@@ -190,12 +190,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const selectedAppointmentSubscription = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if (appointment) {
         this.selectedAppointment = appointment;
-        if(this.selectedAppointment && this.selectedAppointment.customers && this.selectedAppointment.customers.length > 0){
+        if (this.selectedAppointment && this.selectedAppointment.customers && this.selectedAppointment.customers.length > 0) {
           this.customerDispatcher.selectCustomers(this.selectedAppointment.customers[0]);
           this.selectedCustomer = this.selectedAppointment.customers[0];
           this.customerSms = this.selectedCustomer.properties.phoneNumber;
         }
         this.genarateAppointmentData();
+        this.vipLevel1Checked = false;
+        this.vipLevel2Checked = false;
+        this.vipLevel3Checked = false;
+
+
       }
     });
     this.subscriptions.add(selectedAppointmentSubscription);
@@ -230,7 +235,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
       this.subscriptions.add(branchSubscription);
 
-      const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => this.selectedServices = services);
+      const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
+        (services) => {
+          this.selectedServices = services
+        }
+      );
       this.subscriptions.add(serviceSubscription);
 
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
@@ -248,22 +257,27 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   genarateAppointmentData() {
-    if(this.selectedAppointment.startTime){
+    if (this.selectedAppointment.startTime) {
       this.appTime = this.setAppTime();
     }
-    if(this.selectedAppointment.id){
+    if (this.selectedAppointment.id) {
       this.appId = this.setAppID();
     }
-    if(this.selectedAppointment.customers){
+    if (this.selectedAppointment.customers) {
       this.appCustomer = this.setAppCustomer();
     }
-    if(this.selectedAppointment.services){
-    this.appServices = this.setAppServices();
+    if (this.selectedAppointment.services) {
+      this.appServices = this.setAppServices();
     }
 
-    if(this.selectedAppointment.properties.notes) {
+    if (this.selectedAppointment.properties.notes) {
       this.noteTextStr = this.selectedAppointment.properties.notes;
-    }  
+    } else {
+      this.noteTextStr = '';
+    }
+
+
+
   }
 
   setAppTime(): string {
@@ -279,7 +293,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppCustomer(): string {
-      return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;    
+    return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
   }
 
   setAppServices(): string {
@@ -328,12 +342,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.smsSelected || this.emailSelected) {
       this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
         this.themeColor, 'ok', 'cancel',
-        (result : any) => {
+        (result: any) => {
           if (result) {
-            if(result.email){
+            if (result.email) {
               this.customerEmail = result.email;
             }
-            if(result.phone){
+            if (result.phone) {
               this.customerSms = result.phone;
             }
             this.handleCheckoutCompletion();
@@ -549,45 +563,45 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   showErrorMessage(error: any) {
     const err = new DataServiceError(error, null);
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      if (error.status === ERROR_STATUS.INTERNAL_ERROR){
-        if (err.errorMsg.length > 0){
+      if (error.status === ERROR_STATUS.INTERNAL_ERROR) {
+        if (err.errorMsg.length > 0) {
           this.toastService.infoToast(err.errorMsg);
         }
-        else{
+        else {
           this.showTostMessage('request_fail');
         }
       }
-      else if (error.status === ERROR_STATUS.BAD_REQUEST){
+      else if (error.status === ERROR_STATUS.BAD_REQUEST) {
         this.showTostMessage('booking_appointment_error');
       }
-      else{
+      else {
         this.showTostMessage('request_fail');
       }
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
-        if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR){
+        if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
           this.showTostMessage('printer_error');
-        } 
-        else if (err.errorMsg.length > 0){
+        }
+        else if (err.errorMsg.length > 0) {
           this.toastService.infoToast(err.errorMsg);
         }
-        else{
+        else {
           this.showTostMessage('request_fail');
         }
       }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM){
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
         this.showTostMessage('paper_jam');
       }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
         this.showTostMessage('out_of_paper');
       }
       else {
         this.showTostMessage('visit_timeout');
       }
 
-      if(err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+      if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
         this.translateService.get('visit_create_fail').subscribe(v => {
           var successMessage = {
             firstLineName: v,
@@ -600,28 +614,28 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
-        if (err.errorCode === Q_ERROR_CODE.APPOINTMENT_USED_VISIT){
+        if (err.errorCode === Q_ERROR_CODE.APPOINTMENT_USED_VISIT) {
           this.showTostMessage('appointment_already_used');
-        } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR){
+        } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
           this.showTostMessage('printer_error');
-        } else{
+        } else {
           this.showTostMessage('request_fail');
         }
       }
-      else if (error.status === ERROR_STATUS.NOT_FOUND){
+      else if (error.status === ERROR_STATUS.NOT_FOUND) {
         this.showTostMessage('appointment_not_found_detail');
       }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM){
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
         this.showTostMessage('paper_jam');
       }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
         this.showTostMessage('out_of_paper');
       }
       else {
         this.showTostMessage('visit_timeout');
       }
 
-      if(err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT){
+      if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
         this.translateService.get('arrive_appointment_fail').subscribe(v => {
           var successMessage = {
             firstLineName: v,
@@ -633,7 +647,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  showTostMessage(msgKey : string){
+  showTostMessage(msgKey: string) {
     this.translateService.get(msgKey).subscribe(v => {
       this.toastService.infoToast(v);
     });
@@ -669,17 +683,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  getMostFrequnetServices(serviceList: any){
+  getMostFrequnetServices(serviceList: any) {
     var serviceIds = null;
-    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
     }
-    else{
+    else {
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
     }
 
     var tempList = serviceList;
-    if(serviceIds){
+    if (serviceIds) {
       serviceList.concat(serviceIds);
     }
 
@@ -689,7 +703,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   removeDuplicates(arr) {
     let obj = {};
     return Object.keys(arr.reduce((prev, next) => {
-      if(!obj[next]) obj[next] = next; 
+      if (!obj[next]) obj[next] = next;
       return obj;
     }, obj)).map((i) => obj[i]);
   }

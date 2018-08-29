@@ -350,7 +350,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.showCustomerResults = false;
     this.searchedCustomers = [];
     this.arriveAppointmentDispatchers.deselectAppointment();
-    this.appointments = [];
   }
 
 
@@ -415,7 +414,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   onSeachTextChanged() {
     if (this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
       this.customerNotFound = false;
-      if (this.searchText && this.searchText.length >= 2) {
+      if ((this.searchText || '').trim().length >= 2) {
         this.customerInputChanged.next();
       }
     }

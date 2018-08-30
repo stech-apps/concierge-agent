@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class ToastService {
+  @Output() msgBoxOpen : EventEmitter<any> = new EventEmitter();
+
   private toastrOptions: Object = {
     positionClass: 'centered',
     messageClass: 'qm-toast__message',
@@ -15,6 +17,7 @@ export class ToastService {
 
   private successOptions: Object = {
     ...this.toastrOptions,
+     enableHtml: true,
     toastClass: 'toast qm-toast qm-toast--success'
   };
 
@@ -52,12 +55,21 @@ export class ToastService {
   }
 
   successToast(text: string) {
-    return this.toastrService.success('<h1 style = "color:red">'+text + '</h1>', '', this.successOptions);
+    return this.toastrService.success(text, '', this.successOptions);
   }
 
   infoToast(text: string) {
+    const ToastSubscription = this.toastrService.success(text , '', this.infoOptions);
+    ToastSubscription.onShown.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "100vh";
+    })
+    ToastSubscription.onHidden.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "0vh";
+      
+    })
 
-    return this.toastrService.success(text, '', this.infoOptions);
+  
+    return this.toastrService.success(text , '', this.infoOptions);
   }
 
 

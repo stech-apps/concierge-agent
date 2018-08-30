@@ -28,6 +28,7 @@ import { IServicePoint } from '../../../models/IServicePoint';
 @Injectable()
 export class QEventsHelper {
     currentServicePoint:IServicePoint
+    previousServicePoint:IServicePoint
   constructor(
     private nativeApi: NativeApiService,
     private queueDispatchers: QueueDispatchers,
@@ -61,17 +62,27 @@ export class QEventsHelper {
         return;
       }
       
+      this.ServicePointSelectors.previousServicePoint$.subscribe((val)=>{
+          this.previousServicePoint = val;
+      });
+      this.ServicePointSelectors.openServicePoint$.subscribe((val)=>{
+        this.currentServicePoint = val;
+      })
+      
       switch (processedEvent.E.evnt) {
-        // case PUBLIC_EVENTS.USER_SERVICE_POINT_SESSION_END:   
+        case PUBLIC_EVENTS.USER_SERVICE_POINT_SESSION_END:   
+                if(this.currentServicePoint==this.previousServicePoint){
+                    if(this.nativeApi.isNativeBrowser()){
+                        this.nativeApi.logOut();
+                    }
+                    else{
+                        window.location.href =  LOGOUT_URL;
+                    }
+                }
+                break;
         case PUBLIC_EVENTS.USER_SESSION_END:
         case PUBLIC_EVENTS.RESET:
-        
-            const servicePointSubs = this.ServicePointSelectors.openServicePoint$.subscribe((val)=>
-                this.currentServicePoint = val
-            
-        )
-            console.log(this.currentServicePoint);
-        
+           
             if(this.nativeApi.isNativeBrowser()){
                 this.nativeApi.logOut();
             }

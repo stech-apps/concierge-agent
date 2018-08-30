@@ -58,9 +58,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     )
+    
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+
+
+  height(){
+    if(document.getElementsByClassName('toast-success').length > 0){
+        return true;
+  }else{
+    return false
+  }
 }
+  }
+

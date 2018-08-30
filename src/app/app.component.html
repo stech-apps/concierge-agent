@@ -1,4 +1,9 @@
 <qm-auto-close>
     <router-outlet></router-outlet>
-    <div class="qm-messages" toastContainer dir="{{ userDirection$ | async }}"></div>
+    <div id="backdrop" style="background-color:rgba(0,0,0,0.5);width: 100vw;position: absolute;z-index: 100;top:0" >
+    </div>
+    <div #hf class="qm-messages" toastContainer dir="{{ userDirection$ | async }}">
+        
+    </div>
+   
 </qm-auto-close> 

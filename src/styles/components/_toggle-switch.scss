@@ -6,8 +6,9 @@
   .qm-switch {
     position: relative;
     display: inline-block;
-    width: 60px;
+    width: 75px;
     height: 34px;
+
   
     &-label {
       margin-bottom: 0rem;
@@ -20,22 +21,27 @@
     &:checked {
       &~.qm-switch__slider {
         background-color: #3bcc76;
+        -webkit-box-shadow: inset 0 0 8px #474747;
+        box-shadow: inset 0 0 8px #474747;
+
         &:before {
             -webkit-transform: translateX(26px);
             -ms-transform: translateX(26px);
             transform: translateX(26px);
+            left: 13px;
         }
       }
     }
 
     &:focus {
         &~.qm-switch__slider {
-            box-shadow: 0 0 1px #3bcc76;
+            -webkit-box-shadow: inset 0 0 8px #474747;
+            box-shadow: inset 0 0 8px #474747;
         }
     }
   
     &__slider {
-        width: 60px;
+        width: 75px;
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -46,12 +52,14 @@
         -webkit-transition: .4s;
         transition: .4s;
         border-radius: 34px;
+        -webkit-box-shadow: inset 0 0 8px #474747;
+        box-shadow: inset 0 0 8px #474747;
 
         &:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
+            height: 32px;
+            width: 32px;
             left: 4px;
             bottom: 4px;
             background-color: white;

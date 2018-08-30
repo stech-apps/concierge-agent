@@ -228,10 +228,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  applyAppointmentFilters(appointments: IAppointment[]) {
+    return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branch.id === this.selectedBranch.id);
+  }
+
   handleAppointmentResponse(apps: IAppointment[]) {
 
     if (apps && apps.length > 0) {
-      this.appointments = apps.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE);
+      this.appointments =  this.applyAppointmentFilters(apps);
     }
     else {
       this.appointments = [];

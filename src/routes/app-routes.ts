@@ -1,3 +1,4 @@
+import { QmEditAppointmentComponent } from './../app/components/presentational/qm-edit-appointment/qm-edit-appointment.component';
 import { QmProfileComponent } from '../app/components/presentational/qm-profile/qm-profile.component';
 import { QmCustomersComponent } from '../app/components/presentational/qm-customers/qm-customers.component';
 import { QmAppPageNotFoundComponent } from '../app/components/presentational/qm-app-page-not-found/qm-app-page-not-found.component';
@@ -23,7 +24,8 @@ export const appRoutes: Routes = [
         path: 'home', component: QmHomeComponent, children: [
           { path: 'create-appointment', component: QmCreateAppointmentComponent },
           { path: 'create-visit', component: QmCreateVisitComponent },
-          { path: 'arrive-appointment', component: QmArriveAppointmentComponent }
+          { path: 'arrive-appointment', component: QmArriveAppointmentComponent },
+          { path: 'edit-appointment', component: QmEditAppointmentComponent }
         ]
       },
       { path: 'profile', component: QmProfileComponent },

@@ -55,6 +55,15 @@ export class ToastService {
   }
 
   successToast(text: string) {
+    const ToastSubscription = this.toastrService.success(text , '', this.infoOptions);
+    ToastSubscription.onShown.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "100vh";
+    })
+    ToastSubscription.onHidden.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "0vh";
+      
+    })
+
     return this.toastrService.success(text, '', this.successOptions);
   }
 
@@ -67,26 +76,49 @@ export class ToastService {
       document.getElementById('backdrop').style.height = "0vh";
       
     })
-
-  
     return this.toastrService.success(text , '', this.infoOptions);
   }
 
 
   errorToast(text: string) {
+    const ToastSubscription = this.toastrService.error(text , '', this.infoOptions);
+    ToastSubscription.onShown.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "100vh";
+    })
+    ToastSubscription.onHidden.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "0vh";
+      
+    })
     this.toastrService.error(text, '', this.errorOptions);
   }
 
   htmlSuccessToast(text: string) {
+    const ToastSubscription = this.toastrService.success(text , '', this.infoOptions);
+    ToastSubscription.onShown.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "100vh";
+    })
+    ToastSubscription.onHidden.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "0vh";
+      
+    })
     this.toastrService.success(text, '', this.htmlSuccessOptions);
   }
 
   // Create toast that does not expire
   infiniteToast(text: string) {
+    const ToastSubscription = this.toastrService.error(text , '', this.infoOptions);
+    ToastSubscription.onShown.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "100vh";
+    })
+    ToastSubscription.onHidden.subscribe((val)=>{
+      document.getElementById('backdrop').style.height = "0vh";
+      
+    })
     this.toastrService.error(text, '', this.infiniteOptions);
   }
 
   clearToasts () {
+    
     this.toastrService.toasts
       .map(toast => this.toastrService.clear(toast.toastId));
   }

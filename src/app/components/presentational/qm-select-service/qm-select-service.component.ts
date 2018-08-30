@@ -107,6 +107,13 @@ export class QmSelectServiceComponent implements OnInit {
     }
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       // calendar branch subscription
+      const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
+        this.serviceList = <Array<IServiceViewModel>>services;
+        if(this.serviceList !== null){
+          this.filteredServiceList = <Array<IServiceViewModel>>services;
+        }
+      });
+      this.subscriptions.add(calendarServiceSubscription);
 
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
         if((this.selectedBranch as ICalendarBranch) !== branch){
@@ -123,13 +130,7 @@ export class QmSelectServiceComponent implements OnInit {
       });
       this.subscriptions.add(calendarBranchSubscription);
 
-      const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
-        this.serviceList = <Array<IServiceViewModel>>services;
-        if(this.serviceList !== null){
-          this.filteredServiceList = <Array<IServiceViewModel>>services;
-        }
-      });
-      this.subscriptions.add(calendarServiceSubscription);
+      this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
 
       const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
         if(!val){

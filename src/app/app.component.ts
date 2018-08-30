@@ -66,12 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
-  height(){
-    if(document.getElementsByClassName('toast-success').length > 0){
-        return true;
-  }else{
-    return false
-  }
-}
+  
   }
 

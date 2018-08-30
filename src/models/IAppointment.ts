@@ -13,6 +13,7 @@ export interface IAppointment {
   custom?: string;
   customers?: ICustomer[];
   branch?: ICalendarBranch;
+  branchId?: number;
   services?: ICalendarService[];
   title?: string;
   notes?: string;

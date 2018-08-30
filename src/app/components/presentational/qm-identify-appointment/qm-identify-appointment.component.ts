@@ -43,6 +43,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showModalBackDrop: boolean;
   searchedCustomers: ICustomer[] = [];
+  defaultAppointmentCollection: IAppointment[];
   tempCustomers: any;
   selectedSearchIcon: string;
   searchPlaceHolderKey: string;
@@ -229,11 +230,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   applyAppointmentFilters(appointments: IAppointment[]) {
-    return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branch.id === this.selectedBranch.id);
+    return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
-
     if (apps && apps.length > 0) {
       this.appointments =  this.applyAppointmentFilters(apps);
     }
@@ -259,6 +259,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
         ).unsubscribe();
       }
+    }
+    else if (this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState == this.SEARCH_STATES.REFRESH) {
+      this.defaultAppointmentCollection = this.appointments;
     }
 
     if ((!this.appointments || !this.appointments.length)) {
@@ -375,6 +378,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.selectedSearchIcon = '';
     this.isSearchInputReadOnly = false;
     this.customerNotFound = false;
+    this.appointments = this.defaultAppointmentCollection;
   }
 
   searchAppointments() {

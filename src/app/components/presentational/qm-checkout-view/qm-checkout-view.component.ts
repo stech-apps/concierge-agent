@@ -21,7 +21,8 @@ import {
   CalendarBranchDispatchers,
   CalendarServiceDispatchers,
   ArriveAppointmentSelectors,
-  UserSelectors
+  UserSelectors,
+  CalendarBranchSelectors
 } from "../../../../store";
 import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { IBranch } from './../../../../models/IBranch';
@@ -134,7 +135,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private branchDispatcher: CalendarBranchDispatchers,
     private serviceDispatchers: CalendarServiceDispatchers,
     private arriveAppointmentSelectors: ArriveAppointmentSelectors,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private CalendarBranchSelectors:CalendarBranchSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -196,9 +198,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.customerSms = this.selectedCustomer.properties.phoneNumber;
         }
         this.genarateAppointmentData();
-        this.vipLevel1Checked = false;
-        this.vipLevel2Checked = false;
-        this.vipLevel3Checked = false;
+        this.resetViewData();
+
 
 
       }
@@ -237,23 +238,48 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
       const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
         (services) => {
-          this.selectedServices = services
+          this.selectedServices = services;
         }
       );
       this.subscriptions.add(serviceSubscription);
 
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
+
+      this.resetViewData();
     }
 
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment) {
       this.genarateAppointmentData();
     }
 
+    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+      this.CalendarBranchSelectors.selectedBranch$.subscribe((branch) => {
+        this.customerDispatcher.resetCurrentCustomer();
+        this.resetViewData();
+        
+      });
+    }
+
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  resetViewData(){
+    this.vipLevel1Checked = false;
+    this.vipLevel2Checked = false;
+    this.vipLevel3Checked = false;
+    this.ticketSelected = false;
+    this.smsSelected = false;
+    this.emailSelected = false;
+    this.ticketColor = this.whiteColor;
+    this.smsColor = this.whiteColor;
+    this.emailColor= this.whiteColor;
+    this.ticketlessColor = this.whiteColor;
+    this.noteTextStr = '';
+    this.buttonEnabled =false;
   }
 
   genarateAppointmentData() {
@@ -267,7 +293,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.appCustomer = this.setAppCustomer();
     }
     if (this.selectedAppointment.services) {
-      this.appServices = this.setAppServices();
+     // this.appServices = this.setAppServices();
     }
 
     if (this.selectedAppointment.properties.notes) {
@@ -296,11 +322,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
   }
 
-  setAppServices(): string {
-    return this.selectedAppointment.services.map(service => {
-      return service.name;
-    }).join(", ");
-  }
+  // setAppServices(): string {
+  //   return this.selectedAppointment.services.map(service => {
+  //     return service.name;
+  //   }).join(", ");
+
+
+  // }
 
   toggleCollapse() {
     this.isExpanded ? this.isExpanded = false : this.isExpanded = true;

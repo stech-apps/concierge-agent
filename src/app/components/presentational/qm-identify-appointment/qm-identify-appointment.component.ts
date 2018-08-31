@@ -466,6 +466,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.arriveAppointmentDispatchers.deselectAppointment();
     this.showAppointmentCollection = true;
     this.selectedCustomer = null;
+    this.appointments = this.defaultAppointmentCollection;
   }
 
   onCustomerSelect(customer: ICustomer) {

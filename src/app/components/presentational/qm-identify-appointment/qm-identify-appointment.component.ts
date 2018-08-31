@@ -379,6 +379,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.isSearchInputReadOnly = false;
     this.customerNotFound = false;
     this.appointments = this.defaultAppointmentCollection;
+    this.showCustomerResults = false;
   }
 
   searchAppointments() {

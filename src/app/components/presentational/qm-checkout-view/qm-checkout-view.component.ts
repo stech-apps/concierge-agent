@@ -326,8 +326,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return this.selectedAppointment.services.map(service => {
       return service.name;
     }).join(", ");
-
-
   }
 
   toggleCollapse() {

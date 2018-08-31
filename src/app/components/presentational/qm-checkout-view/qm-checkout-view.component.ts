@@ -293,7 +293,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.appCustomer = this.setAppCustomer();
     }
     if (this.selectedAppointment.services) {
-     // this.appServices = this.setAppServices();
+      this.appServices = this.setAppServices();
     }
 
     if (this.selectedAppointment.properties.notes) {
@@ -322,13 +322,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
   }
 
-  // setAppServices(): string {
-  //   return this.selectedAppointment.services.map(service => {
-  //     return service.name;
-  //   }).join(", ");
+  setAppServices(): string {
+    return this.selectedAppointment.services.map(service => {
+      return service.name;
+    }).join(", ");
 
 
-  // }
+  }
 
   toggleCollapse() {
     this.isExpanded ? this.isExpanded = false : this.isExpanded = true;

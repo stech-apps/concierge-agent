@@ -1,11 +1,23 @@
 <qm-flow #f>
   <qm-flow-panel #ia [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true">
-    <qm-flow-panel-header (click)="f.panelHeaderClick(ia); branchHeaderClick();" (onFlowExit)="f.onFlowExit()">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ia)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'identify_appointment' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedCustomer">{{selectedCustomer?.firstName + ' ' + selectedCustomer?.lastName}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-appointment dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-identify-appointment>
+      <qm-identify-appointment dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(resc)"></qm-identify-appointment>
+    </qm-flow-panel-content>
+  </qm-flow-panel>
+
+  <qm-flow-panel #resc>
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ia)" (onFlowExit)="f.onFlowExit()">
+      <qm-flow-panel-title>{{ 'edit_checkIn' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-result></qm-flow-panel-result>
+    </qm-flow-panel-header>
+    <qm-flow-panel-content>  
+        <qm-reschedule>
+
+        </qm-reschedule>    
     </qm-flow-panel-content>
   </qm-flow-panel>
 </qm-flow>  

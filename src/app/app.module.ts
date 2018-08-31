@@ -142,6 +142,7 @@ import { AngularDraggableModule } from 'angular2-draggable';
 import { QmArriveAppointmentComponent } from './components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
 import { QmIdentifyAppointmentComponent } from './components/presentational/qm-identify-appointment/qm-identify-appointment.component';
 import { QmEditAppointmentComponent } from './components/presentational/qm-edit-appointment/qm-edit-appointment.component';
+import { QmRescheduleComponent } from './components/presentational/qm-reschedule/qm-reschedule.component';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -216,7 +217,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmVisitCustomerCreateComponent,
     QmMessageBoxComponent,
     QmNotesModalComponent,
-    QmEditAppointmentComponent
+    QmEditAppointmentComponent,
+    QmRescheduleComponent
   ],
   entryComponents: [
     QmCustomToastComponent,

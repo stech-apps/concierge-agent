@@ -1,0 +1,73 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+.qm-number-of-customers {
+    &__text {
+        color: $primary-text-color;
+        font-size: 0.7rem;
+        @at-root [dir="rtl"] & {
+            margin-left: rem($standard-margin / 2);
+         }
+        
+    }
+    &__numeric {
+        display: flex;
+        margin-left: 1rem;
+        &-button {
+            background: $numeric-button-control;
+            width: 2rem;
+            height: 2rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+
+            &:active {
+                opacity: 0.7;
+            }
+        }
+
+        &-value {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $primary-text-color;
+        }
+    }
+}
+
+.qm-reschedule-time-select {
+    &__content {
+        display: flex;
+    }
+
+    &-slots {
+        flex: 1;
+    }
+}
+
+.qm-time-header {
+    background: #bdbdbd;
+    font-size: 1rem;
+    font-family: $secondary-font-regular;
+    letter-spacing: $extended-letter-spacing ;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.qm-calendar-container {
+    flex: 1;
+    margin: 0.5rem 1rem 1rem 3rem;
+}
+
+.qm-calendar-placeholder {
+    background-color: $calendar-background;
+    padding: 1.8rem 1rem;
+}
+
+.qm-reschedule-time-select-slots {
+    margin: 0.5rem 3rem 1rem 1rem;
+}

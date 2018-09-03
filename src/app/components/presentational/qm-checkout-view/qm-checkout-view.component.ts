@@ -720,18 +720,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     var tempList = serviceList;
     if (serviceIds) {
-      serviceList.concat(serviceIds);
+      tempList = serviceList.concat(serviceIds);
     }
 
     return this.removeDuplicates(tempList);
   }
 
   removeDuplicates(arr) {
-    let obj = {};
-    return Object.keys(arr.reduce((prev, next) => {
-      if (!obj[next]) obj[next] = next;
-      return obj;
-    }, obj)).map((i) => obj[i]);
+    let unique_array = Array.from(new Set(arr))
+    return unique_array
   }
 
   private buildDate(appointment: IAppointment) {

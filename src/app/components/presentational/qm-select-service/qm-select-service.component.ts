@@ -38,6 +38,9 @@ export class QmSelectServiceComponent implements OnInit {
   userDirection$: Observable<string>; 
   @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
+  mostFrequentServiceCount = 5;
+  searchFieldServiceCount = 10;
+
   constructor(
     private serviceSelectors: ServiceSelectors,
     private serviceDispatchers: ServiceDispatchers,
@@ -146,7 +149,9 @@ export class QmSelectServiceComponent implements OnInit {
 
       const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
         if(params){
-          this.multiServiceEnabled = params.mltyService;;
+          this.multiServiceEnabled = params.mltyService;
+          this.mostFrequentServiceCount = params.serviceThreshold2ShowHideServiceCategories;
+          this.searchFieldServiceCount = params.serviceThreshold2ShowHideSearchArea;
         }
       });
       this.subscriptions.add(servicePointsSubscription);
@@ -192,7 +197,9 @@ export class QmSelectServiceComponent implements OnInit {
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';
-    this.clearInputDirective.updateButtonVisibility('');
+    if(this.serviceList.length >= this.searchFieldServiceCount){
+      this.clearInputDirective.updateButtonVisibility('');
+    }
   }
 
   goToNext() {
@@ -372,10 +379,14 @@ export class QmSelectServiceComponent implements OnInit {
           tempList.push(val);
         }
       })
-      this.mostFrequentServiceList = tempList;
+      if(this.serviceList.length >= this.mostFrequentServiceCount){
+        this.mostFrequentServiceList = tempList;
+      }
     }
     else{
-      this.mostFrequentServiceList = currentList;
+      if(this.serviceList.length >= this.mostFrequentServiceCount){
+        this.mostFrequentServiceList = currentList;
+      }
     }
   }
 

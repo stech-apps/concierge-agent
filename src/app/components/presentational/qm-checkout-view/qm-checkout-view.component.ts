@@ -136,7 +136,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private serviceDispatchers: CalendarServiceDispatchers,
     private arriveAppointmentSelectors: ArriveAppointmentSelectors,
     private userSelectors: UserSelectors,
-    private CalendarBranchSelectors:CalendarBranchSelectors
+    private CalendarBranchSelectors: CalendarBranchSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -197,11 +197,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.selectedCustomer = this.selectedAppointment.customers[0];
           this.customerSms = this.selectedCustomer.properties.phoneNumber;
         }
-        this.genarateAppointmentData();
         this.resetViewData();
-
-
-
+        this.genarateAppointmentData();
       }
     });
     this.subscriptions.add(selectedAppointmentSubscription);
@@ -246,18 +243,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
       this.subscriptions.add(servicePointSubscription);
 
-      this.resetViewData();
     }
 
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment) {
       this.genarateAppointmentData();
     }
 
-    if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.CalendarBranchSelectors.selectedBranch$.subscribe((branch) => {
         this.customerDispatcher.resetCurrentCustomer();
         this.resetViewData();
-        
+
       });
     }
 
@@ -267,7 +263,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  resetViewData(){
+  resetViewData() {
     this.vipLevel1Checked = false;
     this.vipLevel2Checked = false;
     this.vipLevel3Checked = false;
@@ -276,10 +272,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.emailSelected = false;
     this.ticketColor = this.whiteColor;
     this.smsColor = this.whiteColor;
-    this.emailColor= this.whiteColor;
+    this.emailColor = this.whiteColor;
     this.ticketlessColor = this.whiteColor;
     this.noteTextStr = '';
-    this.buttonEnabled =false;
+    this.buttonEnabled = false;
   }
 
   genarateAppointmentData() {
@@ -301,9 +297,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     } else {
       this.noteTextStr = '';
     }
-
-
-
   }
 
   setAppTime(): string {
@@ -326,6 +319,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return this.selectedAppointment.services.map(service => {
       return service.name;
     }).join(", ");
+
+
   }
 
   toggleCollapse() {

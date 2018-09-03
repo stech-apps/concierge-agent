@@ -143,6 +143,9 @@ import { QmArriveAppointmentComponent } from './components/presentational/qm-arr
 import { QmIdentifyAppointmentComponent } from './components/presentational/qm-identify-appointment/qm-identify-appointment.component';
 import { QmEditAppointmentComponent } from './components/presentational/qm-edit-appointment/qm-edit-appointment.component';
 import { QmRescheduleComponent } from './components/presentational/qm-reschedule/qm-reschedule.component';
+import { QmEditVisitComponent } from './components/presentational/qm-edit-visit/qm-edit-visit.component';
+import { QmIdentifyQueueComponent } from './components/presentational/qm-identify-queue/qm-identify-queue.component';
+
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -218,7 +221,10 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmMessageBoxComponent,
     QmNotesModalComponent,
     QmEditAppointmentComponent,
-    QmRescheduleComponent
+    QmRescheduleComponent,
+    QmEditVisitComponent,
+    QmIdentifyQueueComponent,
+   
   ],
   entryComponents: [
     QmCustomToastComponent,

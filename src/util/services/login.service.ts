@@ -58,6 +58,7 @@ export class LoginService {
     }
 
     login(servicePoint: IServicePoint) {
+        this.subscriptions.unsubscribe();
         this.selectedServicePoint = servicePoint;
         this.spService.fetchUserStatus().subscribe((status: IUserStatus) => {
             if(status !=  null){

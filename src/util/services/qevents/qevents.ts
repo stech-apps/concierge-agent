@@ -71,15 +71,6 @@ export class QEventsHelper {
       
       switch (processedEvent.E.evnt) {
         case PUBLIC_EVENTS.USER_SERVICE_POINT_SESSION_END:   
-                if(this.currentServicePoint==this.previousServicePoint){
-                    if(this.nativeApi.isNativeBrowser()){
-                        this.nativeApi.logOut();
-                    }
-                    else{
-                        window.location.href =  LOGOUT_URL;
-                    }
-                }
-                break;
         case PUBLIC_EVENTS.USER_SESSION_END:
         case PUBLIC_EVENTS.RESET:
            

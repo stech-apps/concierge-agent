@@ -1,0 +1,29 @@
+<div class="qm-flow-sub-header">
+
+<div class="customer-search-component">
+  <qm-customer-search-bar></qm-customer-search-bar>
+</div>
+<div>
+</div>
+</div>
+<div class="qm-service-list__container">
+
+<div>
+<div>
+<div class="qm-identify__customer-select-container"  dir="{{ userDirection$ | async }}" >
+    <div class="qm-selected-customer-container">
+    <span class="qm-flow-selected-customer" *ngIf="currentCustomer"> <span class="qm-current-customer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</span></span>
+    <i *ngIf="currentCustomer" (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
+    <span class="qm-customer-padding-class-1"></span>  
+  </div>
+  <span class="qm-customer-padding-class-2"></span>  
+</div>  
+</div>
+
+</div>
+
+<div class="customer-search-list-container">
+<qm-customer-search></qm-customer-search>
+</div>
+
+</div>

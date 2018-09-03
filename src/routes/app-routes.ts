@@ -12,6 +12,7 @@ import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-ho
 import { QmCreateAppointmentComponent } from 'src/app/components/presentational/qm-create-appointment/qm-create-appointment.component';
 import { QmCreateVisitComponent } from '../app/components/presentational/qm-create-visit/qm-create-visit.component';
 import { QmArriveAppointmentComponent } from 'src/app/components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
+import { QmEditVisitComponent } from '../app/components/presentational/qm-edit-visit/qm-edit-visit.component';
 export const appRoutes: Routes = [
   {
     path: '',
@@ -26,6 +27,7 @@ export const appRoutes: Routes = [
           { path: 'create-visit', component: QmCreateVisitComponent },
           { path: 'arrive-appointment', component: QmArriveAppointmentComponent },
           { path: 'edit-appointment', component: QmEditAppointmentComponent }
+          { path: 'edit-visit', component: QmEditVisitComponent }
         ]
       },
       { path: 'profile', component: QmProfileComponent },

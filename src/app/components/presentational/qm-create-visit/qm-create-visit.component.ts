@@ -23,12 +23,16 @@ export class QmCreateVisitComponent implements OnInit {
   @ViewChild('px') px: any;
 
   private subscriptions: Subscription = new Subscription();
+  private _isFlowSkip: boolean = false;
   isCustomerFlowHidden: boolean;
   flowType = FLOW_TYPE.CREATE_VISIT;
   selectedServices: IService[];
   currentCustomer: ICustomer;
   isCustomerStoreDB: boolean;
-  isFlowSkip: boolean = false;
+
+  get isFlowSkip(): boolean {
+    return this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
+  }
   isCustomerHeaderVisible: boolean = false;
   
 
@@ -38,8 +42,6 @@ export class QmCreateVisitComponent implements OnInit {
     private customerSelectors: CustomerSelector,
     private localStorage: LocalStorage
   ) {
-
-    this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params !== null && params !== undefined){
@@ -95,8 +97,4 @@ export class QmCreateVisitComponent implements OnInit {
       this.f.onFlowNext(this.pc);
     }
   }
-
-  isFlowSkipCheck(){
-    this.isFlowSkip = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
-}
 }

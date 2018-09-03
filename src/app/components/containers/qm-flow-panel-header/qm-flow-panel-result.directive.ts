@@ -12,6 +12,6 @@ export class QmFlowPanelResult implements AfterViewInit {
 
   ngAfterViewInit() {
     var textNode = this.elt.nativeElement.childNodes[0];
-    this.result = textNode.nodeValue;
+    this.result = (textNode || {}).nodeValue;
   }
 }

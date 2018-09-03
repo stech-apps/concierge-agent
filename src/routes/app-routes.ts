@@ -26,7 +26,7 @@ export const appRoutes: Routes = [
           { path: 'create-appointment', component: QmCreateAppointmentComponent },
           { path: 'create-visit', component: QmCreateVisitComponent },
           { path: 'arrive-appointment', component: QmArriveAppointmentComponent },
-          { path: 'edit-appointment', component: QmEditAppointmentComponent }
+          { path: 'edit-appointment', component: QmEditAppointmentComponent },
           { path: 'edit-visit', component: QmEditVisitComponent }
         ]
       },

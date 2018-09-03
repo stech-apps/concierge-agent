@@ -33,8 +33,8 @@ export class QmCreateVisitComponent implements OnInit {
   get isFlowSkip(): boolean {
     return this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
   }
+
   isCustomerHeaderVisible: boolean = false;
-  
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -44,12 +44,12 @@ export class QmCreateVisitComponent implements OnInit {
   ) {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if(params !== null && params !== undefined){
+      if (params !== null && params !== undefined) {
         this.isCustomerFlowHidden = params.hideCustomer;
-        if(params.saveCustomerOption === CUSTOMER_SAVE_OPTION.VISIT){
+        if (params.saveCustomerOption === CUSTOMER_SAVE_OPTION.VISIT) {
           this.isCustomerStoreDB = false;
         }
-        else{
+        else {
           this.isCustomerStoreDB = true;
         }
       }
@@ -57,7 +57,7 @@ export class QmCreateVisitComponent implements OnInit {
     this.subscriptions.add(servicePointsSubscription);
 
     const servicesSubscription = this.serviceSelectors.selectedServices$.subscribe((services) => {
-      if(services !== null){
+      if (services !== null) {
         this.selectedServices = services;
       }
     });
@@ -65,14 +65,14 @@ export class QmCreateVisitComponent implements OnInit {
 
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
-      if(this.isCustomerStoreDB){
+      if (this.isCustomerStoreDB) {
         this.currentCustomer = customer;
       }
     });
     this.subscriptions.add(customerSubscription);
 
     const tempCustomerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
-      if(!this.isCustomerStoreDB){
+      if (!this.isCustomerStoreDB) {
         this.currentCustomer = customer;
       }
     });
@@ -86,14 +86,14 @@ export class QmCreateVisitComponent implements OnInit {
     this.subscriptions.unsubscribe();
   }
 
-  setPanelClick(){
-    if(this.isCustomerFlowHidden || this.isFlowSkip){
+  setPanelClick() {
+    if (this.isCustomerFlowHidden || this.isFlowSkip) {
       this.f.onFlowNext(this.px);
-      if(!(this.isCustomerFlowHidden)){
+      if (!(this.isCustomerFlowHidden)) {
         this.isCustomerHeaderVisible = true;
       }
     }
-    else{
+    else {
       this.f.onFlowNext(this.pc);
     }
   }

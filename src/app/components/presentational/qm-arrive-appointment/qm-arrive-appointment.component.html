@@ -5,7 +5,9 @@
       <qm-flow-panel-result *ngIf="selectedCustomer">{{selectedCustomer?.firstName + ' ' + selectedCustomer?.lastName}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-appointment dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-identify-appointment>
+      <qm-identify-appointment (appointmentSelected)="onAppointmentSelected($event)"
+      (appointmentDeselected)="onAppointmentDeselected($event)"
+       dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-identify-appointment>
     </qm-flow-panel-content>
   </qm-flow-panel>
   <qm-flow-panel [isHeaderVisible]="isServiceHeaderVisibe && !ia.isActive"  [headerVisibilityOverridden]="true"  #ps>

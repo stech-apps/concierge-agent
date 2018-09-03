@@ -3,6 +3,7 @@ import * as AppointmentActions from '../actions';
 
 export interface IAppointmentState {
     appointments: IAppointment[];
+    calendarAppointments: IAppointment[];
     selectedAppointment: IAppointment;
     loading: boolean;
     loaded: boolean;
@@ -11,6 +12,7 @@ export interface IAppointmentState {
 
 export const initialState: IAppointmentState = {
     appointments: [],
+    calendarAppointments: [],
     selectedAppointment: null,
     loading: false,
     loaded: false,
@@ -41,7 +43,26 @@ export function reducer(
             };
         }
 
-        case AppointmentActions.SEARCH_APPOINTMENTS_FAIL: {
+        case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                error: action.payload
+            };
+        }
+
+        case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS_SUCCESS: {
+            return {
+                ...state,
+                calendarAppointments: Array.isArray(action.payload.appointmentList) ? action.payload.appointmentList : [action.payload],
+                loading: false,
+                loaded: true,
+                error: null
+            };
+        }
+
+        case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS_FAIL: {
             return {
                 ...state,
                 loading: false,

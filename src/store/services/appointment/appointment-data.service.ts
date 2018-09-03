@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { calendarPublicEndpoint, DataServiceError, restEndpoint } from '../data.service';
+import { calendarPublicEndpoint, DataServiceError, restEndpoint, calendarEndpoint } from '../data.service';
 import { IAppointmentResponse } from '../../../models/IAppointmentResponse';
 import { IAppointment } from '../../../models/IAppointment';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export class AppointmentDataService {
   }
 
   searchAppointments(appointmentSearch: any): Observable<IAppointmentResponse> {
-    let searchQuery = `${restEndpoint}/appointment/appointments/search?branchId=${appointmentSearch.branchId}`;
+    let searchQuery =  `${restEndpoint}/appointment/appointments/search?branchId=${appointmentSearch.branchId}`;
 
     if(appointmentSearch.fromDate) {
       searchQuery += `&fromDate=${appointmentSearch.fromDate}`;
@@ -36,6 +36,31 @@ export class AppointmentDataService {
 
     if(appointmentSearch.customerId) {
       searchQuery = `${restEndpoint}/appointment/customers/${appointmentSearch.customerId}/appointments`;
+    }
+    
+    return this.http
+      .get<IAppointmentResponse>(searchQuery)
+      .pipe((catchError)(this.errorHandler.handleError()));
+  }
+
+
+  searchCalendarAppointments(appointmentSearch: any): Observable<IAppointmentResponse> {
+    let searchQuery =  `${calendarEndpoint}/appointments?branch=${appointmentSearch.branchId}`;
+
+    if(appointmentSearch.fromDate) {
+      searchQuery += `&start=${appointmentSearch.fromDate}`;
+    }
+
+    if(appointmentSearch.toDate) {
+      searchQuery += `&end=${appointmentSearch.toDate}`;
+    }
+
+    if(appointmentSearch.id) {
+      searchQuery = `${calendarEndpoint}/appointments/search?qpId=${appointmentSearch.id}`;
+    }
+
+    if(appointmentSearch.customerId) {
+      searchQuery = `${calendarEndpoint}/appointment/customers/${appointmentSearch.customerId}/appointments`;
     }
     
     return this.http

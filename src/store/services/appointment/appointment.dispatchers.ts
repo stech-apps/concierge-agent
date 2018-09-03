@@ -12,4 +12,8 @@ export class AppointmentDispatchers {
   searchAppointments(appointmentSearchInfo: any) {
     this.store.dispatch(new AppointmentActions.SearchAppointments(appointmentSearchInfo));
   }
+
+  searchCalendarAppointments(appointmentSearchInfo: any) {
+    this.store.dispatch(new AppointmentActions.SearchCalendarAppointments(appointmentSearchInfo));
+  }
 }

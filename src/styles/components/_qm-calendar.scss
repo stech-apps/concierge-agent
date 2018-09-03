@@ -57,6 +57,7 @@
     display: flex;
     flex: 1;
     cursor: pointer;
+    color: black;
     &:not(:last-child) {
       border-right: 1px solid #ccc;
     }

@@ -12,6 +12,11 @@ const getAllAppointments = createSelector(
   (state: IAppointmentState) => state.appointments
 );
 
+const getAllCalendarAppointments = createSelector(
+  getAppointmentState,
+  (state: IAppointmentState) => state.calendarAppointments
+);
+
 const getSelectedAppointment = createSelector(
   getAppointmentState,
   (state: IAppointmentState) => state.selectedAppointment
@@ -37,6 +42,7 @@ export class AppointmentSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   appointments$ = this.store.select(getAllAppointments);
+  calendarAppointments$ = this.store.select(getAllCalendarAppointments);
   selectedAppointment$ = this.store.select(getSelectedAppointment);
   appointmentsLoading$ = this.store.select(getAppointmentsLoading);
   appointmentsLoaded$ = this.store.select(getAppointmentsLoaded);

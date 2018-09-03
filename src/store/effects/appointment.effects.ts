@@ -30,4 +30,17 @@ export class AppointmentEffects {
         )
       )
     );
+
+    @Effect()
+    searchCalendarAppointments$: Observable<Action> = this.actions$
+      .ofType(AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS)
+      .pipe(
+        switchMap((action: AppointmentActions.SearchAppointments) =>
+          toAction(
+            this.AppointmentDataService.searchCalendarAppointments(action.payload),
+            AppointmentActions.SearchCalendarAppointmentsSuccess,
+            AppointmentActions.SearchCalendarAppointmentsFail
+          )
+        )
+      );
 }

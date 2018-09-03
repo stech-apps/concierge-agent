@@ -13,6 +13,7 @@
     height: 2.5rem;
     cursor: pointer;
     letter-spacing: $extended-letter-spacing-2;
+    color: $black;
 
     &:not(:last-child) {
         border-right: 1px solid $light-gray8;

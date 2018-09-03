@@ -1,8 +1,9 @@
+import { IAppointment } from './../../../../models/IAppointment';
 import { ToastService } from './../../../../util/services/toast.service';
 import { SelectAppointment } from './../../../../store/actions/arrive-appointment.actions';
 import { IBranch } from 'src/models/IBranch';
 import { Subscription, Observable } from 'rxjs';
-import { OnDestroy } from '@angular/core';
+import { OnDestroy, Input } from '@angular/core';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subject } from 'rxjs';
@@ -12,10 +13,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
-  AppointmentDispatchers, BranchSelectors, AppointmentSelectors, ArriveAppointmentDispatchers,
-  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors, ArriveAppointmentSelectors
+  AppointmentDispatchers, BranchSelectors, AppointmentSelectors,
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors,
 } from 'src/store';
-import { IAppointment } from 'src/models/IAppointment';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
 import { TranslateService } from '@ngx-translate/core';
@@ -89,6 +89,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   };
 
   readonly CREATED_APPOINTMENT_STATE = 'CREATED';
+  readonly CREATED_APPOINTMENT_STATE_ID = 20;
   readonly ARRIVED_APPOINTMENT_STATE = 'ARRIVED';
 
   isFetchBlock: boolean = false;
@@ -96,18 +97,25 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter<any>();
 
+  @Input()
+  useCalendarEndpoint: boolean = false;
+
+  @Output()
+  appointmentSelected: EventEmitter<IAppointment> = new EventEmitter<IAppointment>();
+
+  @Output()
+  appointmentDeselected: EventEmitter<any> = new EventEmitter();
+
   appointments: IAppointment[] = [];
 
   height: string;
 
   constructor(private appointmentDispatchers: AppointmentDispatchers,
     private branchSelectors: BranchSelectors, private appointmentSelectors: AppointmentSelectors,
-    private arriveAppointmentDispatchers: ArriveAppointmentDispatchers,
     private servicePointSelectors: ServicePointSelectors,
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
-    private userSelectors: UserSelectors,
-    private arriveAppointmentSelectors: ArriveAppointmentSelectors
+    private userSelectors: UserSelectors
 
   ) {
 
@@ -116,12 +124,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
-      if (appointment && appointment.customers) {
-        this.selectedCustomer = appointment.customers[0];
-      }
-    });
-    this.subscriptions.add(selectedAppointmentSub);
+
     const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe((value) => {
       this.isSearchedCustomerLoaded = value;
     });
@@ -165,9 +168,22 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.selectedBranch = br;
     });
 
-    const appointmentSubscription = this.appointmentSelectors.appointments$.subscribe((apps) => {
-      this.handleAppointmentResponse(apps);
-    });
+
+    if (this.useCalendarEndpoint) {
+      const calendarAppointmentSubscription = this.appointmentSelectors.calendarAppointments$.subscribe((apps) => {
+        this.handleAppointmentResponse(apps);
+      });
+
+      this.subscriptions.add(calendarAppointmentSubscription);
+    }
+    else {
+      const appointmentSubscription = this.appointmentSelectors.appointments$.subscribe((apps) => {
+        this.handleAppointmentResponse(apps);
+      });
+
+      this.subscriptions.add(appointmentSubscription);
+    }
+
 
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
@@ -199,7 +215,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(branchSubscription);
-    this.subscriptions.add(appointmentSubscription);
     this.subscriptions.add(appointmentErrorSub);
     this.subscriptions.add(customerSearchSubscription);
 
@@ -230,12 +245,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   applyAppointmentFilters(appointments: IAppointment[]) {
-    return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
+    if (this.useCalendarEndpoint) {
+      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && ap.branch.id === this.selectedBranch.id);
+
+    } else {
+      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
+    }
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
     if (apps && apps.length > 0) {
-      this.appointments =  this.applyAppointmentFilters(apps);
+      this.appointments = this.applyAppointmentFilters(apps);
     }
     else {
       this.appointments = [];
@@ -252,7 +272,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
 
       // search appointment is already arrived? then notifiy user
-      if(apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE).length > 0) {
+      if (apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE).length > 0) {
         this.translateService.get('appointment_arrived').subscribe(
           (noappointments: string) => {
             this.toastService.infoToast(noappointments);
@@ -356,7 +376,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.customerNotFound = false;
     this.showCustomerResults = false;
     this.searchedCustomers = [];
-    this.arriveAppointmentDispatchers.deselectAppointment();
+    this.appointmentDeselected.emit();
+    //this.arriveAppointmentDispatchers.deselectAppointment();
   }
 
 
@@ -384,7 +405,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   searchAppointments() {
     let searchQuery: any = {
-      branchId: this.selectedBranch.id
+      branchId: this.selectedBranch.id,
+      useCalendarEndpoint: this.useCalendarEndpoint
     };
 
     if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
@@ -411,7 +433,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       };
     }
 
-    this.appointmentDispatchers.searchAppointments(searchQuery);
+    if (this.useCalendarEndpoint) {
+      this.appointmentDispatchers.searchCalendarAppointments(searchQuery);
+    }
+    else {
+      this.appointmentDispatchers.searchAppointments(searchQuery);
+    }
   }
 
   onEnterPressed() {
@@ -443,11 +470,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onAppointmentSelect(appointment: IAppointment) {
-    this.arriveAppointmentDispatchers.selectAppointment(appointment);
+    //this.arriveAppointmentDispatchers.selectAppointment(appointment);
     this.selectedAppointment = appointment;
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.selectedSearchIcon = '';
     this.onFlowNext.emit();
+    this.appointmentSelected.emit(appointment);
+    this.selectedCustomer = appointment.customers[0];
   }
 
   getSelectedAppointmentInfo() {
@@ -456,17 +485,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.selectedAppointment) {
       appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
       appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
-      appointmentInfo += `${this.selectedAppointment.startTime.replace('T', ' ').slice(0, -3)}`;
+      appointmentInfo += `${(this.useCalendarEndpoint ? this.selectedAppointment.start : this.selectedAppointment.startTime).replace('T', ' ').slice(0, -3)}`;
     }
     return appointmentInfo;
   }
 
   deselectAppointment() {
     this.selectedAppointment = null;
-    this.arriveAppointmentDispatchers.deselectAppointment();
+    //this.arriveAppointmentDispatchers.deselectAppointment();
+    this.appointmentDeselected.emit();
     this.showAppointmentCollection = true;
     this.selectedCustomer = null;
     this.appointments = this.defaultAppointmentCollection;
+    this.appointmentDeselected.emit();
   }
 
   onCustomerSelect(customer: ICustomer) {

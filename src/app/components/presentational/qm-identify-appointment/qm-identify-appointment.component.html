@@ -339,7 +339,7 @@
           <td class="qm-identify-appointment__customer-table__col-5"></td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime)}}</td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.startTime)}}</td>
-          <td class="qm-identify-appointment__customer-table__col-10">{{app.id}}</td>
+          <td class="qm-identify-appointment__customer-table__col-10">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
           <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
           <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
           <td class="qm-identify-appointment__customer-table__col-20">{{app.services[0]?.name}}</td>

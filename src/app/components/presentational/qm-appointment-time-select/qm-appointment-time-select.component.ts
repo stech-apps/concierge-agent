@@ -37,7 +37,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private getExpiryReservationTime$: Observable<Number>;
   private settingReservationExpiryTime: number;
   public showExpiryReservationTime$: Observable<Boolean>;
-  public reservableDates: moment.Moment[] = [];
+    public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
   selectedTime$: Observable<Moment>;
 

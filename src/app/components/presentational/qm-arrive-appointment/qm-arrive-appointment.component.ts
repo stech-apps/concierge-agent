@@ -1,3 +1,5 @@
+import { ArriveAppointmentDispatchers } from './../../../../store/services/arrive-appointment/arrive-appointment.dispatchers';
+import { IAppointment } from './../../../../models/IAppointment';
 import { Subscription, Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { ICustomer } from './../../../../models/ICustomer';
@@ -20,7 +22,9 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
   isServiceHeaderVisibe: boolean;
   userDirection$: Observable<string>;
 
-  constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors, private userSelectors: UserSelectors, private serviceSelector: ServiceSelectors) {
+  constructor(private arriveAppointmentSelectors: ArriveAppointmentSelectors, 
+    private userSelectors: UserSelectors, private serviceSelector: ServiceSelectors,
+    private arriveAppointmentDispatchers: ArriveAppointmentDispatchers) {
 
     const selectedAppointmentSub = this.arriveAppointmentSelectors.selectedAppointment$.subscribe(appointment => {
       if(appointment && appointment.customers ){
@@ -42,7 +46,15 @@ export class QmArriveAppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
 
+  onAppointmentSelected(appointment: IAppointment){
+    this.arriveAppointmentDispatchers.selectAppointment(appointment);
+  }
+
+  onAppointmentDeselected(appointment: IAppointment){
+    this.arriveAppointmentDispatchers.deselectAppointment();
+    this.selectedCustomer = null;
   }
 
   ngOnDestroy() {

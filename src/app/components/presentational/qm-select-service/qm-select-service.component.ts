@@ -197,7 +197,7 @@ export class QmSelectServiceComponent implements OnInit {
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';
-    if(this.serviceList.length >= this.searchFieldServiceCount){
+    if(this.serviceList && this.serviceList.length >= this.searchFieldServiceCount){
       this.clearInputDirective.updateButtonVisibility('');
     }
   }

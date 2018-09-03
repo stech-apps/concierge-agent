@@ -8,7 +8,7 @@
             <div class="qm-switch__slider-text">{{ 'multi_service' | translate }}</div>
         </div>
     </div>
-    <input *ngIf="serviceList.length >= searchFieldServiceCount" type="text" class="qm-flow-sub-header__search" qmClearInput [(ngModel)]="searchText"  (input)="handleInput($event)" placeholder="{{'search_service' | translate}}"  />
+    <input *ngIf="serviceList && serviceList.length >= searchFieldServiceCount" type="text" class="qm-flow-sub-header__search" qmClearInput [(ngModel)]="searchText"  (input)="handleInput($event)" placeholder="{{'search_service' | translate}}"  />
     <div class="qm-flow-sub-header__right">
         <div class="qm-done-button" (click)="doneButtonClick()" *ngIf="selectedServiceList && selectedServiceList.length > 0">
                 {{'banner_done_label' | translate }}

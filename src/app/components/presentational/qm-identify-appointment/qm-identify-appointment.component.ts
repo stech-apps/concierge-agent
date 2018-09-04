@@ -485,7 +485,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.selectedAppointment) {
       appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
       appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
-      appointmentInfo += `${(this.useCalendarEndpoint ? this.selectedAppointment.start : this.selectedAppointment.startTime).replace('T', ' ').slice(0, -3)}`;
+      appointmentInfo += `${this.useCalendarEndpoint ? this.selectedAppointment.start.replace('T', ' ').slice(0, -12): 
+                            this.selectedAppointment.startTime.replace('T', ' ').slice(0, -3)}`;
     }
     return appointmentInfo;
   }
@@ -545,5 +546,4 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showLoadingCustomers() {
     return !this.isSearchedCustomerLoaded && this.isSearchedCustomerLoading;
   }
-
 }

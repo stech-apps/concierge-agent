@@ -235,7 +235,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
       const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
         (services) => {
-          this.selectedServices = services;
+          if(services){
+            this.selectedServices = services;
+            this.appServices = this.setAppServices();
+          }
         }
       );
       this.subscriptions.add(serviceSubscription);
@@ -316,11 +319,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppServices(): string {
-    return this.selectedAppointment.services.map(service => {
-      return service.name;
+    return this.selectedServices.map(service => {
+      return service.name ? service.name : service.internalName;
     }).join(", ");
-
-
   }
 
   toggleCollapse() {
@@ -522,7 +523,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   setAriveAppointment() {
     var aditionalList = this.selectedServices.filter(val => {
-      return !(val.isBind)
+      return val.isBind === false || val.isBind === undefined
     })
     this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, aditionalList, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
       this.showSuccessMessage(result);

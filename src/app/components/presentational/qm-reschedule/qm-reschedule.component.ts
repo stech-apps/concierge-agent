@@ -84,6 +84,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     }
   }
 
+  onTimeSlotSelect(time: CalendarDate){
+
+  }
+
   getServicesQueryString(): string {
     return this.editAppointment.services.reduce((queryString, service: ICalendarService) => {
       return queryString + `;servicePublicId=${service.publicId}`;

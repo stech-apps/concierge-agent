@@ -1,0 +1,33 @@
+<div class="qm-edit-visit-list__container">
+
+  <div class="qm-edit-visit-list__header-container">
+    <div class="header-item-container">
+      VISIT ID
+    </div>
+    <div class="header-item-container">
+      CUSTOMER
+    </div>
+    <div class="header-item-container">
+      SERVICE
+    </div>
+    <div class="header-item-container">
+      WAIT TIME
+    </div>
+  </div>
+
+  <div *ngFor="let visit of visits"  class="qm-edit-visit-list__header-container">
+    <div class="header-item-container">
+      {{visit.ticketNumber}}
+    </div>
+    <div class="header-item-container">
+         {{visit.customerName}}
+    </div>
+    <div class="header-item-container">
+        {{visit.serviceName}}
+    </div>
+    <div class="header-item-container">
+      {{visit.waitingTime}}
+    </div>
+  </div>
+
+</div>

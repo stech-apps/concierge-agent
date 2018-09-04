@@ -64,7 +64,10 @@ import {
   AppointmentDataService,
   AppointmentDispatchers,
   ArriveAppointmentSelectors,
-  ArriveAppointmentDispatchers
+  ArriveAppointmentDispatchers,
+  QueueVisitsDataService,
+  QueueVisitsDispatchers,
+  QueueVisitsSelectors
 
 } from "./services";
 
@@ -129,5 +132,8 @@ export const storeServices = [
   AppointmentDataService,
   AppointmentDispatchers,
   ArriveAppointmentSelectors,
-  ArriveAppointmentDispatchers
+  ArriveAppointmentDispatchers,
+  QueueVisitsDataService,
+  QueueVisitsDispatchers,
+  QueueVisitsSelectors
 ];

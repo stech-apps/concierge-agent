@@ -21,6 +21,7 @@ import * as fromNotes from './note.reducer';
 import * as fromAppointments from './appointment.reducer';
 import * as fromArriveAppointment from './arrive-appointment.reducer';
 import * as fromEditAppointment from './edit-appointment.reducer';
+import * as fromQueueVisits from './queue-visits.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -43,7 +44,8 @@ export interface IAppState {
   note: fromNotes.INoteState
   appointments: fromAppointments.IAppointmentState,
   arriveAppointment: fromArriveAppointment.IArriveAppointmentState,
-  editAppointment: fromEditAppointment.IEditAppointmentState
+  editAppointment: fromEditAppointment.IEditAppointmentState,
+  queueVisits:fromQueueVisits.IQueueVisitsState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -67,5 +69,7 @@ export const reducers: ActionReducerMap<IAppState> = {
   note: fromNotes.reducer,
   appointments: fromAppointments.reducer,
   arriveAppointment: fromArriveAppointment.reducer,
-  editAppointment: fromEditAppointment.reducer
+  editAppointment: fromEditAppointment.reducer,
+  queueVisits:fromQueueVisits.reducer
+
 };

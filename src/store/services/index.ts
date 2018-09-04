@@ -22,3 +22,4 @@ export * from './Infomation-message-box';
 export * from './note';
 export * from './appointment';
 export * from './arrive-appointment';
+export * from './queue-visits';

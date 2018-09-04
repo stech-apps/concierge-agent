@@ -4,6 +4,8 @@
       <div class="qm-calendar-placeholder">
         <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" 
         (onSelectDate)="onSelectDate($event)"></qm-calendar>
+        <button (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
+        <button (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button>
       </div>
     </div>
     <div class="qm-reschedule-select-slots">

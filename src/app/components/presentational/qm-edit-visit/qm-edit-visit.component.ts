@@ -12,4 +12,8 @@ export class QmEditVisitComponent implements OnInit {
   ngOnInit() {
   }
 
+  branchHeaderClick(){
+    
+  }
+
 }

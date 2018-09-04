@@ -15,9 +15,16 @@ const getAllQueueSummary = createSelector(
     (state: IQueueState) => state.allQueueSummary
 );
 
+const getSelectedVisit = createSelector(
+    getQueueState,
+    (state: IQueueState) => state.selectedVisit
+);
+
+
 @Injectable()
 export class QueueSelectors {
     constructor(private store: Store<IAppState>) { }
     // selectors$
     queueSummary$ = this.store.select(getAllQueueSummary);
+    currentVisit$ = this.store.select(getSelectedVisit)
 }

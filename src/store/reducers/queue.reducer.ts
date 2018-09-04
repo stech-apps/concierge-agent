@@ -2,19 +2,22 @@ import { UserRole } from './../../models/UserPermissionsEnum';
 import { Queue } from './../../models/IQueue';
 import * as QueueActions from '../actions';
 import { Visit } from '../../models/IVisit';
+import { FetchSelectedQueueInfo, FetchSelectedQueueInfoSuccess } from '../actions';
 
 export interface IQueueState {
   allQueueSummary: any;
   loading: boolean;
   loaded: boolean;
   error: Object;
+  selectedVisit:Visit;
 }
 
 const initialState = {
   allQueueSummary: {},
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  selectedVisit:null
 };
 
 export function reducer(
@@ -48,6 +51,21 @@ export function reducer(
         error: null
       };
     }
+    case QueueActions.FETCH_SELECTED_QUEUE_INFO_SUCCESS: {
+      return {
+        ...state,
+        selectedVisit: action.payload,
+        error: null
+      };
+    }
+
+    case QueueActions.FETCH_SELECTED_QUEUE_INFO_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
     default: {
       return state;
     }

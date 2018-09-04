@@ -23,7 +23,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 export class QmSelectServiceComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
-  private serviceList: ICalendarService[];
+  public serviceList: ICalendarService[];
   filteredServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
@@ -54,7 +54,7 @@ export class QmSelectServiceComponent implements OnInit {
     private localStorage: LocalStorage,
     private servicePointSelectors: ServicePointSelectors,
     private appointmentSelectors: ArriveAppointmentSelectors,
-    private userSelectors:UserSelectors,
+    public userSelectors:UserSelectors,
     private timeSlotDispatchers: TimeslotDispatchers,
     private reserveDispatcher: ReserveDispatchers
   ) { 

@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",
+    
     "e2e": "ng e2e",
     "start": "npm run ng-config-dev && ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod",

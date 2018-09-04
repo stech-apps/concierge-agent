@@ -70,7 +70,6 @@ export class QmCustomerSearchComponent implements OnInit {
 
   ngOnInit() {
     this.currentRoute=this.router.url;
-    console.log(this.router.url)
     const currentCustomerSubscription = this.CustomerSelectors.currentCustomer$.subscribe((customer) => {this.currentCustomer = customer;
     if(this.currentRoute=="/home/create-appointment" && this.currentCustomer && this.multiBranchEnabled){
       this.reminingHeight='344px';

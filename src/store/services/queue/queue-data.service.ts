@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { IAccount } from './../../../models/IAccount';
-import { managementEndpoint, DataServiceError } from './../data.service';
+import { managementEndpoint, DataServiceError, servicePoint } from './../data.service';
 import { GlobalErrorHandler } from '../../../util/services//global-error-handler.service';
 import { userRoleFactory } from 'src/helpers/user-role-factory';
 
@@ -91,5 +91,11 @@ export class QueueDataService {
     data.totalCustomersWaiting = customerCount;
     data.maxWaitingTime = maxWT;
     return data;
+  }
+
+  getSelectedVist(branchId: number, searchText:string): Observable<any> {
+    return this.http
+      .get<IAccount>(`${servicePoint}/branches/${branchId}/visits;ticketId=${searchText}`)
+      .pipe(catchError(this.errorHandler.handleError()));
   }
 }

@@ -14,9 +14,9 @@
     <div class="qm-profile-ok" (click)="onConfirmProfile()">{{ 'ok' | translate}}</div>
     <div class="qm-profile-cancel" (click)="onCancel()">{{ 'cancel' | translate}}</div>
     <!-- temp -->
-    <!-- <hr> -->
-    <!-- <p (click)="goToCustomer()"> customers</p> -->
-    <!-- <hr> -->
+    <hr>
+    <p (click)="goToCustomer()"> customers</p>
+    <hr>
     <div class="qm-privacy-policy" *ngIf="privacyPolicyUrl">
       <div (click)="showPrivacyPolicyUrl()"> {{ 'privacy_policy' | translate}}</div>
     </div>

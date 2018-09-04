@@ -6,6 +6,7 @@ import { IAppState } from '../../reducers';
 
 import * as AccountActions from '../../actions';
 import { Visit } from '../../../models/IVisit';
+import { Queue } from '../../../models/IQueue';
 
 @Injectable()
 export class QueueDispatchers {
@@ -20,6 +21,15 @@ export class QueueDispatchers {
   }
   
   fetchSelectedVisit(branchId:number,searchText:string){
-    this.store.dispatch(new QueueActions.FetchSelectedQueueInfo(branchId,searchText))
+    this.store.dispatch(new QueueActions.FetchSelectedVisitInfo(branchId,searchText));
+  
+  }
+
+  setectQueue(queue:Queue){
+    this.store.dispatch(new QueueActions.SelectQueue(queue));
+  }
+
+  resetSelectedQueue(){
+    this.store.dispatch(new QueueActions.ResetSelectedQueue());
   }
 }

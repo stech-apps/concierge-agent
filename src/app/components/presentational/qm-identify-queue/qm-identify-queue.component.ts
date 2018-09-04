@@ -96,4 +96,8 @@ keyDownFunction(event,visitSearchText) {
   }
 }
 
+selectQueue(queue){
+  this.queueDispatchers.setectQueue(queue);
+}
+
 }

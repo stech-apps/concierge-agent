@@ -1,15 +1,18 @@
 import { Action } from '@ngrx/store';
 import { Visit } from '../../models/IVisit';
 import { IBranch } from '../../models/IBranch';
+import { Queue } from '../../models/IQueue';
 
 // Fetching user info
 export const FETCH_QUEUE_INFO = '[QUEUE] FETCH_QUEUE_INFO';
 export const FETCH_QUEUE_INFO_FAIL = '[QUEUE] FETCH_QUEUE_INFO_FAIL';
 export const FETCH_QUEUE_INFO_SUCCESS =  '[QUEUE] FETCH_QUEUE_INFO_SUCCESS';
 export const UPDATE_QUEUE_INFO = '[QUEUE] UPDATE_QUEUE_INFO';
-export const FETCH_SELECTED_QUEUE_INFO = '[QUEUE] FETCH_SELECTED_QUEUE_INFO';
-export const FETCH_SELECTED_QUEUE_INFO_FAIL = '[QUEUE] FETCH_SELECTED_QUEUE_INFO_FAIL';
-export const FETCH_SELECTED_QUEUE_INFO_SUCCESS = '[QUEUE] FETCH_SELECTED_QUEUE_INFO_SUCCESS';
+export const FETCH_SELECTED_VISIT_INFO = '[QUEUE] FETCH_SELECTED_VISIT_INFO';
+export const FETCH_SELECTED_VISIT_INFO_FAIL = '[QUEUE] FETCH_SELECTED_VISIT_INFO_FAIL';
+export const FETCH_SELECTED_VISIT_INFO_SUCCESS = '[QUEUE] FETCH_SELECTED_VISIT_INFO_SUCCESS';
+export const SELECT_QUEUE = '[QUEUE] SELECT_QUEUE';
+export const RESET_SELECTED_QUEUE = '[QUEUE] RESET_SELECTED_QUEUE';
 
 export class FetchQueueInfo implements Action {
   readonly type = FETCH_QUEUE_INFO;
@@ -31,27 +34,40 @@ export class UpdateQueueInfo implements Action {
   constructor(public visit: Visit, public isAddedVisit: boolean) {}
 }
 
-export class FetchSelectedQueueInfo implements Action {
-  readonly type = FETCH_SELECTED_QUEUE_INFO;
+export class FetchSelectedVisitInfo implements Action {
+  readonly type = FETCH_SELECTED_VISIT_INFO;
   constructor(public branch:number,public searchText:string) {}
 }
 
-export class FetchSelectedQueueInfoFail implements Action {
-  readonly type = FETCH_SELECTED_QUEUE_INFO_FAIL;
+export class FetchSelectedVisitInfoFail implements Action {
+  readonly type = FETCH_SELECTED_VISIT_INFO_FAIL;
   constructor(public payload: object) {}
 }
 
-export class FetchSelectedQueueInfoSuccess implements Action {
-  readonly type = FETCH_SELECTED_QUEUE_INFO_SUCCESS;
+export class FetchSelectedVisitInfoSuccess implements Action {
+  readonly type = FETCH_SELECTED_VISIT_INFO_SUCCESS;
   constructor(public payload: Visit) {}
 }
+
+export class SelectQueue implements Action {
+  readonly type = SELECT_QUEUE;
+  constructor(public payload: Queue) {}
+}
+
+export class ResetSelectedQueue implements Action {
+  readonly type = RESET_SELECTED_QUEUE;
+  constructor() {}
+}
+
 
 // Action types
 export type AllQueueActions = FetchQueueInfoSuccess
   | FetchQueueInfo
   | FetchQueueInfoFail
   | UpdateQueueInfo
-  | FetchSelectedQueueInfo
-  | FetchSelectedQueueInfoFail
-  | FetchSelectedQueueInfoSuccess
+  | FetchSelectedVisitInfo
+  | FetchSelectedVisitInfoFail
+  | FetchSelectedVisitInfoSuccess
+  | SelectQueue
+  | ResetSelectedQueue
 

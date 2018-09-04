@@ -58,11 +58,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.add(navServiceSubscription);
 
       this.servicePointDispatchers.setOpenServicePoint(null);
-    
-      
-  
-
-      this.setDefaultServicePoint();
+       
+     this.setDefaultServicePoint();
      
       this.selectedBranch = {
         name: 'branch',
@@ -93,9 +90,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.servicePoints = sps;
       if (sps.length === 1) {
         this.onServicePointSelect(sps[0]);
-        // if (this.branches.length === 1) {
-        //   this.onConfirmProfile();
-        // }
+        if (this.branches.length === 1 && !this.previousBranch) {
+          this.onConfirmProfile();
+        }
       }
       else{
         this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_WORKSTATION);

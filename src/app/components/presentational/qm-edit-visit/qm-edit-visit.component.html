@@ -8,4 +8,16 @@
       <qm-edit-visit-list dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-edit-visit-list>
     </qm-flow-panel-content>
   </qm-flow-panel>
+</qm-flow>  
 
+<qm-flow #fa>
+  <qm-flow-panel #ia [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true"> 
+      <qm-flow-panel-header (click)="headerClick()" (onFlowExit)="f.onFlowExit()">
+      <qm-flow-panel-title>{{ 'queues' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
+    </qm-flow-panel-header>
+    <qm-flow-panel-content>
+      <qm-identify-queue dir="{{ userDirection$ | async }}" (onFlowNext)="f.onFlowNext(px)"></qm-identify-queue>
+    </qm-flow-panel-content>
+  </qm-flow-panel>
+</qm-flow>  

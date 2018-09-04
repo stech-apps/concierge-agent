@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { QueueSelectors, UserSelectors, QueueDispatchers } from '../../../../store';
+import { Queue } from '../../../../models/IQueue';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'qm-qm-edit-visit',
@@ -6,14 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./qm-edit-visit.component.scss']
 })
 export class QmEditVisitComponent implements OnInit {
-
-  constructor() { }
+  selectedQueue:Queue;
+  userDirection$: Observable<string> = new Observable<string>();
+  private subscriptions: Subscription = new Subscription();
+  constructor(private queueSelectors:QueueSelectors,
+    private QueueDispatchers:QueueDispatchers,
+    private userSelectors: UserSelectors
+  ) { 
+    const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
+      this.selectedQueue = queue;
+      
+    })
+    this.subscriptions.add(QueueSelectorSubscription);
+    this.userDirection$ = this.userSelectors.userDirection$;
+  }
 
   ngOnInit() {
   }
 
-  branchHeaderClick(){
-    
+  headerClick(){
+    this.QueueDispatchers.resetSelectedQueue();
   }
 
 }

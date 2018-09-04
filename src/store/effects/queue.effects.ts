@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import * as QueueActions from './../actions';
 import { FetchQueueInfo } from 'src/store';
-import { FetchSelectedQueueInfo } from './../actions';
+import { FetchSelectedVisitInfo } from './../actions';
 
 const toAction = QueueActions.toAction();
 
@@ -33,13 +33,13 @@ export class QueueEffects {
 
   @Effect()
   getSelectedVisit$:Observable<Action> = this.actions$
-  .ofType(QueueActions.FETCH_SELECTED_QUEUE_INFO)
+  .ofType(QueueActions.FETCH_SELECTED_VISIT_INFO)
   .pipe(
-    switchMap((fetchSelectedVisit:FetchSelectedQueueInfo)=>
+    switchMap((fetchSelectedVisit:FetchSelectedVisitInfo)=>
     toAction(
       this.queueDataService.getSelectedVist(fetchSelectedVisit.branch,fetchSelectedVisit.searchText),
-      QueueActions.FetchSelectedQueueInfoSuccess,
-      QueueActions.FetchSelectedQueueInfoFail
+      QueueActions.FetchSelectedVisitInfoSuccess,
+      QueueActions.FetchSelectedVisitInfoFail
     ))
   )
 }

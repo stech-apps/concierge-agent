@@ -34,7 +34,7 @@ export class QmInputboxComponent implements OnInit {
     private userSelectors:UserSelectors,
     private fb:FormBuilder,
     private customerDispatchers:CustomerDispatchers,
-    private customerSelectors:CustomerSelector 
+    private customerSelectors:CustomerSelector
   ) {
     this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;

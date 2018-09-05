@@ -58,7 +58,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     const tempCustomerSubscription = this.customerSelector.tempCustomer$
       .subscribe(customer => {
         if (customer && customer.phone && customer.phone.length > 0) {
-          this.customer = customer;
           this.customerEmail = customer.email;
           this.customerSms = customer.phone;
         }

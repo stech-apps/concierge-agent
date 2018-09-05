@@ -13,8 +13,8 @@
     color: $white;
     display: flex;
     padding: 0.5rem;
-    width: 55%;
-
+    max-width: 65%;
+    min-width: 50%;
 }
 
 .qm-clear{   
@@ -34,7 +34,7 @@
 .qm-identify__customer-select-container{
     margin-top:10px;
     display: flex;
-    margin-left: 27.6%
+    justify-content: center;
 }
 
 .qm-input-box{

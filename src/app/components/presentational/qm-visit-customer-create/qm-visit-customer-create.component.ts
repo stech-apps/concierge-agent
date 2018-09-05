@@ -41,6 +41,9 @@ export class QmVisitCustomerCreateComponent implements OnInit {
 
     const customerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
+      if(customer){
+        this.trimCustomer();
+      }
     });
     this.subscriptions.add(customerSubscription);
   }
@@ -71,6 +74,15 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       lastName: '',
       email: '',
       phone: ''
+    });
+  }
+
+  trimCustomer(){
+    this.customerCreateForm.patchValue({
+      firstName: this.currentCustomer.firstName.trim(),
+      lastName: this.currentCustomer.lastName.trim(),
+      email: this.currentCustomer.email.trim(),
+      phone: this.currentCustomer.phone.trim()
     });
   }
 

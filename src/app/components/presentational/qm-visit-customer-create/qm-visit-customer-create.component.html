@@ -21,8 +21,6 @@
       <div class="qm-identify__customer-select-container" *ngIf="currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 || currentCustomer.phone.length > 0 || currentCustomer.email.length > 0) === true">
           <span class="qm-flow-selected-customer">{{ currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</span>
           <i (click)="clearCustomer()" class="icon-close qm-clear" aria-hidden="true"></i>
-            
-          <span class="padding-class"></span>  
         </div>
         <div class="qm-input-box qm-input-box__extend">
       <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >

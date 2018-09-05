@@ -14,9 +14,9 @@ import { GlobalErrorHandler } from '../../../util/services//global-error-handler
 export class QueueVisitsDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) { }
 
-  getQueueVisitInformation(branchId: number,queueId:number): Observable<any> {
+  getQueueVisitInformation(branchId: number,queueId:number): Observable<Visit[]> {
     return this.http
-      .get(`${servicePoint}/branches/${branchId}/queues/${queueId}/visits/full`)
+      .get<Visit[]>(`${servicePoint}/branches/${branchId}/queues/${queueId}/visits/full`)
       .pipe(map((data) => {
         return this.processQueueInfo(data);
       }))
@@ -34,6 +34,13 @@ export class QueueVisitsDataService {
     return result;
 } 
 
+private formatHHMMSSIntoHHMMA (time) {
+  var H = +time.substr(0, 2);
+  var h = H % 12 || 12;
+  var ampm = (H < 12 || H === 24) ? " AM" : " PM";
+  return h + time.substr(2, 3) + ampm;
+}
+
 private addHyphonIfInvalidValue(visit) {
   for (var key in visit) {
       if (visit.hasOwnProperty(key)) {
@@ -44,13 +51,14 @@ private addHyphonIfInvalidValue(visit) {
   }
 }
 
-private processQueueInfo( data){
-  var visitList=[];
+private processQueueInfo( data:Visit[]){
+  var visitList:Visit[]=[];
   for (var i = 0; i < data.length; i++) {
     var visit = data[i];
     visit.customerName = visit.parameterMap.customers;
     visit.serviceName = visit.currentVisitService.serviceExternalName;
-    visit.waitingTime = this.formatTimeHHMM(visit.waitingTime);
+    visit.waitingTimeStr = this.formatTimeHHMM(visit.waitingTime);
+   visit.appointmentTime? visit.appointmentTime = this.formatHHMMSSIntoHHMMA(visit.appointmentTime.split("T")[1]):null;
     visit.ticketNumber = visit.ticketId;
     this.addHyphonIfInvalidValue(visit);
     visitList.push(visit);

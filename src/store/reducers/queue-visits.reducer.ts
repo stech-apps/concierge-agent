@@ -4,14 +4,14 @@ import * as QueueVisitsActions from '../actions';
 import { Visit } from '../../models/IVisit';
 
 export interface IQueueVisitsState {
-  queueVisitsList: any;
+  queueVisitsList: Visit[];
   loading: boolean;
   loaded: boolean;
   error: Object;
 }
 
 const initialState = {
-  queueVisitsList: {},
+  queueVisitsList : [],
   loading: false,
   loaded: false,
   error: null

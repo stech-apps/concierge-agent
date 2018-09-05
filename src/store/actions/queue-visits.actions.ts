@@ -20,7 +20,7 @@ export class FetchQueueVisitsFail implements Action {
 
 export class FetchQueueVisitsSuccess implements Action {
   readonly type = FETCH_QUEUE_VISITS_SUCCESS;
-  constructor(public payload: Object) { }
+  constructor(public payload: Visit[]) { }
 }
 
 

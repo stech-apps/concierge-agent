@@ -1,33 +1,68 @@
-<div class="qm-edit-visit-list__container">
 
-  <div class="qm-edit-visit-list__header-container">
-    <div class="header-item-container">
-      VISIT ID
+<div class="qm-flow-sub-header">
+
+    <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
+      <div class="qm-identify-visit-search__search-container">
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch" name="q" [(ngModel)]="searchText" #visitSearch  (keydown)="keyDownFunction($event,visitSearch.value.trim())" autocomplete="off"> 
+      <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+      <span class="qm-identify-visit-search__or-text"> or_la</span>
+      <div class="qm-qr-code-icon"></div>
+      </div>
     </div>
-    <div class="header-item-container">
-      CUSTOMER
-    </div>
-    <div class="header-item-container">
-      SERVICE
-    </div>
-    <div class="header-item-container">
-      WAIT TIME
-    </div>
+  
   </div>
-<!-- 
-  <div *ngFor="let visit of visits"  class="qm-edit-visit-list__header-container">
-    <div class="header-item-container">
-      {{visit.ticketNumber}}
-    </div>
-    <div class="header-item-container">
-         {{visit.customerName}}
-    </div>
-    <div class="header-item-container">
-        {{visit.serviceName}}
-    </div>
-    <div class="header-item-container">
-      {{visit.waitingTime}}
-    </div>
-  </div> -->
+  
+  
+  <div class="qm-visit-list__container">
+      <div class="qm-visit-list">
+          <div class="qm-visit-list__headers qm-flex-grid">
+            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
+              <div class="qm-visit-list-header-item-label">{{'visit_id_label' | translate}}</div>
+              <div *ngIf="sortingIndicator==='VISITID'" ><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc === true, 'icon-caret-down': sortByVisitIdAsc !==  true }"></i></div>
+            </div>
+            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByCustomer()">
+              <div>
+                <i class="icon-customer-solid" aria-hidden="true"></i>
+              </div>
+              <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
+              <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc === true, 'icon-caret-down': sortByCustomerAsc !==  true }"></i></div>
+            </div>
+  
+            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByService()">
+                <div>
+                  <i class="icon-service-solid" aria-hidden="true"></i>
+                </div>
+                <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
+                <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc === true, 'icon-caret-down': sortByServiceAsc !==  true }"></i></div>
+            </div>
 
-</div>
+            <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+                <div>
+                  <i class="icon-clock-solid" aria-hidden="true"></i>
+                </div>
+                <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
+            </div>
+
+
+            <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+                <div>
+                  <i class="icon-clock-solid" aria-hidden="true"></i>
+                </div>
+                <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
+            </div>
+          
+          </div>
+        
+          <div class="qm-visit-list__body">
+            <div class="qm-flex-grid qm-visit-list-body-row" *ngFor="let visit of visits; index as i" (click)="selectVisit(i)">
+                <div class="qm-col qm-visit-list-body-row-label">{{visit.ticketNumber}}</div>
+                <div class="qm-col">{{visit.customerName }}</div>
+                <div class="qm-col "> {{visit.serviceName }} </div>
+                <div class="qm-col "> {{visit.appointmentTime }} </div>
+                <div class="qm-col">{{ visit.waitingTimeStr }}</div>
+            </div>
+          </div>
+        </div>
+        
+  
+  </div>

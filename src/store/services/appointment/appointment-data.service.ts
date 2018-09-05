@@ -1,4 +1,3 @@
-import { calendarPublicEndpoint } from 'src/store/services/data.service';
 import { IAppointment } from 'src/models/IAppointment';
 import { GlobalErrorHandler } from './../../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';

@@ -43,6 +43,15 @@ export function reducer(
             };
         }
 
+        case AppointmentActions.SEARCH_APPOINTMENTS_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                error: action.payload
+            };
+        }
+
         case AppointmentActions.DELETE_APPOINTMENT: {
             return {
               ...state,

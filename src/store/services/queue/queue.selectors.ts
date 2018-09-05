@@ -31,6 +31,6 @@ export class QueueSelectors {
     constructor(private store: Store<IAppState>) { }
     // selectors$
     queueSummary$ = this.store.select(getAllQueueSummary);
-    currentVisit$ = this.store.select(getSelectedVisit);
+    selectedVisit$ = this.store.select(getSelectedVisit);
     selectedQueue$ = this.store.select(getSelectedQueue);
 }

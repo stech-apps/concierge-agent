@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QueueSelectors, UserSelectors, QueueDispatchers } from '../../../../store';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
+import { FLOW_TYPE } from '../../../../util/flow-state';
 
 @Component({
   selector: 'qm-qm-edit-visit',
@@ -12,6 +13,8 @@ export class QmEditVisitComponent implements OnInit {
   selectedQueue:Queue;
   userDirection$: Observable<string> = new Observable<string>();
   private subscriptions: Subscription = new Subscription();
+  flowType= FLOW_TYPE.EDIT_VIST;
+
   constructor(private queueSelectors:QueueSelectors,
     private QueueDispatchers:QueueDispatchers,
     private userSelectors: UserSelectors

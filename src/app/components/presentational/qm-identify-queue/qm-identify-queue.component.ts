@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
@@ -7,12 +7,16 @@ import { QueueIndicator } from '../../../../util/services/queue-indication.helpe
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
 
+
 @Component({
   selector: 'qm-identify-queue',
   templateUrl: './qm-identify-queue.component.html',
   styleUrls: ['./qm-identify-queue.component.scss']
 })
 export class QmIdentifyQueueComponent implements OnInit {
+  @Output()
+  onFlowNext: EventEmitter<any> = new EventEmitter<any>();
+
   
   queueCollection = new Array<Queue>();
   searchText:String;
@@ -21,6 +25,10 @@ export class QmIdentifyQueueComponent implements OnInit {
   sortAscending = true;
   userDirection$: Observable<string>;
   selectedVisit:Visit
+
+
+  
+ 
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -41,8 +49,12 @@ export class QmIdentifyQueueComponent implements OnInit {
   this.subscriptions.add(branchSubscription);
   this.userDirection$ = this.userSelectors.userDirection$;   
 
-  const visitSubscription = this.queueSelectors.currentVisit$.subscribe((visit)=>{
+  const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
     this.selectedVisit = visit;
+    if(this.selectedVisit){
+      if(this.selectedVisit[0]){
+        this.onFlowNext.emit();
+    }}
   })
   this.subscriptions.add(visitSubscription)
 }
@@ -88,16 +100,12 @@ sortQueueList() {
 keyDownFunction(event,visitSearchText) {
   if(event.keyCode == 13) {
     this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id,visitSearchText.toUpperCase());
-    
-    if(this.selectedVisit){
-      console.log(this.selectedVisit[0]);
     }
-
-  }
 }
 
 selectQueue(queue){
   this.queueDispatchers.setectQueue(queue);
+  this.onFlowNext.emit();
 }
 
 }

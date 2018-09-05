@@ -3,6 +3,7 @@ import { QueueSelectors, UserSelectors, QueueDispatchers } from '../../../../sto
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
+import { ICustomer } from '../../../../models/ICustomer';
 
 @Component({
   selector: 'qm-qm-edit-visit',
@@ -14,6 +15,7 @@ export class QmEditVisitComponent implements OnInit {
   userDirection$: Observable<string> = new Observable<string>();
   private subscriptions: Subscription = new Subscription();
   flowType= FLOW_TYPE.EDIT_VIST;
+  selectedCustomer: ICustomer;
 
   constructor(private queueSelectors:QueueSelectors,
     private QueueDispatchers:QueueDispatchers,
@@ -33,5 +35,7 @@ export class QmEditVisitComponent implements OnInit {
   headerClick(){
     this.QueueDispatchers.resetSelectedQueue();
   }
+
+  branchHeaderClick(){}
 
 }

@@ -82,6 +82,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   uttFromTime: Moment;
   uttToTime: Moment;
   isInDateDurationSelection: boolean = true;
+  selectedDates: CalendarDate[] = [{
+    mDate: moment(),
+    selected: true
+  }];
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -393,7 +397,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.isSearchInputOpen = true;
     let formattedTime = `${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
     if(this.enableSearchByDay) {
-      formattedTime = this.selectedDate.mDate.format('YYYY-DD-MM') + ' / ' + formattedTime;
+      formattedTime = this.selectedDate.mDate.format('YYYY-MM-DD') + ' / ' + formattedTime;
     }
     
     this.searchText = formattedTime;

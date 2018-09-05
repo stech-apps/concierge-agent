@@ -360,7 +360,7 @@
           <td class="qm-identify-appointment__customer-table__col-10">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
           <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
           <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
-          <td class="qm-identify-appointment__customer-table__col-20">{{app.services[0]?.name}}</td>
+          <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
           <td class="qm-identify-appointment__customer-table__col-5"></td>
         </tr>
       </tbody>

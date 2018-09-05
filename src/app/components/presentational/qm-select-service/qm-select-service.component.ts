@@ -353,37 +353,20 @@ export class QmSelectServiceComponent implements OnInit {
 
   getMostFrequnetServices(){
     var serviceIds = null;
-    var tempList = [];
     if(this.flowType === FLOW_TYPE.CREATE_VISIT){
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
-      if(serviceIds){
-        serviceIds.forEach(val => {
-          tempList.push(val);
-        });
-      }
     }
     else{
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
-      if(serviceIds){
-        if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-          serviceIds.forEach(val => {
-            if(val.id){
-              tempList.push(val.id);
-            }
-            else if(val.qpId){
-              tempList.push(val.qpId);
-            }
-          });
-        }
-        if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-          serviceIds.forEach(val => {
-            tempList.push(val.publicId);
-          });
-        }
-      }
     }
 
-    return tempList.length > 0 ? tempList : null;
+    serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
+
+    if(serviceIds.length > this.mostFrequentServiceCount){
+      serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount);
+    }
+
+    return serviceIds;
   }
 
   checkMostFrequentService(){
@@ -393,32 +376,49 @@ export class QmSelectServiceComponent implements OnInit {
       return
     }
     var currentList = [];
-    this.serviceList.forEach(val => {
-      var elementPos = -1;
-      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
-        elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
-      }
-      else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-        elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.publicId);
-      }
-      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-        if(val.qpId){
-          elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.qpId);
+    serviceIds.forEach(val => {
+      var tempObj = this.serviceList.filter(obj => {
+        if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+          return val.id === obj.id;
         }
-        else{
-          elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
+        else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+          return val.publicId === obj.publicId;
         }
-      }
-      
-      if(elementPos >= 0){
-        currentList.push(val);
+        else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+          if(val.qpId){
+            return val.qpId === obj.id;
+          }
+          else{
+            return val.id === obj.id;
+          }
+        }
+      })
+
+      if(tempObj && tempObj.length > 0){
+        currentList.push(tempObj[0]);
       }
     })
 
     if(this.selectedServiceList.length > 0){
       var tempList = [];
       currentList.forEach(val => {
-        var elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
+        var elementPos = 1;
+        if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+          elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
+        }
+        else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+          elementPos = this.selectedServiceList.map(function(x) {
+            return x.publicId; 
+          }).indexOf(val.publicId);
+        }
+        else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+          if(val.qpId){
+            elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.qpId);
+          }
+          else{
+            elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
+          }
+        }
         if(elementPos < 0){
           tempList.push(val);
         }

@@ -708,61 +708,70 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   saveFrequentService() {
-    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      var serviceList = [];
+    var serviceList = [];
       this.selectedServices.forEach(val => {
-        var idObj = { "id" : val.id, "publicId" : val.publicId, "qpId" : val.qpId }
+        var idObj = { "id" : val.id, "publicId" : val.publicId, "qpId" : val.qpId, "usage" : 0 }
         serviceList.push(idObj);
       })
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, this.getMostFrequnetServices(serviceList));
     }
     else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      var serviceList = [];
-      this.selectedServices.forEach(val => {
-        serviceList.push(val.id);
-      })
       this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, this.getMostFrequnetServices(serviceList));
     }
   }
 
   getMostFrequnetServices(serviceList: any) {
     var serviceIds = null;
-    var tempList = [];
+    var tempList = serviceList;
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      serviceList.forEach(val => {
-        tempList.push(val);
-      });
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
     }
     else {
-      if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-        serviceList.forEach(val => {
-          if(val.id){
-            tempList.push(val.id);
-          }
-          else if(val.qpId){
-            tempList.push(val.qpId);
-          }
-        });
-      }
-      if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-        serviceList.forEach(val => {
-          tempList.push(val.publicId);
-        });
-      }
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
     }
 
-    if (serviceIds) {
-      tempList = serviceList.concat(serviceIds);
+    if(serviceIds){
+      tempList = serviceIds.concat(serviceList);
     }
 
-    return this.removeDuplicates(tempList);
+    if (serviceIds && serviceIds.length > 0) {
+      if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+        tempList = this.removeDuplicates(tempList, "id");
+      }
+      else if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+        tempList = this.removeDuplicates(tempList, "publicId");
+      }
+    }
+
+    tempList.forEach(val => {
+      var elementPos = -1;
+      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+        elementPos = serviceList.map(function(x) {return x.id; }).indexOf(val.id);
+      }
+      else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+        elementPos = serviceList.map(function(x) {return x.publicId; }).indexOf(val.publicId);
+      }
+      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+        if(val.qpId){
+          elementPos = serviceList.map(function(x) {return x.qpId; }).indexOf(val.qpId);
+        }
+        else{
+          elementPos = serviceList.map(function(x) {return x.id; }).indexOf(val.id);
+        }
+      }
+      
+      if(elementPos >= 0){
+        val.usage = val.usage + 1;
+      }
+    })
+    return tempList;
   }
 
-  removeDuplicates(arr) {
-    let unique_array = Array.from(new Set(arr))
-    return unique_array
+  removeDuplicates(myArr, prop) {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    });
   }
 
   private buildDate(appointment: IAppointment) {

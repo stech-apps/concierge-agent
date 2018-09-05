@@ -438,3 +438,54 @@
     flex-direction: column;
     padding-top: 90px;
 }
+
+.qm-calendar-container {
+  width: 100%;
+  display: flex;
+  margin-top: 0.3rem;
+  background-color: $calendar-background;
+  qm-calendar {
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.qm-duration-category {
+  display: flex;
+  color: $black;  
+  background-color: $white;
+
+  &__date {
+    flex: 1;
+    line-height: 3rem;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+    &--active {
+      background-color: $app-theme;
+      color: $primary-text-color;
+    }
+  }
+
+  &__time {
+    flex: 1;
+    line-height: 3rem;
+    justify-content: center;   
+    display: flex; 
+    cursor: pointer;
+    &--active {
+      background-color: $app-theme;
+      color: $primary-text-color;
+    }
+  }
+}
+
+.qm-enable-search-by-day { 
+  .qm-command-buttons-container {
+      margin-top: 1rem;
+  }
+  .qm-in-time-selection .qm-step-controls-container {
+    margin-bottom: 135px;
+  }
+}

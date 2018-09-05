@@ -1,12 +1,12 @@
-<div class="qm-flow-sub-header" *ngIf = "selectedCustomer">
+<div class="qm-flow-sub-header" *ngIf="selectedCustomer">
   <div class="qm-flow-sub-header__right">
-      <div class="qm-done-button" (click) = "onDone()" >
-              {{'banner_done_label' | translate }}
-      </div>  
+    <div class="qm-done-button" (click)="onDone()">
+      {{'banner_done_label' | translate }}
+    </div>
   </div>
 </div>
 
-<div class="qm-identify-appointment" dir="{{userDirection$ | async}}">
+<div class="qm-identify-appointment" [ngClass] ="{'qm-enable-search-by-day': enableSearchByDay}" dir="{{userDirection$ | async}}">
   <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
   </div>
   <div class="qm-identify-appointment__search-container">
@@ -221,39 +221,45 @@
   </div>
 
   <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()">
-      <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
-        <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-                <path class="refreshBtnStyleEnable" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87"/>
-                <polygon points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75"/>
-                <path class="refreshBtnStyleEnable" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09"/>
-                <polygon points="0 61.97 2.65 38.18 21.92 52.37 0 61.97"/>
-            </g>
+    <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
+      <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+          <path class="refreshBtnStyleEnable" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
+          <polygon points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
+          <path class="refreshBtnStyleEnable" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
+          <polygon points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
         </g>
+      </g>
     </svg>
 
     <svg *ngIf="isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
-        <defs>
+      <defs>
 
-        </defs>
-        <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-                <path class="refreshBtnStyleDisable-1" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87"/>
-                <polygon class="refreshBtnStyleDisable-2" points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75"/>
-                <path class="refreshBtnStyleDisable-1" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09"/>
-                <polygon class="refreshBtnStyleDisable-2" points="0 61.97 2.65 38.18 21.92 52.37 0 61.97"/>
-            </g>
+      </defs>
+      <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+          <path class="refreshBtnStyleDisable-1" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
+          <polygon class="refreshBtnStyleDisable-2" points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
+          <path class="refreshBtnStyleDisable-1" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
+          <polygon class="refreshBtnStyleDisable-2" points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
         </g>
+      </g>
     </svg>
   </button>
 
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
-    />
+    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText"
+      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" />
     <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
 
-    <div class="qm-duration-control" *ngIf="selectedSearchIcon === 'duration'">
-      <div class="qm-duration-control__header">
+    <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="selectedSearchIcon === 'duration'">
+
+      <div class="qm-duration-category" *ngIf="enableSearchByDay">
+        <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date' | translate}}</div>
+        <div class="qm-duration-category__time" (click)="toggleDurationSelection(0)" [ngClass]="{'qm-duration-category__time--active' : !isInDateDurationSelection}">{{'time' | translate}}</div>
+      </div>
+
+      <div class="qm-duration-control__header" *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
         <div class="left">
           {{'from' | translate}}
         </div>
@@ -262,20 +268,31 @@
         </div>
       </div>
 
-      <div class="qm-step-controls-container">
-        <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController" [(ngModel)]="fromTime"></ngb-timepicker>
-        <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="toTimeController" [(ngModel)]="toTime"></ngb-timepicker>
+      <div class="qm-step-controls-container" >
+        <ng-container *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
+          <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController"
+            [(ngModel)]="fromTime"></ngb-timepicker>
+          <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="toTimeController"
+            [(ngModel)]="toTime"></ngb-timepicker>
+        </ng-container>
+
+        <ng-container *ngIf="(enableSearchByDay && isInDateDurationSelection)">
+          <div class="qm-calendar-container">
+            <qm-calendar [enableAllFutureDates]="enableSearchByDay" [enabledDates]="[]" [selectedDates]="selectedDates"
+            (onSelectDate)="onSelectDate($event)"></qm-calendar>
+          </div>          
+        </ng-container>
       </div>
       <div class="qm-command-buttons-container">
-        <button class="cancel" (click)= "onCancel()">{{'cancel' | translate}}</button>
+        <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
         <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>
       </div>
     </div>
-  </div>  
- 
-  <div class="qm-customer-search-loader" *ngIf="showLoadingCustomers()" >
-      <qm-loader [color]="white"></qm-loader>
-      
+  </div>
+
+  <div class="qm-customer-search-loader" *ngIf="showLoadingCustomers()">
+    <qm-loader [color]="white"></qm-loader>
+
   </div>
   <div class="qm-customer-search-results" *ngIf="showCustomerResults">
     <div class="qm-cutomer-item" (click)="onCustomerSelect(c)" *ngFor="let c of searchedCustomers">
@@ -289,7 +306,7 @@
       </div>
       <div class="qm-cutomer-item-email">
         <div class="qm-customer-item-email__label">
-          {{ 'email' | translate}} 
+          {{ 'email' | translate}}
         </div>
         <div class="qm-customer-item-email__value">
           {{ c.properties.email }} </div>
@@ -315,7 +332,7 @@
   </div>
 
   <div class="qm-customer-not-found" *ngIf="customerNotFound">
-      {{'customer_not_found' | translate }}
+    {{'customer_not_found' | translate }}
   </div>
 
   <div class="qm-identify-appointment__table-container">
@@ -332,9 +349,10 @@
           <th class="qm-identify-appointment__customer-table__col-5"></th>
         </tr>
       </thead>
-     
 
-      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody" [style.max-height]="height">
+
+      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
+        [style.max-height]="height">
         <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect(app)">
           <td class="qm-identify-appointment__customer-table__col-5"></td>
           <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime || app.start)}}</td>
@@ -346,8 +364,8 @@
           <td class="qm-identify-appointment__customer-table__col-5"></td>
         </tr>
       </tbody>
-      
-      <div class="qm-loader-container" *ngIf= "showLoading()" >
+
+      <div class="qm-loader-container" *ngIf="showLoading()">
         <qm-loader [color]="black"></qm-loader>
       </div>
     </table>

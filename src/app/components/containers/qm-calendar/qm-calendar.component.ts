@@ -27,6 +27,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
+  @Input() enableAllFutureDates: boolean = false;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
   @Input() enabledDates: moment.Moment[] = [];
 
@@ -130,11 +131,22 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   isDisabledDay(d: moment.Moment) {
     let isDisabled = true;
-    this.enabledDates.forEach(ed => {
-      if(ed.isSame(d, 'day')){
+
+    if(this.enableAllFutureDates) {
+      if(this.isToday(d) || d.isAfter(moment.now())) {
         isDisabled = false;
       }
-    });
+      else {
+        isDisabled = true;
+      }
+    }
+    else {
+      this.enabledDates.forEach(ed => {
+        if(ed.isSame(d, 'day')){
+          isDisabled = false;
+        }
+      });
+    }
 
     return isDisabled;
   }

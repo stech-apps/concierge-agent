@@ -5,7 +5,7 @@
       <qm-flow-panel-result *ngIf="selectedCustomer">{{selectedCustomer?.firstName + ' ' + selectedCustomer?.lastName}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-appointment [useCalendarEndpoint]="true" (appointmentSelected)="onAppointmentSelect($event)" 
+      <qm-identify-appointment [enableSearchByDay]="true" [useCalendarEndpoint]="true" (appointmentSelected)="onAppointmentSelect($event)" 
       (appointmentDeselected)="onAppointmentDeselected($event)" dir="{{ userDirection$ | async }}" 
       (onFlowNext)="f.onFlowNext(resc)"></qm-identify-appointment>
     </qm-flow-panel-content>

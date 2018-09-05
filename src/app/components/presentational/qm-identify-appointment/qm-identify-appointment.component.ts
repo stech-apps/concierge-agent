@@ -20,6 +20,7 @@ import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
 import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment-timezone';
+import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -31,6 +32,7 @@ import { Moment } from 'moment-timezone';
 })
 
 export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
+  selectedDate: CalendarDate;
 
   tempCustomer: {
     time?: string;
@@ -79,6 +81,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   black: string = "black";
   uttFromTime: Moment;
   uttToTime: Moment;
+  isInDateDurationSelection: boolean = true;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -99,6 +102,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   @Input()
   useCalendarEndpoint: boolean = false;
+
+  @Input()
+  enableSearchByDay: boolean = false;
 
   @Output()
   appointmentSelected: EventEmitter<IAppointment> = new EventEmitter<IAppointment>();
@@ -253,6 +259,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleDurationSelection(isDateHeaderClicked) {
+    this.isInDateDurationSelection = !!isDateHeaderClicked;
+  }
+
   handleAppointmentResponse(apps: IAppointment[]) {
     if (apps && apps.length > 0) {
       this.appointments = this.applyAppointmentFilters(apps);
@@ -352,13 +362,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.setDefaultDuration();
     }
 
-    if (this.inputAnimationState == this.INITIAL_ANIMATION_STATE) {
-      this.inputAnimationState = searchButton;
-    } else if (this.inputAnimationState == searchButton) {
+    if (this.inputAnimationState == searchButton) {
       this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     }
     else {
-      this.inputAnimationState = searchButton;
+      this.inputAnimationState = this.enableSearchByDay && searchButton === 'duration' ?  'durationWithDate' : searchButton;
     }
 
     if (this.selectedSearchIcon != searchButton) {
@@ -383,10 +391,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSelectTime() {
     this.isSearchInputOpen = true;
-    this.searchText = `${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
+    let formattedTime = `${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
+    if(this.enableSearchByDay) {
+      formattedTime = this.selectedDate.mDate.format('YYYY-DD-MM') + ' / ' + formattedTime;
+    }
+    
+    this.searchText = formattedTime;
     this.inputAnimationState = 'input';
     this.selectedSearchIcon = '';
-    this.searchInputController.setValue(`${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)} - ${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`);
+    this.searchInputController.setValue(formattedTime);
     this.searchAppointments();
     this.showModalBackDrop = false;
   }
@@ -410,20 +423,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     };
 
     if (this.currentSearchState === this.SEARCH_STATES.DURATION) {
-
       let now = moment();
       searchQuery = {
         ...searchQuery,
-        fromDate: `${now.format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`,
-        toDate: `${now.format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`
+        fromDate: this.getformattedTimeForDurationSearch(true),
+        toDate: this.getformattedTimeForDurationSearch(false)
       };
     }
     else if (this.currentSearchState === this.SEARCH_STATES.INITIAL ||
       this.currentSearchState === this.SEARCH_STATES.REFRESH) {
       searchQuery = {
         ...searchQuery,
-        fromDate: `${this.uttFromTime.format('YYYY-MM-DD')}T${this.uttFromTime.format('HH')}:${this.uttFromTime.format('mm')}`,
-        toDate: `${this.uttToTime.format('YYYY-MM-DD')}T${this.uttToTime.format('HH')}:${this.uttToTime.format('mm')}`
+        fromDate: this.getUttDefaultTimeForSearch(this.uttFromTime),
+        toDate: this.getUttDefaultTimeForSearch(this.uttToTime)
       };
     }
     else if (this.currentSearchState === this.SEARCH_STATES.ID) {
@@ -439,6 +451,37 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     else {
       this.appointmentDispatchers.searchAppointments(searchQuery);
     }
+  }
+
+  getUttDefaultTimeForSearch(uttTime: Moment) {
+    return `${uttTime.format('YYYY-MM-DD')}T${uttTime.format('HH')}:${uttTime.format('mm')}`;
+  }
+
+  getformattedTimeForDurationSearch(isFromTime: boolean) {
+    let formattedDate: string;
+    if(this.enableSearchByDay) {
+      if(isFromTime) {
+        formattedDate = `${this.selectedDate.mDate.format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`;
+      }
+      else {
+        formattedDate = `${this.selectedDate.mDate.format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
+      }
+    }
+    else {
+      let now = moment();
+      if(isFromTime) {
+        formattedDate = `${now.format('YYYY-MM-DD')}T${this.pad(this.fromTime.hour, 2)}:${this.pad(this.fromTime.minute, 2)}`;
+      }
+      else {
+        formattedDate = `${now.format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
+      }
+    }  
+
+    return formattedDate;
+  }
+
+  onSelectDate(selectedDate: CalendarDate) {
+      this.selectedDate  = selectedDate;
   }
 
   onEnterPressed() {

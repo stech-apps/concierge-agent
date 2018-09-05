@@ -39,7 +39,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   noOfCustomers: number = 1;
   private rescheduleTime: string;
   private originalAppointmentTime: string;
-  enableReschedule: boolean =  false;
+  enableReschedule: boolean = false;
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
@@ -64,9 +64,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['editAppointment'] && this.editAppointment) {
-
-      this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
+    if(changes['editAppointment'] && this.editAppointment) {
+      if(moment(this.editAppointment.start).isAfter(moment.now())) {
+        this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
+      }
       this.fetchReservableDates();
     }
   }
@@ -127,7 +128,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   onTimeSlotSelect(time: { title: string }) {
     this.rescheduleTime = time.title;
-    this.enableReschedule = this.editAppointment.start.slice(0, 16) != (this.currentlyActiveDate.mDate.format('YYYY-DD-MM') + 'T' +  time.title);
+    this.enableReschedule = this.editAppointment.start.slice(0, 16) != (this.currentlyActiveDate.mDate.format('YYYY-DD-MM') + 'T' + time.title);
   }
 
   private getTimeSlots() {
@@ -177,7 +178,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onRescheduleAppointment() {
-    if(this.enableReschedule) {
+    if (this.enableReschedule) {
       this.qmModalService.openForTransKeys('', 'confirm_reschedule', 'yes', 'no', (result) => {
         if (result) {
           let rescheduleAppointment = this.editAppointment;
@@ -188,7 +189,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           this.onFlowExit.next(true);
         }
       }, () => {
-  
+
       });
     }
   }

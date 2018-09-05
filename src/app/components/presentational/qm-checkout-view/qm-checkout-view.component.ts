@@ -22,7 +22,8 @@ import {
   CalendarServiceDispatchers,
   ArriveAppointmentSelectors,
   UserSelectors,
-  CalendarBranchSelectors
+  CalendarBranchSelectors,
+  CalendarServiceSelectors
 } from "../../../../store";
 import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { IBranch } from './../../../../models/IBranch';
@@ -44,6 +45,7 @@ import { Q_ERROR_CODE, ERROR_STATUS } from "../../../../util/q-error";
 import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
 
 import * as moment from 'moment-timezone';
+import { ICalendarService } from "../../../../models/ICalendarService";
 
 @Component({
   selector: "qm-checkout-view",
@@ -103,7 +105,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedCustomer: ICustomer;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
-  private selectedServices: IService[];
+  private selectedServices: ICalendarService[];
   private tempCustomer: ICustomer;
 
   //variables related to expandable appintment details view
@@ -136,7 +138,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private serviceDispatchers: CalendarServiceDispatchers,
     private arriveAppointmentSelectors: ArriveAppointmentSelectors,
     private userSelectors: UserSelectors,
-    private CalendarBranchSelectors: CalendarBranchSelectors
+    private CalendarBranchSelectors: CalendarBranchSelectors,
+    private calendarServiceSelectors: CalendarServiceSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -236,7 +239,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
         (services) => {
           if(services){
-            this.selectedServices = services;
+            this.selectedServices = services as ICalendarService[];
             this.appServices = this.setAppServices();
           }
         }
@@ -253,11 +256,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      this.CalendarBranchSelectors.selectedBranch$.subscribe((branch) => {
+      const branchSubscription = this.CalendarBranchSelectors.selectedBranch$.subscribe((branch) => {
         this.customerDispatcher.resetCurrentCustomer();
         this.resetViewData();
 
       });
+      this.subscriptions.add(branchSubscription);
+
+      const calendarServiceSubscription = this.calendarServiceSelectors.selectedServices$.subscribe(
+        (services) => {
+          if(services){
+            this.selectedServices = services as ICalendarService[];
+            this.appServices = this.setAppServices();
+          }
+        }
+      );
+      this.subscriptions.add(calendarServiceSubscription);
     }
 
   }
@@ -492,6 +506,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   setCreateAppointment() {
     this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
       if (result) {
+        this.saveFrequentService();
         this.showSuccessMessage(result);
         this.onFlowExit.emit();
       }
@@ -499,9 +514,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       const err = new DataServiceError(error, null);
       if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
         this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
+          this.saveFrequentService();
           this.showSuccessMessage(result);
           this.onFlowExit.emit();
         }, error => {
+          this.saveFrequentService();
           this.showErrorMessage(error);
           this.onFlowExit.emit();
         })
@@ -691,30 +708,51 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   saveFrequentService() {
-    if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      var serviceList = [];
+      this.selectedServices.forEach(val => {
+        var idObj = { "id" : val.id, "publicId" : val.publicId, "qpId" : val.qpId }
+        serviceList.push(idObj);
+      })
+      this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, this.getMostFrequnetServices(serviceList));
+    }
+    else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       var serviceList = [];
       this.selectedServices.forEach(val => {
         serviceList.push(val.id);
       })
-      if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, this.getMostFrequnetServices(serviceList));
-      }
-      else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-        this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, this.getMostFrequnetServices(serviceList));
-      }
+      this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, this.getMostFrequnetServices(serviceList));
     }
   }
 
   getMostFrequnetServices(serviceList: any) {
     var serviceIds = null;
+    var tempList = [];
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
+      serviceList.forEach(val => {
+        tempList.push(val);
+      });
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
     }
     else {
+      if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+        serviceList.forEach(val => {
+          if(val.id){
+            tempList.push(val.id);
+          }
+          else if(val.qpId){
+            tempList.push(val.qpId);
+          }
+        });
+      }
+      if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+        serviceList.forEach(val => {
+          tempList.push(val.publicId);
+        });
+      }
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
     }
 
-    var tempList = serviceList;
     if (serviceIds) {
       tempList = serviceList.concat(serviceIds);
     }

@@ -6,5 +6,6 @@ export class ICalendarService extends IService {
     name: string;
     publicId: string;
     custom: any;
+    qpId: number;
   }
   

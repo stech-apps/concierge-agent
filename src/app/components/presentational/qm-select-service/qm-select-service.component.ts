@@ -114,6 +114,7 @@ export class QmSelectServiceComponent implements OnInit {
         this.serviceList = <Array<IServiceViewModel>>services;
         if(this.serviceList !== null){
           this.filteredServiceList = <Array<IServiceViewModel>>services;
+          this.checkMostFrequentService();
         }
       });
       this.subscriptions.add(calendarServiceSubscription);
@@ -352,14 +353,37 @@ export class QmSelectServiceComponent implements OnInit {
 
   getMostFrequnetServices(){
     var serviceIds = null;
+    var tempList = [];
     if(this.flowType === FLOW_TYPE.CREATE_VISIT){
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
+      if(serviceIds){
+        serviceIds.forEach(val => {
+          tempList.push(val);
+        });
+      }
     }
     else{
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
+      if(serviceIds){
+        if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+          serviceIds.forEach(val => {
+            if(val.id){
+              tempList.push(val.id);
+            }
+            else if(val.qpId){
+              tempList.push(val.qpId);
+            }
+          });
+        }
+        if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+          serviceIds.forEach(val => {
+            tempList.push(val.publicId);
+          });
+        }
+      }
     }
 
-    return serviceIds;
+    return tempList.length > 0 ? tempList : null;
   }
 
   checkMostFrequentService(){
@@ -370,7 +394,22 @@ export class QmSelectServiceComponent implements OnInit {
     }
     var currentList = [];
     this.serviceList.forEach(val => {
-      var elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
+      var elementPos = -1;
+      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+        elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
+      }
+      else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+        elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.publicId);
+      }
+      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
+        if(val.qpId){
+          elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.qpId);
+        }
+        else{
+          elementPos = serviceIds.map(function(x) {return x; }).indexOf(val.id);
+        }
+      }
+      
       if(elementPos >= 0){
         currentList.push(val);
       }

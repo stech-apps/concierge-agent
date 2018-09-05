@@ -38,6 +38,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   private serviceSubscription$: Observable<ICalendarService[]>;
   noOfCustomers: number = 1;
   private rescheduleTime: string;
+  private originalAppointmentTime: string;
+  enableReschedule: boolean =  false;
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
@@ -63,6 +65,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['editAppointment'] && this.editAppointment) {
+
+      this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
       this.fetchReservableDates();
     }
   }
@@ -123,6 +127,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   onTimeSlotSelect(time: { title: string }) {
     this.rescheduleTime = time.title;
+    this.enableReschedule = this.editAppointment.start.slice(0, 16) != (this.currentlyActiveDate.mDate.format('YYYY-DD-MM') + 'T' +  time.title);
   }
 
   private getTimeSlots() {
@@ -172,17 +177,19 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onRescheduleAppointment() {
-    this.qmModalService.openForTransKeys('', 'confirm_reschedule', 'yes', 'no', (result) => {
-      if (result) {
-        let rescheduleAppointment = this.editAppointment;
-        rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.format('YYYY-MM-DD')}T${this.rescheduleTime}`;
-        let endTime = moment(rescheduleAppointment.start).add(5, 'minutes');
-        rescheduleAppointment.end = `${endTime.format('YYYY-MM-DD')}T${endTime.format('HH:mm')}`;
-        this.appointmentDispatchers.rescheduleAppointment(rescheduleAppointment);
-        this.onFlowExit.next(true);
-      }
-    }, () => {
-
-    });
+    if(this.enableReschedule) {
+      this.qmModalService.openForTransKeys('', 'confirm_reschedule', 'yes', 'no', (result) => {
+        if (result) {
+          let rescheduleAppointment = this.editAppointment;
+          rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.format('YYYY-MM-DD')}T${this.rescheduleTime}`;
+          let endTime = moment(rescheduleAppointment.start).add(5, 'minutes');
+          rescheduleAppointment.end = `${endTime.format('YYYY-MM-DD')}T${endTime.format('HH:mm')}`;
+          this.appointmentDispatchers.rescheduleAppointment(rescheduleAppointment);
+          this.onFlowExit.next(true);
+        }
+      }, () => {
+  
+      });
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { OnDestroy, EventEmitter } from '@angular/core';
+import { OnDestroy, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
@@ -24,6 +24,9 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     this.timeSlotCategories[0].isActive = true;
   }
 
+  @Input()
+  preselectedTimeSlot: string;
+
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 
@@ -31,6 +34,9 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     const timeSlotSubscription = this.timeSlotSelectors.times$.subscribe((times) => {
       this.timeSlots = [];
       if (times && times.length > 0) {
+
+
+        
         times.forEach((t) => {
           this.timeSlots.push({
             title: t,
@@ -38,6 +44,20 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
             category: this.addCategory(t)
           });
         });
+
+        if(this.preselectedTimeSlot) {
+          this.timeSlots.push(
+            {
+              title: this.preselectedTimeSlot,
+              isActive: true,
+              category: this.addCategory(this.preselectedTimeSlot)
+            }
+          );
+
+          this.timeSlots.sort((a, b) => a.title.localeCompare(b.title));
+        }
+
+
 
         this.selectedCategory = this.timeSlots[0].category;
         this.timeSlotCategories.forEach((tc) => tc.isActive = this.selectedCategory == tc.category);

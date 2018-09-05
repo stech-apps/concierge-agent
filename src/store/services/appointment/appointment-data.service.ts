@@ -1,3 +1,5 @@
+import { calendarPublicEndpoint } from 'src/store/services/data.service';
+import { IAppointment } from 'src/models/IAppointment';
 import { GlobalErrorHandler } from './../../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -5,7 +7,6 @@ import { catchError } from 'rxjs/operators';
 
 import { calendarPublicEndpoint, DataServiceError, restEndpoint, calendarEndpoint } from '../data.service';
 import { IAppointmentResponse } from '../../../models/IAppointmentResponse';
-import { IAppointment } from '../../../models/IAppointment';
 import { Observable } from 'rxjs';
 
 
@@ -41,6 +42,11 @@ export class AppointmentDataService {
     return this.http
       .get<IAppointmentResponse>(searchQuery)
       .pipe((catchError)(this.errorHandler.handleError()));
+  }
+
+  rescheduleAppointment(appointment: IAppointment) {
+    let url = `${calendarPublicEndpoint}/appointments/${appointment.publicId}/reschedule?end=${appointment.end}&start=${appointment.start}`;
+      return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError()));
   }
 
 

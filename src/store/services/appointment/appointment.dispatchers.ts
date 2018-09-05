@@ -17,7 +17,11 @@ export class AppointmentDispatchers {
     this.store.dispatch(new AppointmentActions.SearchCalendarAppointments(appointmentSearchInfo));
   }
 
-  deleteAppointment(appointment: IAppointment, successCallback: any) {
-    this.store.dispatch(new AppointmentActions.DeleteAppointment(appointment, successCallback));
+  deleteAppointment(appointment: IAppointment, successCallback: any, errorCallback: any) {
+    this.store.dispatch(new AppointmentActions.DeleteAppointment(appointment, successCallback, errorCallback));
+  }
+
+  rescheduleAppointment(appointment: IAppointment) {
+    this.store.dispatch(new AppointmentActions.RescheduleAppointment(appointment));
   }
 }

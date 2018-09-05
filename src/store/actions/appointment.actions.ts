@@ -11,6 +11,9 @@ export const SEARCH_CALENDAR_APPOINTMENTS_SUCCESS = '[Appointment] SEARCH_CALEND
 export const DELETE_APPOINTMENT = '[Appointment] DELETE_APPOINTMENT';
 export const DELETE_APPOINTMENT_FAIL = '[Appointment] DELETE_APPOINTMENT_FAIL';
 export const DELETE_APPOINTMENT_SUCCESS = '[Appointment] DELETE_APPOINTMENT_SUCCESS';
+export const RESCHEDULE_APPOINTMENT = '[Appointment] RESCHEDULE_APPOINTMENT';
+export const RESCHEDULE_APPOINTMENT_FAIL = '[Appointment] RESCHEDULE_APPOINTMENT_FAIL';
+export const RESCHEDULE_APPOINTMENT_SUCCESS = '[Appointment] RESCHEDULE_APPOINTMENT_SUCCESS';
 
 
 export class SearchAppointments implements Action {
@@ -46,17 +49,32 @@ export class SearchCalendarAppointmentsSuccess implements Action {
 
 export class DeleteAppointment implements Action {
   readonly type = DELETE_APPOINTMENT;
-  constructor(public payload: IAppointment, public succssCallBack: any) {}
+  constructor(public payload: IAppointment, public succssCallBack: any, public errorCallback: any) {}
 }
 
 export class DeleteAppointmentFail implements Action {
   readonly type = DELETE_APPOINTMENT_FAIL;
-  constructor(public payload: Object) {}
+  constructor(public payload: Object, public errorCallback: any) {}
 }
 
 export class DeleteAppointmentSuccess implements Action {
   readonly type = DELETE_APPOINTMENT_SUCCESS;
   constructor(public payload: IAppointment, public succssCallBack: any) {}
+}
+
+export class RescheduleAppointment implements Action {
+  readonly type = RESCHEDULE_APPOINTMENT;
+  constructor(public payload: IAppointment) {}
+}
+
+export class RescheduleAppointmentFail implements Action {
+  readonly type = RESCHEDULE_APPOINTMENT_FAIL;
+  constructor(public payload: Object) {}
+}
+
+export class RescheduleAppointmentSuccess implements Action {
+  readonly type = RESCHEDULE_APPOINTMENT_SUCCESS;
+  constructor(public payload: IAppointment) {}
 }
 
 // Action types
@@ -69,4 +87,7 @@ export type AllAppointmentActions =
   | DeleteAppointment 
   | DeleteAppointmentFail 
   | DeleteAppointmentSuccess 
+  | RescheduleAppointment 
+  | RescheduleAppointmentFail 
+  | RescheduleAppointmentSuccess 
   | SearchCalendarAppointmentsFail;

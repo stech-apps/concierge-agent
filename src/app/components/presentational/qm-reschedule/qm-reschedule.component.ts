@@ -5,15 +5,16 @@ import { IBranch } from './../../../../models/IBranch';
 import {
   CalendarBranchSelectors, UserSelectors, BranchSelectors, ReserveDispatchers,
   ReserveSelectors, TimeslotDispatchers, ReservationExpiryTimerDispatchers,
-  AppointmentDispatchers, AppointmentSelectors
+  AppointmentDispatchers, AppointmentSelectors, InfoMsgDispatchers
 } from './../../../../store';
 import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input, SimpleChanges, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import * as moment from 'moment';
 import { IBookingInformation } from 'src/models/IBookingInformation';
 import { CalendarServiceSelectors } from 'src/store/services';
+import { TranslateService } from '@ngx-translate/core';
 
 
 enum RescheduleState {
@@ -36,6 +37,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   public reservableDates: moment.Moment[] = [];
   private serviceSubscription$: Observable<ICalendarService[]>;
   noOfCustomers: number = 1;
+  private rescheduleTime: string;
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
@@ -52,7 +54,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private reserveSelectors: ReserveSelectors, private reserveDispatchers: ReserveDispatchers,
     private calendarServiceSelectors: CalendarServiceSelectors, private timeSlotDispatchers: TimeslotDispatchers,
     private qmModalService: QmModalService, private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
-    private appointmentDispatchers: AppointmentDispatchers, private appointmentSelectors: AppointmentSelectors) {
+    private appointmentDispatchers: AppointmentDispatchers, private appointmentSelectors: AppointmentSelectors,
+    private infoMessageDispatchers: InfoMsgDispatchers, private translationService: TranslateService) {
 
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -118,8 +121,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onTimeSlotSelect(time: CalendarDate){
-
+  onTimeSlotSelect(time: { title: string }) {
+    this.rescheduleTime = time.title;
   }
 
   private getTimeSlots() {
@@ -143,18 +146,43 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   onDeleteAppointment() {
     this.qmModalService.openForTransKeys('', 'confirm_delete', 'yes', 'no', (result) => {
       if (result) {
-        this.appointmentDispatchers.deleteAppointment(this.editAppointment, ()=>{
+        this.appointmentDispatchers.deleteAppointment(this.editAppointment, () => {
           this.onFlowExit.next(true);
-        });
+        },
+          () => {
+            this.onFlowExit.next(true);
+
+            this.translationService.get('appointment_not_found_detail').subscribe((v) => {
+
+              var errorMessage = {
+                firstLineName: v,
+                firstLineText: '',
+                icon: "error"
+              };
+
+              this.infoMessageDispatchers.updateInfoMsgBoxInfo(errorMessage);
+            });
+
+          }
+        );
+      }
+    }, () => {
+      this.onFlowExit.next(true);
+    });
+  }
+
+  onRescheduleAppointment() {
+    this.qmModalService.openForTransKeys('', 'confirm_reschedule', 'yes', 'no', (result) => {
+      if (result) {
+        let rescheduleAppointment = this.editAppointment;
+        rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.format('YYYY-MM-DD')}T${this.rescheduleTime}`;
+        let endTime = moment(rescheduleAppointment.start).add(5, 'minutes');
+        rescheduleAppointment.end = `${endTime.format('YYYY-MM-DD')}T${endTime.format('HH:mm')}`;
+        this.appointmentDispatchers.rescheduleAppointment(rescheduleAppointment);
+        this.onFlowExit.next(true);
       }
     }, () => {
 
     });
-
-
-  }
-
-  onRescheduleAppointment() {
-
   }
 }

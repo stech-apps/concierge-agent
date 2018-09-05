@@ -112,7 +112,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
-    if (this.editAppointment.services && this.editAppointment.services.length > 0) {
+    if (this.editAppointment && this.editAppointment.services && this.editAppointment.services.length > 0) {
       this.currentlyActiveDate = date;
       this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
       this.getTimeSlots();

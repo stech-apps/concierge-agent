@@ -6,7 +6,8 @@ import { catchError, map } from 'rxjs/operators';
 import { Visit } from './../../../models/IVisit';
 import { servicePoint } from './../data.service';
 import { GlobalErrorHandler } from '../../../util/services//global-error-handler.service';
-
+import { formatDate } from '@angular/common';
+import * as moment from 'moment-timezone';
 
 
 
@@ -34,11 +35,8 @@ export class QueueVisitsDataService {
     return result;
 } 
 
-private formatHHMMSSIntoHHMMA (time) {
-  var H = +time.substr(0, 2);
-  var h = H % 12 || 12;
-  var ampm = (H < 12 || H === 24) ? " AM" : " PM";
-  return h + time.substr(2, 3) + ampm;
+private formatHHMMSSIntoHHMMA (time:string) {
+  return time.substring(0,5);
 }
 
 private addHyphonIfInvalidValue(visit) {

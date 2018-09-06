@@ -137,7 +137,7 @@ export class AppointmentEffects {
           var errorMessage = {
             firstLineName: messages['appointment_reschedule_fail'],
             icon: "error"
-          }
+          };
 
           this.toastService.infoToast(action.payload["errorMsg"]);
           return [new AppointmentActions.UpdateMessageInfo(errorMessage)]

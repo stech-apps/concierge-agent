@@ -78,12 +78,11 @@ export function reducer(
             };
           }
 
-        case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS_FAIL: {
+        case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS: {
             return {
                 ...state,
-                loading: false,
-                loaded: true,
-                error: action.payload
+                loading: true,
+                loaded: false
             };
         }
 

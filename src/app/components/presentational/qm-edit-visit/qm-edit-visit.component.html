@@ -5,7 +5,7 @@
       <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-queue dir="{{ userDirection$ | async }}" (onFlowNext)="fa.onFlowNext(iv)"></qm-identify-queue>
+      <qm-identify-queue #ia dir="{{ userDirection$ | async }}" (onFlowNext)="fa.onFlowNext(iv)"></qm-identify-queue>
     </qm-flow-panel-content>
   </qm-flow-panel>
 

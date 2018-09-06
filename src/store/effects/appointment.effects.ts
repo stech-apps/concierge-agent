@@ -115,7 +115,7 @@ export class AppointmentEffects {
       return this.translateService.get(['appointment_reschedule_success', 'appointment_new_date_time']).pipe(
         switchMap((messages) => {
           var successMessage = {
-            firstLineName:messages['appointment_reschedule_success'],
+            firstLineName: messages['appointment_reschedule_success'],
             firstLineText: action.payload.branch.name,
             icon: "correct",
             LastLineName: messages['appointment_new_date_time'],
@@ -127,12 +127,21 @@ export class AppointmentEffects {
     })
     );
 
-  @Effect({ dispatch: false })
+  @Effect()
   rescheduleAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
-    tap((action: AppointmentActions.DeleteAppointmentFail) => {
-      this.toastService
-        .infoToast('appointment_not_found_detail');
+    switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
+      return this.translateService.get(['appointment_reschedule_fail']).pipe(
+        switchMap((messages) => {
+          var errorMessage = {
+            firstLineName: messages['appointment_reschedule_fail'],
+            icon: "error"
+          }
+
+          this.toastService.infoToast(action.payload["errorMsg"]);
+          return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
+        })
+      );
     }));
 }

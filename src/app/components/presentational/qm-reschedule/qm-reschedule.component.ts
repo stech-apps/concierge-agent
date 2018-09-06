@@ -42,6 +42,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   enableReschedule: boolean = false;
   isRescheduleEnabledInUtt: boolean = true;
   isDeleteEnabledInUtt: boolean = true;
+  isOriginalAppointmentTimeChanged = false;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{
@@ -70,6 +71,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     if(changes['editAppointment'] && this.editAppointment) {
       if(moment(this.editAppointment.start).isAfter(moment.now())) {
         this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
+        this.isOriginalAppointmentTimeChanged = false;
       }
       this.fetchReservableDates();
     }
@@ -138,6 +140,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
+      if(moment(this.editAppointment.start).date() !== date.mDate.date()) {
+        this.originalAppointmentTime = null;
+      }
     }
   }
 

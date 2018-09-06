@@ -12,6 +12,8 @@ import { Util } from '../../util';
 import { NOTIFICATION_TYPE } from './calendar.service';
 import { VIP_LEVEL } from '../../flow-state';
 import { IAppointment } from '../../../models/IAppointment';
+import { Queue } from '../../../models/IQueue';
+import { Visit } from '../../../models/IVisit';
 
 
 @Injectable()
@@ -76,6 +78,20 @@ export class SPService implements OnDestroy {
         .pipe(
           catchError(this.errorHandler.handleError())
         );
+  }
+
+  queueTransfer(branch:IBranch,openServicePoint:IServicePoint,ToQueue:Queue,visit:Visit,sortPolicy:string){
+    var requestBody = {
+      fromBranchId:branch.id,
+      fromId:openServicePoint.id,
+      sortPolicy:sortPolicy,
+      visitId:visit[0].visitId
+    }
+    return this.http
+      .put(`${servicePoint}/branches/${branch.id}/queues/${ToQueue.id}/visits`,requestBody)
+      .pipe(
+        catchError(this.errorHandler.handleError())
+      );
   }
 
   createVisit(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, customer: ICustomer, sms: string, isTicketPrint: boolean, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE){

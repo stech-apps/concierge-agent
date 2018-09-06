@@ -2,10 +2,15 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors } from '../../../../store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, ServicePointSelectors, InfoMsgDispatchers } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
+import { QmModalService } from '../qm-modal/qm-modal.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SPService } from '../../../../util/services/rest/sp.service';
+import { IServicePoint } from '../../../../models/IServicePoint';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-trasfer-to-queue',
@@ -21,7 +26,12 @@ export class QmTrasferToQueueComponent implements OnInit {
   sortAscending = true;
   userDirection$: Observable<string>;
   selectedVisit:Visit;
-  DropDownselectedQueue:Visit;
+  DropDownselectedQueue:Queue;
+  btnTransferFirst:boolean;
+  btnTransferLast: boolean;
+  btnTransferSort:boolean;
+  selectedServicePoint:IServicePoint;
+
 
   selectedQueue:Queue;
 
@@ -33,6 +43,13 @@ export class QmTrasferToQueueComponent implements OnInit {
     public queueIndicator: QueueIndicator,
     private queueService: QueueService,
     private userSelectors: UserSelectors,
+    private servicePointSelectors:ServicePointSelectors,
+    private qmModalService:QmModalService,
+    private translateService:TranslateService,
+    private spService:SPService,
+    private router:Router,
+    
+    private   infoMsgBoxDispatcher:InfoMsgDispatchers
   ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
     if (branch) {
       this.selectedBranch = branch;
@@ -47,12 +64,22 @@ const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>
   this.selectedVisit = visit;
 })
 this.subscriptions.add(visitSubscription) 
+  
+const uttpSubscriptions =  this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
+  if(uttpParams){
 
-
-const queuesubscription = this.queueSelectors.selectedQueue$.subscribe ((queue)=>
-{
-  this.selectedQueue = queue;
+    this.btnTransferFirst  = uttpParams.btnTransferFirst;
+    this.btnTransferSort  = uttpParams.btnTransferSort;
+    this.btnTransferLast  = uttpParams.btnTransferLast;
+  }
 })
+this.subscriptions.add(uttpSubscriptions);
+
+const selectedServicePointSubscriptions = this.servicePointSelectors.openServicePoint$.subscribe((sp)=>{
+  this.selectedServicePoint = sp;
+})
+
+this.subscriptions.add(selectedServicePointSubscriptions);
 
 
 }
@@ -99,6 +126,51 @@ selectQueue(q){
   }else{
   this.DropDownselectedQueue = q;
 }
+}
+
+OnTransferButtonClick(type){
+
+  if(this.selectedVisit){
+    this.translateService.get(this.transferVisitMsgBoxText(type),
+    {
+      visit: this.selectedVisit[0].ticketId,
+    }).subscribe(
+      (label: string) => 
+        this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
+          if(result){
+            
+          this.spService.queueTransfer(this.selectedBranch,this.selectedServicePoint,this.DropDownselectedQueue,this.selectedVisit,type).subscribe( result=>{
+           
+            this.translateService.get('visit_transferred').subscribe((label)=>{
+              var successMessage = {
+                firstLineName: label,
+                firstLineText:this.selectedVisit[0].ticketId,
+                icon: "correct",
+              }
+              this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+              this.router.navigate(["/home"]);
+            });
+          }, error => {
+            console.log(error);
+          }
+        )
+          }
+    }, () => {
+    })
+    ).unsubscribe()
+  
+  } 
+}
+
+transferVisitMsgBoxText(type){
+  if(type== "FIRST"){
+    return 'transfer_visit_first_in_line_confirm_box';  
+  } else if(type == "SORTED"){
+    return 'transfer_visit_sorted_in_line_confirm_box';
+  } else{
+    return 'transfer_visit_last_in_line_confirm_box';
+  }
+  
 }
 
 

@@ -26,7 +26,7 @@ export class QmInputboxComponent implements OnInit {
   private subscriptions : Subscription = new Subscription();
   invalidFirstName:boolean;
   invalidLastName:boolean;
-
+  countryCodeNumber:string;
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private activeModal:NgbActiveModal,
@@ -48,7 +48,7 @@ export class QmInputboxComponent implements OnInit {
     }
     });
 
-    const phoneValidators = [Validators.pattern(this.regexvalue())]; 
+    const phoneValidators = [Validators.pattern(this.regexvalue())];    
     const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
  
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
@@ -58,7 +58,7 @@ export class QmInputboxComponent implements OnInit {
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl('',Validators.required,whiteSpaceValidator),
       lastName:new FormControl('',Validators.required,whiteSpaceValidator),
-      phone:new FormControl('',phoneValidators),
+      phone:new FormControl('', phoneValidators),
       email:new FormControl('',emailValidators)
     })
 
@@ -92,10 +92,16 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public regexvalue(){
-    let firstRegx = /^([0-9]{7}[0-9])+|/;
-    let lastRegx = /$/;
-    let regex = new RegExp(firstRegx.source + this.countrycode +lastRegx.source);
-    return regex
+    console.log(this.countrycode[0]);
+    if(this.countrycode[0]=='+'){
+      this.countryCodeNumber = this.countrycode.substring(1); 
+    }else{
+      this.countryCodeNumber = this.countrycode;
+    }
+    let firstRegx = /^(([0-9]{7}[0-9])+)|\+?/;
+    let lastRegx = /$/;    
+     let regex = new RegExp(firstRegx.source +  this.countryCodeNumber +lastRegx.source);
+     return regex
   }
 
   public decline() {

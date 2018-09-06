@@ -2,8 +2,8 @@
 
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
-    <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" #visitSearch  (keydown)="keyDownFunction(35,visitSearch.value.trim())" autocomplete="off"> 
-    <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+    <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" #visitSearch  (keyup.enter)="keyDownFunction(visitSearch.value.trim())" autocomplete="off"> 
+    <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = ''" class="icon-close qm-clear-search" aria-hidden="true"></i>
     <span class="qm-identify-visit-search__or-text"> or_la</span>
     <div class="qm-qr-code-icon"></div>
     </div>

@@ -20,10 +20,11 @@ import { SPService } from '../../../../util/services/rest/sp.service';
 import { IUserStatus } from '../../../../models/IUserStatus';
 import { USER_STATE } from '../../../../util/q-state';
 import { LoginService } from '../../../../util/services/login.service';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd   } from '@angular/router';
 import { PlatformSelectors, AccountDispatchers } from 'src/store/services';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { servicePoint } from '../../../../store/services/data.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'qm-profile',
@@ -46,10 +47,16 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
     private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
+    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, 
+    private ActivatedRoute: ActivatedRoute,
+    private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
+
+      
+    const routerSubscription = this.ActivatedRoute.url.subscribe(url=>{
+      console.log('profile page');
       this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
       console.log(this.isEnableUseDefault);
-      
+
       
       const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
         this.navServicePoint = spo
@@ -106,12 +113,11 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.add(servicePointsSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
 
+    })
+ this.subscriptions.add(routerSubscription);
   }
 
   ngOnInit() {
-
-  
- 
 }
 
   setDefaultServicePoint() {
@@ -237,4 +243,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
    this.router.navigate(['customers']);
     console.log(this.branches)
   }
+
+
 }

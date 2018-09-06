@@ -1,0 +1,160 @@
+@import '../../../../styles/base/_component-manifest.scss';
+.qm-identify-visit-search{
+    width: 100%;
+
+    &__input{
+        padding: 8px;
+        width: 60%;
+        margin: auto;
+      
+        margin-bottom: 5px;
+    }
+    &__search-container{
+            margin-left: 30%;
+    }
+    &__or-text{
+        padding:0px 10px
+    }
+}
+
+
+:host {
+    font-size: rem(14px);
+}
+
+.qm-queue-list {
+    margin: rem($standard-margin * 1.5) rem($standard-margin*0.5) 0 rem($standard-margin*0.5);
+   
+
+   .sort-icon {
+        margin-left: 0.4rem;
+        cursor: pointer;
+   }
+
+   .max-wait-time-container {
+       display: flex;
+       justify-content: center;
+   }
+
+   .max-wait-time {
+        font-size: 1.3rem;
+
+        &.gray-indicator {
+            visibility: hidden;
+        }
+
+        &.red-indicator {
+            color: $queue-indicator-red;
+        }
+
+        &.yellow-indicator {
+            color: $queue-indicator-yellow;
+        }
+   }
+
+    &__headers {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 3rem;
+        margin-right: 2rem;
+        margin-left: 2rem;
+   
+        i {
+            font-size: 1.2rem;
+            padding-right: rem(8px);
+            @at-root [dir="rtl"] & {
+                margin-left: 0.2rem;
+            }
+        }
+    }
+
+    &-header-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 0;
+        text-transform: uppercase;
+
+        &-label {
+          @include add-text-ellipsis;
+          width:inherit;
+      }
+    }
+
+
+
+    &-body-row {
+        background-color: white;
+        color:black;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 3rem;
+        border-bottom: 2px solid $light-gray1;
+        padding: 5px 0px;
+
+
+        &-label {
+          @include add-text-ellipsis;
+          width:inherit;
+      }
+    }
+
+    background-color: $wating-list-background;
+}
+
+[dir='rtl'] :host {
+    .qm-queue-list {
+        i {
+            margin-left: 0.25rem;
+        }
+    }
+}
+
+.qm-clear-search{ 
+    margin: 0px 10px 0px -25px;
+    position: relative;
+    z-index: 2;
+    color: black;
+    @at-root [dir="rtl"] {
+        .qm-clear-search{
+         margin: 0px -25px 0px 10px;
+        }
+       }
+       
+ 
+}
+
+.qm-queue-list__body{
+
+    max-height: calc(100vh - 165px);
+    overflow: auto;
+    display: block;
+}
+
+.qm-queue-transfer-first{
+ width: 48px;
+}
+
+.qm-queue-transfer-time{
+    width:  33px;
+}
+.queue-tray-option {
+    padding: 3px;
+    display: block;
+    text-align: center;
+    margin: auto
+}
+.qm-queue-dropdown{
+    margin: 10px 10% 0px 10%;
+
+}
+.qm-queue-transfer-text{
+    margin: 10px;
+    font-size: 0.85em;
+    color: #797979;
+}
+.qm-dropdown{
+    color:black;background-color: white;box-shadow: 0px 0px 15px 1px grey;position: relative;
+}

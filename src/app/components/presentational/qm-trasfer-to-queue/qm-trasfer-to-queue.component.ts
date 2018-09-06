@@ -7,28 +7,24 @@ import { QueueIndicator } from '../../../../util/services/queue-indication.helpe
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
 
-
 @Component({
-  selector: 'qm-identify-queue',
-  templateUrl: './qm-identify-queue.component.html',
-  styleUrls: ['./qm-identify-queue.component.scss']
+  selector: 'qm-trasfer-to-queue',
+  templateUrl: './qm-trasfer-to-queue.component.html',
+  styleUrls: ['./qm-trasfer-to-queue.component.scss']
 })
-export class QmIdentifyQueueComponent implements OnInit {
-  @Output()
-  onFlowNext: EventEmitter<any> = new EventEmitter<any>();
+export class QmTrasferToQueueComponent implements OnInit {
 
-  
   queueCollection = new Array<Queue>();
   searchText:String;
   private subscriptions: Subscription = new Subscription();
   private selectedBranch: IBranch;
   sortAscending = true;
   userDirection$: Observable<string>;
-  selectedVisit:Visit
+  selectedVisit:Visit;
+  DropDownselectedQueue:Visit;
 
+  selectedQueue:Queue;
 
-  
- 
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -37,26 +33,28 @@ export class QmIdentifyQueueComponent implements OnInit {
     public queueIndicator: QueueIndicator,
     private queueService: QueueService,
     private userSelectors: UserSelectors,
-  ) { 
-    
-    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
-      if (branch) {
-        this.selectedBranch = branch;
-        this.queueDispatchers.fetchQueueInfo(branch.id);
-        this.queueService.setQueuePoll();
-    }
-  });
-  this.subscriptions.add(branchSubscription);
-  this.userDirection$ = this.userSelectors.userDirection$;   
+  ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
+    if (branch) {
+      this.selectedBranch = branch;
+      this.queueDispatchers.fetchQueueInfo(branch.id);
+      this.queueService.setQueuePoll();
+  }
+});
+this.subscriptions.add(branchSubscription);
+this.userDirection$ = this.userSelectors.userDirection$;   
 
-  const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
-    this.selectedVisit = visit;
-    if(this.selectedVisit){
-      if(this.selectedVisit[0]){
-        this.onFlowNext.emit();
-    }}
-  })
-  this.subscriptions.add(visitSubscription)
+const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
+  this.selectedVisit = visit;
+})
+this.subscriptions.add(visitSubscription) 
+
+
+const queuesubscription = this.queueSelectors.selectedQueue$.subscribe ((queue)=>
+{
+  this.selectedQueue = queue;
+})
+
+
 }
 
 ngOnInit() {
@@ -95,16 +93,14 @@ sortQueueList() {
   }
 
 }
-
-
-keyDownFunction(visitSearchText) {
-    this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id,visitSearchText.toUpperCase());
+selectQueue(q){
+  if(this.DropDownselectedQueue ==q){
+    this.DropDownselectedQueue = null;
+  }else{
+  this.DropDownselectedQueue = q;
 }
-
-selectQueue(queue){
-  this.queueDispatchers.setectQueue(queue);
-  this.onFlowNext.emit();
 }
 
 
+  
 }

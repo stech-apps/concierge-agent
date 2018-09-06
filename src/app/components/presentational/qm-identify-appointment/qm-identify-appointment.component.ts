@@ -97,6 +97,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   readonly CREATED_APPOINTMENT_STATE = 'CREATED';
   readonly CREATED_APPOINTMENT_STATE_ID = 20;
+  readonly ARRIVED_APPOINTMENT_STATE_ID = 30;
   readonly ARRIVED_APPOINTMENT_STATE = 'ARRIVED';
 
   isFetchBlock: boolean = false;
@@ -206,11 +207,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const appointmentErrorSub = this.appointmentSelectors.appointmentsError$.subscribe((error: any) => {
       if (error && error.responseData && error.responseData['status'] === 404) {
-        this.translateService.get('appointment_not_found').subscribe(
-          (notfoundString: string) => {
-            this.toastService.infoToast(notfoundString);
-          }
-        ).unsubscribe();
+        this.showAppointmentNotFoundError();
       }
     });
 
@@ -245,6 +242,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(appointmentsLoadedSub);
+  }
+
+  showAppointmentNotFoundError() {
+    this.translateService.get('appointment_not_found').subscribe(
+      (notfoundString: string) => {
+        this.toastService.infoToast(notfoundString);
+      }
+    ).unsubscribe();
   }
 
   readAppointmentFetchTimePeriodFromUtt(params: any) {
@@ -286,7 +291,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
 
       // search appointment is already arrived? then notifiy user
-      if (apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE).length > 0) {
+      if (apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE).length > 0 || (this.useCalendarEndpoint && apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE_ID).length > 0 )) {
         this.translateService.get('appointment_arrived').subscribe(
           (noappointments: string) => {
             this.toastService.infoToast(noappointments);
@@ -312,6 +317,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
+      }
+      else if(this.currentSearchState === this.SEARCH_STATES.ID && this.useCalendarEndpoint && apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE_ID).length === 0) {
+        this.showAppointmentNotFoundError();
       }
     }
   }

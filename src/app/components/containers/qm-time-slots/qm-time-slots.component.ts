@@ -68,9 +68,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(timeSlotSubscription);
     this.subscriptions.add(timeSlotLoadingSubscription);
   }
-
-  getFirst
-
+  
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

@@ -489,8 +489,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onEnterPressed() {
-    if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER) {
-      this.inputChanged.next(this.searchText);
+    if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER ) {
+      if((this.searchText || '').trim()) {
+        this.inputChanged.next(this.searchText);
+      }
+      else if(this.currentSearchState = this.SEARCH_STATES.ID) {
+        this.translateService.get('please_enter_id_and_press_enter').subscribe((msg)=> {
+          this.toastService.infoToast(msg)
+        }).unsubscribe();
+      }      
     }
   }
 
@@ -553,9 +560,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.showCustomerResults = false;
     this.showModalBackDrop = false;
     this.isSearchInputReadOnly = true;
-    this.appointmentDispatchers.searchAppointments({
-      customerId: customer.id
-    })
+    if(this.useCalendarEndpoint) {
+      this.appointmentDispatchers.searchCalendarAppointments({
+        customerId: customer.id
+      });
+    }
+    else {
+      this.appointmentDispatchers.searchAppointments({
+        customerId: customer.id
+      });
+    }
   }
 
   refreshAppointments() {

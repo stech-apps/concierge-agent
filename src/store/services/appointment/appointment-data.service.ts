@@ -65,10 +65,13 @@ export class AppointmentDataService {
     }
 
     if(appointmentSearch.customerId) {
-      searchQuery = `${calendarEndpoint}/appointment/customers/${appointmentSearch.customerId}/appointments`;
+      searchQuery = `${calendarEndpoint}/appointments/customer/${appointmentSearch.customerId}/appointments`;
+    }
+    else {
+      searchQuery += `&timeZoneBranchId=${appointmentSearch.branchId}`;
     }
 
-    searchQuery += `&timeZoneBranchId=${appointmentSearch.branchId}`;
+
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)

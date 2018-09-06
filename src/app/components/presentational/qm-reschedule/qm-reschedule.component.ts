@@ -13,7 +13,7 @@ import { Component, OnInit, OnDestroy, Input, SimpleChanges, EventEmitter, Outpu
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import * as moment from 'moment';
 import { IBookingInformation } from 'src/models/IBookingInformation';
-import { CalendarServiceSelectors } from 'src/store/services';
+import { CalendarServiceSelectors, ServicePointSelectors } from 'src/store/services';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -40,6 +40,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   private rescheduleTime: string;
   originalAppointmentTime: string;
   enableReschedule: boolean = false;
+  isRescheduleEnabledInUtt: boolean = true;
+  isDeleteEnabledInUtt: boolean = true;
+
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
@@ -57,7 +60,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors, private timeSlotDispatchers: TimeslotDispatchers,
     private qmModalService: QmModalService, private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
     private appointmentDispatchers: AppointmentDispatchers, private appointmentSelectors: AppointmentSelectors,
-    private infoMessageDispatchers: InfoMsgDispatchers, private translationService: TranslateService) {
+    private infoMessageDispatchers: InfoMsgDispatchers, private translationService: TranslateService, private servicePointSelectors: ServicePointSelectors) {
 
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -96,6 +99,18 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       }
     });
     */
+
+    const uttSubscription = this.servicePointSelectors.uttParameters$
+    .subscribe(uttParameters => {
+      if (uttParameters) {
+        this.isRescheduleEnabledInUtt = uttParameters.reSheduleAppointment;
+        this.isDeleteEnabledInUtt = uttParameters.delAppointment;
+      }
+    })
+    .unsubscribe();
+
+  this.subscriptions.add(uttSubscription);
+
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(reservableDatesSub);

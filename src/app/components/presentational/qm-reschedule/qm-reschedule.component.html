@@ -5,8 +5,8 @@
       <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
     </div>
 
-    <button class="qm-reschedule-button" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
-    <button class="qm-delete-button" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button>
+    <button class="qm-reschedule-button" *ngIf="isRescheduleEnabledInUtt" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
+    <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button>
   </div>
   <div class="qm-reschedule-select-slots">
     <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>

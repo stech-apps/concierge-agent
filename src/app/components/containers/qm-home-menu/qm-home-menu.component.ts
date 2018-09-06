@@ -37,6 +37,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isCreateAppointment = false;
   userDirection$: Observable<string>;
 
+  isEditFlowDisabled = false;
+
   private subscriptions: Subscription = new Subscription();
 
 
@@ -65,6 +67,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
           this.isAllOutputMethodsDisabled = true;
         }
         this.printerEnabled = uttpParams.printerEnable;
+
+        if(!uttpParams.delAppointment && !uttpParams.reSheduleAppointment){
+          this.isEditFlowDisabled = true;
+        }
       }
 
       if (this.isVisitUser && uttpParams) {
@@ -143,6 +149,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.translateService.get('all_methods_disabled').subscribe(v => {
         this.toastService.infoToast(v);
       })
+    }
+    else if (route == 'edit-appointment' && this.isEditFlowDisabled ) {
+        this.translateService.get('no_actions_available').subscribe(v => {
+          this.toastService.infoToast(v);
+        });
     }
     else {
       this.recycleService.clearCache();

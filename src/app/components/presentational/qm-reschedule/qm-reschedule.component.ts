@@ -69,9 +69,11 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['editAppointment'] && this.editAppointment) {
+      this.enableReschedule = false;
       if(moment(this.editAppointment.start).isAfter(moment.now())) {
         this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
         this.isOriginalAppointmentTimeChanged = false;
+
       }
       this.fetchReservableDates();
     }

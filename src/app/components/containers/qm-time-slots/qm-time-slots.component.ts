@@ -11,6 +11,7 @@ import { TimeslotSelectors } from 'src/store';
   styleUrls: ['./qm-time-slots.component.scss']
 })
 export class QmTimeSlotsComponent implements OnInit, OnDestroy {
+  isTimeSlotLoading: boolean;
 
   timeSlotCategories: Array<ITimeSlotCategory> = [];
   timeSlots: Array<ITimeSlot> = [];
@@ -34,8 +35,6 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     const timeSlotSubscription = this.timeSlotSelectors.times$.subscribe((times) => {
       this.timeSlots = [];
       if (times && times.length > 0) {
-
-
         
         times.forEach((t) => {
           this.timeSlots.push({
@@ -57,14 +56,17 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
           this.timeSlots.sort((a, b) => a.title.localeCompare(b.title));
         }
 
-
-
         this.selectedCategory = this.timeSlots[0].category;
         this.timeSlotCategories.forEach((tc) => tc.isActive = this.selectedCategory == tc.category);
       }
     });
 
+    const timeSlotLoadingSubscription = this.timeSlotSelectors.timeslotsLoading$.subscribe((loading)=> {
+      this.isTimeSlotLoading = loading;
+    });
+
     this.subscriptions.add(timeSlotSubscription);
+    this.subscriptions.add(timeSlotLoadingSubscription);
   }
 
   getFirst

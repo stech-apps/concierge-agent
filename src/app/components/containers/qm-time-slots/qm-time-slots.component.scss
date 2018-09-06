@@ -44,6 +44,10 @@
     height: calc(100vh - 285px);
     overflow-y: auto;
     font-family: $primary-font-family;
+}
 
-
+.qm-loading-timeslots {
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 10;
 }

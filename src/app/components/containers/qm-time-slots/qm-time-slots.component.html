@@ -6,7 +6,11 @@
 </div>
 
 <div class="qm-time-slot-list">
-  <div class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : selectedCategory" [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
+  <ng-container *ngIf="!isTimeSlotLoading">
+  <div  class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : selectedCategory" [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
     {{ts.title}}
   </div>
+  </ng-container>
+
+  <div class="qm-loading-timeslots" *ngIf="isTimeSlotLoading">{{('loading_timeslots' | translate)}}</div>
 </div>

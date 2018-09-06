@@ -7,6 +7,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Val
 import { ICustomer } from '../../../../models/ICustomer';
 import { first } from '../../../../../node_modules/rxjs/operators';
 import { whiteSpaceValidator } from '../../../../util/custom-form-validators';
+import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-inputbox',
@@ -34,7 +35,8 @@ export class QmInputboxComponent implements OnInit {
     private userSelectors:UserSelectors,
     private fb:FormBuilder,
     private customerDispatchers:CustomerDispatchers,
-    private customerSelectors:CustomerSelector
+    private customerSelectors:CustomerSelector,
+    private util: Util
   ) {
     this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -48,8 +50,8 @@ export class QmInputboxComponent implements OnInit {
     }
     });
 
-    const phoneValidators = [Validators.pattern(this.regexvalue())];    
-    const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
+    const phoneValidators = this.util.phoneNoValidator();    
+    const emailValidators = this.util.emailValidator();
  
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
@@ -58,7 +60,7 @@ export class QmInputboxComponent implements OnInit {
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl('',Validators.required,whiteSpaceValidator),
       lastName:new FormControl('',Validators.required,whiteSpaceValidator),
-      phone:new FormControl('', phoneValidators),
+      phone:new FormControl(this.countrycode, phoneValidators),
       email:new FormControl('',emailValidators)
     })
 
@@ -89,19 +91,6 @@ export class QmInputboxComponent implements OnInit {
         })
       }
    
-  }
-
-  public regexvalue(){
-    console.log(this.countrycode[0]);
-    if(this.countrycode[0]=='+'){
-      this.countryCodeNumber = this.countrycode.substring(1); 
-    }else{
-      this.countryCodeNumber = this.countrycode;
-    }
-    let firstRegx = /^(([0-9]{7}[0-9])+)|\+?/;
-    let lastRegx = /$/;    
-     let regex = new RegExp(firstRegx.source +  this.countryCodeNumber +lastRegx.source);
-     return regex
   }
 
   public decline() {

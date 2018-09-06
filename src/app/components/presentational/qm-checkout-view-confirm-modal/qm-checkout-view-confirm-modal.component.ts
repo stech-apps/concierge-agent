@@ -81,8 +81,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.add(themeSubscription);
 
-    const phoneValidators = [Validators.pattern(/^\+?\d+$/), Validators.required, Validators.minLength(9), Validators.maxLength(14)];
-    const emailValidators = [Validators.pattern(/^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/), Validators.required];
+    const phoneValidators = this.util.phoneNoValidator().concat([Validators.required]);
+    const emailValidators = this.util.emailValidator().concat([Validators.required]);
     this.userDirection$ = this.userSelectors.userDirection$;
 
     this.confirmModalForm = new FormGroup({

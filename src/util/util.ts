@@ -1,6 +1,7 @@
 import { ServicePointSelectors } from './../store/services';
 import { Injectable } from '@angular/core';
 import cssVars from 'css-vars-ponyfill';
+import { Validators } from '@angular/forms';
 
 @Injectable()
 export class Util {
@@ -74,5 +75,13 @@ export class Util {
 
     buildPhoneNumber(number: string){
         return number.replace("+", "");
+    }
+
+    phoneNoValidator(){
+        return [Validators.pattern(/^\+?\d+$/), Validators.maxLength(14)]
+    }
+
+    emailValidator(){
+        return [Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)];
     }
 }

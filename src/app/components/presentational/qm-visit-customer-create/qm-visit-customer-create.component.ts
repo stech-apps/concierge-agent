@@ -11,6 +11,7 @@ import {
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
+import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-visit-customer-create',
@@ -26,7 +27,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   invalidFirstName: string;
   invalidLastName: string;
   accept: any;
-  countryCode: String = '';
+  countryCode: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +36,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     private localStorage: LocalStorage,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private util: Util
   ) { 
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
@@ -64,8 +66,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   }
 
   buildCustomerFrom(){
-    const phoneValidators = [Validators.pattern(/^[0-9\+\s]+$/)];
-    const emailValidators = [Validators.pattern( /^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[A-Za-z]{2,4}$/)];
+    const phoneValidators = this.util.phoneNoValidator();
+    const emailValidators = this.util.emailValidator();
   
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl(''),
@@ -109,11 +111,15 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   prepareSaveCustomer(): ICustomer {
     const formModel = this.customerCreateForm.value;
 
+    var phoneNo = formModel.phone as string
+    if(phoneNo === this.countryCode){
+      phoneNo = '';
+    }
     const customer: ICustomer = {
       firstName: formModel.firstName as string,
       lastName: formModel.lastName as string,
       email: formModel.email as string,
-      phone: formModel.phone as string
+      phone: phoneNo
     };
 
     // trim trailing spaces
@@ -140,7 +146,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
 
   clearPhoneNum(){
     this.customerCreateForm.patchValue({
-      phone:''
+      phone: this.countryCode
     });
   }
 

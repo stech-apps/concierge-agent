@@ -49,7 +49,7 @@
                       </div>
                       <div class="qm-input-box__col-2">
                         <input type="text" name='phone' minlength="8" formControlName = "phone" #phone>
-                        <i *ngIf="phone.value.trim()"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                        <i *ngIf="phone.value.trim() && phone.value.trim() != countryCode"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
                       </div>
                     </div>
                   <div class="qm-input-box__row">

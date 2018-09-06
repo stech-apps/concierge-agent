@@ -20,6 +20,7 @@ export class QmEditVisitListComponent implements OnInit,OnDestroy {
  
   private subscriptions: Subscription = new Subscription();
 selectedbranchId:number;
+selectedQueueId:number;
 searchText:String;
 visits:Visit[]=[];
 sortByVisitIdAsc=true;
@@ -35,19 +36,21 @@ sortingIndicator:string = SortBy.VISITID;
     private queueVisitsSelectors:QueueVisitsSelectors
   ) { 
 
+    const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe( queue => {
+      this.selectedQueueId = queue.id;
+    } );
+    this.subscriptions.add(selectedQueueSub);
+
     const branchSub = this.branchSelectors.selectedBranch$.subscribe( branch => {
       this.selectedbranchId = branch.id;
-      if(this.selectedbranchId){
-        this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId,1);
+      if(this.selectedbranchId && this.selectedQueueId){
+        this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId,this.selectedQueueId);
       }
     });
 
     this.subscriptions.add(branchSub);
 
-    const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe( queue => {
-      
-    } );
-    this.subscriptions.add(selectedQueueSub);
+
 
   }
 

@@ -67,6 +67,8 @@ export class AppointmentDataService {
     if(appointmentSearch.customerId) {
       searchQuery = `${calendarEndpoint}/appointment/customers/${appointmentSearch.customerId}/appointments`;
     }
+
+    searchQuery += `&timeZoneBranchId=${appointmentSearch.branchId}`;
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)

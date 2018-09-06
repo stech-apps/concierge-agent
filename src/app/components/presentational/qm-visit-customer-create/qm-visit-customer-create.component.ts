@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
-import { CustomerDispatchers, CustomerSelector } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, ServicePointSelectors } from '../../../../store';
 import {
   FormControl,
   FormGroup,
@@ -26,7 +26,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   invalidFirstName: string;
   invalidLastName: string;
   accept: any;
-
+  countryCode: String = '';
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +34,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     private customerSelectors:CustomerSelector,
     private localStorage: LocalStorage,
     private translateService: TranslateService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private servicePointSelectors: ServicePointSelectors
   ) { 
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
@@ -46,6 +47,13 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       }
     });
     this.subscriptions.add(customerSubscription);
+    
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+        this.countryCode = params.countryCode;
+      }
+    });
+    this.subscriptions.add(servicePointsSubscription);
   }
 
   @Output()
@@ -62,7 +70,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl(''),
       lastName:new FormControl(''),
-      phone:new FormControl('',phoneValidators),
+      phone:new FormControl(this.countryCode, phoneValidators),
       email:new FormControl('',emailValidators)
     })
   }
@@ -73,7 +81,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       firstName: '',
       lastName: '',
       email: '',
-      phone: ''
+      phone: this.countryCode
     });
   }
 

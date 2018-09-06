@@ -146,16 +146,6 @@ export class QmSelectServiceComponent implements OnInit {
         }
       });
       this.subscriptions.add(calendarServiceLoadedSubscription);
-
-
-      const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-        if(params){
-          this.multiServiceEnabled = params.mltyService;
-          this.mostFrequentServiceCount = params.serviceThreshold2ShowHideServiceCategories;
-          this.searchFieldServiceCount = params.serviceThreshold2ShowHideSearchArea;
-        }
-      });
-      this.subscriptions.add(servicePointsSubscription);
     }
 
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
@@ -173,6 +163,15 @@ export class QmSelectServiceComponent implements OnInit {
       });
       this.subscriptions.add(appointmentSubscription);
     }
+
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+        this.multiServiceEnabled = params.mltyService;
+        this.mostFrequentServiceCount = params.serviceThreshold2ShowHideServiceCategories;
+        this.searchFieldServiceCount = params.serviceThreshold2ShowHideSearchArea;
+      }
+    });
+    this.subscriptions.add(servicePointsSubscription);
 
     this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
@@ -428,10 +427,16 @@ export class QmSelectServiceComponent implements OnInit {
       if(this.serviceList.length >= this.mostFrequentServiceCount){
         this.mostFrequentServiceList = tempList;
       }
+      else{
+        this.mostFrequentServiceList = [];
+      }
     }
     else{
       if(this.serviceList.length >= this.mostFrequentServiceCount){
         this.mostFrequentServiceList = currentList;
+      }
+      else{
+        this.mostFrequentServiceList = [];
       }
     }
   }

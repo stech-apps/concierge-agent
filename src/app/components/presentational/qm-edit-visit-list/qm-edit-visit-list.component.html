@@ -1,7 +1,7 @@
 
 <div class="qm-flow-sub-header">
 
-    <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
+    <div class="qm-identify-visit-search">
       <div class="qm-identify-visit-search__search-container">
       <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch" name="q" [(ngModel)]="searchText" #visitSearch  (keydown)="keyDownFunction($event,visitSearch.value.trim())" autocomplete="off"> 
       <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>

@@ -360,10 +360,12 @@ export class QmSelectServiceComponent implements OnInit {
       serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
     }
 
-    serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
+    if(serviceIds !== null && serviceIds !== undefined){
+      serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
 
-    if(serviceIds.length > this.mostFrequentServiceCount){
-      serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount);
+      if(serviceIds.length > this.mostFrequentServiceCount){
+        serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount);
+      }
     }
 
     return serviceIds;

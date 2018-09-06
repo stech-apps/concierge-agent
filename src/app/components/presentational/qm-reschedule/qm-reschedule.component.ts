@@ -38,7 +38,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   private serviceSubscription$: Observable<ICalendarService[]>;
   noOfCustomers: number = 1;
   private rescheduleTime: string;
-  private originalAppointmentTime: string;
+  originalAppointmentTime: string;
   enableReschedule: boolean = false;
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[] = [{

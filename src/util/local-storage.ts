@@ -4,6 +4,7 @@ import { IAccount } from '../models/IAccount';
 import { IBranch } from '../models/IBranch';
 import { IServicePoint } from '../models/IServicePoint';
 import { IService } from '../models/IService';
+import { FLOW_TYPE } from './flow-state';
 
 export enum STORAGE_KEY {
     SETTINGS = "SETTINGS",
@@ -13,6 +14,7 @@ export enum STORAGE_KEY {
 export enum STORAGE_SUB_KEY {
     MOST_FRQUENT_SERVICES = "frequent_services",
     MOST_FRQUENT_SERVICES_APPOINTMENT = "appointment_frquent_services",
+    MOST_FRQUENT_SERVICES_CREATE_APPOINTMENT = "create_appointment_frquent_services",
     MULTI_SERVICE_ENABLE_CV = "multi_service_CV",
     MULTI_SERVICE_ENABLE_CA = "multi_service_CA",
     MULTI_SERVICE_ENABLE_AA = "multi_service_AA",
@@ -136,4 +138,23 @@ export class LocalStorage {
             }
         }
     }
+
+    getStorageKey(flowType: FLOW_TYPE){
+        var storageKey = STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES;
+    
+        switch(flowType) {
+          case FLOW_TYPE.CREATE_VISIT:
+              storageKey = STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES;
+              break;
+          case FLOW_TYPE.ARRIVE_APPOINTMENT:
+              storageKey = STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT;
+              break;
+          case FLOW_TYPE.CREATE_APPOINTMENT:
+              storageKey = STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_CREATE_APPOINTMENT;
+              break;
+          default:
+              storageKey = STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES;
+        }
+        return storageKey;
+      }
 }

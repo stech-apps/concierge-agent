@@ -709,27 +709,26 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   saveFrequentService() {
     var serviceList = [];
+    if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       this.selectedServices.forEach(val => {
-        var idObj = { "id" : val.id, "publicId" : val.publicId, "qpId" : val.qpId, "usage" : 0 }
+        var idObj = { "id" : val.id, "usage" : 0 }
         serviceList.push(idObj);
       })
-    if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT, this.getMostFrequnetServices(serviceList));
     }
-    else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, this.getMostFrequnetServices(serviceList));
+    else if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+      this.selectedServices.forEach(val => {
+        var idObj = { "publicId" : val.publicId, "usage" : 0 }
+        serviceList.push(idObj);
+      })
     }
+    this.localStorage.setStoreValue(this.localStorage.getStorageKey(this.flowType), this.getMostFrequnetServices(serviceList));
   }
 
   getMostFrequnetServices(serviceList: any) {
-    var serviceIds = null;
     var tempList = serviceList;
-    if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
-      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
-    }
-    else {
-      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
-    }
+    
+
+  var serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
 
     if(serviceIds){
       tempList = serviceIds.concat(serviceList);
@@ -746,19 +745,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     tempList.forEach(val => {
       var elementPos = -1;
-      if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
         elementPos = serviceList.map(function(x) {return x.id; }).indexOf(val.id);
       }
       else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
         elementPos = serviceList.map(function(x) {return x.publicId; }).indexOf(val.publicId);
-      }
-      else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-        if(val.qpId){
-          elementPos = serviceList.map(function(x) {return x.qpId; }).indexOf(val.qpId);
-        }
-        else{
-          elementPos = serviceList.map(function(x) {return x.id; }).indexOf(val.id);
-        }
       }
       
       if(elementPos >= 0){

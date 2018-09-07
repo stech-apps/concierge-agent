@@ -360,13 +360,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   getMostFrequnetServices(){
-    var serviceIds = null;
-    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
-      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES);
-    }
-    else{
-      serviceIds = this.localStorage.getStoreForKey(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES_APPOINTMENT);
-    }
+    var serviceIds = serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
 
     if(serviceIds !== null && serviceIds !== undefined){
       serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
@@ -388,19 +382,11 @@ export class QmSelectServiceComponent implements OnInit {
     var currentList = [];
     serviceIds.forEach(val => {
       var tempObj = this.serviceList.filter(obj => {
-        if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+        if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
           return val.id === obj.id;
         }
         else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
           return val.publicId === obj.publicId;
-        }
-        else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-          if(val.qpId){
-            return val.qpId === obj.id;
-          }
-          else{
-            return val.id === obj.id;
-          }
         }
       })
 
@@ -413,21 +399,13 @@ export class QmSelectServiceComponent implements OnInit {
       var tempList = [];
       currentList.forEach(val => {
         var elementPos = 1;
-        if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+        if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
           elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
         }
         else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
           elementPos = this.selectedServiceList.map(function(x) {
             return x.publicId; 
           }).indexOf(val.publicId);
-        }
-        else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-          if(val.qpId){
-            elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.qpId);
-          }
-          else{
-            elementPos = this.selectedServiceList.map(function(x) {return x.id; }).indexOf(val.id);
-          }
         }
         if(elementPos < 0){
           tempList.push(val);

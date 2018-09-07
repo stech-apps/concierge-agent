@@ -89,7 +89,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     selected: true
   }];
 
-  selectedBranchFormatted = {selectedBranch: ''} ;
+  selectedBranchFormatted = { selectedBranch: ''} ;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',

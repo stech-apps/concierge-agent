@@ -146,7 +146,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   onTimeSlotSelect(time: { title: string }) {
     this.rescheduleTime = time.title;
-    this.enableReschedule = this.editAppointment.start.slice(0, 16) != (this.currentlyActiveDate.mDate.clone().format('YYYY-MM-DD') + 'T' + time.title);
+    this.enableReschedule = moment(this.editAppointment.start).tz(this.selectedCalendarBranch.fullTimeZone).format('YYYY-MM-DD HH:mm') != (this.currentlyActiveDate.mDate.clone().format('YYYY-MM-DD') + ' ' + time.title);
   }
 
   private getTimeSlots() {

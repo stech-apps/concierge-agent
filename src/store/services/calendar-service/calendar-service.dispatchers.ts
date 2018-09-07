@@ -30,4 +30,12 @@ export class CalendarServiceDispatchers {
   setCalendarServiceSelected(val: boolean){
     this.store.dispatch(new ServiceActions.ServiceSelectionCompleted(val));
   }
+
+  setInitialService(services: ICalendarService[]){
+    this.store.dispatch(new ServiceActions.SetInitialCalendarServices(services));
+  }
+
+  resetInitialServices(){
+    this.store.dispatch(new ServiceActions.SetInitialCalendarServices(null));
+  }
 }

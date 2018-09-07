@@ -157,7 +157,6 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     }
     else {
       this.recycleService.clearCache();
-      this.recycleService.removeInitialCalendarCache();
       this.queueService.stopQueuePoll();
       this.router.navigate(['home/' + route]);
     }

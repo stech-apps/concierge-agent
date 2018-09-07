@@ -28,6 +28,7 @@ export class QmSelectServiceComponent implements OnInit {
   selectedServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   mostFrequentServiceList: IServiceViewModel[] = new Array<IServiceViewModel>();
   selectedBranch: IBranch;
+  loginBranch: IBranch;
   isMultiServiceOn: boolean;
   private maxServiceSelection = 5;
   filterText: string = '';
@@ -40,6 +41,8 @@ export class QmSelectServiceComponent implements OnInit {
 
   mostFrequentServiceCount = 5;
   searchFieldServiceCount = 10;
+
+  isInitialServiceLoaded = false;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -109,43 +112,46 @@ export class QmSelectServiceComponent implements OnInit {
       this.subscriptions.add(serviceLoadedSubscription);
     }
     else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
+
+      const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.loginBranch = branch);
+      this.subscriptions.add(branchSubscription);
+
+      const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
+        this.selectedBranch = branch;
+        if(branch.id !== -1 && this.selectedBranch.id !== this.loginBranch.id){
+          this.selectedServiceList = [];
+          this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
+        }
+      });
+      this.subscriptions.add(calendarBranchSubscription);
+
+      const initialCalendarServiceSubscription = this.calendarServiceSelectors.initialService$.subscribe((services) => {
+        if(services === null){
+          this.isInitialServiceLoaded = false;
+          this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
+        }
+        else{
+          if(this.selectedBranch.id === this.loginBranch.id){
+            this.calendarServiceDispatchers.setInitialService(services);
+          }
+        }
+      });
+      this.subscriptions.add(initialCalendarServiceSubscription);
+
       // calendar branch subscription
       const calendarServiceSubscription = this.calendarServiceSelectors.services$.subscribe((services) => {
         this.serviceList = <Array<IServiceViewModel>>services;
         if(this.serviceList !== null){
           this.filteredServiceList = <Array<IServiceViewModel>>services;
           this.checkMostFrequentService();
+
+          if(this.selectedBranch.id === this.loginBranch.id && this.isInitialServiceLoaded === false){
+            this.isInitialServiceLoaded = true;
+            this.calendarServiceDispatchers.setInitialService(services);
+          }
         }
       });
       this.subscriptions.add(calendarServiceSubscription);
-
-      const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
-        if((this.selectedBranch as ICalendarBranch) !== branch){
-          if(this.selectedBranch !== undefined){
-            this.calendarServiceDispatchers.removeFetchService();
-          }
-          if(branch.id != -1 && this.serviceList === null){
-            this.selectedServiceList = [];
-            this.calendarServiceDispatchers.setSelectedServices([]);
-            this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
-          }
-        }
-        this.selectedBranch = branch;
-      });
-      this.subscriptions.add(calendarBranchSubscription);
-
-      this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
-
-      const calendarServiceLoadedSubscription = this.calendarServiceSelectors.isCalendarServiceLoaded$.subscribe((val) => {
-        if(!val){
-          if(this.selectedBranch.id != -1){
-            this.selectedServiceList = [];
-            this.calendarServiceDispatchers.setSelectedServices([]);
-            this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
-          }
-        }
-      });
-      this.subscriptions.add(calendarServiceLoadedSubscription);
     }
 
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
@@ -363,7 +369,7 @@ export class QmSelectServiceComponent implements OnInit {
       serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
 
       if(serviceIds.length > this.mostFrequentServiceCount){
-        serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount);
+        serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount + 1);
       }
     }
 

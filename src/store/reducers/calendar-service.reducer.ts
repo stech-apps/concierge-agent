@@ -4,25 +4,23 @@ import { IServiceGroup } from '../../models/IServiceGroup';
 
 export interface ICalendarServiceState {
     services: ICalendarService[];
-    serviceGroups: IServiceGroup[];
+    initialServices: ICalendarService[];
     selectedServices: ICalendarService[];
     searchText: string;
     loading: boolean;
     loaded: boolean;
     error: Object;
-    serviceLoaded: boolean;
     serviceSelectionCompleted: boolean;
   }
   
   export const initialState: ICalendarServiceState = {
     services: null,
-    serviceGroups: [],
+    initialServices: null,
     selectedServices: [],
     searchText: '',
     loading: false,
     loaded: false,
     error: null,
-    serviceLoaded: false,
     serviceSelectionCompleted: false
   };
   
@@ -36,7 +34,6 @@ export interface ICalendarServiceState {
           ...state,
           loading: true,
           error: null,
-          serviceLoaded: false,
           serviceSelectionCompleted: false
         };
       }
@@ -44,10 +41,10 @@ export interface ICalendarServiceState {
         return {
           ...state,
           services: sortServices(concatService(action.payload)),
+          selectedServices: [],
           loading: false,
           loaded: true,
           error: null,
-          serviceLoaded: true,
           serviceSelectionCompleted: false
         };
       }
@@ -93,13 +90,20 @@ export interface ICalendarServiceState {
       case ServiceActions.REMOVE_FETCH_SERVICES: {
         return {
           ...state,
-          serviceLoaded : false
+          services: null
         };
       }
       case ServiceActions.SERVICES_SELECTION_COMPLETED: {
         return {
           ...state,
           serviceSelectionCompleted : true
+        };
+      }
+      case ServiceActions.SET_INITIAL_CALENDAR_SERVICES: {
+        return {
+          ...state,
+          initialServices: action.payload,
+          services: action.payload
         };
       }
       default: {

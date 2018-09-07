@@ -14,19 +14,14 @@ const getAllServices = createSelector(
   (state: ICalendarServiceState) => state.services
 );
 
+const getInitialServices = createSelector(
+  getServiceState,
+  (state: ICalendarServiceState) => state.initialServices
+);
+
 export const getSelectedCalendarServices = createSelector(
   getServiceState,
   (state: ICalendarServiceState) => state.selectedServices
-);
-
-export const getServiceGroups = createSelector(
-  getServiceState,
-  (state: ICalendarServiceState) => state.serviceGroups
-);
-
-export const isCalendarServiceLoaded = createSelector(
-  getServiceState,
-  (state: ICalendarServiceState) => state.serviceLoaded
 );
 
 export const isCalendarServiceSelected = createSelector(
@@ -40,6 +35,6 @@ export class CalendarServiceSelectors {
   // selectors$
   services$ = this.store.select(getAllServices);
   selectedServices$ = this.store.select(getSelectedCalendarServices);
-  isCalendarServiceLoaded$ = this.store.select(isCalendarServiceLoaded);
   isCalendarServiceSelected$ = this.store.select(isCalendarServiceSelected);
+  initialService$ = this.store.select(getInitialServices);
 }

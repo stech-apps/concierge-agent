@@ -286,7 +286,11 @@
       <div class="qm-command-buttons-container">
         <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
         <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>
-      </div>
+      </div>     
+    </div>
+    <div class="qm-date-time-selection-footer-text" *ngIf="useCalendarEndpoint && currentSearchState === SEARCH_STATES.DURATION 
+    && showModalBackDrop">
+      {{'current_branch_only' | translate: selectedBranchFormatted}}
     </div>
   </div>
 

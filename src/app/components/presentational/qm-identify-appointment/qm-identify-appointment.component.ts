@@ -89,6 +89,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     selected: true
   }];
 
+  selectedBranchFormatted = {selectedBranch: ''} ;
+
   readonly SEARCH_STATES = {
     DURATION: 'duration',
     DURATION_WITH_DATE: 'durationWithDate',
@@ -181,8 +183,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((br) => {
       this.selectedBranch = br;
-
-     
+      this.selectedBranchFormatted.selectedBranch = br.name;     
     });
 
 

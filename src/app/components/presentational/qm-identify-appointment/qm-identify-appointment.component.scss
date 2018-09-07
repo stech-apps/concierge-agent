@@ -489,3 +489,13 @@
     margin-bottom: 135px;
   }
 }
+
+.qm-date-time-selection-footer-text {
+  position: fixed;
+  color: black;
+  background-color: $white;
+  letter-spacing: 2px;
+  font-size: 13px;
+  top: 685px;
+  padding: 5px 50px;
+}

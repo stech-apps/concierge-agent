@@ -33,13 +33,14 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
   private branchSubscription$: Observable<ICalendarBranch | IBranch>;
-  selectedBranch: ICalendarBranch | IBranch;
   public reservableDates: moment.Moment[] = [];
   private serviceSubscription$: Observable<ICalendarService[]>;
-  noOfCustomers: number = 1;
+  private selectedCalendarBranch: ICalendarBranch;
   private rescheduleTime: string;
+  noOfCustomers: number = 1;
   originalAppointmentTime: string;
   enableReschedule: boolean = false;
+  selectedBranch: ICalendarBranch | IBranch;
   isRescheduleEnabledInUtt: boolean = true;
   isDeleteEnabledInUtt: boolean = true;
   isOriginalAppointmentTimeChanged = false;
@@ -61,7 +62,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors, private timeSlotDispatchers: TimeslotDispatchers,
     private qmModalService: QmModalService, private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
     private appointmentDispatchers: AppointmentDispatchers, private appointmentSelectors: AppointmentSelectors,
-    private infoMessageDispatchers: InfoMsgDispatchers, private translationService: TranslateService, private servicePointSelectors: ServicePointSelectors) {
+    private calendarBranchSelectors: CalendarBranchSelectors, private infoMessageDispatchers: InfoMsgDispatchers,
+    private translationService: TranslateService, private servicePointSelectors: ServicePointSelectors) {
 
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -70,10 +72,12 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['editAppointment'] && this.editAppointment) {
       this.enableReschedule = false;
-      if(moment(this.editAppointment.start).isAfter(moment.now())) {
-        this.originalAppointmentTime = moment(this.editAppointment.start).format('HH:mm');
+      window['moment'] = moment;
+      const calculatedAppointmentTime = moment(this.editAppointment.start).tz(this.selectedCalendarBranch.fullTimeZone);
+      if(calculatedAppointmentTime.isAfter(moment.now())) {
+        this.originalAppointmentTime = calculatedAppointmentTime.format('HH:mm');
+        this.selectedDates = [{selected: true, mDate: calculatedAppointmentTime}];
         this.isOriginalAppointmentTimeChanged = false;
-
       }
       this.fetchReservableDates();
     }
@@ -92,18 +96,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.selectedServices = s;
     });
 
-    /*const appointmentLoadingSub = this.appointmentSelectors.appointmentsLoading$.subscribe((loading) => {
-      if (!loading && this.currentRescheduleState == RescheduleState.OnDeletion) {
-        this.currentRescheduleState = RescheduleState.Default;
-        this.appointmentSelectors.appointmentsError$.subscribe((err) => {
-          if (err === null) {
-              
-          }
-        }).unsubscribe();
-      }
-    });
-    */
-
     const uttSubscription = this.servicePointSelectors.uttParameters$
     .subscribe(uttParameters => {
       if (uttParameters) {
@@ -113,9 +105,13 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     })
     .unsubscribe();
 
-  this.subscriptions.add(uttSubscription);
+    const calendarBranchsSub = this.calendarBranchSelectors.branches$.subscribe((bs) => {
+      this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id)
+  }); 
 
+  this.subscriptions.add(calendarBranchsSub);
 
+   this.subscriptions.add(uttSubscription);
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(reservableDatesSub);
     this.subscriptions.add(serviceSubscription);

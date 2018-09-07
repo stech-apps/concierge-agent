@@ -61,6 +61,9 @@
     &:not(:last-child) {
       border-right: 1px solid #ccc;
     }
+    &.today {
+      background-color: $calendar-today-background;
+    }
     &.selected {
       background-color: $app-theme;
       color: $primary-text-color;

@@ -102,8 +102,13 @@ export interface ICalendarServiceState {
       case ServiceActions.SET_INITIAL_CALENDAR_SERVICES: {
         return {
           ...state,
-          initialServices: action.payload,
-          services: action.payload
+          initialServices: state.services,
+        };
+      }
+      case ServiceActions.SET_CALENDAR_SERVICES_FROM_CACHE: {
+        return {
+          ...state,
+          services: state.initialServices,
         };
       }
       default: {

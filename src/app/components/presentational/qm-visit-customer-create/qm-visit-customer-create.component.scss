@@ -13,11 +13,10 @@
     color: $white;
     display: flex;
     padding: 0.5rem;
-    max-width: 65%;
-    min-width: 50%;
+    width: 98%;
 }
 
-.qm-clear{   
+.qm-clear-customer{   
   display: flex;
   display: inline-block;
   vertical-align: middle;
@@ -25,16 +24,21 @@
   z-index: 2;
   color: white;
   cursor: pointer;
-  @at-root [dir="rtl"] & {
-     margin:10px -25px 10px 10px;
+}
+
+[dir='rtl'] :host {
+    .qm-clear-customer{ 
+        margin: 10px -25px 10px 10px;
     }
-  
 }
 
 .qm-identify__customer-select-container{
     margin-top:10px;
     display: flex;
     justify-content: center;
+    width: 62%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .qm-input-box{

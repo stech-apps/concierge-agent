@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
-import { CustomerDispatchers, CustomerSelector, ServicePointSelectors } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, ServicePointSelectors, UserSelectors } from '../../../../store';
 import {
   FormControl,
   FormGroup,
@@ -88,11 +88,15 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   }
 
   trimCustomer(){
+    var phoneNo = this.currentCustomer.phone.trim()
+    if(phoneNo === "" || phoneNo === null){
+      phoneNo = this.countryCode;
+    }
     this.customerCreateForm.patchValue({
       firstName: this.currentCustomer.firstName.trim(),
       lastName: this.currentCustomer.lastName.trim(),
       email: this.currentCustomer.email.trim(),
-      phone: this.currentCustomer.phone.trim()
+      phone: phoneNo
     });
   }
 

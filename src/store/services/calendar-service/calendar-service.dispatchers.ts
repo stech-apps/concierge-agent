@@ -31,11 +31,11 @@ export class CalendarServiceDispatchers {
     this.store.dispatch(new ServiceActions.ServiceSelectionCompleted(val));
   }
 
-  setInitialService(services: ICalendarService[]){
-    this.store.dispatch(new ServiceActions.SetInitialCalendarServices(services));
+  setInitialService(){
+    this.store.dispatch(new ServiceActions.SetInitialCalendarServices());
   }
 
-  resetInitialServices(){
-    this.store.dispatch(new ServiceActions.SetInitialCalendarServices(null));
+  setCalendarServiceFromCache(){
+    this.store.dispatch(new ServiceActions.SetCalendarServicesFromCache());
   }
 }

@@ -517,14 +517,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onEnterPressed() {
     if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER ) {
-      if((this.searchText || '').trim()) {
-        if(this.currentSearchState === this.SEARCH_STATES.ID && !(/^-{0,1}\d+$/.test(this.searchText))) {
+      const trimmedSearchText =  (this.searchText || '').trim();
+      if(trimmedSearchText) {
+        if(this.currentSearchState === this.SEARCH_STATES.ID && !(/^-{0,1}\d+$/.test(trimmedSearchText))) {
           this.translateService.get('appointment_invalid_entry').subscribe((msg)=> {
             this.toastService.infoToast(msg)
           }).unsubscribe();
         }
         else {
-          this.inputChanged.next(this.searchText);
+          this.inputChanged.next(trimmedSearchText);
         }       
       }
       else if(this.currentSearchState = this.SEARCH_STATES.ID) {

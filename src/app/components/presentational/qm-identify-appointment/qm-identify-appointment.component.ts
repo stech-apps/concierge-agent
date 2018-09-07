@@ -386,6 +386,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
     else if (searchButton === this.SEARCH_STATES.DURATION) {
       this.setDefaultDuration();
+      if(this.enableSearchByDay) {
+        this.isInDateDurationSelection = true;
+      }
     }
 
     if (this.inputAnimationState == searchButton || (this.inputAnimationState == this.SEARCH_STATES.DURATION_WITH_DATE 

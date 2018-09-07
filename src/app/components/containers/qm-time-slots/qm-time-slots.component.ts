@@ -45,18 +45,22 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
         });
 
         if(this.preselectedTimeSlot) {
+          const preselectedTimeSlotCategory = this.addCategory(this.preselectedTimeSlot);
           this.timeSlots.push(
             {
               title: this.preselectedTimeSlot,
               isActive: true,
-              category: this.addCategory(this.preselectedTimeSlot)
+              category: preselectedTimeSlotCategory
             }
           );
 
           this.timeSlots.sort((a, b) => a.title.localeCompare(b.title));
+          this.selectedCategory = preselectedTimeSlotCategory;
+        }
+        else {
+          this.selectedCategory = this.timeSlots[0].category;
         }
 
-        this.selectedCategory = this.timeSlots[0].category;
         this.timeSlotCategories.forEach((tc) => tc.isActive = this.selectedCategory == tc.category);
       }
     });
@@ -101,7 +105,6 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   }
 
   timeSlotCategorySelect(timeSlotCategory: ITimeSlotCategory) {
-
     this.timeSlotCategories.forEach((ts) => {
       ts.isActive = false;
     });

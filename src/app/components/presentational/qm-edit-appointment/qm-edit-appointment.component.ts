@@ -43,6 +43,7 @@ export class QmEditAppointmentComponent implements OnInit, OnDestroy {
 
   onAppointmentDeselected(appointment: IAppointment) {
     this.selectedAppointment = null;
+    this.selectedCustomer = null;
   }
 
 

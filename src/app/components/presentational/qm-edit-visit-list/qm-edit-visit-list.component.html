@@ -1,68 +1,205 @@
-
 <div class="qm-flow-sub-header">
 
-    <div class="qm-identify-visit-search">
-      <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch" name="q" [(ngModel)]="searchText" #visitSearch  (keydown)="keyDownFunction($event,visitSearch.value.trim())" autocomplete="off"> 
+  <div class="qm-identify-visit-search">
+    <div class="qm-identify-visit-search__search-container">
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch"
+        name="q" [(ngModel)]="searchText" #visitSearch (keydown)="keyDownFunction($event,visitSearch.value.trim())" autocomplete="off">
       <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>
       <span class="qm-identify-visit-search__or-text"> or_la</span>
       <div class="qm-qr-code-icon"></div>
-      </div>
     </div>
-  
   </div>
-  
-  
-  <div class="qm-visit-list__container">
-      <div class="qm-visit-list">
-          <div class="qm-visit-list__headers qm-flex-grid">
-            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
-              <div class="qm-visit-list-header-item-label">{{'visit_id_label' | translate}}</div>
-              <div *ngIf="sortingIndicator==='VISITID'" ><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc === true, 'icon-caret-down': sortByVisitIdAsc !==  true }"></i></div>
-            </div>
-            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByCustomer()">
-              <div>
-                <i class="icon-customer-solid" aria-hidden="true"></i>
-              </div>
-              <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
-              <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc === true, 'icon-caret-down': sortByCustomerAsc !==  true }"></i></div>
-            </div>
-  
-            <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByService()">
-                <div>
-                  <i class="icon-service-solid" aria-hidden="true"></i>
-                </div>
-                <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
-                <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc === true, 'icon-caret-down': sortByServiceAsc !==  true }"></i></div>
-            </div>
 
-            <div class="qm-visit-list-header-item qm-col qm-flex-grid">
-                <div>
-                  <i class="icon-clock-solid" aria-hidden="true"></i>
-                </div>
-                <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
-            </div>
+</div>
 
 
-            <div class="qm-visit-list-header-item qm-col qm-flex-grid">
-                <div>
-                  <i class="icon-clock-solid" aria-hidden="true"></i>
-                </div>
-                <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
-            </div>
-          
-          </div>
-        
-          <div class="qm-visit-list__body">
-            <div class="qm-flex-grid qm-visit-list-body-row" *ngFor="let visit of visits; index as i" (click)="selectVisit(i)">
-                <div class="qm-col qm-visit-list-body-row-label">{{visit.ticketNumber}}</div>
-                <div class="qm-col">{{visit.customerName }}</div>
-                <div class="qm-col "> {{visit.serviceName }} </div>
-                <div class="qm-col "> {{visit.appointmentTime }} </div>
-                <div class="qm-col">{{ visit.waitingTimeStr }}</div>
-            </div>
+<div class="qm-visit-list__container">
+  <div class="qm-visit-list">
+    <div class="qm-visit-list__headers qm-flex-grid">
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
+        <div class="qm-visit-list-header-item-label">{{'visit_id_label' | translate}}</div>
+        <div *ngIf="sortingIndicator==='VISITID'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc === true, 'icon-caret-down': sortByVisitIdAsc !==  true }"></i></div>
+      </div>
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByCustomer()">
+        <div>
+          <i class="icon-customer-solid" aria-hidden="true"></i>
+        </div>
+        <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
+        <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc === true, 'icon-caret-down': sortByCustomerAsc !==  true }"></i></div>
+      </div>
+
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByService()">
+        <div>
+          <i class="icon-service-solid" aria-hidden="true"></i>
+        </div>
+        <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
+        <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc === true, 'icon-caret-down': sortByServiceAsc !==  true }"></i></div>
+      </div>
+
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+        <div>
+          <i class="icon-clock-solid" aria-hidden="true"></i>
+        </div>
+        <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
+      </div>
+
+
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+        <div>
+          <i class="icon-clock-solid" aria-hidden="true"></i>
+        </div>
+        <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
+      </div>
+
+    </div>
+
+    <div class="qm-visit-list__body">
+      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits" [class.qm-visit-list-body-row-container-shadow]="visitClicked && selectedVisitID === visit.id " (click)="selectVisit(visit.id)">
+      <div class="qm-flex-grid qm-visit-list-body-row" >
+        <div class="qm-col qm-visit-list-body-row-caret-view">
+            <div *ngIf="visitClicked && selectedVisitID === visit.id "><i class=" icon-caret-down sort-icon" ></i></div>
+        <div class="qm-visit-list-body-row-label">  {{visit.ticketNumber}} </div> 
+        </div>
+        <div class="qm-col">{{visit.customerName }}</div>
+        <div class="qm-col "> {{visit.serviceName }} </div>
+        <div class="qm-col "> {{visit.appointmentTime }} </div>
+        <div class="qm-col">{{ visit.waitingTimeStr }}</div>
+
+      
+      </div>
+
+      <div *ngIf="visitClicked && selectedVisitID === visit.id " class="qm-visit-list__options">
+          <div class="qm-visit-list__options__container">
+  
+            <span class="visit-tray-option visit-transfer-queue-btn">
+              <span class="transQIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.37 80"><defs>
+                    <style>
+                      .cls-1 {
+                        fill: #2b2b2b;
+                      }
+                    </style>
+                  </defs>
+                  <title>TransferQueue</title>
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                      <path class="cls-1" d="M32.56,14.33l13,13L32.63,40.26a2.54,2.54,0,0,1-3.6-3.6l6.14-6.14h-32a3.18,3.18,0,1,1,0-6.36h32L29,17.93a2.54,2.54,0,1,1,3.6-3.6Z"
+                      />
+                      <path class="cls-1" d="M158.32,67.74c-1.06-9-3-12.52-8-17.84-6.34-6.68-15.12-7.4-16.82-7.48l-.44,0a19.52,19.52,0,0,0,7-15.24,19.49,19.49,0,0,0-5.16-13.32,17,17,0,0,0-17.36-4.92,17.44,17.44,0,0,0-8.12,5.14l-.76.9-.36.5a11.35,11.35,0,0,0-.44-1.4,15.81,15.81,0,0,0-3.4-5.56A14.7,14.7,0,0,0,93.66,3.7a14.74,14.74,0,0,0-11.6,5.74l-.6.82A13.87,13.87,0,0,0,78.12,4.1,12.59,12.59,0,0,0,65.38.48,13.08,13.08,0,0,0,58.86,4.9a14.52,14.52,0,0,0-2.6,12.54,14,14,0,0,0,2.22,4.8,9.63,9.63,0,0,0,.64.86l.12.12a9,9,0,0,0,.6.68A18.17,18.17,0,0,0,49,29.22c-3.42,3.6-5,6.16-5.72,12.7a3.36,3.36,0,0,0,0,.78l0,.34a5.32,5.32,0,0,0,2.28,3.38c4,2.86,12.54,4.08,18.32,4.52-.2,1-.34,2.08-.48,3.26a2.93,2.93,0,0,0,0,.94l0,.24A5.72,5.72,0,0,0,66,59.14c4.1,3,12.64,4.46,19.32,5.14.5.06,1,.1,1.52.14-.18,1-.32,2.14-.46,3.36a3.29,3.29,0,0,0,0,1v0l0,.24a6.43,6.43,0,0,0,2.92,4.22C96.92,78.8,117.62,80,122.34,80c5.46,0,28.7-1.5,34.56-8.12A5.06,5.06,0,0,0,158.32,67.74ZM109.18,26.46a14.37,14.37,0,0,1,1.22-5.36,15.09,15.09,0,0,1,1.94-3.24,12.62,12.62,0,0,1,6.5-4.44,12.31,12.31,0,0,1,3.42-.5A12.56,12.56,0,0,1,131.5,17a14.7,14.7,0,0,1,3.92,10.12v0a14.52,14.52,0,0,1-8.26,13.44,11.07,11.07,0,0,1-5.88,1,1.2,1.2,0,0,1-.24,0,12,12,0,0,1-5.92-2.28,15.89,15.89,0,0,1-2.36-2.18l-.14-.16a8.48,8.48,0,0,1-.62-.84A12.12,12.12,0,0,1,110.72,34a15.53,15.53,0,0,1-1.1-3,15.93,15.93,0,0,1-.48-3.78A4.84,4.84,0,0,1,109.18,26.46ZM104.84,31a8.66,8.66,0,0,0,.28,1.2.12.12,0,0,0,0,.08c0,.18.1.36.14.54l.06.2a12.16,12.16,0,0,0-1.62-.2,5.24,5.24,0,0,0-.68-.06,4,4,0,0,0,.54-.48A12.72,12.72,0,0,0,104.84,31ZM85.72,12.36a10.28,10.28,0,0,1,5.2-3.58,10.56,10.56,0,0,1,2.74-.4,10,10,0,0,1,7.4,3.3,11.89,11.89,0,0,1,3.16,8.18,1.23,1.23,0,0,1,0,.28A12.14,12.14,0,0,1,103,25.32a11.12,11.12,0,0,1-5.44,5.38,8.63,8.63,0,0,1-4.7.78,9.32,9.32,0,0,1-2.54-.56A9.13,9.13,0,0,1,88,29.64a11.56,11.56,0,0,1-1.88-1.74l-.14-.16c-.14-.18-.28-.34-.5-.66a8.4,8.4,0,0,1-.66-1,12.7,12.7,0,0,1-1.64-6.22A12.06,12.06,0,0,1,85.72,12.36Zm-7,10.58A11.09,11.09,0,0,0,79,24c-.4-.08-.76-.14-1.06-.18A8.81,8.81,0,0,0,78.74,22.94ZM62.54,7.82A8.34,8.34,0,0,1,66.66,5a8.65,8.65,0,0,1,2.18-.3,8,8,0,0,1,5.88,2.62,9.49,9.49,0,0,1,2.52,6.52v0a9.32,9.32,0,0,1-5.3,8.64,7,7,0,0,1-3.72.64,7.66,7.66,0,0,1-3.9-1.48,7.85,7.85,0,0,1-1.5-1.38l-.12-.12c-.1-.14-.22-.26-.4-.54a9.62,9.62,0,0,1-1.52-3.3,9.82,9.82,0,0,1-.32-2.44A9.6,9.6,0,0,1,62.54,7.82ZM48.28,42.62a2.22,2.22,0,0,1-.36-.32c.62-5.14,1.56-6.84,4.44-9.9a13.83,13.83,0,0,1,8.18-3.9c3.24,2.06,7.78,2.14,8.32,2.14L70,30.58a15.72,15.72,0,0,0,6.9-1.94,3,3,0,0,0,.26-.16,15.44,15.44,0,0,1,4.4,1.22v0c.24.36.5.68.76,1l.12.14a15.64,15.64,0,0,0,1.92,1.9h0c-2.06.12-9.14.94-14.24,6.4a22.26,22.26,0,0,0-5,7.2C59.26,46,51.2,44.72,48.28,42.62ZM88,59.72a.36.36,0,0,1,0,.14l-1.5-.14c-6.48-.64-14.48-2-17.72-4.36A2.36,2.36,0,0,1,68,54.7c.16-1.34.34-2.5.56-3.5a14.23,14.23,0,0,1,1.68-4.7,21.32,21.32,0,0,1,3.26-4.12,17.1,17.1,0,0,1,10.3-4.86,15.63,15.63,0,0,0,5.64,2.14,23.46,23.46,0,0,0,4.24.44c.1,0,.28,0,.56,0L95.1,40a19,19,0,0,0,8.06-2.26l.46-.28a15.71,15.71,0,0,1,2.4.44c.6.14,1.26.34,2,.58a3.29,3.29,0,0,0,.18.28,11.05,11.05,0,0,0,.88,1.16l.14.16a20.39,20.39,0,0,0,2.38,2.34l-.46,0c-2.42.14-10.76,1.1-16.78,7.54C91.16,53.32,89.22,56,88,59.72Zm65.46,9,0,0c-3.48,4-20.72,6.52-31.06,6.54-7.52,0-24.72-1.76-30.36-5.82a2.53,2.53,0,0,1-1-1.12c.16-1.4.34-2.6.56-3.72a21.65,21.65,0,0,1,1.3-4.58,22.19,22.19,0,0,1,4.88-6.9c4.32-4.62,10.4-5.74,12.84-6A19.77,19.77,0,0,0,118.62,50c.6.08,1.12.12,1.62.16s.9.06,1.24.08c0,0,0,0,.08,0a6.42,6.42,0,0,0,.74,0l1.64-.08c.3,0,.66,0,1.06-.1a20.92,20.92,0,0,0,8.44-2.56,4.47,4.47,0,0,0,.64-.42c2.4.24,8.4,1.28,12.84,6s5.84,7.3,6.78,15.18A.91.91,0,0,1,153.42,68.76Z"
+                      />
+                    </g>
+                  </g></svg>
+              </span>
+              <span class="label"> {{'transfer_visit_queue_header_simple' | translate}} </span>
+            </span>
+  
+            <span class="visit-tray-option visit-transfer-sp-btn">
+  
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 159.13 80"><defs>
+                  <style>
+                    .cls-1 {
+                      fill: #2b2b2b;
+                    }
+  
+                    .cls-2 {
+                      fill: #fff;
+                    }
+                  </style>
+                </defs>
+                <title>TransferServicePoint</title>
+                <g id="Layer_2" data-name="Layer 2">
+                  <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="cls-1" d="M38,39a3.55,3.55,0,0,1-2.51-6.06L42,26.41H4.82A4.32,4.32,0,0,1,.5,22.09a4.29,4.29,0,0,1,4.29-4.31H42l-6.61-6.61a3.55,3.55,0,1,1,5-5L56.34,22.09,40.49,37.94A3.53,3.53,0,0,1,38,39Z"
+                    />
+                    <path class="cls-2" d="M37.89,5.6A3,3,0,0,1,40,6.5L55.64,22.09l-15.5,15.5a3.05,3.05,0,1,1-4.31-4.31l7.37-7.37H4.82a3.81,3.81,0,0,1,0-7.63H43.2l-7.46-7.46A3.06,3.06,0,0,1,37.89,5.6m0-1h0A4.06,4.06,0,0,0,35,11.52l5.76,5.76h-36A4.79,4.79,0,0,0,0,22.09a4.82,4.82,0,0,0,4.82,4.81h36l-5.66,5.66a4.05,4.05,0,1,0,5.73,5.73l15.5-15.5.71-.71-.71-.71L40.76,5.79A4,4,0,0,0,37.89,4.6Z"
+                    />
+                    <path class="cls-1" d="M159.13,50.15a3.73,3.73,0,0,1-3.73,3.73h-8.08V76.27a3.73,3.73,0,1,1-7.46,0V53.88H47.21V76.27a3.73,3.73,0,1,1-7.46,0V53.88H28.55a3.73,3.73,0,0,1,0-7.46H155.4A3.73,3.73,0,0,1,159.13,50.15Z"
+                    />
+                    <path class="cls-1" d="M114.09,0H69.86a6.46,6.46,0,0,0-6.45,6.45V36.76a6.46,6.46,0,0,0,6.45,6.45H81.66v4.88h21.28V43.21h11.15a6.46,6.46,0,0,0,6.45-6.45V6.45A6.46,6.46,0,0,0,114.09,0Zm.67,36.76a.68.68,0,0,1-.67.67H69.86a.68.68,0,0,1-.67-.67V6.45a.68.68,0,0,1,.67-.67h44.22a.68.68,0,0,1,.67.67Z"
+                    />
+                  </g>
+                </g></svg>
+  
+              <span class="label">{{'transfer_visit_sp_pool_header_simple' | translate}}</span>
+            </span>
+  
+            <span class="visit-tray-option visit-transfer-staff-btn">
+  
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140.9 80"><defs>
+                  <style>
+                    .cls-1 {
+                      fill: #2b2b2b;
+                    }
+  
+                    .cls-2 {
+                      fill: #fff;
+                    }
+                  </style>
+                </defs>
+                <title>TransferStaff</title>
+                <g id="Layer_2" data-name="Layer 2">
+                  <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="cls-1" d="M33.76,42.07a3.2,3.2,0,0,1-2.26-5.47l5.67-5.67H4.38A3.89,3.89,0,0,1,.5,27a3.86,3.86,0,0,1,3.86-3.87H37.18l-5.76-5.76a3.21,3.21,0,0,1,2.26-5.47h0a3.18,3.18,0,0,1,2.26.94L50.11,27,36,41.13A3.18,3.18,0,0,1,33.76,42.07Z"
+                    />
+                    <path class="cls-2" d="M33.68,12.44a2.69,2.69,0,0,1,1.91.8L49.4,27,35.67,40.78A2.7,2.7,0,0,1,31.85,37l6.53-6.53h-34a3.38,3.38,0,0,1,0-6.76h34l-6.61-6.61a2.71,2.71,0,0,1,1.91-4.62m0-1h0a3.71,3.71,0,0,0-2.62,6.33L36,22.67H4.37A4.36,4.36,0,0,0,0,27a4.39,4.39,0,0,0,4.38,4.38H36l-4.82,4.82a3.7,3.7,0,1,0,5.24,5.24L50.11,27.75l.71-.71-.71-.71L36.3,12.53a3.68,3.68,0,0,0-2.62-1.09Z"
+                    />
+                    <path class="cls-1" d="M81.53,31.48q-.65,0-1.31-.06a14,14,0,0,1-7.09-2.68,16.08,16.08,0,0,1-2.6-2.42l-.11-.13a10.32,10.32,0,0,1-.75-1,15.65,15.65,0,0,1-2.5-5.43,16.41,16.41,0,0,1,3-14.2,14.51,14.51,0,0,1,7.36-5A14.63,14.63,0,0,1,81.39,0,14.43,14.43,0,0,1,91.89,4.65a16,16,0,0,1,4.27,11,15.81,15.81,0,0,1-9.1,14.62A13.22,13.22,0,0,1,81.53,31.48ZM81.39,5A9.31,9.31,0,0,0,74,8.64a11.46,11.46,0,0,0-2,9.88,11,11,0,0,0,1.78,3.85,6.41,6.41,0,0,0,.48.63l.11.13a11,11,0,0,0,1.76,1.63,9.06,9.06,0,0,0,4.57,1.72A8.2,8.2,0,0,0,85,25.74,10.87,10.87,0,0,0,91.2,15.65h0A11.05,11.05,0,0,0,88.26,8,9.33,9.33,0,0,0,81.39,5Z"
+                    />
+                    <path class="cls-1" d="M110.57,50.25h-5c-.83-6-2.2-9.39-5.07-12.43a16.17,16.17,0,0,0-9.57-4.53l-.36.23a17.87,17.87,0,0,1-7.8,2.2l-1.36,0c-.63,0-5.83-.07-9.47-2.43a15.89,15.89,0,0,0-9.57,4.53C59,41.46,57.9,43.43,57.21,49.56a1.63,1.63,0,0,1,0,.25h0l0,.45h-5c0-.66,0-1.29,0-1.36.86-7.4,2.61-10.33,6.48-14.41,4.92-5.27,11.77-6.06,13.73-6.18h.12l.86,0,.76.61c1.92,1.6,5.85,1.95,7.19,1.95l1,0A12.94,12.94,0,0,0,88,29.27a3.24,3.24,0,0,0,.61-.43l.74-.59.88,0h.07c1.39.07,8.59.66,13.78,6.15C108.36,39,109.78,43.86,110.57,50.25Z"
+                    />
+                    <rect class="cls-1" x="84.57" y="41.53" width="13.68" height="5.09" rx="1.2" ry="1.2" />
+                    <path class="cls-1" d="M140.9,53.56a3.31,3.31,0,0,1-3.31,3.31h-7.17V76.69a3.31,3.31,0,0,1-6.61,0V56.86H41.74V76.69a3.31,3.31,0,1,1-6.61,0V56.86H25.22a3.31,3.31,0,1,1,0-6.61H137.59A3.31,3.31,0,0,1,140.9,53.56Z"
+                    />
+                  </g>
+                </g></svg>
+  
+            <span class="label">{{'transfer_visit_user_pool_header_simple' | translate}}</span>
+          </span>
+  
+            <span class="visit-tray-option visit-cherry-pick-btn">
+  
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.86 70"><defs>
+                  <style>
+                    .cls-1 {
+                      fill: #2b2b2b;
+                    }
+                  </style>
+                </defs>
+                <title>Serve</title>
+                <g id="Layer_2" data-name="Layer 2">
+                  <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="cls-1" d="M28.45,70,1.61,43.16a5.5,5.5,0,0,1,7.77-7.78l18.1,18.1L68,2.09a5.5,5.5,0,0,1,8.63,6.81Z" />
+                  </g>
+                </g></svg>
+  
+              <span class="label">{{'cherry_pick' | translate}}</span>
+            </span>
+  
+            <span class="visit-tray-option visit-delete-btn">
+  
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.93 80"><defs>
+                  <style>
+                    .cls-1 {
+                      fill: #2b2b2b;
+                    }
+                  </style>
+                </defs>
+                <title>Delete</title>
+                <g id="Layer_2" data-name="Layer 2">
+                  <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="cls-1" d="M57.69,80H20.24a6.8,6.8,0,0,1-6.81-6.52L11,17l5.61-.24,2.45,56.44a1.19,1.19,0,0,0,1.19,1.14H57.69a1.19,1.19,0,0,0,1.19-1.14L61.33,16.8l5.61.24L64.5,73.48A6.8,6.8,0,0,1,57.69,80Z"
+                    />
+                    <path class="cls-1" d="M52.29,17.18,47.06,6.77a2.09,2.09,0,0,0-1.87-1.15H32.75a2.08,2.08,0,0,0-1.87,1.15l-5.24,10.4-5-2.53,5.24-10.4A7.67,7.67,0,0,1,32.75,0H45.18a7.68,7.68,0,0,1,6.89,4.25l5.24,10.4Z"
+                    />
+                    <rect class="cls-1" y="13.41" width="77.93" height="7.02" />
+                  </g>
+                </g></svg>
+  
+              <span class="label">{{'delete' | translate}}</span>
+            </span>
+  
           </div>
         </div>
-        
-  
+    </div>
+    </div>
   </div>

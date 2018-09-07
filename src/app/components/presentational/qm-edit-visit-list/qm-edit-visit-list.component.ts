@@ -27,6 +27,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   sortByCustomerAsc = false;
   sortByServiceAsc = false;
   sortingIndicator: string = SortBy.VISITID;
+  selectedVisitID:number;
+  visitClicked:boolean= false;
 
   constructor(
     private branchSelectors: BranchSelectors,
@@ -124,9 +126,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.searchText = '';
   }
 
-  selectVisit(index: number) {
+  selectVisit(visitId: number) {
+    this.selectedVisitID===visitId ? this.visitClicked = !this.visitClicked: this.visitClicked=true;
     //visit selection code goes here
-    console.log(this.visits[index].id);
+    console.log(visitId);
+    this.selectedVisitID=visitId;
+
   }
 
   keyDownFunction(event, visitSearchText: string) {

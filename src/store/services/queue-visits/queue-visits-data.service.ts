@@ -6,8 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Visit } from './../../../models/IVisit';
 import { servicePoint } from './../data.service';
 import { GlobalErrorHandler } from '../../../util/services//global-error-handler.service';
-import { formatDate } from '@angular/common';
-import * as moment from 'moment-timezone';
+
 
 
 
@@ -35,7 +34,7 @@ export class QueueVisitsDataService {
     return result;
 } 
 
-private formatHHMMSSIntoHHMMA (time:string) {
+private formatHHMMSSIntoHHMM (time:string) {
   return time.substring(0,5);
 }
 
@@ -56,7 +55,7 @@ private processQueueInfo( data:Visit[]){
     visit.customerName = visit.parameterMap.customers;
     visit.serviceName = visit.currentVisitService.serviceExternalName;
     visit.waitingTimeStr = this.formatTimeHHMM(visit.waitingTime);
-   visit.appointmentTime? visit.appointmentTime = this.formatHHMMSSIntoHHMMA(visit.appointmentTime.split("T")[1]):null;
+   visit.appointmentTime? visit.appointmentTime = this.formatHHMMSSIntoHHMM(visit.appointmentTime.split("T")[1]):null;
     visit.ticketNumber = visit.ticketId;
     this.addHyphonIfInvalidValue(visit);
     visitList.push(visit);

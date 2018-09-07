@@ -14,13 +14,14 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
   AppointmentDispatchers, BranchSelectors, AppointmentSelectors,
-  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors,
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors, CalendarBranchSelectors,
 } from 'src/store';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
 import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment-timezone';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
+import { ICalendarBranch } from 'src/models/ICalendarBranch';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -82,6 +83,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   uttFromTime: Moment;
   uttToTime: Moment;
   isInDateDurationSelection: boolean = true;
+  selectedCalendarBranch: ICalendarBranch;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
     selected: true
@@ -126,6 +128,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
+    private calendarBranchSelectors: CalendarBranchSelectors,
     private userSelectors: UserSelectors
 
   ) {
@@ -177,6 +180,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((br) => {
       this.selectedBranch = br;
+
+     
     });
 
 
@@ -242,6 +247,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(appointmentsLoadedSub);
+
+    const calendarBranchsSub = this.calendarBranchSelectors.branches$.subscribe((bs) => {
+        this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id)
+    }); 
+
+    this.subscriptions.add(calendarBranchsSub);
   }
 
   showAppointmentNotFoundError() {
@@ -488,8 +499,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         formattedDate = `${now.format('YYYY-MM-DD')}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
       }
     }  
+    // adjust the time zone for calendar endpoint
+    if(this.useCalendarEndpoint) {
+      formattedDate = moment(formattedDate).tz(this.selectedCalendarBranch.fullTimeZone).utc()
+      .format('YYYY-MM-DD, HH:mm').replace(', ', 'T');
+    }
 
     return formattedDate;
+  }
+
+  getSelectedBranchTimeZone() {
+    let timeZone = '';
+
+    return timeZone;
   }
 
   onSelectDate(selectedDate: CalendarDate) {

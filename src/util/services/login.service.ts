@@ -57,9 +57,11 @@ export class LoginService {
         this.subscriptions.add(servicePointsSubscription);
     }
 
-    login(servicePoint: IServicePoint) {
+    login(branch: IBranch, servicePoint: IServicePoint, user: IAccount) {
         this.subscriptions.unsubscribe();
         this.selectedServicePoint = servicePoint;
+        this.selectedBranch = branch;
+        this.user = user;
         this.spService.fetchUserStatus().subscribe((status: IUserStatus) => {
             if(status !=  null){
                 if(status.userState === USER_STATE.NO_STARTED_USER_SESSION || status.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION){

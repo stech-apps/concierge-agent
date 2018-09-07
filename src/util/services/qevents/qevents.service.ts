@@ -16,6 +16,7 @@ export class QEvents {
   private userName: string;
 
   private subscriptions: Subscription = new Subscription();
+  private subscribeChannel: any;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -103,7 +104,7 @@ export class QEvents {
 
   subscribe(currentObj){
     var chanel = this.qEventHelper.getChannelStr(this.openServicePoint.unitId)
-    this.cometd.subscribe('/events/' + chanel + '/' + this.userName, function(m){
+    this.subscribeChannel = this.cometd.subscribe('/events/' + chanel + '/' + this.userName, function(m){
 
     })
 
@@ -113,12 +114,14 @@ export class QEvents {
   }
 
   unsubscribe(){
-    var chanel = this.qEventHelper.getChannelStr(this.openServicePoint.unitId)
-    this.cometd.unsubscribe('/events/' + chanel + '/' + this.userName, function(m){
+    if(this.subscribeChannel){
+      var chanel = this.qEventHelper.getChannelStr(this.openServicePoint.unitId);
+      this.cometd.unsubscribe(this.subscribeChannel, function(m){
+      
+      })
 
-    })
-
-    this.cometd.clearListeners();
+      this.cometd.clearListeners();
+    }
   }
 
 

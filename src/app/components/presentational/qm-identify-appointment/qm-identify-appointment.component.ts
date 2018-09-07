@@ -575,8 +575,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.selectedAppointment) {
       appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
       appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
-      appointmentInfo += `${this.useCalendarEndpoint ? this.selectedAppointment.start.replace('T', ' ').slice(0, -12): 
-                            this.selectedAppointment.startTime.replace('T', ' ').slice(0, -3)}`;
+
+
+      if(this.useCalendarEndpoint) {
+        appointmentInfo += moment(this.selectedAppointment.start).tz(this.selectedCalendarBranch.fullTimeZone)
+        .format('YYYY-MM-DD HH:mm');
+      } else {
+        appointmentInfo += this.selectedAppointment.startTime.replace('T', ' ').slice(0, -3);
+      }
     }
     return appointmentInfo;
   }

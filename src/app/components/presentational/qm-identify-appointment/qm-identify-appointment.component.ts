@@ -91,6 +91,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
+    DURATION_WITH_DATE: 'durationWithDate',
     INITIAL: 'initial',
     CUSTOMER: 'customer',
     REFRESH: 'refresh',
@@ -346,6 +347,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.fromTime = { hour: parseInt(currentTime.format('HH')), minute: parseInt(currentTime.format('mm')), second: 0 };
     this.toTime = { hour: parseInt(currentTime.format('HH')) + 1, minute: parseInt(currentTime.format('mm')), second: 0 };
     this.invalidDateSelected = false;
+    this.selectedDates = [{ mDate: moment(), selected: true }];
   }
 
   getTime(timeString) {
@@ -375,21 +377,22 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   onSearchButtonClick(searchButton) {
     this.isSearchInputOpen = !this.isSearchInputOpen;
     this.searchText = '';
-    if (searchButton == 'id') {
+    if (searchButton == this.SEARCH_STATES.ID) {
       this.searchPlaceHolderKey = 'please_enter_id_and_press_enter';
     }
-    else if (searchButton === 'customer') {
+    else if (searchButton === this.SEARCH_STATES.CUSTOMER) {
       this.searchPlaceHolderKey = 'please_enter_customer_attributes';
     }
-    else if (searchButton === 'duration') {
+    else if (searchButton === this.SEARCH_STATES.DURATION) {
       this.setDefaultDuration();
     }
 
-    if (this.inputAnimationState == searchButton) {
+    if (this.inputAnimationState == searchButton || (this.inputAnimationState == this.SEARCH_STATES.DURATION_WITH_DATE 
+      && searchButton == this.SEARCH_STATES.DURATION ) ) {
       this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     }
     else {
-      this.inputAnimationState = this.enableSearchByDay && searchButton === 'duration' ?  'durationWithDate' : searchButton;
+      this.inputAnimationState = this.enableSearchByDay && searchButton === this.SEARCH_STATES.DURATION ?  this.SEARCH_STATES.DURATION_WITH_DATE : searchButton;
     }
 
     if (this.selectedSearchIcon != searchButton) {
@@ -506,12 +509,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
 
     return formattedDate;
-  }
-
-  getSelectedBranchTimeZone() {
-    let timeZone = '';
-
-    return timeZone;
   }
 
   onSelectDate(selectedDate: CalendarDate) {

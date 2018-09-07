@@ -24,6 +24,8 @@ export const IDENTIFY_APPOINTMENT_ANIMATIONS = [
       })),
       transition('out => customer', animate('500ms ease-in-out')),
       transition('customer => out', animate('500ms ease-in-out')),
+      transition('duration => out', animate('500ms ease-in-out')),
+      transition('durationWithDate => out', animate('500ms ease-in-out')),
       transition('customer => id', animate('500ms ease-in-out')),
       transition('duration => customer', animate('500ms ease-in-out')),
       transition('durationWithDate => customer', animate('500ms ease-in-out')),

@@ -16,6 +16,8 @@ import { TimeslotEffects } from './timeslot.effects';
 import { CalendarBranchEffects } from './calendar-branch.effects';
 import { ReserveEffects } from './reserve.effects';
 import { QueueVisitsEffects } from './queue-visits.effects';
+import { ServicePointPoolEffects } from './service-point-pool.effects';
+import { StaffPoolEffects } from './staff-pool.effcts';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -27,6 +29,7 @@ export const effects: any[] = [
     BranchEffects,
     ServiceEffects,
     ServicePointEffects,
+    ServicePointPoolEffects,
     QueueEffects,
     CalendarServiceEffects,
     CustomerEffects,
@@ -35,5 +38,6 @@ export const effects: any[] = [
     CalendarBranchEffects,
     ReserveEffects,
     AppointmentEffects,
-    QueueVisitsEffects
+    QueueVisitsEffects,
+    StaffPoolEffects
 ];

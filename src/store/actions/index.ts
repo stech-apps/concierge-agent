@@ -24,3 +24,5 @@ export * from './appointment.actions';
 export * from './arrive-appointment.actions';
 export * from './edit-appointment.actions';
 export * from './queue-visits.actions';
+export * from './service-point-pool.actions';
+export * from './staffpool.actions'

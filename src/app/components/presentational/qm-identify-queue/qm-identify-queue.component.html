@@ -15,31 +15,34 @@
 <div class="qm-queue-list__container">
     <div class="qm-queue-list">
         <div class="qm-queue-list__headers qm-flex-grid">
-          <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClick()">
+          <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyQueue()">
             <div>
               <i class="icon-queue" aria-hidden="true"></i>
             </div>
             <div class="qm-queue-list-header-item-label">{{'queue_view_queue_label' | translate}}</div>
-            <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+            <div><i  *ngIf="sortedBy =='Queue'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
-          <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+          <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()" >
             <div>
               <i class="icon-customer-solid" aria-hidden="true"></i>
             </div>
             <div class="qm-queue-list-header-item-label">{{'queue_view_waiting_customers_label' | translate}}</div>
+            <div><i *ngIf="sortedBy =='WaitingCustomers'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
 
-          <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+          <div class="qm-queue-list-header-item qm-col qm-flex-grid"  (click)="onSortClickbyMaxWaitTime()">
               <div>
                 <i class="icon-customer-solid" aria-hidden="true"></i>
               </div>
               <div class="qm-queue-list-header-item-label"> {{ 'queue_view_max_wait_time_label' | translate}} </div>
+              <div><i  *ngIf="sortedBy =='MaxWaitTime'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
-          <div class="qm-queue-list-header-item qm-col qm-flex-grid">
+          <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyEstimatedWaitTime()">
               <div>
                 <i class="clock-icon" aria-hidden="true"></i>
               </div>
               <div class="qm-queue-list-header-item-label"> {{ 'queue_view_estimated_wait_time_label' | translate}} </div>
+              <div><i *ngIf="sortedBy =='EstWaitTime'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
         
         </div>

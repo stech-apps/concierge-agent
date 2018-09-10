@@ -6,6 +6,8 @@ import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors } from
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
+import { ToastService } from '../../../../util/services/toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -14,8 +16,8 @@ import { Visit } from '../../../../models/IVisit';
   styleUrls: ['./qm-identify-queue.component.scss']
 })
 export class QmIdentifyQueueComponent implements OnInit {
-  @Output()
-  onFlowNext: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
+  @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
 
   
   queueCollection = new Array<Queue>();
@@ -24,8 +26,8 @@ export class QmIdentifyQueueComponent implements OnInit {
   private selectedBranch: IBranch;
   sortAscending = true;
   userDirection$: Observable<string>;
-  selectedVisit:Visit
-
+  selectedVisit:Visit;
+  sortedBy:string = "Queue";
 
   
  
@@ -35,8 +37,10 @@ export class QmIdentifyQueueComponent implements OnInit {
     private queueDispatchers: QueueDispatchers,
     private branchSelectors: BranchSelectors,
     public queueIndicator: QueueIndicator,
+    private toastService: ToastService,
     private queueService: QueueService,
     private userSelectors: UserSelectors,
+    private translateService:TranslateService
   ) { 
     
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -62,7 +66,7 @@ export class QmIdentifyQueueComponent implements OnInit {
 ngOnInit() {
   const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
     this.queueCollection = qs.queues;
-    this.sortQueueList();
+    this.sortQueueList("QUEUE");
   })
   this.subscriptions.add(queueListSubscription);
 }
@@ -71,40 +75,101 @@ ngOnDestroy() {
   this.subscriptions.unsubscribe();
 }
 
-onSortClick() {
+onSortClickbyQueue() {
   this.sortAscending = !this.sortAscending;
-  this.sortQueueList();    
+  this.sortQueueList("QUEUE");
+  this.sortedBy = "Queue";    
+}
+onSortClickbyWaitingCustomers(){
+
+  this.sortedBy = "WaitingCustomers";
+  this.sortQueueList("WAITCUSTOMERS");
+  this.sortAscending = !this.sortAscending;
+}
+onSortClickbyMaxWaitTime(){
+  this.sortedBy = "MaxWaitTime";
+  this.sortQueueList("MAXWAITTIME");
+  this.sortAscending = !this.sortAscending;
 }
 
-sortQueueList() {
+onSortClickbyEstimatedWaitTime(){
+  this.sortedBy = "EstWaitTime";
+  this.sortQueueList("ESTWAITTIME");
+  this.sortAscending = !this.sortAscending;
+}
+
+
+
+
+sortQueueList(type) {
   if (this.queueCollection) {
     // sort by name
     this.queueCollection = this.queueCollection.sort((a, b) => {
-      var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
-      var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
-      if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
-        return -1;
-      }
-      if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
-        return 1;
-      }
+      if(type=="QUEUE" || type == "MAXWAITTIME"|| type== "ESTWAITTIME"){
+          if(type=="QUEUE"){
+            var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
+           } else if (type == "MAXWAITTIME"){
+            var nameA = a.max_w_time=="-"? "0":a.max_w_time;
+            var nameB = b.max_w_time=="-"? "0":b.max_w_time;
+           }else{
+            var nameA = a.est_w_time=="-"? "0":a.est_w_time;
+            var nameB = b.est_w_time=="-"? "0":b.est_w_time;;
+           }
 
-      // names must be equal
-      return 0;
+            if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+              return -1;
+            }
+            if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+      } else if(type=="WAITCUSTOMERS"){
+              var NumA = a.customers;
+              var NumB = b.customers; 
+            if ((NumA < NumB && this.sortAscending) || (NumA > NumB && !this.sortAscending) ) {
+              return -1;
+            }
+            if ((NumA > NumB && this.sortAscending) || (NumA < NumB && !this.sortAscending)) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+      }
+    
+      
     });
   }
 
 }
 
 
+
 keyDownFunction(visitSearchText) {
+  if(visitSearchText ==""){
+    this.translateService.get('visit_no_entry').subscribe(v => {
+      this.toastService.infoToast(v);
+    });
+  }else if(!this.isAppointmentIdValid(visitSearchText))
+  this.translateService.get('visit_invalid_entry').subscribe(v => {
+    this.toastService.infoToast(v);
+  });
+  {
     this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id,visitSearchText.toUpperCase());
+  }
+  
 }
 
 selectQueue(queue){
+  this.NextFlow.emit("TRANSFER_TO_STAFF_POOL");
   this.queueDispatchers.setectQueue(queue);
   this.onFlowNext.emit();
+  
 }
 
+isAppointmentIdValid(val) {
+  return /^[0-9a-zA-Z]+$/.test(val);
+}
 
 }

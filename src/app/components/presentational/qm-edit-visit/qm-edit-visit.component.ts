@@ -16,14 +16,14 @@ export class QmEditVisitComponent implements OnInit {
   private subscriptions: Subscription = new Subscription();
   flowType= FLOW_TYPE.EDIT_VIST;
   selectedCustomer: ICustomer;
+  currentFlow:string;
 
   constructor(private queueSelectors:QueueSelectors,
     private QueueDispatchers:QueueDispatchers,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
   ) { 
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
-      
     })
     this.subscriptions.add(QueueSelectorSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -37,5 +37,11 @@ export class QmEditVisitComponent implements OnInit {
   }
 
   branchHeaderClick(){}
+
+  NextFlow(flow){
+    this.currentFlow = flow;
+    console.log(flow);
+    
+  }
 
 }

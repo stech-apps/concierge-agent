@@ -40,6 +40,9 @@ import {
   QueueDataService,
   ServicePointDataService,
   ServicePointDispatchers,
+  ServicePointPoolDataService,
+  ServicePointPoolDispatchers,
+  ServicePointPoolSelectors,
   ServicePointSelectors,
   ServiceSelectors,
   CustomerDataService,
@@ -67,7 +70,10 @@ import {
   ArriveAppointmentDispatchers,
   QueueVisitsDataService,
   QueueVisitsDispatchers,
-  QueueVisitsSelectors
+  QueueVisitsSelectors,
+  StaffPoolDataService,
+  StaffPoolDispatchers,
+  StaffPoolSelectors
 
 } from "./services";
 
@@ -104,8 +110,11 @@ export const storeServices = [
   CalendarServiceDispatchers,
   CalendarServiceDataService,
   CalendarServiceSelectors,
+  ServicePointPoolDataService,
   ServicePointDataService,
   ServicePointDispatchers,
+  ServicePointPoolDispatchers,
+  ServicePointPoolSelectors,
   ServicePointSelectors,
   QueueDispatchers,
   QueueSelectors,
@@ -135,5 +144,8 @@ export const storeServices = [
   ArriveAppointmentDispatchers,
   QueueVisitsDataService,
   QueueVisitsDispatchers,
-  QueueVisitsSelectors
+  QueueVisitsSelectors,
+  StaffPoolDataService,
+  StaffPoolDispatchers,
+  StaffPoolSelectors
 ];

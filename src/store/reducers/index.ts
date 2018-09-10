@@ -22,6 +22,8 @@ import * as fromAppointments from './appointment.reducer';
 import * as fromArriveAppointment from './arrive-appointment.reducer';
 import * as fromEditAppointment from './edit-appointment.reducer';
 import * as fromQueueVisits from './queue-visits.reducer';
+import * as fromServicePointPool from './service-point-pool.reducer'
+import * as fromStaffPool from './staff-pool.reducer'
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -46,6 +48,8 @@ export interface IAppState {
   arriveAppointment: fromArriveAppointment.IArriveAppointmentState,
   editAppointment: fromEditAppointment.IEditAppointmentState,
   queueVisits:fromQueueVisits.IQueueVisitsState
+  servicePointPool:fromServicePointPool.IServicePointPoolState,
+  staffPool:fromStaffPool.IStaffPoolState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -70,6 +74,8 @@ export const reducers: ActionReducerMap<IAppState> = {
   appointments: fromAppointments.reducer,
   arriveAppointment: fromArriveAppointment.reducer,
   editAppointment: fromEditAppointment.reducer,
-  queueVisits:fromQueueVisits.reducer
+  queueVisits:fromQueueVisits.reducer,
+  servicePointPool:fromServicePointPool.reducer,
+  staffPool:fromStaffPool.reducer
 
 };

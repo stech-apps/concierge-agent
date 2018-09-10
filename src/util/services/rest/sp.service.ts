@@ -14,6 +14,7 @@ import { VIP_LEVEL } from '../../flow-state';
 import { IAppointment } from '../../../models/IAppointment';
 import { Queue } from '../../../models/IQueue';
 import { Visit } from '../../../models/IVisit';
+import { IUser } from '../../../models/IUser';
 
 
 @Injectable()
@@ -89,6 +90,32 @@ export class SPService implements OnDestroy {
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/queues/${ToQueue.id}/visits`,requestBody)
+      .pipe(
+        catchError(this.errorHandler.handleError())
+      );
+  }
+
+  servicePointTransfer(branch:IBranch,openServicePoint:IServicePoint,ToServicePoint:IServicePoint,visit:Visit){
+    var requestBody = {
+      fromBranchId:branch.id,
+      fromId:openServicePoint.id,
+      visitId:visit[0].visitId
+    }
+    return this.http
+      .put(`${servicePoint}/branches/${branch.id}/servicePoints/${ToServicePoint.id}/visits`,requestBody)
+      .pipe(
+        catchError(this.errorHandler.handleError())
+      );
+  }
+
+  staffPoolTransfer(branch:IBranch,openServicePoint:IServicePoint,ToUserID:number,visit:Visit){
+    var requestBody = {
+      fromBranchId:branch.id,
+      fromId:openServicePoint.id,
+      visitId:visit[0].visitId
+    }
+    return this.http
+      .put(`${servicePoint}/branches/${branch.id}/users/${ToUserID}/visits`,requestBody)
       .pipe(
         catchError(this.errorHandler.handleError())
       );

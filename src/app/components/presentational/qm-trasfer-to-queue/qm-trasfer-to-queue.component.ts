@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SPService } from '../../../../util/services/rest/sp.service';
 import { IServicePoint } from '../../../../models/IServicePoint';
 import { Router } from '@angular/router';
+import { queue } from 'rxjs/internal/scheduler/queue';
 
 @Component({
   selector: 'qm-trasfer-to-queue',
@@ -31,7 +32,7 @@ export class QmTrasferToQueueComponent implements OnInit {
   btnTransferLast: boolean;
   btnTransferSort:boolean;
   selectedServicePoint:IServicePoint;
-
+  sortedBy:string = "Queue";
 
   selectedQueue:Queue;
 
@@ -87,7 +88,7 @@ this.subscriptions.add(selectedServicePointSubscriptions);
 ngOnInit() {
   const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
     this.queueCollection = qs.queues;
-    this.sortQueueList();
+    this.sortQueueList("QUEUE");
   })
   this.subscriptions.add(queueListSubscription);
 }
@@ -96,26 +97,70 @@ ngOnDestroy() {
   this.subscriptions.unsubscribe();
 }
 
-onSortClick() {
+onSortClickbyQueue() {
   this.sortAscending = !this.sortAscending;
-  this.sortQueueList();    
+  this.sortQueueList("QUEUE");
+  this.sortedBy = "Queue";    
+}
+onSortClickbyWaitingCustomers(){
+
+  this.sortedBy = "WaitingCustomers";
+  this.sortQueueList("WAITCUSTOMERS");
+  this.sortAscending = !this.sortAscending;
+}
+onSortClickbyMaxWaitTime(){
+  this.sortedBy = "MaxWaitTime";
+  this.sortQueueList("MAXWAITTIME");
+  this.sortAscending = !this.sortAscending;
 }
 
-sortQueueList() {
+onSortClickbyEstimatedWaitTime(){
+  this.sortedBy = "EstWaitTime";
+  this.sortQueueList("ESTWAITTIME");
+  this.sortAscending = !this.sortAscending;
+}
+
+
+
+
+sortQueueList(type) {
   if (this.queueCollection) {
     // sort by name
     this.queueCollection = this.queueCollection.sort((a, b) => {
-      var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
-      var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
-      if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
-        return -1;
-      }
-      if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
-        return 1;
-      }
+      if(type=="QUEUE" || type == "MAXWAITTIME"|| type== "ESTWAITTIME"){
+          if(type=="QUEUE"){
+            var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
+           } else if (type == "MAXWAITTIME"){
+            var nameA = a.max_w_time=="-"? "0":a.max_w_time;
+            var nameB = b.max_w_time=="-"? "0":b.max_w_time;
+           }else{
+            var nameA = a.est_w_time=="-"? "0":a.est_w_time;
+            var nameB = b.est_w_time=="-"? "0":b.est_w_time;;
+           }
 
-      // names must be equal
-      return 0;
+            if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+              return -1;
+            }
+            if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+      } else if(type=="WAITCUSTOMERS"){
+              var NumA = a.customers;
+              var NumB = b.customers; 
+            if ((NumA < NumB && this.sortAscending) || (NumA > NumB && !this.sortAscending) ) {
+              return -1;
+            }
+            if ((NumA > NumB && this.sortAscending) || (NumA < NumB && !this.sortAscending)) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+      }
+    
+      
     });
   }
 
@@ -173,6 +218,8 @@ transferVisitMsgBoxText(type){
   
 }
 
-
+SearchVisit(searchText){
+  console.log(this.queueCollection.filter(queues => queues.queue.toString()==searchText))
+}
   
 }

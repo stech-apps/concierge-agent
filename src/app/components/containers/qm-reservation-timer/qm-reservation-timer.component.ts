@@ -21,6 +21,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   getExpiryReservationTime$: Observable<number>;
   counterString: string;
   intervalRef = null;
+  prevTimeStamp = undefined;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -64,7 +65,19 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
     // Start timer!!
     this.intervalRef = setInterval(() => {
       // Decrement counter
-      onGoingTime -= 1;
+      if(onGoingTime > 0){
+        var nowTimeStamp = Math.floor(new Date().getTime()/1000);
+        if(this.prevTimeStamp){
+          var diffTimeStamp = nowTimeStamp - this.prevTimeStamp;
+          if(diffTimeStamp > 3){
+            // If more than 3 seconds substract it from the original time!!!
+            // 5 extra seconds added to accomodate for time loss in digest loop
+            onGoingTime = onGoingTime - diffTimeStamp - 5;
+          }
+        }
+        this.prevTimeStamp = Math.floor(new Date().getTime()/1000);
+        onGoingTime--;
+      }
 
       // Format Number into string
       this.counterString = this.timeUtils.formatSecondsIntoMinituesAndSeconds(

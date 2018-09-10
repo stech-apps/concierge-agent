@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output,EventEmitter } from '@angular/core';
 import { QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { ERROR_STATUS, Q_ERROR_CODE } from '../../../../util/q-error';
 import { ToastService } from '../../../../util/services/toast.service';
+
 
 enum SortBy {
   VISITID = "VISITID",
@@ -37,6 +38,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   selectedVisitId: number;
   visitClicked: boolean = false;
 
+  @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
+  @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
+
   //utt parameters
   canTransferSP: boolean = false;
   canTransferQ: boolean = false;
@@ -59,7 +63,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private visitDispatchers:QueueDispatchers
   ) {
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
@@ -194,7 +199,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   transferToQ() {
-
+    this.NextFlow.emit("TRANSFER_TO_STAFF_POOL");
+    // this.visitDispatchers
+    this.onFlowNext.emit();
   }
 
   transferToStaffPool() {

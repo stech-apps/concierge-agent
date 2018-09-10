@@ -1,7 +1,7 @@
 <div class="qm-flow-sub-header">
     <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
       <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="SearchVisit(visitSearch.value.trim())"   #visitSearch autocomplete="off"> 
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText"  #visitSearch autocomplete="off"> 
       <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = ''" class="icon-close qm-clear-search" aria-hidden="true"></i>
   
       </div>
@@ -14,18 +14,18 @@
       <div class="qm-service-point-list">
   
           <div class="qm-service-point-list__headers qm-flex-grid">
-            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyQueue()">
+            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" >
               <div class="qm-service-point-list-header-item-label">{{'last_name' | translate}}</div>
               <div><i  *ngIf="sortedBy =='Queue'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>
   
-            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()">
+            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" >
               <div class="qm-service-point-list-header-item-label">{{'first_name' | translate}}</div>
               <div><i *ngIf="sortedBy =='WaitingCustomers'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>       
 
             
-            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()">
+            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" >
                 <div class="qm-service-point-list-header-item-label">{{'user_name' | translate}}</div>
                 <div><i *ngIf="sortedBy =='WaitingCustomers'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
               </div>       

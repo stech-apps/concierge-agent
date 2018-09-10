@@ -5,36 +5,35 @@
       <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-identify-queue #ia dir="{{ userDirection$ | async }}" (onFlowNext)="fa.onFlowNext(iv)"></qm-identify-queue>
-      <qm-identify-queue dir="{{ userDirection$ | async }}" (NextFlow)="NextFlow($event)" (onFlowNext)="fa.onFlowNext(tsp)"></qm-identify-queue>
+      <qm-identify-queue dir="{{ userDirection$ | async }}" (NextFlow)="NextFlow($event)" (onFlowNext)="fa.onFlowNext(iv)"></qm-identify-queue>
     </qm-flow-panel-content>
   </qm-flow-panel>
 
  
   <qm-flow-panel #iv>
-    <qm-flow-panel-header (click)="fa.panelHeaderClick(ia); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+    <qm-flow-panel-header (click)="fa.panelHeaderClick(iv); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
       <qm-flow-panel-title>{{ 'identify_visit' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedCustomer">{{selectedCustomer?.firstName + ' ' + selectedCustomer?.lastName}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-edit-visit-list dir="{{ userDirection$ | async }}" (onFlowNext)="fa.onFlowNext(iv)"></qm-edit-visit-list>
+      <qm-edit-visit-list (NextFlow)="NextFlow($event)" (onFlowNext)="fa.onFlowNext($event)"  dir="{{ userDirection$ | async }}" (onFlowNext)="fa.onFlowNext(iv)"></qm-edit-visit-list>
     </qm-flow-panel-content>
   </qm-flow-panel>  
-</qm-flow>
+
 
 
 <qm-flow-panel #tq>
-  <qm-flow-panel-header (click)="fa.panelHeaderClick(ia); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+  <qm-flow-panel-header (click)="fa.panelHeaderClick(tq); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
     <qm-flow-panel-title>{{ 'transfer_visit_queue_header' | translate}}</qm-flow-panel-title>
   </qm-flow-panel-header>
   <qm-flow-panel-content>
     <qm-trasfer-to-queue dir="{{ userDirection$ | async }}" ></qm-trasfer-to-queue>
   </qm-flow-panel-content>
 </qm-flow-panel>  
-</qm-flow> -->
+
 
  <qm-flow-panel #tspp>
-  <qm-flow-panel-header (click)="fa.panelHeaderClick(ia); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+  <qm-flow-panel-header (click)="fa.panelHeaderClick(tspp); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
     <qm-flow-panel-title>{{ 'transfer_visit_sp_pool_header' | translate}}</qm-flow-panel-title>
   </qm-flow-panel-header>
   <qm-flow-panel-content>
@@ -43,7 +42,7 @@
 </qm-flow-panel>   
 
 <qm-flow-panel #tsp>
-    <qm-flow-panel-header (click)="fa.panelHeaderClick(ia); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+    <qm-flow-panel-header (click)="fa.panelHeaderClick(tsp); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
       <qm-flow-panel-title>{{ 'transfer_visit_user_pool_header' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>
     <qm-flow-panel-content>

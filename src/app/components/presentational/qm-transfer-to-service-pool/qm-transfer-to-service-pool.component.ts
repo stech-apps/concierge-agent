@@ -23,6 +23,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
   servicePoints:IServicePointPool[];
   selectedVisit:Visit;
   selectedServicePoint:IServicePoint
+  searchText:string;
+  sortedBy:string;
 
   constructor(  private userSelectors: UserSelectors,
     private ServicePointPoolDispatchers:ServicePointPoolDispatchers,
@@ -109,4 +111,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
       })
       ).unsubscribe()
       
-    }}}
+    }}
+    onSortClickbyQueue(){}
+    onSortClickbyWaitingCustomers(){}
+    
+  }

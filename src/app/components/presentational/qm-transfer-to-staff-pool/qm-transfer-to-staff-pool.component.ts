@@ -21,6 +21,9 @@ export class QmTransferToStaffPoolComponent implements OnInit {
   currentBranch:IBranch;
   StaffPool:IStaffPool[];
   selectedVisit:Visit;
+  SearchVisit:string;
+  sortedBy:string;
+  searchText:string;
   selectedServicePoint:IServicePoint;
   constructor(
     private userSelectors:UserSelectors,
@@ -64,6 +67,9 @@ export class QmTransferToStaffPoolComponent implements OnInit {
 
   }
 
+  onSortClickbyQueue(){}
+  onSortClickbyWaitingCustomers(){}
+
   selectPool(s){
     if(this.selectedVisit){
       this.translateService.get('transfer_visit_to_staff_member_confirm_box',
@@ -97,4 +103,8 @@ export class QmTransferToStaffPoolComponent implements OnInit {
       
     }
   }
+ 
+
 }
+
+

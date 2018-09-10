@@ -156,6 +156,18 @@ export class SPService implements OnDestroy {
     .put<ICustomer>(`${servicePoint}/customers/${customer.id}`,customer)
   }
 
+  cherryPickVisit(branchId:number,spId:number,visitId:number){
+   
+    return this.http
+    .post(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}/callAndEnd`,null);
+  }
+
+  deleteVisit(branchId:number,spId:number,visitId:number){
+   
+    return this.http
+    .delete(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}`);
+  }
+
 
 
 }

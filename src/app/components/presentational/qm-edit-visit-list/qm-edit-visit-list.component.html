@@ -54,10 +54,10 @@
     </div>
 
     <div class="qm-visit-list__body">
-      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits" [class.qm-visit-list-body-row-container-shadow]="visitClicked && selectedVisitID === visit.id " (click)="selectVisit(visit.id)">
+      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i" [class.qm-visit-list-body-row-container-shadow]="visitClicked && selectedVisitId === visit.id " (click)="selectVisit(visit.id)">
       <div class="qm-flex-grid qm-visit-list-body-row" >
         <div class="qm-col qm-visit-list-body-row-caret-view">
-            <div *ngIf="visitClicked && selectedVisitID === visit.id "><i class=" icon-caret-down sort-icon" ></i></div>
+            <div *ngIf="visitClicked && selectedVisitId === visit.id "><i class=" icon-caret-down sort-icon" ></i></div>
         <div class="qm-visit-list-body-row-label">  {{visit.ticketNumber}} </div> 
         </div>
         <div class="qm-col">{{visit.customerName }}</div>
@@ -68,11 +68,10 @@
       
       </div>
 
-      <div *ngIf="visitClicked && selectedVisitID === visit.id " class="qm-visit-list__options">
+      <div *ngIf="visitClicked && selectedVisitId === visit.id " class="qm-visit-list__options">
           <div class="qm-visit-list__options__container">
   
-            <span class="visit-tray-option visit-transfer-queue-btn">
-              <span class="transQIcon">
+            <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" (click)="transferToQ()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.37 80"><defs>
                     <style>
                       .cls-1 {
@@ -88,12 +87,11 @@
                       <path class="cls-1" d="M158.32,67.74c-1.06-9-3-12.52-8-17.84-6.34-6.68-15.12-7.4-16.82-7.48l-.44,0a19.52,19.52,0,0,0,7-15.24,19.49,19.49,0,0,0-5.16-13.32,17,17,0,0,0-17.36-4.92,17.44,17.44,0,0,0-8.12,5.14l-.76.9-.36.5a11.35,11.35,0,0,0-.44-1.4,15.81,15.81,0,0,0-3.4-5.56A14.7,14.7,0,0,0,93.66,3.7a14.74,14.74,0,0,0-11.6,5.74l-.6.82A13.87,13.87,0,0,0,78.12,4.1,12.59,12.59,0,0,0,65.38.48,13.08,13.08,0,0,0,58.86,4.9a14.52,14.52,0,0,0-2.6,12.54,14,14,0,0,0,2.22,4.8,9.63,9.63,0,0,0,.64.86l.12.12a9,9,0,0,0,.6.68A18.17,18.17,0,0,0,49,29.22c-3.42,3.6-5,6.16-5.72,12.7a3.36,3.36,0,0,0,0,.78l0,.34a5.32,5.32,0,0,0,2.28,3.38c4,2.86,12.54,4.08,18.32,4.52-.2,1-.34,2.08-.48,3.26a2.93,2.93,0,0,0,0,.94l0,.24A5.72,5.72,0,0,0,66,59.14c4.1,3,12.64,4.46,19.32,5.14.5.06,1,.1,1.52.14-.18,1-.32,2.14-.46,3.36a3.29,3.29,0,0,0,0,1v0l0,.24a6.43,6.43,0,0,0,2.92,4.22C96.92,78.8,117.62,80,122.34,80c5.46,0,28.7-1.5,34.56-8.12A5.06,5.06,0,0,0,158.32,67.74ZM109.18,26.46a14.37,14.37,0,0,1,1.22-5.36,15.09,15.09,0,0,1,1.94-3.24,12.62,12.62,0,0,1,6.5-4.44,12.31,12.31,0,0,1,3.42-.5A12.56,12.56,0,0,1,131.5,17a14.7,14.7,0,0,1,3.92,10.12v0a14.52,14.52,0,0,1-8.26,13.44,11.07,11.07,0,0,1-5.88,1,1.2,1.2,0,0,1-.24,0,12,12,0,0,1-5.92-2.28,15.89,15.89,0,0,1-2.36-2.18l-.14-.16a8.48,8.48,0,0,1-.62-.84A12.12,12.12,0,0,1,110.72,34a15.53,15.53,0,0,1-1.1-3,15.93,15.93,0,0,1-.48-3.78A4.84,4.84,0,0,1,109.18,26.46ZM104.84,31a8.66,8.66,0,0,0,.28,1.2.12.12,0,0,0,0,.08c0,.18.1.36.14.54l.06.2a12.16,12.16,0,0,0-1.62-.2,5.24,5.24,0,0,0-.68-.06,4,4,0,0,0,.54-.48A12.72,12.72,0,0,0,104.84,31ZM85.72,12.36a10.28,10.28,0,0,1,5.2-3.58,10.56,10.56,0,0,1,2.74-.4,10,10,0,0,1,7.4,3.3,11.89,11.89,0,0,1,3.16,8.18,1.23,1.23,0,0,1,0,.28A12.14,12.14,0,0,1,103,25.32a11.12,11.12,0,0,1-5.44,5.38,8.63,8.63,0,0,1-4.7.78,9.32,9.32,0,0,1-2.54-.56A9.13,9.13,0,0,1,88,29.64a11.56,11.56,0,0,1-1.88-1.74l-.14-.16c-.14-.18-.28-.34-.5-.66a8.4,8.4,0,0,1-.66-1,12.7,12.7,0,0,1-1.64-6.22A12.06,12.06,0,0,1,85.72,12.36Zm-7,10.58A11.09,11.09,0,0,0,79,24c-.4-.08-.76-.14-1.06-.18A8.81,8.81,0,0,0,78.74,22.94ZM62.54,7.82A8.34,8.34,0,0,1,66.66,5a8.65,8.65,0,0,1,2.18-.3,8,8,0,0,1,5.88,2.62,9.49,9.49,0,0,1,2.52,6.52v0a9.32,9.32,0,0,1-5.3,8.64,7,7,0,0,1-3.72.64,7.66,7.66,0,0,1-3.9-1.48,7.85,7.85,0,0,1-1.5-1.38l-.12-.12c-.1-.14-.22-.26-.4-.54a9.62,9.62,0,0,1-1.52-3.3,9.82,9.82,0,0,1-.32-2.44A9.6,9.6,0,0,1,62.54,7.82ZM48.28,42.62a2.22,2.22,0,0,1-.36-.32c.62-5.14,1.56-6.84,4.44-9.9a13.83,13.83,0,0,1,8.18-3.9c3.24,2.06,7.78,2.14,8.32,2.14L70,30.58a15.72,15.72,0,0,0,6.9-1.94,3,3,0,0,0,.26-.16,15.44,15.44,0,0,1,4.4,1.22v0c.24.36.5.68.76,1l.12.14a15.64,15.64,0,0,0,1.92,1.9h0c-2.06.12-9.14.94-14.24,6.4a22.26,22.26,0,0,0-5,7.2C59.26,46,51.2,44.72,48.28,42.62ZM88,59.72a.36.36,0,0,1,0,.14l-1.5-.14c-6.48-.64-14.48-2-17.72-4.36A2.36,2.36,0,0,1,68,54.7c.16-1.34.34-2.5.56-3.5a14.23,14.23,0,0,1,1.68-4.7,21.32,21.32,0,0,1,3.26-4.12,17.1,17.1,0,0,1,10.3-4.86,15.63,15.63,0,0,0,5.64,2.14,23.46,23.46,0,0,0,4.24.44c.1,0,.28,0,.56,0L95.1,40a19,19,0,0,0,8.06-2.26l.46-.28a15.71,15.71,0,0,1,2.4.44c.6.14,1.26.34,2,.58a3.29,3.29,0,0,0,.18.28,11.05,11.05,0,0,0,.88,1.16l.14.16a20.39,20.39,0,0,0,2.38,2.34l-.46,0c-2.42.14-10.76,1.1-16.78,7.54C91.16,53.32,89.22,56,88,59.72Zm65.46,9,0,0c-3.48,4-20.72,6.52-31.06,6.54-7.52,0-24.72-1.76-30.36-5.82a2.53,2.53,0,0,1-1-1.12c.16-1.4.34-2.6.56-3.72a21.65,21.65,0,0,1,1.3-4.58,22.19,22.19,0,0,1,4.88-6.9c4.32-4.62,10.4-5.74,12.84-6A19.77,19.77,0,0,0,118.62,50c.6.08,1.12.12,1.62.16s.9.06,1.24.08c0,0,0,0,.08,0a6.42,6.42,0,0,0,.74,0l1.64-.08c.3,0,.66,0,1.06-.1a20.92,20.92,0,0,0,8.44-2.56,4.47,4.47,0,0,0,.64-.42c2.4.24,8.4,1.28,12.84,6s5.84,7.3,6.78,15.18A.91.91,0,0,1,153.42,68.76Z"
                       />
                     </g>
-                  </g></svg>
-              </span>
+                  </g></svg>        
               <span class="label"> {{'transfer_visit_queue_header_simple' | translate}} </span>
             </span>
   
-            <span class="visit-tray-option visit-transfer-sp-btn">
+            <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-sp-btn" (click)="transferToStaffPool()">
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 159.13 80"><defs>
                   <style>
@@ -123,7 +121,7 @@
               <span class="label">{{'transfer_visit_sp_pool_header_simple' | translate}}</span>
             </span>
   
-            <span class="visit-tray-option visit-transfer-staff-btn">
+            <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-staff-btn" (click)="transferToSPfPool()">
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140.9 80"><defs>
                   <style>
@@ -156,7 +154,7 @@
             <span class="label">{{'transfer_visit_user_pool_header_simple' | translate}}</span>
           </span>
   
-            <span class="visit-tray-option visit-cherry-pick-btn">
+            <span *ngIf="canCherryPick" class="visit-tray-option visit-cherry-pick-btn" (click)="cherryPickVisit(i,$event)" >
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.86 70"><defs>
                   <style>
@@ -175,7 +173,7 @@
               <span class="label">{{'cherry_pick' | translate}}</span>
             </span>
   
-            <span class="visit-tray-option visit-delete-btn">
+            <span  *ngIf="canDelete" class="visit-tray-option visit-delete-btn"  (click)="deleteVisit(i,$event)">
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.93 80"><defs>
                   <style>

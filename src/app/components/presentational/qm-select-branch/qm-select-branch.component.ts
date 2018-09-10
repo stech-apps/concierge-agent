@@ -112,7 +112,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';
-    this.clearInputDirective.updateButtonVisibility('');
+    if(this.clearInputDirective){
+      this.clearInputDirective.updateButtonVisibility('');
+    }
   }
 
   goToNext() {

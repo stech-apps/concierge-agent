@@ -208,7 +208,9 @@ export class QmSelectServiceComponent implements OnInit {
     this.searchText = '';
     this.filterText = '';
     if(this.serviceList && this.serviceList.length >= this.searchFieldServiceCount){
-      this.clearInputDirective.updateButtonVisibility('');
+      if(this.clearInputDirective){
+        this.clearInputDirective.updateButtonVisibility('');
+      }
     }
   }
 

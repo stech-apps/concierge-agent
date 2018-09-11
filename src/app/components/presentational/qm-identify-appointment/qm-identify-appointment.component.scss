@@ -300,6 +300,9 @@
     cursor: pointer;
     &.ok {
       background-color: $app-theme;
+      &.invalid-time {
+        background-color: #8e8e8e;
+      }
     }
     &.cancel {
       background-color: #8e8e8e;

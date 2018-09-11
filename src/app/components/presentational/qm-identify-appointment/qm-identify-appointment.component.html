@@ -285,7 +285,7 @@
       </div>
       <div class="qm-command-buttons-container">
         <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
-        <button class="ok" (click)="onSelectTime()">{{'ok' | translate}}</button>
+        <button class="ok" [disabled]="invalidDateSelected" [ngClass]="{'invalid-time': invalidDateSelected}" (click)="onSelectTime()">{{'ok' | translate}}</button>
       </div>     
     </div>
     <div class="qm-date-time-selection-footer-text" *ngIf="useCalendarEndpoint && currentSearchState === SEARCH_STATES.DURATION 

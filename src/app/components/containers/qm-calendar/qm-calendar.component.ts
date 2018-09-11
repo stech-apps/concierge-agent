@@ -44,7 +44,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes.selectedDates &&
       changes.selectedDates.currentValue &&
-      changes.selectedDates.currentValue.length > 1) || (changes.enabledDates.currentValue.length > 0)) {
+      changes.selectedDates.currentValue.length > 1) || (changes.enabledDates && changes.enabledDates.currentValue && changes.enabledDates.currentValue.length > 0)) {
       // sort on date changes for better performance when range checking
 
       if(changes.selectedDates) {

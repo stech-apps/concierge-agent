@@ -377,7 +377,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSearchButtonClick(searchButton) {
     this.isSearchInputOpen = !this.isSearchInputOpen;
-    this.searchText = '';
+    this.showAppointmentCollection = true;
+
     if (searchButton == this.SEARCH_STATES.ID) {
       this.searchPlaceHolderKey = 'please_enter_id_and_press_enter';
     }
@@ -404,17 +405,25 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.selectedSearchIcon = searchButton;
       this.currentSearchState = searchButton;
     }
-    else {
+    else if(this.selectedSearchIcon === searchButton && (this.searchText.trim())) {
+      this.showModalBackDrop = true;
+      this.currentSearchState = searchButton;
+      this.inputAnimationState = searchButton;
+     
+    }
+    else{
       this.showModalBackDrop = false;
       this.selectedSearchIcon = '';
     }
 
+    this.searchText = '';
     this.selectedAppointment = null;
     this.isSearchInputReadOnly = false;
     this.customerNotFound = false;
     this.showCustomerResults = false;
     this.searchedCustomers = [];
     this.appointmentDeselected.emit();
+    this.appointments = this.defaultAppointmentCollection;
     //this.arriveAppointmentDispatchers.deselectAppointment();
   }
 

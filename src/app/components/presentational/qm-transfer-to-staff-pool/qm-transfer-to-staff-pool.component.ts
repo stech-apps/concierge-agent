@@ -22,9 +22,11 @@ export class QmTransferToStaffPoolComponent implements OnInit {
   StaffPool:IStaffPool[];
   selectedVisit:Visit;
   SearchVisit:string;
-  sortedBy:string;
   searchText:string;
   selectedServicePoint:IServicePoint;
+  sortedBy:string = "LAST_NAME";
+  sortAscending = true;
+
   constructor(
     private userSelectors:UserSelectors,
     private StaffPoolDispatchers:StaffPoolDispatchers,
@@ -103,8 +105,48 @@ export class QmTransferToStaffPoolComponent implements OnInit {
       
     }
   }
- 
 
+  onSortClickbyLastName(){
+    this.sortAscending = !this.sortAscending;
+    this.sortQueueList("LAST_NAME");
+    this.sortedBy = "LAST_NAME";  
+  }
+ 
+  onSortClickbyFirstName(){
+    this.sortAscending = !this.sortAscending;
+    this.sortQueueList("FIRST_NAME");
+    this.sortedBy = "FIRST_NAME";  
+  }
+  onSortClickbyUserName(){
+    this.sortAscending = !this.sortAscending;
+    this.sortQueueList("USER_NAME");
+    this.sortedBy = "USER_NAME";  
+}
+
+sortQueueList(type) {
+  if (this.StaffPool) {
+    // sort by name
+    this.StaffPool = this.StaffPool.sort((a, b) => {
+
+          if(type=="LAST_NAME"){
+            var nameA = a.lastName.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.lastName.toUpperCase(); // ignore upper and lowercase
+           } else if (type == "FIRST_NAME"){
+            var nameA = a.firstName.toUpperCase();
+            var nameB = b.firstName.toUpperCase();
+           }
+            if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+              return -1;
+            }
+            if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+      });
+  }
+
+}
 }
 
 

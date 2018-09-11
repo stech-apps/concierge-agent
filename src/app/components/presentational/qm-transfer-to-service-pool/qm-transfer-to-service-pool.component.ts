@@ -24,7 +24,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
   selectedVisit:Visit;
   selectedServicePoint:IServicePoint
   searchText:string;
-  sortedBy:string;
+  sortedBy:string = "SERVICE_POINT";
+  sortAscending = true;
 
   constructor(  private userSelectors: UserSelectors,
     private ServicePointPoolDispatchers:ServicePointPoolDispatchers,
@@ -112,7 +113,42 @@ export class QmTransferToServicePoolComponent implements OnInit {
       ).unsubscribe()
       
     }}
-    onSortClickbyQueue(){}
-    onSortClickbyWaitingCustomers(){}
+  
+    onSortClickbyServicePoint(){
+      this.sortAscending = !this.sortAscending;
+      this.sortQueueList("SERVICEPOINT");
+      this.sortedBy = "SERVICE_POINT";  
+    }
+
+    onSortClickbyState(){
+      this.sortAscending = !this.sortAscending;
+      this.sortQueueList("STATE");
+      this.sortedBy = "STATE";  
+    }
+
+    sortQueueList(type) {
+      if (this.servicePoints) {
+        // sort by name
+        this.servicePoints = this.servicePoints.sort((a, b) => {
+
+              if(type=="SERVICEPOINT"){
+                var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+               } else if (type == "STATE"){
+                var nameA = a.state.toUpperCase();
+                var nameB = b.state.toUpperCase();
+               }
+                if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+                  return -1;
+                }
+                if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+                  return 1;
+                }
+                // names must be equal
+                return 0;
+          });
+      }
+    
+    }
     
   }

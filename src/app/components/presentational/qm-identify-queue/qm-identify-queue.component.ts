@@ -28,7 +28,7 @@ export class QmIdentifyQueueComponent implements OnInit {
   userDirection$: Observable<string>;
   selectedVisit:Visit;
   sortedBy:string = "Queue";
-
+  visitSearched:boolean= false;
   
  
 
@@ -56,9 +56,18 @@ export class QmIdentifyQueueComponent implements OnInit {
   const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
     this.selectedVisit = visit;
     if(this.selectedVisit){
-      if(this.selectedVisit[0]){
+      console.log(this.selectedVisit)
         this.onFlowNext.emit();
-    }}
+        // this.visitSearched = false;
+    // }else{
+    //   if(this.visitSearched==true){
+    //     this.translateService.get('visit_no_entry').subscribe(v => {
+    //       this.toastService.infoToast(v);
+    //       this.visitSearched = false;
+    //     });
+      // }
+    }
+
   })
   this.subscriptions.add(visitSubscription)
 }
@@ -92,11 +101,6 @@ onSortClickbyMaxWaitTime(){
   this.sortAscending = !this.sortAscending;
 }
 
-onSortClickbyEstimatedWaitTime(){
-  this.sortedBy = "EstWaitTime";
-  this.sortQueueList("ESTWAITTIME");
-  this.sortAscending = !this.sortAscending;
-}
 
 
 
@@ -156,7 +160,10 @@ keyDownFunction(visitSearchText) {
     this.toastService.infoToast(v);
   });
   {
-    this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id,visitSearchText.toUpperCase());
+    this.visitSearched=true;
+    if(visitSearchText!=""){
+      this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id,visitSearchText.toUpperCase());
+    }
   }
   
 }

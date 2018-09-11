@@ -14,14 +14,14 @@
     <div class="qm-service-point-list">
 
         <div class="qm-service-point-list__headers qm-flex-grid">
-          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyQueue()">
+          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyServicePoint()">
             <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
-            <div><i  *ngIf="sortedBy =='Queue'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+            <div><i  *ngIf="sortedBy =='SERVICE_POINT'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
 
-          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()">
+          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyState()">
             <div class="qm-service-point-list-header-item-label">{{'state' | translate}}</div>
-            <div><i *ngIf="sortedBy =='WaitingCustomers'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+            <div><i *ngIf="sortedBy =='STATE'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>       
         </div>
       

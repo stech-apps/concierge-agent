@@ -56,7 +56,7 @@ export function reducer(
     case QueueActions.FETCH_SELECTED_VISIT_INFO_SUCCESS: {
       return {
         ...state,
-        selectedVisit: action.payload,
+        selectedVisit: action.payload[0],
         error: null
       };
     }

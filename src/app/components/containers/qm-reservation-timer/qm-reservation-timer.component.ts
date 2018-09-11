@@ -78,6 +78,9 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
         this.prevTimeStamp = Math.floor(new Date().getTime()/1000);
         onGoingTime--;
       }
+      if(onGoingTime < 0){
+        onGoingTime = 0;
+      }
 
       // Format Number into string
       this.counterString = this.timeUtils.formatSecondsIntoMinituesAndSeconds(

@@ -30,7 +30,7 @@ export function reducer(
     case QueueActions.FETCH_QUEUE_INFO_SUCCESS: {
       return {
         ...state,
-        allQueueSummary: action.payload,
+        allQueueSummary: processQueueInfo(action.payload),
         loading: true,
         error: null
       };
@@ -48,7 +48,7 @@ export function reducer(
     case QueueActions.UPDATE_QUEUE_INFO: {
       return {
         ...state,
-        allQueueSummary: updateQueueInfo(state.allQueueSummary, action.visit, action.isAddedVisit),
+        allQueueSummary: processQueueInfo(action.payload),
         loading: true,
         error: null
       };
@@ -96,29 +96,70 @@ export function reducer(
     }
   }
 
-  function updateQueueInfo(queueSummary: any, visit: Visit, isAddedVisit: boolean): any {
-    if(queueSummary){
-    if(queueSummary.queues){
-    let queueList : Queue[] = queueSummary.queues;
-    let queue = queueList.find(queue => queue.id === visit.queueId);
-    let index = queueList.indexOf(queue);
-    if(isAddedVisit){
-      queue.customers = queue.customers + 1;
-      queueSummary.totalCustomersWaiting = queueSummary.totalCustomersWaiting + 1;
-      if(queue.waitingTime < visit.waitingTime){
-        queue.waitingTime = visit.waitingTime;
-      }
-      if(queueSummary.maxWaitingTime < visit.waitingTime){
-        queueSummary.maxWaitingTime = visit.waitingTime;
+  function processEstWaitingTime(time) {
+    var tmp = time
+    var bounds = {upper: undefined, lower: undefined, single: undefined};
+    var counter = 0;
+    var factor = 5	
+
+    if (tmp < 5) {
+        bounds.single = "< 5";
+        return bounds.single;
+    }
+
+    while (tmp % factor > 0) {
+        counter++;
+        tmp--;
+    }
+
+ //handle cases dividable by 5
+    if (counter === 0 && tmp % factor === 0) {
+        bounds.lower = tmp;
+        bounds.upper = tmp+factor;
+        return bounds.lower + "-" + bounds.upper;
+    }
+
+    bounds.lower = tmp;
+    tmp = time
+    while (tmp % factor > 0) {
+        tmp++;
+    }
+
+    bounds.upper = tmp;
+    return bounds.lower + "-" + bounds.upper;
+}
+
+
+  function processQueueInfo(queueInfo) {
+    var data = { queues: null, totalCustomersWaiting: null, maxWaitingTime: null }
+    var queueInformation = [];
+    var customerCount = 0;
+    var est_w_time = undefined;
+    var maxWT = 0;
+    for (var i = 0; i < queueInfo.length; i++) {
+      customerCount = customerCount + queueInfo[i].customersWaiting;
+      est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
+        Math.round(queueInfo[i].estimatedWaitingTime / 60));
+      queueInformation.push({
+        queue: queueInfo[i].name,
+        customers: queueInfo[i].customersWaiting,
+        max_w_time: Math.round(queueInfo[i].waitingTime / 60) == 0 ? "-" : Math.round(queueInfo[i].waitingTime / 60),
+        est_w_time: est_w_time,
+        waitingTime: queueInfo[i].waitingTime,
+        serviceLevel: queueInfo[i].serviceLevel,
+        id: queueInfo[i].id
+
+      });
+
+      var tmpMaxWT = Math.round(queueInfo[i].waitingTime / 60);
+      if (tmpMaxWT > maxWT) {
+        maxWT = Math.round(queueInfo[i].waitingTime / 60);
       }
     }
-    else{
-      queue.customers = queue.customers - 1;
-      queueSummary.totalCustomersWaiting = queueSummary.totalCustomersWaiting - 1;
-    }
-    
-    queueSummary.queues[index] = queue;
-    return queueSummary;
+
+    data.queues = queueInformation
+    data.totalCustomersWaiting = customerCount;
+    data.maxWaitingTime = maxWT;
+    return data;
   }
-    }}
 }

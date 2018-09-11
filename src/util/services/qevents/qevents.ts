@@ -14,7 +14,8 @@ export enum PUBLIC_EVENTS {
     VISIT_TRANSFER_TO_QUEUE = "VISIT_TRANSFER_TO_QUEUE",
     VISIT_TRANSFER_TO_SERVICE_POINT_POOL = "VISIT_TRANSFER_TO_SERVICE_POINT_POOL",
     VISIT_TRANSFER_TO_USER_POOL = "VISIT_TRANSFER_TO_USER_POOL",
-    VISIT_END_TRANSACTION = "VISIT_END_TRANSACTION"
+    VISIT_END_TRANSACTION = "VISIT_END_TRANSACTION",
+    QUEUE_VISITS_UPDATED = "QUEUE_VISITS_UPDATED"
 }
 
 import { Injectable } from '@angular/core';
@@ -24,6 +25,7 @@ import { Visit } from '../../../models/IVisit';
 import { QueueDispatchers, ServicePointSelectors } from '../../../store';
 import { servicePoint } from '../../../store/services/data.service';
 import { IServicePoint } from '../../../models/IServicePoint';
+import { Queue } from '../../../models/IQueue';
 
 @Injectable()
 export class QEventsHelper {
@@ -93,50 +95,18 @@ export class QEventsHelper {
             break;
         case PUBLIC_EVENTS.VISIT_CREATE:
             //appointment.updateAppointmentList(processedEvent);
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), true);
-            break;
-        case PUBLIC_EVENTS.VISIT_NEXT:
-        case PUBLIC_EVENTS.VISIT_REMOVE:
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), false);
-            break;
-        case PUBLIC_EVENTS.VISIT_TRANSFER_TO_QUEUE:
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), true);
-            if(this.isUpdateBothQueues(processedEvent.E.prm)){
-                this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, true), false);
-            }
-            break;
-        case PUBLIC_EVENTS.VISIT_TRANSFER_TO_SERVICE_POINT_POOL:
-        case PUBLIC_EVENTS.VISIT_TRANSFER_TO_USER_POOL:
-            this.queueDispatchers.updateQueueInfo(this.buildVisitObject(processedEvent.E.prm, false), false);
-            break;    
+            break;  
+        case PUBLIC_EVENTS.QUEUE_VISITS_UPDATED:
+            this.buildVisitList(processedEvent.E.prm);
         default:
             break;
       }
   }
 
-isUpdateBothQueues(eventData){
-    if(eventData.eventSiblings.includes(PUBLIC_EVENTS.VISIT_END_TRANSACTION)){
-        return false;
-    }
-    else{
-        return true;
-    }
-}  
+buildVisitList(eventData){
+    var processString = "[" + eventData.queueList.slice(1, -1).replace(/\[/g, "{").replace(/\]/g, "}") + "]";
+    var queueList = JSON.parse(processString) as [Queue];
+    this.queueDispatchers.updateQueueInfo(queueList);
+}
 
-buildVisitObject(eventData, isOriginQueue) : Visit{
-    let queueId = eventData.queueLogicId;
-    if(isOriginQueue){
-        queueId = eventData.fromQueueLogicId;
-    }
-    let visit : Visit = {
-        ticketId: eventData.ticket,
-        visitId: eventData.visitId,
-        waitingTime: eventData.waitingTime,
-        totalWaitingTime: eventData.totWaitTime,
-        appointmentId: eventData.appointmentId,
-        appointmentTime: eventData.appointmentTime,
-        queueId: queueId
-    };
-    return visit;
-  }
 }

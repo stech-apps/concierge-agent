@@ -16,8 +16,8 @@ export class QueueDispatchers {
     this.store.dispatch(new QueueActions.FetchQueueInfo(branchId));
   }
 
-  updateQueueInfo(visit: Visit, isAddedVisit: boolean) {
-    this.store.dispatch(new QueueActions.UpdateQueueInfo(visit, isAddedVisit));
+  updateQueueInfo(queue: [Queue]) {
+    this.store.dispatch(new QueueActions.UpdateQueueInfo(queue));
   }
   
   fetchSelectedVisit(branchId:number,searchText:string){

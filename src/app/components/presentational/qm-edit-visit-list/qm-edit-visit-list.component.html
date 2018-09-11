@@ -13,8 +13,8 @@
 </div>
 
 
-<div class="qm-visit-list__container">
-  <div class="qm-visit-list">
+<div class="qm-visit-list__container" *ngIf="visits">
+  <div class="qm-visit-list" *ngIf="visits.length>0">
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label">{{'visit_id_label' | translate}}</div>
@@ -63,15 +63,13 @@
         <div class="qm-col">{{visit.customerName }}</div>
         <div class="qm-col "> {{visit.serviceName }} </div>
         <div class="qm-col "> {{visit.appointmentTime }} </div>
-        <div class="qm-col">{{ visit.waitingTimeStr }}</div>
-
-      
+        <div class="qm-col">{{ visit.waitingTimeStr }}</div>     
       </div>
 
       <div *ngIf="visitClicked && selectedVisitId === visit.id " class="qm-visit-list__options">
           <div class="qm-visit-list__options__container">
   
-            <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" (click)="transferToQ()">
+            <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" (click)="transferToQ(visit)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.37 80"><defs>
                     <style>
                       .cls-1 {
@@ -91,7 +89,7 @@
               <span class="label"> {{'transfer_visit_queue_header_simple' | translate}} </span>
             </span>
   
-            <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-sp-btn" (click)="transferToStaffPool()">
+            <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn" (click)="transferToSPfPool(visit)">
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 159.13 80"><defs>
                   <style>
@@ -121,7 +119,7 @@
               <span class="label">{{'transfer_visit_sp_pool_header_simple' | translate}}</span>
             </span>
   
-            <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-staff-btn" (click)="transferToSPfPool()">
+            <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn" (click)="transferToStaffPool(visit)">
   
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140.9 80"><defs>
                   <style>

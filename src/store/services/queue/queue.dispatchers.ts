@@ -29,6 +29,10 @@ export class QueueDispatchers {
     this.store.dispatch(new QueueActions.SelectQueue(queue));
   }
 
+  setectVisit(visit:Visit){
+    this.store.dispatch(new QueueActions.SelectVisit(visit));
+  }
+
   resetSelectedQueue(){
     this.store.dispatch(new QueueActions.ResetSelectedQueue());
   }

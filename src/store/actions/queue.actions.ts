@@ -13,6 +13,7 @@ export const FETCH_SELECTED_VISIT_INFO_FAIL = '[QUEUE] FETCH_SELECTED_VISIT_INFO
 export const FETCH_SELECTED_VISIT_INFO_SUCCESS = '[QUEUE] FETCH_SELECTED_VISIT_INFO_SUCCESS';
 export const SELECT_QUEUE = '[QUEUE] SELECT_QUEUE';
 export const RESET_SELECTED_QUEUE = '[QUEUE] RESET_SELECTED_QUEUE';
+export const SELECT_VISIT = '[QUEUE] SELECT_VISIT';
 
 export class FetchQueueInfo implements Action {
   readonly type = FETCH_QUEUE_INFO;
@@ -60,6 +61,13 @@ export class ResetSelectedQueue implements Action {
 }
 
 
+export class SelectVisit implements Action {
+  readonly type = SELECT_VISIT;
+  constructor(public payload: Visit) {}
+}
+
+
+
 // Action types
 export type AllQueueActions = FetchQueueInfoSuccess
   | FetchQueueInfo
@@ -70,4 +78,5 @@ export type AllQueueActions = FetchQueueInfoSuccess
   | FetchSelectedVisitInfoSuccess
   | SelectQueue
   | ResetSelectedQueue
+  | SelectVisit
 

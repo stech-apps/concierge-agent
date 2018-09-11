@@ -198,18 +198,22 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   }
 
-  transferToQ() {
-    this.NextFlow.emit("TRANSFER_TO_STAFF_POOL");
-    // this.visitDispatchers
+  transferToQ(visit) {
+    this.NextFlow.emit("tq");
+    this.visitDispatchers.setectVisit(visit);
     this.onFlowNext.emit();
   }
 
-  transferToStaffPool() {
-
+  transferToStaffPool(visit) {
+    this.NextFlow.emit("tsp");
+    this.visitDispatchers.setectVisit(visit);
+    this.onFlowNext.emit();
   }
 
-  transferToSPfPool() {
-
+  transferToSPfPool(visit) {
+    this.NextFlow.emit("tspp");
+    this.visitDispatchers.setectVisit(visit);
+    this.onFlowNext.emit();
   }
 
   cherryPickVisit(index: number,event:Event) {

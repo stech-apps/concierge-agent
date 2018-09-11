@@ -84,7 +84,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
     if(this.selectedVisit){
       this.translateService.get('transfer_visit_to_service_pool_confirm_box',
       {
-        visit: this.selectedVisit[0].ticketId,
+        visit: this.selectedVisit.ticketId,
       }).subscribe(
         (label: string) => 
           this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
@@ -95,7 +95,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
               this.translateService.get('visit_transferred').subscribe((label)=>{
                 var successMessage = {
                   firstLineName: label,
-                  firstLineText:this.selectedVisit[0].ticketId,
+                  firstLineText:this.selectedVisit.ticketId,
                   icon: "correct",
                 }
                 this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);

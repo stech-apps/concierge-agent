@@ -4,6 +4,7 @@ import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICustomer } from '../../../../models/ICustomer';
+import { Visit } from '../../../../models/IVisit';
 
 @Component({
   selector: 'qm-qm-edit-visit',
@@ -11,6 +12,7 @@ import { ICustomer } from '../../../../models/ICustomer';
   styleUrls: ['./qm-edit-visit.component.scss']
 })
 export class QmEditVisitComponent implements OnInit {
+  SelectedVisit:Visit
   selectedQueue:Queue;
   userDirection$: Observable<string> = new Observable<string>();
   private subscriptions: Subscription = new Subscription();
@@ -27,6 +29,11 @@ export class QmEditVisitComponent implements OnInit {
     })
     this.subscriptions.add(QueueSelectorSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
+
+    const VisitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
+      this.SelectedVisit=visit;
+    });
+    this.subscriptions.add(VisitSubscription);  
   }
 
   ngOnInit() {
@@ -43,5 +50,7 @@ export class QmEditVisitComponent implements OnInit {
     console.log(flow);
     
   }
+
+ 
 
 }

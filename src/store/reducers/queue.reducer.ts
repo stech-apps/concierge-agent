@@ -81,6 +81,15 @@ export function reducer(
         selectedQueue:null
       };
     }
+    
+    case QueueActions.SELECT_VISIT: {
+      return {
+        ...state,
+        selectedVisit: action.payload,
+        loading: true,
+        error: null
+      };
+    }
 
     default: {
       return state;

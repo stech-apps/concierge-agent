@@ -86,7 +86,7 @@ export class SPService implements OnDestroy {
       fromBranchId:branch.id,
       fromId:openServicePoint.id,
       sortPolicy:sortPolicy,
-      visitId:visit[0].visitId
+      visitId:visit.id
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/queues/${ToQueue.id}/visits`,requestBody)
@@ -99,7 +99,7 @@ export class SPService implements OnDestroy {
     var requestBody = {
       fromBranchId:branch.id,
       fromId:openServicePoint.id,
-      visitId:visit[0].visitId
+      visitId:visit.id
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/servicePoints/${ToServicePoint.id}/visits`,requestBody)
@@ -112,7 +112,7 @@ export class SPService implements OnDestroy {
     var requestBody = {
       fromBranchId:branch.id,
       fromId:openServicePoint.id,
-      visitId:visit[0].visitId
+      visitId:visit.id
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/users/${ToUserID}/visits`,requestBody)

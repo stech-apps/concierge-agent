@@ -357,16 +357,19 @@
 
       <tbody *ngIf="appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
         [style.max-height]="height">
-        <tr class="qm-identify-appointment__customer-table__list" *ngFor="let app of appointments" tabindex="0" (click)="onAppointmentSelect(app)">
-          <td class="qm-identify-appointment__customer-table__col-5"></td>
-          <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime || app.start)}}</td>
-          <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.startTime || app.end)}}</td>
-          <td class="qm-identify-appointment__customer-table__col-10">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
-          <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
-          <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
-          <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
-          <td class="qm-identify-appointment__customer-table__col-5"></td>
-        </tr>
+        <ng-container *ngFor="let app of appointments">
+          <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
+            <td class="qm-identify-appointment__customer-table__col-5"></td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime || app.start)}}</td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.startTime || app.end)}}</td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
+            <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
+            <td class="qm-identify-appointment__customer-table__col-5"></td>
+          </tr>
+        </ng-container>
+
       </tbody>
 
       <div class="qm-loader-container" *ngIf="showLoading()">

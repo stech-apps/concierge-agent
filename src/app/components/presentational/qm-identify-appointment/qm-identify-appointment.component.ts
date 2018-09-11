@@ -424,6 +424,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.searchedCustomers = [];
     this.appointmentDeselected.emit();
     this.appointments = this.defaultAppointmentCollection;
+    this.selectedCustomer = null;
     //this.arriveAppointmentDispatchers.deselectAppointment();
   }
 
@@ -602,7 +603,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   deselectAppointment() {
     this.selectedAppointment = null;
     //this.arriveAppointmentDispatchers.deselectAppointment();
-    this.appointmentDeselected.emit();
     this.showAppointmentCollection = true;
     this.selectedCustomer = null;
     this.appointments = this.defaultAppointmentCollection;

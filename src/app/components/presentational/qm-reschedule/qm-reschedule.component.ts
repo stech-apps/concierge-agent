@@ -171,24 +171,11 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     this.qmModalService.openForTransKeys('', 'confirm_delete', 'yes', 'no', (result) => {
       if (result) {
         this.appointmentDispatchers.deleteAppointment(this.editAppointment, () => {
-          this.onFlowExit.next(true);
         },
-          () => {
-            this.onFlowExit.next(true);
-
-            this.translationService.get('appointment_not_found_detail').subscribe((v) => {
-
-              var errorMessage = {
-                firstLineName: v,
-                firstLineText: '',
-                icon: "error"
-              };
-
-              this.infoMessageDispatchers.updateInfoMsgBoxInfo(errorMessage);
-            });
-
+          (error) => {
           }
         );
+        this.onFlowExit.next(true);
       }
     }, () => {
       this.onFlowExit.next(true);

@@ -86,13 +86,22 @@ export class AppointmentEffects {
     })
     );
 
-  @Effect({ dispatch: false })
+  @Effect()
   deleteAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.DELETE_APPOINTMENT_FAIL)
-    .pipe(
-    tap((action: AppointmentActions.DeleteAppointmentFail) => {
-      this.toastService
-        .infoToast('appointment_not_found_detail');
+      .pipe(
+    switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
+      return this.translateService.get(['appointment_deleted_fail']).pipe(
+        switchMap((messages) => {
+          var errorMessage = {
+            firstLineName: messages['appointment_deleted_fail'],
+            icon: "error"
+          };
+
+          this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
+          return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
+        })
+      );
     }));
 
   @Effect()

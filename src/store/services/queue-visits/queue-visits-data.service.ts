@@ -56,7 +56,6 @@ private processQueueInfo( data:Visit[]){
     visit.serviceName = visit.currentVisitService.serviceExternalName;
     visit.waitingTimeStr = this.formatTimeHHMM(visit.waitingTime);
    visit.appointmentTime? visit.appointmentTime = this.formatHHMMSSIntoHHMM(visit.appointmentTime.split("T")[1]):null;
-    visit.ticketNumber = visit.ticketId;
     this.addHyphonIfInvalidValue(visit);
     visitList.push(visit);
   }

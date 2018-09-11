@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
@@ -51,6 +51,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canDelete: boolean = false;
   canCherryPick: boolean = false;
 
+  dsOrOutcomeExists: boolean = false;
+  visitSearchText: string ;
+
 
   constructor(
     private branchSelectors: BranchSelectors,
@@ -64,7 +67,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private router: Router,
     private toastService: ToastService,
-    private visitDispatchers:QueueDispatchers
+    private visitDispatchers: QueueDispatchers
   ) {
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
@@ -89,6 +92,14 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
     const queueVisitsSub = this.queueVisitsSelectors.queueVisits$.subscribe(visitList => {
       this.visits = visitList;
+      this.visitClicked = false;
+      this.selectedVisitId = -1;
+      //if only one visit in queue open visit options
+      if (this.visits.length === 1) {
+        this.visitClicked = true;
+        this.selectedVisitId = this.visits[0].id;
+        this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
+      }
     });
     this.subscriptions.add(queueVisitsSub);
 
@@ -116,9 +127,33 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       })
       .unsubscribe();
     this.subscriptions.add(uttSubscription);
+
+    const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
+
+      if (result ) {
+        this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
+          this.visits.splice(0, this.visits.length, visit);
+          this.visitClicked = true;
+          this.selectedVisitId = this.visits[0].id;
+  
+
+        }, error => {
+          console.log(error);
+          this.translateService.get('request_fail').subscribe(v => {
+            this.toastService.infoToast(v);
+          });
+        })
+      } 
+    }, error => {
+      
+    });
+    this.subscriptions.add(visitSub);
+
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   sortByVisitId() {
     this.sortingIndicator = SortBy.VISITID;
@@ -186,15 +221,45 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.searchText = '';
   }
 
-  selectVisit(visitId: number) {
-    this.selectedVisitId === visitId ? this.visitClicked = !this.visitClicked : this.visitClicked = true;
+  selectVisit(index: number, visitId: number) {
+    this.selectedVisitId === visitId && this.visits.length > 1 ? this.visitClicked = !this.visitClicked : this.visitClicked = true;
     //visit selection code goes here
-    console.log(visitId);
+   
     this.selectedVisitId = visitId;
+    this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
 
   }
 
+  dismissKeyboard(event) {
+    var elem = event.currentTarget || event.target;
+    // #142130605 - Requirement remove keyboard when enter pressed
+    elem.blur();
+  }
+
+
+  isAppointmentIdValid(val: string) {
+    return /^[0-9a-zA-Z]+$/.test(val);
+  }
+
+
   keyDownFunction(event, visitSearchText: string) {
+    this.dismissKeyboard(event);
+    this.visitSearchText = visitSearchText;
+
+    if (this.visitSearchText.trim().length == 0) {
+      this.translateService.get('visit_no_entry').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+      return;
+
+    } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
+      this.translateService.get('visit_invalid_entry').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+      return;
+    }
+
+    this.visitDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
 
   }
 
@@ -216,12 +281,15 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.onFlowNext.emit();
   }
 
-  cherryPickVisit(index: number,event:Event) {
+  cherryPickVisit(index: number, event: Event) {
     event.stopPropagation();
-  
-    let dsOrOutcomeExists: boolean = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
+
+
     let visitId = this.visits[index].ticketNumber;
-    if (!dsOrOutcomeExists && this.canCherryPick) {
+
+    if (this.dsOrOutcomeExists && this.canCherryPick) {
+      return;
+    } else if (!this.dsOrOutcomeExists && this.canCherryPick) {
       this.qmModalService.openForTransKeys('', 'cherry_pick_visit_in_modal', 'yes', 'no', (result) => {
         if (result) {
           this.spService.cherryPickVisit(this.selectedbranchId, this.selectedSpId, this.selectedVisitId).subscribe(
@@ -239,13 +307,19 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
               console.log(error);
               const err = new DataServiceError(error, null);
               if (error.status == ERROR_STATUS.NOT_FOUND) {
-                this.toastService.infoToast('requested_visit_not_found');
+                this.translateService.get('requested_visit_not_found').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
               }
               else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
-                this.toastService.infoToast('visit_already_called');
+                this.translateService.get('visit_already_called').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
               }
               else {
-                this.toastService.infoToast('request_fail');
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
               }
             }
           );
@@ -255,7 +329,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteVisit(index: number,event:Event) {
+  deleteVisit(index: number, event: Event) {
     event.stopPropagation();
     let visitId = this.visits[index].ticketNumber;
     this.qmModalService.openForTransKeys('', 'delete_visit_in_modal', 'yes', 'no', (result) => {
@@ -275,13 +349,19 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             console.log(error);
             const err = new DataServiceError(error, null);
             if (error.status == ERROR_STATUS.NOT_FOUND) {
-              this.toastService.infoToast('requested_visit_not_found');
+              this.translateService.get('requested_visit_not_found').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
             }
             else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
-              this.toastService.infoToast('visit_already_called');
+              this.translateService.get('visit_already_called').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
             }
             else {
-              this.toastService.infoToast('request_fail');
+              this.translateService.get('request_fail').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
             }
           }
         );

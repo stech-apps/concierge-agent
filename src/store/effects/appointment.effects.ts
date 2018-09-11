@@ -12,6 +12,7 @@ import { IAppState, DataServiceError } from 'src/store';
 import * as moment from 'moment';
 import { IAppointmentState } from 'src/store/reducers/appointment.reducer';
 import { ToastService } from 'src/util/services/toast.service';
+import { ERROR_CODE_APPOINTMENT_NOT_FOUND } from 'src/app/shared/error-codes';
 
 const toAction = AppointmentActions.toAction();
 
@@ -89,16 +90,22 @@ export class AppointmentEffects {
   @Effect()
   deleteAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.DELETE_APPOINTMENT_FAIL)
-      .pipe(
+    .pipe(
     switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-      return this.translateService.get(['appointment_deleted_fail']).pipe(
+      return this.translateService.get(['appointment_deleted_fail', 'appointment_not_found_detail']).pipe(
         switchMap((messages) => {
           var errorMessage = {
             firstLineName: messages['appointment_deleted_fail'],
             icon: "error"
           };
 
-          this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
+          if (action.payload["errorCode"] === ERROR_CODE_APPOINTMENT_NOT_FOUND) {
+            this.toastService.infoToast(messages['appointment_not_found_detail']);
+          }
+          else {
+            this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
+          }
+
           return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
         })
       );

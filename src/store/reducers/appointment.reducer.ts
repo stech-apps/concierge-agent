@@ -69,14 +69,6 @@ export function reducer(
               error: null
             };
           }
-          case AppointmentActions.DELETE_APPOINTMENT_FAIL: {
-            return {
-              ...state,
-              loading: false,
-              loaded: true,
-              error: action.payload
-            };
-          }
 
         case AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS: {
             return {

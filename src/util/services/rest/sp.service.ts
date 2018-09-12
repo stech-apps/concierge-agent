@@ -86,7 +86,7 @@ export class SPService implements OnDestroy {
       fromBranchId: branch.id,
       fromId: openServicePoint.id,
       sortPolicy: sortPolicy,
-      visitId: visit.id
+      visitId: visit.visitId
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/queues/${ToQueue.id}/visits`, requestBody)
@@ -99,7 +99,7 @@ export class SPService implements OnDestroy {
     var requestBody = {
       fromBranchId: branch.id,
       fromId: openServicePoint.id,
-      visitId: visit.id
+      visitId: visit.visitId
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/servicePoints/${ToServicePoint.id}/visits`, requestBody)
@@ -112,7 +112,7 @@ export class SPService implements OnDestroy {
     var requestBody = {
       fromBranchId: branch.id,
       fromId: openServicePoint.id,
-      visitId: visit.id
+      visitId: visit.visitId
     }
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/users/${ToUserID}/visits`, requestBody)
@@ -236,8 +236,7 @@ export class SPService implements OnDestroy {
       visit.waitingTimeStr = this.formatTimeHHMM(visit.waitingTime);
       visit.appointmentTime ? visit.appointmentTime = this.formatHHMMSSIntoHHMM(visit.appointmentTime.split("T")[1]) : null;
       this.addHyphonIfInvalidValue(visit);
-     
-    
+      visit.visitId = visit.id;
     return visit;
   }
 

@@ -171,7 +171,27 @@
     }
    
 }
+.inner-box {
+    padding: 8px;
+}
+.no-visits-message {
+    letter-spacing: 0;
+    text-align: center;
+    padding-top: 5em;
+    color: #3e3d3d;
+}
 
+
+.no-visits-message .text-deco {
+    font-weight: 500 !important;
+    border-bottom: 1px solid #3e3d3d;
+    padding-bottom: 6px;
+    cursor: pointer;
+}
+
+.no-visits-message .text-deco:active {
+    color: #565555 !important;
+}
 .disabled-true-btn-color {
     fill: #bdbdbd !important;
 }

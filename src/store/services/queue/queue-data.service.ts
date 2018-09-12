@@ -8,6 +8,7 @@ import { IAccount } from './../../../models/IAccount';
 import { managementEndpoint, DataServiceError, servicePoint } from './../data.service';
 import { GlobalErrorHandler } from '../../../util/services//global-error-handler.service';
 import { userRoleFactory } from 'src/helpers/user-role-factory';
+import { Visit } from '../../../models/IVisit';
 
 const CONNECT_CONCIERGE = 'connectconcierge';
 const CONCIERGE = 'concierge';
@@ -25,7 +26,7 @@ export class QueueDataService {
 
   getSelectedVist(branchId: number, searchText:string): Observable<any> {
     return this.http
-      .get<IAccount>(`${servicePoint}/branches/${branchId}/visits;ticketId=${searchText}`)
+      .get<Visit>(`${servicePoint}/branches/${branchId}/visits;ticketId=${searchText}`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 }

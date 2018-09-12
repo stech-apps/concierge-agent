@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CustomerDispatchers, CalendarServiceDispatchers, TimeslotDispatchers, ServiceDispatchers, CalendarBranchSelectors, BranchSelectors, ArriveAppointmentDispatchers, CalendarServiceSelectors, ReservationExpiryTimerDispatchers, ReserveDispatchers, QueueDispatchers } from '../../store/index';
 import { Subscription } from 'rxjs';
+import { Visit } from '../../models/IVisit';
 
 @Injectable()
 export class Recycle {
@@ -14,7 +15,8 @@ export class Recycle {
     private arriveAppointmentDispatcher: ArriveAppointmentDispatchers,
     private expireTimer: ReservationExpiryTimerDispatchers,
     private reserveDispatcher: ReserveDispatchers,
-    private queueDispatchers:QueueDispatchers
+    private queueDispatchers:QueueDispatchers,
+    private visitDispatchers: QueueDispatchers
   ) {
   
   }
@@ -35,5 +37,6 @@ export class Recycle {
       this.calendarServiceDispatcher.setSelectedServices([]);
       this.queueDispatchers.setectVisit(null);
       
+      this.visitDispatchers.setectVisit(null);
   }
 }

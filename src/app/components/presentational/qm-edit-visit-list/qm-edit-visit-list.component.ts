@@ -30,6 +30,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   selectedbranchId: number;
   selectedSpId: number;
   selectedQueueId: number;
+  selectedQueueName:string;
   searchText: String;
   visits: Visit[] = [];
   sortByVisitIdAsc = true;
@@ -86,6 +87,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       if (queue) {
         this.selectedQueueId = queue.id;
+        this.selectedQueueName = queue.queue;
         if (this.selectedbranchId && this.selectedQueueId) {
           this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
         }
@@ -100,7 +102,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       //if only one visit in queue open visit options
       if (this.visits.length === 1) {
         this.visitClicked = true;
-        this.selectedVisitId = this.visits[0].id;
+        this.selectedVisitId = this.visits[0].visitId;
         this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
       }
     });
@@ -132,12 +134,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(uttSubscription);
 
     const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
-
-      if (result ) {
+//check id defined to detect the search query request
+      if (result && !result.id) {
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
           this.visits.splice(0, this.visits.length, visit);
           this.visitClicked = true;
-          this.selectedVisitId = this.visits[0].id;
+          this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
   
 
@@ -375,7 +377,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
 
-
+  goBackToQueueSection(){
+    // this.NextFlow.emit("qu");
+    // this.onFlowNext.emit();
+  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

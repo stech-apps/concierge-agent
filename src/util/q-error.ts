@@ -18,3 +18,9 @@ export enum ERROR_STATUS {
     BAD_REQUEST = 400,
     TIMEOUT = 0
 }
+
+export enum PRINTER_ISSUE {
+    NO_CONNECTION = "No connection to printer.",
+    PAPER_JAM = "401 Paper jam.",
+    PAPER_OUT = "405 Out of paper"
+}

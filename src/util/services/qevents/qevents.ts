@@ -26,6 +26,9 @@ import { QueueDispatchers, ServicePointSelectors } from '../../../store';
 import { servicePoint } from '../../../store/services/data.service';
 import { IServicePoint } from '../../../models/IServicePoint';
 import { Queue } from '../../../models/IQueue';
+import { PRINTER_ISSUE } from '../../q-error';
+import { TranslateService } from "@ngx-translate/core";
+import { ToastService } from 'src/util/services/toast.service';
 
 @Injectable()
 export class QEventsHelper {
@@ -34,7 +37,9 @@ export class QEventsHelper {
   constructor(
     private nativeApi: NativeApiService,
     private queueDispatchers: QueueDispatchers,
-    private ServicePointSelectors:ServicePointSelectors
+    private ServicePointSelectors:ServicePointSelectors,
+    private translateService: TranslateService,
+    private toastService: ToastService
   ) {
   }
 
@@ -86,7 +91,7 @@ export class QEventsHelper {
         case PUBLIC_EVENTS.PRINTER_ISSUE:
             var errorCode = processedEvent.E.prm.error_code;
             var errorMsg = processedEvent.E.prm.error_msg;
-            //errorHandler.notifyError(errorCode, errorMsg);
+            this.notifyPrinterIssue(errorMsg);
             break;
         case PUBLIC_EVENTS.CREATE_APPOINTMENT:
         case PUBLIC_EVENTS.UPDATE_APPOINTMENT:
@@ -107,6 +112,28 @@ buildVisitList(eventData){
     var processString = "[" + eventData.queueList.slice(1, -1).replace(/\[/g, "{").replace(/\]/g, "}") + "]";
     var queueList = JSON.parse(processString) as [Queue];
     this.queueDispatchers.updateQueueInfo(queueList);
+}
+
+notifyPrinterIssue(errorMsg: string){
+    var msg = "";
+        switch (errorMsg) {
+            case PRINTER_ISSUE.NO_CONNECTION:
+                msg = "no_connection_with_printer";
+                break;
+            case PRINTER_ISSUE.PAPER_JAM:
+                msg = "paper_jam";
+                break;
+            case PRINTER_ISSUE.PAPER_OUT:
+                msg = "out_of_paper";
+                break;
+            default:
+                break;
+        }
+        if(msg.length > 0){
+            this.translateService.get(msg).subscribe(v => {
+                this.toastService.infoToast(v);
+              });
+        }
 }
 
 }

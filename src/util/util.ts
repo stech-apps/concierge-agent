@@ -11,9 +11,6 @@ export class Util {
     }
 
     compareVersions(baseVersion, currentVersion) {
-        if (typeof baseVersion + typeof currentVersion != '')
-            return -1;
-
         var a = baseVersion.split('.')
             , b = currentVersion.split('.')
             , i = 0, len = Math.max(a.length, b.length);

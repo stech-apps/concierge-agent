@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
+import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
 import { QmModalService } from '../qm-modal/qm-modal.service';
@@ -25,6 +25,7 @@ enum SortBy {
 
 export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
+  userDirection$: Observable<string> = new Observable<string>();
   private subscriptions: Subscription = new Subscription();
   selectedbranchId: number;
   selectedSpId: number;
@@ -56,6 +57,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private userSelectors: UserSelectors,
     private branchSelectors: BranchSelectors,
     private queueSelectors: QueueSelectors,
     private queueVisitsDispatchers: QueueVisitsDispatchers,
@@ -69,6 +71,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private visitDispatchers: QueueDispatchers
   ) {
+    this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
     });
@@ -135,6 +138,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visits.splice(0, this.visits.length, visit);
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].id;
+          this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
   
 
         }, error => {
@@ -161,8 +165,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     if (this.visits && this.visits.length) {
       // sort by visitId
       this.visits = this.visits.sort((a, b) => {
-        var nameA = a.ticketNumber.toUpperCase(); // ignore upper and lowercase
-        var nameB = b.ticketNumber.toUpperCase(); // ignore upper and lowercase
+        var nameA = a.ticketId.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.ticketId.toUpperCase(); // ignore upper and lowercase
         if ((nameA < nameB && this.sortByVisitIdAsc) || (nameA > nameB && !this.sortByVisitIdAsc)) {
           return -1;
         }
@@ -285,7 +289,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
 
-    let visitId = this.visits[index].ticketNumber;
+    let visitId = this.visits[index].ticketId;
 
     if (this.dsOrOutcomeExists && this.canCherryPick) {
       return;
@@ -331,7 +335,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   deleteVisit(index: number, event: Event) {
     event.stopPropagation();
-    let visitId = this.visits[index].ticketNumber;
+    let visitId = this.visits[index].ticketId;
     this.qmModalService.openForTransKeys('', 'delete_visit_in_modal', 'yes', 'no', (result) => {
       if (result) {
         this.spService.deleteVisit(this.selectedbranchId, this.selectedSpId, this.selectedVisitId).subscribe(

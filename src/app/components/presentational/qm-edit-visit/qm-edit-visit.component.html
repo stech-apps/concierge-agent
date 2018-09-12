@@ -1,6 +1,6 @@
 <qm-flow #fa>
-      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true"> 
-          <qm-flow-panel-header (click)="fa.panelHeaderClick(qu);" (onFlowExit)="fa.onFlowExit()">
+      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="true " [isContentVisible]="true"> 
+          <qm-flow-panel-header (click)="fa.panelHeaderClick(qu); queueHeaderClick();" (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title>{{ 'queues' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
         </qm-flow-panel-header>
@@ -10,10 +10,10 @@
       </qm-flow-panel>
 
  
-      <qm-flow-panel #iv>
-        <qm-flow-panel-header (click)="fa.panelHeaderClick(iv); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+      <qm-flow-panel #iv >
+        <qm-flow-panel-header  (click)="fa.panelHeaderClick(iv); visitHeaderClick(); " (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title>{{ 'identify_visit' | translate}}</qm-flow-panel-title>
-          <qm-flow-panel-result *ngIf="SelectedVisit">{{SelectedVisit.ticketId}}</qm-flow-panel-result>
+          <qm-flow-panel-result *ngIf="HeaderSelectedVisit">{{HeaderSelectedVisit.ticketId}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
           <qm-edit-visit-list dir="{{ userDirection$ | async }}"  (NextFlow)="NextFlow($event)"  (onFlowNext)="fa.onFlowNext(t)"></qm-edit-visit-list>
@@ -22,7 +22,7 @@
 
 
       <qm-flow-panel #t>
-        <qm-flow-panel-header (click)="fa.panelHeaderClick(t); branchHeaderClick();" (onFlowExit)="fa.onFlowExit()">
+        <qm-flow-panel-header (click)="fa.panelHeaderClick(t); " (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title  *ngIf="currentFlow=='tq'">{{ 'transfer_visit_queue_header' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-title *ngIf="currentFlow=='tspp'">{{ 'transfer_visit_sp_pool_header' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-title *ngIf="currentFlow=='tsp'">{{ 'transfer_visit_user_pool_header' | translate}}</qm-flow-panel-title>

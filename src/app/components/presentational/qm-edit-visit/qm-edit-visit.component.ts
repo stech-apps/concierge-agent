@@ -19,6 +19,7 @@ export class QmEditVisitComponent implements OnInit {
   flowType= FLOW_TYPE.EDIT_VIST;
   selectedCustomer: ICustomer;
   currentFlow:string;
+  HeaderSelectedVisit:Visit;
 
   @Output() Transfer: EventEmitter<any> = new EventEmitter<any>();
 
@@ -34,6 +35,7 @@ export class QmEditVisitComponent implements OnInit {
 
     const VisitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
       this.SelectedVisit=visit;
+      this.HeaderSelectedVisit=this.SelectedVisit;
     });
     this.subscriptions.add(VisitSubscription);  
   }
@@ -42,17 +44,23 @@ export class QmEditVisitComponent implements OnInit {
     
   }
 
-  branchHeaderClick(){
+  queueHeaderClick(){
+    this.HeaderSelectedVisit=null;
     this.QueueDispatchers.resetSelectedQueue();
     this.currentFlow=null;
+
   }
 
-
+  visitHeaderClick(){
+    this.currentFlow=null;
+    this.HeaderSelectedVisit=null;
+  }
 
   NextFlow(flow){
+    this.HeaderSelectedVisit=this.SelectedVisit;
     this.currentFlow = flow;
-    console.log(flow);
     this.Transfer.emit(flow);
+    
   }
 
  

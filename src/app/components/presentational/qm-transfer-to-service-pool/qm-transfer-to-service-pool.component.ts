@@ -64,6 +64,15 @@ export class QmTransferToServicePoolComponent implements OnInit {
     const ServicePointPoolSubscription = this.ServicePointPoolSelectors.ServicePointPool$.subscribe((sp)=>{
       this.servicePoints = sp;
       console.log(this.servicePoints);
+      if(this.servicePoints.length===0){
+        this.translateService.get('empty_sp_pool').subscribe(
+          (noappointments: string) => {
+            this.toastService.infoToast(noappointments);
+          }
+        ).unsubscribe();
+      }
+      
+
       
   })
   this.subscriptions.add(ServicePointPoolSubscription);
@@ -72,14 +81,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
   })
   this.subscriptions.add(visitSubscription) 
    
-  // if(this.servicePoints.length===0){
-  //   this.translateService.get('empty_sp_pool').subscribe(
-  //     (noappointments: string) => {
-  //       this.toastService.infoToast(noappointments);
-  //     }
-  //   ).unsubscribe();
-  // }
-  
+
   this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterServicePoints(text));

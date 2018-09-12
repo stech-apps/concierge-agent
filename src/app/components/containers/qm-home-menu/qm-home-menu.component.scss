@@ -3,6 +3,7 @@
   background-color: $primary-background-color;
   font-family: $tertiary-font-family;
   @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
+  z-index: 3;
 }
 
 .qm-home-menu {

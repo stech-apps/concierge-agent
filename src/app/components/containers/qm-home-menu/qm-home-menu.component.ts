@@ -4,7 +4,7 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers } from 'src/store';
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { QueueService } from '../../../../util/services/queue.service';
@@ -44,7 +44,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
-    private toastService: ToastService, private translateService: TranslateService, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors) {
+    private toastService: ToastService, private translateService: TranslateService,
+    private InfoMsgBoxDispatcher:InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors) {
 
   }
 
@@ -111,6 +112,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   }
 
   handleMenuItemClick(route) {
+    this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     // initial check for central connectivity
     if (route === 'create-appointment') {
       let calendarBranchId: number;

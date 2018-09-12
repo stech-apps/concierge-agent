@@ -88,4 +88,18 @@
     margin-left: -2rem;
 }
 
+.qm-clear-search{ 
+    margin: 0px 10px 0px -25px;
+    position: relative;
+    z-index: 2;
+    color: black;
+    @at-root [dir="rtl"] {
+        .qm-clear-search{
+         margin: 0px -25px 0px 10px;
+        }
+       }
+       
+ 
+}
+
 

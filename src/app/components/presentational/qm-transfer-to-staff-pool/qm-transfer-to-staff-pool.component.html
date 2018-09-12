@@ -16,18 +16,18 @@
           <div class="qm-service-point-list__headers qm-flex-grid">
             <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyLastName()">
               <div class="qm-service-point-list-header-item-label">{{'last_name' | translate}}</div>
-              <div><i  *ngIf="sortedBy =='LAST_NAME'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+              <div><i  *ngIf="sortedBy =='LAST_NAME' && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>
   
             <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyFirstName()" >
               <div class="qm-service-point-list-header-item-label">{{'first_name' | translate}}</div>
-              <div><i *ngIf="sortedBy =='FIRST_NAME'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+              <div><i *ngIf="sortedBy =='FIRST_NAME'  && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>       
 
             
             <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyUserName()">
                 <div class="qm-service-point-list-header-item-label">{{'user_name' | translate}}</div>
-                <div><i *ngIf="sortedBy =='USER_NAME'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+                <div><i *ngIf="sortedBy =='USER_NAME'  && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
               </div>       
 
           </div>

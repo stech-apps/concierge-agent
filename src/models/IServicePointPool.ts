@@ -1,5 +1,4 @@
 export interface IServicePointPool {
-
 "id":number,
 "name":string,
 "unitId":string,

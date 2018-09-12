@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers } from '../../../../store';
-import { Observable, Subscription } from 'rxjs';
 import { ServicePointPoolDispatchers } from '../../../../store';
 import { IBranch } from '../../../../models/IBranch';
 import { IServicePointPool } from '../../../../models/IServicePointPool';
@@ -10,6 +9,10 @@ import { QmModalService } from '../qm-modal/qm-modal.service';
 import { SPService } from '../../../../util/services/rest/sp.service';
 import { IServicePoint } from '../../../../models/IServicePoint';
 import { Router } from '@angular/router';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { Subscription, Observable,Subject } from 'rxjs';
+import { ToastService } from './../../../../util/services/toast.service';
 
 @Component({
   selector: 'qm-transfer-to-service-pool',
@@ -26,6 +29,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
   searchText:string;
   sortedBy:string = "SERVICE_POINT";
   sortAscending = true;
+  inputChanged: Subject<string> = new Subject<string>();
+  filterText: string = '';
 
   constructor(  private userSelectors: UserSelectors,
     private ServicePointPoolDispatchers:ServicePointPoolDispatchers,
@@ -37,7 +42,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
     private spService:SPService,
     private servicePointSelectors:ServicePointSelectors,
     private infoMsgBoxDispatcher:InfoMsgDispatchers,
-    private router:Router
+    private router:Router,
+    private toastService:ToastService
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;   
   
@@ -66,16 +72,38 @@ export class QmTransferToServicePoolComponent implements OnInit {
   })
   this.subscriptions.add(visitSubscription) 
    
+  // if(this.servicePoints.length===0){
+  //   this.translateService.get('empty_sp_pool').subscribe(
+  //     (noappointments: string) => {
+  //       this.toastService.infoToast(noappointments);
+  //     }
+  //   ).unsubscribe();
+  // }
+  
+  this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterServicePoints(text));
+
+
+
+
   }
     
-
+  
   ngOnInit() {
    
   }
 
-   SearchVisit(test){
 
+  filterServicePoints(newFilter: string) {    
+    this.filterText = newFilter;
+   }
+
+   handleInput($event) {
+
+    this.inputChanged.next($event.target.value);
   }
+   
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

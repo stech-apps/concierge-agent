@@ -5,6 +5,7 @@ import { Action } from '@ngrx/store/src/models';
 import * as AllActions from './../actions';
 import { switchMap } from 'rxjs/operators';
 import { ServicePointPoolDataService } from "../services/service-point-pool/service-point-pool-data.service";
+import { FetchServicePointInfo } from "./../actions";
 
 const toAction = AllActions.toAction();
 @Injectable()
@@ -17,7 +18,7 @@ export class ServicePointPoolEffects {
   getServicePointPools$: Observable<Action> = this.actions$
     .ofType(AllActions.FETCH_SERVICE_POINT_POOL_INFO)
     .pipe(
-      switchMap((action: AllActions.FetchServicePointInfo) =>
+      switchMap((action: FetchServicePointInfo) =>
         toAction(
           this.ServicePointPoolDataService.getServicePoints(action.payload),
           AllActions.FetchServicePointInfoSucess,

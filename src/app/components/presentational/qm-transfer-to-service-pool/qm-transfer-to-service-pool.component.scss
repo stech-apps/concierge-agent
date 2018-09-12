@@ -107,3 +107,23 @@
     vertical-align: inherit;
     display: inline-block;
 }
+
+.qm-clear-search{ 
+    margin: 0px 10px 0px -25px;
+    position: relative;
+    z-index: 2;
+    color: black;
+    @at-root [dir="rtl"] {
+        .qm-clear-search{
+         margin: 0px -25px 0px 10px;
+        }
+       }
+}
+
+.qm-no-results{
+    color: black;
+    margin: auto;
+    position: unset;
+    display: table;
+    padding-top: 14vh;
+}

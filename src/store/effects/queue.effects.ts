@@ -8,6 +8,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import * as QueueActions from './../actions';
 import { FetchQueueInfo } from 'src/store';
 import { FetchSelectedVisitInfo } from './../actions';
+import { ToastService } from './../../util/services/toast.service';
 
 const toAction = QueueActions.toAction();
 
@@ -16,6 +17,8 @@ export class QueueEffects {
   constructor(
     private actions$: Actions,
     private queueDataService: QueueDataService,
+    private translateService:TranslateService,
+    private toastService:ToastService
   ) {}
 
   @Effect()
@@ -40,6 +43,20 @@ export class QueueEffects {
       this.queueDataService.getSelectedVist(fetchSelectedVisit.branch,fetchSelectedVisit.searchText),
       QueueActions.FetchSelectedVisitInfoSuccess,
       QueueActions.FetchSelectedVisitInfoFail
-    ))
+    )),
+    tap(
+      (action: QueueActions.FetchSelectedVisitInfoSuccess) => {
+        if (action.payload[0] == null) {
+                   
+          this.translateService.get('visit_not_found').subscribe(
+            (label: string) => {
+              this.toastService.infoToast(label);
+            }
+          ).unsubscribe();
+       
+        }
+      }
+    ),
+    
   )
 }

@@ -149,6 +149,9 @@ import { QmEditVisitListComponent } from './components/presentational/qm-edit-vi
 import { QmTrasferToQueueComponent } from './components/presentational/qm-trasfer-to-queue/qm-trasfer-to-queue.component';
 import { QmTransferToServicePoolComponent } from './components/presentational/qm-transfer-to-service-pool/qm-transfer-to-service-pool.component';
 import { QmTransferToStaffPoolComponent } from './components/presentational/qm-transfer-to-staff-pool/qm-transfer-to-staff-pool.component';
+import { FilterQueuePipe } from './components/presentational/qm-trasfer-to-queue/filter-queue.pipe';
+import { FilterServicePointsPipe } from './components/presentational/qm-transfer-to-service-pool/filter-service-points.pipe';
+
 
 
 // Global options for Toastr
@@ -232,6 +235,9 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmTrasferToQueueComponent,
     QmTransferToServicePoolComponent,
     QmTransferToStaffPoolComponent,
+    FilterQueuePipe,
+    FilterServicePointsPipe,
+ 
    
   ],
   entryComponents: [

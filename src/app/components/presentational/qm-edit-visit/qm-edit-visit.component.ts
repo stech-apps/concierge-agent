@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { QueueSelectors, UserSelectors, QueueDispatchers } from '../../../../store';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
@@ -20,6 +20,8 @@ export class QmEditVisitComponent implements OnInit {
   selectedCustomer: ICustomer;
   currentFlow:string;
 
+  @Output() Transfer: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private queueSelectors:QueueSelectors,
     private QueueDispatchers:QueueDispatchers,
     private userSelectors: UserSelectors,
@@ -37,18 +39,20 @@ export class QmEditVisitComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
-  headerClick(){
+  branchHeaderClick(){
     this.QueueDispatchers.resetSelectedQueue();
+    this.currentFlow=null;
   }
 
-  branchHeaderClick(){}
+
 
   NextFlow(flow){
     this.currentFlow = flow;
     console.log(flow);
-    
+    this.Transfer.emit(flow);
   }
 
  

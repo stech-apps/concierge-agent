@@ -1,6 +1,6 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable,Subject } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, ServicePointSelectors, InfoMsgDispatchers } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
@@ -12,6 +12,9 @@ import { SPService } from '../../../../util/services/rest/sp.service';
 import { IServicePoint } from '../../../../models/IServicePoint';
 import { Router } from '@angular/router';
 import { queue } from 'rxjs/internal/scheduler/queue';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { ToastService } from './../../../../util/services/toast.service';
 
 @Component({
   selector: 'qm-trasfer-to-queue',
@@ -33,7 +36,9 @@ export class QmTrasferToQueueComponent implements OnInit {
   btnTransferSort:boolean;
   selectedServicePoint:IServicePoint;
   sortedBy:string = "Queue";
-
+  inputChanged: Subject<string> = new Subject<string>();
+  filterText: string = '';
+  queueSearched:boolean;
   selectedQueue:Queue;
 
 
@@ -49,13 +54,14 @@ export class QmTrasferToQueueComponent implements OnInit {
     private translateService:TranslateService,
     private spService:SPService,
     private router:Router,
-    
-    private   infoMsgBoxDispatcher:InfoMsgDispatchers
+    private toastService:ToastService,    
+    private infoMsgBoxDispatcher:InfoMsgDispatchers
   ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
     if (branch) {
       this.selectedBranch = branch;
       this.queueDispatchers.fetchQueueInfo(branch.id);
       this.queueService.setQueuePoll();
+      
   }
 });
 this.subscriptions.add(branchSubscription);
@@ -82,8 +88,12 @@ const selectedServicePointSubscriptions = this.servicePointSelectors.openService
 
 this.subscriptions.add(selectedServicePointSubscriptions);
 
+this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterQueues(text));
 
 }
+
 
 ngOnInit() {
   const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
@@ -91,6 +101,13 @@ ngOnInit() {
     this.sortQueueList("QUEUE");
   })
   this.subscriptions.add(queueListSubscription);
+  if(this.queueCollection.length===0){
+    this.translateService.get('empty_queues').subscribe(
+      (noappointments: string) => {
+        this.toastService.infoToast(noappointments);
+      }
+    ).unsubscribe();
+  }
 }
 
 ngOnDestroy() {
@@ -120,6 +137,9 @@ onSortClickbyEstimatedWaitTime(){
   this.sortAscending = !this.sortAscending;
 }
 
+filterQueues(newFilter: string) {    
+  this.filterText = newFilter;
+ }
 
 
 
@@ -218,8 +238,11 @@ transferVisitMsgBoxText(type){
   
 }
 
-SearchVisit(searchText){
-  console.log(this.queueCollection.filter(queues => queues.queue.toString()==searchText))
+
+
+handleInput($event) {
+  this.queueSearched = true;
+  this.inputChanged.next($event.target.value);
 }
   
 }

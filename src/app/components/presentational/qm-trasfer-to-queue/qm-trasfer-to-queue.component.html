@@ -2,7 +2,7 @@
 
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
-    <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_queue' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="SearchVisit(visitSearch.value.trim())"   #visitSearch autocomplete="off"> 
+    <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_queue' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
     <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = ''" class="icon-close qm-clear-search" aria-hidden="true"></i>
 
     </div>
@@ -19,14 +19,14 @@
               <i class="icon-queue" aria-hidden="true"></i>
             </div>
             <div class="qm-queue-list-header-item-label">{{'queue_view_queue_label' | translate}}</div>
-            <div><i  *ngIf="sortedBy =='Queue'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+            <div><i  *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
           <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()">
             <div>
               <i class="icon-customer-solid" aria-hidden="true"></i>
             </div>
             <div class="qm-queue-list-header-item-label">{{'queue_view_waiting_customers_label' | translate}}</div>
-            <div><i *ngIf="sortedBy =='WaitingCustomers'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+            <div><i *ngIf="sortedBy =='WaitingCustomers'  && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
 
           <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyMaxWaitTime()">
@@ -34,7 +34,7 @@
                 <i class="icon-customer-solid" aria-hidden="true"></i>
               </div>
               <div class="qm-queue-list-header-item-label"> {{ 'queue_view_max_wait_time_label' | translate}} </div>
-              <div><i  *ngIf="sortedBy =='MaxWaitTime'" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
+              <div><i  *ngIf="sortedBy =='MaxWaitTime'  && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
           <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyEstimatedWaitTime()">
               <div>
@@ -47,7 +47,8 @@
         </div>
       
         <div class="qm-queue-list__body">
-          <div *ngFor="let q of queueCollection" [class.qm-dropdown]= "DropDownselectedQueue==q" >
+          <div *ngFor="let q of queueCollection | filterQueue : filterText" [class.qm-dropdown]= "DropDownselectedQueue==q" >
+              
           <div  class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
               <div class="qm-col qm-queue-list-body-row-label">{{q.queue}}</div>
               <div class="qm-col">{{q.customers }}</div>
@@ -82,10 +83,12 @@
             </div>  
 
           </div>
+       
+        </div>
+       
+       
         </div>
 
-        </div>
       </div>
-      
-
+      <div class="qm-no-results" *ngIf="(queueCollection | filterQueue : filterText).length===0"> {{'queue_not_found' |translate}} </div>
 </div>

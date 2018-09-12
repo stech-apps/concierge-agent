@@ -9,6 +9,7 @@ import { QmModalService } from '../qm-modal/qm-modal.service';
 import { SPService } from '../../../../util/services/rest/sp.service';
 import { Router } from '@angular/router';
 import { IServicePoint } from '../../../../models/IServicePoint';
+import { ToastService } from './../../../../util/services/toast.service';
 
 @Component({
   selector: 'qm-transfer-to-staff-pool',
@@ -38,7 +39,8 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     private spService:SPService,
     private infoMsgBoxDispatcher:InfoMsgDispatchers,
     private router:Router,
-    private ServicePointSelectors:ServicePointSelectors
+    private ServicePointSelectors:ServicePointSelectors,
+    private toastService:ToastService
 
   ) { 
     const staffPoolSubscription = this.StaffPoolSelectors.StaffPool$.subscribe((staffPool)=>{
@@ -57,6 +59,9 @@ export class QmTransferToStaffPoolComponent implements OnInit {
       this.selectedServicePoint = sp;
     })
     this.subscriptions.add(ServicePointSubscription);
+
+
+   
   }
 
   ngOnInit() {
@@ -67,10 +72,16 @@ export class QmTransferToStaffPoolComponent implements OnInit {
 
     this.StaffPoolDispatchers.fetchStaffPool(this.currentBranch.id); 
 
+    if(this.StaffPool.length===0){
+      this.translateService.get('empty_sp_pool').subscribe(
+        (noappointments: string) => {
+          this.toastService.infoToast(noappointments);
+        }
+      ).unsubscribe();
+    }
   }
 
-  onSortClickbyQueue(){}
-  onSortClickbyWaitingCustomers(){}
+
 
   selectPool(s){
     if(this.selectedVisit){
@@ -135,6 +146,11 @@ sortQueueList(type) {
             var nameA = a.firstName.toUpperCase();
             var nameB = b.firstName.toUpperCase();
            }
+           else if (type == "USER_NAME"){
+            var nameA = a.userName.toUpperCase();
+            var nameB = b.userName.toUpperCase();
+           }
+
             if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
               return -1;
             }
@@ -147,6 +163,11 @@ sortQueueList(type) {
   }
 
 }
+ngOnDestroy() {
+  this.subscriptions.unsubscribe();
 }
+}
+
+
 
 

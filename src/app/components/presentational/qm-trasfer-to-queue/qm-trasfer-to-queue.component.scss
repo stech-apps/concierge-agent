@@ -126,6 +126,14 @@
  
 }
 
+.qm-no-results{
+    color: black;
+    margin: auto;
+    position: unset;
+    display: table;
+    padding-top: 14vh;
+}
+
 .qm-queue-list__body{
 
     max-height: calc(100vh - 165px);

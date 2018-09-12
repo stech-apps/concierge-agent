@@ -1,6 +1,5 @@
 import { IServicePointPool } from "../../models/IServicePointPool";
-import * as moment from 'moment';
-import * as ServicePointActions from '../actions'
+import * as ServicePointPoolActions from '../actions'
 
 
 export interface IServicePointPoolState {
@@ -11,18 +10,18 @@ export interface IServicePointPoolState {
   }
   
   export const initialState: IServicePointPoolState = {
-    servicePointPool: null,
-    loading:null,
-    loaded:null,
+    servicePointPool: [],
+    loading:false,
+    loaded:false,
     error:null
   };
 
   export function reducer(
       state:IServicePointPoolState = initialState,
-      action:ServicePointActions.AllServicePointPoolActions
+      action:ServicePointPoolActions.AllServicePointPoolActions
   ):IServicePointPoolState{
     switch(action.type){
-        case ServicePointActions.FETCH_SERVICE_POINT_POOL_INFO:{
+        case ServicePointPoolActions.FETCH_SERVICE_POINT_POOL_INFO:{
             return{
                 ...state,             
                 loading:true,
@@ -30,7 +29,7 @@ export interface IServicePointPoolState {
                 error:null
             }
         };
-        case ServicePointActions.FETCH_SERVICE_POINT_POOL_INFO_SUCCESS:{
+        case ServicePointPoolActions.FETCH_SERVICE_POINT_POOL_INFO_SUCCESS:{
             return{
                 ...state,
                 servicePointPool:action.payload,             
@@ -38,15 +37,16 @@ export interface IServicePointPoolState {
                 loaded:false
             }
         }; 
-        case ServicePointActions.FETCH_SERVICE_POINT_POOL_INFO_FAIL:{
+        case ServicePointPoolActions.FETCH_SERVICE_POINT_POOL_INFO_FAIL:{
             return{
                 ...state,             
                 loading:false,
                 loaded:false,
                 error:action.payload
             }
-        }; 
-
-
+        }
+        default: {
+            return state;
+          }
   }
 }

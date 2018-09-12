@@ -3,13 +3,13 @@ import { IServicePointPool } from '../../models/IServicePointPool';
 
 
 // Fetching user info
-export const FETCH_SERVICE_POINT_POOL_INFO = '[QUEUE] FETCH_SERVICE_POINT_POOL_INFO';
-export const FETCH_SERVICE_POINT_POOL_INFO_FAIL = '[QUEUE] FETCH_SERVICE_POINT_POOL_INFO_FAIL';
-export const FETCH_SERVICE_POINT_POOL_INFO_SUCCESS =  '[QUEUE] FETCH_SERVICE_POINT_POOL_INFO_SUCCESS'
+export const FETCH_SERVICE_POINT_POOL_INFO = '[IServicePointPool] FETCH_SERVICE_POINT_POOL_INFO';
+export const FETCH_SERVICE_POINT_POOL_INFO_FAIL = '[IServicePointPool] FETCH_SERVICE_POINT_POOL_INFO_FAIL';
+export const FETCH_SERVICE_POINT_POOL_INFO_SUCCESS =  '[IServicePointPool] FETCH_SERVICE_POINT_POOL_INFO_SUCCESS'
 
 export class FetchServicePointInfo implements Action {
-    readonly type = FETCH_SERVICE_POINT_POOL_INFO;
-    constructor(public payload: number) {}
+  constructor(public payload: number) {} 
+  readonly type = FETCH_SERVICE_POINT_POOL_INFO;
   }
   
 export class FetchServicePointInfoFail implements Action {

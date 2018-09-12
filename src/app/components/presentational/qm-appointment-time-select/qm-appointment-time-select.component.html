@@ -30,7 +30,7 @@
   <div class="qm-appointment-time-select-slots">
     <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
     <div class="qm-time-slot-placeholder">
-      <qm-time-slots (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+      <qm-time-slots [preselectedTimeSlot]="preselectedTimeSlot" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
     </div>
   </div>
   <!--ngb-datepicker #dp [(ngModel)]="model" [outsideDays]="'hidden'" firstDayOfWeek="7" [displayMonths]="displayMonths" [navigation]="'arrows'"  (navigate)="date = $event.next"></ngb-datepicker-->

@@ -355,7 +355,7 @@
       </thead>
 
 
-      <tbody *ngIf="appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
+      <tbody *ngIf="appointments && appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
         [style.max-height]="height">
         <ng-container *ngFor="let app of appointments">
           <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">

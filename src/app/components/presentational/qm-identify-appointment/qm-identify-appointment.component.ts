@@ -189,7 +189,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     if (this.useCalendarEndpoint) {
       const calendarAppointmentSubscription = this.appointmentSelectors.calendarAppointments$.subscribe((apps) => {
-        this.handleAppointmentResponse(apps);
+        this.calendarBranchSelectors.branches$.subscribe(()=> {
+          this.handleAppointmentResponse(apps);
+        }).unsubscribe();       
       });
 
       this.subscriptions.add(calendarAppointmentSubscription);
@@ -234,7 +236,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       this.readAppointmentFetchTimePeriodFromUtt(params);
-      this.searchAppointments();
+        this.searchAppointments();
     });
 
     this.subscriptions.add(servicePointsSubscription);
@@ -251,8 +253,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(appointmentsLoadedSub);
 
     const calendarBranchsSub = this.calendarBranchSelectors.branches$.subscribe((bs) => {
-        this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id)
-    }); 
+        this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id);
+    });
 
     this.subscriptions.add(calendarBranchsSub);
   }
@@ -274,8 +276,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   applyAppointmentFilters(appointments: IAppointment[]) {
     if (this.useCalendarEndpoint) {
-      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && ap.branch.id === this.selectedBranch.id);
-
+      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && this.selectedCalendarBranch && ap.branch.qpId === this.selectedCalendarBranch.qpId);
     } else {
       return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
     }

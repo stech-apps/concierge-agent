@@ -94,7 +94,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.subscriptions.add(reservableDatesSub);
     this.subscriptions.add(serviceSelectionSubscription);
 
-    this.reloadTimeSlots.subscribe(()=> {
+    this.reloadTimeSlots.subscribe(() => {
         this.preselectedTimeSlot = this.selectedTime;
         this.getTimeSlots();
     });

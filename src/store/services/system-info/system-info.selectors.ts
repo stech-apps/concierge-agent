@@ -41,9 +41,8 @@ const getSystemInfoHost = createSelector(
 
 const getSystemInfoHostAddress = createSelector(
   getSystemInfo,
-  (state: ISystemInfo) => {
-    state.protocol + "://" + state.host + ":" + state.port;
-  }
+  (state: ISystemInfo) => state.protocol + "://" + state.host + ":" + state.port
+
 );
 
 

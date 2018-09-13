@@ -4,7 +4,8 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors } from 'src/store';
+
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { QueueService } from '../../../../util/services/queue.service';
@@ -38,6 +39,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   userDirection$: Observable<string>;
 
   isEditFlowDisabled = false;
+  isEditVisitFlowDisabled = false;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -45,7 +47,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
     private toastService: ToastService, private translateService: TranslateService,
-    private InfoMsgBoxDispatcher:InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors) {
+    private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors,
+    private systemInfoSelectors: SystemInfoSelectors) {
 
   }
 
@@ -69,8 +72,24 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         }
         this.printerEnabled = uttpParams.printerEnable;
 
-        if(!uttpParams.delAppointment && !uttpParams.reSheduleAppointment){
+        if (!uttpParams.delAppointment && !uttpParams.reSheduleAppointment) {
           this.isEditFlowDisabled = true;
+        }
+
+        var canCherryPick = uttpParams.cherryPick;
+        if(!canCherryPick){
+            canCherryPick = false;
+        }
+        var canTransferSP = uttpParams.trServPool;
+        var canTransferQ = uttpParams.btnQueueTransfer;
+        var canTransferStaff = uttpParams.trUserPool;
+        var canTransferQFirst = uttpParams.btnTransferFirst;
+        var canTransferQLast = uttpParams.btnTransferLast;
+        var canTransferQWait = uttpParams.btnTransferSort;
+        var canDelete = uttpParams.delVisit;
+        if (canDelete == false && canCherryPick == false && canTransferSP == false && canTransferQ == false && canTransferStaff == false &&
+           (canTransferQ == false || (canTransferQ == true && canTransferQFirst == false && canTransferQLast == false && canTransferQWait == false))) {
+            this.isEditVisitFlowDisabled =true;
         }
       }
 
@@ -116,23 +135,33 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     // initial check for central connectivity
     if (route === 'create-appointment') {
       let calendarBranchId: number;
+      let hostAddressStr: string;
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);
-      if (calendarBranchId && calendarBranchId > 0) {
-        this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
-          value => {
-            if (value && calendarBranchId === value.branch.id) {
+      const hostAddressSub = this.systemInfoSelectors.systemInfoHostAddress$.subscribe(hostAddress => {
+        hostAddressStr = hostAddress;
+      });
+      this.subscriptions.add(hostAddressSub);
 
+      if (calendarBranchId && calendarBranchId > 0) {
+        ///////////////////////
+        this.calendarService.getBranchWithPublicId('', calendarBranchId).subscribe(
+          value => {
+            if (value && value.branch.publicId) {
               this.handleUttRequirements(route);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.infoToast(v);
               })
             }
+          }, error => {
+            this.translateService.get('no_central_access').subscribe(v => {
+              this.toastService.infoToast(v);
+            })
           }
         );
       }
-    }else {
+    } else {
       this.handleUttRequirements(route);
     }
 
@@ -152,10 +181,15 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.toastService.infoToast(v);
       })
     }
-    else if (route == 'edit-appointment' && this.isEditFlowDisabled ) {
-        this.translateService.get('no_actions_available').subscribe(v => {
-          this.toastService.infoToast(v);
-        });
+    else if (route == 'edit-appointment' && this.isEditFlowDisabled) {
+      this.translateService.get('no_actions_available').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+    }
+    else if (route == 'edit-visit' && this.isEditFlowDisabled) {
+      this.translateService.get('no_actions_available').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
     }
     else {
       this.recycleService.clearCache();

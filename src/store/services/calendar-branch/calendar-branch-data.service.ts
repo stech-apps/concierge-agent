@@ -16,7 +16,7 @@ export class CalendarBranchDataService {
 
   getCalendarBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranchResponse>(`${calendarEndpoint}/branches/`)
+      .get<ICalendarBranchResponse>(`${calendarEndpoint}/branches/`,{withCredentials:true})
       .pipe(catchError(this.errorHandler.handleError()));
   }
 

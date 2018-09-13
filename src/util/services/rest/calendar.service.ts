@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { GlobalErrorHandler } from '../../../util/services/global-error-handler.service';
 import { DataServiceError, calendarEndpoint, calendarPublicEndpoint, calendarPublicEndpointV2 } from 'src/store/services/data.service';
 import { IAppointment } from '../../../models/IAppointment';
@@ -116,8 +116,13 @@ private buildTime(appointment: IAppointment){
     return customerInfo;
   }
 
-  getBranchWithPublicId(branchId:number){
+  getBranchWithPublicId(hostAddress:string, branchId:number){
+    let refererheader = new HttpHeaders().set('Referer', 'http://10.2.4.11:4200/connectconcierge/')
   return this.http
-  .get<ICalendarBranchCentralResponse>(`${calendarEndpoint}/branches/${branchId}`)
+  .get<ICalendarBranchCentralResponse>(`${hostAddress}${calendarEndpoint}/branches/${branchId}`
+//   ,{
+//     headers: refererheader
+//   }
+);
 }
 }

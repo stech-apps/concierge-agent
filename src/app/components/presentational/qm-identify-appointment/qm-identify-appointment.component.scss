@@ -502,3 +502,23 @@
   top: 685px;
   padding: 5px 50px;
 }
+
+
+th {
+  cursor: pointer;
+  &.qm-sort-active {
+    &::after {
+      content: '\25b2';
+    }
+  }
+}
+
+.qm-sort-desc {
+  th {
+    &.qm-sort-active {
+      &::after {
+        content: '\25bc';
+      }
+    }
+  }
+} 

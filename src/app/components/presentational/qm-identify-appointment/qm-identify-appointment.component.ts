@@ -1,3 +1,4 @@
+import { SortColumns } from './sort-columns.enum';
 import { IAppointment } from './../../../../models/IAppointment';
 import { ToastService } from './../../../../util/services/toast.service';
 import { SelectAppointment } from './../../../../store/actions/arrive-appointment.actions';
@@ -85,6 +86,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   uttToTime: Moment;
   isInDateDurationSelection: boolean = true;
   selectedCalendarBranch: ICalendarBranch;
+  sortColumn: string = SortColumns.startTime;
+  isDescending: boolean = false;
   selectedDates: CalendarDate[] = [{
     mDate: moment(),
     selected: true
@@ -223,7 +226,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
 
-
     if(this.useCalendarEndpoint) {
       const customersFromAllDates = this.customerSelectors.customer$.subscribe((customers) => {
         if (!customers || customers.length === 0 && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
@@ -253,7 +255,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentErrorSub);
-
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       this.readAppointmentFetchTimePeriodFromUtt(params);
@@ -285,6 +286,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(qrCodeSubscription);
+    this.sortColumn =  this.useCalendarEndpoint ?  SortColumns.start : SortColumns.startTime;
   }
 
   showAppointmentNotFoundError() {
@@ -697,5 +699,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showLoadingCustomers() {
     return !this.isSearchedCustomerLoaded && this.isSearchedCustomerLoading;
+  }
+
+  sortAppointments(sortColumn: string) {
+    if(this.sortColumn === sortColumn) {
+      this.isDescending = !this.isDescending;
+    }
+    else {
+      this.isDescending = false;
+    }
+    this.sortColumn = sortColumn;
   }
 }

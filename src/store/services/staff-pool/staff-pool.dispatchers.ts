@@ -11,4 +11,7 @@ export class StaffPoolDispatchers {
     fetchStaffPool(branchId:number) {
       this.store.dispatch(new StaffPoolActions.FetchStaffPool(branchId));
     }
+    resetStaffPool(){
+      this.store.dispatch(new StaffPoolActions.ResetStaffPool());
+    }
 }

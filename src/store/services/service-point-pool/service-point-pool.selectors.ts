@@ -11,8 +11,21 @@ const getAllServicePointPool = createSelector(
     (state: IServicePointPoolState) => state.servicePointPool 
   );
 
+const getServicePointPoolLoading = createSelector(
+    getServicePointPoolState,
+    (state: IServicePointPoolState) => state.loading 
+  );
+
+  const getServicePointPoolLoaded = createSelector(
+    getServicePointPoolState,
+    (state: IServicePointPoolState) => state.loaded 
+  );
+
+
   @Injectable()
   export class ServicePointPoolSelectors {
     constructor(private store: Store<IAppState>) {}
     ServicePointPool$ = this.store.select(getAllServicePointPool);
+    ServicePointPoolLoading$ = this.store.select(getServicePointPoolLoading);
+    ServicePointPoolLoaded$ = this.store.select(getServicePointPoolLoaded);
 }

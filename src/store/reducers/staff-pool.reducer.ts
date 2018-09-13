@@ -24,6 +24,7 @@ export interface IStaffPoolState {
         return {
           ...state,
           loading: true,
+          loaded:false,
           error: null
         };
       }
@@ -41,7 +42,16 @@ export interface IStaffPoolState {
         return {
           ...state,
           loading: false,
+          loaded:false,
           error: action.payload
+        };
+      }
+      case StaffPoolActions.RESET_STAFF_POOL: {
+        return {
+          ...state,
+          loading: false,
+          loaded:false,
+          staffPool: []
         };
       }
       default: {

@@ -90,6 +90,14 @@ export function reducer(
         error: null
       };
     }
+    case QueueActions.RESET_QUEUE_INFO: {
+      return {
+        ...state,
+        allQueueSummary: {},
+        loading: false,
+        error: null
+      };
+    }
 
     default: {
       return state;
@@ -145,6 +153,7 @@ export function reducer(
         customers: queueInfo[i].customersWaiting,
         max_w_time: Math.round(queueInfo[i].waitingTime / 60) == 0 ? "-" : Math.round(queueInfo[i].waitingTime / 60),
         est_w_time: est_w_time,
+        queueType:queueInfo[i].queueType,
         waitingTime: queueInfo[i].waitingTime,
         serviceLevel: queueInfo[i].serviceLevel,
         id: queueInfo[i].id

@@ -14,6 +14,7 @@ export const FETCH_SELECTED_VISIT_INFO_SUCCESS = '[QUEUE] FETCH_SELECTED_VISIT_I
 export const SELECT_QUEUE = '[QUEUE] SELECT_QUEUE';
 export const RESET_SELECTED_QUEUE = '[QUEUE] RESET_SELECTED_QUEUE';
 export const SELECT_VISIT = '[QUEUE] SELECT_VISIT';
+export const RESET_QUEUE_INFO = '[QUEUE] RESET_QUEUE_INFO';
 
 export class FetchQueueInfo implements Action {
   readonly type = FETCH_QUEUE_INFO;
@@ -66,6 +67,11 @@ export class SelectVisit implements Action {
   constructor(public payload: Visit) {}
 }
 
+export class ResetQueueInfo implements Action {
+  readonly type = RESET_QUEUE_INFO;
+  constructor() {}
+}
+
 
 
 // Action types
@@ -79,4 +85,5 @@ export type AllQueueActions = FetchQueueInfoSuccess
   | SelectQueue
   | ResetSelectedQueue
   | SelectVisit
+  | ResetQueueInfo
 

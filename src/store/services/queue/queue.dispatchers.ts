@@ -36,4 +36,8 @@ export class QueueDispatchers {
   resetSelectedQueue(){
     this.store.dispatch(new QueueActions.ResetSelectedQueue());
   }
+
+  resetQueueInfo(){
+    this.store.dispatch(new QueueActions.ResetQueueInfo());
+  }
 }

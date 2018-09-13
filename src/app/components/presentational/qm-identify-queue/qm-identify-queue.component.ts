@@ -1,4 +1,4 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
@@ -18,6 +18,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class QmIdentifyQueueComponent implements OnInit {
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
   @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
+
+  @Input() set isVisible(value: boolean) {
+   if(value) {
+      this.onFlowStepActivated();  
+   }
+ }
 
   
   queueCollection = new Array<Queue>();
@@ -58,14 +64,6 @@ export class QmIdentifyQueueComponent implements OnInit {
     if(this.selectedVisit){
       console.log(this.selectedVisit)
         this.onFlowNext.emit();
-        // this.visitSearched = false;
-    // }else{
-    //   if(this.visitSearched==true){
-    //     this.translateService.get('visit_no_entry').subscribe(v => {
-    //       this.toastService.infoToast(v);
-    //       this.visitSearched = false;
-    //     });
-      // }
     }
 
   })
@@ -102,7 +100,9 @@ onSortClickbyMaxWaitTime(){
 }
 
 
-
+onFlowStepActivated(){
+ this.searchText = "";
+}
 
 
 sortQueueList(type) {

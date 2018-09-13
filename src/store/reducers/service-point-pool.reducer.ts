@@ -34,7 +34,7 @@ export interface IServicePointPoolState {
                 ...state,
                 servicePointPool:action.payload,             
                 loading:false,
-                loaded:false
+                loaded:true
             }
         }; 
         case ServicePointPoolActions.FETCH_SERVICE_POINT_POOL_INFO_FAIL:{
@@ -45,6 +45,15 @@ export interface IServicePointPoolState {
                 error:action.payload
             }
         }
+        case ServicePointPoolActions.RESET_SERVICE_POINT_POOL_INFO:{
+            return{
+                ...state, 
+                servicePointPool:[],                 
+                loading:false,
+                loaded:false,
+                error:null
+            }
+        };
         default: {
             return state;
           }

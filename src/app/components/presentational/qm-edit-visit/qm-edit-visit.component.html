@@ -1,22 +1,22 @@
 <qm-flow #fa>
-      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="true " [isContentVisible]="true"> 
+      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="queueFlowActive " [isContentVisible]="queueFlowActive"> 
           <qm-flow-panel-header (click)="fa.panelHeaderClick(qu); queueHeaderClick();" (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title>{{ 'queues' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
-          <qm-identify-queue dir="{{ userDirection$ | async }}"  (onFlowNext)="fa.onFlowNext(iv)"></qm-identify-queue>
+          <qm-identify-queue [isVisible]="qu.isContentVisible" dir="{{ userDirection$ | async }}"  (onFlowNext)="fa.onFlowNext(iv); showVisitFlow()"></qm-identify-queue>
         </qm-flow-panel-content>
       </qm-flow-panel>
 
  
-      <qm-flow-panel #iv >
+      <qm-flow-panel #iv  [isHeaderVisible]="visitFlowActive" [isActive]="visitFlowActive" [isContentVisible]="visitFlowActive" >
         <qm-flow-panel-header  (click)="fa.panelHeaderClick(iv); visitHeaderClick(); " (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title>{{ 'identify_visit' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="HeaderSelectedVisit">{{HeaderSelectedVisit.ticketId}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
-          <qm-edit-visit-list dir="{{ userDirection$ | async }}"  (NextFlow)="NextFlow($event)"  (onFlowNext)="fa.onFlowNext(t)"></qm-edit-visit-list>
+          <qm-edit-visit-list dir="{{ userDirection$ | async }}" (PreviousFlow)="goBack(); fa.onFlowNext(qu)" (NextFlow)="NextFlow($event)"  (onFlowNext)="fa.onFlowNext(t)"></qm-edit-visit-list>
         </qm-flow-panel-content>
       </qm-flow-panel>  
 

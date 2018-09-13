@@ -42,6 +42,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
   @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() PreviousFlow: EventEmitter<any> = new EventEmitter<any>();
 
   //utt parameters
   canTransferSP: boolean = false;
@@ -55,6 +56,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   dsOrOutcomeExists: boolean = false;
   visitSearchText: string ;
+  
 
 
   constructor(
@@ -70,7 +72,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private infoMsgBoxDispatcher: InfoMsgDispatchers,
     private router: Router,
     private toastService: ToastService,
-    private visitDispatchers: QueueDispatchers
+    private visitDispatchers: QueueDispatchers,
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -312,17 +314,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             }, error => {
               console.log(error);
               const err = new DataServiceError(error, null);
-              if (error.status == ERROR_STATUS.NOT_FOUND) {
+              if (error.status == Q_ERROR_CODE.NO_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
                   this.toastService.infoToast(v);
                 });
-              }
-              else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
-                this.translateService.get('visit_already_called').subscribe(v => {
-                  this.toastService.infoToast(v);
-                });
-              }
-              else {
+              } else {
                 this.translateService.get('request_fail').subscribe(v => {
                   this.toastService.infoToast(v);
                 });
@@ -385,4 +381,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  test(){
+    this.PreviousFlow.emit();
+  }
 }

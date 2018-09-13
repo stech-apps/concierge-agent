@@ -18,7 +18,7 @@
   </div>
 
   <div class="qm-queue-list__body">
-    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection">
+    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" (click)="selectQueue(q)">
         <div class="qm-col qm-queue-list-body-row-label">{{q.queue}}</div>
         <div class="qm-col">{{q.customers }}</div>
         <div class="qm-col max-wait-time-container">

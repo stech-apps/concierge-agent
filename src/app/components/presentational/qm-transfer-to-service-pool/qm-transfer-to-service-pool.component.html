@@ -39,6 +39,6 @@
 
         </div>
       </div> 
-      <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0"> {{'service_point_not_found' |translate}} </div>
+      <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded "> {{'service_point_not_found' |translate}} </div>
 
 </div> 

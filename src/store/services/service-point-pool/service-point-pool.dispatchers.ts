@@ -9,7 +9,11 @@ export class ServicePointPoolDispatchers {
     constructor(private store: Store<IAppState>) {}
 
     fetchServicePointPool(branchId:number){
-        this.store.dispatch(new ServicePointPoolActions.FetchServicePointInfo(branchId))
+        this.store.dispatch(new ServicePointPoolActions.FetchServicePointInfo(branchId));
+    }
+   
+    resetServicePointPool(){
+        this.store.dispatch(new ServicePointPoolActions.ResetServicePointInfo());
     }
 
 }

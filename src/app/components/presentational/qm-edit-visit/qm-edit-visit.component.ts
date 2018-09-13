@@ -1,5 +1,5 @@
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
-import { QueueSelectors, UserSelectors, QueueDispatchers } from '../../../../store';
+import { QueueSelectors, UserSelectors, StaffPoolDispatchers, ServicePointPoolDispatchers, QueueDispatchers } from '../../../../store';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
@@ -20,12 +20,16 @@ export class QmEditVisitComponent implements OnInit {
   selectedCustomer: ICustomer;
   currentFlow:string;
   HeaderSelectedVisit:Visit;
+  visitFlowActive:boolean;
+  queueFlowActive:boolean;
 
   @Output() Transfer: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private queueSelectors:QueueSelectors,
     private QueueDispatchers:QueueDispatchers,
     private userSelectors: UserSelectors,
+    private staffPoolDispatchers:StaffPoolDispatchers,
+    private servicePointPoolDispatchers:ServicePointPoolDispatchers,
   ) { 
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
@@ -41,19 +45,27 @@ export class QmEditVisitComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    if(this.selectedQueue){
+      this.showVisitFlow()
+      this.queueFlowActive = false;
+    }
+    else{
+      this.queueFlowActive= true;
+    }
   }
 
   queueHeaderClick(){
     this.HeaderSelectedVisit=null;
     this.QueueDispatchers.resetSelectedQueue();
     this.currentFlow=null;
-
   }
 
   visitHeaderClick(){
     this.currentFlow=null;
     this.HeaderSelectedVisit=null;
+    this.staffPoolDispatchers.resetStaffPool();
+    this.servicePointPoolDispatchers.resetServicePointPool();
+    // this.QueueDispatchers.resetQueueInfo();
   }
 
   NextFlow(flow){
@@ -63,6 +75,12 @@ export class QmEditVisitComponent implements OnInit {
     
   }
 
- 
+  goBack(){
+    this.visitFlowActive = false;
+  }
+
+  showVisitFlow(){
+    this.visitFlowActive = true;
+  }
 
 }

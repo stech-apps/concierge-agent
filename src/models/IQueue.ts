@@ -6,4 +6,5 @@ export class Queue {
     waitingTime: number;
     serviceLevel: number;
     id: number;
+    queueType?:string;
 }

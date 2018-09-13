@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription, Observable,Subject } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
 import { IStaffPool } from '../../../../models/IStaffPool';
 import { UserSelectors, StaffPoolDispatchers, StaffPoolSelectors, BranchSelectors, QueueVisitsSelectors, QueueSelectors, InfoMsgDispatchers, ServicePointSelectors } from '../../../../store';
@@ -10,6 +10,9 @@ import { SPService } from '../../../../util/services/rest/sp.service';
 import { Router } from '@angular/router';
 import { IServicePoint } from '../../../../models/IServicePoint';
 import { ToastService } from './../../../../util/services/toast.service';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { Q_ERROR_CODE } from '../../../../util/q-error';
 
 @Component({
   selector: 'qm-transfer-to-staff-pool',
@@ -26,7 +29,11 @@ export class QmTransferToStaffPoolComponent implements OnInit {
   searchText:string;
   selectedServicePoint:IServicePoint;
   sortedBy:string = "LAST_NAME";
+  inputChanged: Subject<string> = new Subject<string>();
   sortAscending = true;
+  filterText: string = '';
+  loaded:boolean;
+  loading:boolean;
 
   constructor(
     private userSelectors:UserSelectors,
@@ -43,12 +50,32 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     private toastService:ToastService
 
   ) { 
+
+    
+    const staffPoolLoadingSubscription = this.StaffPoolSelectors.StaffPoolLoading$.subscribe((loading)=>{
+          this.loading = loading;
+           });
+    this.subscriptions.add(staffPoolLoadingSubscription);
+
+    const staffPoolLoadedSubscription = this.StaffPoolSelectors.StaffPoolLoaded$.subscribe((loaded)=>{
+          this.loaded = loaded;
+          });
+    this.subscriptions.add(staffPoolLoadedSubscription);
+
     const staffPoolSubscription = this.StaffPoolSelectors.StaffPool$.subscribe((staffPool)=>{
-    if(staffPool){
+ 
         this.StaffPool = staffPool;
-      }
-    });
+        if(this.loaded && this.StaffPool.length===0){
+          this.translateService.get('empty_user_pool').subscribe(
+            (noappointments: string) => {
+              this.toastService.infoToast(noappointments);
+            }
+          ).unsubscribe();
+        }
+      
+     });
     this.subscriptions.add(staffPoolSubscription);
+
 
     const selectedVisitSubscription =  this.VisitSelectors.selectedVisit$.subscribe((visit)=>{
         this.selectedVisit = visit;
@@ -60,7 +87,9 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     })
     this.subscriptions.add(ServicePointSubscription);
 
-
+    this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterStaffPool(text));
    
   }
 
@@ -72,13 +101,7 @@ export class QmTransferToStaffPoolComponent implements OnInit {
 
     this.StaffPoolDispatchers.fetchStaffPool(this.currentBranch.id); 
 
-    if(this.StaffPool.length===0){
-      this.translateService.get('empty_sp_pool').subscribe(
-        (noappointments: string) => {
-          this.toastService.infoToast(noappointments);
-        }
-      ).unsubscribe();
-    }
+  
   }
 
 
@@ -107,6 +130,17 @@ export class QmTransferToStaffPoolComponent implements OnInit {
             }
             , error => {
               console.log(error);
+            
+              if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
+                this.translateService.get('requested_visit_not_found').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
+              }
+              else {
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
+              }
             }
           )
             }
@@ -133,6 +167,11 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     this.sortQueueList("USER_NAME");
     this.sortedBy = "USER_NAME";  
 }
+
+
+filterStaffPool(newFilter: string) {    
+  this.filterText = newFilter;
+ }
 
 sortQueueList(type) {
   if (this.StaffPool) {
@@ -166,6 +205,12 @@ sortQueueList(type) {
 ngOnDestroy() {
   this.subscriptions.unsubscribe();
 }
+
+handleInput($event) {
+
+  this.inputChanged.next($event.target.value);
+}
+  
 }
 
 

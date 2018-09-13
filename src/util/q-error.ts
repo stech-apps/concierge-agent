@@ -7,7 +7,8 @@ export enum Q_ERROR_CODE {
     PRINTER_ERROR = "1251",
     HUB_PRINTER_ERROR = "3050",
     PRINTER_PAPER_OUT = "8113",
-    PRINTER_PAPER_JAM = "8114"
+    PRINTER_PAPER_JAM = "8114",
+    NO_VISIT = "8011"
 }
 
 export enum ERROR_STATUS {

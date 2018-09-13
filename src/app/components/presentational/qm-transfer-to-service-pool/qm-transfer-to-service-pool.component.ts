@@ -13,6 +13,7 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subscription, Observable,Subject } from 'rxjs';
 import { ToastService } from './../../../../util/services/toast.service';
+import { Q_ERROR_CODE } from '../../../../util/q-error';
 
 @Component({
   selector: 'qm-transfer-to-service-pool',
@@ -31,6 +32,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
   sortAscending = true;
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
+  loaded:boolean;
+  loading:boolean;
 
   constructor(  private userSelectors: UserSelectors,
     private ServicePointPoolDispatchers:ServicePointPoolDispatchers,
@@ -61,10 +64,20 @@ export class QmTransferToServicePoolComponent implements OnInit {
 
     this.ServicePointPoolDispatchers.fetchServicePointPool(this.currentBranch.id);
     
+    const ServicePointPoolLoadingSubscription = this.ServicePointPoolSelectors.ServicePointPoolLoading$.subscribe((loading)=>{
+      this.loading = loading
+    })
+    this.subscriptions.add(ServicePointPoolLoadingSubscription)
+
+    const ServicePointPoolLoadedSubscription = this.ServicePointPoolSelectors.ServicePointPoolLoaded$.subscribe((loaded)=>{
+      this.loaded = loaded
+    })
+    this.subscriptions.add(ServicePointPoolLoadedSubscription)
+
+
     const ServicePointPoolSubscription = this.ServicePointPoolSelectors.ServicePointPool$.subscribe((sp)=>{
       this.servicePoints = sp;
-      console.log(this.servicePoints);
-      if(this.servicePoints.length===0){
+      if(this.loaded && this.servicePoints.length===0 ){
         this.translateService.get('empty_sp_pool').subscribe(
           (noappointments: string) => {
             this.toastService.infoToast(noappointments);
@@ -135,6 +148,17 @@ export class QmTransferToServicePoolComponent implements OnInit {
             }
             , error => {
               console.log(error);
+            
+              if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
+                this.translateService.get('requested_visit_not_found').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
+              }
+              else {
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.toastService.infoToast(v);
+                });
+              }
             }
           )
             }

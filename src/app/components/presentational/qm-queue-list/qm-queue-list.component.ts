@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QueueSelectors, QueueDispatchers, BranchSelectors } from 'src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueService } from '../../../../util/services/queue.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-queue-list',
@@ -24,7 +25,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private queueDispatchers: QueueDispatchers,
     private branchSelectors: BranchSelectors,
     public queueIndicator: QueueIndicator,
-    private queueService: QueueService
+    private queueService: QueueService,
+    private router:Router
   ) {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
       if (branch) {
@@ -70,6 +72,12 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
         return 0;
       });
     }
-
   }
+
+  selectQueue(q){
+    this.queueDispatchers.setectQueue(q);
+    this.queueService.stopQueuePoll();
+      this.router.navigate(['home/edit-visit']);
+  }
+
 }

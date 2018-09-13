@@ -8,6 +8,7 @@ export class FilterQueuePipe implements PipeTransform {
 
   
   transform(queues: Queue[], filterText?: any): any {
+    queues = queues.filter(q=>q.queueType=="QUEUE")
     filterText =  (filterText || '').trim();
     if(!queues || !filterText) {
       return queues;

@@ -1,7 +1,7 @@
 <qm-flow #fa>
       <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="queueFlowActive " [isContentVisible]="queueFlowActive"> 
           <qm-flow-panel-header (click)="fa.panelHeaderClick(qu); queueHeaderClick();" (onFlowExit)="fa.onFlowExit()">
-          <qm-flow-panel-title>{{ 'queues' | translate}}</qm-flow-panel-title>
+          <qm-flow-panel-title>{{ 'queues_section_header_label' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>

@@ -169,15 +169,15 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
   handleUttRequirements(route) {
     if (this.isAllOutputMethodsDisabled && route == 'create-appointment') {
-      this.translateService.get('all_methods_disabled').subscribe(v => {
+      this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.infoToast(v);
       })
     } else if (this.isAllOutputMethodsDisabled && route == 'arrive-appointment' && !this.printerEnabled) {
-      this.translateService.get('all_methods_disabled').subscribe(v => {
+      this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.infoToast(v);
       })
     } else if (this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled) {
-      this.translateService.get('all_methods_disabled').subscribe(v => {
+      this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.infoToast(v);
       })
     }

@@ -220,19 +220,37 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
 
-    const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers) => {
-      if (!customers || customers.length === 0 && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
-        this.customerNotFound = true;
-      }
-      else {
-        this.customerNotFound = false;
-      }
-      this.searchedCustomers = customers;
-    });
+
+    if(this.useCalendarEndpoint) {
+      const customersFromAllDates = this.customerSelectors.customer$.subscribe((customers) => {
+        if (!customers || customers.length === 0 && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
+          this.customerNotFound = true;
+        }
+        else {
+          this.customerNotFound = false;
+        }
+        this.searchedCustomers = customers;
+      });
+  
+      this.subscriptions.add(customersFromAllDates);
+    }
+    else {
+      const customerSearchSubscription = this.customerSelectors.appointmentSearchCustomers$.subscribe((customers) => {
+        if (!customers || customers.length === 0 && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
+          this.customerNotFound = true;
+        }
+        else {
+          this.customerNotFound = false;
+        }
+        this.searchedCustomers = customers;
+      });
+  
+      this.subscriptions.add(customerSearchSubscription);
+    }
 
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(appointmentErrorSub);
-    this.subscriptions.add(customerSearchSubscription);
+
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       this.readAppointmentFetchTimePeriodFromUtt(params);
@@ -562,7 +580,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showCustomerAutoComplete() {
     this.showCustomerResults = true;
-    this.customerDispatchers.fetchAppointmentCustomers((this.searchText || '').trim());
+    if(this.useCalendarEndpoint) {
+      this.customerDispatchers.fetchCustomers((this.searchText || '').trim());
+    }
+    else {
+      this.customerDispatchers.fetchAppointmentCustomers((this.searchText || '').trim());
+    }
   }
   onSearchInputChange() {
     this.inputChanged.next(this.searchText);

@@ -47,7 +47,10 @@ export class SortAppointmentsPipe implements PipeTransform {
         else if(property === SortColumns.services) {
           compareA = a.services.length > 1 ? a.services.length.toString(): (a.services[0]? a.services[0].name: '');
           compareB = b.services.length > 1 ? b.services.length.toString() : (b.services[0]? b.services[0].name : '');
-          console.log('sdf' + compareA + ' ' + compareB );
+        }
+        else if(property === SortColumns.branch) {
+          compareA = a.branch.name;
+          compareB = b.branch.name;
         }
         else {
           compareA = a[property];

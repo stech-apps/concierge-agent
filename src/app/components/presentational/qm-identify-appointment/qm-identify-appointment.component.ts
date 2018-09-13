@@ -195,7 +195,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     if (this.useCalendarEndpoint) {
       const calendarAppointmentSubscription = this.appointmentSelectors.calendarAppointments$.subscribe((apps) => {
-        this.calendarBranchSelectors.branches$.subscribe(()=> {
+        this.calendarBranchSelectors.branches$.subscribe((bs)=> {
+          this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id);
           this.handleAppointmentResponse(apps);
         }).unsubscribe();       
       });
@@ -528,7 +529,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   getUttDefaultTimeForSearch(uttTime: Moment) {
-    return `${uttTime.format('YYYY-MM-DD')}T${uttTime.format('HH')}:${uttTime.format('mm')}`;
+    let formattedDate = `${uttTime.format('YYYY-MM-DD')}T${uttTime.format('HH')}:${uttTime.format('mm')}`;
+       // adjust the time zone for calendar endpoint
+       if(this.useCalendarEndpoint) {
+        formattedDate = moment(formattedDate).tz(this.selectedCalendarBranch.fullTimeZone).utc()
+        .format('YYYY-MM-DD HH:mm').replace(' ', 'T');
+      }
+
+    return formattedDate;
   }
 
   getformattedTimeForDurationSearch(isFromTime: boolean) {

@@ -16,6 +16,7 @@ export const FETCH_PUBLIC_CALENDAR_BRANCHES_SUCCESS = '[Calendar Branch] FETCH_P
 
 export class FetchCalendarBranches implements Action {
   readonly type = FETCH_CALENDAR_BRANCHES;
+  constructor(public hostAddress: string) {}
 }
 
 export class FetchCalendarBranchesFail implements Action {

@@ -117,12 +117,8 @@ private buildTime(appointment: IAppointment){
   }
 
   getBranchWithPublicId(hostAddress:string, branchId:number){
-    let refererheader = new HttpHeaders().set('Referer', 'http://10.2.4.11:4200/connectconcierge/')
   return this.http
-  .get<ICalendarBranchCentralResponse>(`${hostAddress}${calendarEndpoint}/branches/${branchId}`
-//   ,{
-//     headers: refererheader
-//   }
-);
+  .get<ICalendarBranchCentralResponse>(`${hostAddress}${calendarEndpoint}/branches/${branchId}`,
+  {withCredentials:true});
 }
 }

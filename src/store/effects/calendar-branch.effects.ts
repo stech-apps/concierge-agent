@@ -20,9 +20,9 @@ export class CalendarBranchEffects {
     getCalendarBranches$: Observable<Action> = this.actions$
       .ofType(AllActions.FETCH_CALENDAR_BRANCHES)
       .pipe(
-        switchMap(() =>
+        switchMap((action: AllActions.FetchCalendarBranches) =>
           toAction(
-            this.branchDataService.getCalendarBranches(),
+            this.branchDataService.getCalendarBranches(action.hostAddress),
             AllActions.FetchCalendarBranchesSuccess,
             AllActions.FetchCalendarBranchesFail
           )

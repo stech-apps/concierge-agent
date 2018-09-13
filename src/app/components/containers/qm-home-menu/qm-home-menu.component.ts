@@ -41,6 +41,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isEditFlowDisabled = false;
   isEditVisitFlowDisabled = false;
 
+  hostAddressStr:string;
+
   private subscriptions: Subscription = new Subscription();
 
 
@@ -53,12 +55,16 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const hostAddressSub = this.systemInfoSelectors.systemInfoHostAddress$.subscribe(hostAddress => {
+      this.hostAddressStr = hostAddress;
+    });
+    this.subscriptions.add(hostAddressSub);
     this.checkUserPermissions();
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
 
-    if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment)) {
-      this.calendarBranchDispatcher.fetchCalendarBranches();
+    if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
+      this.calendarBranchDispatcher.fetchCalendarBranches(this.hostAddressStr);
     }
 
   }
@@ -135,17 +141,12 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     // initial check for central connectivity
     if (route === 'create-appointment') {
       let calendarBranchId: number;
-      let hostAddressStr: string;
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);
-      const hostAddressSub = this.systemInfoSelectors.systemInfoHostAddress$.subscribe(hostAddress => {
-        hostAddressStr = hostAddress;
-      });
-      this.subscriptions.add(hostAddressSub);
+  
 
       if (calendarBranchId && calendarBranchId > 0) {
-        ///////////////////////
-        this.calendarService.getBranchWithPublicId('', calendarBranchId).subscribe(
+        this.calendarService.getBranchWithPublicId(this.hostAddressStr, calendarBranchId).subscribe(
           value => {
             if (value && value.branch.publicId) {
               this.handleUttRequirements(route);

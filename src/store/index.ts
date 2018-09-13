@@ -73,7 +73,9 @@ import {
   QueueVisitsSelectors,
   StaffPoolDataService,
   StaffPoolDispatchers,
-  StaffPoolSelectors
+  StaffPoolSelectors,
+  NativeApiDispatchers,
+  NativeApiSelectors
 
 } from "./services";
 
@@ -147,5 +149,7 @@ export const storeServices = [
   QueueVisitsSelectors,
   StaffPoolDataService,
   StaffPoolDispatchers,
-  StaffPoolSelectors
+  StaffPoolSelectors,
+  NativeApiDispatchers,
+  NativeApiSelectors
 ];

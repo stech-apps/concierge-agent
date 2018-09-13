@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
+import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
 import { QmModalService } from '../qm-modal/qm-modal.service';
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { ERROR_STATUS, Q_ERROR_CODE } from '../../../../util/q-error';
 import { ToastService } from '../../../../util/services/toast.service';
+import { NativeApiService } from '../../../../util/services/native-api.service';
 
 
 enum SortBy {
@@ -73,6 +74,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastService: ToastService,
     private visitDispatchers: QueueDispatchers,
+    private nativeApi: NativeApiService,
+    private nativeApiSelector: NativeApiSelectors 
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -96,6 +99,20 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedQueueSub);
+
+    const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
+      if(value != null){
+        this.keyDownFunction(null, value);
+      }
+    });
+    this.subscriptions.add(qrCodeSubscription);
+  
+    const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
+      if(value === false){
+        
+      }
+    });
+    this.subscriptions.add(qrCodeScannerSubscription);
 
     const queueVisitsSub = this.queueVisitsSelectors.queueVisits$.subscribe(visitList => {
       this.visits = visitList;
@@ -238,6 +255,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   }
 
+  onQRCodeSelect(){
+    this.nativeApi.openQRScanner();
+  }
+
   dismissKeyboard(event) {
     var elem = event.currentTarget || event.target;
     // #142130605 - Requirement remove keyboard when enter pressed
@@ -251,7 +272,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
 
   keyDownFunction(event, visitSearchText: string) {
-    this.dismissKeyboard(event);
+    if(event){
+      this.dismissKeyboard(event);
+    }
     this.visitSearchText = visitSearchText;
 
     if (this.visitSearchText.trim().length == 0) {

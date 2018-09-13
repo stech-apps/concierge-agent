@@ -14,7 +14,7 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
   AppointmentDispatchers, BranchSelectors, AppointmentSelectors,
-  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors, CalendarBranchSelectors,
+  ServicePointSelectors, CustomerDispatchers, CustomerSelector, UserSelectors, CalendarBranchSelectors, NativeApiSelectors,
 } from 'src/store';
 import { ICustomer } from 'src/models/ICustomer';
 import { filter } from 'rxjs/internal/operators/filter';
@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment-timezone';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
+import { NativeApiService } from '../../../../util/services/native-api.service';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -97,7 +98,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     INITIAL: 'initial',
     CUSTOMER: 'customer',
     REFRESH: 'refresh',
-    ID: 'id'
+    ID: 'id',
+    QR: 'qr'
   };
 
   readonly CREATED_APPOINTMENT_STATE = 'CREATED';
@@ -132,8 +134,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private toastService: ToastService, private translateService: TranslateService,
     private customerDispatchers: CustomerDispatchers, private customerSelectors: CustomerSelector,
     private calendarBranchSelectors: CalendarBranchSelectors,
-    private userSelectors: UserSelectors
-
+    private userSelectors: UserSelectors,
+    private nativeApi: NativeApiService,
+    private nativeApiSelector: NativeApiSelectors
   ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
@@ -275,6 +278,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(calendarBranchsSub);
+
+    const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
+      if(value != null){
+        
+      }
+    });
+    this.subscriptions.add(qrCodeSubscription);
   }
 
   showAppointmentNotFoundError() {
@@ -409,6 +419,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       if(this.enableSearchByDay) {
         this.isInDateDurationSelection = true;
       }
+    }
+    else if(searchButton === this.SEARCH_STATES.QR) {
+      this.nativeApi.openQRScanner();
     }
 
     if (this.inputAnimationState == searchButton || (this.inputAnimationState == this.SEARCH_STATES.DURATION_WITH_DATE 

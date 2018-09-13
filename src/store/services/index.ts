@@ -24,4 +24,5 @@ export * from './appointment';
 export * from './arrive-appointment';
 export * from './queue-visits';
 export * from './service-point-pool';
-export * from './staff-pool'
+export * from './staff-pool';
+export * from './native-api';

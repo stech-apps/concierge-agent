@@ -94,6 +94,7 @@ import { QmQueueListComponent } from "./components/presentational/qm-queue-list/
 import { QmModalComponent } from "./components/presentational/qm-modal/qm-modal.component";
 import { QmModalService } from "./components/presentational/qm-modal/qm-modal.service";
 import { LocalStorage } from "src/util/local-storage";
+import { NativeApiSupportService } from "./../util/services/native-api-support.service";
 
 // Ng Bootstrap, used for modals
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -301,6 +302,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FormGroupDirective,
     BookingHelperService,
     LocalStorage,
+    NativeApiSupportService,
     { 
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 

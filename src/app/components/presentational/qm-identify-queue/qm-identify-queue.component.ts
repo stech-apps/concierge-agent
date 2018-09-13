@@ -2,12 +2,13 @@ import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors } from '../../../../store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, NativeApiSelectors } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NativeApiService } from '../../../../util/services/native-api.service';
 
 
 @Component({
@@ -46,7 +47,9 @@ export class QmIdentifyQueueComponent implements OnInit {
     private toastService: ToastService,
     private queueService: QueueService,
     private userSelectors: UserSelectors,
-    private translateService:TranslateService
+    private translateService:TranslateService,
+    private nativeApi: NativeApiService,
+    private nativeApiSelector: NativeApiSelectors
   ) { 
     
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -58,6 +61,20 @@ export class QmIdentifyQueueComponent implements OnInit {
   });
   this.subscriptions.add(branchSubscription);
   this.userDirection$ = this.userSelectors.userDirection$;   
+
+  const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
+    if(value != null){
+      this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id, value);
+    }
+  });
+  this.subscriptions.add(qrCodeSubscription);
+
+  const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
+    if(value === false){
+      
+    }
+  });
+  this.subscriptions.add(qrCodeScannerSubscription);
 
   const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
     this.selectedVisit = visit;
@@ -104,6 +121,9 @@ onFlowStepActivated(){
  this.searchText = "";
 }
 
+onQRCodeSelect(){
+  this.nativeApi.openQRScanner();
+}
 
 sortQueueList(type) {
   if (this.queueCollection) {

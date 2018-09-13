@@ -2,17 +2,23 @@ import { IPlatform } from './../../models/IPlatform';
 import { Injectable } from '@angular/core';
 import { LOGOUT_URL } from '../url-helper';
 import { Util } from '../util';
+import { NativeApiSupportService } from './native-api-support.service';
 declare var Android: any;
 declare var webkit: any;
+
+var nativeApiService : any;
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NativeApiService {
 
   constructor(
-    private util: Util
+    private util: Util,
+    private nativeApiSupport: NativeApiSupportService
   ) {
+    nativeApiService = this;
   }
 
   showNativeLoader(state) {
@@ -134,4 +140,31 @@ export class NativeApiService {
     }
   }
 
+  openQRScanner () {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        //support iOS 8 and above version
+        try {
+            webkit.messageHandlers.qrCodeReader.postMessage(true);
+        } catch(err) {
+            console.log("The native context does not exist yet", {class:"nativeApi" ,func:"openQRScanner", exception: err});
+        }
+    }
+    else if (navigator.userAgent.match(/Android/i)) {
+        try{
+            Android.openQRScanner();
+        }
+        catch(err){
+            console.log("The native context does not exist yet", {class:"nativeApi" ,func:"opernQRScanner", exception: err});
+        }
+    }
+  }
+
+}
+
+window['searchQRCode'] = (qrCode)=> {
+  nativeApiService.nativeApiSupport.updateQRCode(qrCode);
+}
+
+window['closeQRReadings'] = ()=> {
+  nativeApiService.nativeApiSupport.closeQRReadings();
 }

@@ -374,14 +374,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
 
   goBackToQueueSection(){
-    // this.NextFlow.emit("qu");
-    // this.onFlowNext.emit();
+    this.PreviousFlow.emit();
+    this.visitDispatchers.resetSelectedQueue();
+  
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-  }
-
-  test(){
-    this.PreviousFlow.emit();
   }
 }

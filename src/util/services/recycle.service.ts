@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CustomerDispatchers, CalendarServiceDispatchers, TimeslotDispatchers, ServiceDispatchers, CalendarBranchSelectors, BranchSelectors, ArriveAppointmentDispatchers, CalendarServiceSelectors, ReservationExpiryTimerDispatchers, ReserveDispatchers, QueueDispatchers } from '../../store/index';
+import { CustomerDispatchers, CalendarServiceDispatchers, TimeslotDispatchers, ServiceDispatchers, CalendarBranchSelectors, BranchSelectors, ArriveAppointmentDispatchers, CalendarServiceSelectors, ReservationExpiryTimerDispatchers, ReserveDispatchers, QueueDispatchers, ServicePointPoolDispatchers, StaffPoolDispatchers } from '../../store/index';
 import { Subscription } from 'rxjs';
 import { Visit } from '../../models/IVisit';
 
@@ -16,7 +16,9 @@ export class Recycle {
     private expireTimer: ReservationExpiryTimerDispatchers,
     private reserveDispatcher: ReserveDispatchers,
     private queueDispatchers:QueueDispatchers,
-    private visitDispatchers: QueueDispatchers
+    private servicePoolDispatcher:ServicePointPoolDispatchers,
+    private staffPoolDispatchers:StaffPoolDispatchers
+ 
   ) {
   
   }
@@ -36,7 +38,8 @@ export class Recycle {
       this.calendarServiceDispatcher.removeFetchService();
       this.calendarServiceDispatcher.setSelectedServices([]);
       this.queueDispatchers.setectVisit(null);
-      
-      this.visitDispatchers.setectVisit(null);
+      this.queueDispatchers.resetSelectedQueue();
+      this.servicePoolDispatcher.resetServicePointPool();
+      this.staffPoolDispatchers.resetStaffPool();
   }
 }

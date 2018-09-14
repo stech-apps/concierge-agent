@@ -124,7 +124,13 @@
   &__branch-name {
     flex: 1 1 auto;
     color: $header-branch-name-color;
-    margin: rem(0 $standard-margin 0 $standard-margin*2);
+    margin: rem(0 0 0 $standard-margin);
+  }
+
+  &__service-point-name {
+    flex: 1 1 auto;
+    color: $header-service-point-name-color;
+    margin: rem(0 $standard-margin 0 $standard-margin);
   }
 
   &__edit-link {

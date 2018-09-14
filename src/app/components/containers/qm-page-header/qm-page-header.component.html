@@ -13,9 +13,10 @@
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}}</span>
-    <a >
+    <span class="qm-header__service-point-name" *ngIf='showSPointName'>{{sPName}}</span>
+    <a>
       <span class="qm-header__edit-link" *ngIf='showBranch' (click)="editClick()">Edit</span>
-  </a>
+    </a>
   </div>
 
   <div class="qm-header__right">

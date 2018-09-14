@@ -50,6 +50,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   branchName: string;
   private branch$: Observable<IBranch>;
   showBranch = false;
+  showSPointName:boolean = false;
+  sPName:string;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -90,6 +92,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       (servicePoint: IServicePoint) => {
         if (servicePoint) {
           this.showBranch = true;
+          this.showSPointName = true;
+          this.sPName = servicePoint.name;
         }
       }
     );

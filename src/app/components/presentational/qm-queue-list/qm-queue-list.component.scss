@@ -77,6 +77,11 @@
     }
 
     background-color: $wating-list-background;
+
+    &__body {
+        max-height: calc(100vh - 382px);
+        overflow-y: auto;
+    }
 }
 
 [dir='rtl'] :host {

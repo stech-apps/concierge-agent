@@ -1,8 +1,9 @@
 import { IPlatform } from './../../models/IPlatform';
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { LOGOUT_URL } from '../url-helper';
 import { Util } from '../util';
 import { NativeApiSupportService } from './native-api-support.service';
+import { NativeApiDispatchers } from '../../store';
 declare var Android: any;
 declare var webkit: any;
 
@@ -16,7 +17,8 @@ export class NativeApiService {
 
   constructor(
     private util: Util,
-    private nativeApiSupport: NativeApiSupportService
+    private nativeApiSupport: NativeApiSupportService,
+    private nativeApiDispatcher: NativeApiDispatchers
   ) {
     nativeApiService = this;
   }
@@ -141,6 +143,7 @@ export class NativeApiService {
   }
 
   openQRScanner () {
+    this.nativeApiDispatcher.openQRCodeScanner();
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
         //support iOS 8 and above version
         try {
@@ -162,9 +165,14 @@ export class NativeApiService {
 }
 
 window['searchQRCode'] = (qrCode)=> {
-  nativeApiService.nativeApiSupport.updateQRCode(qrCode);
+    nativeApiService.nativeApiSupport.updateQRCode(qrCode);
 }
 
 window['closeQRReadings'] = ()=> {
-  nativeApiService.nativeApiSupport.closeQRReadings();
+  nativeApiService.nativeApiSupport.closeQRCodeScanner();
 }
+
+window['updateAppFromBackgroundFromNative'] = ()=> {
+  
+}
+

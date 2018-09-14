@@ -21,7 +21,7 @@ export class NativeApiDispatchers {
       this.store.dispatch(new NativeApiActions.OpenQRCodeScanner());
   }
 
-  resetQRCodeInfo(qrCode: string) {
+  resetQRCodeInfo() {
     this.store.dispatch(new NativeApiActions.ResetQRCode());
   }
 }

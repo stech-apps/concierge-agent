@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ApplicationRef } from '@angular/core';
 import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
@@ -75,7 +75,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private visitDispatchers: QueueDispatchers,
     private nativeApi: NativeApiService,
-    private nativeApiSelector: NativeApiSelectors 
+    private nativeApiSelector: NativeApiSelectors,
+    private applicationRef: ApplicationRef
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -160,8 +161,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
-  
-
+          this.applicationRef.tick();
         }, error => {
           console.log(error);
           this.translateService.get('request_fail').subscribe(v => {

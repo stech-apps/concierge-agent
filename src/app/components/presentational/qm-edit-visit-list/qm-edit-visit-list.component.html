@@ -6,7 +6,7 @@
         name="q" [(ngModel)]="searchText" #visitSearch (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())" autocomplete="off">
       <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>
       <span class="qm-identify-visit-search__or-text"> or_la</span>
-      <div class="qm-qr-code-icon"></div>
+      <div class="qm-qr-code-icon" (click)="onQRCodeSelect()"></div>
     </div>
   </div>
 

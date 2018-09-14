@@ -79,7 +79,7 @@ export class QmIdentifyQueueComponent implements OnInit {
   const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
     this.selectedVisit = visit;
     if(this.selectedVisit){
-        this.onFlowNext.emit();
+      this.onFlowNext.emit();
     }
 
   })

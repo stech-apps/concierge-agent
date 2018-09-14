@@ -10,7 +10,7 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ApplicationRef } from '@angular/core';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { IDENTIFY_APPOINTMENT_ANIMATIONS } from 'src/app/animations/identify-appointment.animations';
 import {
@@ -92,6 +92,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     mDate: moment(),
     selected: true
   }];
+  qrCodeValue: string;
 
   selectedBranchFormatted = { selectedBranch: ''} ;
 
@@ -139,7 +140,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private calendarBranchSelectors: CalendarBranchSelectors,
     private userSelectors: UserSelectors,
     private nativeApi: NativeApiService,
-    private nativeApiSelector: NativeApiSelectors
+    private nativeApiSelector: NativeApiSelectors,
+    private applicationRef: ApplicationRef
   ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
@@ -283,11 +285,27 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if(value != null){
-        
+        try{
+          this.currentSearchState = this.SEARCH_STATES.QR;
+          var jsonObject = JSON.parse(value);
+          this.qrCodeValue = jsonObject.appointment_id;
+          this.searchAppointments();
+        }
+        catch(err){
+          this.showQRCodeError();
+        }
       }
     });
     this.subscriptions.add(qrCodeSubscription);
     this.sortColumn =  this.useCalendarEndpoint ?  SortColumns.start : SortColumns.startTime;
+  }
+
+  showQRCodeError(){
+    this.translateService.get('appointment_not_found_qr').subscribe(
+      (noappointments: string) => {
+        this.toastService.infoToast(noappointments);
+      }
+    ).unsubscribe();
   }
 
   showAppointmentNotFoundError() {
@@ -326,13 +344,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
 
     // in id search handle id search cases
-    if (this.SEARCH_STATES.ID == this.currentSearchState) {
+    if (this.SEARCH_STATES.ID == this.currentSearchState || this.SEARCH_STATES.QR === this.currentSearchState) {
       if (this.appointments.length === 1) {
         this.selectedAppointment = apps[0];
         this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
         this.showAppointmentCollection = false;
         this.onAppointmentSelect(this.selectedAppointment);
         this.showModalBackDrop = false;
+        this.applicationRef.tick();
       }
 
       // search appointment is already arrived? then notifiy user
@@ -517,6 +536,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       searchQuery = {
         ...searchQuery,
         id: (this.searchText || '').trim()
+      };
+    }
+    else if (this.currentSearchState === this.SEARCH_STATES.QR) {
+      searchQuery = {
+        ...searchQuery,
+        id: (this.qrCodeValue || '').trim()
       };
     }
 

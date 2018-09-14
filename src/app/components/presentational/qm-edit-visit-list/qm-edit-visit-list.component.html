@@ -176,7 +176,7 @@
                   </g>
                 </g></svg>
   
-              <span class="label">{{'cherry_pick' | translate}}</span>
+              <span class="label" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#2b2b2b'}">{{'cherry_pick' | translate}}</span>
             </span>
   
             <span  *ngIf="canDelete" class="visit-tray-option visit-delete-btn"  (click)="deleteVisit(i,$event)">

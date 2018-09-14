@@ -64,7 +64,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.userDirection$ = this.userSelectors.userDirection$;
 
     if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
-      this.calendarBranchDispatcher.fetchCalendarBranches(this.hostAddressStr);
+      //insert hostaddress if using QAgent(OnHold)
+      this.calendarBranchDispatcher.fetchCalendarBranches('');
     }
 
   }
@@ -146,7 +147,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   
 
       if (calendarBranchId && calendarBranchId > 0) {
-        this.calendarService.getBranchWithPublicId(this.hostAddressStr, calendarBranchId).subscribe(
+        //insert hostaddress if using QAgent(OnHold)
+        this.calendarService.getBranchWithPublicId('', calendarBranchId).subscribe(
           value => {
             if (value && value.branch.publicId) {
               this.handleUttRequirements(route);

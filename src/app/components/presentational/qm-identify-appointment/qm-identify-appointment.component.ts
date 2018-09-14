@@ -328,8 +328,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   applyAppointmentFilters(appointments: IAppointment[]) {
     if (this.useCalendarEndpoint) {
-      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && this.selectedCalendarBranch
-         && ap.branch.qpId === this.selectedCalendarBranch.qpId);
+      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID);
     } else {
       return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
     }

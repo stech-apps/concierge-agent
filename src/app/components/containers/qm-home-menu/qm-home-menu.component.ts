@@ -189,7 +189,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.toastService.infoToast(v);
       });
     }
-    else if (route == 'edit-visit' && this.isEditFlowDisabled) {
+    else if (route == 'edit-visit' && this.isEditVisitFlowDisabled) {
       this.translateService.get('no_actions_available').subscribe(v => {
         this.toastService.infoToast(v);
       });

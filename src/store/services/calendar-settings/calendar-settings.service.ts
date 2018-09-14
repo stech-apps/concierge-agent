@@ -16,7 +16,7 @@ export class CalendarSettingsService {
 
   getSerttingsInfo(): Observable<{ data: ICalendarSetting }> {
     return this.http
-      .get<ICalendarSettingResponse>(`${calendarEndpoint}/settings`)
+    .get<ICalendarSettingResponse>(`${calendarEndpoint}/settings/search?group=calendar`)
       .pipe(
         map((res: ICalendarSettingResponse) => {
           const reservationTime = res["settingList"][0]["data"].match(

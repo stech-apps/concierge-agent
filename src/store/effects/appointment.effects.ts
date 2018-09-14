@@ -148,14 +148,20 @@ export class AppointmentEffects {
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
     switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-      return this.translateService.get(['appointment_reschedule_fail']).pipe(
+      return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
         switchMap((messages) => {
           var errorMessage = {
             firstLineName: messages['appointment_reschedule_fail'],
             icon: "error"
           };
 
-          this.toastService.infoToast(action.payload["errorMsg"]);
+          if(action.payload["errorCode"] === 'E461'){
+            this.toastService.infoToast(messages['appointment_already_used']);
+          }
+          else {
+            this.toastService.infoToast(action.payload["errorMsg"]);
+          }
+         
           return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
         })
       );

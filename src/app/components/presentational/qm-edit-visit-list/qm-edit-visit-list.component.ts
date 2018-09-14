@@ -97,6 +97,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         if (this.selectedbranchId && this.selectedQueueId) {
           this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
         }
+      }else{
+        this.selectedQueueId=null;
       }
     });
     this.subscriptions.add(selectedQueueSub);
@@ -244,7 +246,21 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   resetSearch() {
     this.searchText = '';
+    
+    if (this.selectedbranchId && this.selectedQueueId) {
+      this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
+    }
+
   }
+
+  handleInput($event) {
+  if($event.target.value.length == 0){
+    if (this.selectedbranchId && this.selectedQueueId) {
+      this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
+    }
+  }
+  }
+  
 
   selectVisit(index: number, visitId: number) {
     this.selectedVisitId === visitId && this.visits.length > 1 ? this.visitClicked = !this.visitClicked : this.visitClicked = true;

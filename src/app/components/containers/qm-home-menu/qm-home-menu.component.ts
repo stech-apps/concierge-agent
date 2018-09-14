@@ -140,7 +140,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   handleMenuItemClick(route) {
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     // initial check for central connectivity
-    if (route === 'create-appointment') {
+    if (route === 'create-appointment' || route === 'edit-appointment') {
       let calendarBranchId: number;
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);
@@ -160,7 +160,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
           }, error => {
             this.translateService.get('no_central_access').subscribe(v => {
               this.toastService.infoToast(v);
-            })
+            });
           }
         );
       }

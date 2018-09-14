@@ -198,9 +198,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.useCalendarEndpoint) {
       const calendarAppointmentSubscription = this.appointmentSelectors.calendarAppointments$.subscribe((apps) => {
         this.calendarBranchSelectors.branches$.subscribe((bs)=> {
-          this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id);
+          this.selectedCalendarBranch = bs.find(x => x.qpId == this.selectedBranch.id);
           this.handleAppointmentResponse(apps);
-        }).unsubscribe();       
+        }).unsubscribe();
       });
 
       this.subscriptions.add(calendarAppointmentSubscription);
@@ -278,7 +278,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(appointmentsLoadedSub);
 
     const calendarBranchsSub = this.calendarBranchSelectors.branches$.subscribe((bs) => {
-        this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id);
+        this.selectedCalendarBranch = bs.find(x => x.qpId == this.selectedBranch.id);
     });
 
     this.subscriptions.add(calendarBranchsSub);
@@ -325,7 +325,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   applyAppointmentFilters(appointments: IAppointment[]) {
     if (this.useCalendarEndpoint) {
-      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && this.selectedCalendarBranch && ap.branch.qpId === this.selectedCalendarBranch.qpId);
+      return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID && this.selectedCalendarBranch
+         && ap.branch.qpId === this.selectedCalendarBranch.qpId);
     } else {
       return appointments.filter(ap => ap.status === this.CREATED_APPOINTMENT_STATE && ap.branchId === this.selectedBranch.id);
     }
@@ -555,11 +556,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   getUttDefaultTimeForSearch(uttTime: Moment) {
     let formattedDate = `${uttTime.format('YYYY-MM-DD')}T${uttTime.format('HH')}:${uttTime.format('mm')}`;
-       // adjust the time zone for calendar endpoint
-       if(this.useCalendarEndpoint) {
+      
+      // adjust the time zone for calendar endpoint
+      if(this.useCalendarEndpoint) {
         formattedDate = moment(formattedDate).tz(this.selectedCalendarBranch.fullTimeZone).utc()
         .format('YYYY-MM-DD HH:mm').replace(' ', 'T');
-      }
+      }      
 
     return formattedDate;
   }
@@ -660,7 +662,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.selectedAppointment) {
       appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
       appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
-
 
       if(this.useCalendarEndpoint) {
         appointmentInfo += moment(this.selectedAppointment.start).tz(this.selectedCalendarBranch.fullTimeZone)

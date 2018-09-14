@@ -83,6 +83,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
             this.toastService.infoToast(noappointments);
           }
         ).unsubscribe();
+      }else{
+        this.sortQueueList("SERVICE_POINT");
       }
       
 
@@ -170,7 +172,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
   
     onSortClickbyServicePoint(){
       this.sortAscending = !this.sortAscending;
-      this.sortQueueList("SERVICEPOINT");
+      this.sortQueueList("SERVICE_POINT");
       this.sortedBy = "SERVICE_POINT";  
     }
 
@@ -185,7 +187,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
         // sort by name
         this.servicePoints = this.servicePoints.sort((a, b) => {
 
-              if(type=="SERVICEPOINT"){
+              if(type=="SERVICE_POINT"){
                 var nameA = a.name.toUpperCase(); // ignore upper and lowercase
                 var nameB = b.name.toUpperCase(); // ignore upper and lowercase
                } else if (type == "STATE"){
@@ -203,6 +205,10 @@ export class QmTransferToServicePoolComponent implements OnInit {
           });
       }
     
+    }
+
+    clearSearchText(){
+      this.filterText="";
     }
     
   }

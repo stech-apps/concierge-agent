@@ -21,7 +21,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     private util: Util,
     private qmModalService: QmModalService,
     private recycleService: Recycle,
-    private queueService: QueueService
+    private queueService: QueueService,
   ) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -80,7 +80,9 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
       setTimeout(() => {
+        if(this.router.url!="/profile"){
         this.router.navigate(['home']);
+        }
       }, 1000);
     }
     else {
@@ -90,7 +92,9 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
           this.recycleService.clearCache();
           this.queueService.setQueuePoll();
           setTimeout(() => {
+            if(this.router.url!="/profile"){
             this.router.navigate(['home']);
+            }
           }, 1000);
         }
       }, () => {

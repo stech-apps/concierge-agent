@@ -256,5 +256,9 @@ handleInput($event) {
   this.queueSearched = true;
   this.inputChanged.next($event.target.value);
 }
+
+clearSearchText(){
+  this.filterText="";
+}
   
 }

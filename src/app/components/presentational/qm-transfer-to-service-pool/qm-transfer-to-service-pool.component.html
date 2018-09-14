@@ -2,7 +2,7 @@
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
     <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="spSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)" #spSearch autocomplete="off"> 
-    <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = ''" class="icon-close qm-clear-search" aria-hidden="true"></i>
+    <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = '';clearSearchText()" class="icon-close qm-clear-search" aria-hidden="true"></i>
 
     </div>
   </div>
@@ -26,7 +26,7 @@
         </div>
       
         <div class="qm-service-point-list__body">
-          <div *ngFor="let s of servicePoints  | filterServicePoints : filterText">
+          <div *ngFor="let s of servicePoints  | filterServicePoints : filterText:sortedBy:sortAscending">
           <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
               <div class="qm-col qm-service-point-list-body-row-first-label">{{s.name}}</div>
               <div class="qm-col qm-service-point-list-body-row-second-label">
@@ -39,6 +39,6 @@
 
         </div>
       </div> 
-      <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded "> {{'service_point_not_found' |translate}} </div>
+      <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded  && filterText!=''"> {{'service_point_not_found' |translate}} </div>
 
 </div> 

@@ -136,6 +136,13 @@ export class QmTransferToStaffPoolComponent implements OnInit {
                   this.toastService.infoToast(v);
                 });
               }
+              else if (error.errorCode == Q_ERROR_CODE.STAFF_MEMBER_LOGOUT) {
+                this.translateService.get('empty_user_pool').subscribe(v => {
+                  this.toastService.infoToast(v);
+                  this.StaffPoolDispatchers.resetStaffPool;
+                  this.StaffPoolDispatchers.fetchStaffPool(this.currentBranch.id);  
+                });
+              }
               else {
                 this.translateService.get('request_fail').subscribe(v => {
                   this.toastService.infoToast(v);
@@ -209,6 +216,10 @@ ngOnDestroy() {
 handleInput($event) {
 
   this.inputChanged.next($event.target.value);
+}
+
+clearSearchText(){
+  this.filterText="";
 }
   
 }

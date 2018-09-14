@@ -513,7 +513,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   searchAppointments() {
     let searchQuery: any = {
-      branchId: this.useCalendarEndpoint? this.selectedCalendarBranch.qpId :this.selectedBranch.id,
+      branchId: this.useCalendarEndpoint ? this.selectedCalendarBranch.id : this.selectedBranch.id,
       useCalendarEndpoint: this.useCalendarEndpoint
     };
 

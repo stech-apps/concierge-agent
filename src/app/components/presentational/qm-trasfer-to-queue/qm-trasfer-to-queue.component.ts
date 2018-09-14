@@ -224,6 +224,11 @@ OnTransferButtonClick(type){
                 this.toastService.infoToast(v);
               });
             }
+            else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
+              this.translateService.get('requested_visit_not_found').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
+            }
             else {
               this.translateService.get('request_fail').subscribe(v => {
                 this.toastService.infoToast(v);

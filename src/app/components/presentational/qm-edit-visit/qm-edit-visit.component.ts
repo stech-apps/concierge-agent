@@ -1,5 +1,5 @@
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
-import { QueueSelectors, UserSelectors, StaffPoolDispatchers, ServicePointPoolDispatchers, QueueDispatchers } from '../../../../store';
+import { QueueSelectors, UserSelectors, StaffPoolDispatchers, ServicePointPoolDispatchers, QueueDispatchers, QueueDataService } from '../../../../store';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
@@ -30,6 +30,8 @@ export class QmEditVisitComponent implements OnInit {
     private userSelectors: UserSelectors,
     private staffPoolDispatchers:StaffPoolDispatchers,
     private servicePointPoolDispatchers:ServicePointPoolDispatchers,
+    private queueDispatchers:QueueDispatchers,
+    private servicePoolDispatcher:ServicePointPoolDispatchers
   ) { 
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
@@ -58,6 +60,9 @@ export class QmEditVisitComponent implements OnInit {
     this.HeaderSelectedVisit=null;
     this.QueueDispatchers.resetSelectedQueue();
     this.currentFlow=null;
+    this.queueDispatchers.resetSelectedQueue();
+    this.servicePoolDispatcher.resetServicePointPool();
+    this.staffPoolDispatchers.resetStaffPool();
   }
 
   visitHeaderClick(){

@@ -53,7 +53,7 @@ export class QueueEffects {
               this.toastService.infoToast(label);
             }
           ).unsubscribe();
-       
+
         }
       }
     ),

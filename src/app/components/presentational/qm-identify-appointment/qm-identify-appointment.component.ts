@@ -354,7 +354,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.showAppointmentCollection = false;
         this.onAppointmentSelect(this.selectedAppointment);
         this.showModalBackDrop = false;
-        this.applicationRef.tick();
+        //this.applicationRef.tick();
       }
 
       // search appointment is already arrived? then notifiy user

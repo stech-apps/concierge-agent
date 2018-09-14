@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ApplicationRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ERROR_STATUS, Q_ERROR_CODE } from '../../../../util/q-error';
 import { ToastService } from '../../../../util/services/toast.service';
 import { NativeApiService } from '../../../../util/services/native-api.service';
+import { Util } from '../../../../util/util';
 
 
 enum SortBy {
@@ -76,7 +77,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private visitDispatchers: QueueDispatchers,
     private nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
-    private applicationRef: ApplicationRef
+    private util: Util
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -105,14 +106,18 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if(value != null){
-        this.keyDownFunction(null, value);
+        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true})
       }
     });
     this.subscriptions.add(qrCodeSubscription);
   
     const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
-      if(value === false){
-        
+      if(value === true){
+        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false})
+        this.util.qrCodeListner();
+      }
+      else{
+        this.util.removeQRCodeListner();
       }
     });
     this.subscriptions.add(qrCodeScannerSubscription);
@@ -163,7 +168,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
-          this.applicationRef.tick();
+          //this.applicationRef.tick();
         }, error => {
           console.log(error);
           this.translateService.get('request_fail').subscribe(v => {
@@ -374,6 +379,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       },
         () => { }, { visitId: visitId })
     }
+    //this.applicationRef.tick();
   }
 
   deleteVisit(index: number, event: Event) {
@@ -415,6 +421,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     },
       () => { }, { visitId: visitId })
+      //this.applicationRef.tick();
   }
 
 

@@ -1,12 +1,15 @@
-import { ServicePointSelectors } from './../store/services';
+import { ServicePointSelectors, QueueDispatchers } from './../store/services';
 import { Injectable } from '@angular/core';
 import cssVars from 'css-vars-ponyfill';
 import { Validators } from '@angular/forms';
 
 @Injectable()
 export class Util {
+
+    qrCodeListnerTimer : any;
+    public qrRelatedData: any;
     
-    constructor(private servicePointSelectors: ServicePointSelectors) {
+    constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers) {
         window['x'] = this.setSelectedApplicationTheme.bind(this);
     }
 
@@ -81,4 +84,23 @@ export class Util {
     emailValidator(){
         return [Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)];
     }
+
+    qrCodeListner(){
+        this.qrCodeListnerTimer = setInterval(() => {
+          if(this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded){
+            this.qrRelatedData.isQrCodeLoaded = false;
+            this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+          }
+        }, 1000);
+      }
+      
+      removeQRCodeListner(){
+        if(this.qrCodeListnerTimer){
+          clearInterval(this.qrCodeListnerTimer);
+        }
+      }
+
+      setQRRelatedData(qrData: any){
+        this.qrRelatedData = qrData;
+      }
 }

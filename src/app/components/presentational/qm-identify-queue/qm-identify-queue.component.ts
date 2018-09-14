@@ -2,13 +2,14 @@ import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, NativeApiSelectors } from '../../../../store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, NativeApiSelectors, NativeApiDispatchers } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NativeApiService } from '../../../../util/services/native-api.service';
+import { Util } from '../../../../util/util';
 
 
 @Component({
@@ -36,8 +37,6 @@ export class QmIdentifyQueueComponent implements OnInit {
   selectedVisit:Visit;
   sortedBy:string = "Queue";
   visitSearched:boolean= false;
-  
- 
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -49,7 +48,9 @@ export class QmIdentifyQueueComponent implements OnInit {
     private userSelectors: UserSelectors,
     private translateService:TranslateService,
     private nativeApi: NativeApiService,
-    private nativeApiSelector: NativeApiSelectors
+    private nativeApiSelector: NativeApiSelectors,
+    private nativeApiDispatcher: NativeApiDispatchers,
+    private util: Util
   ) { 
     
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -64,24 +65,28 @@ export class QmIdentifyQueueComponent implements OnInit {
 
   const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
     if(value != null){
-      this.queueDispatchers.fetchSelectedVisit(this.selectedBranch.id, value);
+      this.util.setQRRelatedData({ "branchId": this.selectedBranch.id, "qrCode": value, "isQrCodeLoaded": true})
     }
   });
   this.subscriptions.add(qrCodeSubscription);
 
   const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
-    if(value === false){
-      
+    if(value === true){
+      this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false})
+      this.util.qrCodeListner();
+    }
+    else{
+      this.util.removeQRCodeListner();
     }
   });
   this.subscriptions.add(qrCodeScannerSubscription);
 
   const visitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
     this.selectedVisit = visit;
+    this.nativeApiDispatcher.closeQRCodeScanner();
     if(this.selectedVisit){
       this.onFlowNext.emit();
     }
-
   })
   this.subscriptions.add(visitSubscription)
 }

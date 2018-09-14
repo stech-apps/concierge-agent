@@ -1,5 +1,5 @@
 import { TranslateService } from "@ngx-translate/core";
-import { Injectable } from "@angular/core";
+import { Injectable, ApplicationRef } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { QmModalComponent } from "./qm-modal.component";
@@ -8,7 +8,8 @@ import { QmModalComponent } from "./qm-modal.component";
 export class QmModalService {
   constructor(
     private modalService: NgbModal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private applicationRef: ApplicationRef
   ) {}
 
   public open(

@@ -25,8 +25,7 @@ export function reducer(
     case NativeApiActions.FETCH_QR_CODE_SUCCESS: {
       return {
         ...state,
-        qrCode: action.payload,
-        isQRCodeScannerLoaded: false
+        qrCode: action.payload
       };
     }
     case NativeApiActions.RESET_QR_CODE_SCANNER: {

@@ -1,4 +1,4 @@
-import { OnDestroy, EventEmitter, Input } from '@angular/core';
+import { OnDestroy, EventEmitter, Input, ApplicationRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
@@ -20,7 +20,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   private readonly TIME_GAP = 6;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private timeSlotSelectors: TimeslotSelectors) {
+  constructor(private timeSlotSelectors: TimeslotSelectors, private applicationRef: ApplicationRef) {
     this.generateTimeSlotCategories();
     this.timeSlotCategories[0].isActive = true;
   }
@@ -62,6 +62,8 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
         }
 
         this.timeSlotCategories.forEach((tc) => tc.isActive = this.selectedCategory == tc.category);
+
+        //this.applicationRef.tick();
       }
     });
 

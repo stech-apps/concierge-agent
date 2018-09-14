@@ -319,7 +319,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readAppointmentFetchTimePeriodFromUtt(params: any) {
     if (params) {
       this.uttFromTime = moment().subtract(params.gapFromTime, 'minutes');
-      this.uttToTime = moment().add(params.gapFromTime, 'minutes');
+      this.uttToTime = moment().add(params.gapToTime, 'minutes');
     }
   }
 

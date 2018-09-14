@@ -207,7 +207,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
     else {
       const appointmentSubscription = this.appointmentSelectors.appointments$.subscribe((apps) => {
-        this.handleAppointmentResponse(apps);
+        this.calendarBranchSelectors.branches$.subscribe((bs)=> {
+          this.selectedCalendarBranch = bs.find(x => x.qpId == this.selectedBranch.id);
+          this.handleAppointmentResponse(apps);
+        }).unsubscribe();
       });
 
       this.subscriptions.add(appointmentSubscription);
@@ -513,7 +516,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   searchAppointments() {
     let searchQuery: any = {
-      branchId: this.useCalendarEndpoint ? this.selectedCalendarBranch.id : this.selectedBranch.id,
+      branchId: this.useCalendarEndpoint ? this.selectedCalendarBranch.id : this.selectedCalendarBranch.qpId,
       useCalendarEndpoint: this.useCalendarEndpoint
     };
 

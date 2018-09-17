@@ -119,10 +119,10 @@ export class QmSelectServiceComponent implements OnInit {
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
         this.selectedBranch = branch;
         this.selectedServiceList = [];
-        if(branch.id !== -1 && this.selectedBranch.id !== this.loginBranch.id){
+        if(branch.id !== -1 && (this.selectedBranch as ICalendarBranch).qpId !== this.loginBranch.id){
           this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
         }
-        else if(this.selectedBranch.id === this.loginBranch.id){
+        else if((this.selectedBranch as ICalendarBranch).qpId === this.loginBranch.id){
           this.calendarServiceDispatchers.setCalendarServiceFromCache();
         }
       });
@@ -134,7 +134,7 @@ export class QmSelectServiceComponent implements OnInit {
           this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
         }
         else{
-          if(this.selectedBranch.id === this.loginBranch.id){
+          if((this.selectedBranch as ICalendarBranch).qpId === this.loginBranch.id){
             this.calendarServiceDispatchers.setCalendarServiceFromCache();
           }
         }

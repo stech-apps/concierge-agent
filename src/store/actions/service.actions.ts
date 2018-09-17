@@ -17,6 +17,8 @@ export const FETCH_SERVICE_CONFIGURATION = '[Service] FETCH_SERVICE_CONFIGURATIO
 export const FETCH_SERVICE_CONFIGURATION_FAIL = '[Service] FETCH_SERVICE_CONFIGURATION_FAIL';
 export const FETCH_SERVICE_CONFIGURATION_SUCCESS = '[Service] FETCH_SERVICE_CONFIGURATION_SUCCESS';
 
+export const REMOVE_FETCH_SERVICE_LIST = '[Service] REMOVE_FETCH_SERVICE_LIST';
+
 export class FetchServices implements Action {
   readonly type = FETCH_SERVICES;
   constructor(public payload: IBranch) {}
@@ -57,6 +59,10 @@ export class SetSelectedServices implements Action {
   constructor(public payload: IService[]) {}
 }
 
+export class RemoveFetchServiceList implements Action {
+  readonly type = REMOVE_FETCH_SERVICE_LIST;
+}
+
 // Action types
 export type AllServiceActions = FetchServices |
                                 FetchServicesFail |
@@ -65,4 +71,5 @@ export type AllServiceActions = FetchServices |
                                 FetchServiceConfigurationFail |
                                 FetchServiceConfigurationSuccess |
                                 GetSelectedServices |
-                                SetSelectedServices;
+                                SetSelectedServices |
+                                RemoveFetchServiceList;

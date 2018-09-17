@@ -111,6 +111,13 @@ export interface ICalendarServiceState {
           services: state.initialServices,
         };
       }
+      case ServiceActions.RESET_INITIAL_CALENDAR_SERVICES: {
+        return {
+          ...state,
+          services: null,
+          initialServices: null
+        };
+      }
       default: {
           return state;
       }

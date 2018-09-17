@@ -26,6 +26,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { servicePoint } from '../../../../store/services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { IAccount } from '../../../../models/IAccount';
+import { Recycle } from '../../../../util/services/recycle.service';
 
 @Component({
   selector: 'qm-profile',
@@ -51,7 +52,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
     private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, 
     private ActivatedRoute: ActivatedRoute,
-    private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers) {
+    private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers, private recycleService: Recycle) {
 
       
       const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
@@ -195,6 +196,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     else {
+      if(this.previousBranch && this.previousBranch.id !== this.selectedBranch.id){
+        this.recycleService.removeAppCache();
+      }
       this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user);
     }
   }

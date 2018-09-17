@@ -21,4 +21,8 @@ export class ServiceDispatchers {
   setSelectedServices(services: IService[]) {
     this.store.dispatch(new ServiceActions.SetSelectedServices(services));
   }
+
+  removeFetchServiceList(){
+    this.store.dispatch(new ServiceActions.RemoveFetchServiceList());
+  }
 }

@@ -38,4 +38,8 @@ export class CalendarServiceDispatchers {
   setCalendarServiceFromCache(){
     this.store.dispatch(new ServiceActions.SetCalendarServicesFromCache());
   }
+
+  resetInitialService(){
+    this.store.dispatch(new ServiceActions.ResetInitialCalendarServices());
+  }
 }

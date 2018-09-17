@@ -85,6 +85,13 @@ export function reducer (
         selectedServices: action.payload
       };
     }
+    case ServiceActions.REMOVE_FETCH_SERVICE_LIST: {
+      return {
+        ...state,
+        services: [],
+        servicesConfiguration: []
+      };
+    }
     default: {
         return state;
     }

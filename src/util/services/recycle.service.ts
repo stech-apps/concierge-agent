@@ -43,4 +43,9 @@ export class Recycle {
       this.staffPoolDispatchers.resetStaffPool();
       this.nativeApiDispatchers.resetQRCodeInfo();
   }
+
+  removeAppCache(){
+    this.calendarServiceDispatcher.resetInitialService();
+    this.serviceDispatcher.removeFetchServiceList();
+  }
 }

@@ -20,6 +20,7 @@ export const SERVICES_SELECTION_COMPLETED = '[Calendar Service] SERVICES_SELECTI
 
 export const SET_INITIAL_CALENDAR_SERVICES = '[Calendar Service] SET_INITIAL_CALENDAR_SERVICES';
 export const SET_CALENDAR_SERVICES_FROM_CACHE = '[Calendar Service] SET_CALENDAR_SERVICES_FROM_CACHE';
+export const RESET_INITIAL_CALENDAR_SERVICES = '[Calendar Service] RESET_INITIAL_CALENDAR_SERVICES';
 
 export class FetchCalendarServices implements Action {
     readonly type = FETCH_CALENDAR_SERVICES;
@@ -80,6 +81,11 @@ export class FetchCalendarServices implements Action {
     constructor() {}
   }
 
+  export class ResetInitialCalendarServices implements Action {
+    readonly type = RESET_INITIAL_CALENDAR_SERVICES;
+    constructor() {}
+  }
+
   // Action types
 export type AllCalendarServiceActions = 
                                     FetchCalendarServices |
@@ -93,4 +99,5 @@ export type AllCalendarServiceActions =
                                     RemoveFetchServices |
                                     ServiceSelectionCompleted |
                                     SetInitialCalendarServices |
-                                    SetCalendarServicesFromCache;                
+                                    SetCalendarServicesFromCache |
+                                    ResetInitialCalendarServices;                

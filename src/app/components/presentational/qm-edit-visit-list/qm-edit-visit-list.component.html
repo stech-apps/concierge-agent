@@ -48,11 +48,12 @@
         <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc === true, 'icon-caret-down': sortByServiceAsc !==  true }"></i></div>
       </div>
 
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByAppTime()">
         <div>
           <i class="icon-clock-solid" aria-hidden="true"></i>
         </div>
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
+        <div *ngIf="sortingIndicator==='APPTIME'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc === true, 'icon-caret-down': sortByAppTimeAsc !==  true }"></i></div>
       </div>
 
 

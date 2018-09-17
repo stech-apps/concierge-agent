@@ -16,6 +16,7 @@ enum SortBy {
   VISITID = "VISITID",
   CUSTOMER = "CUSTOMER",
   SERVICE = "SERVICE",
+  APPTIME = "APPTIME"
 }
 
 
@@ -38,6 +39,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   sortByVisitIdAsc = true;
   sortByCustomerAsc = false;
   sortByServiceAsc = false;
+  sortByAppTimeAsc = false;
   sortingIndicator: string = SortBy.VISITID;
   selectedVisitId: number;
   visitClicked: boolean = false;
@@ -248,6 +250,27 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  sortByAppTime() {
+    this.sortingIndicator = SortBy.APPTIME;
+    this.sortByAppTimeAsc = !this.sortByAppTimeAsc;
+    if (this.visits && this.visits.length) {
+      // sort by service
+      this.visits = this.visits.sort((a, b) => {
+        var nameA = a.appointmentTime.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.appointmentTime.toUpperCase(); // ignore upper and lowercase
+        if ((nameA < nameB && this.sortByAppTimeAsc) || (nameA > nameB && !this.sortByAppTimeAsc)) {
+          return -1;
+        }
+        if ((nameA > nameB && this.sortByAppTimeAsc) || (nameA < nameB && !this.sortByAppTimeAsc)) {
+          return 1;
+        }
+        // names must be equal
+        return 0;
+      });
+    }
+  }
+
 
   resetSearch() {
     this.searchText = '';

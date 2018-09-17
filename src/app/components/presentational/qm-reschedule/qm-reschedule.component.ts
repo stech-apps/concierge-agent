@@ -106,7 +106,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     .unsubscribe();
 
     const calendarBranchsSub = this.calendarBranchSelectors.branches$.subscribe((bs) => {
-      this.selectedCalendarBranch = bs.find(x=> x.id == this.selectedBranch.id)
+      if(this.selectedBranch) {
+        this.selectedCalendarBranch = bs.find(x => x.qpId == this.selectedBranch.id);
+      }
   }); 
 
   this.subscriptions.add(calendarBranchsSub);

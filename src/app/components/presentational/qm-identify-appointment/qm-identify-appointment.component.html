@@ -345,7 +345,7 @@
         <tr [ngClass]="{'qm-sort-desc' : isDescending}">
           <th class="qm-identify-appointment__customer-table__col-5"></th>
           <th (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" [ngClass]="{'qm-sort-active' : sortColumn === 'start' || sortColumn === 'startTime' }" class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-active' : sortColumn === 'startDate' || sortColumn === 'startTimeDate'}" class="qm-identify-appointment__customer-table__col-10">{{ 'date' | translate }}</th>
+          <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-10">{{ 'date' | translate }}</th>
           <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-10">{{ 'id' | translate }}</th>
           <th (click)="sortAppointments('firstName')" [ngClass]="{'qm-sort-active' : sortColumn === 'firstName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
           <th (click)="sortAppointments('lastName')" [ngClass]="{'qm-sort-active' : sortColumn === 'lastName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>

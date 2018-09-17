@@ -872,6 +872,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   sortAppointments(sortColumn: string) {
+    if(!this.useCalendarEndpoint && sortColumn === SortColumns.startTimeDate) {
+      return;
+    }
+
     if(this.sortColumn === sortColumn) {
       this.isDescending = !this.isDescending;
     }

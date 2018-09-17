@@ -511,6 +511,10 @@ th {
       content: '\25b2';
     }
   }
+
+  &.qm-sort-inactive {
+    cursor: default;
+  }
 }
 
 .qm-sort-desc {

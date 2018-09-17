@@ -1,6 +1,8 @@
 export enum SortColumns {
     start = "start",
+    startDate = "startDate",
     startTime = "startTime",
+    startTimeDate = "startTimeDate",
     branch = "branch",
     date = "date",
     id = "id",

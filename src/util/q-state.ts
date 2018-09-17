@@ -26,3 +26,14 @@ export enum COUNTER_STATE {
     CLOSED = "CLOSED",
     OPEN = "OPEN"
 }
+
+export enum APPOINTMENT_STATE {
+    CREATED = 20,
+    RESCHEDULED = 21,
+    CALLED = 40,
+    ARRIVED = 30,
+    CANCELLED = 53,
+    COMPLETE = 50,
+    NO_SHOW = 51,
+    ENDED_BY_RESET = 52
+}

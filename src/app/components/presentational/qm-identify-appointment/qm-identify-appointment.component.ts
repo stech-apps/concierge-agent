@@ -24,6 +24,8 @@ import { Moment } from 'moment-timezone';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { NativeApiService } from '../../../../util/services/native-api.service';
+import { APPOINTMENT_STATE } from '../../../../util/q-state';
+import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-identify-appointment',
@@ -93,8 +95,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     selected: true
   }];
   qrCodeValue: string;
+  qrCodeContent: any;
 
   selectedBranchFormatted = { selectedBranch: ''} ;
+  qrCodeListnerTimer : any;
+  isQrCodeLoaded: false;
+  isMultiBranchEnable = false;
+  branchList: IBranch[];
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -141,7 +148,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors,
     private nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
-    private applicationRef: ApplicationRef
+    private util: Util
   ) {
 
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
@@ -214,13 +221,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       });
 
       this.subscriptions.add(appointmentSubscription);
-    }
 
+      const branchesSubscription = this.branchSelectors.branches$.subscribe((branches) => { this.branchList =  branches});
+      this.subscriptions.add(branchesSubscription);
+    }
 
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
           this.enableAppointmentLoad = uttParameters.fetchAppointment;
+          this.isMultiBranchEnable = uttParameters.mltyBrnch;
         }
       });
 
@@ -286,21 +296,54 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(calendarBranchsSub);
 
+    this.sortColumn =  this.useCalendarEndpoint ?  SortColumns.start : SortColumns.startTime;
+
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if(value != null){
+        this.qrCodeContent = value;
+      }
+    });
+    this.subscriptions.add(qrCodeSubscription);
+  
+    const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
+      if(value === true){
+        this.isQrCodeLoaded = false;
+        this.qrCodeContent = null;
+        this.qrCodeListner();
+      }
+      else{
+        this.removeQRCodeListner();
+      }
+    });
+    this.subscriptions.add(qrCodeScannerSubscription);
+  }
+
+  qrCodeListner(){
+    this.qrCodeListnerTimer = setInterval(() => {
+      if(this.isQrCodeLoaded){
+        this.isQrCodeLoaded = false;
         try{
           this.currentSearchState = this.SEARCH_STATES.QR;
-          var jsonObject = JSON.parse(value);
-          this.qrCodeValue = jsonObject.appointment_id;
+          this.qrCodeContent = JSON.parse(this.qrCodeContent);
+          this.qrCodeValue = this.qrCodeContent.appointment_id;
+          if(this.useCalendarEndpoint){
+            var branchId = this.qrCodeContent.branch_id;
+            var date = this.qrCodeContent.appointment_date;
+            var branchName = this.qrCodeContent.branch_name;
+          }
           this.searchAppointments();
         }
         catch(err){
           this.showQRCodeError();
         }
       }
-    });
-    this.subscriptions.add(qrCodeSubscription);
-    this.sortColumn =  this.useCalendarEndpoint ?  SortColumns.start : SortColumns.startTime;
+    }, 1000);
+  }
+
+  removeQRCodeListner(){
+    if(this.qrCodeListnerTimer){
+      clearInterval(this.qrCodeListnerTimer);
+    }
   }
 
   showQRCodeError(){
@@ -338,6 +381,94 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.isInDateDurationSelection = !!isDateHeaderClicked;
   }
 
+  handleQRCodeValidation(apps: IAppointment[]){
+    if (this.appointments.length === 1) {
+      let appointment = apps[0];
+      if (this.useCalendarEndpoint) {
+        if(appointment.status === APPOINTMENT_STATE.CREATED || appointment.status === APPOINTMENT_STATE.RESCHEDULED){
+          if(this.qrCodeContent.branch_id !== this.selectedBranch.id && this.qrCodeContent.branch_name !== this.selectedBranch.name && !this.isMultiBranchEnable){
+            this.translateService.get('appointment_in_another_branch').subscribe(
+              (val: string) => {
+                this.toastService.infoToast(val + " " + this.qrCodeContent.branch_name);
+              }
+            ).unsubscribe();
+          }
+          else{
+            appointment.startTime = moment(appointment.start).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DDTHH:mm');
+            appointment.endTime = moment(appointment.end).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DDTHH:mm');
+            appointment.start = moment(appointment.start).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DDTHH:mm');
+            appointment.end = moment(appointment.end).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DDTHH:mm');
+
+            this.selectedAppointment = appointment;
+            this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
+            this.showAppointmentCollection = false;
+            this.onAppointmentSelect(this.selectedAppointment);
+            this.showModalBackDrop = false; 
+          }
+        }
+        else{
+          this.translateService.get('appointment_arrived').subscribe(
+            (noappointments: string) => {
+              this.toastService.infoToast(noappointments);
+            }
+          ).unsubscribe();
+        }
+      }
+      else {
+        if(appointment.status === APPOINTMENT_STATE.CREATED){
+          if(appointment.branchId !== this.selectedBranch.id){
+            var branch = this.branchList.filter(val => {
+              return val.id === appointment.branchId;
+            })
+            var branchName = "";
+            if(branch.length > 0){
+              branchName = branch[0].name;
+            }
+            this.translateService.get('appointment_in_another_branch').subscribe(
+              (val: string) => {
+                this.toastService.infoToast(val + " " + branchName);
+              }
+            ).unsubscribe();
+          }
+          else{
+            var dateOriginal = appointment.startTime.split('T');
+            var date = dateOriginal[0];
+            var appDate = new Date(date).setHours(0, 0, 0, 0);
+            var todayDate = new Date().setHours(0, 0, 0, 0);
+            if (appDate != todayDate) {
+              this.translateService.get('appointment_in_another_day').subscribe(
+                (val: string) => {
+                  this.toastService.infoToast(val + " " + this.util.getLocaleDate(appointment.startTime));
+                }
+              ).unsubscribe();
+            }
+            else{
+              this.selectedAppointment = appointment;
+              this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
+              this.showAppointmentCollection = false;
+              this.onAppointmentSelect(this.selectedAppointment);
+              this.showModalBackDrop = false; 
+            }
+          }
+        }
+        else{
+          this.translateService.get('appointment_arrived').subscribe(
+            (noappointments: string) => {
+              this.toastService.infoToast(noappointments);
+            }
+          ).unsubscribe();
+        }
+      }
+    }
+    else {
+      this.translateService.get('appointment_not_found_qr').subscribe(
+        (noappointments: string) => {
+          this.toastService.infoToast(noappointments);
+        }
+      ).unsubscribe();
+    }
+  }
+
   handleAppointmentResponse(apps: IAppointment[]) {
     if (apps && apps.length > 0) {
       this.appointments = this.applyAppointmentFilters(apps);
@@ -346,15 +477,18 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.appointments = [];
     }
 
+    if(this.SEARCH_STATES.QR === this.currentSearchState){
+      this.handleQRCodeValidation(apps);
+    }
+
     // in id search handle id search cases
-    if (this.SEARCH_STATES.ID == this.currentSearchState || this.SEARCH_STATES.QR === this.currentSearchState) {
+    else if (this.SEARCH_STATES.ID == this.currentSearchState) {
       if (this.appointments.length === 1) {
         this.selectedAppointment = apps[0];
         this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
         this.showAppointmentCollection = false;
         this.onAppointmentSelect(this.selectedAppointment);
-        this.showModalBackDrop = false;
-        //this.applicationRef.tick();
+        this.showModalBackDrop = false; 
       }
 
       // search appointment is already arrived? then notifiy user

@@ -170,7 +170,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
-          //this.applicationRef.tick();
         }, error => {
           console.log(error);
           this.translateService.get('request_fail').subscribe(v => {
@@ -402,7 +401,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       },
         () => { }, { visitId: visitId })
     }
-    //this.applicationRef.tick();
   }
 
   deleteVisit(index: number, event: Event) {
@@ -444,7 +442,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     },
       () => { }, { visitId: visitId })
-      //this.applicationRef.tick();
   }
 
 

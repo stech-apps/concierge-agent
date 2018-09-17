@@ -9,7 +9,7 @@ import {
 } from './../../../../store';
 import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input, SimpleChanges, EventEmitter, Output, ApplicationRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import * as moment from 'moment';
 import { IBookingInformation } from 'src/models/IBookingInformation';
@@ -63,7 +63,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private qmModalService: QmModalService, private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
     private appointmentDispatchers: AppointmentDispatchers, private appointmentSelectors: AppointmentSelectors,
     private calendarBranchSelectors: CalendarBranchSelectors, private infoMessageDispatchers: InfoMsgDispatchers,
-    private translationService: TranslateService, private servicePointSelectors: ServicePointSelectors, private applicationRef: ApplicationRef) {
+    private translationService: TranslateService, private servicePointSelectors: ServicePointSelectors) {
 
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -90,7 +90,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[]) => {
       this.reservableDates = dates;
-      //this.applicationRef.tick();
     });
 
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {

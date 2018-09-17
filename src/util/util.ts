@@ -103,4 +103,30 @@ export class Util {
       setQRRelatedData(qrData: any){
         this.qrRelatedData = qrData;
       }
+
+      getLocaleDate(dateString : string) {
+        var date = new Date(dateString);
+        var timeOffset = date.getTimezoneOffset();
+
+        var timeStamp = date.getTime() + (timeOffset * 60000);
+        var localeDate = new Date(timeStamp);
+        var localeTimeFormat = localeDate.toLocaleTimeString();
+        var localeFormat = localeDate.toLocaleString();
+
+        var gmtIndex = localeFormat.indexOf('+');
+        if (gmtIndex < 0) {
+            gmtIndex = localeFormat.indexOf('-');
+        }
+        var timePortion = localeTimeFormat;
+        if (gmtIndex != -1) {
+            timePortion = localeTimeFormat.split(" ")[0];
+        }
+
+        var secondsIndex = timePortion.lastIndexOf(":");
+        var modifyTime = timePortion.substring(0, secondsIndex);
+
+        var modifyDate = localeFormat.replace(localeTimeFormat, modifyTime);
+
+        return modifyDate;
+    }  
 }

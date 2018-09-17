@@ -46,8 +46,18 @@ export class QmEditAppointmentComponent implements OnInit, OnDestroy {
     this.selectedCustomer = null;
   }
 
-
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  getSelectedAppointmentDuration() {
+    let result = '';
+    if(this.selectedAppointment ) {
+      result = `${moment(this.selectedAppointment.start)
+        .tz(this.selectedAppointment.branch.fullTimeZone).local().format('YYYY-MM-DD HH:mm')}`;
+      result += `-${moment(this.selectedAppointment.end)
+        .tz(this.selectedAppointment.branch.fullTimeZone).local().format('HH:mm')}`;
+    }
+    return result;
   }
 }

@@ -24,7 +24,7 @@ import { Moment } from 'moment-timezone';
 import { CalendarDate } from 'src/app/components/containers/qm-calendar/qm-calendar.component';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { NativeApiService } from '../../../../util/services/native-api.service';
-import { APPOINTMENT_STATE } from '../../../../util/q-state';
+import { APPOINTMENT_STATE_ID, APPOINTMENT_STATUS } from '../../../../util/q-state';
 import { Util } from '../../../../util/util';
 
 @Component({
@@ -99,7 +99,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   selectedBranchFormatted = { selectedBranch: ''} ;
   qrCodeListnerTimer : any;
-  isQrCodeLoaded: false;
+  isQrCodeLoaded = false;
   isMultiBranchEnable = false;
   branchList: IBranch[];
 
@@ -301,6 +301,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if(value != null){
         this.qrCodeContent = value;
+        this.isQrCodeLoaded = true;
       }
     });
     this.subscriptions.add(qrCodeSubscription);
@@ -385,8 +386,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.appointments.length === 1) {
       let appointment = apps[0];
       if (this.useCalendarEndpoint) {
-        if(appointment.status === APPOINTMENT_STATE.CREATED || appointment.status === APPOINTMENT_STATE.RESCHEDULED){
+        if(appointment.status === APPOINTMENT_STATE_ID.CREATED || appointment.status === APPOINTMENT_STATE_ID.RESCHEDULED){
           if(this.qrCodeContent.branch_id !== this.selectedBranch.id && this.qrCodeContent.branch_name !== this.selectedBranch.name && !this.isMultiBranchEnable){
+            this.clearSelection();
             this.translateService.get('appointment_in_another_branch').subscribe(
               (val: string) => {
                 this.toastService.infoToast(val + " " + this.qrCodeContent.branch_name);
@@ -407,6 +409,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
         }
         else{
+          this.clearSelection();
           this.translateService.get('appointment_arrived').subscribe(
             (noappointments: string) => {
               this.toastService.infoToast(noappointments);
@@ -415,7 +418,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         }
       }
       else {
-        if(appointment.status === APPOINTMENT_STATE.CREATED){
+        if(appointment.status === APPOINTMENT_STATUS.CREATED){
           if(appointment.branchId !== this.selectedBranch.id){
             var branch = this.branchList.filter(val => {
               return val.id === appointment.branchId;
@@ -424,6 +427,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             if(branch.length > 0){
               branchName = branch[0].name;
             }
+            this.clearSelection();
             this.translateService.get('appointment_in_another_branch').subscribe(
               (val: string) => {
                 this.toastService.infoToast(val + " " + branchName);
@@ -436,6 +440,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             var appDate = new Date(date).setHours(0, 0, 0, 0);
             var todayDate = new Date().setHours(0, 0, 0, 0);
             if (appDate != todayDate) {
+              this.clearSelection();
               this.translateService.get('appointment_in_another_day').subscribe(
                 (val: string) => {
                   this.toastService.infoToast(val + " " + this.util.getLocaleDate(appointment.startTime));
@@ -452,6 +457,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
         }
         else{
+          this.clearSelection();
           this.translateService.get('appointment_arrived').subscribe(
             (noappointments: string) => {
               this.toastService.infoToast(noappointments);
@@ -461,12 +467,18 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     }
     else {
+      this.clearSelection();
       this.translateService.get('appointment_not_found_qr').subscribe(
         (noappointments: string) => {
           this.toastService.infoToast(noappointments);
         }
       ).unsubscribe();
     }
+  }
+
+  clearSelection(){
+    this.appointments = [];
+    this.onCancel();
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {

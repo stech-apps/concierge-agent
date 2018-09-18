@@ -126,7 +126,12 @@ onFlowStepActivated(){
 }
 
 onQRCodeSelect(){
-  this.nativeApi.openQRScanner();
+  if(this.nativeApi.isNativeBrowser()){
+    this.nativeApi.openQRScanner();
+  }
+  else{
+    document.getElementById("visitSearchx").focus();
+  }
 }
 
 sortQueueList(type) {

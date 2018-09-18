@@ -29,7 +29,7 @@ export class QmIdentifyQueueComponent implements OnInit {
 
   
   queueCollection = new Array<Queue>();
-  searchText:String;
+  searchText:string;
   private subscriptions: Subscription = new Subscription();
   private selectedBranch: IBranch;
   sortAscending = true;
@@ -37,6 +37,7 @@ export class QmIdentifyQueueComponent implements OnInit {
   selectedVisit:Visit;
   sortedBy:string = "Queue";
   visitSearched:boolean= false;
+  desktopQRCodeListnerTimer : any;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -66,6 +67,9 @@ export class QmIdentifyQueueComponent implements OnInit {
   const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
     if(value != null){
       this.util.setQRRelatedData({ "branchId": this.selectedBranch.id, "qrCode": value, "isQrCodeLoaded": true})
+      if(!this.nativeApi.isNativeBrowser()){
+        this.removeDesktopQRReader();
+      }
     }
   });
   this.subscriptions.add(qrCodeSubscription);
@@ -74,6 +78,9 @@ export class QmIdentifyQueueComponent implements OnInit {
     if(value === true){
       this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false})
       this.util.qrCodeListner();
+      if(!this.nativeApi.isNativeBrowser()){
+        this.checkDesktopQRReaderValue();
+      }
     }
     else{
       this.util.removeQRCodeListner();
@@ -89,6 +96,20 @@ export class QmIdentifyQueueComponent implements OnInit {
     }
   })
   this.subscriptions.add(visitSubscription)
+}
+
+checkDesktopQRReaderValue(){
+  this.desktopQRCodeListnerTimer = setInterval(() => {
+    if(this.searchText && this.searchText.length > 0){
+      this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+    }
+  }, 1000);
+}
+
+removeDesktopQRReader(){
+  if(this.desktopQRCodeListnerTimer){
+    clearInterval(this.desktopQRCodeListnerTimer);
+  }
 }
 
 ngOnInit() {
@@ -130,7 +151,12 @@ onQRCodeSelect(){
     this.nativeApi.openQRScanner();
   }
   else{
-    document.getElementById("visitSearchx").focus();
+    var searchBox = document.getElementById("visitSearchQueue") as any;
+    this.translateService.get('qr_code_scanner').subscribe(v => {
+      searchBox.placeholder = v
+    });
+    searchBox.focus();
+    this.nativeApiDispatcher.openQRCodeScanner();
   }
 }
 

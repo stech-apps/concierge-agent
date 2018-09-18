@@ -2,7 +2,7 @@
 
   <div class="qm-identify-visit-search">
     <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearch"
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearchVisit"
         name="q" [(ngModel)]="searchText" #visitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())" autocomplete="off">
       <i *ngIf="visitSearch.value.trim()" (click)="resetSearch()"  class="icon-close qm-clear-search" aria-hidden="true"></i>
       <span class="qm-identify-visit-search__or-text"> {{'or_la'|translate}}</span>

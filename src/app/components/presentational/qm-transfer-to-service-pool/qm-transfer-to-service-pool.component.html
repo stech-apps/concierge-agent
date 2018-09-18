@@ -29,11 +29,16 @@
           <div *ngFor="let s of servicePoints  | filterServicePoints : filterText:sortedBy:sortAscending">
           <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
               <div class="qm-col qm-service-point-list-body-row-first-label">{{s.name}}</div>
-              <div class="qm-col qm-service-point-list-body-row-second-label">
-                <span *ngIf="s.state == 'CLOSED'" class="sp-closed-icon"> </span>
-                <span *ngIf="s.state == 'OPEN'" class="sp-open-icon"> </span>
-                {{s.state}}
+              <div *ngIf="s.state == 'CLOSED'" class="qm-col qm-service-point-list-body-row-second-label">
+                <span  class="sp-closed-icon"> </span>
+                  {{'closed'|translate}}
               </div>
+              <div *ngIf="s.state == 'OPEN'" class="qm-col qm-service-point-list-body-row-second-label">
+                  <span class="sp-open-icon"> </span>
+                    {{'open'|translate}}
+                </div>
+
+             
             </div>
         </div>
 

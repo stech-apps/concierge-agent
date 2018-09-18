@@ -248,4 +248,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
+  closeDropDown(dd1, dd2) {
+    dd1.isExpanded = false;
+    dd2.isExpanded = false;
+  }
 }

@@ -42,7 +42,7 @@
         width: 85%;
         margin: 0 auto;
         overflow: scroll;
-        max-height: calc(100vh - 390px);
+        max-height: calc(63.5vh - 9rem);
         -ms-overflow-style: none;
     }
 
@@ -149,3 +149,10 @@
         width: 85.5%;
     }
 }
+
+@media(max-width: 800px) {
+    .qm-quick-serve { 
+
+    }
+}
+

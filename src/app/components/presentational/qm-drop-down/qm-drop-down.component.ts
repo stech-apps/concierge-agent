@@ -40,13 +40,15 @@ export class QmDropDownComponent implements OnInit {
   @Output()
   onExpand: EventEmitter<any> = new EventEmitter<any>();
 
-  dropDownExpand() {
+  dropDownExpand($event) {
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
+    $event.stopPropagation();
   }
 
-  itemClick(item: IDropDownItem | any) {
+  itemClick(item: IDropDownItem | any, $event) {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
+    $event.stopPropagation();
   }
 }

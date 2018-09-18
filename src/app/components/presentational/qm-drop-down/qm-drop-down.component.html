@@ -1,9 +1,9 @@
 <div class="qm-dropdown" dir="{{userDirection$ | async}}">
-  <button class="qm-dropdown-button" (click)="dropDownExpand()">
+  <button class="qm-dropdown-button" (click)="dropDownExpand($event)">
     <div class="qm-dropdown-button--label">{{caption | translate}}</div>
     <div class="qm-dropdown-button--arrow triangle-down"></div>
   </button>
   <div class="qm-dropdown__content" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
-    <a *ngFor="let item of items" (click)="itemClick(item)" >{{item[labelProperty]}}</a>
+    <a *ngFor="let item of items" (click)="itemClick(item, $event)" >{{item[labelProperty]}}</a>
   </div>
 </div>

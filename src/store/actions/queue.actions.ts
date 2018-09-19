@@ -15,6 +15,7 @@ export const SELECT_QUEUE = '[QUEUE] SELECT_QUEUE';
 export const RESET_SELECTED_QUEUE = '[QUEUE] RESET_SELECTED_QUEUE';
 export const SELECT_VISIT = '[QUEUE] SELECT_VISIT';
 export const RESET_QUEUE_INFO = '[QUEUE] RESET_QUEUE_INFO';
+export const RESET_ERROR = '[QUEUE] RESET_ERROR';
 
 export class FetchQueueInfo implements Action {
   readonly type = FETCH_QUEUE_INFO;
@@ -72,6 +73,11 @@ export class ResetQueueInfo implements Action {
   constructor() {}
 }
 
+export class ResetError implements Action {
+  readonly type = RESET_ERROR;
+  constructor() {}
+}
+
 
 
 // Action types
@@ -86,4 +92,5 @@ export type AllQueueActions = FetchQueueInfoSuccess
   | ResetSelectedQueue
   | SelectVisit
   | ResetQueueInfo
+  | ResetError
 

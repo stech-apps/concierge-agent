@@ -24,4 +24,8 @@ export class AppointmentDispatchers {
   rescheduleAppointment(appointment: IAppointment) {
     this.store.dispatch(new AppointmentActions.RescheduleAppointment(appointment));
   }
+
+  resetError(){
+    this.store.dispatch(new AppointmentActions.ResetAppointmentError());
+  }
 }

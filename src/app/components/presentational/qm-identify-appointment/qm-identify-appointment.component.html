@@ -249,7 +249,7 @@
 
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
     <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText"
-      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" />
+      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" id="searchAppointmentField"/>
     <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
 
     <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="selectedSearchIcon === 'duration'">

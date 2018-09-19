@@ -90,12 +90,14 @@ export class Util {
           if(this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded){
             this.qrRelatedData.isQrCodeLoaded = false;
             this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+            this.qrRelatedData = null;
           }
         }, 1000);
       }
       
       removeQRCodeListner(){
         if(this.qrCodeListnerTimer){
+          this.qrRelatedData = null;
           clearInterval(this.qrCodeListnerTimer);
         }
       }

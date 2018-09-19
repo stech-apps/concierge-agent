@@ -93,15 +93,28 @@ export class QmIdentifyQueueComponent implements OnInit {
     this.nativeApiDispatcher.closeQRCodeScanner();
     if(this.selectedVisit){
       this.onFlowNext.emit();
+      this.searchText = "";
     }
   })
   this.subscriptions.add(visitSubscription)
+
+  const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val)=>{
+    if(!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0){
+      var searchBox = document.getElementById("visitSearchQueue") as any;
+      this.translateService.get('visit_search_placeholder').subscribe(v => {
+        searchBox.placeholder = v
+      });
+      this.queueDispatchers.resetError();
+      this.searchText = "";
+    }
+  })
+  this.subscriptions.add(visiInfoFail)
 }
 
 checkDesktopQRReaderValue(){
   this.desktopQRCodeListnerTimer = setInterval(() => {
     if(this.searchText && this.searchText.length > 0){
-      this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+      this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText)
     }
   }, 1000);
 }
@@ -147,6 +160,7 @@ onFlowStepActivated(){
 }
 
 onQRCodeSelect(){
+  this.queueDispatchers.resetError();
   if(this.nativeApi.isNativeBrowser()){
     this.nativeApi.openQRScanner();
   }

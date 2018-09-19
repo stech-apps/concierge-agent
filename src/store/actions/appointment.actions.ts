@@ -14,7 +14,7 @@ export const DELETE_APPOINTMENT_SUCCESS = '[Appointment] DELETE_APPOINTMENT_SUCC
 export const RESCHEDULE_APPOINTMENT = '[Appointment] RESCHEDULE_APPOINTMENT';
 export const RESCHEDULE_APPOINTMENT_FAIL = '[Appointment] RESCHEDULE_APPOINTMENT_FAIL';
 export const RESCHEDULE_APPOINTMENT_SUCCESS = '[Appointment] RESCHEDULE_APPOINTMENT_SUCCESS';
-
+export const RESET_APPOINTMENT_ERROR = '[Appointment] RESET_APPOINTMENT_ERROR';
 
 export class SearchAppointments implements Action {
   readonly type = SEARCH_APPOINTMENTS;
@@ -77,6 +77,11 @@ export class RescheduleAppointmentSuccess implements Action {
   constructor(public payload: IAppointment) {}
 }
 
+export class ResetAppointmentError implements Action {
+  readonly type = RESET_APPOINTMENT_ERROR;
+  constructor() {}
+}
+
 // Action types
 export type AllAppointmentActions =
   | SearchAppointments
@@ -90,4 +95,5 @@ export type AllAppointmentActions =
   | RescheduleAppointment 
   | RescheduleAppointmentFail 
   | RescheduleAppointmentSuccess 
-  | SearchCalendarAppointmentsFail;
+  | SearchCalendarAppointmentsFail
+  | ResetAppointmentError;

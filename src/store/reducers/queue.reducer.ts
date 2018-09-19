@@ -53,11 +53,17 @@ export function reducer(
         error: null
       };
     }
+    case QueueActions.FETCH_SELECTED_VISIT_INFO: {
+      return {
+        ...state,
+        error: null
+      };
+    }
     case QueueActions.FETCH_SELECTED_VISIT_INFO_SUCCESS: {
       return {
         ...state,
         selectedVisit: action.payload[0],
-        error: null
+        error: action.payload[0] ? null : "error"
       };
     }
 
@@ -95,6 +101,12 @@ export function reducer(
         ...state,
         allQueueSummary: {},
         loading: false,
+        error: null
+      };
+    }
+    case QueueActions.RESET_ERROR: {
+      return {
+        ...state,
         error: null
       };
     }

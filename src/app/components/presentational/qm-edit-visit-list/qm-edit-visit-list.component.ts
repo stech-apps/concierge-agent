@@ -80,7 +80,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private util: Util,
-    private nativeApiDispatcher: NativeApiDispatchers
+    private nativeApiDispatcher: NativeApiDispatchers,
+    private queueDispatcher: QueueDispatchers
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -172,6 +173,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
 //check id defined to detect the search query request
       if (result && !result.id) {
+        this.searchText = "";
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
           this.visits.splice(0, this.visits.length, visit);
           this.visitClicked = true;
@@ -188,6 +190,17 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       
     });
     this.subscriptions.add(visitSub);
+
+    const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val)=>{
+      if(!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0){
+        var searchBox = document.getElementById("visitSearchVisit") as any;
+        this.translateService.get('visit_search_placeholder').subscribe(v => {
+          searchBox.placeholder = v
+        });
+        this.searchText = "";
+      }
+    })
+    this.subscriptions.add(visiInfoFail)
 
   }
 
@@ -306,6 +319,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   onQRCodeSelect(){
+    this.queueDispatcher.resetError();
     if(this.nativeApi.isNativeBrowser()){
       this.nativeApi.openQRScanner();
     }

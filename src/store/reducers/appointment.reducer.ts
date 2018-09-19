@@ -96,6 +96,12 @@ export function reducer(
                 error: action.payload
             };
         }
+        case AppointmentActions.RESET_APPOINTMENT_ERROR: {
+            return {
+              ...state,
+              error: null
+            };
+          }
         default: {
             return state;
         }

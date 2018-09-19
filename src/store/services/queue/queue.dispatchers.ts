@@ -40,4 +40,8 @@ export class QueueDispatchers {
   resetQueueInfo(){
     this.store.dispatch(new QueueActions.ResetQueueInfo());
   }
+
+  resetError(){
+    this.store.dispatch(new QueueActions.ResetError());
+  }
 }

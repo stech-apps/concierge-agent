@@ -25,6 +25,11 @@ const getSelectedQueue = createSelector(
     (state:IQueueState) => state.selectedQueue
 )
 
+const isFetchVisitInfoFail = createSelector(
+    getQueueState,
+    (state:IQueueState) => state.error ? true : false
+)
+
 
 @Injectable()
 export class QueueSelectors {
@@ -33,4 +38,5 @@ export class QueueSelectors {
     queueSummary$ = this.store.select(getAllQueueSummary);
     selectedVisit$ = this.store.select(getSelectedVisit);
     selectedQueue$ = this.store.select(getSelectedQueue);
+    isVisitInfoFail$ = this.store.select(isFetchVisitInfoFail);
 }

@@ -75,7 +75,7 @@ import {
   StaffPoolDispatchers,
   StaffPoolSelectors,
   NativeApiDispatchers,
-  NativeApiSelectors
+  NativeApiSelectors,
 
 } from "./services";
 

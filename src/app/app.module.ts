@@ -1,3 +1,5 @@
+import { QmGlobalHttpInterceptor } from './../util/services/global-http-interceptor';
+import { GlobalNotifyDispatchers, GlobalNotifySelectors } from './../store/services/global-notify';
 import { QmClearInputButtonComponent } from './directives/qm-clear-input-button/qm-clear-input-button.component';
 import { QmClearInputDirective } from './directives/qm-clear-input.directive';
 import { BookingHelperService } from './../util/services/booking-helper.service';
@@ -14,7 +16,7 @@ import { LicenseAuthGuard } from "src/auth-guards/license-auth-guard";
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -155,7 +157,7 @@ import { FilterServicePointsPipe } from './components/presentational/qm-transfer
 import { FilterStaffPoolPipe } from './components/presentational/qm-transfer-to-staff-pool/filter-staff-pool.pipe';
 import { SortAppointmentsPipe } from './components/presentational/qm-identify-appointment/sort-appointments.pipe';
 import { QmLoadingModalComponent } from './components/containers/qm-loading-modal/qm-loading-modal.component';
-
+import { QmGlobalErrorComponent } from './components/containers/qm-global-error/qm-global-error.component';
 
 
 // Global options for Toastr
@@ -243,7 +245,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FilterServicePointsPipe,
     FilterStaffPoolPipe,
     SortAppointmentsPipe,
-    QmLoadingModalComponent,
+    QmGlobalErrorComponent,
+    QmLoadingModalComponent
  
    
   ],
@@ -287,6 +290,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
   providers: [
     ...storeServices,
     GlobalErrorHandler,
+    GlobalNotifyDispatchers,
+    GlobalNotifySelectors,
     ToastService,
     LicenseAuthGuard,
     QEvents,
@@ -307,6 +312,11 @@ export class MyHammerConfig extends HammerGestureConfig  {
     BookingHelperService,
     LocalStorage,
     NativeApiSupportService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: QmGlobalHttpInterceptor,
+      multi: true,
+    },
     { 
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 

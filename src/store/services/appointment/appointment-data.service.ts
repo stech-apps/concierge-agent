@@ -2,11 +2,11 @@ import { IAppointment } from 'src/models/IAppointment';
 import { GlobalErrorHandler } from './../../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, retryWhen, flatMap } from 'rxjs/operators';
 
 import { calendarPublicEndpoint, DataServiceError, restEndpoint, calendarEndpoint } from '../data.service';
 import { IAppointmentResponse } from '../../../models/IAppointmentResponse';
-import { Observable } from 'rxjs';
+import { Observable, interval, throwError, of } from 'rxjs';
 
 
 @Injectable()
@@ -45,7 +45,7 @@ export class AppointmentDataService {
 
   rescheduleAppointment(appointment: IAppointment) {
     let url = `${calendarPublicEndpoint}/appointments/${appointment.publicId}/reschedule?end=${appointment.end}&start=${appointment.start}`;
-      return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError()));
+    return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError()));
   }
 
 
@@ -70,17 +70,25 @@ export class AppointmentDataService {
     else {
       searchQuery += `&timeZoneBranchId=${appointmentSearch.branchId}`;
     }
-
-
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)
-      .pipe((catchError)(this.errorHandler.handleError()));
+      .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError()));
   }
 
   deleteAppointment(appointment: IAppointment) {
     return this.http
       .delete(`${calendarPublicEndpoint}/appointments/${appointment.publicId}`)
       .pipe(catchError(this.errorHandler.handleError()));
+  }
+
+  retryForRobustness(maxRetry: number = 3, delayMs: number = 2000) {
+    return (src: Observable<any>) => src.pipe(
+      retryWhen(_ => {
+        return interval(delayMs).pipe(
+          flatMap(count => count == maxRetry ? throwError("Giving up") : of(count))
+        )
+      }),
+    )
   }
 }

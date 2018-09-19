@@ -1,2 +1,3 @@
 export const ERROR_CODE_TIMESLOT_TAKEN = 'E440';
 export const ERROR_CODE_APPOINTMENT_NOT_FOUND = 'E142';
+export const ERROR_CODE_TIMEOUT = 0;

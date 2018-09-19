@@ -25,6 +25,7 @@ import * as fromQueueVisits from './queue-visits.reducer';
 import * as fromServicePointPool from './service-point-pool.reducer';
 import * as fromStaffPool from './staff-pool.reducer';
 import * as fromNativeApi from './native.api.reducer'
+import * as fromGlobalNotify from './global-notify.reducer'
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -51,7 +52,8 @@ export interface IAppState {
   queueVisits:fromQueueVisits.IQueueVisitsState
   servicePointPool:fromServicePointPool.IServicePointPoolState,
   staffPool:fromStaffPool.IStaffPoolState,
-  nativeApi:fromNativeApi.NativeApiState
+  nativeApi:fromNativeApi.NativeApiState,
+  globalNotify: fromGlobalNotify.IGlobalNotifyState
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -79,5 +81,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   queueVisits:fromQueueVisits.reducer,
   servicePointPool:fromServicePointPool.reducer,
   staffPool:fromStaffPool.reducer,
-  nativeApi: fromNativeApi.reducer
+  nativeApi: fromNativeApi.reducer,
+  globalNotify: fromGlobalNotify.reducer
 };

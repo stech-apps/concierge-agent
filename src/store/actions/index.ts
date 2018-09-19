@@ -27,3 +27,4 @@ export * from './queue-visits.actions';
 export * from './service-point-pool.actions';
 export * from './staffpool.actions';
 export * from './native.api.actions';
+export * from './global-notify.actions';

@@ -32,7 +32,6 @@ export class Recycle {
       this.customerDispatcher.resetCurrentCustomer();
       this.customerDispatcher.resetTempCustomer();
       this.timeSlotDispatchers.resetTimeslots();
-      this.timeSlotDispatchers.deselectTimeslot();
       this.serviceDispatcher.setSelectedServices([]);
       this.arriveAppointmentDispatcher.deselectAppointment();
       this.expireTimer.hideReservationExpiryTimer();

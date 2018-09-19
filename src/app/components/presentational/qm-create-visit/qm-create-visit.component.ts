@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ServicePointSelectors, ServiceSelectors, CustomerSelector } from 'src/store/services';
+import { ServicePointSelectors, ServiceSelectors, CustomerSelector, TimeslotDispatchers } from 'src/store/services';
 import { Subscription } from 'rxjs';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { IService } from '../../../../models/IService';
@@ -40,7 +40,8 @@ export class QmCreateVisitComponent implements OnInit {
     private servicePointSelectors: ServicePointSelectors,
     private serviceSelectors: ServiceSelectors,
     private customerSelectors: CustomerSelector,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private timeSlotDispatchers:TimeslotDispatchers
   ) {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
@@ -97,4 +98,7 @@ export class QmCreateVisitComponent implements OnInit {
       this.f.onFlowNext(this.pc);
     }
   }
+  // deselectTime(){
+  //   this.timeSlotDispatchers.deselectTimeslot();
+  // }
 }

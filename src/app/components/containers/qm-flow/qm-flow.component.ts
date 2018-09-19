@@ -7,7 +7,7 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { ReserveDispatchers } from '../../../../store';
+import { ReserveDispatchers, TimeslotDispatchers } from '../../../../store';
 
 @Component({
   selector: 'qm-flow',
@@ -23,7 +23,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     private qmModalService: QmModalService,
     private recycleService: Recycle,
     private queueService: QueueService,
-    private reserveDispatchers:ReserveDispatchers
+    private reserveDispatchers:ReserveDispatchers,
+    private timeSlotDispatchers:TimeslotDispatchers
   ) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -83,6 +84,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
       setTimeout(() => {
+      
         if(this.router.url!="/profile"){
         this.router.navigate(['home']);
         }
@@ -91,6 +93,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     else {
       this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
         if (result) {
+          this.timeSlotDispatchers.deselectTimeslot();
           this.exitFlow = true;
           this.recycleService.clearCache();
           this.queueService.setQueuePoll();

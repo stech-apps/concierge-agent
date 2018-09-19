@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors, CustomerDispatchers, CustomerSelector, ReservationExpiryTimerSelectors,TimeslotSelectors, ServicePointSelectors } from './../../../../store/services';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors, CustomerDispatchers, CustomerSelector, ReservationExpiryTimerSelectors,TimeslotSelectors, ServicePointSelectors, TimeslotDispatchers } from './../../../../store/services';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
@@ -35,7 +35,8 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     private timeSlotSelectors: TimeslotSelectors, private servicePointSelectors: ServicePointSelectors, private localStorage: LocalStorage,
     private serviceSelectors: CalendarServiceSelectors,
     private customerDispatchers:CustomerDispatchers,
-    private customerSelectors:CustomerSelector) {
+    private customerSelectors:CustomerSelector,
+  private timeSlotDispatchers:TimeslotDispatchers) {
          
       this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
       if(this.isFlowSkip === undefined){
@@ -106,4 +107,8 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
   moveReservationTimer($event) {
   }
+  
+  // deselectTime(){
+  //   this.timeSlotDispatchers.deselectTimeslot();
+  // }
 }

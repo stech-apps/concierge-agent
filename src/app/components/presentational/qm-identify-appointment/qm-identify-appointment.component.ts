@@ -323,6 +323,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
       else{
         this.removeQRCodeListner();
+        this.clearInput();
       }
     });
     this.subscriptions.add(qrCodeScannerSubscription);

@@ -89,6 +89,8 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     
   }
 
+  deselectTime(){}
+
   setSelectedBranch(){
     const selectedBranchSub = this.branchSelectors.selectedBranch$.subscribe((sb) => {
       this.calendarBranchDispatchers.selectCalendarBranch(sb as ICalendarBranch);

@@ -93,22 +93,29 @@ export class QmIdentifyQueueComponent implements OnInit {
     this.nativeApiDispatcher.closeQRCodeScanner();
     if(this.selectedVisit){
       this.onFlowNext.emit();
-      this.searchText = "";
+      this.resetQRReader();
     }
   })
   this.subscriptions.add(visitSubscription)
 
   const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val)=>{
     if(!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0){
-      var searchBox = document.getElementById("visitSearchQueue") as any;
-      this.translateService.get('visit_search_placeholder').subscribe(v => {
-        searchBox.placeholder = v
-      });
+      this.resetQRReader()
       this.queueDispatchers.resetError();
-      this.searchText = "";
     }
   })
   this.subscriptions.add(visiInfoFail)
+}
+
+resetQRReader(){
+  var searchBox = document.getElementById("visitSearchQueue") as any;
+  this.translateService.get('visit_search_placeholder').subscribe(v => {
+    searchBox.placeholder = v
+  });
+  this.searchText = "";
+  if(!this.nativeApi.isNativeBrowser()){
+    this.removeDesktopQRReader();
+  }
 }
 
 checkDesktopQRReaderValue(){
@@ -241,7 +248,7 @@ selectQueue(queue){
   this.NextFlow.emit("TRANSFER_TO_STAFF_POOL");
   this.queueDispatchers.setectQueue(queue);
   this.onFlowNext.emit();
-  
+  this.resetQRReader();
 }
 
 isAppointmentIdValid(val) {

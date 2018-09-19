@@ -173,7 +173,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
 //check id defined to detect the search query request
       if (result && !result.id) {
-        this.searchText = "";
+        this.resetQRReader();
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
           this.visits.splice(0, this.visits.length, visit);
           this.visitClicked = true;
@@ -193,11 +193,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
     const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val)=>{
       if(!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0){
-        var searchBox = document.getElementById("visitSearchVisit") as any;
-        this.translateService.get('visit_search_placeholder').subscribe(v => {
-          searchBox.placeholder = v
-        });
-        this.searchText = "";
+        this.resetQRReader();
+        this.queueDispatcher.resetError();
       }
     })
     this.subscriptions.add(visiInfoFail)
@@ -206,6 +203,17 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+  }
+
+  resetQRReader(){
+    var searchBox = document.getElementById("visitSearchVisit") as any;
+    this.translateService.get('visit_search_placeholder').subscribe(v => {
+      searchBox.placeholder = v
+    });
+    this.searchText = "";
+    if(!this.nativeApi.isNativeBrowser()){
+      this.removeDesktopQRReader();
+    }
   }
 
   sortByVisitId() {
@@ -315,7 +323,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
    
     this.selectedVisitId = visitId;
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
-
+    this.resetQRReader();
   }
 
   onQRCodeSelect(){

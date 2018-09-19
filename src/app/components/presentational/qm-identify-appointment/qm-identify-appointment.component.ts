@@ -356,6 +356,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   showQRCodeError(){
+    this.clearInput();
     this.translateService.get('appointment_not_found_qr').subscribe(
       (noappointments: string) => {
         this.toastService.infoToast(noappointments);
@@ -700,6 +701,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.appointments = this.defaultAppointmentCollection;
     this.selectedCustomer = null;
     //this.arriveAppointmentDispatchers.deselectAppointment();
+
+    if((searchButton === this.SEARCH_STATES.QR && this.nativeApi.isNativeBrowser())){
+      this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
+    }
   }
 
 

@@ -8,7 +8,7 @@
  
   &__header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: rem(15px 10px);
 justify-content: flex-end;
     width: 100%;
@@ -27,7 +27,12 @@ justify-content: flex-end;
   }
 
   &__header-char-count {
-      margin-top: rem(10px);
+    width: 35px;
+    margin-left: rem(10px);
+    @at-root [dir="rtl"] & {
+      margin-left: 0;
+      margin-right: rem(10px);
+    }
     color: #000000;
     font-family: Montserrat-Light;
     letter-spacing: 1px;

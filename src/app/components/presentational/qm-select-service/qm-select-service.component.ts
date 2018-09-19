@@ -148,7 +148,7 @@ export class QmSelectServiceComponent implements OnInit {
           this.filteredServiceList = <Array<IServiceViewModel>>services;
           this.checkMostFrequentService();
 
-          if(this.selectedBranch.id === this.loginBranch.id && this.isInitialServiceLoaded === false){
+          if((this.selectedBranch as ICalendarBranch).qpId === this.loginBranch.id && this.isInitialServiceLoaded === false){
             this.isInitialServiceLoaded = true;
             this.calendarServiceDispatchers.setInitialService();
           }

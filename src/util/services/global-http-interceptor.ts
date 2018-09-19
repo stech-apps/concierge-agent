@@ -1,3 +1,4 @@
+import { NativeApiService } from './native-api.service';
 import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable } from '@angular/core';
@@ -10,6 +11,9 @@ import { retryWhen } from 'rxjs/internal/operators/retryWhen';
 import { BLOCKED_URLS } from 'src/util/url-helper';
 import { ServiceStateService } from 'src/app/service-state.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NativeApiSelectors } from 'src/store';
+import { timeout } from 'rxjs/internal/operators/timeout';
+import { timeoutWith } from 'rxjs/internal/operators/timeoutWith';
 
 @Injectable()
 export class QmGlobalHttpInterceptor implements HttpInterceptor {
@@ -21,7 +25,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private lastRequestAction = 'NONE';
 
     constructor(private globalNotifyDispatchers: GlobalNotifyDispatchers, private serviceState: ServiceStateService,
-        private translateService: TranslateService) {
+        private translateService: TranslateService, private nativeApiService: NativeApiService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,35 +34,35 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             ((this.isABlockedUrl(req.url))
             ) && !this.isAResourceFile(req)) {
 
-                if(!this.serviceState.isActive()) {
-                    this.lastRequestAction = req.method;
+            if (!this.serviceState.isActive()) {
+                this.lastRequestAction = req.method;
 
-                    if (this.localTimeoutBeforeStartPing) {
-                        clearTimeout(this.localTimeoutBeforeStartPing);
-                    }
-        
-                    this.localTimeoutBeforeStartPing = setTimeout(() => {
-                        // Show yellow network message only if not retrying get requesting...
-                        if (this.serviceState.getCurrentTry() == 0) {
-                            //networkMessageController.setMessage(R.NETWORK_STATUS_MSG.POOR_NETWORK_MSG);
-                            //networkMessageController.showNetworkMessage();
-                            this.translateService.get('poor_network_msg').subscribe((msg) => {
-                                this.globalNotifyDispatchers.showWarning(msg);
-                            }).unsubscribe();
-        
-                        }
-        
-                    }, this.localTimeoutBeforeStartPingValue);
-        
-                    //if(config.method == R.SERVICE_ACTIONS.GET) //This is force block GET requests
-                    this.serviceState.setActive(true);
+                if (this.localTimeoutBeforeStartPing) {
+                    clearTimeout(this.localTimeoutBeforeStartPing);
                 }
 
+                this.localTimeoutBeforeStartPing = setTimeout(() => {
+                    // Show yellow network message only if not retrying get requesting...
+                    if (this.serviceState.getCurrentTry() == 0) {
+                        //networkMessageController.setMessage(R.NETWORK_STATUS_MSG.POOR_NETWORK_MSG);
+                        //networkMessageController.showNetworkMessage();
+                        this.translateService.get('poor_network_msg').subscribe((msg) => {
+                            this.globalNotifyDispatchers.showWarning({ message: msg });
+                        }).unsubscribe();
 
-            return next.handle(req).pipe(tap((response: any) => {
+                    }
+
+                }, this.localTimeoutBeforeStartPingValue);
+
+                //if(config.method == R.SERVICE_ACTIONS.GET) //This is force block GET requests
+                this.serviceState.setActive(true);
+            }
+
+
+            return next.handle(req).pipe(timeoutWith(5000, throwError({status: ERROR_CODE_TIMEOUT})), tap((response: any) => {
 
                 if (response instanceof HttpResponse) {
-                   
+
                     if ((this.isABlockedUrl(response.url) || req.method != 'GET') && !this.isAResourceFile(response)) {
                         //networkMessageController.hideNetworkMessage();
                         this.globalNotifyDispatchers.hideNotifications();
@@ -89,15 +93,20 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     }
 
                     this.translateService.get('no_network_msg').subscribe((msg) => {
-                        this.globalNotifyDispatchers.showError({ message: msg });
+                        this.globalNotifyDispatchers.showError({ message: msg });                        
                     }).unsubscribe();
+
+
+                    if (this.nativeApiService.isNativeBrowser()) {
+                        this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
+                    }
                 }
 
                 return throwError('');
             }));
         }
         else {
-            return next.handle(req).pipe(
+            return next.handle(req).pipe(timeout(5000),
                 retryWhen(_ => {
                     return interval(1000).pipe(
                         flatMap((count) => {

@@ -159,7 +159,9 @@ export class AppointmentEffects {
             this.toastService.infoToast(messages['appointment_already_used']);
           }
           else {
-            this.toastService.infoToast(action.payload["errorMsg"]);
+            if(action.payload["errorMsg"]) {
+              this.toastService.infoToast(action.payload["errorMsg"]);
+            }
           }
          
           return [new AppointmentActions.UpdateMessageInfo(errorMessage)]

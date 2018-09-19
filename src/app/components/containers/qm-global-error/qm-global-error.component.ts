@@ -31,7 +31,7 @@ export class QmGlobalErrorComponent implements OnInit, OnDestroy {
       this.globalError = err;
     });
 
-    const globalWarningSubscription = this.globalNotifySelectors.error$.subscribe((war) => {
+    const globalWarningSubscription = this.globalNotifySelectors.warning$.subscribe((war) => {
       this.globalWarning = war;
     });
 

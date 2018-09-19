@@ -18,7 +18,8 @@ export class Recycle {
     private queueDispatchers:QueueDispatchers,
     private servicePoolDispatcher:ServicePointPoolDispatchers,
     private staffPoolDispatchers:StaffPoolDispatchers,
-    private nativeApiDispatchers: NativeApiDispatchers
+    private nativeApiDispatchers: NativeApiDispatchers,
+    private reserveDispatchers:ReserveDispatchers
   ) {
   
   }
@@ -31,6 +32,7 @@ export class Recycle {
       this.customerDispatcher.resetCurrentCustomer();
       this.customerDispatcher.resetTempCustomer();
       this.timeSlotDispatchers.resetTimeslots();
+      this.timeSlotDispatchers.deselectTimeslot();
       this.serviceDispatcher.setSelectedServices([]);
       this.arriveAppointmentDispatcher.deselectAppointment();
       this.expireTimer.hideReservationExpiryTimer();
@@ -42,6 +44,7 @@ export class Recycle {
       this.servicePoolDispatcher.resetServicePointPool();
       this.staffPoolDispatchers.resetStaffPool();
       this.nativeApiDispatchers.resetQRCodeInfo();
+      // this.reserveDispatchers.unreserveAppointment();
   }
 
   removeAppCache(){

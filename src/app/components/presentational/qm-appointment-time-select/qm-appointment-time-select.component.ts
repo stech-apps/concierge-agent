@@ -184,6 +184,11 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       services: this.selectedServices
     };
 
+    
+    
+    if(this.selectedTime){
+      this.timeSlotDispatchers.deselectTimeslot();
+    }
     this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
     this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
 
@@ -208,6 +213,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   changeCustomerCount(step) {
+    this.timeSlotDispatchers.deselectTimeslot();
     if ((this.noOfCustomers + step) == 0) {
       return;
     }

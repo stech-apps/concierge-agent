@@ -56,7 +56,7 @@ export class FetchReservableDatesSuccess implements Action {
 
 export class UnreserveAppointment implements Action {
   readonly type = UNRESERVE_APPOINTMENT;
-  constructor(public payload: IAppointment) {}
+  constructor() {}
 }
 
 export class UnreserveAppointmentFail implements Action {

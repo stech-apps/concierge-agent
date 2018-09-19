@@ -22,3 +22,9 @@
   cursor: move;
   left: 0.5rem;
 }
+
+.qm-current-customer-text{
+  white-space: nowrap; text-overflow:ellipsis; max-width:20vw;
+  overflow: hidden;
+  outline-style:none;
+}

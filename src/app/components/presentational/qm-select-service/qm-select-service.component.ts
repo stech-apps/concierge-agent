@@ -257,6 +257,7 @@ export class QmSelectServiceComponent implements OnInit {
     this.selectedServiceList.push(selectedService);
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.timeSlotDispatchers.resetTimeslots();
+      this.timeSlotDispatchers.deselectTimeslot();
       this.reserveDispatcher.resetReserveAppointment();
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
       this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
@@ -289,6 +290,7 @@ export class QmSelectServiceComponent implements OnInit {
       );
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
       this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
+      this.timeSlotDispatchers.deselectTimeslot();
     }
     else{
       this.selectedServiceList = this.selectedServiceList.filter(

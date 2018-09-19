@@ -99,6 +99,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   buttonText: string;
   noteText$: Observable<string>;
   noteTextStr: string = '';
+  loading :boolean =false;
 
   selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
   private selectedAppointment: IAppointment;
@@ -527,11 +528,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateVisit() {
+    this.loading = true;
     this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, this.selectedServices, this.noteTextStr, this.selectedVIPLevel, this.selectedCustomer, this.customerSms, this.ticketSelected, this.tempCustomer, this.getNotificationType()).subscribe((result) => {
+      this.loading = false;
       this.showSuccessMessage(result);
       this.saveFrequentService();
       this.onFlowExit.emit();
     }, error => {
+      this.loading = false;
       this.showErrorMessage(error);
       this.saveFrequentService();
       this.onFlowExit.emit();

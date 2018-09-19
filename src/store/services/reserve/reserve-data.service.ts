@@ -39,6 +39,12 @@ export class ReserveDataService {
             .pipe(catchError(this.errorHandler.handleError()));
   }
 
+  removerreserveAppointment(reservationPublicId: string) {
+    return this.http
+            .delete<IAppointment>(`${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
+            .pipe(catchError(this.errorHandler.handleError()));
+  }
+
   fetchReservableDates(bookingInformation: IBookingInformation): any {
     return this.http
             .get<IAppointment>(

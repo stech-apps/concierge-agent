@@ -7,6 +7,7 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
+import { ReserveDispatchers } from '../../../../store';
 
 @Component({
   selector: 'qm-flow',
@@ -22,6 +23,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     private qmModalService: QmModalService,
     private recycleService: Recycle,
     private queueService: QueueService,
+    private reserveDispatchers:ReserveDispatchers
   ) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -75,7 +77,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
-    if (result) {
+
+   if (result) {
       this.exitFlow = true;
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();

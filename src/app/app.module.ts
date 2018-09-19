@@ -154,6 +154,7 @@ import { FilterQueuePipe } from './components/presentational/qm-trasfer-to-queue
 import { FilterServicePointsPipe } from './components/presentational/qm-transfer-to-service-pool/filter-service-points.pipe';
 import { FilterStaffPoolPipe } from './components/presentational/qm-transfer-to-staff-pool/filter-staff-pool.pipe';
 import { SortAppointmentsPipe } from './components/presentational/qm-identify-appointment/sort-appointments.pipe';
+import { QmLoadingModalComponent } from './components/containers/qm-loading-modal/qm-loading-modal.component';
 
 
 
@@ -242,6 +243,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FilterServicePointsPipe,
     FilterStaffPoolPipe,
     SortAppointmentsPipe,
+    QmLoadingModalComponent,
  
    
   ],

@@ -17,7 +17,9 @@ import {
   UserSelectors,
   LicenseInfoSelectors,
   ServicePointSelectors,
-  BranchSelectors
+  BranchSelectors,
+  AppointmentDispatchers,
+  ReserveDispatchers
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -70,7 +72,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private licenseInfoSelectors: LicenseInfoSelectors,
     private nativeApiService: NativeApiService,
     private branchSelectors: BranchSelectors,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private reserveDispatchers:ReserveDispatchers
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -109,6 +112,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(event: Event) {
+    this.reserveDispatchers.unreserveAppointment();
     event.preventDefault();
     this.logoutService.logout(false);
   }

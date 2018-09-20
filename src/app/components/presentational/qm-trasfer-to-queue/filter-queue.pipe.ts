@@ -13,7 +13,7 @@ export class FilterQueuePipe implements PipeTransform {
     if(!queues || !filterText) {
       return queues;
     }else{
-      let queueList = queues.filter(b => b.queue.toUpperCase().includes(filterText.toUpperCase()));
+      let queueList = queues.filter(b => b.name.toUpperCase().includes(filterText.toUpperCase()));
       return queueList
     }
  

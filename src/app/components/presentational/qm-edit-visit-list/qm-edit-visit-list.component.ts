@@ -98,7 +98,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       if (queue) {
         this.selectedQueueId = queue.id;
-        this.selectedQueueName = queue.queue;
+        this.selectedQueueName = queue.name;
         if (this.selectedbranchId && this.selectedQueueId) {
           this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
         }

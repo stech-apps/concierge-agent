@@ -75,8 +75,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
       this.queueCollection = this.queueCollection.sort((a, b) => {
         if(type=="QUEUE" || type == "MAXWAITTIME"|| type== "ESTWAITTIME"){
             if(type=="QUEUE"){
-              var nameA = a.queue.toUpperCase(); // ignore upper and lowercase
-              var nameB = b.queue.toUpperCase(); // ignore upper and lowercase
+              var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+              var nameB = b.name.toUpperCase(); // ignore upper and lowercase
              } else if (type == "MAXWAITTIME"){
               var nameA = a.max_w_time=="-"? "0":a.max_w_time;
               var nameB = b.max_w_time=="-"? "0":b.max_w_time;
@@ -94,8 +94,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
               // names must be equal
               return 0;
         } else if(type=="WAITCUSTOMERS"){
-                var NumA = a.customers;
-                var NumB = b.customers; 
+                var NumA = a.customersWaiting;
+                var NumB = b.customersWaiting; 
               if ((NumA < NumB && this.sortAscending) || (NumA > NumB && !this.sortAscending) ) {
                 return -1;
               }

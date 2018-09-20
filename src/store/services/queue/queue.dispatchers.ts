@@ -16,7 +16,7 @@ export class QueueDispatchers {
     this.store.dispatch(new QueueActions.FetchQueueInfo(branchId));
   }
 
-  updateQueueInfo(queue: [Queue]) {
+  updateQueueInfo(queue: Queue) {
     this.store.dispatch(new QueueActions.UpdateQueueInfo(queue));
   }
   

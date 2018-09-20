@@ -109,9 +109,9 @@ export class QEventsHelper {
   }
 
 buildVisitList(eventData){
-    var processString = "[" + eventData.queueList.slice(1, -1).replace(/\[/g, "{").replace(/\]/g, "}") + "]";
-    var queueList = JSON.parse(processString) as [Queue];
-    this.queueDispatchers.updateQueueInfo(queueList);
+    var processString = eventData.queue.replace(/\[/g, "{").replace(/\]/g, "}");
+    var queue = JSON.parse(processString) as Queue;
+    this.queueDispatchers.updateQueueInfo(queue);
 }
 
 notifyPrinterIssue(errorMsg: string){

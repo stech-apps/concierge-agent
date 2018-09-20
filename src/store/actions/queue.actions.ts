@@ -34,7 +34,7 @@ export class FetchQueueInfoSuccess implements Action {
 
 export class UpdateQueueInfo implements Action {
   readonly type = UPDATE_QUEUE_INFO;
-  constructor(public payload: [Queue]) {}
+  constructor(public payload: Queue) {}
 }
 
 export class FetchSelectedVisitInfo implements Action {

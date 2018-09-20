@@ -48,7 +48,7 @@ export function reducer(
     case QueueActions.UPDATE_QUEUE_INFO: {
       return {
         ...state,
-        allQueueSummary: processQueueInfo(action.payload),
+        allQueueSummary: processQueueInfo(updateQueueList(state.allQueueSummary, action.payload)),
         loading: true,
         error: null
       };
@@ -149,6 +149,14 @@ export function reducer(
     return bounds.lower + "-" + bounds.upper;
 }
 
+function updateQueueList(queueList: any, queueInfo : Queue){
+  var queue = queueList.queues.find(queue => queue.id === queueInfo.id);
+  let index = queueList.queues.indexOf(queue);
+  queue.customersWaiting = queueInfo.customersWaiting;
+  queue.waitingTime = queueInfo.waitingTime;
+  queueList.queues[index] = queue;
+  return queueList.queues;
+}
 
   function processQueueInfo(queueInfo) {
     var data = { queues: null, totalCustomersWaiting: null, maxWaitingTime: null }
@@ -161,8 +169,8 @@ export function reducer(
       est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
         Math.round(queueInfo[i].estimatedWaitingTime / 60));
       queueInformation.push({
-        queue: queueInfo[i].name,
-        customers: queueInfo[i].customersWaiting,
+        name: queueInfo[i].name,
+        customersWaiting: queueInfo[i].customersWaiting,
         max_w_time: Math.round(queueInfo[i].waitingTime / 60) == 0 ? "-" : Math.round(queueInfo[i].waitingTime / 60),
         est_w_time: est_w_time,
         queueType:queueInfo[i].queueType,

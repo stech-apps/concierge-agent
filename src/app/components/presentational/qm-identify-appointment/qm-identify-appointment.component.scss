@@ -35,6 +35,11 @@
       top: 0;
       left: 0px;
       height: 42px;
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width:100px;
+      width: 80%;
       &:focus {
         outline: none;
       }
@@ -125,6 +130,9 @@
     }
     &__col-10 {
       width: 10%;
+    }
+    &__col-15 {
+      width: 15%;
     }
     &__col-20 {
       width: 20%;
@@ -356,6 +364,9 @@
     input {
       padding-left: 0;
       padding-right: 1rem;
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .qm-customer-item-name__value,
@@ -526,3 +537,11 @@ th {
     }
   }
 } 
+
+.qm-details-text-feild{
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width:80%;
+  
+}

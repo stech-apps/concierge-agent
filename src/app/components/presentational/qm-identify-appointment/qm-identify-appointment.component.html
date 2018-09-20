@@ -249,7 +249,7 @@
 
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
     <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText"
-      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" id="searchAppointmentField"/>
+      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" id="searchAppointmentField" class="qm-details-text-feild"/>
     <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
 
     <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="selectedSearchIcon === 'duration'">
@@ -345,11 +345,11 @@
         <tr [ngClass]="{'qm-sort-desc' : isDescending}">
           <th class="qm-identify-appointment__customer-table__col-5"></th>
           <th (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" [ngClass]="{'qm-sort-active' : sortColumn === 'start' || sortColumn === 'startTime' }" class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-10">{{ 'date' | translate }}</th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-10">{{ 'id' | translate }}</th>
+          <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-15">{{ 'date' | translate }}</th>
+          <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-5">{{ 'id' | translate }}</th>
           <th (click)="sortAppointments('firstName')" [ngClass]="{'qm-sort-active' : sortColumn === 'firstName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
           <th (click)="sortAppointments('lastName')" [ngClass]="{'qm-sort-active' : sortColumn === 'lastName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>
-          <th (click)="sortAppointments('branch')" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-sort-active' : sortColumn === 'branch'}" class="qm-identify-appointment__customer-table__col-20">{{ 'branch' | translate }}</th>
+          <th (click)="sortAppointments('branch')" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-sort-active' : sortColumn === 'branch'}" class="qm-identify-appointment__customer-table__col-15">{{ 'branch' | translate }}</th>
           <th (click)="sortAppointments('services')" [ngClass]="{'qm-sort-active' : sortColumn === 'services'}" class="qm-identify-appointment__customer-table__col-20">{{ 'service' | translate }}</th>
           <th class="qm-identify-appointment__customer-table__col-5"></th>
         </tr>
@@ -362,11 +362,11 @@
           <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
             <td class="qm-identify-appointment__customer-table__col-5"></td>
             <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime || app.start)}}</td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{getDate(app.endTime || app.end)}}</td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
+            <td class="qm-identify-appointment__customer-table__col-15">{{getDate(app.endTime || app.end)}}</td>
+            <td class="qm-identify-appointment__customer-table__col-5">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
             <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
             <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20" *ngIf="useCalendarEndpoint">{{app.branch?.name}}</td>
+            <td class="qm-identify-appointment__customer-table__col-15" *ngIf="useCalendarEndpoint">{{app.branch?.name}}</td>
             <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
             <td class="qm-identify-appointment__customer-table__col-5"></td>
           </tr>

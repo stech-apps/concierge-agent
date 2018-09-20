@@ -543,14 +543,17 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAriveAppointment() {
+    this.loading = true;
     var aditionalList = this.selectedServices.filter(val => {
       return val.isBind === false || val.isBind === undefined
     })
     this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, aditionalList, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
+      this.loading = false;
       this.showSuccessMessage(result);
       this.saveFrequentService();
       this.onFlowExit.emit();
     }, error => {
+      this.loading = false; 
       this.showErrorMessage(error);
       this.saveFrequentService();
       this.onFlowExit.emit();

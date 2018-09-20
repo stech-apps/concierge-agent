@@ -41,6 +41,7 @@ qm-flow-panel-header  {
         display: flex;
         justify-content: flex-end;
         margin-right:  $standard-margin;
+          
     }
 
     &-back {
@@ -50,4 +51,8 @@ qm-flow-panel-header  {
         margin-right: $standard-margin;
         cursor: pointer;
     }
+}
+.qm-flow-panel-result{
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

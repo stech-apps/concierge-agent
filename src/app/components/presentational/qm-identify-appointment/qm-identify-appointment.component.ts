@@ -103,6 +103,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isMultiBranchEnable = false;
   branchList: IBranch[];
   desktopQRCodeListnerTimer : any;
+  isQRReaderOpen = false;
+  isQRReaderClose = false;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',
@@ -316,14 +318,18 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       if(value === true){
         this.isQrCodeLoaded = false;
         this.qrCodeContent = null;
+        this.isQRReaderOpen = true;
+        this.isQRReaderClose = false;
         this.qrCodeListner();
         if(!this.nativeApi.isNativeBrowser()){
           this.checkDesktopQRReaderValue();
         }
       }
       else{
-        this.removeQRCodeListner();
-        this.clearInput();
+        if(!this.nativeApi.isNativeBrowser()){
+          this.removeQRCodeListner();
+        }
+        this.isQRReaderClose = true;
       }
     });
     this.subscriptions.add(qrCodeScannerSubscription);
@@ -346,6 +352,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         catch(err){
           this.showQRCodeError();
         }
+      }
+      if(this.isQRReaderOpen && this.isQRReaderClose){
+        this.isQRReaderOpen = false;
+        this.isQRReaderClose = false;
+        this.clearInput();
+        this.removeQRCodeListner();
       }
     }, 1000);
   }

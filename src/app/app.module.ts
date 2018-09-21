@@ -15,8 +15,8 @@ import { LicenseAuthGuard } from "src/auth-guards/license-auth-guard";
 
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { NgModule,ApplicationRef, ErrorHandler } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -158,6 +158,8 @@ import { FilterStaffPoolPipe } from './components/presentational/qm-transfer-to-
 import { SortAppointmentsPipe } from './components/presentational/qm-identify-appointment/sort-appointments.pipe';
 import { QmLoadingModalComponent } from './components/containers/qm-loading-modal/qm-loading-modal.component';
 import { QmGlobalErrorComponent } from './components/containers/qm-global-error/qm-global-error.component';
+import { ErrorsHandler } from '../util/errors-handler';
+
 
 
 // Global options for Toastr
@@ -322,7 +324,11 @@ export class MyHammerConfig extends HammerGestureConfig  {
       useClass: MyHammerConfig 
     },
     QmCheckoutViewConfirmModalService,
-    QmNotesModalService
+    QmNotesModalService,
+    {
+      provide: ErrorHandler,
+      useClass: ErrorsHandler,
+    }
   ],
   bootstrap: [AppComponent]
 })

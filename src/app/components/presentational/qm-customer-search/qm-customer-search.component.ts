@@ -56,7 +56,7 @@ export class QmCustomerSearchComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.multiBranchEnabled = params.mltyBrnch;
-        console.log(params);
+       // console.log(params);
       }
      
     });
@@ -122,7 +122,7 @@ export class QmCustomerSearchComponent implements OnInit {
   editCustomer(customer:ICustomer){
     this.confirmBox.open('update');
     this.CustomerDispatchers.editCustomers(customer);
-    console.log(customer);
+    //console.log(customer);
   }
 
   showLoading() {

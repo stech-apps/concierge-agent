@@ -2,11 +2,12 @@ import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from './toast.service';
 import { Injectable } from '@angular/core';
-import { Observable, throwError, interval, of } from 'rxjs';
+import { Observable, throwError, interval, of, empty } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DataServiceError } from 'src/store/services/data.service';
 import { GlobalNotifyDispatchers } from 'src/store/services/global-notify';
 import { retryWhen, flatMap } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable()
 export class GlobalErrorHandler {
@@ -37,9 +38,24 @@ export class GlobalErrorHandler {
     handleError<T>(requestData?: T) {
         return (res: HttpErrorResponse) => {
             const error = new DataServiceError(res, requestData);
-            console.error(error);
-            //this.handleGlobalNotifications(error);
-            return throwError(error);
+
+            /*all the request errors which need to be handled in their respective components should be created with a pipe
+             to handle error method with pasing "true" to requestdata.*/
+
+            if ((<boolean><any>requestData) === true) {
+                //transfer error to the component to handle
+                console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error transferred');
+                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + error);
+                return throwError(error);
+            } else {
+                //error should be handled in here
+                console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error handled in global handler');
+                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + error);
+                //this.toastService.errorToast(`${error.errorMsg}`);
+                return empty();
+            }
+
+
         };
     }
 
@@ -60,7 +76,7 @@ export class GlobalErrorHandler {
                     message: messages['no_network_msg']
                 });
             });
-
         }
     }
+
 }

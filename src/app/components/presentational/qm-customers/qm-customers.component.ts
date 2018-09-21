@@ -25,7 +25,7 @@ export class QmCustomersComponent implements OnInit {
   }
 
   onLongPress(){
-    console.log('long press');
+   // console.log('long press');
   }
 
 }

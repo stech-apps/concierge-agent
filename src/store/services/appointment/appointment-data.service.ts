@@ -16,7 +16,7 @@ export class AppointmentDataService {
   getAppointments(publicId: string): Observable<IAppointmentResponse> {
     return this.http
       .get<IAppointmentResponse>(`${calendarPublicEndpoint}/customers/${publicId}/appointments`)
-      .pipe(catchError(this.errorHandler.handleError()));
+      .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   searchAppointments(appointmentSearch: any): Observable<IAppointmentResponse> {
@@ -40,12 +40,12 @@ export class AppointmentDataService {
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)
-      .pipe((catchError)(this.errorHandler.handleError()));
+      .pipe((catchError)(this.errorHandler.handleError(true)));
   }
 
   rescheduleAppointment(appointment: IAppointment) {
     let url = `${calendarPublicEndpoint}/appointments/${appointment.publicId}/reschedule?end=${appointment.end}&start=${appointment.start}`;
-    return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError()));
+      return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError(true)));
   }
 
 
@@ -73,13 +73,13 @@ export class AppointmentDataService {
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)
-      .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError()));
+      .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError(true)));
   }
 
   deleteAppointment(appointment: IAppointment) {
     return this.http
       .delete(`${calendarPublicEndpoint}/appointments/${appointment.publicId}`)
-      .pipe(catchError(this.errorHandler.handleError()));
+      .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   retryForRobustness(maxRetry: number = 3, delayMs: number = 2000) {

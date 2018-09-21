@@ -30,13 +30,13 @@ export class ReserveDataService {
               + `/times/${bookingInformation.time}/reserve;`
               + `numberOfCustomers=${bookingInformation.numberOfCustomers}`, appointment
             )
-            .pipe(catchError(this.errorHandler.handleError({bookingInformation: bookingInformation, appointment: appointment})));
+            .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   unreserveAppointment(reservationPublicId: string) {
     return this.http
             .delete<IAppointment>(`${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
-            .pipe(catchError(this.errorHandler.handleError()));
+            .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   removerreserveAppointment(reservationPublicId: string) {
@@ -54,6 +54,6 @@ export class ReserveDataService {
               + `${bookingInformation.serviceQuery};` 
               + `numberOfCustomers=${bookingInformation.numberOfCustomers}`
             )
-            .pipe(catchError(this.errorHandler.handleError()));
+            .pipe(catchError(this.errorHandler.handleError(true)));
   }
 }

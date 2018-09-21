@@ -7,6 +7,7 @@ import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
 import * as moment from 'moment-timezone';
 import { ICalendarBranchCentralResponse } from '../../../models/ICalendarBranchCentralResponse';
+import { catchError } from 'rxjs/operators';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -33,7 +34,9 @@ export class CalendarService implements OnDestroy {
           "customers" : [this.buildCustomerObject(customer)], 
           "custom" : this.buildCustomObject(email, sms, notificationType) }
     return this.http
-     .post(`${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body);
+     .post(`${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
 
   bookAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
@@ -44,7 +47,9 @@ export class CalendarService implements OnDestroy {
         "customers" : [this.buildCustomerObject(customer)], 
         "custom" : this.buildCustomObject(email, sms, notificationType) }
   return this.http
-   .post(`${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body);
+   .post(`${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body).pipe(
+    catchError(this.errorHandler.handleError(true))
+  );
 }
 
 private buildDate(appointment: IAppointment){
@@ -119,6 +124,8 @@ private buildTime(appointment: IAppointment){
   getBranchWithPublicId(hostAddress:string, branchId:number){
   return this.http
   .get<ICalendarBranchCentralResponse>(`${hostAddress}${calendarEndpoint}/branches/${branchId}`,
-  {withCredentials:true});
+  {withCredentials:true}).pipe(
+    catchError(this.errorHandler.handleError(true))
+  );
 }
 }

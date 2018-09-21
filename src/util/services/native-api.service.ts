@@ -142,7 +142,19 @@ export class NativeApiService {
     }
   }
 
-  openQRScanner() {
+
+  setLogMessage (msg){
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        var date = new Date().toString();
+        var fullMsg = date + " " + msg;
+        try {
+            webkit.messageHandlers.setLogMessage.postMessage(fullMsg);
+        } catch(err) {
+            console.log("The native context does not exist yet", {class:"nativeApi" ,func:"setLogMessage", exception: err});
+        }
+    }
+}
+  openQRScanner () {
     this.nativeApiDispatcher.openQRCodeScanner();
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
       //support iOS 8 and above version

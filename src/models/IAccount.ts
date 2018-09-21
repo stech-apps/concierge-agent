@@ -8,4 +8,5 @@ export interface IAccount {
   direction: string;
   status: string;
   fullName: string;
+  permissions?: string[];
 }

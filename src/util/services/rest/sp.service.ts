@@ -91,7 +91,7 @@ export class SPService implements OnDestroy {
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/queues/${ToQueue.id}/visits`, requestBody)
       .pipe(
-        catchError(this.errorHandler.handleError())
+        catchError(this.errorHandler.handleError(true))
       );
   }
 
@@ -104,7 +104,7 @@ export class SPService implements OnDestroy {
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/servicePoints/${ToServicePoint.id}/visits`, requestBody)
       .pipe(
-        catchError(this.errorHandler.handleError())
+        catchError(this.errorHandler.handleError(true))
       );
   }
 
@@ -117,7 +117,7 @@ export class SPService implements OnDestroy {
     return this.http
       .put(`${servicePoint}/branches/${branch.id}/users/${ToUserID}/visits`, requestBody)
       .pipe(
-        catchError(this.errorHandler.handleError())
+        catchError(this.errorHandler.handleError(true))
       );
   }
 
@@ -128,7 +128,9 @@ export class SPService implements OnDestroy {
       "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType)
     }
     return this.http
-      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body);
+      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
 
   arriveAppointment(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, sms: string, isTicketPrint: boolean, notificationType: NOTIFICATION_TYPE, appointment: IAppointment) {
@@ -139,7 +141,9 @@ export class SPService implements OnDestroy {
       "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, null, notificationType)
     }
     return this.http
-      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body);
+      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
 
   private buildParametersObject(sms: string, isTicketPrint: boolean, notes: string, vipLevel: VIP_LEVEL, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE) {
@@ -189,13 +193,17 @@ export class SPService implements OnDestroy {
   cherryPickVisit(branchId: number, spId: number, visitId: number) {
 
     return this.http
-      .post(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}/callAndEnd`, null);
+      .post(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}/callAndEnd`, null).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
 
   deleteVisit(branchId: number, spId: number, visitId: number) {
 
     return this.http
-      .delete(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}`);
+      .delete(`${servicePoint}/branches/${branchId}/servicePoints/${spId}/visits/${visitId}`).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
 
 
@@ -204,7 +212,9 @@ export class SPService implements OnDestroy {
       .get<Visit>(`${servicePoint}/branches/${branchId}/visits/${visitid}`)
       .pipe(map((data) => {
         return this.processVisitInfo(data);
-      }));
+      })).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
   }
   private formatTimeHHMM(totalSeconds) {
     var hours = Math.floor(totalSeconds / 3600);

@@ -59,7 +59,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       this.subscriptions.add(userSubscription);
 
       this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
-      console.log(this.isEnableUseDefault);
+     // console.log(this.isEnableUseDefault);
 
       
       const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
@@ -244,7 +244,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   // Temp function
   goToCustomer(){
    this.router.navigate(['customers']);
-    console.log(this.branches)
+   // console.log(this.branches)
   }
 
 

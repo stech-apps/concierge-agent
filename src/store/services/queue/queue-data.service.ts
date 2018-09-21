@@ -21,12 +21,12 @@ export class QueueDataService {
   getQueueInformation(branchId: number): Observable<any> {
     return this.http
       .get<IAccount>(`${managementEndpoint}/branches/${branchId}/queues`)
-      .pipe(catchError(this.errorHandler.handleError()));
+      .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   getSelectedVist(branchId: number, searchText:string): Observable<any> {
     return this.http
       .get<Visit>(`${servicePoint}/branches/${branchId}/visits;ticketId=${searchText}`)
-      .pipe(catchError(this.errorHandler.handleError()));
+      .pipe(catchError(this.errorHandler.handleError(true)));
   }
 }

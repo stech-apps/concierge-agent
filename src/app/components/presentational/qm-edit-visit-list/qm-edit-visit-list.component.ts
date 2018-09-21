@@ -180,7 +180,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
         }, error => {
-          console.log(error);
+         // console.log(error);
           this.translateService.get('request_fail').subscribe(v => {
             this.toastService.infoToast(v);
           });
@@ -431,7 +431,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
                 this.router.navigate(["/home"]);
               });
             }, error => {
-              console.log(error);
+             // console.log(error);
               const err = new DataServiceError(error, null);
               if (error.status == ERROR_STATUS.NOT_FOUND) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
@@ -473,7 +473,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
               this.router.navigate(["/home"]);
             });
           }, error => {
-            console.log(error);
+           // console.log(error);
             const err = new DataServiceError(error, null);
             if (error.status == ERROR_STATUS.NOT_FOUND) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {

@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     );
     this.subscriptions.add(translateSubscription);
-    console.log('setting toast container', this.toastContainer);
+    //console.log('setting toast container', this.toastContainer);
     this.toastService.setToastContainer(this.toastContainer);
 
     this.systemInfoSelectors.systemInfoHost$.subscribe(host => {
@@ -58,14 +58,51 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     )
-    
+
+    this.customizeConsole();
+
+    this.systemInfoSelectors.systemInfo$.subscribe(
+      systemInfo => {
+        if (systemInfo && systemInfo.productName) {
+          console.log("Orchestra System Information – \n" + JSON.stringify(systemInfo));
+        }
+      }
+    );
+
+    this.userSelectors.user$.subscribe(
+      user => {
+        if (user && user.id) {
+          console.log("User –  \n" + JSON.stringify(user));
+        }
+      }
+    );
+
+  }
+
+  customizeConsole() {
+    if (window.console && console.log) {
+      var defaultConsole = console.log;
+      var context = this;
+      console.log = function () {
+
+        if (typeof arguments[1] === 'object' && arguments[1].class && arguments[1].func && arguments[1].exception) {
+
+          arguments[0] = arguments[1].class + ", " + arguments[1].func + ", " + arguments[1].exception.stack;
+        } else if (typeof arguments[1] === 'object' && arguments[1].class && arguments[1].func) {
+          arguments[0] = arguments[1].class + ", " + arguments[1].func + ", " + arguments[0];
+        }
+        defaultConsole.apply(this, arguments);
+        context.nativeApiService.setLogMessage(arguments[0]);
+
+      }
+    }
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
-  
-  
-  }
+
+
+}
 

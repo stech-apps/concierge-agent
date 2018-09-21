@@ -1,0 +1,78 @@
+@import '../../../../styles/base/_component-manifest.scss';
+.qm-central-login {
+
+  &__content {
+    font-size: 16px !important;
+    font-family: "Roboto", sans-serif;
+    background: -webkit-gradient(linear, left top, left bottom, from(#3E344C), to(#455C87));
+    background: linear-gradient(180deg, #3E344C 0%, #455C87 100%);
+    height: 100%;
+    min-height: 560px;
+  }
+
+  &__form-content {
+    position: relative;
+    max-width: 320px;
+    width: 100%;
+    margin: auto;
+  }
+
+  &__form {
+    box-sizing: border-box;
+    margin-top: 0em;
+  }
+
+  &__form-field {
+    margin-bottom: 1.25rem;
+  }
+  
+  &__form-label {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: #FFF;
+    margin-bottom: 0.125rem;
+    letter-spacing: 1px;
+  }
+
+  &__input {
+    width: 100%;
+    color: rgba(0, 0, 0, 0.82);
+    padding: 0.5625rem 0.75rem;
+    line-height: 1;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  &__button {
+    font-size: 1.125rem;
+    width: 100%;
+    background: #A9023B;
+    border: 0;
+    color: #FFF;
+    padding: 0.625rem 2.5rem;
+    margin-top: 1.25rem;
+    cursor: pointer;
+
+    &__rounded {
+      border-radius: 22px;
+    }
+  }
+
+  &__button-label {
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: .8rem;
+    font-family: Montserrat-Light;
+    margin-top: 10%;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+  }
+}

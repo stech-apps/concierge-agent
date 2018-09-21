@@ -1,0 +1,29 @@
+<qm-flow>
+<div class="qm-central-login__content">
+  <div class="qm-central-login__form-content">
+      <form [formGroup]="formLogin" class="qm-central-login__form">
+          <div class="qm-central-login__form-field">
+            <label class="qm-central-login__form-label">{{ 'userName' | translate}}</label>
+            <input type="text"
+                   name="userName"
+                   class="qm-central-login__input"
+                   maxlength="50"
+                   disabled
+                   required
+                   formControlName="userName" />
+          </div>
+          <div class="qm-central-login__form-field">
+              <label class="qm-central-login__form-label">{{ 'password' | translate}}</label>
+              <input type="password"
+                     name="password"
+                     class="qm-central-login__input"
+                     maxlength="50"
+                     required
+                     formControlName="password" />
+          </div>
+        <button type="button" (click)="onLogin()" class="qm-central-login__button qm-central-login__button__rounded">{{ 'login' | translate}}</button>
+        <button type="button" (click)="onCancel()" class="qm-central-login__button-label">{{ 'cancel' | translate}}</button>
+    </form>
+  </div>
+</div>
+</qm-flow>

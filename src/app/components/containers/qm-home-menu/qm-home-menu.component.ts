@@ -64,8 +64,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.userDirection$ = this.userSelectors.userDirection$;
 
     if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
-      //insert hostaddress if using QAgent(OnHold)
-      this.calendarBranchDispatcher.fetchCalendarBranches('');
+      this.calendarBranchDispatcher.fetchCalendarBranches();
     }
 
   }
@@ -137,6 +136,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     });
   }
 
+  // handleMenuItemClick(route){
+  //   this.router.navigate(['home/central-login']);
+  // }
+
   handleMenuItemClick(route) {
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     // initial check for central connectivity
@@ -148,7 +151,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
       if (calendarBranchId && calendarBranchId > 0) {
         //insert hostaddress if using QAgent(OnHold)
-        this.calendarService.getBranchWithPublicId('', calendarBranchId).subscribe(
+        this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
           value => {
             if (value && value.branch.publicId) {
               this.handleUttRequirements(route);

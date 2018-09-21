@@ -37,7 +37,9 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     const firstPanel = this.flowPanels.toArray()[0];
-    firstPanel.isShowExitFlow = true;
+    if(firstPanel){
+      firstPanel.isShowExitFlow = true;
+    }
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {

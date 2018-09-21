@@ -14,9 +14,9 @@ import { ICalendarBranchResponse } from '../../../models/ICalendarBranchResponse
 export class CalendarBranchDataService {
   constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
 
-  getCalendarBranches(hostAddress:string): Observable<ICalendarBranchResponse> {
+  getCalendarBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranchResponse>(`${hostAddress}${calendarEndpoint}/branches/`,{withCredentials:true})
+      .get<ICalendarBranchResponse>(`${calendarEndpoint}/branches/`)
       .pipe(catchError(this.errorHandler.handleError()));
   }
 

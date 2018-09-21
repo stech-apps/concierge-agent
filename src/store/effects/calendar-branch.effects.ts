@@ -22,7 +22,7 @@ export class CalendarBranchEffects {
       .pipe(
         switchMap((action: AllActions.FetchCalendarBranches) =>
           toAction(
-            this.branchDataService.getCalendarBranches(action.hostAddress),
+            this.branchDataService.getCalendarBranches(),
             AllActions.FetchCalendarBranchesSuccess,
             AllActions.FetchCalendarBranchesFail
           )

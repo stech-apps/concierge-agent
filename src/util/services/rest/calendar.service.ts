@@ -121,10 +121,9 @@ private buildTime(appointment: IAppointment){
     return customerInfo;
   }
 
-  getBranchWithPublicId(hostAddress:string, branchId:number){
+  getBranchWithPublicId(branchId:number){
   return this.http
-  .get<ICalendarBranchCentralResponse>(`${hostAddress}${calendarEndpoint}/branches/${branchId}`,
-  {withCredentials:true}).pipe(
+  .get<ICalendarBranchCentralResponse>(`${calendarEndpoint}/branches/${branchId}`, {withCredentials:true}).pipe(
     catchError(this.errorHandler.handleError(true))
   );
 }

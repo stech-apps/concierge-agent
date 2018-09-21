@@ -9,8 +9,8 @@ import * as CalendarBranchActions from '../../actions';
 export class CalendarBranchDispatchers {
   constructor(private store: Store<IAppState>) {}
 
-  fetchCalendarBranches(hostAddress:string) {
-    this.store.dispatch(new CalendarBranchActions.FetchCalendarBranches(hostAddress));
+  fetchCalendarBranches() {
+    this.store.dispatch(new CalendarBranchActions.FetchCalendarBranches());
   }
 
   fetchPublicCalendarBranches() {

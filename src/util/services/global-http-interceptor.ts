@@ -23,9 +23,13 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private native_ping_period = 5000;
     private native_max_ping_count_for_message = 2;
     private lastRequestAction = 'NONE';
+    private isPingStarted = false;
 
     constructor(private globalNotifyDispatchers: GlobalNotifyDispatchers, private serviceState: ServiceStateService,
         private translateService: TranslateService, private nativeApiService: NativeApiService) {
+
+            window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
+            window["qmGlobalHttpInterceptor"] = this;
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -162,7 +166,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         }
     }
 
-
     isStringInArray(string: any, array: any) {
         if (!string && !array)
             return;
@@ -182,4 +185,27 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
         return { exists: isPresent, count: numberOfStringsPresent };
     }
+
+    resetState() {
+        this.globalNotifyDispatchers.hideNotifications();
+        this.serviceState.setActive(false);
+    }
+
+    retryFailedGetRequests() {
+        
+    }
+
+    notifyNativePingStatus(val) {
+        this.isPingStarted = val;
+    }
 }
+
+window["removeWebModels"] = () => { 
+    window["qmGlobalHttpInterceptor"].resetState();
+};
+
+window["onPingSuccess"] = () => { 
+    const interceptor =  window["qmGlobalHttpInterceptor"];
+    interceptor.notifyNativePingStatus(false);
+    interceptor.retryFailedGetRequests();  
+};

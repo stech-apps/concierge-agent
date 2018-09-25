@@ -178,7 +178,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
   }
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -313,12 +312,12 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FormGroupDirective,
     BookingHelperService,
     LocalStorage,
-    NativeApiSupportService/* ,
+    NativeApiSupportService ,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: QmGlobalHttpInterceptor,
       multi: true,
-    } */,
+    } ,
     { 
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 

@@ -189,8 +189,11 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.qmModalService.openForTransKeys('', 'confirm_reschedule', 'yes', 'no', (result) => {
         if (result) {
           let rescheduleAppointment = this.editAppointment;
+          const originalAppointmentStartTime = this.editAppointment.start;
           rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.format('YYYY-MM-DD')}T${this.rescheduleTime}`;
-          let endTime = moment(rescheduleAppointment.start).add(5, 'minutes');
+
+          const timeDiff = moment.duration(moment(this.editAppointment.end).diff(originalAppointmentStartTime));
+          let endTime = moment(rescheduleAppointment.start).add(timeDiff.asMinutes(), 'minutes');
           rescheduleAppointment.end = `${endTime.format('YYYY-MM-DD')}T${endTime.format('HH:mm')}`;
           this.appointmentDispatchers.rescheduleAppointment(rescheduleAppointment);
           this.onFlowExit.next(true);

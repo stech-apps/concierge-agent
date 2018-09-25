@@ -36,7 +36,7 @@
               <div class="qm-queue-list-header-item-label"> {{ 'queue_view_max_wait_time_label' | translate}} </div>
               <div><i  *ngIf="sortedBy =='MaxWaitTime'  && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
           </div>
-          <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyEstimatedWaitTime()">
+          <div class="qm-queue-list-header-item qm-col qm-flex-grid" *ngIf="showEstWaitTime" (click)="onSortClickbyEstimatedWaitTime()">
               <div>
                 <i class="clock-icon" aria-hidden="true"></i>
               </div>
@@ -56,7 +56,7 @@
                 <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
                 <div> {{q.max_w_time }}</div>
               </div>
-              <div class="qm-col">{{ q.esnpmt_w_time || '-' }}</div>
+              <div class="qm-col" *ngIf="showEstWaitTime">{{ q.esnpmt_w_time || '-' }}</div>
           </div>
           <div class="qm-flex-grid qm-queue-dropdown" *ngIf="DropDownselectedQueue==q">
 

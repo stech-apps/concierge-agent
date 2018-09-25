@@ -41,7 +41,7 @@ export class QmTrasferToQueueComponent implements OnInit {
   filterText: string = '';
   queueSearched:boolean;
   selectedQueue:Queue;
-
+  showEstWaitTime:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -56,7 +56,8 @@ export class QmTrasferToQueueComponent implements OnInit {
     private spService:SPService,
     private router:Router,
     private toastService:ToastService,    
-    private infoMsgBoxDispatcher:InfoMsgDispatchers
+    private infoMsgBoxDispatcher:InfoMsgDispatchers,
+    
   ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
     if (branch) {
       this.selectedBranch = branch;
@@ -79,6 +80,7 @@ const uttpSubscriptions =  this.servicePointSelectors.uttParameters$.subscribe((
     this.btnTransferFirst  = uttpParams.btnTransferFirst;
     this.btnTransferSort  = uttpParams.btnTransferSort;
     this.btnTransferLast  = uttpParams.btnTransferLast;
+    this.showEstWaitTime = uttpParams.estWaitTime;
   }
 })
 this.subscriptions.add(uttpSubscriptions);

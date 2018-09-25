@@ -260,7 +260,13 @@
     }
     background: none;
     border: none;
-    right: 11.25%;
+    @at-root [dir="rtl"] {
+      left: 11.25%;
+    }
+    @at-root [dir="ltr"]{
+      right: 11.25%;
+    }
+   
     transform: translateX(50%);
     top: 3.8rem;
     cursor: pointer;

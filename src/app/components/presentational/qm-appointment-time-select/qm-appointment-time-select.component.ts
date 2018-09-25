@@ -41,6 +41,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
   selectedTime$: Observable<Moment>;
+  showTimer:Boolean
 
   selectedServices: ICalendarService[] = [];
   selectedDates: CalendarDate[] = [{
@@ -60,7 +61,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors, private reserveDispatchers: ReserveDispatchers,
     private calendarSettingsSelectors: CalendarSettingsSelectors, private reserveSelectors: ReserveSelectors,
     private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers, private calendarSettingsDispatchers: CalendarSettingsDispatchers,
-    private userSelectors: UserSelectors) {
+    private userSelectors: UserSelectors,
+  private resevationTimeSelectors:ReservationExpiryTimerSelectors) {
 
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -108,6 +110,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         this.settingReservationExpiryTime = time;
       }
     );
+    const showTimerSubscription = this.resevationTimeSelectors.showReservationExpiryTime$.subscribe((hide)=>{
+      this.showTimer = hide;
+    })
 
     const appointmentSubscription = this.reservedAppointment$.subscribe(
       (app: IAppointment) => {
@@ -171,6 +176,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   onTimeSlotSelect(timeSlot: ITimeSlot) {
+   
     this.selectedTime = timeSlot.title;
     const bookingInformation: IBookingInformation = {
       branchPublicId: this.selectedBranch.publicId,
@@ -182,15 +188,17 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const appointment: IAppointment = {
       services: this.selectedServices
-    };
-
-    
-    
-    if(this.selectedTime){
-      this.timeSlotDispatchers.deselectTimeslot();
+    };    
+    if(this.preselectedTimeSlot==timeSlot.title){
+        this.onFlowNext.emit();
     }
-    this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
-    this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
+    if(this.preselectedTimeSlot!=timeSlot.title){
+      if(this.showTimer){
+        this.timeSlotDispatchers.deselectTimeslot();
+      }
+      this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
+      this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
+    }
 
   }
 

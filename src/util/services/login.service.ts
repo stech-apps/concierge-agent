@@ -67,7 +67,7 @@ export class LoginService {
                 if(status.userState === USER_STATE.NO_STARTED_USER_SESSION || status.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION){
                     this.hijack();
                 }
-                else  if(this.previousBranch){
+                else if(this.previousBranch){
                     this.hijack();
                 }else
                 {

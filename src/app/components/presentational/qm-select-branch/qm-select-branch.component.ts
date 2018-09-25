@@ -100,6 +100,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
       this.currentBranch = {} as ICalendarBranch;
     }
     else if (!this.currentBranch.id) {
+      this.timeSlotDispatchers.deselectTimeslot();
       this.currentBranch = branch;
       this.calendarBranchDispatchers.selectCalendarBranch(branch);
       this.goToNext();

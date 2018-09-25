@@ -2,10 +2,12 @@ import { QueueIndicator } from './../../../../util/services/queue-indication.hel
 import { Subscription } from 'rxjs';
 import { Queue } from './../../../../models/IQueue';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { QueueSelectors, QueueDispatchers, BranchSelectors } from 'src/store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, ServicePointSelectors } from 'src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from '../../../../util/services/toast.service';
 
 @Component({
   selector: 'qm-queue-list',
@@ -20,6 +22,16 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private selectedBranch: IBranch;
   sortAscending = true;
+  showEstWaitTime:boolean;
+
+  canTransferSP:boolean;
+  canTransferQ:boolean;
+  canTransferStaff:boolean;
+  canTransferQFirst:boolean;
+  canTransferQLast :boolean;
+  canTransferQWait :boolean;
+  canDelete :boolean;
+  cancherypick:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -27,7 +39,10 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private branchSelectors: BranchSelectors,
     public queueIndicator: QueueIndicator,
     private queueService: QueueService,
-    private router:Router
+    private router:Router,
+    private servicePointSelectors:ServicePointSelectors,
+    private translateService:TranslateService,
+    private toastService:ToastService
   ) {
     this.sortedBy = "Queue"
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -38,6 +53,22 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(branchSubscription);
+
+    const uttpSubscriptions =  this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
+      if(uttpParams){
+        this.showEstWaitTime = uttpParams.estWaitTime;
+        this.canTransferSP=uttpParams.trServPool;
+        this.canTransferQ=uttpParams.btnQueueTransfer
+        this.canTransferStaff=uttpParams.trUserPool;
+        this.canTransferQFirst=uttpParams.btnTransferFirst;
+        this.canTransferQLast=uttpParams.btnTransferLast;
+        this.canTransferQWait =uttpParams.btnTransferSort;
+        this.canDelete =uttpParams.delVisit;
+        this.cancherypick=uttpParams.cherryPick;
+      }
+    })
+    this.subscriptions.add(uttpSubscriptions);
+
   }
 
   ngOnInit() {
@@ -113,9 +144,18 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   }
 
   selectQueue(q){
+
+    if (this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+      (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) {
+        this.translateService.get('no_actions_available').subscribe(v => {
+          this.toastService.infoToast(v);
+        });
+   } else{
     this.queueDispatchers.setectQueue(q);
     this.queueService.stopQueuePoll();
       this.router.navigate(['home/edit-visit']);
+   }
+    
   }
 
 }

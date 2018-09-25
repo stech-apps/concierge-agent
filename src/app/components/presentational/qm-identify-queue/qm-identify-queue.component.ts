@@ -2,7 +2,7 @@ import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, NativeApiSelectors, NativeApiDispatchers } from '../../../../store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, NativeApiSelectors, NativeApiDispatchers, ServicePointSelectors } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
@@ -38,6 +38,7 @@ export class QmIdentifyQueueComponent implements OnInit {
   sortedBy:string = "Queue";
   visitSearched:boolean= false;
   desktopQRCodeListnerTimer : any;
+  showEstWaitTime:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -51,7 +52,8 @@ export class QmIdentifyQueueComponent implements OnInit {
     private nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
-    private util: Util
+    private util: Util,
+    private servicePointSelectors:ServicePointSelectors
   ) { 
     
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -73,6 +75,15 @@ export class QmIdentifyQueueComponent implements OnInit {
     }
   });
   this.subscriptions.add(qrCodeSubscription);
+
+  const uttSubscription = this.servicePointSelectors.uttParameters$
+  .subscribe(uttParameters => {
+    if (uttParameters) {
+      this.showEstWaitTime = uttParameters.estWaitTime;
+    }
+  })
+  .unsubscribe();
+this.subscriptions.add(uttSubscription);
 
   const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
     if(value === true){

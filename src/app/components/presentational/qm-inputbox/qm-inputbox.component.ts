@@ -114,6 +114,7 @@ export class QmInputboxComponent implements OnInit {
       }
       }
       this.customerDispatchers.resetCurrentCustomer();
+      
     }
   
   updateList(customer:ICustomer){

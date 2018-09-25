@@ -313,11 +313,11 @@ export class MyHammerConfig extends HammerGestureConfig  {
     BookingHelperService,
     LocalStorage,
     NativeApiSupportService ,
-    {
+    /*{
       provide: HTTP_INTERCEPTORS,
       useClass: QmGlobalHttpInterceptor,
       multi: true,
-    } ,
+    } ,*/
     { 
       provide: HAMMER_GESTURE_CONFIG, 
       useClass: MyHammerConfig 

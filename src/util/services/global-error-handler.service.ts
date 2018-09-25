@@ -44,9 +44,9 @@ export class GlobalErrorHandler {
 
             if ((<boolean><any>requestData) === true) {
                 //transfer error to the component to handle
-                console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error transferred');
+                console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error transferred to the component to handle');
                 console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + error);
-                return throwError(error);
+                return throwError(res);
             } else {
                 //error should be handled in here
                 console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error handled in global handler');

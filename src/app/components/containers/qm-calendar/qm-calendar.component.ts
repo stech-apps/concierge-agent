@@ -42,9 +42,11 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.userSelectors.userLocale$.subscribe(
       locale => {
-        if (locale)
+        if (locale) {
           this.locale = locale;
           moment.locale(this.locale);
+        }
+     
       }
     );
     this.generateCalendar();
@@ -168,7 +170,13 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
     this._currentCalendarDates = [];
-    const firstOfMonth = moment(currentMoment).locale(this.locale).startOf('month').weekday();
+    let firstOfMonth:number;
+    if(this.locale){
+       firstOfMonth = moment(currentMoment).locale(this.locale).startOf('month').weekday();
+    }else{
+       firstOfMonth = moment(currentMoment).startOf('month').weekday();
+    }
+   
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
     const start = firstDayOfGrid.date();
     return _.range(start, start + 42)

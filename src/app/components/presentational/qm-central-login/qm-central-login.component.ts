@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserSelectors, BranchSelectors, CalendarBranchDispatchers, SystemInfoDispatchers, CalendarBranchSelectors } from '../../../../../src/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IAccount } from '../../../../models/IAccount';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
@@ -20,6 +20,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
   userDirection$: Observable<string>;
   user: IAccount;
   formLogin: FormGroup;
+  currentFlow: string;
 
   constructor(private translateService: TranslateService,
       private toastService: ToastService,
@@ -29,7 +30,8 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       private calendarService: CalendarService,
       private calendarBranchDispatcher: CalendarBranchDispatchers,
       private systemInfoDispatcher: SystemInfoDispatchers,
-      private calendarBranchSelector: CalendarBranchSelectors
+      private calendarBranchSelector: CalendarBranchSelectors,
+      private route: ActivatedRoute,
     ) {
       
     const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
@@ -39,7 +41,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
 
     const calendarBranchSubscription = this.calendarBranchSelector.branches$.subscribe((bs) => {
       if(bs && bs.length > 0){
-        this.router.navigate(['home/create-appointment']);
+        this.router.navigate(['home/' + this.currentFlow ]);
       }
     });
     this.subscriptions.add(calendarBranchSubscription);
@@ -50,6 +52,15 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       userName: new FormControl(this.user.userName, [Validators.required]),
       password:new FormControl('', [Validators.required])
     })
+
+    const routerParams = this.route
+      .queryParams
+      .subscribe(params => {
+        if(params){
+          this.currentFlow = params.route;
+        }
+      });
+    this.subscriptions.add(routerParams);
   }
 
   ngOnDestroy() {
@@ -64,6 +75,17 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
     let calendarBranchId: number;
     const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
     this.subscriptions.add(selectedBranchSub);
+    const calendarBranchSub = this.calendarBranchSelector.branches$.subscribe((branches => {
+      if(branches && branches.length > 0){
+        var selectedBranch = branches.filter(res => {
+          return res.qpId === calendarBranchId;
+        })
+        if(selectedBranch){
+          calendarBranchId = selectedBranch[0].qpId;
+        }
+      }
+    }));
+    this.subscriptions.add(calendarBranchSub);
   
     if (calendarBranchId && calendarBranchId > 0) {
       this.systemInfoDispatcher.setAuthorizationHeader(this.getAuthorizationHeader())
@@ -77,6 +99,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
               })
             }
           }, error => {
+            this.systemInfoDispatcher.resetAuthorizationHeader();
             if(error.status === 401){
               this.translateService.get('login_failed').subscribe(v => {
                 this.toastService.infoToast(v);

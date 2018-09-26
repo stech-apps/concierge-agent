@@ -1,10 +1,11 @@
+import { filter } from 'rxjs/internal/operators/filter';
 import { NativeApiService } from './native-api.service';
 import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, interval, of } from 'rxjs';
-import { tap, catchError, flatMap, retry } from 'rxjs/operators';
+import { tap, catchError, flatMap, retry, map } from 'rxjs/operators';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { from } from 'rxjs/internal/observable/from';
 import { retryWhen } from 'rxjs/internal/operators/retryWhen';
@@ -14,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NativeApiSelectors } from 'src/store';
 import { timeout } from 'rxjs/internal/operators/timeout';
 import { timeoutWith } from 'rxjs/internal/operators/timeoutWith';
+import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 
 @Injectable()
 export class QmGlobalHttpInterceptor implements HttpInterceptor {
@@ -21,19 +23,21 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private localTimeoutBeforeStartPingValue = 3000;
     private localTimeoutBeforeStartPing;
     private native_ping_period = 5000;
+    private http_timeout = 5000;
     private native_max_ping_count_for_message = 2;
     private lastRequestAction = 'NONE';
     private isPingStarted = false;
+    // Retry all get requests this many times before starting ping.
+    private numberOfGetRetry = 3;
 
     constructor(private globalNotifyDispatchers: GlobalNotifyDispatchers, private serviceState: ServiceStateService,
         private translateService: TranslateService, private nativeApiService: NativeApiService) {
 
-            window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
-            window["qmGlobalHttpInterceptor"] = this;
+        window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
+        window["qmGlobalHttpInterceptor"] = this;
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         if (
             ((this.isABlockedUrl(req.url))
             ) && !this.isAResourceFile(req)) {
@@ -63,7 +67,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             }
 
 
-            return next.handle(req).pipe(timeoutWith(5000, throwError({status: ERROR_CODE_TIMEOUT})), tap((response: any) => {
+            return next.handle(req).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })), tap((response: any) => {
 
                 if (response instanceof HttpResponse) {
 
@@ -96,10 +100,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                         this.localTimeoutBeforeStartPing = undefined;
                     }
 
-                    this.translateService.get('no_network_msg').subscribe((msg) => {
-                        this.globalNotifyDispatchers.showError({ message: msg });                        
-                    }).unsubscribe();
-
+                    this.showNoNetworkMessage();
 
                     if (this.nativeApiService.isNativeBrowser()) {
                         this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
@@ -110,19 +111,52 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             }));
         }
         else {
-            return next.handle(req).pipe(timeout(5000),
-                retryWhen(_ => {
-                    return interval(1000).pipe(
-                        flatMap((count) => {
-                            if (count == 3) {
-                                return throwError("Giving up");
-                            } else {
-                                return of(count);
+
+            // handle retry logic when needed
+            if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url)) {
+
+                return next.handle(req).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
+                    retryWhen(res => {
+                        return interval(this.http_timeout).pipe(
+                            flatMap((count) => {
+                                if (count == (this.numberOfGetRetry - 1)) {
+                                    if (this.nativeApiService.isNativeBrowser()) {
+                                        this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
+                                    }
+                                    return throwError("Giving up");
+                                } else {
+                                    if (this.serviceState.getCurrentTry() == 0) {
+                                        this.showNoNetworkMessage();
+                                    }
+                                    this.serviceState.incrementTry();
+                                    if (this.localTimeoutBeforeStartPing) {
+                                        clearTimeout(this.localTimeoutBeforeStartPing);
+                                        this.localTimeoutBeforeStartPing = undefined;
+                                    }
+                                    return of(count);
+                                }
+                            }),
+                        )
+                    }),
+                    tap((res) => {
+                        if (res instanceof HttpResponse) {
+                            if (res.status === 200) {
+                                this.globalNotifyDispatchers.hideNotifications();
+                                if (this.localTimeoutBeforeStartPing) {
+                                    clearTimeout(this.localTimeoutBeforeStartPing);
+                                    this.localTimeoutBeforeStartPing = undefined;
+                                }
+                                this.serviceState.setActive(false);
+                                this.serviceState.resetTryCounter();
                             }
-                        }),
-                    )
-                })
-            );
+                        }
+                    })
+                );
+
+            }
+            else {
+                return next.handle(req);
+            }
         }
     }
 
@@ -186,13 +220,42 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         return { exists: isPresent, count: numberOfStringsPresent };
     }
 
+    isCentralAvailabilityChecking(url) {
+        var calendarUrl = "/calendar-backend/api/v1/branches/";
+        if (url.includes(calendarUrl)) {
+            var urlParts = url.split(calendarUrl);
+            if (urlParts.length == 2) {
+                var sndPart = urlParts[1];
+                var sndPartArr = sndPart.split('/');
+                if (sndPartArr.length == 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
     resetState() {
         this.globalNotifyDispatchers.hideNotifications();
         this.serviceState.setActive(false);
     }
 
     retryFailedGetRequests() {
-        
+
+    }
+
+    showNoNetworkMessage() {
+        this.translateService.get('no_network_msg').subscribe((msg) => {
+            this.globalNotifyDispatchers.showError({ message: msg });
+        }).unsubscribe();
     }
 
     notifyNativePingStatus(val) {
@@ -200,12 +263,12 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 }
 
-window["removeWebModels"] = () => { 
+window["removeWebModels"] = () => {
     window["qmGlobalHttpInterceptor"].resetState();
 };
 
-window["onPingSuccess"] = () => { 
-    const interceptor =  window["qmGlobalHttpInterceptor"];
+window["onPingSuccess"] = () => {
+    const interceptor = window["qmGlobalHttpInterceptor"];
     interceptor.notifyNativePingStatus(false);
-    interceptor.retryFailedGetRequests();  
+    interceptor.retryFailedGetRequests();
 };

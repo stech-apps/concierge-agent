@@ -34,7 +34,7 @@
     width: 85%;
     margin: 0 auto;
     overflow: auto;
-    max-height: calc(100% - 10rem);
+    max-height: calc(100vh - 400px);
     -ms-overflow-style: none;
   }
   &__icon {

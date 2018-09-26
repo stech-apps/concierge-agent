@@ -232,7 +232,7 @@ export class QmSelectServiceComponent implements OnInit {
         this.toastService.infoToast(v);
       });
     }
-    else if(this.selectedServiceList.length === 1 && !this.isMultiServiceOn){
+    else if(this.selectedServiceList.length > 0 && !this.isMultiServiceOn){
       this.qmModalService.openForTransKeys('', 'enable_multi_serv_switch', 'yes', 'no', (v) => {
         if(v) {
           this.isMultiServiceOn = true;

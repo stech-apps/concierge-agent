@@ -136,10 +136,6 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     });
   }
 
-  // handleMenuItemClick(route){
-  //   this.router.navigate(['home/central-login']);
-  // }
-
   handleMenuItemClick(route) {
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     // initial check for central connectivity
@@ -161,9 +157,15 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
               })
             }
           }, error => {
-            this.translateService.get('no_central_access').subscribe(v => {
-              this.toastService.infoToast(v);
-            });
+            if(error.status === 401){
+              this.router.navigate(['home/central-login']);
+            }
+            else{
+              this.translateService.get('no_central_access').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
+            }
+            
           }
         );
       }

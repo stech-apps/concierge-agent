@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { GlobalErrorHandler } from '../../../util/services/global-error-handler.service';
 import { DataServiceError, calendarEndpoint, calendarPublicEndpoint, calendarPublicEndpointV2 } from 'src/store/services/data.service';
 import { IAppointment } from '../../../models/IAppointment';
@@ -8,6 +8,8 @@ import { Util } from '../../util';
 import * as moment from 'moment-timezone';
 import { ICalendarBranchCentralResponse } from '../../../models/ICalendarBranchCentralResponse';
 import { catchError } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { SystemInfoSelectors } from '../../../store';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -19,13 +21,21 @@ export enum NOTIFICATION_TYPE {
 @Injectable()
 export class CalendarService implements OnDestroy {
 
-  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private util: Util) {
-    
+    hostAddress: string;
+    authorizationHeader: HttpHeaders;
+    private subscriptions: Subscription = new Subscription();
+
+  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private util: Util, private systemInfoSelector: SystemInfoSelectors) {
+    const hostSubscription = this.systemInfoSelector.centralHostAddress$.subscribe((info) => this.hostAddress = info);
+    this.subscriptions.add(hostSubscription);
+    const authorizationSubscription = this.systemInfoSelector.authorizationHeader$.subscribe((info) => this.authorizationHeader = info);
+    this.subscriptions.add(authorizationSubscription);
   }
 
   ngOnDestroy() {
-    
-  }
+    this.subscriptions.unsubscribe();
+}
+
 
   createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
       var body = { 
@@ -34,7 +44,7 @@ export class CalendarService implements OnDestroy {
           "customers" : [this.buildCustomerObject(customer)], 
           "custom" : this.buildCustomObject(email, sms, notificationType) }
     return this.http
-     .post(`${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body).pipe(
+     .post(`${this.hostAddress}${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body).pipe(
         catchError(this.errorHandler.handleError(true))
       );
   }
@@ -47,7 +57,7 @@ export class CalendarService implements OnDestroy {
         "customers" : [this.buildCustomerObject(customer)], 
         "custom" : this.buildCustomObject(email, sms, notificationType) }
   return this.http
-   .post(`${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body).pipe(
+   .post(`${this.hostAddress}${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body).pipe(
     catchError(this.errorHandler.handleError(true))
   );
 }
@@ -123,7 +133,7 @@ private buildTime(appointment: IAppointment){
 
   getBranchWithPublicId(branchId:number){
   return this.http
-  .get<ICalendarBranchCentralResponse>(`${calendarEndpoint}/branches/${branchId}`, {withCredentials:true}).pipe(
+  .get<ICalendarBranchCentralResponse>(`${this.hostAddress}${calendarEndpoint}/branches/${branchId}`, {headers : this.authorizationHeader}).pipe(
     catchError(this.errorHandler.handleError(true))
   );
 }

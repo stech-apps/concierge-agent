@@ -836,7 +836,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onEnterPressed() {
-    if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER ) {
+    if (this.currentSearchState !== this.SEARCH_STATES.CUSTOMER || this.currentSearchState !== this.SEARCH_STATES.QR ) {
       const trimmedSearchText =  (this.searchText || '').trim();
       if(trimmedSearchText) {
         if(this.currentSearchState === this.SEARCH_STATES.ID && !(/^-{0,1}\d+$/.test(trimmedSearchText))) {
@@ -848,7 +848,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.inputChanged.next(trimmedSearchText);
         }       
       }
-      else if(this.currentSearchState = this.SEARCH_STATES.ID) {
+      else if(this.currentSearchState === this.SEARCH_STATES.ID) {
         this.translateService.get('please_enter_id_and_press_enter').subscribe((msg)=> {
           this.toastService.infoToast(msg)
         }).unsubscribe();

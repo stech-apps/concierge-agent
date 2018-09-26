@@ -1,5 +1,6 @@
 import { ISystemInfo } from './../../models/ISystemInfo';
 import * as SystemInfoActions from '../actions';
+import { HttpHeaders } from '@angular/common/http';
 
 export interface ISystemInfoState {
   data: ISystemInfo;
@@ -7,6 +8,7 @@ export interface ISystemInfoState {
   loaded: boolean;
   error: Object;
   isDistributedAgent: boolean;
+  authorizationHeader: HttpHeaders
 }
 
 const initialState = {
@@ -23,7 +25,8 @@ const initialState = {
   loading: false,
   loaded: false,
   error: null,
-  isDistributedAgent: false
+  isDistributedAgent: false,
+  authorizationHeader: null
 };
 
 
@@ -67,6 +70,18 @@ export function reducer(
       return {
         ...state,
         isDistributedAgent: true
+      };
+    }
+    case SystemInfoActions.SET_AUTHORIZATION: {
+      return {
+        ...state,
+        authorizationHeader: action.payload
+      };
+    }
+    case SystemInfoActions.RESET_AUTHORIZATION: {
+      return {
+        ...state,
+        authorizationHeader: null
       };
     }
 

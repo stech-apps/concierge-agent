@@ -1,21 +1,31 @@
 import { IAppointment } from 'src/models/IAppointment';
 import { GlobalErrorHandler } from './../../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, retryWhen, flatMap } from 'rxjs/operators';
 
 import { calendarPublicEndpoint, DataServiceError, restEndpoint, calendarEndpoint } from '../data.service';
 import { IAppointmentResponse } from '../../../models/IAppointmentResponse';
-import { Observable, interval, throwError, of } from 'rxjs';
+import { Observable, interval, throwError, of, Subscription } from 'rxjs';
+import { SystemInfoSelectors } from '../system-info';
 
 
 @Injectable()
 export class AppointmentDataService {
-  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
+  hostAddress: string;
+  private subscriptions: Subscription = new Subscription();
+  authorizationHeader: HttpHeaders;
+
+  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private systemInfoSelector : SystemInfoSelectors) {
+    const hostSubscription = this.systemInfoSelector.centralHostAddress$.subscribe((info) => this.hostAddress = info);
+    this.subscriptions.add(hostSubscription);
+    const authorizationSubscription = this.systemInfoSelector.authorizationHeader$.subscribe((info) => this.authorizationHeader = info);
+    this.subscriptions.add(authorizationSubscription);
+  }
 
   getAppointments(publicId: string): Observable<IAppointmentResponse> {
     return this.http
-      .get<IAppointmentResponse>(`${calendarPublicEndpoint}/customers/${publicId}/appointments`)
+      .get<IAppointmentResponse>(`${this.hostAddress}${calendarPublicEndpoint}/customers/${publicId}/appointments`)
       .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
@@ -44,13 +54,13 @@ export class AppointmentDataService {
   }
 
   rescheduleAppointment(appointment: IAppointment) {
-    let url = `${calendarPublicEndpoint}/appointments/${appointment.publicId}/reschedule?end=${appointment.end}&start=${appointment.start}`;
+    let url = `${this.hostAddress}${calendarPublicEndpoint}/appointments/${appointment.publicId}/reschedule?end=${appointment.end}&start=${appointment.start}`;
       return this.http.put(url, null).pipe((catchError)(this.errorHandler.handleError(true)));
   }
 
 
   searchCalendarAppointments(appointmentSearch: any): Observable<IAppointmentResponse> {
-    let searchQuery =  `${calendarEndpoint}/appointments?branch=${appointmentSearch.branchId}`;
+    let searchQuery =  `${this.hostAddress}${calendarEndpoint}/appointments?branch=${appointmentSearch.branchId}`;
 
     if(appointmentSearch.fromDate) {
       searchQuery += `&start=${appointmentSearch.fromDate}`;
@@ -61,24 +71,24 @@ export class AppointmentDataService {
     }
 
     if(appointmentSearch.id) {
-      searchQuery = `${calendarEndpoint}/appointments/search?qpId=${appointmentSearch.id}`;
+      searchQuery = `${this.hostAddress}${calendarEndpoint}/appointments/search?qpId=${appointmentSearch.id}`;
     }
 
     if(appointmentSearch.customerId) {
-      searchQuery = `${calendarEndpoint}/appointments/customer/${appointmentSearch.customerId}/appointments`;
+      searchQuery = `${this.hostAddress}${calendarEndpoint}/appointments/customer/${appointmentSearch.customerId}/appointments`;
     }
     else {
       searchQuery += `&timeZoneBranchId=${appointmentSearch.branchId}`;
     }
     
     return this.http
-      .get<IAppointmentResponse>(searchQuery)
+      .get<IAppointmentResponse>(searchQuery, {headers : this.authorizationHeader})
       .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError(true)));
   }
 
   deleteAppointment(appointment: IAppointment) {
     return this.http
-      .delete(`${calendarPublicEndpoint}/appointments/${appointment.publicId}`)
+      .delete(`${this.hostAddress}${calendarPublicEndpoint}/appointments/${appointment.publicId}`)
       .pipe(catchError(this.errorHandler.handleError(true)));
   }
 

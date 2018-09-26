@@ -45,6 +45,16 @@ const getSystemInfoHostAddress = createSelector(
 
 );
 
+const getCentralHost = createSelector(
+  getSystemInfoHostAddress,
+  (state: string) => state.includes("127.0.0.1") ? "" : state
+
+);
+
+const getAuthorizationHeader = createSelector(
+  getSystemInfoState,
+  (state: ISystemInfoState) => state.authorizationHeader
+);
 
 const getDistributedAgentStatus = createSelector(
   getSystemInfoState,
@@ -64,4 +74,6 @@ export class SystemInfoSelectors {
   systemInfoHost$ = this.store.select(getSystemInfoHost);
   systemInfoHostAddress$ = this.store.select(getSystemInfoHostAddress);
   DistributedAgentStatus$ = this.store.select(getDistributedAgentStatus);
+  centralHostAddress$ = this.store.select(getCentralHost);
+  authorizationHeader$ = this.store.select(getAuthorizationHeader);
 }

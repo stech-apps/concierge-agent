@@ -3,7 +3,7 @@ import { GlobalErrorHandler } from './../../../util/services/global-error-handle
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import {
   calendarPublicEndpointV2,
@@ -12,11 +12,18 @@ import {
 } from '../data.service';  
 
 import { IAppointment } from '../../../models/IAppointment';
+import { SystemInfoSelectors } from '../system-info';
 
 
 @Injectable()
 export class ReserveDataService {
-  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler) {}
+  hostAddress: string;
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private systemInfoSelector: SystemInfoSelectors) {
+    const hostSubscription = this.systemInfoSelector.centralHostAddress$.subscribe((info) => this.hostAddress = info);
+    this.subscriptions.add(hostSubscription);
+  }
 
   reserveAppointment(
     bookingInformation: IBookingInformation,
@@ -24,7 +31,7 @@ export class ReserveDataService {
   ): Observable<IAppointment> {
     return this.http
             .post<IAppointment>(
-              `${calendarPublicEndpointV2}`
+              `${this.hostAddress}${calendarPublicEndpointV2}`
               + `/branches/${bookingInformation.branchPublicId}`
               + `/dates/${bookingInformation.date}`
               + `/times/${bookingInformation.time}/reserve;`
@@ -35,20 +42,20 @@ export class ReserveDataService {
 
   unreserveAppointment(reservationPublicId: string) {
     return this.http
-            .delete<IAppointment>(`${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
+            .delete<IAppointment>(`${this.hostAddress}${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
             .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   removerreserveAppointment(reservationPublicId: string) {
     return this.http
-            .delete<IAppointment>(`${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
+            .delete<IAppointment>(`${this.hostAddress}${calendarPublicEndpoint}/appointments/${reservationPublicId}`)
             .pipe(catchError(this.errorHandler.handleError()));
   }
 
   fetchReservableDates(bookingInformation: IBookingInformation): any {
     return this.http
             .get<IAppointment>(
-              `${calendarPublicEndpointV2}`
+              `${this.hostAddress}${calendarPublicEndpointV2}`
               + `/branches/${bookingInformation.branchPublicId}/`
               + `dates;`
               + `${bookingInformation.serviceQuery};` 

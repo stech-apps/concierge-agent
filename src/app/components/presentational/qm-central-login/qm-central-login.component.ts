@@ -1,12 +1,13 @@
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserSelectors, BranchSelectors, CalendarBranchDispatchers } from '../../../../../src/store';
+import { UserSelectors, BranchSelectors, CalendarBranchDispatchers, SystemInfoDispatchers, CalendarBranchSelectors } from '../../../../../src/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
 import { Router } from '@angular/router';
 import { IAccount } from '../../../../models/IAccount';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'qm-central-login',
@@ -26,13 +27,22 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       private router:Router,
       private branchSelector: BranchSelectors,
       private calendarService: CalendarService,
-      private calendarBranchDispatcher: CalendarBranchDispatchers
+      private calendarBranchDispatcher: CalendarBranchDispatchers,
+      private systemInfoDispatcher: SystemInfoDispatchers,
+      private calendarBranchSelector: CalendarBranchSelectors
     ) {
       
     const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
     this.subscriptions.add(userSubscription);
 
     this.userDirection$ = this.userSelectors.userDirection$;
+
+    const calendarBranchSubscription = this.calendarBranchSelector.branches$.subscribe((bs) => {
+      if(bs && bs.length > 0){
+        this.router.navigate(['home/create-appointment']);
+      }
+    });
+    this.subscriptions.add(calendarBranchSubscription);
   }
 
   ngOnInit() {
@@ -56,22 +66,42 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
     this.subscriptions.add(selectedBranchSub);
   
     if (calendarBranchId && calendarBranchId > 0) {
+      this.systemInfoDispatcher.setAuthorizationHeader(this.getAuthorizationHeader())
         this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
           value => {
             if (value && value.branch.publicId) {
               this.calendarBranchDispatcher.fetchCalendarBranches();
-              this.router.navigate(['home/create-appointment']);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.infoToast(v);
               })
             }
           }, error => {
-            this.translateService.get('no_central_access').subscribe(v => {
-              this.toastService.infoToast(v);
-            });
+            if(error.status === 401){
+              this.translateService.get('login_failed').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
+            }
+            else{
+              this.translateService.get('no_central_access').subscribe(v => {
+                this.toastService.infoToast(v);
+              });
+            }
           }
         );
     }
   }
+
+  getAuthorizationHeader() : HttpHeaders{
+    var headers = new HttpHeaders();
+    const formModel = this.formLogin.value;
+    var authKey = btoa(this.user.userName + ":" + formModel.password as string)
+    headers = headers.append('Authorization', 'Basic ' + authKey);
+    headers = headers.append('Accept', 'application/json');
+    headers = headers.append('Content-Type', 'application/json');
+
+    return headers;
+  }
+
+  
 }

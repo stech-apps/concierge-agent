@@ -130,5 +130,5 @@ export class Util {
         var modifyDate = localeFormat.replace(localeTimeFormat, modifyTime);
 
         return modifyDate;
-    }  
+    } 
 }

@@ -21,7 +21,7 @@ export class LoginService {
     private selectedServicePoint: IServicePoint;
     private user: IAccount
     private isSingleSession: boolean;
-    private previousBranch:IBranch;
+   
    
 
     constructor(
@@ -39,12 +39,10 @@ export class LoginService {
         private localStorage: LocalStorage,
         
     ) {
+       
         const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
         this.subscriptions.add(branchSubscription);
-        const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
-            this.previousBranch = branch;
-        })
-        this.subscriptions.add(previousBranchSubscription)
+       
 
         const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
         this.subscriptions.add(userSubscription);
@@ -57,7 +55,7 @@ export class LoginService {
         this.subscriptions.add(servicePointsSubscription);
     }
 
-    login(branch: IBranch, servicePoint: IServicePoint, user: IAccount) {
+    login(branch: IBranch, servicePoint: IServicePoint, user: IAccount, previousBranch?:IBranch) {
         this.subscriptions.unsubscribe();
         this.selectedServicePoint = servicePoint;
         this.selectedBranch = branch;
@@ -67,7 +65,7 @@ export class LoginService {
                 if(status.userState === USER_STATE.NO_STARTED_USER_SESSION || status.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION){
                     this.hijack();
                 }
-                else if(this.previousBranch){
+                else if(previousBranch){
                     this.hijack();
                 }else
                 {

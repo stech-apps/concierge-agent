@@ -203,7 +203,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate(['home']);
       }else {
         this.recycleService.removeAppCache();
-        this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user);
+        this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user, this.previousBranch);
       }
      
     

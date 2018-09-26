@@ -91,7 +91,7 @@ export class CustomerEffects{
         .ofType(CustomerActions.UPDATE_CUSTOMER_SUCCESS)
         .pipe(
         switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
-        [new CustomerActions.SelectCustomer(action.payload)]
+        []
         )
         );
 

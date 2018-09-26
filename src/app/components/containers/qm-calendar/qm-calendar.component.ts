@@ -20,10 +20,12 @@ export interface CalendarDate {
 export class QmCalendarComponent implements OnInit, OnChanges {
 
   currentDate = moment();
-  dayNames = ['calendar.weekday.sun', 'calendar.weekday.mon', 'calendar.weekday.tue', 'calendar.weekday.wed', 'calendar.weekday.thu', 'calendar.weekday.fri', 'calendar.weekday.sat'];
+  dayNames: string[];
+  // dayNames = ['calendar.weekday.sun', 'calendar.weekday.mon', 'calendar.weekday.tue', 'calendar.weekday.wed', 'calendar.weekday.thu', 'calendar.weekday.fri', 'calendar.weekday.sat'];
   weeks: CalendarDate[][] = [];
   sortedDates: CalendarDate[] = [];
-  userDirection$ :Observable<string>;
+  userDirection$: Observable<string>;
+  locale: string;
 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
@@ -35,9 +37,16 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   constructor(private userSelectors: UserSelectors) {
     this.userDirection$ = this.userSelectors.userDirection$;
-   }
+  }
 
   ngOnInit(): void {
+    this.userSelectors.userLocale$.subscribe(
+      locale => {
+        if (locale)
+          this.locale = locale;
+          moment.locale(this.locale);
+      }
+    );
     this.generateCalendar();
   }
 
@@ -47,7 +56,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       changes.selectedDates.currentValue.length > 1) || (changes.enabledDates && changes.enabledDates.currentValue && changes.enabledDates.currentValue.length > 0)) {
       // sort on date changes for better performance when range checking
 
-      if(changes.selectedDates) {
+      if (changes.selectedDates) {
         this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
       }
       this.generateCalendar();
@@ -71,7 +80,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   selectDate(date: CalendarDate): void {
-    if(date.disabled) {
+    if (date.disabled) {
       return;
     }
     this.onSelectDate.emit(date);
@@ -80,7 +89,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       this._currentCalendarDates.forEach(d => {
         d.selected = false;
       });
-      
+
       date.selected = true;
       this.selectedDates[0] = date;
     }
@@ -120,7 +129,13 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   // generate the calendar grid
 
+  genarateDynamicDayList() {
+    moment.locale(this.locale);
+    this.dayNames = moment.weekdaysShort(true);
+  }
+
   generateCalendar(): void {
+    this.genarateDynamicDayList();
     const dates = this.fillDates(this.currentDate);
     const weeks: CalendarDate[][] = [];
     while (dates.length > 0) {
@@ -132,8 +147,8 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   isDisabledDay(d: moment.Moment) {
     let isDisabled = true;
 
-    if(this.enableAllFutureDates) {
-      if(this.isToday(d) || d.isAfter(moment.now())) {
+    if (this.enableAllFutureDates) {
+      if (this.isToday(d) || d.isAfter(moment.now())) {
         isDisabled = false;
       }
       else {
@@ -142,7 +157,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     }
     else {
       this.enabledDates.forEach(ed => {
-        if(ed.isSame(d, 'day')){
+        if (ed.isSame(d, 'day')) {
           isDisabled = false;
         }
       });
@@ -153,7 +168,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
     this._currentCalendarDates = [];
-    const firstOfMonth = moment(currentMoment).startOf('month').day();
+    const firstOfMonth = moment(currentMoment).locale(this.locale).startOf('month').weekday();
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
     const start = firstDayOfGrid.date();
     return _.range(start, start + 42)
@@ -161,7 +176,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
         const d = moment(firstDayOfGrid).date(date);
 
         const isSelectedDay = this.isSelected(d);
-        
+
         let calDay = {
           today: this.isToday(d),
           selected: isSelectedDay,
@@ -169,7 +184,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
           mDate: d,
         };
 
-        if(isSelectedDay) {
+        if (isSelectedDay) {
           this.selectDate(calDay);
         }
 

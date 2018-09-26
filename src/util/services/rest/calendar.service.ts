@@ -10,6 +10,7 @@ import { ICalendarBranchCentralResponse } from '../../../models/ICalendarBranchC
 import { catchError } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SystemInfoSelectors } from '../../../store';
+import { NativeApiService } from '../native-api.service';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -25,7 +26,7 @@ export class CalendarService implements OnDestroy {
     authorizationHeader: HttpHeaders;
     private subscriptions: Subscription = new Subscription();
 
-  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private util: Util, private systemInfoSelector: SystemInfoSelectors) {
+  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private util: Util, private systemInfoSelector: SystemInfoSelectors, private nativeApi: NativeApiService) {
     const hostSubscription = this.systemInfoSelector.centralHostAddress$.subscribe((info) => this.hostAddress = info);
     this.subscriptions.add(hostSubscription);
     const authorizationSubscription = this.systemInfoSelector.authorizationHeader$.subscribe((info) => this.authorizationHeader = info);
@@ -133,7 +134,7 @@ private buildTime(appointment: IAppointment){
 
   getBranchWithPublicId(branchId:number){
   return this.http
-  .get<ICalendarBranchCentralResponse>(`${this.hostAddress}${calendarEndpoint}/branches/${branchId}`, {headers : this.authorizationHeader}).pipe(
+  .get<ICalendarBranchCentralResponse>(`${this.hostAddress}${calendarEndpoint}/branches/${branchId}`, {headers : this.authorizationHeader, withCredentials: this.nativeApi.isNativeBrowser()}).pipe(
     catchError(this.errorHandler.handleError(true))
   );
 }

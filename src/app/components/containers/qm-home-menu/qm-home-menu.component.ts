@@ -14,6 +14,7 @@ import { CalendarService } from '../../../../util/services/rest/calendar.service
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarBranchCentralResponse } from '../../../../models/ICalendarBranchCentralResponse';
 import { ActiveToast } from 'ngx-toastr';
+import { NativeApiService } from '../../../../util/services/native-api.service';
 
 @Component({
   selector: 'qm-home-menu',
@@ -50,7 +51,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
     private toastService: ToastService, private translateService: TranslateService,
     private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors,
-    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors) {
+    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors, private nativeApi: NativeApiService) {
 
   }
 
@@ -168,7 +169,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
               })
             }
           }, error => {
-            if(error.status === 401){
+            if(error.status === 401 && !this.nativeApi.isNativeBrowser()){
               this.router.navigate(['home/central-login'], { queryParams : {route} });
             }
             else{

@@ -27,7 +27,7 @@ export class CalendarSettingsService {
 
   getSerttingsInfo(): Observable<{ data: ICalendarSetting }> {
     return this.http
-    .get<ICalendarSettingResponse>(`${this.hostAddress}${calendarEndpoint}/settings/search?group=calendar`, {headers : this.authorizationHeader})
+    .get<ICalendarSettingResponse>(`${this.hostAddress}${calendarEndpoint}/settings/search?group=calendar`, {headers : this.authorizationHeader, withCredentials: this.isNativeBrowser()})
       .pipe(
         map((res: ICalendarSettingResponse) => {
           const reservationTime = res["settingList"][0]["data"].match(
@@ -37,5 +37,14 @@ export class CalendarSettingsService {
         }),
         catchError(this.errorHandler.handleError())
       );
+  }
+
+  isNativeBrowser(): boolean {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

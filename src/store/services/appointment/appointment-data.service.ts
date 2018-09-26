@@ -82,7 +82,7 @@ export class AppointmentDataService {
     }
     
     return this.http
-      .get<IAppointmentResponse>(searchQuery, {headers : this.authorizationHeader})
+      .get<IAppointmentResponse>(searchQuery, {headers : this.authorizationHeader, withCredentials: this.isNativeBrowser()})
       .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError(true)));
   }
 
@@ -100,5 +100,14 @@ export class AppointmentDataService {
         )
       }),
     )
+  }
+
+  isNativeBrowser(): boolean {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

@@ -5,7 +5,7 @@ import { SelectAppointment } from './../../../../store/actions/arrive-appointmen
 import { IBranch } from 'src/models/IBranch';
 import { Subscription, Observable } from 'rxjs';
 import { OnDestroy, Input } from '@angular/core';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, ignoreElements } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -637,13 +637,25 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   checkDesktopQRReaderValue(){
+    var count = 0;
     this.desktopQRCodeListnerTimer = setInterval(() => {
       if(this.searchText && this.searchText.length > 0){
-        this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
-        this.searchText = "";
-        this.clearInput();
+        count = count + 1;
+        try{
+          JSON.parse(this.searchText);
+          this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+          this.searchText = "";
+          this.clearInput();
+        }
+        catch(err){
+          if(count > 5){
+            this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+            this.searchText = "";
+            this.clearInput();
+          }
+        }
       }
-    }, 2000);
+    }, 1000);
   }
   
   removeDesktopQRReader(){

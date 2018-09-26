@@ -109,11 +109,12 @@ export class QmInputboxComponent implements OnInit {
       if(this.isOnupdate){
         this.customerDispatchers.updateCustomer(this.preparedCustomer());
         this.updateList(this.preparedCustomer());
+        this.customerDispatchers.selectCustomers(this.preparedCustomer());
       }else{
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
       }
-      this.customerDispatchers.resetCurrentCustomer();
+      // this.customerDispatchers.resetCurrentCustomer();
       
     }
   
@@ -121,6 +122,7 @@ export class QmInputboxComponent implements OnInit {
     let updateItem = this.customers.find(this.findIndexToUpdate, customer.id);
     let index = this.customers.indexOf(updateItem);
     this.customers[index] = customer;
+
   }
 
   findIndexToUpdate(newItem) { 
@@ -175,7 +177,7 @@ export class QmInputboxComponent implements OnInit {
   }
 
   clearPhoneNum(){
-    this.customerCreateForm.patchValue({
+    this.customerCreateForm.patchValue({  
       phone:''
     });
   }

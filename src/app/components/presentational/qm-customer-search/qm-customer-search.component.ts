@@ -122,7 +122,9 @@ export class QmCustomerSearchComponent implements OnInit {
   editCustomer(customer:ICustomer){
     this.confirmBox.open('update');
     this.CustomerDispatchers.editCustomers(customer);
-    //console.log(customer);
+  
+    
+
   }
 
   showLoading() {

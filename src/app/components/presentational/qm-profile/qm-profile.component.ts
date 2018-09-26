@@ -195,12 +195,18 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toastService.infoToast(v);
       });
     }
-    else {
-      if(this.previousBranch && this.previousBranch.id !== this.selectedBranch.id){
+    
+    
+      else if((this.previousBranch && this.previousBranch.id == this.selectedBranch.id)&&(this.navServicePoint && this.selectedServicePoint.id == this.navServicePoint.id)){
+        this.branchDispatchers.selectBranch(this.previousBranch);
+        this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
+        this.router.navigate(['home']);
+      }else {
         this.recycleService.removeAppCache();
+        this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user);
       }
-      this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user);
-    }
+     
+    
   }
 
   showPrivacyPolicyUrl($event) {

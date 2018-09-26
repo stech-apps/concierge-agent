@@ -59,12 +59,6 @@ export class QmIdentifyCustomerComponent implements OnInit {
     
   }
 
-  // test(){
-  //   this.SampleValue={firstLineName:"Appoinment for service",firstLineText:"SERVICE2",SecondLineName:"Created on branch",
-  //   SecondLineText:"BRANCH_TIMEZONE1",icon:"correct",LastLineName:"Appoinment time",LastLineText:"2018-08-13, 12:50"}
-  //   this.InfoMsgBoxDispatcher.updateInfoMsgBoxInfo(this.SampleValue);
-  // }
-
   onSwitchChange(){
     this.localStorage.setSettings(STORAGE_SUB_KEY.CUSTOMER_SKIP, this.isFlowSkip);
   }

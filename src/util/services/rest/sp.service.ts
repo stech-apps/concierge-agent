@@ -128,7 +128,8 @@ export class SPService implements OnDestroy {
       "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType)
     }
     return this.http
-      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body).pipe(
+      .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body)
+      .pipe(
         catchError(this.errorHandler.handleError(true))
       );
   }

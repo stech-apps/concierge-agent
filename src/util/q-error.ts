@@ -10,7 +10,8 @@ export enum Q_ERROR_CODE {
     PRINTER_PAPER_JAM = "8114",
     NO_VISIT = "8011",
     STAFF_MEMBER_LOGOUT="8068",
-    SERVED_VISIT = "8082"
+    SERVED_VISIT = "8082",
+    QUEUE_FULL = "8042"
 }
 
 export enum ERROR_STATUS {

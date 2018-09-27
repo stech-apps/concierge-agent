@@ -631,7 +631,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showTostMessage('printer_error');
         }
         else if (err.errorMsg.length > 0) {
-          this.toastService.infoToast(err.errorMsg);
+          if(err.errorCode = Q_ERROR_CODE.QUEUE_FULL){
+            this.showTostMessage('queue_full');
+          }
         }
         else {
           this.showTostMessage('request_fail');

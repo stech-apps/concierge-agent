@@ -49,7 +49,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formLogin = new FormGroup({
-      userName: new FormControl(this.user.userName, [Validators.required]),
+      userName: new FormControl({value: this.user.userName, disabled: true}, [Validators.required]),
       password:new FormControl('', [Validators.required])
     })
 
@@ -81,7 +81,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
           return res.qpId === calendarBranchId;
         })
         if(selectedBranch){
-          calendarBranchId = selectedBranch[0].qpId;
+          calendarBranchId = selectedBranch[0].id;
         }
       }
     }));

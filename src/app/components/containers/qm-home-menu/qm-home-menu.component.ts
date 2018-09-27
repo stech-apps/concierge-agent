@@ -150,7 +150,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
             return res.qpId === calendarBranchId;
           })
           if(selectedBranch){
-            calendarBranchId = selectedBranch[0].qpId;
+            calendarBranchId = selectedBranch[0].id;
           }
         }
       }));

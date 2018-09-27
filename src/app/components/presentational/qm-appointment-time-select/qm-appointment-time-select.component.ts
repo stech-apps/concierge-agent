@@ -44,10 +44,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   showTimer:Boolean
 
   selectedServices: ICalendarService[] = [];
-  selectedDates: CalendarDate[] = [{
-    mDate: moment(),
-    selected: true
-  }];
+  selectedDates: CalendarDate[];
 
   selectedTime: string;
 
@@ -83,6 +80,10 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[])=> {
         this.reservableDates = dates;
+        this.selectedDates =  [{
+          mDate: this.reservableDates[0],
+          selected: true
+        }];
     });
 
     const serviceSelectionSubscription = this.calendarServiceSelectors.isCalendarServiceSelected$.subscribe((val) => {
@@ -134,12 +135,20 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const timeSlotSubscription = this.timeSlotSelectors.selectedTime$.subscribe((st: string)=> {
       this.selectedTime = st;
     });
+   
+
 
     this.subscriptions.add(appointmentSubscription);
+    
     this.subscriptions.add(timeSlotSubscription);
     this.timeSlotDispatchers.selectTimeslotDate(this.selectedDates[0].mDate);
-    
-
+    const timeSlotsSubscription = this.timeSlotSelectors.times$.subscribe((ts)=> {
+      if(ts.length){
+        console.log(ts[0]);
+      }
+      
+    }); 
+    this.subscriptions.add(timeSlotsSubscription);
     this.reserveSelectors.reservedAppointment$.subscribe((alreadyReserved)=> {
       if(alreadyReserved) {
         this.onFlowNext.emit();

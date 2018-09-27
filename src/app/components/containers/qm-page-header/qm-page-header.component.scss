@@ -125,24 +125,25 @@
     flex: 1 1 auto;
     color: $header-branch-name-color;
     margin: rem(0 0 0 $standard-margin);
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;
+    max-width: 20vw;
     @at-root [dir="rtl"] & {
       margin-left: 0;
       margin-right: rem($standard-margin);
     }
+   
   }
 
   &__service-point-name {
     flex: 1 1 auto;
     color: $header-service-point-name-color;
     margin: rem(0 $standard-margin 0 $standard-margin);
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 300px
+    max-width: 20vw;
   }
 
   &__edit-link {

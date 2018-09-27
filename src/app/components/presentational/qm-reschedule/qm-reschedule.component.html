@@ -1,6 +1,6 @@
 <div class="qm-reschedule-select__content">
   <div class="qm-calendar-container">
-    <div class="qm-calendar-header qm-time-header">{{selectedCalendarBranch.name}}</div>
+    <div class="qm-calendar-header qm-time-header">{{editAppointment.branch.name}}</div>
     <div class="qm-calendar-placeholder">
       <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
     </div>

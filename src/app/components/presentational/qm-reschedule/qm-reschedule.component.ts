@@ -46,10 +46,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isOriginalAppointmentTimeChanged = false;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
-  selectedDates: CalendarDate[] = [{
-    mDate: moment(),
-    selected: true
-  }];
+  selectedDates: CalendarDate[]
 
   @Input()
   editAppointment: IAppointment;
@@ -87,9 +84,14 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     const branchSubscription = this.branchSubscription$.subscribe((cb) => {
       this.selectedBranch = cb;
     });
+    
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[]) => {
       this.reservableDates = dates;
+      this.selectedDates =  [{
+        mDate: this.reservableDates[0],
+        selected: true
+      }];
     });
 
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {

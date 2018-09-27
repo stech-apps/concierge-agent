@@ -4,7 +4,7 @@
         <i class="icon-caret-left"></i>
       </button>
       <div>
-          <span class="p4">{{ 'calendar.month.' + currentDate.format('MMMM').toLowerCase() | translate }}</span><span>  {{ currentDate.format('YYYY') }}</span>
+          <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>  {{ currentDate.locale(this.locale).format('YYYY') }}</span>
       </div> 
         
       <button (click)="nextMonth()"><i class="icon-caret-right"></i></button>

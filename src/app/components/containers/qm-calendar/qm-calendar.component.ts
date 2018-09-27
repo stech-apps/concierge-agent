@@ -1,6 +1,7 @@
 
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
+
 import * as _ from 'underscore';
 import { Observable } from 'rxjs';
 import { UserSelectors } from 'src/store';
@@ -44,9 +45,8 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       locale => {
         if (locale) {
           this.locale = locale;
-          moment.locale(this.locale);
         }
-     
+
       }
     );
     this.generateCalendar();
@@ -134,10 +134,12 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   genarateDynamicDayList() {
     moment.locale(this.locale);
     this.dayNames = moment.weekdaysShort(true);
+    moment.locale('en');
   }
 
   generateCalendar(): void {
     this.genarateDynamicDayList();
+    this.currentDate = this.currentDate.locale('en');
     const dates = this.fillDates(this.currentDate);
     const weeks: CalendarDate[][] = [];
     while (dates.length > 0) {
@@ -170,13 +172,13 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
     this._currentCalendarDates = [];
-    let firstOfMonth:number;
-    if(this.locale){
-       firstOfMonth = moment(currentMoment).locale(this.locale).startOf('month').weekday();
-    }else{
-       firstOfMonth = moment(currentMoment).startOf('month').weekday();
+    let firstOfMonth: number;
+    if (this.locale) {
+      firstOfMonth = moment(currentMoment).locale(this.locale).startOf('month').weekday();
+    } else {
+      firstOfMonth = moment(currentMoment).startOf('month').weekday();
     }
-   
+
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
     const start = firstDayOfGrid.date();
     return _.range(start, start + 42)

@@ -166,7 +166,8 @@ function updateQueueList(queueList: any, queueInfo : Queue){
     var maxWT = 0;
     for (var i = 0; i < queueInfo.length; i++) {
       customerCount = customerCount + queueInfo[i].customersWaiting;
-      est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
+      est_w_time = (!queueInfo[i].estimatedWaitingTime || queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
+        
         Math.round(queueInfo[i].estimatedWaitingTime / 60));
       queueInformation.push({
         name: queueInfo[i].name,

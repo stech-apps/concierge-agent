@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { calendarPublicEndpoint, DataServiceError, servicePoint, calendarEndpoint } from '../data.service';
 import { ICalendarBranchResponse } from '../../../models/ICalendarBranchResponse';
 import { SystemInfoSelectors } from 'src/store/services/system-info/system-info.selectors';
+import { async } from 'q';
 
 @Injectable()
 export class CalendarBranchDataService {
@@ -25,7 +26,7 @@ export class CalendarBranchDataService {
 
   getCalendarBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranchResponse>(`${this.hostAddress}${calendarEndpoint}/branches/`, {headers : this.authorizationHeader, withCredentials: this.isNativeBrowser()})
+      .get<ICalendarBranchResponse>(`${this.hostAddress}${calendarEndpoint}/branches/`, {headers : this.authorizationHeader, withCredentials: this.isNativeBrowser() })
       .pipe(catchError(this.errorHandler.handleError()));
   }
 

@@ -241,7 +241,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.subscriptions.add(uttSubscription);
 
     const appointmentErrorSub = this.appointmentSelectors.appointmentsError$.subscribe((error: any) => {
-      if (error && error.responseData && error.responseData['status'] === 404) {
+      if (error && error.status && error.status === 404) {
         this.showAppointmentNotFoundError();
         this.appointmentDispatchers.resetError();
       }

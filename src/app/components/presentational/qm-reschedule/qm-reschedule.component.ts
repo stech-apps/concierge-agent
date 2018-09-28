@@ -77,6 +77,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         this.isOriginalAppointmentTimeChanged = false;
       }
       this.fetchReservableDates();
+      
     }
   }
 
@@ -88,10 +89,26 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[]) => {
       this.reservableDates = dates;
-      this.selectedDates =  [{
-        mDate: this.reservableDates[0],
-        selected: true
-      }];
+    
+
+      
+      console.log(this.reservableDates[0]);
+      if(this.editAppointment){
+          if(this.reservableDates[0].isAfter(this.editAppointment.start)){
+            this.selectedDates =  [{
+              mDate: this.reservableDates[0],
+              selected: true
+            }];
+      }else{
+         this.selectedDates =  [{
+              mDate: moment(this.editAppointment.start),
+              selected: true
+            }];
+      }
+      }
+    
+    
+ 
     });
 
     const serviceSubscription = this.serviceSubscription$.subscribe((s) => {

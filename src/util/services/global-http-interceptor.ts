@@ -4,9 +4,8 @@ import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, interval, of } from 'rxjs';
-import { tap, catchError, flatMap, retry, map } from 'rxjs/operators';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
+import { Observable, throwError, interval, of, Subject, empty } from 'rxjs';
+import { tap, catchError, flatMap, retry, map, switchMap } from 'rxjs/operators';
 import { from } from 'rxjs/internal/observable/from';
 import { retryWhen } from 'rxjs/internal/operators/retryWhen';
 import { BLOCKED_URLS } from 'src/util/url-helper';
@@ -16,9 +15,11 @@ import { NativeApiSelectors } from 'src/store';
 import { timeout } from 'rxjs/internal/operators/timeout';
 import { timeoutWith } from 'rxjs/internal/operators/timeoutWith';
 import { mergeMap } from 'rxjs/internal/operators/mergeMap';
+import { delayWhen } from 'rxjs/internal/operators/delayWhen';
 
 @Injectable()
 export class QmGlobalHttpInterceptor implements HttpInterceptor {
+    isPingSuccess: boolean;
 
     private localTimeoutBeforeStartPingValue = 3000;
     private localTimeoutBeforeStartPing;
@@ -29,6 +30,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private isPingStarted = false;
     // Retry all get requests this many times before starting ping.
     private numberOfGetRetry = 3;
+
+    public recoverApp = new Subject<boolean>();
 
     constructor(private globalNotifyDispatchers: GlobalNotifyDispatchers, private serviceState: ServiceStateService,
         private translateService: TranslateService, private nativeApiService: NativeApiService) {
@@ -115,15 +118,16 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             // handle retry logic when needed
             if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url)) {
 
-                return next.handle(req).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
+                return next.handle(req).pipe(
+                    timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
                     retryWhen(res => {
                         return interval(this.http_timeout).pipe(
                             flatMap((count) => {
                                 if (count == (this.numberOfGetRetry - 1)) {
-                                    if (this.nativeApiService.isNativeBrowser()) {
+                                    if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess) {
                                         this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                                     }
-                                    return throwError("Giving up");
+                                    return of(count);
                                 } else {
                                     if (this.serviceState.getCurrentTry() == 0) {
                                         this.showNoNetworkMessage();
@@ -135,7 +139,13 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                     }
                                     return of(count);
                                 }
-                            }),
+                            }), delayWhen((d) => {
+                                if (this.serviceState.getCurrentTry() <= (this.numberOfGetRetry - 1)) {
+                                    return of(req);
+                                } else {
+                                    return this.recoverApp.asObservable();
+                                }
+                            })
                         )
                     }),
                     tap((res) => {
@@ -150,9 +160,10 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                 this.serviceState.resetTryCounter();
                             }
                         }
+
+                        return res;
                     })
                 );
-
             }
             else {
                 return next.handle(req);
@@ -249,7 +260,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     retryFailedGetRequests() {
-
+        this.isPingSuccess = true;
+        this.recoverApp.next(true);
     }
 
     showNoNetworkMessage() {
@@ -259,6 +271,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     notifyNativePingStatus(val) {
+        console.log("Native Ping Status - " + val);
         this.isPingStarted = val;
     }
 }

@@ -5,6 +5,8 @@ var fs = require('fs');
 const del = require('del');
 var sftp = require('gulp-sftp');
 var ncmd = require('node-cmd');
+var mkdirp = require('mkdirp');
+var getDirName = require('path').dirname;
 
 require('events').EventEmitter.prototype._maxListeners = 100;
 
@@ -115,9 +117,9 @@ gulp.task('write:manifest', function () {
     var versionInfo = getVersionInfo();
     if (versionInfo) {
       var fileContent = 'Build-Date: ' + new Date().toISOString().substring(0, 10) + '\r\n';
-      fileContent += 'Product-Name: Appointment Booking' + '\r\n';
+      fileContent += 'Product-Name: Connect Concierge' + '\r\n';
       fileContent += 'Build-Version: ' + versionInfo.version + '\r\n';
-      fs.writeFileSync('./src/META-INF/MANIFEST.MF', fileContent);
+      writeFile('./src/META-INF/MANIFEST.MF', fileContent);
       return true;
     }
   } catch (ex) {
@@ -138,6 +140,14 @@ function getVersionInfo() {
     };
   }
   return null;
+}
+
+function writeFile(path, contents, cb) {
+  mkdirp(getDirName(path), function (err) {
+    if (err) return cb(err);
+
+    fs.writeFile(path, contents, cb);
+  });
 }
 
 // Deploy build to orchestra

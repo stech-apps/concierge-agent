@@ -7,7 +7,7 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { ReserveDispatchers, TimeslotDispatchers } from '../../../../store';
+import { ReserveDispatchers, TimeslotDispatchers, AccountDispatchers } from '../../../../store';
 
 @Component({
   selector: 'qm-flow',
@@ -24,7 +24,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     private recycleService: Recycle,
     private queueService: QueueService,
     private reserveDispatchers:ReserveDispatchers,
-    private timeSlotDispatchers:TimeslotDispatchers
+    private timeSlotDispatchers:TimeslotDispatchers,
+    private AccountDispatchers:AccountDispatchers
   ) { }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -79,14 +80,21 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     });
   }
 
-  onFlowExit(panel: QmFlowPanelComponent, result: any) {
+  ngOnDestroy() {
+  console.log("completed");
+  
+  }
 
+
+
+  onFlowExit(panel: QmFlowPanelComponent, result: any) {
+    this.AccountDispatchers.setMenuItemStatus(true);
    if (result) {
       this.exitFlow = true;
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
       setTimeout(() => {
-      
+        this.AccountDispatchers.setMenuItemStatus(false);
         if(this.router.url!="/profile"){
         this.router.navigate(['home']);
         }
@@ -100,6 +108,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
           this.recycleService.clearCache();
           this.queueService.setQueuePoll();
           setTimeout(() => {
+            this.AccountDispatchers.setMenuItemStatus(false);
             if(this.router.url!="/profile"){
             this.router.navigate(['home']);
             }

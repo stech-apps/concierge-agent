@@ -43,6 +43,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isEditVisitFlowDisabled = false;
 
   hostAddressStr:string;
+  menuItemEnable:boolean;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -68,6 +69,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.calendarBranchDispatcher.fetchCalendarBranches();
     }
 
+    const AccountSubscriptions = this.accountSelectors.MenuItemStatus.subscribe(status=>{
+        this.menuItemEnable = status;
+    });
+    this.subscriptions.add(AccountSubscriptions);
   }
 
 

@@ -16,4 +16,7 @@ export class AccountDispatchers {
   setUseDefaultStatus(value: boolean) {
     this.store.dispatch(new AccountActions.SetUseDefaultStatus(value));
   }
+  setMenuItemStatus(value:boolean){
+    this.store.dispatch(new AccountActions.MenuItemDeselect(value))
+  }
 }

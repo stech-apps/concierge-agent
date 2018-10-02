@@ -9,6 +9,7 @@ export interface IAccountState {
   loaded: boolean;
   error: Object;
   useDefaultStatus: boolean;
+  menuItemDeselect:boolean;
 }
 
 const initialState = {
@@ -22,12 +23,14 @@ const initialState = {
     status: '',
     fullName: '',
     modules: [],
+    
   },
   userRole: UserRole.None,
   loading: false,
   loaded: false,
   error: null,
-  useDefaultStatus: false
+  useDefaultStatus: false,
+  menuItemDeselect:false
 };
 
 export function reducer(
@@ -68,6 +71,12 @@ export function reducer(
       return {
         ...state,
         useDefaultStatus: action.payload
+      };
+    }
+    case AccountActions.MENU_ITEM_DESELECT: {
+      return {
+        ...state,
+        menuItemDeselect: action.payload
       };
     }
     default: {

@@ -43,10 +43,17 @@ const getUseDefaultStatus = createSelector(
   (state: IAccountState) => state.useDefaultStatus
 );
 
+
+const MenuItemStatus = createSelector(
+  getUserState,
+  (state: IAccountState) => state.menuItemDeselect
+);
+
 @Injectable()
 export class AccountSelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   userRole$ = this.store.select(getUserRole);
   useDefaultStatus$ = this.store.select(getUseDefaultStatus);
+  MenuItemStatus = this.store.select(MenuItemStatus);
 }

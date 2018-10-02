@@ -538,7 +538,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.showErrorMessage(error);
       this.saveFrequentService();
-      this.onFlowExit.emit();
+    
     })
   }
 
@@ -556,7 +556,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.showErrorMessage(error);
       this.saveFrequentService();
-      this.onFlowExit.emit();
+    
     })
   }
 

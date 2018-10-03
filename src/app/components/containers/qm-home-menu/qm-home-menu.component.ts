@@ -174,7 +174,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
               })
             }
           }, error => {
-            if(error.status === 401 && !this.nativeApi.isNativeBrowser()){
+            if(error.status === 401){
               this.router.navigate(['home/central-login'], { queryParams : {route} });
             }
             else{

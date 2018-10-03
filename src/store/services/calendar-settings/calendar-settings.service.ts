@@ -27,7 +27,7 @@ export class CalendarSettingsService {
 
   getSerttingsInfo(): Observable<{ data: ICalendarSetting }> {
     return this.http
-    .get<ICalendarSettingResponse>(`${this.hostAddress}${calendarEndpoint}/settings/search?group=calendar`, {headers : this.authorizationHeader, withCredentials : this.isNativeBrowser() })
+    .get<ICalendarSettingResponse>(`${this.hostAddress}${calendarEndpoint}/settings/search?group=calendar`, {headers : this.authorizationHeader })
       .pipe(
         map((res: ICalendarSettingResponse) => {
           const reservationTime = res["settingList"][0]["data"].match(

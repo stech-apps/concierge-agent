@@ -82,7 +82,7 @@ export class AppointmentDataService {
     }
     
     return this.http
-      .get<IAppointmentResponse>(searchQuery, {headers : this.authorizationHeader, withCredentials : this.isNativeBrowser() })
+      .get<IAppointmentResponse>(searchQuery, {headers : this.authorizationHeader })
       .pipe(this.retryForRobustness(), (catchError)(this.errorHandler.handleError(true)));
   }
 

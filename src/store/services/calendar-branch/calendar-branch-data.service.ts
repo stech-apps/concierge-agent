@@ -26,7 +26,7 @@ export class CalendarBranchDataService {
 
   getCalendarBranches(): Observable<ICalendarBranchResponse> {
     return this.http
-      .get<ICalendarBranchResponse>(`${this.hostAddress}${calendarEndpoint}/branches/`, {headers : this.authorizationHeader, withCredentials: this.isNativeBrowser() })
+      .get<ICalendarBranchResponse>(`${this.hostAddress}${calendarEndpoint}/branches/`, {headers : this.authorizationHeader })
       .pipe(catchError(this.errorHandler.handleError()));
   }
 
@@ -34,14 +34,5 @@ export class CalendarBranchDataService {
     return this.http
       .get<ICalendarBranchResponse>(`${this.hostAddress}${calendarPublicEndpoint}/branches/`)
       .pipe(catchError(this.errorHandler.handleError()));
-  }
-
-  isNativeBrowser(): boolean {
-    if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 }

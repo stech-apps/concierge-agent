@@ -91,7 +91,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
             }), catchError((error: HttpErrorResponse) => {
                 // when blocke url fails 
-
+               
                 if (error.status === ERROR_CODE_TIMEOUT) {
                     if (this.localTimeoutBeforeStartPing) {
                         clearTimeout(this.localTimeoutBeforeStartPing);
@@ -103,6 +103,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     if (this.nativeApiService.isNativeBrowser()) {
                         this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                     }
+                }else {
+                    clearTimeout(this.localTimeoutBeforeStartPing);
                 }
 
                 return throwError(error);

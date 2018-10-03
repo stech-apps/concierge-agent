@@ -524,6 +524,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showErrorMessage(error);
           this.onFlowExit.emit();
         })
+      } else if (err.errorCode === '0') {
+        this.translateService.get('appointment_create_fail').subscribe(v => {
+          var unSuccessMessage = {
+            firstLineName: v,
+            icon: "error"
+          }
+          this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
+        });
+        this.onFlowExit.emit();
       }
     });
   }

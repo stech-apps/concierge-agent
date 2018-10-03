@@ -46,6 +46,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
 
 import * as moment from 'moment-timezone';
 import { ICalendarService } from "../../../../models/ICalendarService";
+import { ERROR_CODE_TIMEOUT } from "../../../shared/error-codes";
 
 @Component({
   selector: "qm-checkout-view",
@@ -99,7 +100,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   buttonText: string;
   noteText$: Observable<string>;
   noteTextStr: string = '';
-  loading :boolean =false;
+  loading: boolean = false;
 
   selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
   private selectedAppointment: IAppointment;
@@ -109,7 +110,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedServices: ICalendarService[];
   private tempCustomer: ICustomer;
 
-  //variables related to expandable appintment details view
+  //variables related to expandable appointment details view
   serviceStr: string;
   isExpanded: boolean = true;
   appTime: string;
@@ -239,7 +240,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
       const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
         (services) => {
-          if(services){
+          if (services) {
             this.selectedServices = services as ICalendarService[];
             this.appServices = this.setAppServices();
           }
@@ -266,7 +267,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
       const calendarServiceSubscription = this.calendarServiceSelectors.selectedServices$.subscribe(
         (services) => {
-          if(services){
+          if (services) {
             this.selectedServices = services as ICalendarService[];
             this.appServices = this.setAppServices();
           }
@@ -631,7 +632,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showTostMessage('printer_error');
         }
         else if (err.errorMsg.length > 0) {
-          if(err.errorCode = Q_ERROR_CODE.QUEUE_FULL){
+          if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
             this.showTostMessage('queue_full');
           }
         }
@@ -666,6 +667,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showTostMessage('appointment_already_used');
         } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
           this.showTostMessage('printer_error');
+        } else if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
+          this.showTostMessage('queue_full');
         } else {
           this.showTostMessage('request_fail');
         }
@@ -720,13 +723,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     var serviceList = [];
     if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       this.selectedServices.forEach(val => {
-        var idObj = { "id" : val.id, "usage" : 0 }
+        var idObj = { "id": val.id, "usage": 0 }
         serviceList.push(idObj);
       })
     }
     else if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       this.selectedServices.forEach(val => {
-        var idObj = { "publicId" : val.publicId, "usage" : 0 }
+        var idObj = { "publicId": val.publicId, "usage": 0 }
         serviceList.push(idObj);
       })
     }
@@ -739,7 +742,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   var serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
 
-    if(serviceIds){
+    if (serviceIds) {
       tempList = serviceIds.concat(serviceList);
     }
 
@@ -754,14 +757,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     tempList.forEach(val => {
       var elementPos = -1;
-      if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
-        elementPos = serviceList.map(function(x) {return x.id; }).indexOf(val.id);
+      if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+        elementPos = serviceList.map(function (x) { return x.id; }).indexOf(val.id);
       }
-      else if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
-        elementPos = serviceList.map(function(x) {return x.publicId; }).indexOf(val.publicId);
+      else if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+        elementPos = serviceList.map(function (x) { return x.publicId; }).indexOf(val.publicId);
       }
       
-      if(elementPos >= 0){
+      if (elementPos >= 0) {
         val.usage = val.usage + 1;
       }
     })

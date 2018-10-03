@@ -120,9 +120,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                 }else {
                     clearTimeout(this.localTimeoutBeforeStartPing);
                 }
-                else {
-                    clearTimeout(this.localTimeoutBeforeStartPing);
-                }
 
                 return throwError(error);
             }));

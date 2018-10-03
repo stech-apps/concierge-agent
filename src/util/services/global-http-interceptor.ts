@@ -1,3 +1,5 @@
+import { UserStatusDispatchers } from './../../store/services/user-status/user-status.dispatchers';
+import { UserStatusSelectors } from 'src/store/services';
 import { filter } from 'rxjs/internal/operators/filter';
 import { NativeApiService } from './native-api.service';
 import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
@@ -16,12 +18,14 @@ import { timeout } from 'rxjs/internal/operators/timeout';
 import { timeoutWith } from 'rxjs/internal/operators/timeoutWith';
 import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 import { delayWhen } from 'rxjs/internal/operators/delayWhen';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SPService } from 'src/util/services/rest/sp.service';
 
 @Injectable()
 export class QmGlobalHttpInterceptor implements HttpInterceptor {
     isPingSuccess: boolean;
 
-    private localTimeoutBeforeStartPingValue = 3000;
+    private timeToWaitBeforeStartPing = 3000;
     private localTimeoutBeforeStartPing;
     private native_ping_period = 5000;
     private http_timeout = 5000;
@@ -33,8 +37,18 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     public recoverApp = new Subject<boolean>();
 
-    constructor(private zone: NgZone, private globalNotifyDispatchers: GlobalNotifyDispatchers, private serviceState: ServiceStateService,
-        private translateService: TranslateService, private nativeApiService: NativeApiService) {
+    readonly MARKED_DEVICES = {
+        SAMSUNG_S4_V1: "Samsung GT-I9515",
+        SAMSUNG_S4_V2: "Samsung GT-I9505"
+    }
+
+    readonly NO_STARTED_USER_SESSION = "NO_STARTED_USER_SESSION";
+
+    constructor(private zone: NgZone, private globalNotifyDispatchers: GlobalNotifyDispatchers,
+        private serviceState: ServiceStateService, private translateService: TranslateService,
+        private nativeApiService: NativeApiService, private userStatusSelector: UserStatusSelectors,
+        private router: Router, private userStatusDispatchers: UserStatusDispatchers,
+    private spService: SPService) {
 
         window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
         window["qmGlobalHttpInterceptor"] = this;
@@ -61,7 +75,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                         }).unsubscribe();
                     }
 
-                }, this.localTimeoutBeforeStartPingValue);
+                }, this.timeToWaitBeforeStartPing);
 
                 //if(config.method == R.SERVICE_ACTIONS.GET) //This is force block GET requests
                 this.serviceState.setActive(true);
@@ -106,6 +120,9 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                 }else {
                     clearTimeout(this.localTimeoutBeforeStartPing);
                 }
+                else {
+                    clearTimeout(this.localTimeoutBeforeStartPing);
+                }
 
                 return throwError(error);
             }));
@@ -114,60 +131,59 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
             // handle retry logic when needed
             if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url)) {
-
-                return next.handle(req).pipe(
-                    tap(() => {
-                        this.isPingSuccess = false;
-                    }),
-                    timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
-                    retryWhen(res => {
-                        return interval(this.http_timeout).pipe(
-                            flatMap((count) => {
-                                if (count >= (this.numberOfGetRetry - 1)) {
-                                    this.zone.run(() => {
+                return this.zone.run(() => {
+                    return next.handle(req).pipe(
+                        tap(() => {
+                            this.isPingSuccess = false;
+                        }),
+                        timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
+                        retryWhen(res => {
+                            return interval(this.http_timeout).pipe(
+                                flatMap((count) => {
+                                    if (count >= (this.numberOfGetRetry - 1)) {
                                         if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.isPingStarted) {
                                             this.isPingStarted = true;
                                             this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                                         }
-                                    });
-
-                                    return of(count);
-                                } else {
-                                    if (this.serviceState.getCurrentTry() == 0) {
-                                        this.showNoNetworkMessage();
+                                        return of(count);
+                                    } else {
+                                        if (this.serviceState.getCurrentTry() == 0) {
+                                            this.showNoNetworkMessage();
+                                        }
+                                        this.serviceState.incrementTry();
+                                        if (this.localTimeoutBeforeStartPing) {
+                                            clearTimeout(this.localTimeoutBeforeStartPing);
+                                            this.localTimeoutBeforeStartPing = undefined;
+                                        }
+                                        return of(count);
                                     }
-                                    this.serviceState.incrementTry();
+                                }), delayWhen((d) => {
+                                    if (this.serviceState.getCurrentTry() <= (this.numberOfGetRetry - 1)) {
+                                        return of(req);
+                                    } else {
+                                        return this.recoverApp.asObservable();
+                                    }
+                                })
+                            )
+                        }),
+                        tap((res) => {
+                            if (res instanceof HttpResponse) {
+                                if (res.status === 200) {
+                                    this.globalNotifyDispatchers.hideNotifications();
                                     if (this.localTimeoutBeforeStartPing) {
                                         clearTimeout(this.localTimeoutBeforeStartPing);
                                         this.localTimeoutBeforeStartPing = undefined;
                                     }
-                                    return of(count);
+                                    this.serviceState.setActive(false);
+                                    this.serviceState.resetTryCounter();
                                 }
-                            }), delayWhen((d) => {
-                                if (this.serviceState.getCurrentTry() <= (this.numberOfGetRetry - 1)) {
-                                    return of(req);
-                                } else {
-                                    return this.recoverApp.asObservable();
-                                }
-                            })
-                        )
-                    }),
-                    tap((res) => {
-                        if (res instanceof HttpResponse) {
-                            if (res.status === 200) {
-                                this.globalNotifyDispatchers.hideNotifications();
-                                if (this.localTimeoutBeforeStartPing) {
-                                    clearTimeout(this.localTimeoutBeforeStartPing);
-                                    this.localTimeoutBeforeStartPing = undefined;
-                                }
-                                this.serviceState.setActive(false);
-                                this.serviceState.resetTryCounter();
                             }
-                        }
 
-                        return res;
-                    })
-                );
+                            return res;
+                        })
+                    );
+                });
+
             }
             else {
                 return next.handle(req);
@@ -235,6 +251,15 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         return { exists: isPresent, count: numberOfStringsPresent };
     }
 
+    isUserStatusCheck(url) {
+        let statusUrl = 'rest/servicepoint/user/status';
+        if (url.includes(url)) { 
+            return true;
+        }
+
+        return false;
+    }
+
     isCentralAvailabilityChecking(url) {
         var calendarUrl = "/calendar-backend/api/v1/branches/";
         if (url.includes(calendarUrl)) {
@@ -276,14 +301,54 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     showNoNetworkMessage() {
-        this.translateService.get('no_network_msg').subscribe((msg) => {
-            this.globalNotifyDispatchers.showError({ message: msg });
-        }).unsubscribe();
+        this.zone.run(()=> {
+            this.translateService.get('no_network_msg').subscribe((msg) => {
+                this.globalNotifyDispatchers.showError({ message: msg });
+            }).unsubscribe();
+        });
+    }
+
+    resetCommunications = () => {
+        this.serviceState.setActive(false);
     }
 
     notifyNativePingStatus(val) {
         console.log("Native Ping Status - " + val);
         this.isPingStarted = val;
+    }
+
+    updateAppFromBackground(deviceType) {
+        //enable all communications
+        window['ajaxEnabled'] = true;
+
+        //httpResponseErrorInterceptor.resetState();
+        this.globalNotifyDispatchers.hideNotifications();
+        this.resetCommunications();
+        this.serviceState.resetTryCounter();
+
+        //qeventsHandller.connectCometD();
+        this.spService.fetchUserStatus().subscribe((res: any) => {
+            if (!res) {
+                /**
+                 * For specific devices like S4, when network changes from 3g->4g and app resumes res==undefined == TRUE and app gets logout.
+                 * So show network error message for such devices only
+                 * by Prasad
+                 */
+                if (deviceType == this.MARKED_DEVICES.SAMSUNG_S4_V1 || deviceType == this.MARKED_DEVICES.SAMSUNG_S4_V2) {
+                    this.showNoNetworkMessage();
+                }
+                else {
+                    this.nativeApiService.logOut();
+                }
+            }
+            else {
+                if (res.userState == this.NO_STARTED_USER_SESSION && this.router.url != '/profile') {
+                    this.nativeApiService.logOut();
+                }
+            }
+        }, () => {
+
+        });
     }
 }
 
@@ -295,4 +360,10 @@ window["onPingSuccess"] = () => {
     const interceptor = window["qmGlobalHttpInterceptor"];
     interceptor.notifyNativePingStatus(false);
     interceptor.retryFailedGetRequests();
+};
+
+window['updateAppFromBackgroundFromNative'] = () => {
+    const interceptor = window["qmGlobalHttpInterceptor"];
+    interceptor.updateAppFromBackground();
+
 };

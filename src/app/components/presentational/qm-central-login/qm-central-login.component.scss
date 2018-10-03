@@ -55,6 +55,15 @@
     margin-top: 1.25rem;
     cursor: pointer;
 
+    &[disabled] {
+      opacity: 0.65;
+      cursor: auto;
+      &:hover,
+      &:focus {
+        font-weight: $font-weight-light;
+      }
+    }
+
     &__rounded {
       border-radius: 22px;
     }

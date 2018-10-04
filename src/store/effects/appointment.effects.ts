@@ -31,38 +31,38 @@ export class AppointmentEffects {
   searchAppointments$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.SEARCH_APPOINTMENTS)
     .pipe(
-    switchMap((action: AppointmentActions.SearchAppointments) =>
-      toAction(
-        this.appointmentDataService.searchAppointments(action.payload),
-        AppointmentActions.SearchAppointmentsSuccess,
-        AppointmentActions.SearchAppointmentsFail
+      switchMap((action: AppointmentActions.SearchAppointments) =>
+        toAction(
+          this.appointmentDataService.searchAppointments(action.payload),
+          AppointmentActions.SearchAppointmentsSuccess,
+          AppointmentActions.SearchAppointmentsFail
+        )
       )
-    )
     );
 
   @Effect()
   searchCalendarAppointments$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS)
     .pipe(
-    switchMap((action: AppointmentActions.SearchAppointments) =>
-      toAction(
-        this.appointmentDataService.searchCalendarAppointments(action.payload),
-        AppointmentActions.SearchCalendarAppointmentsSuccess,
-        AppointmentActions.SearchCalendarAppointmentsFail
+      switchMap((action: AppointmentActions.SearchAppointments) =>
+        toAction(
+          this.appointmentDataService.searchCalendarAppointments(action.payload),
+          AppointmentActions.SearchCalendarAppointmentsSuccess,
+          AppointmentActions.SearchCalendarAppointmentsFail
+        )
       )
-    )
     );
 
   @Effect()
   deleteAppointment$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.DELETE_APPOINTMENT)
     .pipe(
-    switchMap((action: AppointmentActions.DeleteAppointment) =>
-      this.appointmentDataService.deleteAppointment(action.payload).pipe(
-        mergeMap(() => [new AppointmentActions.DeleteAppointmentSuccess(action.payload, action.succssCallBack)]),
-        catchError((err: DataServiceError<any>) => of(new AppointmentActions.DeleteAppointmentFail(err, action.errorCallback))),
+      switchMap((action: AppointmentActions.DeleteAppointment) =>
+        this.appointmentDataService.deleteAppointment(action.payload).pipe(
+          mergeMap(() => [new AppointmentActions.DeleteAppointmentSuccess(action.payload, action.succssCallBack)]),
+          catchError((err: DataServiceError<any>) => of(new AppointmentActions.DeleteAppointmentFail(err, action.errorCallback))),
+        )
       )
-    )
     );
 
 
@@ -70,102 +70,105 @@ export class AppointmentEffects {
   deleteAppointmentSuccess$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.DELETE_APPOINTMENT_SUCCESS)
     .pipe(
-    tap((action: AppointmentActions.DeleteAppointmentSuccess) => {
-      action.succssCallBack();
-    }),
-    withLatestFrom(this.store$.select((state: IAppState) => state.appointments)),
-    switchMap(() => {
-      return this.translateService.get('appointment_deleted_success');
-    }),
-    switchMap((v) => {
-      var successMessage = {
-        firstLineName: v,
-        firstLineText: '',
-        icon: "correct"
-      }
-      return [new AppointmentActions.UpdateMessageInfo(successMessage)]
-    })
+      tap((action: AppointmentActions.DeleteAppointmentSuccess) => {
+        action.succssCallBack();
+      }),
+      withLatestFrom(this.store$.select((state: IAppState) => state.appointments)),
+      switchMap(() => {
+        return this.translateService.get('appointment_deleted_success');
+      }),
+      switchMap((v) => {
+        var successMessage = {
+          firstLineName: v,
+          firstLineText: '',
+          icon: "correct"
+        }
+        return [new AppointmentActions.UpdateMessageInfo(successMessage)]
+      })
     );
 
   @Effect()
   deleteAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.DELETE_APPOINTMENT_FAIL)
     .pipe(
-    switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-      return this.translateService.get(['appointment_deleted_fail', 'appointment_not_found_detail']).pipe(
-        switchMap((messages) => {
-          var errorMessage = {
-            firstLineName: messages['appointment_deleted_fail'],
-            icon: "error"
-          };
+      switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
+        return this.translateService.get(['appointment_deleted_fail', 'appointment_not_found_detail']).pipe(
+          switchMap((messages) => {
+            var errorMessage = {
+              firstLineName: messages['appointment_deleted_fail'],
+              icon: "error"
+            };
 
-          if (action.payload["errorCode"] === ERROR_CODE_APPOINTMENT_NOT_FOUND) {
-            this.toastService.infoToast(messages['appointment_not_found_detail']);
-          }
-          else {
-            this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
-          }
+            if (action.payload["errorCode"] === ERROR_CODE_APPOINTMENT_NOT_FOUND) {
+              this.toastService.infoToast(messages['appointment_not_found_detail']);
+            }
+            else {
+              let errMsg: string = (((action.payload["responseData"] || "")["error"] || "")["msg"] || "");
+              if (errMsg.length) {
+                this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
+              }
+            }
 
-          return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
-        })
-      );
-    }));
+            return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
+          })
+        );
+      }));
 
   @Effect()
   rescheduleAppointment$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT)
     .pipe(
-    switchMap((action: AppointmentActions.RescheduleAppointment) =>
-      this.appointmentDataService.rescheduleAppointment(action.payload).pipe(
-        mergeMap(() => [new AppointmentActions.RescheduleAppointmentSuccess(action.payload)]),
-        catchError((err: DataServiceError<any>) => of(new AppointmentActions.RescheduleAppointmentFail(err))),
+      switchMap((action: AppointmentActions.RescheduleAppointment) =>
+        this.appointmentDataService.rescheduleAppointment(action.payload).pipe(
+          mergeMap(() => [new AppointmentActions.RescheduleAppointmentSuccess(action.payload)]),
+          catchError((err: DataServiceError<any>) => of(new AppointmentActions.RescheduleAppointmentFail(err))),
+        )
       )
-    )
     );
 
   @Effect()
   rescheduleAppointmentSuccess$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS)
     .pipe(
-    switchMap((action: AppointmentActions.RescheduleAppointmentSuccess) => {
-      return this.translateService.get(['appointment_reschedule_success', 'appointment_new_date_time']).pipe(
-        switchMap((messages) => {
-          var successMessage = {
-            firstLineName: messages['appointment_reschedule_success'],
-            firstLineText: action.payload.branch.name,
-            icon: "correct",
-            LastLineName: messages['appointment_new_date_time'],
-            LastLineText: action.payload.start.replace('T', ', ')
-          }
-          return [new AppointmentActions.UpdateMessageInfo(successMessage)]
-        })
-      );
-    })
+      switchMap((action: AppointmentActions.RescheduleAppointmentSuccess) => {
+        return this.translateService.get(['appointment_reschedule_success', 'appointment_new_date_time']).pipe(
+          switchMap((messages) => {
+            var successMessage = {
+              firstLineName: messages['appointment_reschedule_success'],
+              firstLineText: action.payload.branch.name,
+              icon: "correct",
+              LastLineName: messages['appointment_new_date_time'],
+              LastLineText: action.payload.start.replace('T', ', ')
+            }
+            return [new AppointmentActions.UpdateMessageInfo(successMessage)]
+          })
+        );
+      })
     );
 
   @Effect()
   rescheduleAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
-    switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-      return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
-        switchMap((messages) => {
-          var errorMessage = {
-            firstLineName: messages['appointment_reschedule_fail'],
-            icon: "error"
-          };
+      switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
+        return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
+          switchMap((messages) => {
+            var errorMessage = {
+              firstLineName: messages['appointment_reschedule_fail'],
+              icon: "error"
+            };
 
-          if(action.payload["errorCode"] === 'E461'){
-            this.toastService.infoToast(messages['appointment_already_used']);
-          }
-          else {
-            if(action.payload["errorMsg"]) {
-              this.toastService.infoToast(action.payload["errorMsg"]);
+            if (action.payload["errorCode"] === 'E461') {
+              this.toastService.infoToast(messages['appointment_already_used']);
             }
-          }
-         
-          return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
-        })
-      );
-    }));
+            else {
+              if (action.payload["errorMsg"]) {
+                this.toastService.infoToast(action.payload["errorMsg"]);
+              }
+            }
+
+            return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
+          })
+        );
+      }));
 }

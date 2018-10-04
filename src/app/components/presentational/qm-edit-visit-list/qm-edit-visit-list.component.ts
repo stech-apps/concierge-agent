@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import {UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors, NativeApiDispatchers } from '../../../../store';
+import { UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors, NativeApiDispatchers } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
 import { QmModalService } from '../qm-modal/qm-modal.service';
@@ -33,7 +33,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   selectedbranchId: number;
   selectedSpId: number;
   selectedQueueId: number;
-  selectedQueueName:string;
+  selectedQueueName: string;
   searchText: string;
   visits: Visit[] = [];
   sortByVisitIdAsc = true;
@@ -59,8 +59,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canCherryPick: boolean = false;
 
   dsOrOutcomeExists: boolean = false;
-  visitSearchText: string ;
-  desktopQRCodeListnerTimer : any;
+  visitSearchText: string;
+  desktopQRCodeListnerTimer: any;
 
 
   constructor(
@@ -102,31 +102,31 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         if (this.selectedbranchId && this.selectedQueueId) {
           this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
         }
-      }else{
-        this.selectedQueueId=null;
+      } else {
+        this.selectedQueueId = null;
       }
     });
     this.subscriptions.add(selectedQueueSub);
 
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
-      if(value != null){
-        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true})
-        if(!this.nativeApi.isNativeBrowser()){
+      if (value != null) {
+        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
+        if (!this.nativeApi.isNativeBrowser()) {
           this.removeDesktopQRReader();
         }
       }
     });
     this.subscriptions.add(qrCodeSubscription);
-  
+
     const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
-      if(value === true){
-        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false})
+      if (value === true) {
+        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
         this.util.qrCodeListner();
-        if(!this.nativeApi.isNativeBrowser()){
+        if (!this.nativeApi.isNativeBrowser()) {
           this.checkDesktopQRReaderValue();
         }
       }
-      else{
+      else {
         this.util.removeQRCodeListner();
       }
     });
@@ -171,7 +171,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(uttSubscription);
 
     const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
-//check id defined to detect the search query request
+      //check id defined to detect the search query request
       if (result && !result.id) {
         this.resetQRReader();
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
@@ -180,19 +180,19 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
         }, error => {
-         // console.log(error);
+          // console.log(error);
           this.translateService.get('request_fail').subscribe(v => {
             this.toastService.infoToast(v);
           });
         })
-      } 
+      }
     }, error => {
-      
+
     });
     this.subscriptions.add(visitSub);
 
-    const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val)=>{
-      if(!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0){
+    const visiInfoFail = this.queueSelectors.isVisitInfoFail$.subscribe((val) => {
+      if (!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0) {
         this.resetQRReader();
         this.queueDispatcher.resetError();
       }
@@ -205,13 +205,13 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   }
 
-  resetQRReader(){
+  resetQRReader() {
     var searchBox = document.getElementById("visitSearchVisit") as any;
     this.translateService.get('visit_search_placeholder').subscribe(v => {
       searchBox.placeholder = v
     });
     this.searchText = "";
-    if(!this.nativeApi.isNativeBrowser()){
+    if (!this.nativeApi.isNativeBrowser()) {
       this.removeDesktopQRReader();
     }
   }
@@ -301,7 +301,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   resetSearch() {
     this.searchText = '';
-    
+
     if (this.selectedbranchId && this.selectedQueueId) {
       this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
     }
@@ -309,29 +309,29 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   handleInput($event) {
-  if($event.target.value.length == 0){
-    if (this.selectedbranchId && this.selectedQueueId) {
-      this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
+    if ($event.target.value.length == 0) {
+      if (this.selectedbranchId && this.selectedQueueId) {
+        this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
+      }
     }
   }
-  }
-  
+
 
   selectVisit(index: number, visitId: number) {
     this.selectedVisitId === visitId && this.visits.length > 1 ? this.visitClicked = !this.visitClicked : this.visitClicked = true;
     //visit selection code goes here
-   
+
     this.selectedVisitId = visitId;
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
     this.resetQRReader();
   }
 
-  onQRCodeSelect(){
+  onQRCodeSelect() {
     this.queueDispatcher.resetError();
-    if(this.nativeApi.isNativeBrowser()){
+    if (this.nativeApi.isNativeBrowser()) {
       this.nativeApi.openQRScanner();
     }
-    else{
+    else {
       var searchBox = document.getElementById("visitSearchVisit") as any;
       this.translateService.get('qr_code_scanner').subscribe(v => {
         searchBox.placeholder = v
@@ -341,16 +341,16 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkDesktopQRReaderValue(){
+  checkDesktopQRReaderValue() {
     this.desktopQRCodeListnerTimer = setInterval(() => {
-      if(this.searchText && this.searchText.length > 0){
+      if (this.searchText && this.searchText.length > 0) {
         this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
       }
     }, 1000);
   }
-  
-  removeDesktopQRReader(){
-    if(this.desktopQRCodeListnerTimer){
+
+  removeDesktopQRReader() {
+    if (this.desktopQRCodeListnerTimer) {
       clearInterval(this.desktopQRCodeListnerTimer);
     }
   }
@@ -368,7 +368,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
 
   keyDownFunction(event, visitSearchText: string) {
-    if(event){
+    if (event) {
       this.dismissKeyboard(event);
     }
     this.visitSearchText = visitSearchText;
@@ -431,7 +431,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
                 this.router.navigate(["/home"]);
               });
             }, error => {
-             // console.log(error);
+              // console.log(error);
               const err = new DataServiceError(error, null);
               if (error.status == ERROR_STATUS.NOT_FOUND) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
@@ -442,8 +442,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
                 this.translateService.get('visit_already_called').subscribe(v => {
                   this.toastService.infoToast(v);
                 });
-              }
-              else {
+              } else if (err.errorCode === '0') {
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.toastService.errorToast(v);
+                });
+              } else {
                 this.translateService.get('request_fail').subscribe(v => {
                   this.toastService.infoToast(v);
                 });
@@ -473,7 +476,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
               this.router.navigate(["/home"]);
             });
           }, error => {
-           // console.log(error);
+            // console.log(error);
             const err = new DataServiceError(error, null);
             if (error.status == ERROR_STATUS.NOT_FOUND) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {
@@ -483,6 +486,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
               this.translateService.get('visit_already_called').subscribe(v => {
                 this.toastService.infoToast(v);
+              });
+            } else if (err.errorCode === '0') {
+              this.translateService.get('request_fail').subscribe(v => {
+                this.router.navigate(["/home"]);
+                this.toastService.errorToast(v);
               });
             }
             else {
@@ -498,11 +506,20 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
 
-  goBackToQueueSection(){
+  goBackToQueueSection() {
     this.PreviousFlow.emit();
     this.visitDispatchers.resetSelectedQueue();
-  
+
   }
+
+  handleTimeoutError(err: DataServiceError<any>, msg: string,routeToHome) {
+    if (err.errorCode === '0') {
+      this.translateService.get(msg).subscribe(v => {
+        this.toastService.errorToast(msg);
+      });
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

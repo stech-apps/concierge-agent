@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers } from '../../../../store';
+import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
 import { ServicePointPoolDispatchers } from '../../../../store';
 import { IBranch } from '../../../../models/IBranch';
 import { IServicePointPool } from '../../../../models/IServicePointPool';
@@ -150,7 +150,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
             }
             , error => {
               console.log(error);
-            
+              const err = new DataServiceError(error, null);
+              
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
                   this.toastService.infoToast(v);
@@ -158,6 +159,11 @@ export class QmTransferToServicePoolComponent implements OnInit {
               }  else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
                   this.toastService.infoToast(v);
+                });
+              } else if (err.errorCode === '0') {
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.router.navigate(["/home"]);
+                  this.toastService.errorToast(v);
                 });
               }
               else {

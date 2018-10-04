@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable,Subject } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
 import { IStaffPool } from '../../../../models/IStaffPool';
-import { UserSelectors, StaffPoolDispatchers, StaffPoolSelectors, BranchSelectors, QueueVisitsSelectors, QueueSelectors, InfoMsgDispatchers, ServicePointSelectors } from '../../../../store';
+import { UserSelectors, StaffPoolDispatchers, StaffPoolSelectors, BranchSelectors, QueueVisitsSelectors, QueueSelectors, InfoMsgDispatchers, ServicePointSelectors, DataServiceError } from '../../../../store';
 import { TranslateService } from '@ngx-translate/core';
 import { Visit } from '../../../../models/IVisit';
 import { QmModalService } from '../qm-modal/qm-modal.service';
@@ -130,7 +130,8 @@ export class QmTransferToStaffPoolComponent implements OnInit {
             }
             , error => {
               console.log(error);
-            
+              const err = new DataServiceError(error, null);
+              
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
                   this.toastService.infoToast(v);
@@ -145,6 +146,11 @@ export class QmTransferToStaffPoolComponent implements OnInit {
               }  else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
                   this.toastService.infoToast(v);
+                });
+              }else if (err.errorCode === '0') {
+                this.translateService.get('request_fail').subscribe(v => {
+                  this.router.navigate(["/home"]);
+                  this.toastService.errorToast(v);
                 });
               }
               else {

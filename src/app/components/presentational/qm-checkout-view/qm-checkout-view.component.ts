@@ -525,14 +525,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.onFlowExit.emit();
         })
       } else if (err.errorCode === '0') {
-        this.translateService.get('appointment_create_fail').subscribe(v => {
-          var unSuccessMessage = {
-            firstLineName: v,
-            icon: "error"
-          }
-          this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
-        });
-        this.onFlowExit.emit();
+         this.handleTimeoutError(err,'appointment_create_fail');
       }
     });
   }
@@ -545,9 +538,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.saveFrequentService();
       this.onFlowExit.emit();
     }, error => {
-      this.loading = false;
-      this.showErrorMessage(error);
-      this.saveFrequentService();
+      const err = new DataServiceError(error, null);
+      if(err.errorCode === '0'){
+        this.handleTimeoutError(err,'visit_create_fail')
+      }else{
+        this.loading = false;
+        this.showErrorMessage(error);
+        this.saveFrequentService();
+      }
+
     
     })
   }
@@ -563,9 +562,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.saveFrequentService();
       this.onFlowExit.emit();
     }, error => {
-      this.loading = false;
-      this.showErrorMessage(error);
-      this.saveFrequentService();
+      const err = new DataServiceError(error, null);
+      if(err.errorCode === '0'){
+        this.handleTimeoutError(err,'arrive_appointment_fail')
+      }else{
+        this.loading = false;
+        this.showErrorMessage(error);
+        this.saveFrequentService();
+      }
+  
     
     })
   }
@@ -791,5 +796,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return dateObj;
   }
 
-
+handleTimeoutError(err:DataServiceError<any>,msg:string){
+ if (err.errorCode === '0') {
+    this.translateService.get(msg).subscribe(v => {
+      var unSuccessMessage = {
+        firstLineName: v,
+        icon: "error"
+      }
+      this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
+    });
+    this.onFlowExit.emit();
+  }
+}
 }

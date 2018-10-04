@@ -21,7 +21,7 @@ export class DataServiceError<T> {
   }
 
   private parseErrors(responseData: HttpErrorResponse) {
-    if (responseData) {
+    if (responseData && responseData.headers) {
       this.errorCode = responseData.headers.get(ERROR_CODE) || '0';
       this.errorMsg = responseData.headers.get(ERROR_MESSAGE) || '';
     }

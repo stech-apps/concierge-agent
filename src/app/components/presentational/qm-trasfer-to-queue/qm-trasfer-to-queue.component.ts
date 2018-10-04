@@ -2,7 +2,7 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable,Subject } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, ServicePointSelectors, InfoMsgDispatchers } from '../../../../store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
@@ -219,6 +219,7 @@ OnTransferButtonClick(type){
               this.router.navigate(["/home"]);
             });
           }, error => {
+            const err = new DataServiceError(error, null);
             console.log(error);
             
             if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
@@ -229,6 +230,11 @@ OnTransferButtonClick(type){
             else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {
                 this.toastService.infoToast(v);
+              });
+            } else if (err.errorCode === '0') {
+              this.translateService.get('request_fail').subscribe(v => {
+                this.router.navigate(["/home"]);
+                this.toastService.errorToast(v);
               });
             }
             else {

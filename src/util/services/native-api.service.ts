@@ -3,7 +3,7 @@ import { Injectable, ApplicationRef } from '@angular/core';
 import { LOGOUT_URL } from '../url-helper';
 import { Util } from '../util';
 import { NativeApiSupportService } from './native-api-support.service';
-import { NativeApiDispatchers } from '../../store';
+import { NativeApiDispatchers, ServicePointSelectors } from '../../store';
 declare var Android: any;
 declare var webkit: any;
 
@@ -18,7 +18,8 @@ export class NativeApiService {
   constructor(
     private util: Util,
     private nativeApiSupport: NativeApiSupportService,
-    private nativeApiDispatcher: NativeApiDispatchers
+    private nativeApiDispatcher: NativeApiDispatchers,
+    private servicePointSelectors: ServicePointSelectors
   ) {
     nativeApiService = this;
   }
@@ -143,18 +144,18 @@ export class NativeApiService {
   }
 
 
-  setLogMessage (msg){
+  setLogMessage(msg) {
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-        var date = new Date().toString();
-        var fullMsg = date + " " + msg;
-        try {
-            webkit.messageHandlers.setLogMessage.postMessage(fullMsg);
-        } catch(err) {
-            console.log("The native context does not exist yet", {class:"nativeApi" ,func:"setLogMessage", exception: err});
-        }
+      var date = new Date().toString();
+      var fullMsg = date + " " + msg;
+      try {
+        webkit.messageHandlers.setLogMessage.postMessage(fullMsg);
+      } catch (err) {
+        console.log("The native context does not exist yet", { class: "nativeApi", func: "setLogMessage", exception: err });
+      }
     }
-}
-  openQRScanner () {
+  }
+  openQRScanner() {
     this.nativeApiDispatcher.openQRCodeScanner();
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
       //support iOS 8 and above version
@@ -175,62 +176,69 @@ export class NativeApiService {
   }
 
   startPing(period, times) {
-    var pingExpireTime = 0;  //utt.getEntity().pingExpire; //TODO :
-    if (pingExpireTime) {
-      pingExpireTime = 15;
-    }
+    let pingExpireTime = undefined;  //utt.getEntity().pingExpire; //TODO :
+    this.servicePointSelectors
+      .uttParameters$.subscribe((uttParams) => {
+        if (uttParams) {
+          pingExpireTime = uttParams.pingExpire;
+        }
 
-    if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-      //support iOS 8 and above version
-      try {
-        //disable all communications
-        window['ajaxEnabled'] = false;
-        var message = { "period": period, "times": times, "pingExpire": pingExpireTime };
-        webkit.messageHandlers.startPing.postMessage(message);
-      } catch (err) {
-        console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
-      }
-    } else {
-      var nativeAndroidVersion = "1.0.0.2";
-      var status = 0;
-      var nativeAppVersion = 0;
-      try {
-        nativeAppVersion = Android.getNativeAppVersion();
+        if (!pingExpireTime) {
+          pingExpireTime = 15;
+        }
 
-      }
-      catch (err) {
-      }
-      if (navigator.userAgent.match(/Android/i)) {
-        status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
-      }
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+          //support iOS 8 and above version
+          try {
+            //disable all communications
+            window['ajaxEnabled'] = false;
+            var message = { "period": period, "times": times, "pingExpire": pingExpireTime };
+            webkit.messageHandlers.startPing.postMessage(message);
+          } catch (err) {
+            console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
+          }
+        } else {
+          var nativeAndroidVersion = "1.0.0.2";
+          var status = 0;
+          var nativeAppVersion = 0;
+          try {
+            nativeAppVersion = Android.getNativeAppVersion();
 
-      if (status > 0) {
-        try {
-          //disable all communications
-          window['ajaxEnabled'] = false;
-          /**
-           * To work consistently over backward compatibility and fine tuning on paramters
-           * function will accept object for ping
-           * @param pingObj
-           */
-          var pingObj = { "pingDelay": period, "pingCounter": times, "pingDuration": pingExpireTime };
-          Android.startPing(JSON.stringify(pingObj));
+          }
+          catch (err) {
+          }
+          if (navigator.userAgent.match(/Android/i)) {
+            status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
+          }
+
+          if (status > 0) {
+            try {
+              //disable all communications
+              window['ajaxEnabled'] = false;
+              /**
+               * To work consistently over backward compatibility and fine tuning on paramters
+               * function will accept object for ping
+               * @param pingObj
+               */
+              var pingObj = { "pingDelay": period, "pingCounter": times, "pingDuration": pingExpireTime };
+              Android.startPing(JSON.stringify(pingObj));
+            }
+            catch (err) {
+              console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
+            }
+          }
+          else {
+            try {
+              //disable all communications
+              window['ajaxEnabled'] = false;
+              Android.startPing(period, times);
+            }
+            catch (err) {
+              console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
+            }
+          }
         }
-        catch (err) {
-          console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
-        }
-      }
-      else {
-        try {
-          //disable all communications
-          window['ajaxEnabled'] = false;
-          Android.startPing(period, times);
-        }
-        catch (err) {
-          console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
-        }
-      }
-    }
+      }).unsubscribe();
   }
 }
 

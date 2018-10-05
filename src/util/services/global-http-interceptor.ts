@@ -1,3 +1,4 @@
+import { ToastService } from './toast.service';
 import { UserStatusDispatchers } from './../../store/services/user-status/user-status.dispatchers';
 import { UserStatusSelectors } from 'src/store/services';
 import { filter } from 'rxjs/internal/operators/filter';
@@ -48,7 +49,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         private serviceState: ServiceStateService, private translateService: TranslateService,
         private nativeApiService: NativeApiService, private userStatusSelector: UserStatusSelectors,
         private router: Router, private userStatusDispatchers: UserStatusDispatchers,
-    private spService: SPService) {
+    private spService: SPService, private toastService: ToastService) {
 
         window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
         window["qmGlobalHttpInterceptor"] = this;
@@ -117,7 +118,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     if (this.nativeApiService.isNativeBrowser()) {
                         this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                     }
-                }else {
+                } else {
                     clearTimeout(this.localTimeoutBeforeStartPing);
                 }
 
@@ -141,6 +142,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                         if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.isPingStarted) {
                                             this.isPingStarted = true;
                                             this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
+                                        } else if(!this.nativeApiService.isNativeBrowser()) {
+                                            this.serviceState.incrementTry();
                                         }
                                         return of(count);
                                     } else {
@@ -158,6 +161,15 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                     if (this.serviceState.getCurrentTry() <= (this.numberOfGetRetry - 1)) {
                                         return of(req);
                                     } else {
+                                        if (!this.nativeApiService.isNativeBrowser()) {
+                                            if (this.serviceState.getCurrentTry() === this.numberOfGetRetry) {
+                                                this.translateService.get('label.critical_com_error').subscribe((t) => {
+                                                    this.toastService.stickyToast(t);
+                                                    this.globalNotifyDispatchers.hideNotifications();
+                                                }).unsubscribe(); 
+                                            }                                          
+                                        }
+
                                         return this.recoverApp.asObservable();
                                     }
                                 })

@@ -18,6 +18,10 @@ export class GlobalNotifyDispatchers {
     this.store.dispatch(new GlobalNotifyActions.GlobalWarning(warning));
   }
 
+  showCriticalCommunicationError(warning: IGlobalNotification) {
+    this.store.dispatch(new GlobalNotifyActions.GlobalCriticalCommunicationError());
+  }
+
   hideNotifications() {
     this.store.dispatch(new GlobalNotifyActions.GlobalNotifiyHide());
   }

@@ -1,15 +1,17 @@
+import { interval } from 'rxjs';
 import { ServicePointSelectors, QueueDispatchers } from './../store/services';
 import { Injectable } from '@angular/core';
 import cssVars from 'css-vars-ponyfill';
 import { Validators } from '@angular/forms';
+import { GlobalNotifyDispatchers } from 'src/store/services/global-notify';
 
 @Injectable()
 export class Util {
 
-    qrCodeListnerTimer : any;
+    qrCodeListnerTimer: any;
     public qrRelatedData: any;
-    
-    constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers) {
+
+    constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers, private globalDispatchers: GlobalNotifyDispatchers) {
         window['x'] = this.setSelectedApplicationTheme.bind(this);
     }
 
@@ -30,83 +32,83 @@ export class Util {
 
     setDefaultApplicationTheme() {
         this.setApplicationTheme(null);
-    }  
-    
+    }
+
     setSelectedApplicationTheme() {
-        this.servicePointSelectors.openServicePoint$.subscribe((sp)=> {
+        this.servicePointSelectors.openServicePoint$.subscribe((sp) => {
             this.setApplicationTheme(sp);
         }).unsubscribe();
-    } 
+    }
 
     setApplicationTheme(servicePoint) {
         let themeColor = '#a9023a';
 
         if (servicePoint) {
-             themeColor = servicePoint.parameters.highlightColor;
+            themeColor = servicePoint.parameters.highlightColor;
             if (themeColor == "customized") {
                 themeColor = servicePoint.parameters.customizeHighlightColor;
             }
         }
 
-            //set color for app theme custom property
-            if (themeColor) {
-                let styles: any = getComputedStyle(document.documentElement);
-                document.documentElement.style.setProperty('--app-theme', themeColor);
+        //set color for app theme custom property
+        if (themeColor) {
+            let styles: any = getComputedStyle(document.documentElement);
+            document.documentElement.style.setProperty('--app-theme', themeColor);
 
-                //IE fix 
-                if (!(window["CSS"] && CSS.supports('color', 'var(--primary)'))) {
-                    setTimeout(() => {
-                        cssVars({
-                            onlyVars : true,
-                            preserve: true,
-                            variables: {
-                                'app-theme': themeColor
-                            }
-                        });
-                    }, 0);
-                }
+            //IE fix 
+            if (!(window["CSS"] && CSS.supports('color', 'var(--primary)'))) {
+                setTimeout(() => {
+                    cssVars({
+                        onlyVars: true,
+                        preserve: true,
+                        variables: {
+                            'app-theme': themeColor
+                        }
+                    });
+                }, 0);
             }
-        
+        }
+
     }
 
-    replaceCharcter(value: string){
-        return value.replace(/^\s+|\s+$/g, "").replace(/\n/g, "\\n").replace(/\\/g, "\\\\").replace(/"/g, "\\\""); 
+    replaceCharcter(value: string) {
+        return value.replace(/^\s+|\s+$/g, "").replace(/\n/g, "\\n").replace(/\\/g, "\\\\").replace(/"/g, "\\\"");
     }
 
-    buildPhoneNumber(number: string){
+    buildPhoneNumber(number: string) {
         return number.replace("+", "");
     }
 
-    phoneNoValidator(){
+    phoneNoValidator() {
         return [Validators.pattern(/^\+?\d+$/), Validators.maxLength(14)]
     }
 
-    emailValidator(){
+    emailValidator() {
         return [Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)];
     }
 
-    qrCodeListner(){
+    qrCodeListner() {
         this.qrCodeListnerTimer = setInterval(() => {
-          if(this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded){
-            this.qrRelatedData.isQrCodeLoaded = false;
-            this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
-            this.qrRelatedData = null;
-          }
+            if (this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded) {
+                this.qrRelatedData.isQrCodeLoaded = false;
+                this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+                this.qrRelatedData = null;
+            }
         }, 1000);
-      }
-      
-      removeQRCodeListner(){
-        if(this.qrCodeListnerTimer){
-          this.qrRelatedData = null;
-          clearInterval(this.qrCodeListnerTimer);
+    }
+
+    removeQRCodeListner() {
+        if (this.qrCodeListnerTimer) {
+            this.qrRelatedData = null;
+            clearInterval(this.qrCodeListnerTimer);
         }
-      }
+    }
 
-      setQRRelatedData(qrData: any){
+    setQRRelatedData(qrData: any) {
         this.qrRelatedData = qrData;
-      }
+    }
 
-      getLocaleDate(dateString : string) {
+    getLocaleDate(dateString: string) {
         var date = new Date(dateString);
         var timeOffset = date.getTimezoneOffset();
 
@@ -130,5 +132,5 @@ export class Util {
         var modifyDate = localeFormat.replace(localeTimeFormat, modifyTime);
 
         return modifyDate;
-    } 
+    }
 }

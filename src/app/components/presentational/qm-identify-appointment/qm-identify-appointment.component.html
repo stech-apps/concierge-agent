@@ -361,8 +361,8 @@
         <ng-container *ngFor="let app of appointments | sortAppointments: [sortColumn]: isDescending">
           <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
             <td class="qm-identify-appointment__customer-table__col-5"></td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{getTime(app.startTime || app.start)}}</td>
-            <td class="qm-identify-appointment__customer-table__col-15">{{getDate(app.endTime || app.end)}}</td>
+            <td class="qm-identify-appointment__customer-table__col-10">{{getTime((app.startTime || app.start ), (app.branch && app.branch.fullTimeZone || ''))}}</td>
+            <td class="qm-identify-appointment__customer-table__col-15">{{getDate((app.endTime || app.end),( app.branch && app.branch.fullTimeZone || ''))}}</td>
             <td class="qm-identify-appointment__customer-table__col-5">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
             <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
             <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>

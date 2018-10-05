@@ -54,9 +54,9 @@ export class QmEditAppointmentComponent implements OnInit, OnDestroy {
     let result = '';
     if(this.selectedAppointment ) {
       result = `${moment(this.selectedAppointment.start)
-        .tz(this.selectedAppointment.branch.fullTimeZone).local().format('YYYY-MM-DD HH:mm')}`;
+        .tz(this.selectedAppointment.branch.fullTimeZone).format('YYYY-MM-DD HH:mm')}`;
       result += `-${moment(this.selectedAppointment.end)
-        .tz(this.selectedAppointment.branch.fullTimeZone).local().format('HH:mm')}`;
+        .tz(this.selectedAppointment.branch.fullTimeZone).format('HH:mm')}`;
     }
     return result;
   }

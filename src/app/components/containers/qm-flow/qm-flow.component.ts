@@ -80,12 +80,6 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     });
   }
 
-  ngOnDestroy() {
-  console.log("completed");
-  
-  }
-
-
 
   onFlowExit(panel: QmFlowPanelComponent, result: any) {
     this.AccountDispatchers.setMenuItemStatus(true);

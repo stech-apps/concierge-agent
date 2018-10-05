@@ -2,6 +2,7 @@
 import * as LicenseActions from '../actions';
 
 export interface ILicenseState {
+  
     status: boolean;
     loading: boolean;
     loaded: boolean;
@@ -9,6 +10,7 @@ export interface ILicenseState {
 }
 
 const initialState = {
+ 
   status: false,
   loading: false,
   loaded: false,

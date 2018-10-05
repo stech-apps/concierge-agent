@@ -12,8 +12,10 @@
       <!-- <span class="sr-only">{{ 'label.home' | translate }}</span> -->
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
-    <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}}</span>
-    <span class="qm-header__service-point-name" *ngIf='showSPointName'>{{sPName}}</span>
+    <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} 
+      <span> &#62; </span>
+    </span>
+    <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
     <a>
       <span class="qm-header__edit-link" *ngIf='showBranch' (click)="editClick()">{{'edit'|translate}}</span>
     </a>

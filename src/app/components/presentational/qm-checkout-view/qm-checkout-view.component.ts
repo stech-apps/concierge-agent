@@ -562,6 +562,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.saveFrequentService();
       this.onFlowExit.emit();
     }, error => {
+<<<<<<< HEAD
       const err = new DataServiceError(error, null);
       if(err.errorCode === '0'){
         this.handleTimeoutError(err,'arrive_appointment_fail')
@@ -572,6 +573,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
   
     
+=======
+      this.loading = false;
+      this.showErrorMessage(error);
+      this.saveFrequentService();
+      this.onFlowExit.emit();
+>>>>>>> bottom bar added
     })
   }
 

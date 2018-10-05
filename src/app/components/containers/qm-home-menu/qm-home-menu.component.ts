@@ -4,7 +4,7 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors } from 'src/store';
 
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,7 @@ import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarBranchCentralResponse } from '../../../../models/ICalendarBranchCentralResponse';
 import { ActiveToast } from 'ngx-toastr';
 import { NativeApiService } from '../../../../util/services/native-api.service';
+import { ISystemInfo } from '../../../../models/ISystemInfo';
 
 @Component({
   selector: 'qm-home-menu',
@@ -45,6 +46,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   hostAddressStr:string;
   menuItemEnable:boolean;
 
+  public systemInformation$: Observable<ISystemInfo>;
+  public licenseIsValid$: Observable<boolean>;
+
   private subscriptions: Subscription = new Subscription();
 
 
@@ -52,7 +56,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
     private toastService: ToastService, private translateService: TranslateService,
     private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors,
-    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors, private nativeApi: NativeApiService) {
+    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors, private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors) {
 
   }
 
@@ -64,7 +68,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.checkUserPermissions();
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
-
+    console.log(this.userDirection$);
+    
     if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
       this.calendarBranchDispatcher.fetchCalendarBranches();
     }
@@ -73,6 +78,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.menuItemEnable = status;
     });
     this.subscriptions.add(AccountSubscriptions);
+
+    this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
+    this.licenseIsValid$ = this.licenseInfoSelectors.isValidLicense$;
+
   }
 
 
@@ -224,5 +233,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  hasValidLicense (systemInfo) {
+    return systemInfo.licenseCompanyName !== null && systemInfo.licenseCompanyName !== '';
   }
 }

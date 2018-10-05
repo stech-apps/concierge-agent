@@ -81,9 +81,13 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.servicePoint$ = this.servicePointSelectors.openServicePoint$;
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
+
   }
 
   ngOnInit() {
+    
+    console.log(this.userDirection$);
+    
     const licenseSubscription = this.isValidLicense$.subscribe(
       (licenseIsValid: boolean) => {
         this.isValidLicense = licenseIsValid;

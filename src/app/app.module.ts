@@ -16,7 +16,7 @@ import { LicenseAuthGuard } from "src/auth-guards/license-auth-guard";
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule,ApplicationRef, ErrorHandler } from "@angular/core";
+import { NgModule, ApplicationRef, ErrorHandler } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -168,13 +168,13 @@ const toastrGlobalOptions = {
   preventDuplicates: true,
   autoDismiss: true,
   iconClasses: {},
-  class:'toast-msg'
+  class: 'toast-msg'
 };
 
-export class MyHammerConfig extends HammerGestureConfig  {
+export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
-      // override hammerjs default configuration
-      'press': {time: 1000}      
+    // override hammerjs default configuration
+    'press': { time: 1000 }
   }
 }
 
@@ -249,7 +249,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     QmGlobalErrorComponent,
     QmLoadingModalComponent,
     QmCentralLoginComponent
-   
+
   ],
   entryComponents: [
     QmCustomToastComponent,
@@ -312,15 +312,15 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FormGroupDirective,
     BookingHelperService,
     LocalStorage,
-    NativeApiSupportService ,
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: QmGlobalHttpInterceptor,
-    //   multi: true,
-    // },
-    { 
-      provide: HAMMER_GESTURE_CONFIG, 
-      useClass: MyHammerConfig 
+    NativeApiSupportService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: QmGlobalHttpInterceptor,
+      multi: true,
+    },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
     },
     QmCheckoutViewConfirmModalService,
     QmNotesModalService,
@@ -351,7 +351,7 @@ export class AppModule {
     });
 
     this.router.events.subscribe((ev) => {
-      if(ev instanceof NavigationEnd){
+      if (ev instanceof NavigationEnd) {
         this.util.setSelectedApplicationTheme();
       }
     });

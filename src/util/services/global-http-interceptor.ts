@@ -118,6 +118,15 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     if (this.nativeApiService.isNativeBrowser()) {
                         this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                     }
+                    else {
+                        this.translateService.get('label.critical_com_error').subscribe((t) => {
+                            this.toastService.stickyToast(t);
+                            setTimeout(()=> {
+                                this.globalNotifyDispatchers.hideNotifications();
+                            }, 2000);
+                            
+                        }).unsubscribe(); 
+                    }
                 } else {
                     clearTimeout(this.localTimeoutBeforeStartPing);
                 }

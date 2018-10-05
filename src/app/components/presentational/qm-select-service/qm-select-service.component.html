@@ -34,7 +34,7 @@
     </div>
     <div class="qm-service-list__item-container">
         <div class="qm-service-list__header" *ngIf="selectedBranch && (filteredServiceList | filterService: [filterText, flowType]).length > 0">{{ ('available_services' | translate) + ' ' + selectedBranch.name }}</div>
-        <div class="qm-service-list__header" *ngIf="selectedBranch && filteredServiceList.length === 0 && flowType === 'CREATE_APPOINTMENT'">{{ ('no_bookable_service' | translate) + ' ' + selectedBranch.name }}</div>
+        <div class="qm-service-list__header" *ngIf="selectedBranch && filteredServiceList.length === 0 && flowType === 'CREATE_APPOINTMENT'">{{ ('no_bookable_service' | translate) }}</div>
         <div class="qm-service-list__item" (click)="onServiceSelect(service, true)" *ngFor="let service of filteredServiceList | filterService : [filterText, flowType]">
             <div class="qm-service-list__item--text">{{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
         </div>

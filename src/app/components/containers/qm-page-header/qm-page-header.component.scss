@@ -124,14 +124,16 @@
   &__branch-name {
     flex: 1 1 auto;
     color: $header-branch-name-color;
-    margin: rem(0 0 0 $standard-margin);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 20vw;
-    @at-root [dir="rtl"] & {
-      margin-left: 0;
+
+    @at-root [dir="rtl"] & { 
       margin-right: rem($standard-margin);
+    }
+   @at-root [dir="ltr"] & { 
+      margin-left: rem($standard-margin);
     }
    
   }
@@ -139,11 +141,22 @@
   &__service-point-name {
     flex: 1 1 auto;
     color: $header-service-point-name-color;
-    margin: rem(0 $standard-margin/2 0 $standard-margin/2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 20vw;
+      @at-root [dir="rtl"] & { 
+      margin-left: rem($standard-margin);
+    }
+   @at-root [dir="ltr"] & { 
+      margin-right: rem($standard-margin);
+    }
+  }
+
+  &__less-than-icon{
+    flex: 1 1 auto;
+    color: $header-service-point-name-color;
+    margin: rem(0 $standard-margin/2 0 $standard-margin/2); 
   }
 
   &__edit-link {

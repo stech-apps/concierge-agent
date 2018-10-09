@@ -70,7 +70,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     if(changes['editAppointment'] && this.editAppointment) {
       this.enableReschedule = false;
       window['moment'] = moment;
-      const calculatedAppointmentTime = moment(this.editAppointment.start).tz(this.selectedCalendarBranch.fullTimeZone);
+      const calculatedAppointmentTime = moment(this.editAppointment.start).tz(this.editAppointment.branch.fullTimeZone);
       if(calculatedAppointmentTime.isAfter(moment.now())) {
         this.originalAppointmentTime = calculatedAppointmentTime.format('HH:mm');
         this.selectedDates = [{selected: true, mDate: calculatedAppointmentTime}];

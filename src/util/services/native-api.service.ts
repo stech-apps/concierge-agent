@@ -211,7 +211,7 @@ export class NativeApiService {
             status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
           }
 
-          if (status > 0) {
+          if (status < 0) {
             try {
               //disable all communications
               window['ajaxEnabled'] = false;

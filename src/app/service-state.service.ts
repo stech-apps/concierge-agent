@@ -8,6 +8,7 @@ export class ServiceStateService {
   private maxNumberOfTries = undefined; //value was 2 in prior implementation for 3 retries. Now undefined to continue retry indefinitely.
   private currentTry = 0;
   private isServiceInProgress = false;
+  private isNetWorkPingStarted = false;
 
   constructor() { }
 
@@ -17,6 +18,14 @@ export class ServiceStateService {
 
   getCurrentTry() {
     return this.currentTry;
+  }
+
+  getIsNetWorkPingStarted() {
+    return this.isNetWorkPingStarted;
+  }
+
+  setIsNetWorkPingStarted(value) {
+    this.isNetWorkPingStarted = value;
   }
 
   incrementTry() {

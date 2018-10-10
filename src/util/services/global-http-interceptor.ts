@@ -32,7 +32,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private http_timeout = 5000;
     private native_max_ping_count_for_message = 2;
     private lastRequestAction = 'NONE';
-    private isPingStarted = false;
     // Retry all get requests this many times before starting ping.
     private numberOfGetRetry = 3;
 
@@ -147,9 +146,10 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                         retryWhen(res => {
                             return interval(this.http_timeout).pipe(
                                 flatMap((count) => {
-                                    if (count >= (this.numberOfGetRetry - 1)) {
-                                        if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.isPingStarted) {
-                                            this.isPingStarted = true;
+                                    if (this.serviceState.getCurrentTry() === this.numberOfGetRetry) {
+                                        if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.serviceState.getIsNetWorkPingStarted()) {
+                                            console.log('starting network ping' + ' ISPINGSTARTED=' +  this.serviceState.getIsNetWorkPingStarted());
+                                            this.serviceState.setIsNetWorkPingStarted(true);
                                             this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                                         } else if(!this.nativeApiService.isNativeBrowser()) {
                                             this.serviceState.incrementTry();
@@ -167,7 +167,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                         return of(count);
                                     }
                                 }), delayWhen((d) => {
-                                    if (this.serviceState.getCurrentTry() <= (this.numberOfGetRetry - 1)) {
+                                    if (this.serviceState.getCurrentTry() < this.numberOfGetRetry) {
+                                        console.log("On before another retry");
                                         return of(req);
                                     } else {
                                         if (!this.nativeApiService.isNativeBrowser()) {
@@ -178,6 +179,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                                 }).unsubscribe(); 
                                             }                                          
                                         }
+
+                                        console.log("WAITING for recover no retries");
 
                                         return this.recoverApp.asObservable();
                                     }
@@ -305,15 +308,15 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         this.zone.run(() => {
             this.globalNotifyDispatchers.hideNotifications();
             this.serviceState.setActive(false);
-            this.serviceState.resetTryCounter();
-            this.isPingSuccess = false;
-            this.isPingStarted = false;
         });
     }
 
     retryFailedGetRequests() {
         this.zone.run(() => {
             this.isPingSuccess = true;
+            this.serviceState.resetTryCounter();
+            this.isPingSuccess = false;
+            this.serviceState.setIsNetWorkPingStarted(false);
             this.recoverApp.next(true);
         });
     }
@@ -332,7 +335,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     notifyNativePingStatus(val) {
         console.log("Native Ping Status - " + val);
-        this.isPingStarted = val;
+       this.isPingSuccess = val;
     }
 
     updateAppFromBackground(deviceType) {

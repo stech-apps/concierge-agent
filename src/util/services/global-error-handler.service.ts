@@ -35,22 +35,24 @@ export class GlobalErrorHandler {
         // }
     }
 
-    handleError<T>(requestData?: T) {
+    handleError<T>(requestData?: T, additionalData: any = {}) {
         return (res: HttpErrorResponse) => {
-            const error = new DataServiceError(res, requestData);
+            const error = new DataServiceError(res, additionalData);
 
             /*all the request errors which need to be handled in their respective components should be created with a pipe
              to handle error method with pasing "true" to requestdata.*/
 
+             let combinedError = Object.assign(res, error); // due to app compatibility after error handler introduction
+
             if ((<boolean><any>requestData) === true) {
                 //transfer error to the component to handle
                 console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error transferred to the component to handle');
-                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + res);
-                return throwError(res);
+                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + combinedError);
+                return throwError(combinedError);
             } else {
                 //error should be handled in here
                 console.log(moment().format('YYYY-MM-DD HH:mm') + " INFO " + 'Error handled in global handler');
-                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + res);
+                console.error(moment().format('YYYY-MM-DD HH:mm') + " ERROR " + combinedError);
                 //this.toastService.errorToast(`${error.errorMsg}`);
                 return empty();
             }

@@ -10,4 +10,5 @@
     left: 0;
     @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
     z-index: 50;
+    display: flex;
 }

@@ -1,5 +1,5 @@
 <qm-flow #f>
-  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true">
+  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true" [title]="'specify_service'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{  selectedServices[0].internalName }}</qm-flow-panel-result>
@@ -10,9 +10,9 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #pc *ngIf="!isCustomerFlowHidden"  [isHeaderVisible]="isCustomerHeaderVisible">
+  <qm-flow-panel #pc *ngIf="!isCustomerFlowHidden"  [isHeaderVisible]="isCustomerHeaderVisible" [title]="'addCustomer'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pc)" (onFlowExit)="f.onFlowExit()">
-      <qm-flow-panel-title>{{ 'identify_customer' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'addCustomer' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{ currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0) === true ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
@@ -21,7 +21,7 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true">
+  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true" [title]="'create_confirm'">
     <qm-flow-panel-header  (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()" >
       <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>

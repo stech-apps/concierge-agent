@@ -1,4 +1,5 @@
+<ng-content select="qm-flow-panel-header" *ngIf="isHeaderVisible" class="qm-header-class"></ng-content>
 <div class="qm-flow-panel" [ngClass]="{'qm-flow-panel--active' : isActive }">
-    <ng-content select="qm-flow-panel-header" *ngIf="isHeaderVisible"></ng-content>
+  
     <ng-content select="qm-flow-panel-content" *ngIf="isContentVisible"></ng-content>
 </div> 

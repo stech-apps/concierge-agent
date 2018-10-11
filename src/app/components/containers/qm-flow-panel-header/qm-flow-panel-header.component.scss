@@ -5,14 +5,17 @@
 }
 
 qm-flow-panel-header  {
-    width: 100%;
-    line-height: 45px;
-    max-height: 45px;
-    height: 45px;
-    color: $primary-text-color;
-    font-family: $tertiary-font-family;
-    letter-spacing: $header-letter-spacing;
-    font-weight: $font-weight-bold;
+    // background-color: red;
+    // width: 100%;
+    // line-height: 45px;
+    // max-height: 45px;
+    // height: 45px;
+    // color: $primary-text-color;
+    // font-family: $tertiary-font-family;
+    // letter-spacing: $header-letter-spacing;
+    // font-weight: $font-weight-bold;
+    display: inline;
+    width:fit-content;
 }
 
 .qm-flow-panel-header {
@@ -56,3 +59,49 @@ qm-flow-panel-header  {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+
+#qm-pointer-2 {
+    margin-top: 7px;
+    width: 150px;
+    height: 60px;
+    position: relative;
+    background: $white;
+    text-align: center;
+    margin-left: 23px;
+  }
+
+  #qm-pointer-2:before {
+    margin-top: 10px;
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid $white;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+  }
+  #qm-pointer-2:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid $midnight-blue;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+  }
+
+  .qm-pointer-text{
+      padding-top: 17px;
+      color:$primary-pink;  
+      margin-left: 30px;
+  }
+
+ 
+
+
+  

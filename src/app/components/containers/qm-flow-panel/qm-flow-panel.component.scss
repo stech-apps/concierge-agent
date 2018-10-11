@@ -1,11 +1,17 @@
 @import '../../../../styles/base/_component-manifest.scss';
 
 .qm-flow-panel {
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    margin-top: 75px;
     &--active {
         .qm-flow-panel-header  {
             background-color: var(--app-theme);
         }
     }
+}
+
+.qm-header-class{
+    display: flex;
 }

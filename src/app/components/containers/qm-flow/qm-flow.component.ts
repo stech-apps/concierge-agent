@@ -1,7 +1,7 @@
 import { QmModalService } from './../../presentational/qm-modal/qm-modal.service';
 import { Util } from './../../../../util/util';
 import { Router } from '@angular/router';
-import { Component, OnInit, ContentChildren, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ContentChildren, AfterContentInit, Input } from '@angular/core';
 import { QmFlowPanelComponent } from 'src/app/components/containers/qm-flow-panel/qm-flow-panel.component';
 import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
@@ -9,13 +9,15 @@ import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
 import { ReserveDispatchers, TimeslotDispatchers, AccountDispatchers } from '../../../../store';
 
+
 @Component({
   selector: 'qm-flow',
   templateUrl: './qm-flow.component.html',
   styleUrls: ['./qm-flow.component.scss'],
   host: { 'class': 'qm-flow-component-root animated slideInUp faster' }
 })
-export class QmFlowComponent implements OnInit, AfterContentInit {
+export class QmFlowComponent implements OnInit {
+  activeHeader:number;
 
   constructor(
     private router: Router,
@@ -26,7 +28,11 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     private reserveDispatchers:ReserveDispatchers,
     private timeSlotDispatchers:TimeslotDispatchers,
     private AccountDispatchers:AccountDispatchers
-  ) { }
+  ) {
+
+    this.activeHeader = 0;
+
+   }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
 
@@ -34,13 +40,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   flowPanels = new QueryList<QmFlowPanelComponent>();
 
   ngOnInit() {
-  }
-
-  ngAfterContentInit() {
-    const firstPanel = this.flowPanels.toArray()[0];
-    if(firstPanel){
-      firstPanel.isShowExitFlow = true;
-    }
+    
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
@@ -58,7 +58,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       if (fp.id == flowPanel.id) {
         fp.isActive = true;
         fp.isContentVisible = true;
-        fp.isHeaderVisible = true;
+          fp.isHeaderVisible = true;
         panelFound = true;
       }
       else {
@@ -81,7 +81,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
 
-  onFlowExit(panel: QmFlowPanelComponent, result: any) {
+  onFlowExit(result?: any) {
     this.AccountDispatchers.setMenuItemStatus(true);
    if (result) {
       this.exitFlow = true;
@@ -115,11 +115,10 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
-
+    this.activeHeader=this.activeHeader+1;
     let panelsCollection = this.flowPanels.toArray();
-
     let panelIndex = panelsCollection.indexOf(panel);
-
+    
     this.flowPanels.forEach((fp, index) => {
       fp.isActive = false;
       fp.isContentVisible = false;
@@ -133,4 +132,17 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     panel.isContentVisible = true;
     panel.isHeaderVisible = true;
   }
+
+  
+headerItemClicked(n){
+  if(n<this.activeHeader){
+    this.activeHeader = n;
+   
+  }
+  
+ 
 }
+
+
+}
+

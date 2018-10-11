@@ -1,5 +1,5 @@
 <qm-flow #f>
-  <qm-flow-panel #ia [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true">
+  <qm-flow-panel #ia [isHeaderVisible]="true" [isActive]="true" [isContentVisible]="true" [title]="'identify_appointment'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ia)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'identify_appointment' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedCustomer">{{selectedCustomer?.firstName + ' ' + selectedCustomer?.lastName}}</qm-flow-panel-result>
@@ -12,8 +12,8 @@
   </qm-flow-panel>
 
 
-  <qm-flow-panel #resc>
-    <qm-flow-panel-header (click)="f.panelHeaderClick(ia)" (onFlowExit)="f.onFlowExit()">
+  <qm-flow-panel #resc [title]="'edit_checkIn'">
+    <qm-flow-panel-header (click)="f.panelHeaderClick(ia)" (onFlowExit)="f.onFlowExit()" >
       <qm-flow-panel-title>{{ 'edit_checkIn' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result>{{ getSelectedAppointmentDuration()}}</qm-flow-panel-result>
     </qm-flow-panel-header>

@@ -1,4 +1,10 @@
-<!-- <div class="qm-flow-main-header">
+<div class="qm-flow-main-header"  *ngIf="flowPanels.toArray()">
     <div class="qm-flow-main-header__topic"> Arrive <br> appointment</div>
-</div> -->
+    <div class="qm-pointer" [ngClass]="{'qm-pointer-active':activeHeader == 0} " (click)="headerItemClicked(0)"> <div [ngClass]="{'qm-pointer-text qm-text-underline':activeHeader != 0,'qm-active-text':activeHeader == 0} " > {{(flowPanels.toArray())[0].title|translate}}</div></div> 
+    <div  *ngFor="let headerItem of flowPanels.toArray()| slice:1; let i=index" class="qm-pointer-2" (click)="headerItemClicked(i+1)" [ngClass]="{'qm-pointer-active':activeHeader == i+1} " > <div [ngClass]="{'qm-pointer-text':activeHeader != i+1,'qm-active-text':activeHeader == i+1,'qm-text-underline':activeHeader>i+1} "> {{headerItem.title|translate}}</div></div>
+    <!-- <div (click)="test()" style="color:white;padding: 30px">test</div> -->
+    <div class="qm-flow-close" (click)="onFlowExit()"  > Cancel</div>
+ 
+</div>
+
 <ng-content></ng-content>

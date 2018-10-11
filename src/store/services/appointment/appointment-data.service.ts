@@ -50,7 +50,7 @@ export class AppointmentDataService {
     
     return this.http
       .get<IAppointmentResponse>(searchQuery)
-      .pipe((catchError)(this.errorHandler.handleError(true)));
+      .pipe(catchError(this.errorHandler.handleError(true)));
   }
 
   rescheduleAppointment(appointment: IAppointment) {

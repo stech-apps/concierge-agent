@@ -1,14 +1,13 @@
 import { ToastService } from './toast.service';
 import { UserStatusDispatchers } from './../../store/services/user-status/user-status.dispatchers';
 import { UserStatusSelectors } from 'src/store/services';
-import { filter } from 'rxjs/internal/operators/filter';
 import { NativeApiService } from './native-api.service';
 import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable, NgZone } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, interval, of, Subject, empty } from 'rxjs';
-import { tap, catchError, flatMap, retry, map, switchMap } from 'rxjs/operators';
+import { tap, catchError, flatMap, retry, map, switchMap, filter } from 'rxjs/operators';
 import { from } from 'rxjs/internal/observable/from';
 import { retryWhen } from 'rxjs/internal/operators/retryWhen';
 import { BLOCKED_URLS } from 'src/util/url-helper';
@@ -33,7 +32,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private native_max_ping_count_for_message = 2;
     private lastRequestAction = 'NONE';
     // Retry all get requests this many times before starting ping.
-    private numberOfGetRetry = 3;
+    private numberOfTries = 4;
 
     public recoverApp = new Subject<boolean>();
 
@@ -48,7 +47,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         private serviceState: ServiceStateService, private translateService: TranslateService,
         private nativeApiService: NativeApiService, private userStatusSelector: UserStatusSelectors,
         private router: Router, private userStatusDispatchers: UserStatusDispatchers,
-    private spService: SPService, private toastService: ToastService) {
+        private spService: SPService, private toastService: ToastService) {
 
         window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
         window["qmGlobalHttpInterceptor"] = this;
@@ -105,7 +104,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
             }), catchError((error: HttpErrorResponse) => {
                 // when blocke url fails 
-               
+
                 if (error.status === ERROR_CODE_TIMEOUT) {
                     if (this.localTimeoutBeforeStartPing) {
                         clearTimeout(this.localTimeoutBeforeStartPing);
@@ -120,11 +119,11 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     else {
                         this.translateService.get('label.critical_com_error').subscribe((t) => {
                             this.toastService.stickyToast(t);
-                            setTimeout(()=> {
+                            setTimeout(() => {
                                 this.globalNotifyDispatchers.hideNotifications();
                             }, 2000);
-                            
-                        }).unsubscribe(); 
+
+                        }).unsubscribe();
                     }
                 } else {
                     clearTimeout(this.localTimeoutBeforeStartPing);
@@ -136,22 +135,24 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         else {
 
             // handle retry logic when needed
-            if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url)) {
+            if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url) && !this.isSkipGetUrls(req.url)) {
                 return this.zone.run(() => {
+
                     return next.handle(req).pipe(
-                        tap(() => {
+                        tap((res) => {
+                            console.log(res);
                             this.isPingSuccess = false;
                         }),
                         timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
                         retryWhen(res => {
                             return interval(this.http_timeout).pipe(
                                 flatMap((count) => {
-                                    if (this.serviceState.getCurrentTry() === this.numberOfGetRetry) {
+                                    if (this.serviceState.getCurrentTry() === this.numberOfTries) {
                                         if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.serviceState.getIsNetWorkPingStarted()) {
-                                            console.log('starting network ping' + ' ISPINGSTARTED=' +  this.serviceState.getIsNetWorkPingStarted());
+                                            console.log('starting network ping' + ' ISPINGSTARTED=' + this.serviceState.getIsNetWorkPingStarted());
                                             this.serviceState.setIsNetWorkPingStarted(true);
                                             this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
-                                        } else if(!this.nativeApiService.isNativeBrowser()) {
+                                        } else if (!this.nativeApiService.isNativeBrowser()) {
                                             this.serviceState.incrementTry();
                                         }
                                         return of(count);
@@ -167,22 +168,19 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                         return of(count);
                                     }
                                 }), delayWhen((d) => {
-                                    if (this.serviceState.getCurrentTry() < this.numberOfGetRetry) {
-                                        console.log("On before another retry");
+                                    if (this.serviceState.getCurrentTry() < this.numberOfTries) {
                                         return of(req);
                                     } else {
                                         if (!this.nativeApiService.isNativeBrowser()) {
-                                            if (this.serviceState.getCurrentTry() === this.numberOfGetRetry) {
+                                            if (this.serviceState.getCurrentTry() === this.numberOfTries) {
                                                 this.translateService.get('label.critical_com_error').subscribe((t) => {
                                                     this.toastService.stickyToast(t);
                                                     this.globalNotifyDispatchers.hideNotifications();
-                                                }).unsubscribe(); 
-                                            }                                          
+                                                }).unsubscribe();
+                                            }
                                         }
 
-                                        console.log("WAITING for recover no retries");
-
-                                        return this.recoverApp.asObservable();
+                                       return this.recoverApp.asObservable();
                                     }
                                 })
                             )
@@ -199,7 +197,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                     this.serviceState.resetTryCounter();
                                 }
                             }
-
                             return res;
                         })
                     );
@@ -244,6 +241,15 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         return isBlockedUrl;
     }
 
+    isSkipGetUrls(url) {
+        let isSkip = false;
+        if (url.match(/^\/rest\/appointment\/.+appointments\/\d+$/)) {
+            isSkip = true;
+        }
+
+        return isSkip;
+    }
+
     isAResourceFile(config) {
         if (config.url.match(/.html/g) || config.url.match(/.js/g) || config.url.match(/.properties/g) || config.url.match(/.otf/g) || config.url.match(/.ttf/g)) {
             return true;
@@ -274,7 +280,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     isUserStatusCheck(url) {
         let statusUrl = 'rest/servicepoint/user/status';
-        if (url.includes(url)) { 
+        if (url.includes(url)) {
             return true;
         }
 
@@ -322,7 +328,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     showNoNetworkMessage() {
-        this.zone.run(()=> {
+        this.zone.run(() => {
             this.translateService.get('no_network_msg').subscribe((msg) => {
                 this.globalNotifyDispatchers.showError({ message: msg });
             }).unsubscribe();
@@ -335,7 +341,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     notifyNativePingStatus(val) {
         console.log("Native Ping Status - " + val);
-       this.isPingSuccess = val;
+        this.isPingSuccess = val;
     }
 
     updateAppFromBackground(deviceType) {

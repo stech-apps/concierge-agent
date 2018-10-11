@@ -9,8 +9,8 @@ export interface IQueueState {
   loading: boolean;
   loaded: boolean;
   error: Object;
-  selectedVisit:Visit;
-  selectedQueue:Queue;
+  selectedVisit: Visit;
+  selectedQueue: Queue;
 }
 
 const initialState = {
@@ -18,8 +18,8 @@ const initialState = {
   loading: false,
   loaded: false,
   error: null,
-  selectedVisit:null,
-  selectedQueue:null
+  selectedVisit: null,
+  selectedQueue: null
 };
 
 export function reducer(
@@ -77,17 +77,17 @@ export function reducer(
     case QueueActions.SELECT_QUEUE: {
       return {
         ...state,
-        selectedQueue:action.payload
+        selectedQueue: action.payload
       };
     }
 
     case QueueActions.RESET_SELECTED_QUEUE: {
       return {
         ...state,
-        selectedQueue:null
+        selectedQueue: null
       };
     }
-    
+
     case QueueActions.SELECT_VISIT: {
       return {
         ...state,
@@ -118,45 +118,45 @@ export function reducer(
 
   function processEstWaitingTime(time) {
     var tmp = time
-    var bounds = {upper: undefined, lower: undefined, single: undefined};
+    var bounds = { upper: undefined, lower: undefined, single: undefined };
     var counter = 0;
-    var factor = 5	
+    var factor = 5
 
     if (tmp < 5) {
-        bounds.single = "< 5";
-        return bounds.single;
+      bounds.single = "< 5";
+      return bounds.single;
     }
 
     while (tmp % factor > 0) {
-        counter++;
-        tmp--;
+      counter++;
+      tmp--;
     }
 
- //handle cases dividable by 5
+    //handle cases dividable by 5
     if (counter === 0 && tmp % factor === 0) {
-        bounds.lower = tmp;
-        bounds.upper = tmp+factor;
-        return bounds.lower + "-" + bounds.upper;
+      bounds.lower = tmp;
+      bounds.upper = tmp + factor;
+      return bounds.lower + "-" + bounds.upper;
     }
 
     bounds.lower = tmp;
     tmp = time
     while (tmp % factor > 0) {
-        tmp++;
+      tmp++;
     }
 
     bounds.upper = tmp;
     return bounds.lower + "-" + bounds.upper;
-}
+  }
 
-function updateQueueList(queueList: any, queueInfo : Queue){
-  var queue = queueList.queues.find(queue => queue.id === queueInfo.id);
-  let index = queueList.queues.indexOf(queue);
-  queue.customersWaiting = queueInfo.customersWaiting;
-  queue.waitingTime = queueInfo.waitingTime;
-  queueList.queues[index] = queue;
-  return queueList.queues;
-}
+  function updateQueueList(queueList: any, queueInfo: Queue) {
+    var queue = queueList.queues.find(queue => queue.id === queueInfo.id);
+    let index = queueList.queues.indexOf(queue);
+    queue.customersWaiting = queueInfo.customersWaiting;
+    queue.waitingTime = queueInfo.waitingTime;
+    queueList.queues[index] = queue;
+    return queueList.queues;
+  }
 
   function processQueueInfo(queueInfo) {
     var data = { queues: null, totalCustomersWaiting: null, maxWaitingTime: null }
@@ -166,15 +166,19 @@ function updateQueueList(queueList: any, queueInfo : Queue){
     var maxWT = 0;
     for (var i = 0; i < queueInfo.length; i++) {
       customerCount = customerCount + queueInfo[i].customersWaiting;
-      est_w_time = (!queueInfo[i].estimatedWaitingTime || queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
-        
-        Math.round(queueInfo[i].estimatedWaitingTime / 60));
+      if (queueInfo[i].estimatedWaitingTime != undefined) {
+        est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
+          Math.round(queueInfo[i].estimatedWaitingTime / 60));
+      } else {
+        est_w_time = null;
+      }
+
       queueInformation.push({
         name: queueInfo[i].name,
         customersWaiting: queueInfo[i].customersWaiting,
         max_w_time: Math.round(queueInfo[i].waitingTime / 60) == 0 ? "-" : Math.round(queueInfo[i].waitingTime / 60),
         est_w_time: est_w_time,
-        queueType:queueInfo[i].queueType,
+        queueType: queueInfo[i].queueType,
         waitingTime: queueInfo[i].waitingTime,
         serviceLevel: queueInfo[i].serviceLevel,
         id: queueInfo[i].id

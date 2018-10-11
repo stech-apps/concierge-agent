@@ -9,7 +9,7 @@
         "protocol": "http",
         "username": "nalhew",
         "password": "",
-        "path": "/artifactory/list/qmatic/appointment-booking-ui"
+        "path": "/artifactory/list/qmatic/connect-concierge"
     },
 
     "remote_deploy_method": "localcopyx"

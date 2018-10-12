@@ -131,7 +131,10 @@ export class QmSelectServiceComponent implements OnInit {
       const initialCalendarServiceSubscription = this.calendarServiceSelectors.initialService$.subscribe((services) => {
         if(services === null){
           this.isInitialServiceLoaded = false;
+        if(this.selectedBranch.id !==-1){
           this.calendarServiceDispatchers.fetchServices(this.selectedBranch as ICalendarBranch);
+        }
+        
         }
         else{
           if((this.selectedBranch as ICalendarBranch).qpId === this.loginBranch.id){

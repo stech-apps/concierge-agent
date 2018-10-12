@@ -15,7 +15,7 @@
 .qm-fishes-first {
     cursor: pointer;
     margin-top: 7px;
-    width: 150px;
+    width: 15vw;
     height: 60px;
     position: relative;
     background: $light-transparent12;
@@ -41,7 +41,7 @@
   .qm-fishes {
     cursor: pointer;
     margin-top: 7px;
-    width: 150px;
+    width: 15vw;
     height: 60px;
     position: relative;
     background: $light-transparent12;
@@ -106,4 +106,26 @@
     position: absolute;
     color:$light-transparent75;
     font-family: $font-family;
+  }
+
+  .qm-flow-done-bar{
+    z-index: 10000;
+    background-color: $white;
+    height: 15vh;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    box-shadow: 1px -1px 14px 0px #888888;
+
+    &__done-button{
+      font-family: $font-family !important;
+      background-color: $primary-pink;
+      color: $white;
+      right: 10vw;
+      width:200px;
+      text-align: center;
+      position: absolute;
+      bottom: 3vh;
+      padding: 20px 50px;
+    }
   }

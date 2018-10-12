@@ -219,11 +219,11 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
 
   setphoneColor(phoneNo: string) {
-    if (this.countryCode === null) {
+    // if (this.countryCode === null) {
       phoneNo === '' || this.confirmModalForm.controls['phone'].valid ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
-    } else if (this.countryCode != null) {
-      phoneNo == '' || phoneNo === this.countryCode || (phoneNo.length > this.countryCode.length && this.confirmModalForm.controls['phone'].valid) ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
-    }
+    // } else if (this.countryCode != null) {
+    //   phoneNo == '' || phoneNo === this.countryCode || (phoneNo.length > this.countryCode.length && this.confirmModalForm.controls['phone'].valid) ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
+    // }
   }
 
 }

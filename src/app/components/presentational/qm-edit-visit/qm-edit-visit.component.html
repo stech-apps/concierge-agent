@@ -1,4 +1,4 @@
-<qm-flow #fa [FlowName] ="'change_visit'">
+<qm-flow #fa [FlowName] ="'change_visit_single_line'">
       <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="queueFlowActive " [isContentVisible]="queueFlowActive" [title]="'queues_section_header_label'"> 
           <qm-flow-panel-header (click)="fa.panelHeaderClick(qu); queueHeaderClick();" (onFlowExit)="fa.onFlowExit()">
           <qm-flow-panel-title>{{ 'queues_section_header_label' | translate}}</qm-flow-panel-title>

@@ -75,29 +75,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
-
-      if (qs.queues) {
-        let tempQueueList: Queue[] = qs.queues;
-        tempQueueList.map(
-          queue => {
-            if (this.queueCollection) {
-              this.queueCollection.forEach(
-                oldQueue => {
-                  if (oldQueue.id === queue.id) {
-                    if (queue.est_w_time === null) {
-                      oldQueue.est_w_time ? queue.est_w_time = oldQueue.est_w_time : queue.est_w_time = '-';
-                    }
-
-                  }
-                }
-              );
-            }
-          }
-        );
-        this.queueCollection = tempQueueList;
-      } else {
-        this.queueCollection = qs.queues;
-      }
+      this.queueCollection = qs.queues;
       this.sortQueueList("QUEUE");
     })
     this.subscriptions.add(queueListSubscription);

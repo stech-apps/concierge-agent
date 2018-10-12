@@ -7,8 +7,9 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { TimeslotDispatchers, AccountDispatchers } from '../../../../store';
+import { TimeslotDispatchers, AccountDispatchers, UserSelectors } from '../../../../store';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 export class QmFlowComponent implements OnInit,AfterContentInit {
   activeHeader:number;
   public isFlowSkip = true;
+  userDirection$: Observable<string>;
 
   @Input() FlowName: string;
   
@@ -31,7 +33,8 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     private queueService: QueueService,
     private timeSlotDispatchers:TimeslotDispatchers,
     private AccountDispatchers:AccountDispatchers,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private userSelectors: UserSelectors,
   ) {
 
     this.activeHeader = 0;
@@ -46,7 +49,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   flowPanels = new QueryList<QmFlowPanelComponent>();
 
   ngOnInit() {
-    
+    this.userDirection$ = this.userSelectors.userDirection$;   
   }
   ngAfterContentInit(){
     if(this.FlowName=='create_appointment' && this.isFlowSkip){

@@ -1,4 +1,4 @@
-<qm-flow #f>
+<qm-flow #f [FlowName] ="'create_appointment'">
   <qm-flow-panel #pb [isHeaderVisible]="multiBranchEnabled" [headerVisibilityOverridden]="true" [isContentVisible]="!isFlowSkip"
     [isActive]="!isFlowSkip" [title]="'select_branch_header'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit();">

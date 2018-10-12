@@ -7,7 +7,8 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { ReserveDispatchers, TimeslotDispatchers, AccountDispatchers } from '../../../../store';
+import { TimeslotDispatchers, AccountDispatchers } from '../../../../store';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 
 @Component({
@@ -16,22 +17,27 @@ import { ReserveDispatchers, TimeslotDispatchers, AccountDispatchers } from '../
   styleUrls: ['./qm-flow.component.scss'],
   host: { 'class': 'qm-flow-component-root animated slideInUp faster' }
 })
-export class QmFlowComponent implements OnInit {
+export class QmFlowComponent implements OnInit,AfterContentInit {
   activeHeader:number;
+  public isFlowSkip = true;
+
+  @Input() FlowName: string;
+  
 
   constructor(
     private router: Router,
-    private util: Util,
     private qmModalService: QmModalService,
     private recycleService: Recycle,
     private queueService: QueueService,
-    private reserveDispatchers:ReserveDispatchers,
     private timeSlotDispatchers:TimeslotDispatchers,
-    private AccountDispatchers:AccountDispatchers
+    private AccountDispatchers:AccountDispatchers,
+    private localStorage: LocalStorage
   ) {
 
     this.activeHeader = 0;
-
+    this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
+    
+   
    }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -42,10 +48,14 @@ export class QmFlowComponent implements OnInit {
   ngOnInit() {
     
   }
+  ngAfterContentInit(){
+    if(this.FlowName=='create_appointment' && this.isFlowSkip){
+      this.activeHeader = 1;
+    }    
+  }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
     let panelFound = false;
-
     if (flowPanel.isContentVisible && flowPanel.hasResult()) {
       let panelArray = this.flowPanels.toArray();
       let panelIndex = panelArray.indexOf(flowPanel);
@@ -115,10 +125,9 @@ export class QmFlowComponent implements OnInit {
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
-    this.activeHeader=this.activeHeader+1;
     let panelsCollection = this.flowPanels.toArray();
     let panelIndex = panelsCollection.indexOf(panel);
-    
+    this.activeHeader=panelIndex;
     this.flowPanels.forEach((fp, index) => {
       fp.isActive = false;
       fp.isContentVisible = false;
@@ -131,17 +140,23 @@ export class QmFlowComponent implements OnInit {
     panel.isActive = true;
     panel.isContentVisible = true;
     panel.isHeaderVisible = true;
+    console.log('aa');
   }
 
   
 headerItemClicked(n){
+  
   if(n<this.activeHeader){
+    this.onFlowNext(this.flowPanels.toArray()[n]);
     this.activeHeader = n;
-   
   }
   
- 
 }
+
+test(){
+  console.log(this.flowPanels.toArray()[0].index);
+}
+
 
 
 }

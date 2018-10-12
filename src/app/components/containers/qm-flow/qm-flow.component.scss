@@ -4,8 +4,7 @@
     background-color: $midnight-blue;
     height: 75px;
     display: flex;
-    width: 100%;
-    
+    width: 100%; 
        &__topic{
         color: $white;
         font-family: $font-family !important;
@@ -13,7 +12,7 @@
     }
 }
 
-.qm-pointer {
+.qm-fishes-first {
     cursor: pointer;
     margin-top: 7px;
     width: 150px;
@@ -25,7 +24,7 @@
     text-align: center;
   }
   
-  .qm-pointer:before {
+  .qm-fishes-first:before {
     margin-top: 10px;
     content: "";
     position: absolute;
@@ -39,7 +38,7 @@
   }
 
 
-  .qm-pointer-2 {
+  .qm-fishes {
     cursor: pointer;
     margin-top: 7px;
     width: 150px;
@@ -50,7 +49,7 @@
     margin-left: 19px;
   }
 
-  .qm-pointer-2:before {
+  .qm-fishes:before {
     margin-top: 10px;
     content: "";
     position: absolute;
@@ -62,7 +61,7 @@
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent;
   }
-  .qm-pointer-2:after {
+  .qm-fishes:after {
     content: "";
     position: absolute;
     left: 0;
@@ -74,7 +73,7 @@
     border-bottom: 30px solid transparent;
   }
 
-  .qm-pointer-text{
+  .qm-fishes-text{
       padding-top: 17px;
       color:$light-transparent75;
       margin-left: 10px;
@@ -82,25 +81,24 @@
 
   }
 
-  .qm-pointer-active{
+  .qm-fishes-active{
     background-color: $white;
   }
 
-  .qm-pointer-active:before{
+  .qm-fishes-active:before{
     border-left: 20px solid $white;
 
   }
   .qm-active-text{
- color: $primary-pink;
- padding-top: 17px;
- margin-left: 10px;
- font-family: $font-family !important;
-
- font-weight: bold;
-  }
+      color: $primary-pink;
+      padding-top: 17px;
+      margin-left: 10px;
+      font-family: $font-family !important;
+      font-weight: bold;
+    }
   .qm-text-underline{
- text-decoration: underline;
-  }
+      text-decoration: underline;
+    }
 
   .qm-flow-close{
     right: 10px;

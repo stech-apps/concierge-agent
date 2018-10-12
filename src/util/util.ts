@@ -80,7 +80,7 @@ export class Util {
     }
 
     phoneNoValidator() {
-        return [Validators.pattern(/^[0-9\+\s]+$/), Validators.maxLength(14)]
+        return [Validators.pattern(/^[0-9\+\s]+$/)]
     }
 
     emailValidator() {

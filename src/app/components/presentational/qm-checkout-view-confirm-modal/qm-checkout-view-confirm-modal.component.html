@@ -20,7 +20,7 @@
 
         <div *ngIf="isSmsEnabled" class="sms-container">
           <div class="input-box-and-clear-button" [ngStyle]="{'background-color': phoneColor }">
-            <input type="text" class="input-box" name='phone' placeholder="{{'type_mobile_number'|translate }}" minlength="8" formControlName="phone"
+            <input type="text" class="input-box" name='phone' placeholder="{{'type_mobile_number'|translate }}" formControlName="phone"
               #phone />
             <i *ngIf="phone.value!='' " class="clear-icon icon-close" (click)="clearPhone()"></i>
           </div>

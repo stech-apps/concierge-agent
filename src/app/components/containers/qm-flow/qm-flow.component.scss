@@ -12,40 +12,57 @@
     &__icon{
       font-size: 3em;
       color: white;
-      padding: 10 px 0px 7px 40px;
+      padding: 10px 0px 7px 40px;
     }
 }
 
-.qm-fishes-first {
-    cursor: pointer;
+.qm-fishes-container{
+  display: flex;
+}
+
+.qm-fishes-first { 
     margin-top: 7px;
-    width: 15vw;
+    width: calc((100vw - 350px)/5);
     height: 60px;
     position: relative;
     background: $light-transparent12;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     text-align: center;
+    @at-root [dir="ltr"] & {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+     }
+    @at-root [dir="rtl"] & {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-left: 4px;
+     }
   }
   
   .qm-fishes-first:before {
     margin-top: 10px;
     content: "";
-    position: absolute;
-    right: -20px;
+    position: absolute;   
     bottom: 0;
     width: 0;
     height: 0;
     border-left: 20px solid $light-transparent12;
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent;
+    @at-root [dir="ltr"] & {
+      right: -20px;
+     }
+
+    @at-root [dir="rtl"] & {
+      left: -20px;
+      transform: rotate(180deg);
+     }
   }
 
 
   .qm-fishes {
-    cursor: pointer;
+
     margin-top: 7px;
-    width: 15vw;
+    width: calc((100vw - 350px)/5);
     height: 60px;
     position: relative;
     background: $light-transparent12;
@@ -57,36 +74,65 @@
     margin-top: 10px;
     content: "";
     position: absolute;
-    right: -20px;
     bottom: 0;
     width: 0;
     height: 0;
     border-left: 20px solid $light-transparent12;
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent;
+    @at-root [dir="ltr"] & {
+      right: -20px;
+     }
+
+    @at-root [dir="rtl"] & {
+      left: -20px;
+      transform: rotate(180deg);
+     }
   }
   .qm-fishes:after {
     content: "";
     position: absolute;
-    left: 0;
     bottom: 0;
     width: 0;
     height: 0;
     border-left: 20px solid $midnight-blue;
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent;
+    @at-root [dir="ltr"] & {
+      left: 0;
+     }
+
+    @at-root [dir="rtl"] & {
+      right: 0;
+      transform: rotate(180deg);
+     }
   }
 
   .qm-fishes-text{
       padding-top: 17px;
       color:$light-transparent75;
-      margin-left: 10px;
+     
       font-family: $font-family !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc((100vw - 400px)/5);
+      display: table-cell;
+      
+
+      @at-root [dir="ltr"] & {
+        margin: auto;
+        padding-left: 1vw;
+       }
+  
+      // @at-root [dir="rtl"] & {
+      //   margin: auto;
+      //  }
 
   }
 
   .qm-fishes-active{
     background-color: $white;
+    cursor: pointer;
   }
 
   .qm-fishes-active:before{
@@ -102,6 +148,7 @@
     }
   .qm-text-underline{
       text-decoration: underline;
+      cursor: pointer;
     }
 
   .qm-flow-close{
@@ -112,12 +159,16 @@
     position: absolute;
     color:$light-transparent75;
     font-family: $font-family;
+
+    @at-root [dir="rtl"] & {
+      left: 15px;
+     }
   }
 
   .qm-flow-done-bar{
     z-index: 10000;
     background-color: $white;
-    height: 15vh;
+    height: 12vh;
     width: 100%;
     bottom: 0;
     position: absolute;
@@ -131,8 +182,9 @@
       width:200px;
       text-align: center;
       position: absolute;
-      bottom: 3vh;
-      padding: 20px 50px;
+      bottom: 2vh;
+      padding: 15px 50px;
+      cursor: pointer;
     }
 
   

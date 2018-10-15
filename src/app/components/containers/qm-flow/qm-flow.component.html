@@ -1,8 +1,10 @@
 <div class="qm-flow-main-header"  *ngIf="flowPanels.toArray()"  dir="{{ userDirection$ | async }}">
-    <i class="qm-flow-main-header__icon" [ngClass]="{'icon-create-appointment': FlowName=='create_appointment','icon-edit-appointment': FlowName=='change_appointment'||FlowName=='checkin_appointment','icon-add-visit': FlowName=='create_visit_single_line','icon-edit-visit': FlowName=='change_visit_single_line'}"></i>
+    <i class="qm-flow-main-header__icon" [ngClass]="{'icon-create-appointment': FlowName=='create_appointment','icon-edit-appointment': FlowName=='change_appointment','icon-arrive-appointment':FlowName=='checkin_appointment','icon-add-visit': FlowName=='create_visit_single_line','icon-edit-visit': FlowName=='change_visit_single_line'}"></i>
     <div class="qm-flow-main-header__topic" [innerHTML]="FlowName | translate"  [ngStyle]="{'padding':FlowName=='change_visit_single_line' ||FlowName=='create_visit_single_line' ? '1.7rem 1em' : '0.7rem 1em' }"> </div>
+    <div class="qm-fishes-container">
     <div  *ngFor="let headerItem of flowPanels.toArray(); let i=index" [ngClass]="{'qm-fishes': i!=0, 'qm-fishes-first':i==0,'qm-fishes-active':activeHeader == i}" (click)="headerItemClicked(i)" [ngStyle]="{'z-index':200-i}" > <div [ngClass]="{'qm-fishes-text':activeHeader != i,'qm-active-text':activeHeader == i,'qm-text-underline':activeHeader>i} "> {{headerItem.title|translate}}</div></div>
     <!-- <div (click)="test()" style="color:white;padding: 30px">test</div> -->
+    </div>
     <div class="qm-flow-close" (click)="onFlowExit()"> Cancel</div>
  
 </div>

@@ -24,6 +24,7 @@
     margin-top: 7px;
     width: calc((100vw - 350px)/5);
     height: 60px;
+    display: table;
     position: relative;
     background: $light-transparent12;
     text-align: center;
@@ -68,6 +69,7 @@
     background: $light-transparent12;
     text-align: center;
     margin-left: 4px;
+    display: table;
   }
 
   .qm-fishes:before {
@@ -109,14 +111,16 @@
   }
 
   .qm-fishes-text{
-      padding-top: 17px;
+      // padding-top: 17px;
       color:$light-transparent75;
      
       font-family: $font-family !important;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: calc((100vw - 400px)/5);
+      min-width: calc((100vw - 400px)/5);
       display: table-cell;
+      vertical-align: middle;
       
 
       @at-root [dir="ltr"] & {
@@ -141,7 +145,8 @@
   }
   .qm-active-text{
       color: $primary-pink;
-      padding-top: 17px;
+      display: table-cell;
+      vertical-align: middle;
       margin-left: 10px;
       font-family: $font-family !important;
       font-weight: bold;

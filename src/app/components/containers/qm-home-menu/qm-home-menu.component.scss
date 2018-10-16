@@ -71,5 +71,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 10vw;
-  
+  -webkit-line-clamp: 2;
 }
+

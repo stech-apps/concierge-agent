@@ -1,5 +1,6 @@
 <ng-content select="qm-flow-panel-header" *ngIf="isHeaderVisible" class="qm-header-class"></ng-content>
-<div class="qm-flow-panel" [ngClass]="{'qm-flow-panel--active' : isActive }">
+<div class="qm-flow-panel" [ngClass]="{'qm-flow-panel--active' : isActive }"  dir="{{ userDirection$ | async }}"> 
   
     <ng-content select="qm-flow-panel-content" *ngIf="isContentVisible"></ng-content>
+ 
 </div> 

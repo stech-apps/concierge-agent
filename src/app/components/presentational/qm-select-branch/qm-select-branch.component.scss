@@ -7,6 +7,21 @@
     margin-top: 1.5rem;
 }
 
+.qm-select-branch {
+    .qm-flow-sub-header__right {
+        margin-top: 4rem;
+        margin-left: $standard-margin;
+    }
+
+    .qm-checkbox-label {
+        padding-right: 1rem;
+    }
+
+    .qm-checkbox__selector-icon-text {
+        margin-left: 0.5rem;
+    }
+}
+
 .qm-branch-list {
     &__item {
         color: #000;

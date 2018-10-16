@@ -91,6 +91,11 @@ $primary-action-button-color: $qmatic-bordeaux;
 $primary-action-button-active-color: $dark-transparent82;
 $primary-action-button-disabled-color: $dark-transparent42;
 $customer-count-btn-background-color: $white;
+$primary-label-color: rgba(0, 0, 0, 0.82);
+
+//Check boxes
+$checkbox-color: $pale-aquamarine;
+
 // Booking
 $list-item-selected-color: $light-aquamarine;
 $list-item-hover-color: $dark-transparent04;
@@ -132,6 +137,9 @@ $numeric-button-control: $light-gray6;
 // Calendar colors
 $calendar-background: $white;
 $calendar-today-background: #e3f2ff;
+
+// tool tip colors
+$tooltip-color: $dark-transparent42;
 
 $search-bar-background: $white;
 $seach-bar-text-color: $black;

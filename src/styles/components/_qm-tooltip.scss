@@ -1,0 +1,22 @@
+.qm-tooltip-btn {
+    color: $tooltip-color;
+    display: flex;
+    align-items: center;
+
+    .icon-help {
+        font-size: 2rem;
+    }
+
+    &:hover {
+        .qm-tooltip {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+}
+
+.qm-tooltip {
+    display: none;
+}

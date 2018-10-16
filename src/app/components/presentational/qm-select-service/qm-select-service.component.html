@@ -40,3 +40,7 @@
         </div>
     </div>
 </div>
+<div class="qm-flow-done-bar"  *ngIf="selectedServiceList && selectedServiceList.length > 0" >
+    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
+  </div>
+  

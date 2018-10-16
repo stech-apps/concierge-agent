@@ -4,6 +4,8 @@ import { QmPageHeaderComponent } from './../qm-page-header/qm-page-header.compon
 import { Component, OnInit, Input } from '@angular/core';
 import { ContentChild } from '@angular/core';
 import { QmFlowPanelResult } from 'src/app/components/containers/qm-flow-panel-header/qm-flow-panel-result.directive';
+import { Observable } from 'rxjs';
+import { UserSelectors } from '../../../../store';
 
 let _uniqueIdCounter = 0;
 
@@ -20,8 +22,9 @@ export class QmFlowPanelComponent implements OnInit {
 
   index: number = _uniqueIdCounter++;
   id: string = `qm-flow-panel-${this.index}`;
+  userDirection$: Observable<string>;
 
-  constructor() { }
+  constructor(  private userSelectors: UserSelectors) { }
 
   @Input()
   headerVisibilityOverridden : boolean;
@@ -76,5 +79,6 @@ export class QmFlowPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userDirection$ = this.userSelectors.userDirection$;   
   }
 }

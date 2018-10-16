@@ -1,0 +1,24 @@
+.qm-crossline-header {
+  height: 2px;
+  width: 800px;
+  background-color: rgba(0, 0, 0, 0.12);
+  width: 100%;
+
+  &-text {
+    font-size: rem(18px);
+    line-height: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.42);
+    position: absolute;
+    z-index: 1;
+    top: -13px;
+    transform: translateX(-50%);
+    left: 50%;
+    text-transform: uppercase;
+  }
+}
+
+.qm-crossline-header-container {
+    position: relative;
+    width: 100%;
+}

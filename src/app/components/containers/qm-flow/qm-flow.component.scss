@@ -24,7 +24,7 @@
     margin-top: 7px;
     width: calc((100vw - 350px)/5);
     height: 60px;
-    display: table;
+    // display: table;
     position: relative;
     background: $light-transparent12;
     text-align: center;
@@ -69,7 +69,7 @@
     background: $light-transparent12;
     text-align: center;
     margin-left: 4px;
-    display: table;
+    // display: table;
   }
 
   .qm-fishes:before {
@@ -111,26 +111,25 @@
   }
 
   .qm-fishes-text{
-      // padding-top: 17px;
+      padding-left: 17px;
       color:$light-transparent75;
-     
       font-family: $font-family !important;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: calc((100vw - 400px)/5);
-      display: table-cell;
+      // display: table-cell;
       vertical-align: middle;
       
 
       @at-root [dir="ltr"] & {
         margin: auto;
-        padding-left: 1vw;
+        padding-left: 2vw;
        }
   
-      // @at-root [dir="rtl"] & {
-      //   margin: auto;
-      //  }
+      @at-root [dir="rtl"] & {
+        margin: auto;
+       }
 
   }
 
@@ -145,11 +144,14 @@
   }
   .qm-active-text{
       color: $primary-pink;
-      display: table-cell;
+      min-width: calc((100vw - 400px)/5);
       vertical-align: middle;
       margin-left: 10px;
       font-family: $font-family !important;
       font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   .qm-text-underline{
       text-decoration: underline;
@@ -162,6 +164,7 @@
     cursor: pointer;
     margin-top: 25px;
     position: absolute;
+   
     color:$light-transparent75;
     font-family: $font-family;
 

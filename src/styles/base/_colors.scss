@@ -17,6 +17,7 @@ $light-gray6: rgb(232, 232, 232);
 $light-gray7:#e8e8e8;
 $light-gray8: #d6d6d6;
 $light-gray9: #C0C0C0;
+$light-gray10: #fafafa;
 $medium-gray: rgb(86, 86, 86);
 $charcoal: #2b2b2b;
 $soft-gray: #e0e0e0;
@@ -124,7 +125,7 @@ $queue-indicator-red: $danger-red;
 $queue-indicator-yellow: rgb(255, 228, 91);
 $app-theme: var(--app-theme);
 $header-inactive: $dark-gray;
-$flow-background : $light-gray5;
+$flow-background : $light-gray10;
 
 $numeric-button-control: $light-gray6;
 

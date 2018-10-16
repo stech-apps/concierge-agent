@@ -153,7 +153,7 @@ function writeFile(path, contents, cb) {
 // Deploy build to orchestra
 gulp.task('deploy:war', function () {
 
-  if(!useLocalCopy) {
+  if (!useLocalCopy) {
     return gulp.src('./dist/webapp/connectconcierge.war').pipe(
       sftp({
         remotePath: remoteDeploymentDefaultPath,
@@ -164,8 +164,7 @@ gulp.task('deploy:war', function () {
         timeout: 9999999
       })
     );
-  }
-  else {
+  } else {
     return gulp.src('./dist/webapp/connectconcierge.war').pipe(gulp.dest(remoteDeploymentDefaultPath));
   }
 });
@@ -192,26 +191,25 @@ gulp.task('deploy:war:artifactory', function () {
 
 // Deploy lang file to orchestra
 gulp.task('deploy:lang', function () {
-  if(!useLocalCopy) { 
+  if (!useLocalCopy) {
     return gulp
-    .src('./dist/properties/connectConciergeMessages.properties')
-    .pipe(
-      sftp({
-        remotePath: remoteDeploymentDefaultLangPath,
-        remotePlatform: remoteDeploymentPlatform,
-        host: remoteDeployHost,
-        user: remoteDeployUsername,
-        pass: remoteDeployPassword,
-        timeout: 9999999
-      })
-    );
-  }
-  else {
+      .src('./dist/properties/connectConciergeMessages.properties')
+      .pipe(
+        sftp({
+          remotePath: remoteDeploymentDefaultLangPath,
+          remotePlatform: remoteDeploymentPlatform,
+          host: remoteDeployHost,
+          user: remoteDeployUsername,
+          pass: remoteDeployPassword,
+          timeout: 9999999
+        })
+      );
+  } else {
     return gulp
-           .src('./dist/properties/connectConciergeMessages.properties')
-           .pipe(gulp.dest(remoteDeploymentDefaultPath));
+      .src('./dist/properties/connectConciergeMessages.properties')
+      .pipe(gulp.dest(remoteDeploymentDefaultPath));
   }
- 
+
 });
 
 /**

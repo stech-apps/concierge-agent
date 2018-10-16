@@ -20,26 +20,26 @@
     .qm-checkbox__selector-icon-text {
         margin-left: 0.5rem;
     }
+
+    &__search-heading {
+        width: 100%;
+        padding-top: 1rem;
+        font-size: rem(18px);
+        mark {
+            font-weight: 800;
+            background-color: transparent;
+        }
+    }
 }
+
+
 
 .qm-branch-list {
     &__item {
-        color: #000;
-        background: #FFFFFF;
-        text-align: center;
-        height: 3.5em;
-        line-height: 3em;
-        border-radius: 3px;
-        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-        max-width: 50%;
-        font-size: 0.8em;
-        font-weight: 500;
-        margin: rem(4px);
-        font-family: $primary-font-family;
-        width: 50%;
+
+        text-align: left;
         cursor: pointer;
         position: relative;
-        letter-spacing: $extended-letter-spacing-2;
 
         i {
             position: absolute;

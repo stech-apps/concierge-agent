@@ -59,4 +59,6 @@ $grid-breakpoints: (
 $appointment-identify-searchbar-width: 55%;
 
 //search input
-$large-search-input-height: 56px;
+$standard-item-height: 56px;
+$large-search-input-height: $standard-item-height;
+$standar-line-height: 24px;

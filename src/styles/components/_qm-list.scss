@@ -1,0 +1,25 @@
+.qm-list {
+  width: 100%;
+  padding-top: 1rem;
+
+  &__item {
+      padding-top: 0.5rem;
+    &--text {
+      background-color: $white;
+      box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      width: 100%;
+      height: $standard-item-height;
+      font-size: rem(20px);
+      line-height: 53px;
+      color: rgba(0, 0, 0, 0.82);
+      font-weight: 300;
+      padding-left: 1rem;
+
+      mark {
+          font-weight: bold;
+          background-color: transparent;
+      }
+    }
+  }
+}

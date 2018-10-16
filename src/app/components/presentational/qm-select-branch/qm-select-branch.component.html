@@ -7,7 +7,7 @@
       <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
         id="branchSearchInput" name="q" type="search" placeholder="{{'branch_search_placeholder' | translate}}">
 
-      <button class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+      <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
         <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
         <span class="sr-only">Search</span>
       </button>
@@ -23,7 +23,7 @@
           <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
         </div>
       </label>
-      <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
+      <button  type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
         <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
         <span class="qm-tooltip"> {{ 'tooltip.branch.skip' | translate}}</span>
       </button>
@@ -37,10 +37,16 @@
     <h2 class="qm-crossline-header-text">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
 
+  <div class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
+    <span>{{'label.search.result.header' | translate}} &nbsp;</span>
+    <mark>{{ '"'+ searchText + '"' }}</mark>
+  </div>
 
-  <div style="padding-top:50px;" *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item" (click)="onToggleBranchSelection(b)"
-    [ngClass]="{'qm-branch-list__item--selected': b.publicId === currentBranch.publicId}">
-    <div class="qm-branch-list__item--text">{{b.name}}</div>
-    <i class="icon-check" *ngIf="b.publicId === currentBranch.publicId"></i>
+  <div class="qm-list">
+    <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item qm-list__item" (click)="onToggleBranchSelection(b)"
+      [ngClass]="{'qm-branch-list__item--selected': b.publicId === currentBranch.publicId}">
+      <div class="qm-branch-list__item--text qm-list__item--text" [innerHtml]="b.name | qmhighlight: searchText"></div>
+      <i class="icon-check" *ngIf="b.publicId === currentBranch.publicId"></i>
+    </div>
   </div>
 </div>

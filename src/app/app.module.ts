@@ -160,6 +160,7 @@ import { QmLoadingModalComponent } from './components/containers/qm-loading-moda
 import { QmGlobalErrorComponent } from './components/containers/qm-global-error/qm-global-error.component';
 import { ErrorsHandler } from '../util/errors-handler';
 import { QmCentralLoginComponent } from './components/presentational/qm-central-login/qm-central-login.component';
+import { QmHighlightPipe } from './pipes/qm-highlight.pipe';
 
 
 // Global options for Toastr
@@ -248,7 +249,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     SortAppointmentsPipe,
     QmGlobalErrorComponent,
     QmLoadingModalComponent,
-    QmCentralLoginComponent
+    QmCentralLoginComponent,
+    QmHighlightPipe
 
   ],
   entryComponents: [

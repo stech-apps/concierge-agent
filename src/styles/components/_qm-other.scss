@@ -15,6 +15,9 @@
     transform: translateX(-50%);
     left: 50%;
     text-transform: uppercase;
+    background-color: $light-gray10;
+    padding-right: 2rem;
+    padding-left: 2rem;
   }
 }
 
@@ -22,3 +25,5 @@
     position: relative;
     width: 100%;
 }
+
+

@@ -1,5 +1,5 @@
 @import '../svgs/manifest';
-$primary-font-family: sans-serif;
+$primary-font-family: 'Roboto', sans-serif;
 $secondary-font-semi-bold: 'Montserrat-SemiBold';
 $secondary-font-regular: 'Montserrat-Regular';
 $secondary-font-light: 'Montserrat-Light';
@@ -8,6 +8,7 @@ $extended-letter-spacing: 1px;
 $header-letter-spacing: 2px;
 $extended-letter-spacing-2: 2px;
 $font-family: 'Roboto', sans-serif;
+$base-unit: 16px;
 
 
 $standard-padding: 10px;
@@ -56,3 +57,6 @@ $grid-breakpoints: (
 
 
 $appointment-identify-searchbar-width: 55%;
+
+//search input
+$large-search-input-height: 56px;

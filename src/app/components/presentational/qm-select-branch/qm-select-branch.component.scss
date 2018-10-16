@@ -26,11 +26,6 @@
         position: relative;
         letter-spacing: $extended-letter-spacing-2;
 
-        &--selected {
-            background-color: var(--app-theme);
-            color: $primary-text-color;
-        }
-
         i {
             position: absolute;
             right: 5%;

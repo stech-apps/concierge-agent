@@ -10,6 +10,9 @@
     letter-spacing: -0.17px;
     font-weight: 300;
     line-height: 32px;
+    @at-root [dir="rtl"] & { 
+      text-align: right;
+    }
   } 
 
   &__search {

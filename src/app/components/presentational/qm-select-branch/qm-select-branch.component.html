@@ -40,7 +40,6 @@
   </div>
 </div>
 <div class="qm-branch-list__container" dir="{{ userDirection$ | async}}">
-
   <div class="qm-crossline-header-container">
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text">{{ 'label.branch.allbranches' | translate }}</h2>
@@ -55,6 +54,7 @@
     <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item qm-list__item" (click)="onToggleBranchSelection(b)"
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId}">
       <div class="qm-branch-list__item--text qm-list__item--text" [innerHtml]="b.name | qmhighlight: searchText"></div>
+      <i class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
     </div>
   </div>
 </div>

@@ -1,5 +1,23 @@
 <div class="customer-search" dir="{{ userDirection$ | async }}">
-  <input type="search" placeholder="{{ 'search_customer' | translate }}" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value.trim())" autocomplete="off"> 
+      <div style="width:60%;margin:auto">
+      <input type="search" placeholder="{{ 'search_customer' | translate }}" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value.trim())" autocomplete="off"> 
+      <button class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+        <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+        <span class="sr-only">Search</span>
+      </button>
+      <br>
+      <div class="qm-info-text">
+      <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name
+      </div>
+    
+      </div>
+  <!-- <div class="qm-search qm-search--large">
+      <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
+      <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
+        id="branchSearchInput" name="q" type="search" placeholder="{{'branch_search_placeholder' | translate}}">
+
+    
+  </div> -->
   <i *ngIf="customerSearch.value.trim()" (click)="resetSearch()" class="icon-close qm-clear-search" aria-hidden="true"></i>
   <span class="add-customer-button" (click)="createNewCustomer()">     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.73 29.5" height="30" width="40"><defs>
@@ -15,4 +33,6 @@
       </g>
     </svg>
   </span>
+</div>
+<div>
 </div>

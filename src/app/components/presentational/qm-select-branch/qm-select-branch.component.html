@@ -2,6 +2,15 @@
   <div class="qm-flow-sub-header__left">
     <h1>{{ 'select_branch_header' | translate}}</h1>
 
+    <div class="qm-selected-box">
+      <div class="qm-selected-box__heading">{{ 'label.selected.branch' | translate }}</div>
+      
+      <div class="qm-selected-box__content">
+          {{ currentBranch.name }}
+          <i aria-hidden="true" class="icon-delete"></i>
+      </div>
+    </div>
+
     <div class="qm-search qm-search--large">
       <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
       <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
@@ -44,9 +53,8 @@
 
   <div class="qm-list">
     <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item qm-list__item" (click)="onToggleBranchSelection(b)"
-      [ngClass]="{'qm-branch-list__item--selected': b.publicId === currentBranch.publicId}">
+      [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId}">
       <div class="qm-branch-list__item--text qm-list__item--text" [innerHtml]="b.name | qmhighlight: searchText"></div>
-      <i class="icon-check" *ngIf="b.publicId === currentBranch.publicId"></i>
     </div>
   </div>
 </div>

@@ -107,6 +107,11 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   }
 
+  deselectBranch() {
+       this.calendarBranchDispatchers.selectCalendarBranch({} as ICalendarBranch);
+      this.currentBranch = {} as ICalendarBranch;
+  }
+
   onFlowStepActivated() {
     this.searchText = '';
     this.filterText = '';

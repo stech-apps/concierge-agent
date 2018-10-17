@@ -34,33 +34,33 @@ export class ReserveEffects {
 
   @Effect()
   reserveAppointment$: Observable<any> = this.actions$
-  .ofType(ReserveActions.RESERVE_APPOINTMENT)
+    .ofType(ReserveActions.RESERVE_APPOINTMENT)
     .pipe(
-      switchMap((action: AllActions.ReserveAppointment) =>
-        toAction(
-          this.reserveDataService.reserveAppointment(action.payload.bookingInformation, action.payload.appointment),
-          AllActions.ReserveAppointmentSuccess,
-          AllActions.ReserveAppointmentFail
-        )
+    switchMap((action: AllActions.ReserveAppointment) =>
+      toAction(
+        this.reserveDataService.reserveAppointment(action.payload.bookingInformation, action.payload.appointment),
+        AllActions.ReserveAppointmentSuccess,
+        AllActions.ReserveAppointmentFail
       )
+    )
     );
 
-    @Effect()
-    fetchReservableDates$: Observable<any> = this.actions$
+  @Effect()
+  fetchReservableDates$: Observable<any> = this.actions$
     .ofType(ReserveActions.FETCH_RESERVABLE_DATES)
-      .pipe(
-        switchMap((action: AllActions.FetchReservableDates) =>
-          toAction(
-            this.reserveDataService.fetchReservableDates(action.payload),
-            AllActions.FetchReservableDatesSuccess,
-            AllActions.FetchReservableDatesFail
-          )
-        )
-      );
+    .pipe(
+    switchMap((action: AllActions.FetchReservableDates) =>
+      toAction(
+        this.reserveDataService.fetchReservableDates(action.payload),
+        AllActions.FetchReservableDatesSuccess,
+        AllActions.FetchReservableDatesFail
+      )
+    )
+    );
 
   @Effect()
   unreserveAppointment$: Observable<Action> = this.actions$
-    .ofType(ReserveActions.DESELECT_TIMESLOT )
+    .ofType(ReserveActions.DESELECT_TIMESLOT)
     .pipe(
     withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
     switchMap((data: any) => {
@@ -77,24 +77,24 @@ export class ReserveEffects {
     })
     );
 
-    @Effect()
-    removerreserveAppointment$: Observable<Action> = this.actions$
-      .ofType(ReserveActions.UNRESERVE_APPOINTMENT)
-      .pipe(
-      withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
-      switchMap((data: any) => {
-        const [action, reservedAppointment] = data;
-        if (reservedAppointment) {
-          return toAction(
-            this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
-            ReserveActions.UnreserveAppointmentSuccess,
-            ReserveActions.UnreserveAppointmentFail
-          );
-        } else {
-          return empty();
-        }
-      })
-      );
+  @Effect()
+  removerreserveAppointment$: Observable<Action> = this.actions$
+    .ofType(ReserveActions.UNRESERVE_APPOINTMENT)
+    .pipe(
+    withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
+    switchMap((data: any) => {
+      const [action, reservedAppointment] = data;
+      if (reservedAppointment) {
+        return toAction(
+          this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
+          ReserveActions.UnreserveAppointmentSuccess,
+          ReserveActions.UnreserveAppointmentFail
+        );
+      } else {
+        return empty();
+      }
+    })
+    );
 
   @Effect()
   reserveAppointmentFailed$: Observable<Action> = this.actions$
@@ -102,7 +102,7 @@ export class ReserveEffects {
     .pipe(
     tap(
       (action: ReserveActions.ReserveAppointmentFail) => {
-        if (action.payload.errorCode === ERROR_CODE_TIMESLOT_TAKEN) {
+        if (action.payload.status !== 0) {
           this.translateService.get('time_slot_already_taken').subscribe(
             (label: string) => {
               this.toastService.errorToast(label);

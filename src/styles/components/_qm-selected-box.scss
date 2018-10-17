@@ -1,0 +1,26 @@
+.qm-selected-box {
+  display: inline-flex;
+  align-items: baseline;
+  padding-bottom: 1rem;
+
+  &__content {
+    box-sizing: border-box;
+    height: rem(57px);
+    width: rem(162px);
+    border: 1px solid $dark-transparent12;
+    background-color: $white;
+    box-shadow: 2px 4px 4px 0 $dark-transparent04;
+    margin-left: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    .icon-delete {
+      font-size: $standard-icon-size;
+      color: $primary-pink;
+      transform: translateY(25%);
+    }
+  }
+}

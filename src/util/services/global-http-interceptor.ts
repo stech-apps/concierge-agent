@@ -140,7 +140,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
                     return next.handle(req).pipe(
                         tap((res) => {
-                            console.log(res);
                             this.isPingSuccess = false;
                         }),
                         timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
@@ -149,7 +148,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                 flatMap((count) => {
                                     if (this.serviceState.getCurrentTry() === this.numberOfTries) {
                                         if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.serviceState.getIsNetWorkPingStarted()) {
-                                            console.log('starting network ping' + ' ISPINGSTARTED=' + this.serviceState.getIsNetWorkPingStarted());
                                             this.serviceState.setIsNetWorkPingStarted(true);
                                             this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
                                         } else if (!this.nativeApiService.isNativeBrowser()) {
@@ -340,7 +338,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     notifyNativePingStatus(val) {
-        console.log("Native Ping Status - " + val);
         this.isPingSuccess = val;
     }
 

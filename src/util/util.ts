@@ -10,6 +10,7 @@ export class Util {
 
     qrCodeListnerTimer: any;
     public qrRelatedData: any;
+    private _refreshUrl: string;
 
     constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers, private globalDispatchers: GlobalNotifyDispatchers) {
         window['x'] = this.setSelectedApplicationTheme.bind(this);
@@ -132,5 +133,13 @@ export class Util {
         var modifyDate = localeFormat.replace(localeTimeFormat, modifyTime);
 
         return modifyDate;
+    }
+
+    setRefreshUrl(value: string) {
+        this._refreshUrl = value;
+    }
+
+    getRefreshUrl() {
+        return this._refreshUrl;
     }
 }

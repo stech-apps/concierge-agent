@@ -361,6 +361,7 @@ export class AppModule {
       this.router.navigate(["/profile"]);
     } else {
       this.licenseInfoDispatchers.fetchLicenseInfo(); // only fetch license in desktop
+      this.util.setRefreshUrl(window.location.pathname);
       this.router.navigate(["/loading"]);
     }
   }

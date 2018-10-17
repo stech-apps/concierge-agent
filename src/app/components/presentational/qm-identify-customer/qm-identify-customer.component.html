@@ -1,6 +1,10 @@
 <div class="qm-flow-sub-header">
-    <div class="qm-flow-sub-header__left" *ngIf="flowType !== 'CREATE_APPOINTMENT'">
-        <div class="qm-checkbox__container">
+    <div class="qm-flow-sub-header__left">
+        <h1>{{ 'select_customer_header' | translate}}</h1>
+
+        
+
+        <!-- <div class="qm-checkbox__container">
           <label for="qm-checkbox" class="qm-checkbox-label">
             <input id="qm-checkbox"class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
             <div class="qm-checkbox__selector">
@@ -8,10 +12,10 @@
                 <div class="qm-checkbox__selector-icon-text">{{ 'skip_branch_label' | translate }}</div>
             </div>
           </label>
-        </div>
+        </div> -->
     </div>
   <div class="customer-search-component">
-    <qm-customer-search-bar></qm-customer-search-bar>
+
   </div>
   <div>
   <div class="qm-flow-sub-header__right">
@@ -21,6 +25,19 @@
   </div>
 </div>
 </div>
+
+<div class="qm-crossline-header-container">
+    <div class="qm-crossline-header"></div>
+    <h2 class="qm-crossline-header-text">{{ 'label.link_customer' | translate }}</h2>
+  </div>
+  <br>
+
+  <qm-customer-search-bar></qm-customer-search-bar>
+  <br>
+  <div class="qm-crossline-header-container">
+    <div class="qm-crossline-header"></div>
+    <h2 class="qm-crossline-header-text">{{ 'label.link_customer' | translate }}</h2>
+  </div>
 <div class="qm-service-list__container">
   
   <div>

@@ -2,17 +2,21 @@
 
 :host {
     text-align: center;
+    font-family: $font-family !important;
     }
 
 // placeholder styles
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        font-size: 0.8em;
+        font-size: 1.1em;
+        font-weight: 100;
     }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        font-size: 0.8em;
+        font-size: 1.1em;
+        font-weight: 100;
     }
 ::-ms-input-placeholder { /* Microsoft Edge */
-        font-size: 0.8em;
+        font-size: 1.1em;
+        font-weight: 100;
     }
 
 .customer-search{
@@ -41,13 +45,15 @@
     }
 
     input{
-        width:40%;
+        width:100%;
         align-content: center;
         margin: 0 auto;
-        padding: 0.5rem 1.5rem 0.5rem 1rem ;
+        padding: 1rem 1.5rem 1rem 1rem ;
         // height:100%; 
         outline: none;
-        border: 0;
+        border: 1;
+        font-size: 1.1em;
+        align-self: left;
     }
     
     .add-customer-button{
@@ -75,8 +81,18 @@
       }
 
 }
+.qm-info-text{
+    text-align: left;
+    color: $dark-transparent42;
+    font-size: 1em;
+    margin-top: 0.8em;
+}
 
-
+.qm-details-icon{
+    font-size: 1.5em;
+    vertical-align: middle;
+    color: $black
+}
 
 
 

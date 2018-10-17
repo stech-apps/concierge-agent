@@ -2,12 +2,12 @@
   <div class="qm-flow-sub-header__left">
     <h1>{{ 'select_branch_header' | translate}}</h1>
 
-    <div class="qm-selected-box">
+    <div class="qm-selected-box" *ngIf="currentBranch && currentBranch.publicId">
       <div class="qm-selected-box__heading">{{ 'label.selected.branch' | translate }}</div>
       
       <div class="qm-selected-box__content">
           {{ currentBranch.name }}
-          <i aria-hidden="true" class="icon-delete"></i>
+          <i aria-hidden="true" class="icon-delete" (click)="deselectBranch()"></i>
       </div>
     </div>
 

@@ -91,7 +91,7 @@ $primary-action-button-color: $qmatic-bordeaux;
 $primary-action-button-active-color: $dark-transparent82;
 $primary-action-button-disabled-color: $dark-transparent42;
 $customer-count-btn-background-color: $white;
-$primary-label-color: rgba(0, 0, 0, 0.82);
+$primary-label-color: $dark-transparent82;
 
 //Check boxes
 $checkbox-color: $pale-aquamarine;
@@ -143,6 +143,10 @@ $tooltip-color: $dark-transparent42;
 
 $search-bar-background: $white;
 $seach-bar-text-color: $black;
+
+//reskin 
+$hover-background-main: $dark-transparent04;
+$icon-color-default:  $dark-transparent42;
 
 
 

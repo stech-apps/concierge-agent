@@ -32,25 +32,10 @@
     }
 }
 
-
-
 .qm-branch-list {
     &__item {
-
         text-align: left;
         cursor: pointer;
         position: relative;
-
-        i {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-
-            @at-root [dir='rtl'] & {
-                left: 5%;
-                right: auto;
-            }
-        }
     }
 }

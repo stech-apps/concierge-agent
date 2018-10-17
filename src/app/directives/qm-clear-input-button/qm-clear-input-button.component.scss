@@ -1,22 +1,23 @@
+@import '../../../styles/base/_component-manifest.scss';
 
 .qm-clear-input-button {
   position: absolute;
-  color: rgb(0, 0, 0);
+  color: $dark-transparent42;
   top: 50%;
-  right: 0.5rem;
+  right: 1rem;
   transform: translateY(-50%);
   cursor: pointer;
 
   &:hover {
-    color: rgba(0, 0, 0, 0.62);
+    color: $dark-transparent62;
   }
 
   @at-root [dir='rtl'] & {
       right: auto;
-      left: 0.5rem;
+      left: 1rem;
   }
 
   .qm-action-btn__icon {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
   }
 }

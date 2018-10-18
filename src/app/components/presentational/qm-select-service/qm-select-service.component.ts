@@ -18,7 +18,8 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 @Component({
   selector: 'qm-select-service',
   templateUrl: './qm-select-service.component.html',
-  styleUrls: ['./qm-select-service.component.scss']
+  styleUrls: ['./qm-select-service.component.scss'],
+  host: {'class': 'qm-service-page'}
 })
 export class QmSelectServiceComponent implements OnInit {
 
@@ -244,7 +245,7 @@ export class QmSelectServiceComponent implements OnInit {
         }
       }, ()=> {});
     }
-    else if(this.selectedServiceList.length === 5){
+    else if(this.selectedServiceList.length === 55555){
       this.translateService.get('limit_max_service').subscribe(v => {
         this.toastService.infoToast(v);
       });

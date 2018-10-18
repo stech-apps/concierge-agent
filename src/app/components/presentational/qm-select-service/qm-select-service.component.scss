@@ -1,33 +1,32 @@
 @import '../../../../styles/base/_component-manifest.scss';
 //qm-flow-sub-header
-.qm-flow-sub-header {
-    height: 2.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 1rem;
-      
-    &__search {
-      height: rem(34px);
-      color: #111;
-      vertical-align: middle;
-      font-size: rem(14px);
-      line-height: rem(16px);
-      flex: 2;
-      width: 100%;
-      padding: 0.4rem 1rem;
+
+:host(.qm-service-page) {
+    .qm-flow-sub-header__right {
+        align-items: flex-end;
+        margin-left: 16px;
     }
-  
-    &__left {
-      flex: 1;
+
+    .qm-checkbox__selector-icon-text {
+        margin-left: 0.5rem;
     }
-  
-    &__right {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
+    
+    .qm-checkbox-label {
+        padding-right: 1rem;
     }
-  }
+
+    .qm-list__item {
+        position: relative;
+    }
+
+    .qm-flow-sub-header {
+        display: block;
+    }
+
+    .qm-service-search-area {
+        display: flex;
+    }
+}
 
 .qm-service- {
     display: flex;
@@ -46,6 +45,19 @@
 }
 
 .qm-service-list {
+    &__item-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    &__header {
+        margin-top: 2rem;
+    }
+}
+
+/* .qm-service-list {
 
     &__item-container {
         width: 100%;
@@ -130,4 +142,4 @@
             }
         }
     }
-}
+} */

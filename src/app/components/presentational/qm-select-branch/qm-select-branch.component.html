@@ -58,3 +58,6 @@
     </div>
   </div>
 </div>
+<div class="qm-flow-done-bar" *ngIf="currentBranch && currentBranch.publicId">
+  <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
+</div>

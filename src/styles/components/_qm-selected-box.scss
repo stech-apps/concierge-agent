@@ -3,6 +3,11 @@
   align-items: baseline;
   padding-bottom: 1rem;
   justify-content: flex-start;
+  &__heading {
+    @at-root [dir='rtl'] & {
+      margin-left: 1rem;
+    }
+  }
 
   &__content {
     box-sizing: border-box;

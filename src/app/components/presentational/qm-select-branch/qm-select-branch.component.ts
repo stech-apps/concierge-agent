@@ -103,6 +103,10 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     }
   }
 
+  getBranchCount() {
+    
+  }
+
   ngOnInit() {
 
   }

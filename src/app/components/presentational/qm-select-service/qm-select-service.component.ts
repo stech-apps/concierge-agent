@@ -245,7 +245,7 @@ export class QmSelectServiceComponent implements OnInit {
         }
       }, ()=> {});
     }
-    else if(this.selectedServiceList.length === 55555){
+    else if(this.selectedServiceList.length === 5){
       this.translateService.get('limit_max_service').subscribe(v => {
         this.toastService.infoToast(v);
       });

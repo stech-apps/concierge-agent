@@ -10,7 +10,7 @@ export class QmHighlightPipe implements PipeTransform {
     if (value && args) {
       const rx = new RegExp(args, 'i');
       const matches = rx.exec(value);
-      if (matches.length > 0) {
+      if (matches && matches.length > 0) {
         transformedText = value.replace(rx, '<mark>' + matches[0] + '</mark>');
       }
     }

@@ -18,12 +18,22 @@
     background-color: $light-gray10;
     padding-right: 2rem;
     padding-left: 2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+    max-width: 50%;  
   }
 }
 
 .qm-crossline-header-container {
     position: relative;
     width: 100%;
+}
+
+.qm-text-oveflow-fix {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 

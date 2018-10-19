@@ -6,7 +6,7 @@
       <div class="qm-selected-box__heading">{{ 'label.selected.branch' | translate }}</div>
       
       <div class="qm-selected-box__content">
-          <div class="qm-select-box__text">{{ currentBranch.name }}</div>
+          <div class="qm-selected-box__text">{{ currentBranch.name }}</div>
           <i aria-hidden="true" class="icon-delete" (click)="deselectBranch()"></i>
       </div>
     </div>
@@ -34,7 +34,6 @@
       </label>
       <button  type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
         <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
-        <span class="qm-tooltip"> {{ 'tooltip.branch.skip' | translate}}</span>
       </button>
     </div>
   </div>
@@ -42,19 +41,32 @@
 <div class="qm-branch-list__container" dir="{{ userDirection$ | async}}">
   <div class="qm-crossline-header-container">
     <div class="qm-crossline-header"></div>
-    <h2 class="qm-crossline-header-text">{{ 'label.branch.allbranches' | translate }}</h2>
+    <h2 class="qm-crossline-header-text qm-text-oveflow-fix">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
 
   <div class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
     <span>{{'label.search.result.header' | translate}} &nbsp;</span>
     <mark>{{ '"'+ searchText + '"' }}</mark>
+    <span class="qm-select-branch__foundbox">{{ ' ' + 
+        (calendarBranches | filterBranch : filterText)?.length + ' ' 
+        + ((calendarBranches | filterBranch : filterText)?.length == '1' ? ('label.branch.found' | translate) :  ('label.branches.found' | translate))
+     
+    }}
+  </span>
   </div>
 
   <div class="qm-list">
-    <div *ngFor="let b of calendarBranches | filterBranch : filterText" class="qm-branch-list__item qm-list__item" (click)="onToggleBranchSelection(b)"
-      [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId}">
-      <div class="qm-branch-list__item--text qm-list__item--text" [innerHtml]="b.name | qmhighlight: searchText"></div>
-      <i class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+    <div *ngFor="let b of calendarBranches | filterBranch : filterText;" class="qm-branch-list__item qm-list__item" 
+      [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 
+      'qm-list__item--info-active' : b.showInfo}">
+      <div class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)">
+        <div class="qm-list__item--label" [innerHtml]="b.name | qmhighlight: searchText">
+        </div>
+        <div class="qm-list__item--info" *ngIf="b.showInfo">
+          {{b.externalDescription || ('label.noinformation.avaialble' | translate) }}
+        </div>      
+      </div>
+      <i (click)="b.showInfo = !b.showInfo" [ngClass]="{ 'icon-info--active' : b.showInfo}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
     </div>
   </div>
 </div>

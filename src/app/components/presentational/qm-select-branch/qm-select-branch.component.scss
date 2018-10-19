@@ -13,6 +13,11 @@
         margin-left: $standard-margin;
     }
 
+    &__foundbox {
+        font-size: 16px;
+        color: $dark-transparent42;
+    }
+
     .qm-checkbox-label {
         padding-right: 1rem;
     }

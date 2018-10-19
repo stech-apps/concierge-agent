@@ -22,9 +22,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   activeHeader:number;
   public isFlowSkip = true;
   userDirection$: Observable<string>;
-
-  @Input() FlowName: string;
-  
+  @Input() FlowName: string;  
 
   constructor(
     private router: Router,
@@ -159,8 +157,5 @@ headerItemClicked(n){
 test(){
   console.log(this.flowPanels.toArray()[0].index);
 }
-
-
-
 }
 

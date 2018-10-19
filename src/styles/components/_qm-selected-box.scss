@@ -5,6 +5,13 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 
+  &__text {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 94%;
+    text-overflow: ellipsis;
+  }
+
   .qm-flex-wrapper {
     flex-wrap: wrap;
     display: flex;

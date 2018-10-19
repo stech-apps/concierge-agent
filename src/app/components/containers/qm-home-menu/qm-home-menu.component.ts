@@ -46,6 +46,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   hostAddressStr:string;
   menuItemEnable:boolean;
 
+  //putting menuItem Names to a 2D array by splitting the words in to half chunks
+  menuItemWordArray=new Array();;
+
   public systemInformation$: Observable<ISystemInfo>;
   public licenseIsValid$: Observable<boolean>;
 
@@ -82,6 +85,13 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
     this.licenseIsValid$ = this.licenseInfoSelectors.isValidLicense$;
 
+    //passing menu item names to add to the 2d array
+    this.wordSplitter('create_appointment_single_line')
+    this.wordSplitter('edit_appointment_single_line')
+    this.wordSplitter('arrive_appointment_single_line')
+    this.wordSplitter('create_visit_single_line')
+    this.wordSplitter('edit_visit_single_line')
+     
   }
 
 
@@ -237,5 +247,18 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
   hasValidLicense (systemInfo) {
     return systemInfo.licenseCompanyName !== null && systemInfo.licenseCompanyName !== '';
+  }
+
+  //splitting menu item words from the language varibles in to two chunks and adding them to a 2d array (to support ie 11 issue of not properly hiding the words when it overflow)
+  wordSplitter(Word){
+    this.translateService.get(Word).subscribe(v => {
+      let menuName = v;
+      //splitting menu item name by spaces
+      let splitedName = menuName.split(" ");
+      //sclicing menu item name in to two chunks
+        let firstArray = splitedName.slice(0,Math.floor(splitedName.length / 2)).toString().replace(/,/g, ' ');
+        let secondArray = splitedName.slice(Math.floor(splitedName.length / 2),splitedName.length).toString().replace(/,/g, ' ');
+        this.menuItemWordArray.push([firstArray, secondArray]);
+    })
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AutoClose } from '../../../../util/services/autoclose.service';
 import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
 import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, } from '@angular/forms';
@@ -30,7 +30,7 @@ export class QmInputboxComponent implements OnInit {
   countryCodeNumber:string;
   constructor(
     private servicePointSelectors: ServicePointSelectors,
-    private activeModal:NgbActiveModal,
+    // private activeModal:NgbActiveModal,
     public autoCloseService:AutoClose,
     private userSelectors:UserSelectors,
     private fb:FormBuilder,
@@ -94,27 +94,27 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public decline() {
-    this.activeModal.close(false);
-    this.customerDispatchers.resetCurrentCustomer();
+    // this.activeModal.close(false);
+    // this.customerDispatchers.resetCurrentCustomer();
   }
 
   public accept() {
-    if(this.customerCreateForm.controls.firstName.invalid){
-      this.invalidFirstName=true
-    }else if (this.customerCreateForm.controls.lastName.invalid){
-      this.invalidLastName=true
-    }
-    if(this.customerCreateForm.valid){
-      this.activeModal.close(this.customerCreateForm.value); 
-      if(this.isOnupdate){
-        this.customerDispatchers.updateCustomer(this.preparedCustomer());
-        this.updateList(this.preparedCustomer());
-        this.customerDispatchers.selectCustomers(this.preparedCustomer());
-      }else{
-        this.customerDispatchers.createCustomer(this.trimCustomer());
-      }
-      }
-      // this.customerDispatchers.resetCurrentCustomer();
+    // if(this.customerCreateForm.controls.firstName.invalid){
+    //   this.invalidFirstName=true
+    // }else if (this.customerCreateForm.controls.lastName.invalid){
+    //   this.invalidLastName=true
+    // }
+    // if(this.customerCreateForm.valid){
+    //   this.activeModal.close(this.customerCreateForm.value); 
+    //   if(this.isOnupdate){
+    //     this.customerDispatchers.updateCustomer(this.preparedCustomer());
+    //     this.updateList(this.preparedCustomer());
+    //     this.customerDispatchers.selectCustomers(this.preparedCustomer());
+    //   }else{
+    //     this.customerDispatchers.createCustomer(this.trimCustomer());
+    //   }
+    //   }
+    //   // this.customerDispatchers.resetCurrentCustomer();
       
     }
   
@@ -161,7 +161,7 @@ export class QmInputboxComponent implements OnInit {
   }
 
   public dismiss() {
-    this.activeModal.dismiss();
+    // this.activeModal.dismiss();
   }
   
   clearFirstName(){

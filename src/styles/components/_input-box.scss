@@ -3,25 +3,25 @@ input::-ms-clear {
 }
 
 .qm-input-box {  
-  background-color: $light-gray2;
+
   display: block;
   border-radius: 5px;
   margin: auto; 
   position: relative;
   // overflow: auto;
-  width: 450px;
-  margin-left:-100px;
+
 
 
 
   input {
-    padding: rem(12px);
-    outline: none;
-    border: 0;
+    padding: rem(13px);
     float: left;
     padding-right: rem(30px);
     padding-left: rem(25px);
     width: 100%;
+    border: 1px solid $dark-transparent20;
+    font-weight: 300;
+    font-size: 1.2em;
   }
 
   input.ng-invalid.ng-touched {
@@ -33,16 +33,10 @@ input::-ms-clear {
   }
 
   input:focus{
-    background-color: white!important
+    background-color: white!important;
+    border: 1px solid $dark-transparent42;
   }
 
- 
-
- 
-  &__input-section{
-    padding: 20px;
-    // background-color: rebeccapurple;
-  }
 
   &__header {
     padding: rem(40px 20px 5px 20px );
@@ -57,10 +51,8 @@ input::-ms-clear {
 
   &__inputbox-name {
     display: block;
-    color: $black;
-    font-size: rem(12px);
-    text-align: right;
-    font-weight: bold;
+    color: $dark-transparent62;
+    font-size: rem(15px);
     margin-right: rem(8px);
     @at-root [dir="rtl"] & {
       text-align: left;
@@ -68,22 +60,40 @@ input::-ms-clear {
     white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
     
   }
-
+  &__row{
+    margin-top: 20px;
+  }
   &__row:after {
     content: "";
     display: table;
     clear: both;
+  
 }
 
   &__col-1{
     float: left;
     width: 40%;
-    margin-top: rem(12px);
+    margin-top: rem(10px);
     color: $black;
     @at-root [dir="rtl"] & {
       float: right;
-    }
+    } 
   }
+
+  
+  &__col-50{
+    float: left;
+    width: 50%;
+    margin-top: rem(10px);
+    color: $black;
+    @at-root [dir="rtl"] & {
+      float: right;
+    } 
+  }
+  &__left-side{
+    padding-right: 10px;
+  }
+
 
   &__col-2{
     display: flex;
@@ -91,6 +101,17 @@ input::-ms-clear {
     width: 60%;
     padding: rem(2px);
  
+  }
+
+  &__label-first-name{
+    float:left;
+  }
+  &__inputbox-month{
+    width: 90% !important
+  }
+  &__label-required{
+    float: right;
+    color: $pale-aquamarine;
   }
   
   &__button-container {
@@ -145,8 +166,8 @@ input::-ms-clear {
 }
 
 .qm-clear-search{   
-  display: inline-block;
-  vertical-align: middle;
+  // display: inline-block;
+  // vertical-align: middle;
   margin:10px 10px -10px -25px;
   z-index: 2;
   color: black;

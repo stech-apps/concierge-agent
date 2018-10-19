@@ -9,14 +9,6 @@
         outline: none; 
     }
  
-    
-    .customer-table-header{
-        background-color: $dark-transparent12;
-        border-bottom: 3px solid $light-gray2;
-        font-size: 0.75rem;
-        margin: 5px;
-        
-    }
 
     tr{
       display: table;
@@ -51,27 +43,28 @@
   
     .customer-list{
         background-color: white;
-        border-bottom: 1px solid $light-gray2;
+        border: 1px solid $light-gray2;
         height: 35px;
         width: 100%;
         padding:0;
-        margin:0;
+        margin: 6px;
    
     }
     .customer-list:active{
         background-color:$light-gray2;
+    }
+    .customer-list:hover{
+        background-color:$light-gray1;
+        cursor: pointer;
     }
 
         .svg-container {
         width: 2.8em;
         margin:0 auto;
       }
-    svg{
-        display: inline-block; 
-        bottom: 0 auto;
-        vertical-align: middle;
-        text-align: center;
-        height: 50px;
+    .edit-button{
+        font-size: 2em;
+        color:$primary-pink;
     }
     
    .customer-table-edit-background{
@@ -104,6 +97,7 @@ tbody{
     overflow-y: auto;
     width: 100%;
     -webkit-overflow-scrolling: touch;
+    border: 1px solid $light-gray2;
 }
 
 

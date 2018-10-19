@@ -113,14 +113,15 @@
   .qm-fishes-text{
      
       color:$light-transparent75;
+      min-width: calc((100vw - 400px)/5);
+      vertical-align: middle;
+      padding-left: 3vw;
+      // padding-top:15px;
       font-family: $font-family !important;
-      white-space: nowrap;
+      font-weight: normal;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-width: calc((100vw - 400px)/5);
-      padding-top:15px;
-      vertical-align: middle;
-      
+      line-height: 1.5em;
 
       @at-root [dir="ltr"] & {
         margin: auto;
@@ -147,12 +148,13 @@
       min-width: calc((100vw - 400px)/5);
       vertical-align: middle;
       padding-left: 3vw;
-      padding-top:15px;
+      // padding-top:15px;
       font-family: $font-family !important;
       font-weight: bold;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.5em;
+
     }
   .qm-text-underline{
       text-decoration: underline;

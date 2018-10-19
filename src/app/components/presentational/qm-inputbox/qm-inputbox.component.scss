@@ -1,0 +1,51 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
+.qm-primary-action-button-disabled{
+    background: $dark-transparent42;
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $white;
+    border: 1px $dark-transparent42;
+    font-weight: 300;
+}
+
+.qm-primary-action-button-active{
+    background: $dark-transparent82;
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $white;
+    border: 1px $dark-transparent82;
+    font-weight: 500;
+}
+
+.qm-primary-action-button-default{
+    background: $primary-pink;
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $white;
+    border: 1px $primary-pink;
+    font-weight: 500;
+}
+.qm-primary-action-button-default{
+    background: $primary-pink;
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $white;
+    border: 1px $primary-pink;
+    font-weight: 500;
+}
+
+.qm-secondary-action-button-disabled{
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $dark-transparent42;
+    border: 1px $dark-transparent42 solid;
+    font-weight: 300;
+}
+.qm-secondary-action-button-active{
+    padding: 1em 2em;
+    border-radius: 4px;
+    color: $dark-transparent82;
+    border: 1px $dark-transparent82 solid;
+    font-weight: 500;
+}

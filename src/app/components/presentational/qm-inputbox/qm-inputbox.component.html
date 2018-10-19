@@ -1,55 +1,76 @@
 <qm-auto-close data-keyboard="false" data-backdrop="static">
   <div class="qm-input-box" dir="{{ userDirection$ | async }}" cdkTrapFocus>
     <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
-      <div class="qm-input-box__header">
-        <span class="qm-input-box__headline" *ngIf="!isOnupdate">{{'create_customer'|translate }}</span>
-        <span class="qm-input-box__headline" *ngIf="isOnupdate">{{'edit_customer'|translate }}</span>
-      </div>
+   
       <div class="qm-input-box__input-section">
           <div class="qm-input-box__row">
-              <div class="qm-input-box__col-1" >
-                <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
+              <div class="qm-input-box__col-50">
+                <div class="qm-input-box__left-side">
+                  <div>
+                    <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-name" >{{'first_name'|translate }}</label>
+                    <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                  </div>
+                  <br>
+                    <input  type="text" name='firstName' formControlName = "firstName" #firstName maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                    <i *ngIf="firstName.value.trim()" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                  </div>
               </div>
-              <div class="qm-input-box__col-2">
-                  <input  type="text" name='firstName' placeholder="{{'mandatory'|translate }}" formControlName = "firstName" #firstName maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                  <i *ngIf="firstName.value.trim()" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-              </div>
+              <div class="qm-input-box__col-50">
+                  <div>
+                    <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-name" >{{'last_name'|translate }}</label>
+                    <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                  </div> 
+                    <input type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                    <i *ngIf="lastName.value.trim()" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
+                  </div>
             </div>
             <div class="qm-input-box__row">
-                <div class="qm-input-box__col-1">
-                    <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
+                <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
+                <input type="text" name='email' formControlName = "email" #email>
+                <i *ngIf="email.value.trim()" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+            </div>
+            <div class="qm-input-box__row">
+                  <div class="qm-input-box__col-50">
+                      <div class="qm-input-box__left-side">
+                        <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
+                        <input type="text" name='phone' formControlName = "phone" #phone>
+                        <i *ngIf="phone.value.trim() && phone.value.trim()!=countrycode"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
+                      </div>
                 </div>
-                <div class="qm-input-box__col-2" >
-                  <input type="text" name='lastName' formControlName = "lastName"  placeholder="{{'mandatory'|translate }}" #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                  <i *ngIf="lastName.value.trim()" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
-                </div>
-              </div>
-              <div class="qm-input-box__row">
-                  <div class="qm-input-box__col-1">
-                      <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
-                  </div>
-                  <div class="qm-input-box__col-2">
-                    <input type="text" name='phone' placeholder="{{'optional'|translate }}" formControlName = "phone" #phone>
-                    <i *ngIf="phone.value.trim() && phone.value.trim()!=countrycode"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-                  </div>
-                </div>
-              <div class="qm-input-box__row">
-                    <div class="qm-input-box__col-1">
-                        <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
+            </div>
+            <div class="qm-input-box__row">
+                <div class="qm-input-box__col-50">
+                    <div class="qm-input-box__left-side">
+                      <label for="phone" class="qm-input-box__inputbox-name">{{'date_of_birth'|translate }}</label>
+                      <div style="width:100%; display:flex">
+                        <div style="width:45%"> 
+                            <label for="phone" class="qm-input-box__inputbox-name">{{'month'|translate }}</label>
+                            <input class="qm-input-box__inputbox-month" type="text" name='month' placeholder="{{'month'|translate}}" formControlName = "phone" #phone> 
+                        </div>
+                        <div style="width:35%"> 
+                            <label for="phone" class="qm-input-box__inputbox-name">{{'day'|translate }}</label>
+                            <input class="qm-input-box__inputbox-month" type="text" name='month' placeholder="{{'dd'|translate}}" formControlName = "phone" #phone> 
+                        </div>
+                        <div style="width:35%"> 
+                            <label for="phone" class="qm-input-box__inputbox-name">{{'year'|translate }}</label>
+                            <input class="qm-input-box__inputbox-month" type="text" name='month' placeholder="{{'yyyy'|translate}}" formControlName = "phone" #phone> 
+                        </div>
+                      </div>
+                    
                     </div>
-                    <div class="qm-input-box__col-2">
-                      <input type="text" name='email' placeholder="{{'optional'|translate }}" formControlName = "email" #email>
-                      <i *ngIf="email.value.trim()" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-                    </div>
               </div>
-      </div>
+          </div>
+        </div>
            
       <div class="qm-input-box__row">
           <div class="qm-input-box__col-1">
           </div>
           <div class="qm-input-box__col-2">
               <div class="qm-input-box__button-container">
-                  <button class="qm-input-box__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()">
+                <div class="qm-secondary-action-button-active">
+                  Save and add
+                </div> 
+                <!-- <button class="qm-input-box__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()">
                   <span>
                       {{'cancel'|translate}}
                     </span>
@@ -58,11 +79,10 @@
                     <span>
                     {{'save'|translate}}
                     </span>
-                  </button>
+                  </button> -->
                 </div>
           </div>
     </div>
-      
     </form>
   </div>
 </qm-auto-close>

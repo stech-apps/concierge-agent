@@ -43,7 +43,8 @@ import { effects } from "../store/effects";
 import { environment } from "../environments/environment";
 
 
-
+//select module
+import { NgSelectModule } from '@ng-select/ng-select';
 
 //Forms
 import {
@@ -267,6 +268,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     MomentModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     EffectsModule.forRoot(effects),
     StoreModule.forRoot(reducers),

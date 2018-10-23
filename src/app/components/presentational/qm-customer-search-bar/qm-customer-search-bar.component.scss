@@ -19,68 +19,9 @@
         font-weight: 100;
     }
 
-.customer-search{
-    svg {
-         display: inline-block;
-        width: rem(30px);
-        margin: 0 auto;
-        bottom: 0 auto;
-        vertical-align: middle;
-        text-align: center;
-        .cls-sc-1,.cls-sc-2,.cls-sc-3{
-            fill:none;
-            stroke:#000;
-        }
-        .cls-sc-1{
-            stroke-linecap:round;
-            stroke-linejoin:round;
-        }
-        .cls-sc-1,.cls-sc-2{
-            stroke-width:1.5px;
-        }
-        .cls-sc-2,.cls-sc-3{
-            stroke-miterlimit:10;
-        }
-        
-    }
-
-    input{
-        width:100%;
-        align-content: center;
-        margin: 0 auto;
-        padding: 1rem 1.5rem 1rem 1rem ;
-        // height:100%; 
-        outline: none;
-        border: 1;
-        font-size: 1.1em;
-        align-self: left;
-    }
-    
-    .add-customer-button{
-        background-color:$white;
-        margin: 0.5rem;
-        align-items: center;
-        text-align: center;
-        color: $primary-text-color;
-        padding: 8px 20px 8px 20px;
-        cursor: pointer;
-        
-    }
-
-    .qm-clear-search{
-        
-        margin: 0px 10px 0px -25px;
-        position: relative;
-        z-index: 2;
-        color: black;
-    }
-    @at-root [dir="rtl"] {
-       .qm-clear-search{
-        margin: 0px -25px 0px 10px;
-       }
-      }
-
+.qm-search__icon{
+    right: 1.2em;
+    color: black;
+    z-index: 1000;
+    position: relative;
 }
-
-
-

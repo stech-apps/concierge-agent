@@ -5,7 +5,7 @@ import { CustomerSelector,CustomerDispatchers, ServicePointSelectors, UserSelect
 import { tap, distinctUntilChanged, debounceTime, filter, throwIfEmpty } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Util } from '../../../../util/util';
-import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
+
 import { EventEmitter } from '../../../../../node_modules/protractor';
 
 @Component({
@@ -36,7 +36,6 @@ export class QmCustomerSearchBarComponent implements OnInit {
     private CustomerSelectors: CustomerSelector,
     private servicePointSelectors:ServicePointSelectors,
     private util:Util,
-    private confirmBox:CustomerUpdateService,
     private userSelectors:UserSelectors
   
   ) {
@@ -103,9 +102,4 @@ export class QmCustomerSearchBarComponent implements OnInit {
   handleCustomerSearch(text:string){
     this.CustomerDispatchers.fetchCustomers(text);
   }
-
-  createNewCustomer(){
-    this.confirmBox.open();
-  }
-
 }

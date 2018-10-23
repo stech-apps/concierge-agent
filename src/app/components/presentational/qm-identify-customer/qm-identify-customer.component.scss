@@ -1,9 +1,6 @@
 @import '../../../../styles/base/_component-manifest.scss';
 
-.customer-search-component{
-    width: 100%;
-    margin: 0px 0px 10px 0px;
-}
+
 .customer-search-list-container{
     width: 100;
     margin: 10px 0px 0px 0px;
@@ -73,6 +70,7 @@
     color: $dark-transparent42;
     font-size: 1em;
     margin-top: 0.8em;
+    display: flex;
 }
 
 .qm-details-icon{

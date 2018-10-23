@@ -2,7 +2,6 @@ import { Component, OnInit, Input, OnDestroy, Output } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
 import { CustomerDispatchers, CustomerSelector, UserSelectors, ServicePointSelectors } from '../../../../store';
-import { CustomerUpdateService } from '../../../../util/services/customer-update.service';
 import { Router } from '@angular/router';
 import { EventEmitter } from '../../../../../node_modules/protractor';
 
@@ -42,7 +41,6 @@ export class QmCustomerSearchComponent implements OnInit {
   constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors:CustomerSelector,
-    private confirmBox:CustomerUpdateService,
     private userSelectors:UserSelectors,
     private servicePointSelectors: ServicePointSelectors,
     private router: Router
@@ -56,7 +54,7 @@ export class QmCustomerSearchComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.multiBranchEnabled = params.mltyBrnch;
-       // console.log(params);
+  
       }
      
     });
@@ -120,7 +118,6 @@ export class QmCustomerSearchComponent implements OnInit {
   }
   
   editCustomer(customer:ICustomer){
-    this.confirmBox.open('update');
     this.CustomerDispatchers.editCustomers(customer);
   
     

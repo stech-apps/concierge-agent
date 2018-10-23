@@ -2,6 +2,11 @@ input::-ms-clear {
   display: none;
 }
 
+.qm-form-error-message{
+  color:$primary-pink;
+  font-size: 0.8em;
+}
+
 .qm-input-box {  
 
   display: block;
@@ -10,23 +15,16 @@ input::-ms-clear {
   position: relative;
   // overflow: auto;
 
-
-
-
-  input {
-    padding: rem(13px);
-    float: left;
-    padding-right: rem(30px);
-    padding-left: rem(25px);
+  &__input {
+    height: 3em;
     width: 100%;
-    border: 1px solid $dark-transparent20;
-    font-weight: 300;
-    font-size: 1.2em;
+    padding: 0 1em;
   }
 
   input.ng-invalid.ng-touched {
-    background-color: #ffaab7;
+    border:solid $primary-pink 1px;
   }
+
 
   input.ng-submitted {
     background-color: #ffaab7;
@@ -49,17 +47,41 @@ input::-ms-clear {
     text-align: center;
   }
 
+  &__dob-container{
+    width:100%; display:flex
+  }
+
   &__inputbox-name {
     display: block;
     color: $dark-transparent62;
     font-size: rem(15px);
-    margin-right: rem(8px);
+    // margin-right: rem(8px);
     @at-root [dir="rtl"] & {
       text-align: left;
     }
     white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
     
   }
+
+  &__month-element-container{
+    width: 200px;
+  }
+  &__day-element-container{
+    width: 90px;
+  }
+  &__year-element-container{
+    width: 140px;
+  }
+  &__dob-element-container{
+    @at-root [dir="ltr"] & {
+      margin-left: 10px;
+    }
+    @at-root [dir="rtl"] & {
+      margin-right: 10px;
+    }
+  }
+
+
   &__row{
     margin-top: 20px;
   }
@@ -91,7 +113,13 @@ input::-ms-clear {
     } 
   }
   &__left-side{
-    padding-right: 10px;
+    @at-root [dir="ltr"] & {
+      padding-right: 10px;
+    }
+    @at-root [dir="rtl"] & {
+      padding-left: 10px;
+    }
+  
   }
 
 
@@ -103,14 +131,26 @@ input::-ms-clear {
  
   }
 
-  &__label-first-name{
-    float:left;
+  &__label-first-label{
+    @at-root [dir="ltr"] & {
+      float:left;
+    }
+    @at-root [dir="rtl"] & {
+      float: right;
+    }
+  
   }
   &__inputbox-month{
     width: 90% !important
   }
   &__label-required{
-    float: right;
+    @at-root [dir="ltr"] & {
+      float: right;;
+    }
+    @at-root [dir="rtl"] & {
+      float: left;
+    }
+  
     color: $pale-aquamarine;
   }
   
@@ -165,16 +205,104 @@ input::-ms-clear {
   background-color: #ffaab7;
 }
 
-.qm-clear-search{   
-  // display: inline-block;
-  // vertical-align: middle;
-  margin:10px 10px -10px -25px;
-  z-index: 2;
-  color: black;
-  cursor: pointer;
-  @at-root [dir="rtl"] & {
-     margin:10px -25px 10px 10px;
-    }
+// Combobox dropdown
+// Opened
+.ng-select-single.ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+  border: 0;
+  top: 2px;
+  width: rem(24px);
+  height: rem(24px);
+  &:before {
+    content: "\e905";
+    font-size: rem($base-unit * 1.4);
+  }
+}
+// Closed
+.ng-select.ng-select-single .ng-arrow-wrapper .ng-arrow {
+  border: 0;
+  width: rem(24px);
+  height: rem(24px);
+  top: 2px;
+  &:before {
+    content: "\e902";
+    @include icomoon-styles;
+    font-size: rem($base-unit * 1.4);
+  }
 }
 
+.ng-select.ng-select-single .ng-select-container {
+  height: rem(50px);
+  border-color: $standard-border-color;
+}
+
+.ng-select .ng-select-container {
+  border-radius: 0;
+}
+
+.ng-select .ng-arrow-wrapper {
+  width: 28px;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  font-weight: $font-weight-light;
+  color: $dark-transparent62;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: $dark-transparent04;
+}
+
+.ng-select .ng-value-label {
+  font-weight: $font-weight-light;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background: $list-item-hover-color;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected .ng-option-label {
+  font-weight: $font-weight-normal;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  font-weight: $font-weight-light;
+  @at-root [dir='rtl'] & {
+    text-align: right;
+  }
+}
+
+.ng-dropdown-panel {
+  @at-root [dir='rtl'] & {
+    left: 0;
+  }
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  @at-root [dir='rtl'] & {
+    padding-right: 10px;
+    padding-left: 50px;
+  }
+}
+
+.ng-select .ng-select-container .ng-value-container {
+  @at-root [dir='rtl'] & {
+    padding-right: 10px;
+    padding-left: 0;
+  }
+}
+
+.ng-select .ng-arrow-wrapper {
+  @at-root [dir='rtl'] & {
+    padding-left: 5px;
+    padding-right: 0;
+  }
+}
+.ng-input>input
+{
+  display: none;
+}
+.ng-option{
+  border: 1px solid $dark-transparent12;
+  margin: 5px;   
+}
 

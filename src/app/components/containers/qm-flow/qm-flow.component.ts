@@ -50,7 +50,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     this.userDirection$ = this.userSelectors.userDirection$;   
   }
   ngAfterContentInit(){
-    if(this.FlowName=='create_appointment' && this.isFlowSkip){
+    if(this.FlowName=='create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined)){
       this.activeHeader = 1;
     }    
   }

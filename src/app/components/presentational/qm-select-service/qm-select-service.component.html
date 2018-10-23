@@ -1,6 +1,6 @@
 <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
-  <h1 class="qm--text-oveflow-fix">{{ 'label.service.heading' | translate}}</h1>
+  <h1 class="qm-text-oveflow-fix">{{ 'label.service.heading' | translate}}</h1>
   <div class="qm-selected-box" *ngIf="selectedServiceList && selectedServiceList.length > 0">
     <div class="qm-selected-box__heading">{{ 'label.selected.service' | translate }}</div>
 
@@ -48,6 +48,20 @@
         </button>
       </div>
     </div>
+
+    
+
+
+  </div>
+  <div class="qm-select-service__search-heading" *ngIf="(searchText || '').trim().length > 0">
+      <span>{{'label.search.result.header' | translate}} &nbsp;</span>
+      <mark>{{ '"'+ searchText + '"' }}</mark>
+      <span class="qm-select-service__foundbox">{{ ' ' + 
+          (filteredServiceList | filterService : [filterText, flowType])?.length + ' ' 
+          + ((filteredServiceList | filterService : [filterText, flowType])?.length == '1' ? ('label.service.found' | translate) :  ('label.services.found' | translate))
+       
+      }}
+    </span>
   </div>
 
 </div>

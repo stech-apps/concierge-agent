@@ -1,18 +1,26 @@
 .qm-calendar {
-  font-family: $secondary-font-regular;
+  border: 1px solid rgba(0,0,0,0.12);
+  background-color: $white;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-bottom: 1.5rem;
+
   &-navs {
-    background-color: $app-theme;
+    background-color: $white;
     display: flex;
-    color: $primary-text-color;
+    color: $secondary-label-color;
     height: rem(50px);
     justify-content: space-between;
     text-transform: uppercase;
     align-items: center;
+    font-size: 21px;
+    font-weight: $font-weight-medium;
+    padding: 1.8em 0.5rem;
+
     button {
-      height: 100%;
       width: rem(50px);
-      background-color: $app-theme;
-      color: $primary-text-color;
+      color: $secondary-label-color;
+      background-color: transparent;
       border: none;
       font-size: 2.2rem;
       cursor: pointer;
@@ -34,21 +42,31 @@
   }
   .qm-day-name {
     flex: 1;
-    color: $app-theme;
-    font-weight: bold;
-    font-size: 0.8rem;
+    font-weight: $font-weight-medium;
+    color: $dark-transparent62;
+    font-size: 16px;
     letter-spacing: $extended-letter-spacing;
     display: flex;
     justify-content: center;
     height: 3rem;
     align-items: center;
-    &:not(:last-child) {
-      border-right: 1px solid #ccc;
-    }
   }
   .qm-calendar-week {
     display: flex;
     justify-content: space-around;
+    &:nth-child(5) {
+      .qm-date-text:not(:empty) { 
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+        &:last-child {
+          border-right: 1px solid rgba(0,0,0,0.12);
+        }
+      }
+      .qm-date-text:empty { 
+        border-right: none;
+        border-top: 1px solid rgba(0,0,0,0.12);
+      }
+    }
+
     @at-root [dir="rtl"] & {
         flex-direction: row-reverse; 
        }
@@ -58,14 +76,27 @@
     flex: 1;
     cursor: pointer;
     color: black;
-    &:not(:last-child) {
-      border-right: 1px solid #ccc;
+    height: 56px;
+    width: 56px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 56px;
+
+    &:last-child {
+      .qm-date-text { 
+        border-right: 1px solid rgba(0,0,0,0.12);
+      }
+
+      .qm-date-text:empty { 
+        border-right: none;
+      }
     }
+
     &.today {
-      background-color: $calendar-today-background;
+      background-color: $secondary-color;
     }
     &.selected {
-      background-color: $app-theme;
+      background-color: $secondary-color;
       color: $primary-text-color;
     }
     &.disabled {
@@ -73,13 +104,15 @@
     }
   }
   .qm-date-text {
-    text-align: right;
-    height: 3rem;
     width: 100%;
-    padding-right: calc(50% - 10px);
-    vertical-align: middle;
-    line-height: 3rem;
-    font-family: $secondary-font-light;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-bottom: none;
+    border-right: none;
+
+    &:empty {
+      border: none;
+    }
+
   }
   background-color: $calendar-background;
 }

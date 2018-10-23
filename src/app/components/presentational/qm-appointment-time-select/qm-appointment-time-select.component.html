@@ -1,9 +1,9 @@
 <div class="qm-flow-sub-header" dir="{{ userDirection$ | async}}">
-  <div class="qm-flow-sub-header__left">
-
-  </div>
-  <div class="qm-flow-sub-header__center">
-    <div class="qm-number-of-customers__text">{{ 'no_of_customers' | translate }}</div>
+  <h1 class="qm-text-oveflow-fix">{{ 'label.select.datetime' | translate}}</h1>
+</div>
+<div class="qm-appointment-time-select__content">
+  <div class="qm-number-of-customers">
+    <div class="qm-number-of-customers__text qm-text-overflow-fix">{{ 'no_of_customers' | translate }}</div>
     <div class="qm-number-of-customers__numeric">
       <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">
         <i class="icon-subtract"></i>
@@ -14,15 +14,9 @@
       </div>
     </div>
   </div>
-  <div class="qm-flow-sub-header__right">
-    <div class="qm-done-button" *ngIf="(selectedTime)?.length > 0" (click)="doneButtonClick()">
-      {{'banner_done_label' | translate }}
-    </div>
-  </div>
-</div>
-<div class="qm-appointment-time-select__content">
+
   <div class="qm-calendar-container">
-    <div class="qm-calendar-header qm-time-header">{{selectedBranch.name}}</div>
+    <div class="qm-calendar-header qm-text-overflow-fix">{{selectedBranch.name}}</div>
     <div class="qm-calendar-placeholder">
       <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
     </div>

@@ -1,15 +1,36 @@
 <div class="time-category-container">
-  <div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 
+  <h3 class="qm-available-slots-heading">{{ 'label.available.timeslots' | translate }}</h3>
+
+  <!--div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 
   [ngClass]="{'qm-time-category--active': ti.isActive}">
     {{ti.title}}
+  </div-->
+  <div class="qm-time-slot-list__category-parent">
+    <ng-container *ngFor="let ti of timeSlotCategories">
+      <div *ngIf="ti.endTime != 24" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" [ngClass]="{'qm-time-category--active': ti.isActive}">
+        <button class="qm-time-slot-category--title">{{ti.title }}</button>
+      </div>
+    </ng-container>
   </div>
 </div>
 
 <div class="qm-time-slot-list">
   <ng-container *ngIf="!isTimeSlotLoading">
-  <div  class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : selectedCategory" [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
-    {{ts.title}}
-  </div>
+    <div class="qm-time-slot-list__scrollable">
+      <div class="qm-time-split" *ngFor="let tc of timeSlotCategories">
+        <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="timeFormat === HOUR_24FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
+          {{ ('label.nobookable.slots' | translate) + ' ' + tc.startTime + ':00' + ' - ' + tc.endTime + ':00'}}
+        </div>
+        <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
+          {{ ('label.nobookable.slots.ampm' | translate) + ' ' + tc.title}}
+        </div>
+        <div class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : tc.category" [ngClass]="{'qm-time-select-slot--active': ts.isActive}"
+          (click)="timeSlotSelect(ts)">
+          {{ts.title}}
+          <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}</span>
+        </div>
+      </div>
+    </div>
   </ng-container>
 
   <div class="qm-loading-timeslots" *ngIf="isTimeSlotLoading">{{('loading_timeslots' | translate)}}</div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AutoClose } from '../../../../util/services/autoclose.service';
 import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
-import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, AbstractControl, } from '@angular/forms';
 import { ICustomer } from '../../../../models/ICustomer';
 import { first } from '../../../../../node_modules/rxjs/operators';
 import { whiteSpaceValidator } from '../../../../util/custom-form-validators';
@@ -29,6 +29,8 @@ export class QmInputboxComponent implements OnInit {
   invalidFirstName:boolean;
   invalidLastName:boolean;
   countryCodeNumber:string;
+  day:number;
+  controls: any;
 
   private dateLabelKeys: string[] = [
     'calendar.month.none',
@@ -46,7 +48,7 @@ export class QmInputboxComponent implements OnInit {
     'calendar.month.december'
   ];
 
-  private months: NgOption[];
+  months: NgOption[];
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,

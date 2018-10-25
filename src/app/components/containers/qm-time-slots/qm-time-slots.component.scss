@@ -1,53 +1,134 @@
 @import "../../../../styles/base/_component-manifest.scss";
-
 .time-category-container {
-    display: flex;
+  display: flex;
 }
 
 .qm-time-category {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $light-gray7;
-    height: 2.5rem;
-    cursor: pointer;
-    letter-spacing: $extended-letter-spacing-2;
-    color: $black;
-
-    &:not(:last-child) {
-        border-right: 1px solid $light-gray8;
-    }
-
-    &--active {
-        background-color: $app-theme;
-        color: $primary-text-color;
-    }
-} 
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  background-color: $white;
+  height: 2.5rem;
+  cursor: pointer;
+  letter-spacing: $extended-letter-spacing-2;
+  color: $black;
+  &--active {
+    color: $primary-text-color;
+  }
+}
 
 .qm-time-select-slot {
-    background-color: $primary-text-color;
-    display: flex;
-    justify-content: center;
-    height: 2.7rem;
-    align-items: center;
-    border-bottom: 1px solid $light-gray8;
-    letter-spacing: $extended-letter-spacing-2;
-    cursor: pointer;
-    &--active {
-        background-color: $app-theme;
-        color: $primary-text-color;
+    color: $dark-transparent82;
+  background-color: $primary-text-color;
+  display: flex;
+  font-weight: 300;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.12);
+  height: 55px;
+  cursor: pointer;
+  &--active {
+    background-color: $secondary-color;
+    color: $primary-text-color;
+    .qm-time-select-slot--meridian {
+      color: $white;
     }
+  }
+  margin: 0.25rem;
+  box-shadow: 2px 4px 4px 0 rgba(0,0,0,0.04);
+  width: calc(25% - 10px);
+  box-sizing: border-box;
+  &:last-child {
+      margin-bottom: 24px;
+  }
+
+  &:hover {
+      background-color: rgba(0,0,0,0.04);
+    .qm-time-select-slot--meridian {
+        color: rgba(0,0,0,0.62);
+        font-weight: 500;
+      }
+
+  }
+}
+
+.qm-time-slot-list__category-parent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0px;
+  height: calc(100vh - 517px);
+  width: 55px;
+  padding-top: 3rem;
+  background-color: $white;
 }
 
 .qm-time-slot-list {
-    height: calc(100vh - 285px);
-    overflow-y: auto;
-    font-family: $primary-font-family;
+  overflow-y: auto;
+  font-family: $primary-font-family;
+  display: flex;
+  position: absolute;
+  top: 90px;
+  right: 0;
+  left: 55px;
+  bottom: 0;
+  .qm-time-slot-list__scrollable {
+    flex: 10;
+    .qm-time-split {
+      flex-wrap: wrap;
+      background-color: $timeslot-background;
+      justify-content: left;
+      align-content: flex-start;
+    }
+
+  }
 }
 
 .qm-loading-timeslots {
-    letter-spacing: 2px;
-    text-align: center;
-    line-height: 10;
+  letter-spacing: 2px;
+  text-align: center;
+  line-height: 10;
+}
+
+.qm-available-slots-heading {
+  font-size: 14px;
+  font-weight: 500;
+  color: $dark-transparent62;
+  padding: 0.5rem;
+  background: $white;
+  width: 100%;
+  margin-bottom: 0;
+  padding-left: 55px;
+}
+
+.qm-time-select-slot--meridian {
+  color: rgba(0, 0, 0, 0.42);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  margin-left: 0.20rem;
+}
+
+.qm-time-slot-category--title {
+  border: none;
+  cursor: pointer;
+  background: $white;
+  height: 2rem;
+  color: $dark-transparent62;
+}
+
+.qm-time-split {
+  display: flex;
+}
+
+.qm-time-split__empty {
+  height: 56px;
+  width: 384px;
+  color: $dark-transparent82;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 56px;
+  padding-left: 25px;
 }

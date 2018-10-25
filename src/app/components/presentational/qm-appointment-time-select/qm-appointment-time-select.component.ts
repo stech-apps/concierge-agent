@@ -38,6 +38,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private settingReservationExpiryTime: number;
   public showExpiryReservationTime$: Observable<Boolean>;
   public preselectedTimeSlot: string = null;
+  selectedTimeHeading: string = '';
     public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
   selectedTime$: Observable<Moment>;
@@ -52,6 +53,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
   reloadTimeSlots: EventEmitter<any> = new EventEmitter();
+  private readonly HOUR_24FORMAT = '24';
+  private readonly HOUR_12FORMAT = 'AMPM';
+  timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
 
   constructor(private branchSelectors: BranchSelectors, private timeSlotSelectors: TimeslotSelectors, private timeSlotDispatchers: TimeslotDispatchers,
     private bookingHelperService: BookingHelperService, private calendarBranchSelectors: CalendarBranchSelectors,
@@ -178,6 +182,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
+      this.selectedTimeHeading = date.mDate.format('dddd DD MMMM');
     }
   }
 
@@ -186,7 +191,6 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   onTimeSlotSelect(timeSlot: ITimeSlot) {
-   
     this.selectedTime = timeSlot.title;
     const bookingInformation: IBookingInformation = {
       branchPublicId: this.selectedBranch.publicId,
@@ -223,6 +227,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     this.timeSlotDispatchers.getTimeslots(bookingInformation);
   }
+
+
 
   getServicesQueryString(): string {
     return this.selectedServices.reduce((queryString, service: ICalendarService) => {

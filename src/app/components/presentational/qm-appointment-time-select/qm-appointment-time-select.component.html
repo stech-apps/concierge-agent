@@ -15,17 +15,22 @@
     </div>
   </div>
 
-  <div class="qm-calendar-container">
-    <div class="qm-calendar-header qm-text-overflow-fix">{{selectedBranch.name}}</div>
-    <div class="qm-calendar-placeholder">
-      <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
+  <div class="qm-time-container">
+    <div class="qm-calendar-container">
+      <div class="qm-calendar-header qm-text-overflow-fix">{{selectedBranch.name}}</div>
+      <div class="qm-calendar-placeholder">
+        <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
+      </div>
+    </div>
+    <div class="qm-appointment-time-select-slots">
+      <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
+      <div class="qm-time-slot-placeholder">
+        <qm-time-slots [preselectedTimeSlot]="preselectedTimeSlot" 
+        (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+      </div>
     </div>
   </div>
-  <div class="qm-appointment-time-select-slots">
-    <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
-    <div class="qm-time-slot-placeholder">
-      <qm-time-slots [preselectedTimeSlot]="preselectedTimeSlot" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
-    </div>
-  </div>
+
+
   <!--ngb-datepicker #dp [(ngModel)]="model" [outsideDays]="'hidden'" firstDayOfWeek="7" [displayMonths]="displayMonths" [navigation]="'arrows'"  (navigate)="date = $event.next"></ngb-datepicker-->
 </div>

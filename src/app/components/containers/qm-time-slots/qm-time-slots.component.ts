@@ -1,4 +1,4 @@
-import { OnDestroy, EventEmitter, Input } from '@angular/core';
+import { OnDestroy, EventEmitter, Input, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
@@ -16,11 +16,14 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   timeSlotCategories: Array<ITimeSlotCategory> = [];
   timeSlots: Array<ITimeSlot> = [];
   selectedCategory: number = 1;
+  private readonly HOUR_24FORMAT = '24';
+  private readonly HOUR_12FORMAT = 'AMPM';
+  timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
   
-  private readonly TIME_GAP = 6;
+  private readonly TIME_GAP = 4;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private timeSlotSelectors: TimeslotSelectors) {
+  constructor(private timeSlotSelectors: TimeslotSelectors, private elRef: ElementRef) {
     this.generateTimeSlotCategories();
     this.timeSlotCategories[0].isActive = true;
   }
@@ -79,19 +82,46 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   }
 
   generateTimeSlotCategories() {
-    let slotCount = Math.ceil(24 / this.TIME_GAP);
-    let startTime = 0;
 
-    for (let i = 0; i < slotCount; i++) {
+    if(this.timeFormat == this.HOUR_24FORMAT) {
+      let slotCategoryCount = 4;
       this.timeSlotCategories.push({
-        title: this.pad(startTime, 2) + '-' + this.pad(startTime + this.TIME_GAP, 2),
-        startTime: startTime,
-        endTime: startTime + this.TIME_GAP,
+        title: '8', //first category start from 0-8
+        startTime: 0,
+        endTime: 8,
         isActive: false,
-        category: i + 1
+        category: 1
+      });
+  
+      let startTime = 8;
+      for (let i = 0; i < slotCategoryCount; i++) {
+        this.timeSlotCategories.push({
+          title: (startTime + this.TIME_GAP).toString(),
+          startTime: startTime,
+          endTime: startTime + this.TIME_GAP,
+          isActive: false,
+          category: i + 2
+        });
+  
+        startTime = startTime + this.TIME_GAP;
+      }
+    }
+    else {
+      this.timeSlotCategories.push( {
+        title: 'AM',
+        startTime: 0,
+        endTime: 0,
+        isActive: false,
+        category: 1
       });
 
-      startTime = startTime + this.TIME_GAP;
+      this.timeSlotCategories.push( {
+        title: 'PM',
+        startTime: 0,
+        endTime: 0,
+        isActive: false,
+        category: 2
+      });
     }
   }
 
@@ -105,13 +135,89 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     this.onTimeSlotSelect.emit(timeSlot);
   }
 
-  timeSlotCategorySelect(timeSlotCategory: ITimeSlotCategory) {
-    this.timeSlotCategories.forEach((ts) => {
-      ts.isActive = false;
-    });
-    timeSlotCategory.isActive = true;
+  getNextClosestTime(time: string): string {
 
-    this.selectedCategory = timeSlotCategory.category;
+    if (this.timeFormat === 'AMPM') {
+      return this.getNextClosestTimeAMPM(time);
+    } else {
+      return this.getNextClosestTime24Hours(time);
+    }
+  }
+
+  getNextClosestTime24Hours(time: string): string {
+    const timeToScrollTo = this.timeSlots.reduce(
+      (nextClosestTime: ITimeSlot, currTime: ITimeSlot) => {
+        const clickedTime: number = parseInt(time, 10);
+        const currentHour: string = currTime.title.split(':')[0];
+        const currentIterTime = parseInt(currentHour, 10);
+
+        if (nextClosestTime.title === '' && currentIterTime >= clickedTime) {
+          return currTime;
+        } else {
+          return nextClosestTime;
+        }
+      }, {title: ''}
+    );
+
+    return timeToScrollTo.title;
+  }
+
+  getNextClosestTimeAMPM(ampm: string) {
+    const timeToScrollTo = this.timeSlots.reduce(
+      (nextClosestTime: ITimeSlot, currTime: ITimeSlot) => {
+        const clickedAMPM: string = ampm;
+
+        if (clickedAMPM === 'AM') {
+          if (nextClosestTime.title === '') {
+            return currTime;
+          } else {
+            return nextClosestTime;
+          }
+        }
+
+        if (clickedAMPM === 'PM') {
+          const currentHour: string = currTime.title.split(':')[0];
+          const currentIterTime = parseInt(currentHour, 10);
+
+          if (nextClosestTime.title === '' && currentIterTime >= 12) {
+            return currTime;
+          } else {
+            return nextClosestTime;
+          }
+        }
+      }, {title: ''}
+    );
+
+    return timeToScrollTo.title;
+  }
+
+  timeSlotCategorySelect(timeSlotCategory: ITimeSlotCategory) {
+    const timeString =  this.timeFormat === this.HOUR_24FORMAT ? timeSlotCategory.endTime.toString() : timeSlotCategory.title
+    const nextClosestTime = this.getNextClosestTime(timeString);
+    const index = this.getPositionOfTimeInList(nextClosestTime);
+    const timeSlotControls = this.elRef.nativeElement.querySelectorAll(
+      '.qm-time-select-slot'
+    );
+
+    if (index !== -1) {
+      const itemToScrollTo = timeSlotControls[index];
+
+      if (itemToScrollTo !== undefined) {
+        itemToScrollTo.scrollIntoView(true);
+      }
+    } else {
+      const emptyCategory = this.elRef.nativeElement.querySelector(
+        '.qm-time-split__empty' + (timeSlotCategory.category + 1)
+      );
+
+      if (emptyCategory !== undefined) {
+        emptyCategory.scrollIntoView(true);
+      }
+    }
+  }
+
+  getPositionOfTimeInList(timeToFind) {
+    return this.timeSlots.map(x =>x.title).indexOf(timeToFind);
   }
 
   pad(n, width, z = '0') {
@@ -123,14 +229,25 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
   addCategory(timeString) {
     let category = 1;
-    if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("06:00")) {
-      category = 1;
-    } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("12:00")) {
-      category = 2;
-    } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("18:00")) {
-      category = 3;
-    } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("24:00")) {
-      category = 4;
+
+    if(this.timeFormat === this.HOUR_24FORMAT) {
+      if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("08:00")) {
+        category = 1;
+      } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("12:00")) {
+        category = 2;
+      } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("16:00")) {
+        category = 3;
+      } else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("20:00")) {
+        category = 4;
+      }
+      else if (this.getMinutesFromTime(timeString) < this.getMinutesFromTime("24:00")) {
+        category = 5;
+      }
+    }
+    else {
+      if(this.getMeridian(timeString) === 'PM') {
+        category = 2;
+      }
     }
 
     return category;
@@ -144,5 +261,18 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
       console.log("timeString issue", { class: "CalendarDatePickerModel", func: "getMinutesFromTime", exception: ex });
     }
     return (hours * 60) + minutes;
+  }
+
+  getMeridian(time) {
+    if(time) {
+      const splitTime = time.split(':');
+      if(parseInt(splitTime[0], 10) >= 12) {
+        return 'PM';
+      }
+      else {
+        return 'AM';
+      }      
+    }
+    return '';
   }
 }

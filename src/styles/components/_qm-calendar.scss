@@ -1,5 +1,5 @@
 .qm-calendar {
-  border: 1px solid rgba(0,0,0,0.12);
+
   background-color: $white;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
@@ -26,6 +26,9 @@
       cursor: pointer;
       &:focus {
         outline: none;
+      }
+      &:hover {
+        color: rgba(0,0,0,0.62);
       }
     }
     @at-root [dir="rtl"] & {
@@ -82,9 +85,11 @@
     vertical-align: middle;
     line-height: 56px;
 
+
+
     &:last-child {
       .qm-date-text { 
-        border-right: 1px solid rgba(0,0,0,0.12);
+        border-right: 1px solid $dark-transparent12;
       }
 
       .qm-date-text:empty { 
@@ -93,7 +98,8 @@
     }
 
     &.today {
-      background-color: $secondary-color;
+      background-color: $white;
+      border: 1px solid $secondary-color;
     }
     &.selected {
       background-color: $secondary-color;
@@ -111,6 +117,12 @@
 
     &:empty {
       border: none;
+    }
+
+    &:hover:not(:empty) {
+      border: 1px solid $dark-transparent12;
+      background-color: rgba(0,0,0,0.04);
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
     }
 
   }

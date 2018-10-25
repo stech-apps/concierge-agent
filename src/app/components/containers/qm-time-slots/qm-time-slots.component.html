@@ -26,7 +26,7 @@
         </div>
         <div class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : tc.category" [ngClass]="{'qm-time-select-slot--active': ts.isActive}"
           (click)="timeSlotSelect(ts)">
-          {{ts.title}}
+          {{ getTimeDisplayValue(ts) }}
           <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}</span>
         </div>
       </div>

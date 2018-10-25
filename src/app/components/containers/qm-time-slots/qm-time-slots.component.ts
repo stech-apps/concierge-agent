@@ -18,7 +18,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   selectedCategory: number = 1;
   private readonly HOUR_24FORMAT = '24';
   private readonly HOUR_12FORMAT = 'AMPM';
-  timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
+  timeFormat: string = this.HOUR_24FORMAT; //todo read from orchestra setting
   public userDirection$: Observable<string>;
   
   private readonly TIME_GAP = 4;
@@ -263,6 +263,17 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
       console.log("timeString issue", { class: "CalendarDatePickerModel", func: "getMinutesFromTime", exception: ex });
     }
     return (hours * 60) + minutes;
+  }
+
+  getTimeDisplayValue(ts: ITimeSlot): string{
+    let displayValue: any = ts.title;
+    if(this.timeFormat == this.HOUR_12FORMAT)  {
+      let timeParts = ts.title.split(':');
+      if(parseInt(timeParts[0], 10)>12) {
+        displayValue = `${(parseInt(timeParts[0], 10) - 12)}:${timeParts[1]}`;        
+      }
+    }
+    return displayValue;
   }
 
   getMeridian(time) {

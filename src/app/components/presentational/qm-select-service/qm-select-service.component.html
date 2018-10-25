@@ -1,6 +1,6 @@
 <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
-  <h1 class="qm-text-oveflow-fix">{{ 'label.service.heading' | translate}}</h1>
+  <h1 class="qm-text-overflow-fix">{{ 'label.service.heading' | translate}}</h1>
   <div class="qm-selected-box" *ngIf="selectedServiceList && selectedServiceList.length > 0">
     <div class="qm-selected-box__heading">{{ 'label.selected.service' | translate }}</div>
 
@@ -71,7 +71,7 @@
   <div class="qm-service-list__item-container" *ngIf="mostFrequentServiceList && mostFrequentServiceList.length > 0 && (mostFrequentServiceList | filterService: [filterText, flowType]).length > 0">
     <div class="qm-crossline-header-container">
       <div class="qm-crossline-header"></div>
-      <h2 class="qm-crossline-header-text qm-text-oveflow-fix">{{ 'most_freq_services' | translate }}</h2>
+      <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'most_freq_services' | translate }}</h2>
     </div>
 
     <div class="qm-list">

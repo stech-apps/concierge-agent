@@ -11,7 +11,8 @@
         margin-right: 30px;
         max-width: 50%;
         @at-root [dir="rtl"] & {
-            margin-left: rem($standard-margin / 2);
+            margin-left: 30px;
+            margin-right: 0;
         }        
     }
     &__numeric {
@@ -87,8 +88,15 @@
     background-color: $calendar-background;
     margin-right: 2rem;
     height: calc(100vh - 388px);
-
     border: 1px solid rgba(0,0,0,0.12);
+    @at-root [dir="rtl"] & {
+        margin-left: 2rem;
+        margin-right: 0;
+    }   
+}
+
+[dir="rtl"] .qm-calendar-placeholder {
+    
 }
 
 .qm-appointment-time-select-slots {

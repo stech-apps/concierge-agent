@@ -1,4 +1,4 @@
-<div class="time-category-container">
+<div class="time-category-container" dir="{{userDirection$ | async}}">
   <h3 class="qm-available-slots-heading">{{ 'label.available.timeslots' | translate }}</h3>
 
   <!--div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 
@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div class="qm-time-slot-list">
+<div class="qm-time-slot-list" dir="{{userDirection$ | async}}">
   <ng-container *ngIf="!isTimeSlotLoading">
     <div class="qm-time-slot-list__scrollable">
       <div class="qm-time-split" *ngFor="let tc of timeSlotCategories">

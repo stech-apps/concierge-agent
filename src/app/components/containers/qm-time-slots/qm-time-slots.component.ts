@@ -1,9 +1,9 @@
 import { OnDestroy, EventEmitter, Input, ElementRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
 import { Component, OnInit, Output } from '@angular/core';
-import { TimeslotSelectors } from 'src/store';
+import { TimeslotSelectors, UserSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-time-slots',
@@ -19,13 +19,15 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   private readonly HOUR_24FORMAT = '24';
   private readonly HOUR_12FORMAT = 'AMPM';
   timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
+  public userDirection$: Observable<string>;
   
   private readonly TIME_GAP = 4;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private timeSlotSelectors: TimeslotSelectors, private elRef: ElementRef) {
+  constructor(private timeSlotSelectors: TimeslotSelectors, private userSelectors: UserSelectors, private elRef: ElementRef) {
     this.generateTimeSlotCategories();
     this.timeSlotCategories[0].isActive = true;
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   @Input()

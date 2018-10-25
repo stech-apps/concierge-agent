@@ -28,11 +28,25 @@
   border: 1px solid rgba(0,0,0,0.12);
   height: 55px;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(0,0,0,0.04);
+  .qm-time-select-slot--meridian {
+      color: rgba(0,0,0,0.62);
+      font-weight: 500;
+    }
+
+}
   &--active {
     background-color: $secondary-color;
     color: $primary-text-color;
     .qm-time-select-slot--meridian {
       color: $white;
+    }
+    &:hover {
+        background-color: $secondary-color;
+        .qm-time-select-slot--meridian {
+            color: $white;
+          }
     }
   }
   margin: 0.25rem;
@@ -43,14 +57,7 @@
       margin-bottom: 24px;
   }
 
-  &:hover {
-      background-color: rgba(0,0,0,0.04);
-    .qm-time-select-slot--meridian {
-        color: rgba(0,0,0,0.62);
-        font-weight: 500;
-      }
 
-  }
 }
 
 .qm-time-slot-list__category-parent {
@@ -63,6 +70,14 @@
   width: 55px;
   padding-top: 3rem;
   background-color: $white;
+
+  @at-root [dir='rtl'] & {
+    right: 0;
+    left: auto;
+    top: 88px;
+    bottom: 0;
+    height: auto;
+  }
 }
 
 .qm-time-slot-list {
@@ -82,8 +97,17 @@
       justify-content: left;
       align-content: flex-start;
     }
-
   }
+
+  @at-root [dir='rtl'] & {
+    right: 55px;
+    left: 0;
+  }
+}
+
+.qm-time-slot-list[dir='rtl'] { 
+    right: 55px;
+    left: 0;
 }
 
 .qm-loading-timeslots {
@@ -101,6 +125,12 @@
   width: 100%;
   margin-bottom: 0;
   padding-left: 55px;
+  max-width: 100%;
+  @at-root [dir='rtl'] & {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 55px;
+  }
 }
 
 .qm-time-select-slot--meridian {
@@ -109,6 +139,11 @@
   font-weight: 500;
   display: inline-block;
   margin-left: 0.20rem;
+
+  @at-root [dir='rtl'] & {
+    margin-right: 0.2rem;
+    margin-left: initial;
+  }
 }
 
 .qm-time-slot-category--title {
@@ -132,3 +167,4 @@
   line-height: 56px;
   padding-left: 25px;
 }
+

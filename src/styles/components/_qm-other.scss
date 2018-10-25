@@ -30,10 +30,13 @@
     width: 100%;
 }
 
-.qm-text-oveflow-fix {
+.qm-text-overflow-fix {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
+.qm-appointment-time-select__content[dir="rtl"] .qm-calendar-header {
+  text-align: right;
+}
 

@@ -3,7 +3,7 @@ import { Subscription, Observable } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
 import { Component, OnInit, Output } from '@angular/core';
-import { TimeslotSelectors, UserSelectors } from 'src/store';
+import { TimeslotSelectors, UserSelectors, SystemInfoSelectors } from 'src/store';
 
 @Component({
   selector: 'qm-time-slots',
@@ -24,9 +24,9 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   private readonly TIME_GAP = 4;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private timeSlotSelectors: TimeslotSelectors, private userSelectors: UserSelectors, private elRef: ElementRef) {
-    this.generateTimeSlotCategories();
-    this.timeSlotCategories[0].isActive = true;
+  constructor(private timeSlotSelectors: TimeslotSelectors, private userSelectors: UserSelectors,
+    private elRef: ElementRef, private systemInfoSelectors: SystemInfoSelectors) {
+
     this.userDirection$ = this.userSelectors.userDirection$;
   }
 
@@ -37,6 +37,12 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 
   ngOnInit() {
+    const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
+      this.timeFormat = tf;
+      this.generateTimeSlotCategories();
+      this.timeSlotCategories[0].isActive = true;
+    });
+    
     const timeSlotSubscription = this.timeSlotSelectors.times$.subscribe((times) => {
       this.timeSlots = [];
       if (times && times.length > 0) {
@@ -75,8 +81,11 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
       this.isTimeSlotLoading = loading;
     });
 
+
+
     this.subscriptions.add(timeSlotSubscription);
     this.subscriptions.add(timeSlotLoadingSubscription);
+    this.subscriptions.add(timeConventionSubscriptioon);
   }
   
   ngOnDestroy() {

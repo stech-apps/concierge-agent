@@ -61,6 +61,10 @@ const getDistributedAgentStatus = createSelector(
   (state: ISystemInfoState) => state.isDistributedAgent
 );
 
+const getTimeConvention = createSelector(
+  getSystemInfo,
+  (state: ISystemInfo) => (state.timeConvention === '24 hour' ? '24' : 'AMPM')
+);
 
 @Injectable()
 export class SystemInfoSelectors {
@@ -76,4 +80,5 @@ export class SystemInfoSelectors {
   DistributedAgentStatus$ = this.store.select(getDistributedAgentStatus);
   centralHostAddress$ = this.store.select(getCentralHost);
   authorizationHeader$ = this.store.select(getAuthorizationHeader);
+  timeConvention$ = this.store.select(getTimeConvention);
 }

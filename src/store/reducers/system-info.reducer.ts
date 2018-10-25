@@ -8,7 +8,7 @@ export interface ISystemInfoState {
   loaded: boolean;
   error: Object;
   isDistributedAgent: boolean;
-  authorizationHeader: HttpHeaders
+  authorizationHeader: HttpHeaders;
 }
 
 const initialState = {
@@ -20,7 +20,8 @@ const initialState = {
     defaultLanguage: '',
     protocol: '',
     host: '',
-    port: ''
+    port: '',
+    timeConvention: '24 hour'
   },
   loading: false,
   loaded: false,

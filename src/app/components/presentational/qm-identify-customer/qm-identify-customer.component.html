@@ -44,17 +44,17 @@
   <qm-customer-search-bar ></qm-customer-search-bar>
   <!-- customer search results -->
   <qm-customer-search></qm-customer-search>
-  <div class="qm-info-text"  > <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name
+  <div class="qm-info-text" *ngIf="customers.length==0" > <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name
   </div>
 </div>
 <br>
 
-<div class="qm-crossline-header-container" >
-    <div class="qm-crossline-header"></div>
+<div class="qm-crossline-header-container" *ngIf="customers.length==0" >
+    <div class="qm-crossline-header" ></div>
     <h2 class="qm-crossline-header-text" *ngIf="!editMode">{{ 'label.add_customer' | translate }}</h2>
     <h2 class="qm-crossline-header-text" *ngIf="editMode">{{ 'label.customer_details' | translate }}</h2>
 </div>
-<div class="qm-service-list__container">
+<div class="qm-service-list__container" >
   <qm-inputbox></qm-inputbox>
 
   

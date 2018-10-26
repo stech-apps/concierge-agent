@@ -77,8 +77,8 @@
     <div class="qm-list">
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
         (click)="onServiceSelect(service, true)" [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
-        <div class="qm-service-list__item--text qm-list__item--text">
-          {{ service.name && service.name.length > 0 ? service.name : service.internalName }}</div>
+        <div class="qm-service-list__item--text qm-list__item--text" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
+          </div>
         <i class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
       </div>
     </div>
@@ -98,8 +98,7 @@
         <div class="qm-service-list__item qm-list__item"  [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false, 'qm-list__item--info-active' : service.showInfo}">
 
           <div class="qm-service-list__item--text qm-list__item--text" (click)="onServiceSelect(service, true)">
-            <div class="qm-list__item--label">
-                {{ service.name && service.name.length > 0 ? service.name : service.internalName }}
+            <div class="qm-list__item--label" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfo">
                 {{service.externalDescription || ('label.noinformation.avaialble' | translate) }}

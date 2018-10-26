@@ -21,7 +21,6 @@ export class QmInputboxComponent implements OnInit {
   editCustomer: ICustomer;
   editCustomer$: Observable<ICustomer>;
   userDirection$: Observable<string>;
-  isOnupdate:boolean;
   isButtonPressed:boolean=false;
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
@@ -31,6 +30,10 @@ export class QmInputboxComponent implements OnInit {
   countryCodeNumber:string;
   day:number;
   controls: any;
+  currentCustomer:ICustomer
+  editMode:boolean;
+
+  firstName:string
 
   private dateLabelKeys: string[] = [
     'calendar.month.none',
@@ -48,7 +51,8 @@ export class QmInputboxComponent implements OnInit {
     'calendar.month.december'
   ];
 
-  months: NgOption[];
+  
+  public months: NgOption[];
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -60,11 +64,37 @@ export class QmInputboxComponent implements OnInit {
     private util: Util,
     private translateService: TranslateService
   ) {
-    this.editCustomer$ = this.customerSelectors.editCustomer$;
+    // this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;
    }
 
   ngOnInit() {
+
+    // patch values if current customer available
+    const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
+      this.currentCustomer = customer;
+      if(this.currentCustomer){
+        this.customerCreateForm.patchValue({
+          firstName: this.currentCustomer.firstName,
+          lastName:this.currentCustomer.lastName,
+          phone:this.currentCustomer.properties.phoneNumber,
+          email:this.currentCustomer.properties.email
+        })
+      }else if((this.customerCreateForm!==undefined) && !this.currentCustomer  ){
+        this.customerCreateForm.patchValue({
+          firstName: '',
+          lastName:'',
+          phone:'',
+          email:''
+        })
+      }
+    });
+    this.subscriptions.add(CurrentcustomerSubscription);
+
+    const editModeSubscription = this.customerSelectors.editCustomerMode$.subscribe((status)=>{
+      this.editMode = status;
+    })
+    this.subscriptions.add(editModeSubscription);
 
     // get country code
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
@@ -80,11 +110,11 @@ export class QmInputboxComponent implements OnInit {
     let dayValidators = [Validators.maxLength(2), Validators.max(31)];
     let yearValidators = [Validators.maxLength(4), Validators.min(1)];
     let monthValidators = [];
-    dayValidators = [...dayValidators, Validators.required];
-    yearValidators = [...yearValidators, Validators.required];
-    monthValidators = [...monthValidators, Validators.required];
+    dayValidators = [...dayValidators];
+    yearValidators = [...yearValidators];
+    monthValidators = [...monthValidators];
 
-    //subscribe current custoomer 
+    //subscribe customer List 
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
     
@@ -108,7 +138,7 @@ export class QmInputboxComponent implements OnInit {
       )
     })
 
-    let editCustomerSubscription = null;
+    
  
     // Add month names to an array
     const translateSubscription = this.translateService
@@ -134,28 +164,23 @@ export class QmInputboxComponent implements OnInit {
     this.subscriptions.add(translateSubscription);
 
     // if on update
-    if(this.isOnupdate){  
-      editCustomerSubscription = this.editCustomer$.subscribe(
-        (editCustomer:ICustomer)=>{
-          this.editCustomer = editCustomer;
-        }
-      )
+    // if(this.currentCustomer){  
+    //   editCustomerSubscription = this.editCustomer$.subscribe(
+    //     (editCustomer:ICustomer)=>{
+    //       this.editCustomer = editCustomer;
+    //     }
+    //   )
 
-      this.customerCreateForm.patchValue({
-        firstName: this.editCustomer.firstName,
-        lastName:this.editCustomer.lastName,
-        phone:this.editCustomer.properties.phoneNumber,
-        email:this.editCustomer.properties.email
-      })
-    }
+     
+    // }
 
     // Add customer status place country code
-    if(this.countrycode && !this.isOnupdate){
+    if(this.countrycode && !this.currentCustomer){
         this.customerCreateForm.patchValue({
           phone:this.countrycode
         })
       }
-       else if(this.countrycode && this.isOnupdate && !this.editCustomer.properties.phoneNumber){
+       else if(this.countrycode && this.currentCustomer && !this.editCustomer.properties.phoneNumber){
         this.customerCreateForm.patchValue({
           phone:this.countrycode
         })
@@ -177,10 +202,10 @@ export class QmInputboxComponent implements OnInit {
     }
     if(this.customerCreateForm.valid){
       // this.activeModal.close(this.customerCreateForm.value); 
-      if(this.isOnupdate){
+      if(this.currentCustomer){
         this.customerDispatchers.updateCustomer(this.preparedCustomer());
         this.updateList(this.preparedCustomer());
-        this.customerDispatchers.selectCustomers(this.preparedCustomer());
+        this.customerDispatchers.selectCustomer(this.preparedCustomer());
       }else{
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
@@ -217,7 +242,7 @@ export class QmInputboxComponent implements OnInit {
 
 
   preparedCustomer():ICustomer{
-    if(this.isOnupdate){
+    if(this.currentCustomer){
       const customerToSave : ICustomer = {
         ...this.editCustomer,
         ...this.trimCustomer(),
@@ -232,39 +257,12 @@ export class QmInputboxComponent implements OnInit {
     }
       
   }
-
-  public dismiss() {
-    // this.activeModal.dismiss();
-  }
-  
-  clearFirstName(){
-    this.customerCreateForm.patchValue({
-      firstName:''
-    });
-  }
-
-  clearLastName(){
-    this.customerCreateForm.patchValue({
-      lastName:''
-    });
-  }
-
-  clearPhoneNum(){
-    this.customerCreateForm.patchValue({  
-      phone:''
-    });
-  }
-
-  clearEmail(){
-    this.customerCreateForm.patchValue({
-      email:''
-    });
-  }
-
+ 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
   
+  // Date of Birth validation
   isValidDOBEntered(control: FormGroup) {
     let errors = null;
     if (control.value) {
@@ -295,7 +293,7 @@ export class QmInputboxComponent implements OnInit {
 
     return errors;
   }
-
+// restric input feild of birth date and year to numbers
   restrictNumbers($event) {
     const pattern = /[0-9]/;
     const inputChar = String.fromCharCode($event.charCode);
@@ -354,4 +352,9 @@ export class QmInputboxComponent implements OnInit {
     return sourceString;
   }
 
+
+  cancel(){
+    this.customerDispatchers.resetCurrentCustomer();
+    this.customerDispatchers.editCustomerMode(false);
+  }
 }

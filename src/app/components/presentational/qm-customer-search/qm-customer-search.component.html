@@ -1,17 +1,17 @@
 <table class="customer-table" dir="{{ userDirection$ | async }}" >
-  <tbody *ngIf="customers.length!=0" class="tbody" [style.max-height]="height">
+  <tbody *ngIf="customers.length!=0" class="tbody">
     <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" >
-      <td style="width: 5%" (click)="selectCustomer(customer)"></td>
+      <td style="width: 5%" (click)="selectCustomer(customer)" ></td>
       <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.firstName}}  {{customer.lastName}} </td>
       <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.properties.email}}</td>
       <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.properties.phoneNumber}}</td>
       <td style="width: 20%" (click)="selectCustomer(customer)"> {{customer.properties.dateOfBirth}}</td>
-      <td style="width: 10%"> 
+      <td style="width: 10%" (click)="selectCustomer(customer)"> 
           <div class="svg-container" (click)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>
           </div>
-          </td>
-          <td style="width: 4vw" (click)="selectCustomer(customer)"></td>
+      </td>
+      <td style="width: 4vw" (click)="selectCustomer(customer)"></td>
     </tr>  
     
 </tbody>

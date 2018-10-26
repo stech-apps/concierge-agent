@@ -158,52 +158,12 @@ input::-ms-clear {
     display: flex;
     flex-direction: row;
     margin: rem(0px 0px 20px 0px);
-  }
-
-  &__primary-button  {
-    background-color:$modal-secondary-button-background;
-    color: $white;
-    font-family: Montserrat-Light;
-    font-size: rem(12px);
-    border: none;
-    padding: 15px;
-    width: 105px;
-    margin-left: rem(15px);
-    float: left;
-    white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
-  }
-  :focus{
-    outline: none; 
-  }
-
-  &__valid-button {
-    background-color:var(--app-theme);
-  }
-
-  &__secondary-button {
-  
-    background: $modal-secondary-button-background;
-    color: $white;
-    font-size: rem(12px);
-    border: none;
-    font-family: Montserrat-Light;
-    margin-right: rem(15px);
-    padding: 15px;
-    width: 105px;
-    float: right;
-    white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
-    @at-root [dir="rtl"] & {
-      margin-left: rem(5px);
-    }
-  }
-  
-
-  
+  }  
 }
 
-.invalid{
-  background-color: #ffaab7;
-}
+// .invalid{
+ 
+// }
 
 // Combobox dropdown
 // Opened
@@ -306,3 +266,52 @@ input::-ms-clear {
   margin: 5px;   
 }
 
+.qm-button{
+  padding: 1em 2em;
+  border-radius: 4px;
+  color: $white;
+  margin: 0px 6px;
+}
+
+
+.qm-primary-button-disabled{
+  background: $dark-transparent42; 
+  border: 1px $dark-transparent42;
+  font-weight: 300;
+}
+
+.qm-primary-button-active{
+  background: $dark-transparent82;
+  border: 1px $dark-transparent82;
+  font-weight: 500;
+}
+
+.qm-primary-button-default{
+  background: $primary-pink;
+  border: 1px $primary-pink;
+  font-weight: 300;
+}
+.qm-primary-button-default:hover{
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.qm-secondary-button-disabled{
+  color: $dark-transparent42;
+  border: 1px $dark-transparent42 solid;
+  font-weight: 300;
+}
+.qm-secondary-button-active{
+  color: $dark-transparent82;
+  border: 1px $dark-transparent82 solid;
+  font-weight: 500;
+}
+.qm-secondary-button-defult{
+  color: $primary-pink;
+  border: 1px $primary-pink solid;
+  font-weight: 300;
+}
+.qm-secondary-button-defult:hover{
+  font-weight: 500;
+  cursor: pointer;
+}

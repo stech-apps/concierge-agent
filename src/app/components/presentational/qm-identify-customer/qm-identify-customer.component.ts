@@ -19,6 +19,8 @@ export class QmIdentifyCustomerComponent implements OnInit {
   private subscriptions : Subscription = new Subscription();
   isFlowSkip: boolean = false;
   userDirection$: Observable<string>;
+  editMode : boolean;
+  customers:ICustomer[];
 
   constructor(
     private customerDispatchers:CustomerDispatchers,
@@ -37,14 +39,25 @@ export class QmIdentifyCustomerComponent implements OnInit {
   onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
+
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
-      this.currentCustomer = customer;
-      if(customer){
+      this.currentCustomer = customer;     
+      if(this.currentCustomer && !this.editMode){
         this.doneButtonClick();       
       }
-      this.userDirection$ = this.userSelectors.userDirection$;   
     });
     this.subscriptions.add(customerSubscription);
+
+    const editModeSubscription = this.customerSelectors.editCustomerMode$.subscribe((status)=>{
+      this.editMode = status;     
+      if(this.currentCustomer && !this.editMode){
+        this.doneButtonClick();       
+      }
+    })
+    this.subscriptions.add(editModeSubscription);
+
+    const customerListSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
+    this.subscriptions.add(customerListSubscription);
   }
 
 
@@ -62,4 +75,6 @@ export class QmIdentifyCustomerComponent implements OnInit {
   onSwitchChange(){
     this.localStorage.setSettings(STORAGE_SUB_KEY.CUSTOMER_SKIP, this.isFlowSkip);
   }
+
+  
 }

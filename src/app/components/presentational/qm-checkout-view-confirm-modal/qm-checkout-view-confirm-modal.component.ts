@@ -162,7 +162,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   updateCustomer(customer: ICustomer, fromEmail: boolean) {
     this.spService.updateCustomerPartially(customer).subscribe(
       result => {
-        this.customerDispatchers.selectCustomers(customer);
+        this.customerDispatchers.selectCustomer(customer);
         this.updateCustomerSuccess(fromEmail);
       }, error => {
       }

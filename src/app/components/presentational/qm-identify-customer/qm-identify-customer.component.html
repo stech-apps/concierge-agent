@@ -2,6 +2,16 @@
     <div class="qm-flow-sub-header__left">
         <h1 *ngIf="!currentCustomer">{{ 'select_customer_header' | translate}}</h1>
         <h1 *ngIf="currentCustomer">{{ 'edit_customer' | translate}}</h1>
+
+        <div class="qm-selected-box" *ngIf="currentCustomer && !editMode">
+          <div class="qm-selected-box__heading">{{ 'label.selected.customer' | translate }}</div>
+          
+          <div class="qm-selected-box__content">
+              <div class="qm-selected-box__text">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</div>
+              <i aria-hidden="true" class="icon-delete" (click)="clearCustomer()"></i>
+          </div>
+        </div>
+    
     </div>
      <!-- <div class="qm-checkbox__container">
           <label for="qm-checkbox" class="qm-checkbox-label">
@@ -23,27 +33,30 @@
 </div>
 
 
-<div class="qm-crossline-header-container">
+<div class="qm-crossline-header-container" *ngIf="!editMode">
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text">{{ 'label.link_customer' | translate }}</h2>
+    <br>
 </div>
-<br>
-<div class="qm-customer-search-component">
+
+<div class="qm-customer-search-component" *ngIf="!editMode">
   <!-- customer Serach bar -->
-  <qm-customer-search-bar></qm-customer-search-bar>
+  <qm-customer-search-bar ></qm-customer-search-bar>
   <!-- customer search results -->
   <qm-customer-search></qm-customer-search>
-  <div class="qm-info-text"> <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name
+  <div class="qm-info-text"  > <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name
   </div>
 </div>
 <br>
 
-<div class="qm-crossline-header-container">
+<div class="qm-crossline-header-container" >
     <div class="qm-crossline-header"></div>
-    <h2 class="qm-crossline-header-text">{{ 'label.add_customer' | translate }}</h2>
+    <h2 class="qm-crossline-header-text" *ngIf="!editMode">{{ 'label.add_customer' | translate }}</h2>
+    <h2 class="qm-crossline-header-text" *ngIf="editMode">{{ 'label.customer_details' | translate }}</h2>
 </div>
 <div class="qm-service-list__container">
   <qm-inputbox></qm-inputbox>
+
   
   <!-- <div>
   <div>

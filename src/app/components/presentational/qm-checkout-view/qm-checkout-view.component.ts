@@ -198,7 +198,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       if (appointment) {
         this.selectedAppointment = appointment;
         if (this.selectedAppointment && this.selectedAppointment.customers && this.selectedAppointment.customers.length > 0) {
-          this.customerDispatcher.selectCustomers(this.selectedAppointment.customers[0]);
+          this.customerDispatcher.selectCustomer(this.selectedAppointment.customers[0]);
           this.selectedCustomer = this.selectedAppointment.customers[0];
           this.customerSms = this.selectedCustomer.properties.phoneNumber;
         }

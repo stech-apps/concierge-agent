@@ -4,7 +4,8 @@
     font-size: 0.9rem;
     width:100%;
     touch-action: auto !important;
-  
+ 
+
     :focus{
         outline: none; 
     }
@@ -98,6 +99,8 @@ tbody{
     width: 100%;
     -webkit-overflow-scrolling: touch;
     border: 1px solid $light-gray2;
+    height: 50vh;
+    z-index: 200;
 }
 
 

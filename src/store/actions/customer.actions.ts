@@ -46,7 +46,7 @@ export class SelectCustomer implements Action{
 
 export class EditCustomer implements Action{
     readonly type = EDIT_CUSTOMER;
-    constructor(public payload: ICustomer) {}
+    constructor(public payload: boolean) {}
 
 }
 export class ResetCurrentCustomer implements Action{

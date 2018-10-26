@@ -63,7 +63,7 @@ const getDistributedAgentStatus = createSelector(
 
 const getTimeConvention = createSelector(
   getSystemInfo,
-  (state: ISystemInfo) => (state.timeConvention === '24 hour' ? '24' : 'AMPM')
+  (state: ISystemInfo) => (state.timeConvention !== '24 hour' ? 'AMPM' : '24')
 );
 
 @Injectable()

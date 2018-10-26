@@ -16,8 +16,8 @@
   </div>
 
   <div class="qm-time-container" dir="{{ userDirection$ | async }}">
-    <div class="qm-calendar-container">
-      <div class="qm-calendar-header qm-text-overflow-fix">{{selectedBranch.name}}</div>
+    <div class="qm-branch-header qm-text-overflow-fix">{{selectedBranch.name}}</div>
+    <div class="qm-calendar-container">      
       <div class="qm-calendar-placeholder">
         <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
       </div>

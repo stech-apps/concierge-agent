@@ -69,26 +69,37 @@
     line-height: 3.25rem; 
 }
 
-.qm-calendar-header {
+.qm-branch-header {
     color: $dark-transparent42;
     font-size: 18px;
     font-weight: 500;
     max-width: 90%;
-    background-color: $white;
     text-align: left;
     background-color: $background-default;
+    position: absolute;
+    left: 0;
+    top: 20px;
+    @at-root [dir='rtl'] & {
+        right: 0;
+        left: auto;
+    }
 }
 
 .qm-calendar-container {
     flex: 1;
-    margin: 1.2rem 0rem 0rem 0rem;
+    margin: 48px 1.5rem 0rem 0rem;
+    background-color: $white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    @at-root [dir="rtl"] & {
+        margin-right: 0;
+        margin-left: 1.5rem;
+    }  
 }
 
 .qm-calendar-placeholder {
     background-color: $calendar-background;
     margin-right: 2rem;
     height: calc(100vh - 388px);
-    border: 1px solid rgba(0,0,0,0.12);
     @at-root [dir="rtl"] & {
         margin-left: 2rem;
         margin-right: 0;
@@ -100,7 +111,7 @@
 }
 
 .qm-appointment-time-select-slots {
-    margin: 47px 0rem 1rem 0rem;
+    margin: 47px 0rem 0rem 0rem;
     border: 1px solid rgba(0, 0, 0, 0.12);
     position: relative;
 }
@@ -109,4 +120,5 @@
     display: flex;
     overflow: hidden;
     height: calc(100vh - 330px);
+    position: relative;
 }

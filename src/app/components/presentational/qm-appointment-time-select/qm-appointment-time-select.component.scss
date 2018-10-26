@@ -98,7 +98,6 @@
 
 .qm-calendar-placeholder {
     background-color: $calendar-background;
-    margin-right: 2rem;
     height: calc(100vh - 388px);
     @at-root [dir="rtl"] & {
         margin-left: 2rem;

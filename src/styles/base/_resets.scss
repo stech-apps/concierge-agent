@@ -187,6 +187,12 @@
    overflow: visible;
  }
 
+ input {
+   border-radius: 0;
+   -webkit-appearance: none;
+   -webkit-border-radius:0px;
+ }
+
  /**
    * Remove the inheritance of text transform in Edge, Firefox, and IE.
    * 1. Remove the inheritance of text transform in Firefox.

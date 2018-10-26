@@ -4,6 +4,9 @@
     width: 100%;
     border: 1px solid $standard-border-color;
     box-shadow: 0 0 4px 0 $dark-transparent04;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
     padding: rem(10px 48px 10px 12px);
     color: $dark-transparent82;
     font-size: rem(18px);

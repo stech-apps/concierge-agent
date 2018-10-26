@@ -32,6 +32,11 @@ export class QmInputboxComponent implements OnInit {
   controls: any;
   currentCustomer:ICustomer
   editMode:boolean;
+  date = {
+    day: '',
+    month: '',
+    year: ''
+  };
 
   firstName:string
 
@@ -74,18 +79,38 @@ export class QmInputboxComponent implements OnInit {
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
       if(this.currentCustomer){
+        if (this.currentCustomer.properties.dateOfBirth) {
+          const dob: any = this.currentCustomer.properties.dateOfBirth;
+          const dobDate = new Date(dob);
+          this.date = this.formatDate(
+            dobDate.getDate(),
+            dobDate.getMonth(),
+            dobDate.getFullYear()
+          );
+        }
+        console.log(this.date);
         this.customerCreateForm.patchValue({
           firstName: this.currentCustomer.firstName,
           lastName:this.currentCustomer.lastName,
           phone:this.currentCustomer.properties.phoneNumber,
-          email:this.currentCustomer.properties.email
+          email:this.currentCustomer.properties.email,
+          dateOfBirth: {
+            month: this.date.month ? this.date.month : null,
+            day: this.date.day ? this.date.day : '',
+            year: this.date.year ? this.date.year : ''
+          }
         })
       }else if((this.customerCreateForm!==undefined) && !this.currentCustomer  ){
         this.customerCreateForm.patchValue({
           firstName: '',
           lastName:'',
           phone:'',
-          email:''
+          email:'',
+          dateOfBirth: {
+            month: null,
+            day: '',
+            year: ''
+          }
         })
       }
     });

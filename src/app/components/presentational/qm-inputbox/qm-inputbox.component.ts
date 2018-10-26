@@ -79,7 +79,7 @@ export class QmInputboxComponent implements OnInit {
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
       if(this.currentCustomer){
-        if (this.currentCustomer.properties.dateOfBirth) {
+        
           const dob: any = this.currentCustomer.properties.dateOfBirth;
           const dobDate = new Date(dob);
           this.date = this.formatDate(
@@ -87,8 +87,8 @@ export class QmInputboxComponent implements OnInit {
             dobDate.getMonth(),
             dobDate.getFullYear()
           );
-        }
-        console.log(this.date);
+        
+
         this.customerCreateForm.patchValue({
           firstName: this.currentCustomer.firstName,
           lastName:this.currentCustomer.lastName,

@@ -68,15 +68,14 @@
                         <!-- Day -->
                         <div class="qm-input-box__day-element-container qm-input-box__dob-element-container" > 
                             <label for="day" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'day'|translate }}</label>
-                            <input class="qm-input-box__input" formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
+                            <input class="qm-input-box__input" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
                         </div>
                         <!-- Year -->
                         <div class="qm-input-box__year-element-container qm-input-box__dob-element-container"> 
                             <label for="year" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'year'|translate }}</label>
-                            <input class="qm-input-box__input" formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
+                            <input class="qm-input-box__input" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
                         </div>
                         <br>
-                     
                       </div>
                     
                     </div>
@@ -85,6 +84,7 @@
               
                   <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth')?.errors?.invalidDay">{{ 'error.form.dob.invalidDay' | translate }}</div>
                   <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')">{{ 'error.form.dob.invalidYear' | translate }}</div>
+                  <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')">{{ 'error.form.dob.invalidDay' | translate }}</div>
                   <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth').hasError('incompleteDob')">{{ 'error.form.dob.incompleteDob' | translate }}</div>
                 </div>
             </div>
@@ -102,10 +102,14 @@
                 <div class="qm-button qm-secondary-button-defult" (click)="cancel()" *ngIf="editMode">
                   Cancel
                 </div> 
+                <div class="qm-button qm-secondary-button-defult" (click)="firstName.value='';lastName.value='';email.value='';phone.value=''" *ngIf="!editMode && (firstName.value!='')">
+                  Cancel
+                </div>
 
                 <div class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
-                  <span> add </span>
-                  <!-- <span *ngIf="currentCustomer && (currentCustomer.first_name != firstName.value )"> add and save </span> -->
+                  <span *ngIf="!currentCustomer"> {{'button_save_and_add'|translate}} </span>
+                  <span *ngIf="currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"> {{'button_add'|translate}} </span>
+                  <span *ngIf="currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"> {{'button_save_and_add'|translate}} </span>
                 </div> 
 
               

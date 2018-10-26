@@ -4,13 +4,19 @@
     font-size: 0.9rem;
     width:100%;
     touch-action: auto !important;
- 
+    font-weight: 300;
 
     :focus{
         outline: none; 
     }
- 
 
+    .search-list-text{
+        mark {
+            font-weight: bold;
+            background-color: transparent;
+        }
+    }
+    
     tr{
       display: table;
       width: 100%;
@@ -49,6 +55,7 @@
         width: 100%;
         padding:0;
         margin: 6px;
+      
    
     }
     .customer-list:active{
@@ -102,6 +109,5 @@ tbody{
     height: 50vh;
     z-index: 200;
 }
-
 
 

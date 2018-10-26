@@ -20,6 +20,7 @@ export class QmCustomerSearchComponent implements OnInit {
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
   userDirection$: Observable<string>; 
+  searchText:string
 
 constructor(
     private CustomerDispatchers: CustomerDispatchers,
@@ -34,6 +35,10 @@ constructor(
   }
   ngOnInit() {
     
+    const searchTextSubscription = this.CustomerSelectors.searchText$.subscribe((searchText)=>{
+      this.searchText = searchText;
+    })
+    this.subscriptions.add(searchTextSubscription);
     const currentCustomerSubscription = this.CustomerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
         });

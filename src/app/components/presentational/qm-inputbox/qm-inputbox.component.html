@@ -1,4 +1,4 @@
-<qm-auto-close data-keyboard="false" data-backdrop="static">
+<qm-auto-close data-keyboard="false" data-backdrop="static"  *ngIf="customers.length==0" >
   <div class="qm-input-box" dir="{{ userDirection$ | async }}" cdkTrapFocus>
     <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
       <div class="qm-input-box__input-section">  
@@ -12,10 +12,10 @@
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div>
                      <br>
-                      <input qmClearInput class="qm-input-box__input"  
+                      <input #firstName qmClearInput class="qm-input-box__input"  
                       type="text" name='firstName' formControlName = "firstName"
                       maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                      <!-- <div class="qm-form-error-message" *ngIf="firstName.invalid && firstName.value==''"> first Name required</div> -->
+                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
                   </div>
               </div>
 
@@ -25,6 +25,7 @@
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div> 
                       <input qmClearInput class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
               </div>
             </div>
 
@@ -32,7 +33,7 @@
             <div class="qm-input-box__row">
                   <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'email'|translate }}</label>
                   <input  qmClearInput class="qm-input-box__input" type="text" name='email' formControlName = "email" #email >
-                  <div class="qm-form-error-message" *ngIf="email.invalid"> {{'error.form.email.invalid'|translate}}</div>
+                  <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
             </div>
 
             <!-- Phone Section -->

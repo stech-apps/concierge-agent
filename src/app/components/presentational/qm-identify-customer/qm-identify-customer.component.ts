@@ -63,12 +63,14 @@ export class QmIdentifyCustomerComponent implements OnInit {
 
   clearCustomer(){
     this.customerDispatchers.resetCurrentCustomer()
+
   }
 
   doneButtonClick() {
     this.customerDispatchers.resetCustomerSearchText();
     this.customerDispatchers.resetCustomers();
     this.onFlowNext.emit();
+    this.customerDispatchers.editCustomerMode(false);
     
   }
 

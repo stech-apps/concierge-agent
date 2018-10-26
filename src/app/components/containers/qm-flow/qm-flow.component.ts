@@ -1,7 +1,7 @@
 import { QmModalService } from './../../presentational/qm-modal/qm-modal.service';
 import { Util } from './../../../../util/util';
 import { Router } from '@angular/router';
-import { Component, OnInit, ContentChildren, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, ContentChildren, AfterContentInit, Input, Output, EventEmitter } from '@angular/core';
 import { QmFlowPanelComponent } from 'src/app/components/containers/qm-flow-panel/qm-flow-panel.component';
 import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
@@ -23,6 +23,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   public isFlowSkip = true;
   userDirection$: Observable<string>;
   @Input() FlowName: string;  
+  @Output() headerClicked = new EventEmitter<QmFlowPanelComponent>();
 
   constructor(
     private router: Router,
@@ -56,42 +57,36 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
-    let panelFound = false;
-    if (flowPanel.isContentVisible && flowPanel.hasResult()) {
-      let panelArray = this.flowPanels.toArray();
-      let panelIndex = panelArray.indexOf(flowPanel);
-      let nextPanel = panelArray[++panelIndex];
-      this.onFlowNext(nextPanel);
-      return;
-    }
+    console.log(flowPanel);
+    this.headerClicked.emit(flowPanel);
+    // let panelFound = false;
+    // if (flowPanel.isContentVisible && flowPanel.hasResult()) {
+    //   let panelArray = this.flowPanels.toArray();
+    //   let panelIndex = panelArray.indexOf(flowPanel);
+    //   let nextPanel = panelArray[++panelIndex];
+    //   this.onFlowNext(nextPanel);
+    //   return;
+    // }
 
-    this.flowPanels.forEach(fp => {
-      if (fp.id == flowPanel.id) {
-        fp.isActive = true;
-        fp.isContentVisible = true;
-          fp.isHeaderVisible = true;
-        panelFound = true;
-      }
-      else {
-        fp.isActive = false;
-        //hide the next panels
-        if (panelFound) {
-          fp.isContentVisible = false;
-          fp.isHeaderVisible = false;
-        }
-      }
-    });
+    // this.flowPanels.forEach(fp => {
+    //   if (fp.id == flowPanel.id) {
+    //     fp.isActive = true;
+    //     fp.isContentVisible = true;
+    //       fp.isHeaderVisible = true;
+    //     panelFound = true;
+    //   }
+    //   else {
+    //     fp.isActive = false;
+    //     //hide the next panels
+    //     if (panelFound) {
+    //       fp.isContentVisible = false;
+    //       fp.isHeaderVisible = false;
+    //     }
+    //   }
+    // });
   }
 
-  private hideAllPanels() {
-    this.flowPanels.forEach(fp => {
-      fp.isActive = false;
-      fp.isContentVisible = false
-      fp.isHeaderVisible = false;
-    });
-  }
-
-
+  
   onFlowExit(result?: any) {
     this.AccountDispatchers.setMenuItemStatus(true);
    if (result) {
@@ -141,7 +136,6 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     panel.isActive = true;
     panel.isContentVisible = true;
     panel.isHeaderVisible = true;
-    console.log('aa');
   }
 
   

@@ -3,7 +3,6 @@
     <input qmClearInput type="search" placeholder="{{ 'search_customer' | translate }}" class="qm-search__input" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value.trim())" autocomplete="off"> 
       <button *ngIf="!customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
         <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-        <span class="sr-only">Search</span>
       </button>   
   </div>
 </div>

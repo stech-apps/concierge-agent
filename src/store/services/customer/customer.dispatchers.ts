@@ -20,11 +20,11 @@ export class CustomerDispatchers{
         this.store.dispatch(new CustomerAction.ResetCustomers);
     }
 
-    selectCustomers(customer:ICustomer){
+    selectCustomer(customer:ICustomer){
         this.store.dispatch(new CustomerAction.SelectCustomer(customer));
     }
-    editCustomers(customer:ICustomer){
-        this.store.dispatch(new CustomerAction.EditCustomer(customer));
+    editCustomerMode(state:boolean){
+        this.store.dispatch(new CustomerAction.EditCustomer(state));
     }
  
     createCustomer(customer:ICustomer){

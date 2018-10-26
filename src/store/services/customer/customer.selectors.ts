@@ -55,7 +55,7 @@ export class CustomerSelector{
     customerLoading$ = this.store.select(getCustomersLoading);
     customerLoaded$ = this.store.select(getCustomersLoaded);
     currentCustomer$ = this.store.select(getCurrentCustomer);
-    editCustomer$ = this.store.select(getEditCustomer);
+    editCustomerMode$ = this.store.select(getEditCustomer);
     searchText$ = this.store.select(getSearchText);
     tempCustomer$ = this.store.select(getTempCustomer);
     appointmentSearchCustomers$ = this.store.select(getAppointmentSearchCustomers);

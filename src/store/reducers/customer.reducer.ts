@@ -10,7 +10,7 @@ export interface ICustomerState{
     loaded:boolean;
     error:Object;
     tempCustomer: ICustomer;
-    editCustomer:ICustomer;
+    editCustomer:boolean;
 }
 
 export const initialState:ICustomerState={
@@ -22,7 +22,7 @@ export const initialState:ICustomerState={
     loaded:false,
     error:null,
     tempCustomer: null,
-    editCustomer:null
+    editCustomer:false
 };
 
 export function reducer(

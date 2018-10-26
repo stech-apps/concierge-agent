@@ -3,7 +3,7 @@
   width: 100%;
   padding: rem($standard-padding * 1.5 $standard-padding);
   background: $white;
-  border-radius: rem($standard-border-radius);
+  border-radius: 4px;;
   box-shadow: $standard-box-shadow;
   text-align: center;
 
@@ -22,5 +22,6 @@
     line-height: rem(35px);
     color: $dark-transparent62;
     font-weight: $font-weight-regular;
+    padding-top: 32px;
   }
 }

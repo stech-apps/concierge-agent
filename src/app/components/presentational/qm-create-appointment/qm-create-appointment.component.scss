@@ -6,21 +6,22 @@
 
 .qm-reservation-expiry-timer {
   position: fixed;
-  bottom: 10px;
+  top: 58px;
   font-size: 2em;
   display: inline-block;
   padding: 14px;
-  background: #f8f8f8;
+  background: $white;
   color: #5E5C5C;
   padding-top: 0.2em;
   padding-bottom: 0.7em;
   z-index: 99999;
   line-height: 0.8em;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
   margin: 1em;
   text-align: center;
   cursor: move;
-  left: 0.5rem;
+  right: 0.5rem;
+  width: 124px;
 }
 
 .qm-current-customer-text{

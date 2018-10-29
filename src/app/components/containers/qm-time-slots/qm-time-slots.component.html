@@ -33,5 +33,10 @@
     </div>
   </ng-container>
 
-  <div class="qm-loading-timeslots" *ngIf="isTimeSlotLoading">{{('loading_timeslots' | translate)}}</div>
+  <div class="qm-loading-timeslots" *ngIf="isTimeSlotLoading">
+      <span class="qm-spinner"></span>
+    <div class="qm-loading-timeslots__content">
+        {{('label.timeslots.loading.text' | translate)}}
+    </div>    
+  </div>
 </div>

@@ -1,3 +1,4 @@
+import { QmAddnotesModalComponent } from './../qm-addnotes-modal/qm-addnotes-modal.component';
 import { TranslateService } from "@ngx-translate/core";
 import { Injectable, ApplicationRef } from "@angular/core";
 import { Subscription } from 'rxjs';
@@ -71,5 +72,12 @@ export class QmModalService {
             errorCallback(err);
           });
       });
+  }
+
+  openNotesModal(notesText: string) {
+    const modal = this.modalService.open(QmAddnotesModalComponent, { centered: true });
+    modal.componentInstance.isOnUpdate = true;
+    modal.componentInstance.notes = notesText;
+    return modal;
   }
 }

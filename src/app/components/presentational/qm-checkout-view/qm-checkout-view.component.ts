@@ -461,7 +461,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   onEmailAndSmsSelected() {
     this.emailAndSmsSelected = !this.emailAndSmsSelected;
-    if(this.emailAndSmsSelected) {
+    if (this.emailAndSmsSelected) {
       this.buttonEnabled = true;
       this.smsSelected = false;
       this.emailSelected = false;
@@ -542,7 +542,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.onFlowExit.emit();
         })
       } else if (err.errorCode === '0') {
-         this.handleTimeoutError(err,'appointment_create_fail');
+        this.handleTimeoutError(err, 'appointment_create_fail');
       }
     });
   }
@@ -556,15 +556,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.onFlowExit.emit();
     }, error => {
       const err = new DataServiceError(error, null);
-      if(err.errorCode === '0'){
-        this.handleTimeoutError(err,'visit_create_fail')
-      }else{
+      if (err.errorCode === '0') {
+        this.handleTimeoutError(err, 'visit_create_fail')
+      } else {
         this.loading = false;
         this.showErrorMessage(error);
         this.saveFrequentService();
       }
 
-    
+
     })
   }
 
@@ -580,15 +580,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.onFlowExit.emit();
     }, error => {
       const err = new DataServiceError(error, null);
-      if(err.errorCode === '0'){
-        this.handleTimeoutError(err,'arrive_appointment_fail')
-      }else{
+      if (err.errorCode === '0') {
+        this.handleTimeoutError(err, 'arrive_appointment_fail')
+      } else {
         this.loading = false;
         this.showErrorMessage(error);
         this.saveFrequentService();
       }
-  
-    
+
+
     })
   }
 
@@ -769,9 +769,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   getMostFrequnetServices(serviceList: any) {
     var tempList = serviceList;
-    
 
-  var serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
+
+    var serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
 
     if (serviceIds) {
       tempList = serviceIds.concat(serviceList);
@@ -794,7 +794,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       else if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
         elementPos = serviceList.map(function (x) { return x.publicId; }).indexOf(val.publicId);
       }
-      
+
       if (elementPos >= 0) {
         val.usage = val.usage + 1;
       }
@@ -804,7 +804,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   removeDuplicates(myArr, prop) {
     return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+      return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
     });
   }
 
@@ -815,21 +815,25 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   getTimePeriod() {
     let timeString = moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
-     timeString += ` - ${moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A')}`;
-   
+    timeString += ` - ${moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A')}`;
+
     return timeString;
   }
 
-handleTimeoutError(err:DataServiceError<any>,msg:string){
- if (err.errorCode === '0') {
-    this.translateService.get(msg).subscribe(v => {
-      var unSuccessMessage = {
-        firstLineName: v,
-        icon: "error"
-      }
-      this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
-    });
-    this.onFlowExit.emit();
+  handleTimeoutError(err: DataServiceError<any>, msg: string) {
+    if (err.errorCode === '0') {
+      this.translateService.get(msg).subscribe(v => {
+        var unSuccessMessage = {
+          firstLineName: v,
+          icon: "error"
+        }
+        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
+      });
+      this.onFlowExit.emit();
+    }
   }
-}
+
+  onNotesChanged(value) {
+    this.noteTextStr = value;
+  }
 }

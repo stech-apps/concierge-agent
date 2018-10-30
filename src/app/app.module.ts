@@ -163,6 +163,7 @@ import { ErrorsHandler } from '../util/errors-handler';
 import { QmCentralLoginComponent } from './components/presentational/qm-central-login/qm-central-login.component';
 import { QmHighlightPipe } from './pipes/qm-highlight.pipe';
 import { QmNotesComponent } from './components/presentational/qm-notes/qm-notes.component';
+import { QmAddnotesModalComponent } from './components/presentational/qm-addnotes-modal/qm-addnotes-modal.component';
 
 
 // Global options for Toastr
@@ -253,7 +254,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmLoadingModalComponent,
     QmCentralLoginComponent,
     QmHighlightPipe,
-    QmNotesComponent
+    QmNotesComponent,
+    QmAddnotesModalComponent
 
   ],
   entryComponents: [
@@ -262,8 +264,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmInputboxComponent,
     QmCheckoutViewConfirmModalComponent,
     QmClearInputButtonComponent,
-    QmNotesModalComponent
-
+    QmNotesModalComponent,
+    QmAddnotesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -335,7 +337,8 @@ export class MyHammerConfig extends HammerGestureConfig {
       useClass: ErrorsHandler,
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule {
   constructor(

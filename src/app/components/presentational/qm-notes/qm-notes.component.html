@@ -1,3 +1,17 @@
-<p>
-  qm-notes works!
-</p>
+<div class="qm-notes" *ngIf="notesEnabled" dir="{{ userDirection$ | async }}">
+  <div class="qm-notes__edit-container">
+    <div class="qm-notes-layout">
+      <div class="qm-notes__nr-of-character-container">
+        
+      </div>
+    </div>
+
+    <div class="qm-notes__textarea">
+        {{notes}}
+    </div>
+    <button class="qm-notes-btn js-notes-btn" (click)="toggleNotesInput()">
+        <span class="qm-notes-btn__text" [ngClass]="{ 'qm-notes-btn__text--has-text' : hasNotesText() }" [innerHTML]="getButtonText()"></span>
+        <i class="qm-notes-btn__icon icon-edit" aria-hidden="true"></i>
+      </button>
+  </div>
+</div>

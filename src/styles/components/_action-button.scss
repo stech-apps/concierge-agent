@@ -8,46 +8,36 @@
   padding: 0;
   cursor: pointer;
   text-decoration: none;
-
   &:hover,
   &:focus {
     font-weight: $font-weight-medium;
     text-decoration: none;
   }
-
   &:active {
     outline: 0;
     color: $primary-action-button-active-color;
   }
-
   &[disabled] {
     color: $primary-action-button-disabled-color;
     cursor: auto;
-
     &:hover,
     &:focus {
       font-weight: $font-weight-light;
     }
   }
-
-  & + & {
+  &+& {
     margin-left: rem(12px);
-
     @at-root [dir='rtl'] & {
       margin-left: 0;
       margin-right: rem(12px);
     }
-  }
-
-  // Elements
+  } // Elements
   &__icon {
     display: block;
     font-size: rem(28px);
     margin: 0 auto;
   }
-
   &__text {
-
     &:after {
       display: block;
       content: attr(title);
@@ -57,52 +47,42 @@
       visibility: hidden;
     }
   }
-
   &--large {
     font-size: rem(18px);
-
     .qm-action-btn__icon {
       font-size: rem(36px);
     }
   }
-
   &--huge {
     font-size: rem(18px);
-
     .qm-action-btn__icon {
       font-size: rem(72px);
     }
   }
-
   &--laying {
     display: flex;
     align-items: center;
     padding: rem($standard-padding / 2 0);
-
     .qm-action-btn__icon {
       font-size: rem(24px);
       margin: 0;
       margin-right: rem(4px);
-
       @at-root [dir='rtl'] & {
         margin-right: 0;
         margin-left: rem(4px);
       }
     }
-
     .qm-action-btn__text {
       flex: 1 1 auto;
       max-width: none;
       font-size: rem(16px);
     }
   }
-
   &--only-icon {
     .qm-action-btn__icon {
       margin: 0;
     }
   }
-
   &--standard-link {
     @at-root {
       a#{&} {
@@ -114,5 +94,40 @@
         }
       }
     }
+  }
+}
+
+.qm-button-plain {
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.82);
+  font-size: 24px;
+  font-weight: 300;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+
+  &:hover{
+    border: 2px solid #03996C;
+    border-radius: 4px;
+    background-color: rgba(3,153,108,0.04);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);     
+    outline: none;
+  }
+
+  &--active {
+    background-color: $secondary-color;
+    color: $white;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+
+
+
+  &:focus {
+    outline: 0;
   }
 }

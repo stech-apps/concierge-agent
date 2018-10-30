@@ -42,7 +42,7 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
   
-  <qm-flow-panel #px  [title]="'create_confirm'">
+  <qm-flow-panel #px  [title]="'create_confirm'" class="qm-checkout-view-flowpanel">
     <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>
@@ -50,7 +50,6 @@
       <qm-checkout-view [flowType]="flowType" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
     </qm-flow-panel-content>
   </qm-flow-panel>
-
 </qm-flow>
 <div class="qm-reservation-expiry-timer" ngDraggable *ngIf="showExpiryReservationTime$ | async">
   <qm-reservation-timer></qm-reservation-timer>

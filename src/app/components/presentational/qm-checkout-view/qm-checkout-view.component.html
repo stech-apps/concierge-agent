@@ -1,5 +1,59 @@
-<div class="qm-checkout-view"  dir="{{userDirection$ | async}}">
-  <div class="qm-checkout-view__container">
+<div class="qm-checkout-view" dir="{{userDirection$ | async}}">
+
+  <div class="qm-checkout-view__summary" *ngIf="selectedAppointment">
+    <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-phone"></span>
+      <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
+    </div>
+
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-mail"></span>
+      <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.email }}</span>
+    </div>
+
+    <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-calendar"></span>
+      <span class="qm-summary-item__text">{{selectedAppointment?.start | date: 'EEEE dd MMMM' }}</span>
+    </div>
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-clock"></span>
+      <span class="qm-summary-item__text">{{getTimePeriod()}}</span>
+    </div>
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-home"></span>
+      <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment.branch.name}}</span>
+    </div>
+    <div class="qm-summary-item">
+      <span class="qm-summary-item__icon icon-service"></span>
+      <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
+    </div>
+
+  </div>
+  <div class="qm-checkout-view__notifications">
+    <div class="qm-checkout-view__notifications-heading">{{'label.appconfirm.notification.heading' | translate}}</div>
+    <div class="qm-checkout-view__notifications-question">
+      {{'label.appconfirm.notification.question' | translate }}
+    </div>
+    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
+      <span class="icon-phone"></span>
+      <span>{{ 'send_sms' | translate}}</span>
+    </button>
+    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
+      <span class="icon-mail"></span>
+      <span>{{ 'email' | translate}}</span>
+    </button>
+    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
+      (click)="onEmailAndSmsSelected()">
+      <span class="icon-mail"></span>
+      <span>{{ 'send_sms_and_email' | translate}}</span>
+    </button>
+  </div>
+  <div class="qm-flow-done-bar" *ngIf="buttonEnabled">
+    <div class="qm-flow-done-bar__done-button" (click)="onButtonPressed()"> {{ 'create_confirm' | translate }}</div>
+  </div>
+  <!--div class="qm-checkout-view__container">
 
     <div *ngIf="isNoteEnabled" class="qm-checkout-view__note-container">
       <div class="label">{{ 'notes' | translate }}</div>
@@ -180,7 +234,7 @@
         [disabled]="!buttonEnabled"> {{buttonText | translate}}</button>
     </div>
 
-  </div>
+  </div-->
 </div>
 
-<qm-loading-modal *ngIf="loading"></qm-loading-modal> 
+<qm-loading-modal *ngIf="loading"></qm-loading-modal>

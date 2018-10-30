@@ -80,6 +80,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ticketSelected: boolean = false;
   smsSelected: boolean = false;
   emailSelected: boolean = false;
+  emailAndSmsSelected: boolean = false;
   ticketlessSelected: boolean = false;
   vipLevel1Checked: boolean = false;
   vipLevel2Checked: boolean = false;
@@ -103,7 +104,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
-  private selectedAppointment: IAppointment;
+  selectedAppointment: IAppointment;
   private selectedCustomer: ICustomer;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
@@ -172,6 +173,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       .subscribe(customer => {
         if (customer) {
           this.selectedCustomer = customer;
+          console.log(customer);
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
         }
@@ -180,6 +182,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => {
       if (appointment) {
+        console.log(appointment);
         this.selectedAppointment = appointment;
       }
     });
@@ -406,6 +409,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       return;
     }
     this.emailSelected = true;
+    this.emailAndSmsSelected = false;
+    this.smsSelected = false;
+
     this.emailColor = this.themeColor;
     this.buttonEnabled = true;
   }
@@ -447,8 +453,19 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
     }
     this.smsSelected = true;
+    this.emailSelected = false;
+    this.emailAndSmsSelected = false;
     this.smsColor = this.themeColor;
     this.buttonEnabled = true;
+  }
+
+  onEmailAndSmsSelected() {
+    this.emailAndSmsSelected = !this.emailAndSmsSelected;
+    if(this.emailAndSmsSelected) {
+      this.buttonEnabled = true;
+      this.smsSelected = false;
+      this.emailSelected = false;
+    }
   }
 
   onTicketlessSelected() {
@@ -794,6 +811,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private buildDate(appointment: IAppointment) {
     let dateObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DD, HH:mm');
     return dateObj;
+  }
+
+  getTimePeriod() {
+    let timeString = moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+     timeString += ` - ${moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A')}`;
+   
+    return timeString;
   }
 
 handleTimeoutError(err:DataServiceError<any>,msg:string){

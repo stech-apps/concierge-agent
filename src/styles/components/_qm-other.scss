@@ -43,3 +43,10 @@
 [dir='rtl'] .qm-reservation-expiry-timer {
   left: 0.5rem;
 }
+
+.qm-checkout-view-flowpanel {
+  .qm-flow-pane__content {
+    padding-top: 0;
+    background: linear-gradient(to bottom, #202c44 1%, #27364e 18%, #27364e 46%, #6d6981 93%, #6d6981 93%, #6d6981 93%, #6d6981 100%, #6d6981 100%);
+  }
+}

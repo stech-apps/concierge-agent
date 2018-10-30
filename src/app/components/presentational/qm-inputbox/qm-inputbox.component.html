@@ -99,7 +99,7 @@
           </div>
           <div class="qm-input-box__col-2">
               <div class="qm-input-box__button-container">
-                <div class="qm-button qm-secondary-button-defult" (click)="cancel()" *ngIf="editMode">
+                <div class="qm-button qm-secondary-button-defult" (click)="cancel();firstName.value==''" *ngIf="editMode">
                   Cancel
                 </div> 
                 <div class="qm-button qm-secondary-button-defult" (click)="firstName.value='';lastName.value='';email.value='';phone.value=''" *ngIf="!editMode && (firstName.value!='')">

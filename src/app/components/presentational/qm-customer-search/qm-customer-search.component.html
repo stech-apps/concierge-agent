@@ -1,6 +1,7 @@
 <table class="customer-table" dir="{{ userDirection$ | async }}" >
   <tbody *ngIf="customers.length!=0" class="tbody">
-    <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0"  (press)="editCustomer(customer)" >
+     <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0">
+       
       <td style="width: 5%" (click)="selectCustomer(customer)" ></td>
       <td style="width: 20%"  (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.firstName +' ' + customer.lastName "> </div> </td>
       <td style="width: 20%" (click)="selectCustomer(customer)">{{customer.properties.email}}</td>
@@ -11,13 +12,14 @@
             <i class="icon-edit edit-button"></i>
           </div>
       </td>
-      <td style="width: 4vw" (click)="selectCustomer(customer)"></td>
+      <td style="width: 4vw" (click)="selectCustomer(customer)"></td> 
     </tr>  
+   
     
-</tbody>
-<h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
+  </tbody>
+  <h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
 
 </table>
-<div class="qm-loader-container" *ngIf="showLoading()" >
+<!-- <div class="qm-loader-container" *ngIf="showLoading()" >
   <qm-loader [color]="black"></qm-loader>
-</div>
+</div> -->

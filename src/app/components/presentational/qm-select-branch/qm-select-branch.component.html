@@ -1,3 +1,5 @@
+<div>
+<div class="qm-pannel-container-one">
 <div class="qm-select-branch qm-flow-sub-header" dir="{{ userDirection$ | async}}">
   <div class="qm-flow-sub-header__left">
     <h1>{{ 'select_branch_header' | translate}}</h1>
@@ -70,6 +72,14 @@
     </div>
   </div>
 </div>
-<div class="qm-flow-done-bar" *ngIf="currentBranch && currentBranch.publicId">
-  <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
 </div>
+<div class="qm-flow-done-bar" *ngIf="currentBranch && currentBranch.publicId">
+  <!-- <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div> -->
+</div>
+</div>
+
+
+<!-- <div style="height:calc(100vh - 100px);background-color: rgb(161, 178, 255);">
+  <div style="height:100px; background-color:white;bottom:0">asdhasn</div>
+  <div style="height:200px; background-color:green;bottom:0">asdhasn</div>
+</div> -->

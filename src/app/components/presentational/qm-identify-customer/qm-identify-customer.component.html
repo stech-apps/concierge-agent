@@ -1,3 +1,4 @@
+<div class="qm-pannel-container" >
 <div class="qm-flow-sub-header">
     <div class="qm-flow-sub-header__left">
         <h1 *ngIf="!currentCustomer">{{ 'select_customer_header' | translate}}</h1>
@@ -77,6 +78,7 @@
  
   </div> -->
 
+</div>
 </div>
 <div class="qm-flow-done-bar" *ngIf="currentCustomer && !editMode">
     <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>

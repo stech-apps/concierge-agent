@@ -1,3 +1,5 @@
+<div class="qm-pannel-container" [ngStyle]="{'height':  (selectedTime)?.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
+  <div class="qm-pannel-inner-container"> 
 <div class="qm-flow-sub-header" dir="{{ userDirection$ | async}}">
   <h1 class="qm-text-overflow-fix">{{ 'label.select.datetime' | translate}}</h1>
 </div>
@@ -30,6 +32,7 @@
       </div>
     </div>
   </div>
+  </div></div>
   <!--ngb-datepicker #dp [(ngModel)]="model" [outsideDays]="'hidden'" firstDayOfWeek="7" [displayMonths]="displayMonths" [navigation]="'arrows'"  (navigate)="date = $event.next"></ngb-datepicker-->
 </div>
 <div class="qm-flow-done-bar" *ngIf="(selectedTime)?.length > 0">

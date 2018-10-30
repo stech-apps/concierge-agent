@@ -1,4 +1,7 @@
-<div class="qm-flow-sub-header">
+
+
+<div class="qm-pannel-container" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
+  <div class="qm-pannel-inner-container"> <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
   <h1 class="qm-text-overflow-fix">{{ 'label.service.heading' | translate}}</h1>
   <div class="qm-selected-box" *ngIf="selectedServiceList && selectedServiceList.length > 0">
@@ -111,6 +114,7 @@
     </div>
   </div>
 </div>
+</div></div>
 <div class="qm-flow-done-bar" *ngIf="selectedServiceList && selectedServiceList.length > 0">
   <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
 </div>

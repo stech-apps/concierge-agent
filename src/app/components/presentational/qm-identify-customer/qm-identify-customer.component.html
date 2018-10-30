@@ -1,4 +1,5 @@
-<div class="qm-pannel-container" >
+<div class="qm-pannel-container" [ngStyle]="{'height':  currentCustomer && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+    <div class="qm-pannel-inner-container"> 
 <div class="qm-flow-sub-header">
     <div class="qm-flow-sub-header__left">
         <h1 *ngIf="!currentCustomer">{{ 'select_customer_header' | translate}}</h1>
@@ -78,6 +79,7 @@
  
   </div> -->
 
+</div>
 </div>
 </div>
 <div class="qm-flow-done-bar" *ngIf="currentCustomer && !editMode">

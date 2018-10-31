@@ -60,6 +60,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  gotToPanelByIndex: EventEmitter<number> = new EventEmitter<number>();
+
   private subscriptions: Subscription = new Subscription();
   uttParameters$: Observable<IUTTParameter>;
   userDirection$: Observable<string>;
@@ -85,6 +88,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   vipLevel1Checked: boolean = false;
   vipLevel2Checked: boolean = false;
   vipLevel3Checked: boolean = false;
+  isMultiBranchEnabled: boolean = true;
 
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
@@ -159,6 +163,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.emailActionEnabled = uttParameters.sndEmail;
           this.ticketActionEnabled = uttParameters.printerEnable;
           this.ticketlessActionEnabled = uttParameters.ticketLess;
+          this.isMultiBranchEnabled = uttParameters.mltyBrnch;
 
           if (this.themeColor === "customized") {
             this.themeColor = uttParameters.customizeHighlightColor;
@@ -852,4 +857,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   onNotesChanged(value) {
     this.noteTextStr = value;
   }
+
+  goToPanel(ix: number) {
+    if(!this.isMultiBranchEnabled && ix !=0) {
+      ix = ix - 1;
+    }
+    this.gotToPanelByIndex.emit(ix);
+  }
 }
+

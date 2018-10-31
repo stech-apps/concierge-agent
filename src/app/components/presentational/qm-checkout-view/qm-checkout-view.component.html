@@ -1,33 +1,42 @@
 <div class="qm-checkout-view" dir="{{userDirection$ | async}}">
 
   <div class="qm-checkout-view__summary" *ngIf="selectedAppointment">
-    <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-phone"></span>
-      <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(3)">
+      <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-phone"></span>
+        <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
+      </div>
+
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-mail"></span>
+        <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.email }}</span>
+      </div>
     </div>
 
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-mail"></span>
-      <span class="qm-summary-item__text" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.email }}</span>
-    </div>
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-calendar"></span>
-      <span class="qm-summary-item__text">{{selectedAppointment?.start | date: 'EEEE dd MMMM' }}</span>
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)">
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-calendar"></span>
+        <span class="qm-summary-item__text">{{selectedAppointment?.start | date: 'EEEE dd MMMM' }}</span>
+      </div>
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-clock"></span>
+        <span class="qm-summary-item__text">{{getTimePeriod()}}</span>
+      </div>
     </div>
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-clock"></span>
-      <span class="qm-summary-item__text">{{getTimePeriod()}}</span>
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)">
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-home"></span>
+        <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment.branch.name}}</span>
+      </div>
     </div>
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-home"></span>
-      <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment.branch.name}}</span>
-    </div>
-    <div class="qm-summary-item">
-      <span class="qm-summary-item__icon icon-service"></span>
-      <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(1)">
+      <div class="qm-summary-item">
+        <span class="qm-summary-item__icon icon-service"></span>
+        <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
+      </div>
     </div>
     <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
   </div>

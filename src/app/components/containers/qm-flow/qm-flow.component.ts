@@ -120,6 +120,11 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     }
   }
 
+  goToPanelByIndex(panelIndex: number) {
+    this.activeHeader = panelIndex;
+    this.onFlowNext(this.flowPanels.toArray()[panelIndex]);
+  }
+
   onFlowNext(panel: QmFlowPanelComponent) {
     let panelsCollection = this.flowPanels.toArray();
     let panelIndex = panelsCollection.indexOf(panel);

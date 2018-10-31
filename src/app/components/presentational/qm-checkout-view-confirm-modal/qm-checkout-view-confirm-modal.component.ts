@@ -40,7 +40,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
     private autoCloseService: AutoClose,
     private userSelectors: UserSelectors,
     private customerSelector: CustomerSelector,

@@ -25,7 +25,7 @@ export class QmNotesModalComponent implements OnInit,OnDestroy{
   charCount:number = 1000;
 
   constructor(
-    private activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
     private autoCloseService: AutoClose,
     private userSelectors: UserSelectors,
     private noteSelectors: NoteSelectors,

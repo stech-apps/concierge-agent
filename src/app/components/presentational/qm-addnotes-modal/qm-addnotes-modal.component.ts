@@ -10,10 +10,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QmAddnotesModalComponent implements OnInit {
 
-  private notes: string = '';
+  notes: string = '';
   userDirection$: Observable<string>;
 
-  constructor(private activeModal: NgbActiveModal, private userSelectors: UserSelectors) { }
+  constructor(public activeModal: NgbActiveModal, private userSelectors: UserSelectors) { }
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;

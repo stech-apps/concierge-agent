@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -19,6 +20,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   title: string;
   isEmailEnabled: boolean = false;
   isSmsEnabled: boolean = false;
+  isEmailAndSmsEmpty: boolean = false;
   customerEmail: String;
   customerSms: string;
   themeColor: string;
@@ -31,6 +33,9 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   customer: ICustomer;
   countryCode: string;
   phoneColor: string = "#ffffff";
+  optionsHeading: string = '';
+  phoneNumber: string = '';
+  email: string = '';
 
 
 
@@ -40,6 +45,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors,
     private customerSelector: CustomerSelector,
     private servicePointSelectors: ServicePointSelectors,
+    private translationService: TranslateService,
     private spService: SPService,
     private util: Util,
     private customerDispatchers: CustomerDispatchers
@@ -134,6 +140,24 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     } else if (!this.isSmsEnabled) {
       this.confirmModalForm.get('phone').disable();
     }
+
+    this.translationService.get(['label.options.smsonly.heading',
+      'label.options.emailonly.heading',
+      'label.options.emailandsms.heading'
+    ]).subscribe((messages) => {
+
+      if (this.isEmailEnabled && this.isSmsEnabled && !this.customer.properties.email && !this.customer.properties.phoneNumber) {
+        this.optionsHeading = messages['label.options.emailandsms.heading'];
+        this.isEmailAndSmsEmpty = true;
+      }
+      else if (this.isEmailEnabled && !this.isSmsEnabled && !this.customer.properties.email) {
+        this.optionsHeading = messages['label.options.emailonly.heading'];
+        this.isEmailAndSmsEmpty = false;
+      } else if (this.isSmsEnabled && !this.customer.properties.phoneNumber) {
+        this.optionsHeading = messages['label.options.smsonly.heading'];
+        this.isEmailAndSmsEmpty = false;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -192,11 +216,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   public accept() {
-    if (this.confirmModalForm.valid) {
-      this.customerEmail = this.confirmModalForm.controls['email'].value;
-      this.customerSms = this.confirmModalForm.controls['phone'].value;
-      this.activeModal.close(this.confirmModalForm.value);
-    }
+      this.activeModal.close({ 'email' : this.email , 'phone': this.phoneNumber});    
   }
 
   public dismiss() {
@@ -220,7 +240,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   setphoneColor(phoneNo: string) {
     // if (this.countryCode === null) {
-      phoneNo === '' || this.confirmModalForm.controls['phone'].valid ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
+    phoneNo === '' || this.confirmModalForm.controls['phone'].valid ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
     // } else if (this.countryCode != null) {
     //   phoneNo == '' || phoneNo === this.countryCode || (phoneNo.length > this.countryCode.length && this.confirmModalForm.controls['phone'].valid) ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
     // }

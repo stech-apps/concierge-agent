@@ -379,18 +379,34 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  isShowNotifyOptionsInput(): boolean {
+    let showNotifyOptionsInput = false;
+    if (
+      (this.smsSelected && !this.customerSms)
+      || (this.emailSelected && !this.customerEmail)
+      || (this.emailAndSmsSelected && (!this.customerEmail || !this.customerSms))) {
+      showNotifyOptionsInput = true;
+    }
+
+    return showNotifyOptionsInput;
+  }
+
   onButtonPressed() {
-    if (this.smsSelected || this.emailSelected) {
-      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected, this.smsSelected,
+    if (this.isShowNotifyOptionsInput()) {
+      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected || this.emailAndSmsSelected, this.smsSelected || this.emailAndSmsSelected,
         this.themeColor, 'ok', 'cancel',
         (result: any) => {
           if (result) {
             if (result.email) {
               this.customerEmail = result.email;
+              this.selectedCustomer.properties['email'] = result.email;
             }
             if (result.phone) {
               this.customerSms = result.phone;
+              this.selectedCustomer.properties['phoneNumber'] = result.phone;
             }
+
+            this.customerDispatcher.updateCustomer(this.selectedCustomer);
             this.handleCheckoutCompletion();
           }
         },

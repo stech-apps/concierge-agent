@@ -9,21 +9,21 @@
     <div class="qm-modal__body">
       <div class="qm-modal-row">
         <div class="qm-notes-text-area__container">
+          <div class="qm-note__counter">{{ (notes.length || '0' ) + '/255'}}</div>
           <textarea class="qm-note__textarea" name="qmNotes" qmAutofocus [(ngModel)]="notes" id="addnotesText" maxlength="255">
           </textarea>
           <i aria-hidden="true" *ngIf="notes && notes.length > 0" (click)="clearNotes()" class="qm-action-btn__icon icon-close qm-search__icon qm-note__textarea--clear"></i>
         </div>
-
       </div>
     </div>
     <div class="qm-modal__footer">
       <div class="qm-generic-layout qm-generic-layout--align-right">
-        <button type="button" class="qm-btn qm-btn--secondary" (click)="activeModal.close();">
+        <button type="button" class="qm-btn qm-btn--secondary qm-btn-cancel" (click)="activeModal.close('');">
           <span class="qm-btn__text" title="{{ 'button.label.cancel' | translate }}">
             {{ 'button.label.cancel' | translate }}
           </span>
         </button>
-        <button class="qm-btn qm-btn--primary" (click)="addNotes()">
+        <button class="qm-btn qm-btn--primary qm-btn-finish" (click)="addNotes()">
           <span class="qm-btn__text" title="{{ 'button.label.finish' | translate }}">
             {{ 'button.label.finish' | translate }}
           </span>

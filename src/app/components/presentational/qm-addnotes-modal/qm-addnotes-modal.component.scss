@@ -1,11 +1,11 @@
 @import '../../../../styles/base/_component-manifest.scss';
-
 .qm-notes-text-area__container {
-    position: relative;
+  position: relative;
 }
 
-.qm-note__textarea {
-    border: 1px solid rgba(0,0,0,0.42);
+.qm-note {
+  &__textarea {
+    border: 1px solid rgba(0, 0, 0, 0.42);
     display: block;
     height: 130px;
     width: 100%;
@@ -13,17 +13,36 @@
     border: 1px solid $standard-border-color;
     resize: none;
     font-weight: $font-weight-light;
-    padding: rem($standard-padding / 2);
+    padding: rem($standard-padding / 2) rem($standard-padding * 1.5) rem($standard-padding / 2) rem($standard-padding / 2);
 
-    &--clear {
-        position: absolute;
-        color: rgba(0,0,0,0.42);
-        right: 0.5rem;
-        top: 0.5rem;
-        font-size: 18px;
-        cursor: pointer;
-        &:hover {
-            color: rgba(0,0,0,0.82);
-        }
+    @at-root [dir='rtl'] & {
+        padding: rem($standard-padding / 2) rem($standard-padding /2) rem($standard-padding / 2) rem($standard-padding *1.5);
     }
+    &--clear {
+      position: absolute;
+      color: rgba(0, 0, 0, 0.42);
+      right: 0.5rem;
+      top: 0.5rem;
+      font-size: 18px;
+      cursor: pointer;
+      &:hover {
+        color: rgba(0, 0, 0, 0.82);
+      }
+
+      @at-root [dir='rtl'] & {
+        left:  0.5rem;
+      }
+    }
+  }
+
+  &__counter {
+      position: absolute;
+      color: rgba(0,0,0,0.62);
+      right: 0;
+      top: -27px;
+      font-size: 14px;
+      @at-root [dir='rtl'] & {
+        left: 0;
+      }
+  }
 }

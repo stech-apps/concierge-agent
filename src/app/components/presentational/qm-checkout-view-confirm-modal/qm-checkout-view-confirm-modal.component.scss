@@ -157,3 +157,7 @@
 .btn-light-active-action:active {
     opacity: 0.7 !important;
 }
+
+.qm-standard-text-field ~ .qm-standard-text-field {
+    margin-top: 1.3rem;
+}

@@ -1,5 +1,78 @@
 <qm-auto-close>
-  <div class="qm-confirm-modal " dir="{{ userDirection$ | async }}" cdkTrapFocus>
+  <div class="qm-modal qm-add-notes-modal qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
+    <form class="qm-modal__box-container" #optionsForm="ngForm">
+      <div class="qm-modal__header">
+        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-modal__close-btn" (click)="activeModal.close()">
+          <span class="sr-only">{{ optionsHeading }}</span>
+        </button>
+        <span class="qm-modal__headline">{{ optionsHeading }}</span>
+      </div>
+      <div class="qm-modal__body">
+        <div class="qm-modal-row">
+         <!--  phone feild  -->
+          <div class="qm-standard-text-field" *ngIf="isSmsEnabled">
+            <label class="qm-standard-text-field__label">
+              <span class="qm-standard-text-field__top-container">
+                <span class="qm-standard-text-field__text">{{ 'field.notifyoptions.phone' | translate }}</span>
+                <span class="qm-standard-text-field__required">{{ 'required' | translate }}</span>
+              </span>
+              <span class="qm-standard-text-field__input-container">
+                <input type="text"
+                      class="qm-input qm-standard-text-field__input"
+                      placeholder=""
+                      maxlength="50"
+                      qmClearInput
+                      [(ngModel)]="phoneNumber"
+                      required
+                      name="phoneNumber"
+                      />
+              </span>
+            </label>
+          </div>
+          <!-- Email field -->
+          <div class="qm-standard-text-field" *ngIf="isEmailEnabled">
+              <label class="qm-standard-text-field__label">
+                <span class="qm-standard-text-field__top-container">
+                  <span class="qm-standard-text-field__text">{{ 'field.notifyoptions.email' | translate }}</span>
+                  <span class="qm-standard-text-field__required">{{ 'required' | translate }}</span>
+                </span>
+                <span class="qm-standard-text-field__input-container">
+                  <input type="text"
+                        class="qm-input qm-standard-text-field__input"
+                        placeholder=""
+                        maxlength="50"
+                        qmClearInput
+                        [(ngModel)]="email"
+                        required
+                        email
+                        name="email"
+                        />
+                </span>
+              </label>
+            </div>
+        </div>
+      </div>
+      <div class="qm-modal__footer">
+        <div class="qm-generic-layout qm-generic-layout--align-right">
+          <button type="button" class="qm-btn qm-btn--secondary qm-btn-cancel" (click)="activeModal.close();">
+            <span class="qm-btn__text" title="{{ 'button.label.cancel' | translate }}">
+              {{ 'button.label.cancel' | translate }}
+            </span>
+          </button>
+          <button [disabled]="!optionsForm.form.valid" class="qm-btn qm-btn--primary qm-btn-finish" (click)="accept()">
+            <span class="qm-btn__text" title="{{ 'button.label.finish' | translate }}">
+              {{ 'button.label.finish' | translate }}
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+
+  <!-- <div class="qm-confirm-modal " dir="{{ userDirection$ | async }}" cdkTrapFocus>
     <form class="qm-confirm-modal__box-container" [formGroup]="confirmModalForm" (keyup.enter)="accept()" autocomplete="off">
       <div class="qm-confirm-modal__header">
         <span class="qm-confirm-modal__header-text">{{ title }}</span>
@@ -12,7 +85,7 @@
             <input type="text" class="input-box" name='email' placeholder="{{'type_email'|translate }}" formControlName="email" #email
             />
             <i *ngIf="email.value!='' " class="clear-icon icon-close" (click)="clearEmail()"></i>
-          </div>
+          </div>4
           <div class="validate-icon btn-light-active-action" :active>
             <i [ngClass]="showEmailTick ? 'icon-check':'icon-refresh'" (click)="validateEmail()"></i>
           </div>
@@ -48,5 +121,5 @@
 
       </div>
     </form>
-  </div>
+  </div> -->
 </qm-auto-close>

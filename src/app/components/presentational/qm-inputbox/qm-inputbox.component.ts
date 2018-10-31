@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AutoClose } from '../../../../util/services/autoclose.service';
 import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
@@ -9,6 +9,7 @@ import { whiteSpaceValidator } from '../../../../util/custom-form-validators';
 import { Util } from '../../../../util/util';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'qm-inputbox',
@@ -30,6 +31,11 @@ export class QmInputboxComponent implements OnInit {
   controls: any;
   currentCustomer:ICustomer
   editMode:boolean;
+
+  
+  @Output()
+  onFlowNext: EventEmitter<any> = new EventEmitter();
+  
   date = {
     day: '',
     month: '',
@@ -186,17 +192,6 @@ export class QmInputboxComponent implements OnInit {
 
     this.subscriptions.add(translateSubscription);
 
-    // if on update
-    // if(this.currentCustomer){  
-    //   editCustomerSubscription = this.editCustomer$.subscribe(
-    //     (editCustomer:ICustomer)=>{
-    //       this.editCustomer = editCustomer;
-    //     }
-    //   )
-
-     
-    // }
-
     // Add customer status place country code
     if(this.countrycode && !this.currentCustomer){
         this.customerCreateForm.patchValue({
@@ -220,11 +215,14 @@ export class QmInputboxComponent implements OnInit {
       }else{
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
-      }      
+      }     
+      this.customerCreateForm.markAsPristine() 
     }
 
+  // When customer edit and do not chage (add btn) 
   public next(){
     this.customerDispatchers.editCustomerMode(false);
+    this.customerCreateForm.markAsPristine()
   }
   
 
@@ -367,8 +365,23 @@ export class QmInputboxComponent implements OnInit {
     if(this.customerCreateForm.valid && ((this.currentCustomer.firstName != this.customerCreateForm.value.firstName )||(this.currentCustomer.lastName != this.customerCreateForm.value.lastName )||(this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone )||(this.currentCustomer.properties.email != this.customerCreateForm.value.email )||(this.date.year &&(this.date.year != this.customerCreateForm.value.dateOfBirth.year))||(!this.date.year && this.customerCreateForm.value.dateOfBirth.year)||(this.date.day &&(this.date.day != this.customerCreateForm.value.dateOfBirth.day))||(!this.date.day && this.customerCreateForm.value.dateOfBirth.year)||(this.date.month!=this.customerCreateForm.value.dateOfBirth.month))){
       this.accept();
     }else if(this.customerCreateForm.valid){
-      this.next();
+        this.onFlowNext.emit();
+        this.customerCreateForm.markAsPristine()
     }
+  }
+  discard(){
+    this.onFlowNext.emit();
+  }
+
+  clearInputFeild(name){
+    
+   switch(name){
+     case "firstName": this.customerCreateForm.patchValue({ firstName: ''});break;
+     case "lastName": this.customerCreateForm.patchValue({ lastName: ''});break;
+     case "phone": this.customerCreateForm.patchValue({ phone: ''});break;
+     case "email": this.customerCreateForm.patchValue({ email: ''});break;
+                        
+   }
   }
   
 }

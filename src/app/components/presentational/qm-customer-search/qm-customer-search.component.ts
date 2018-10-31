@@ -67,7 +67,7 @@ constructor(
   editCustomer(customer:ICustomer){
     this.CustomerDispatchers.editCustomerMode(true);
     this.CustomerDispatchers.selectCustomer(customer);
-    this.CustomerDispatchers.resetCustomers();
+    // this.CustomerDispatchers.resetCustomers();
   }
 
   showLoading() {

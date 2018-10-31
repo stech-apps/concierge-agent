@@ -14,11 +14,14 @@
       </td>
       <td style="width: 5%" (click)="selectCustomer(customer)"></td> 
     </tr>  
-   
+    
     
   </tbody>
-  <h5 class="customer-list-not-found" *ngIf="showNoResults()">Customer not found</h5>
-
+  <tbody *ngIf="showNoResults()" class="tbody">
+   <tr  class="customer-list">
+    <td class="search-list-text" style="text-align:center"> {{'customer_not_found'| translate}} </td>
+    </tr>
+  </tbody>
 </table>
 <!-- loader component -->
 <!-- <div class="qm-loader-container" *ngIf="showLoading()" >

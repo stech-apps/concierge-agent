@@ -49,12 +49,12 @@
             <div class="qm-crossline-header" ></div>
             <h2 class="qm-crossline-header-text" *ngIf="!editMode && !currentCustomer">{{ 'label.add_customer' | translate }}</h2>
             <h2 class="qm-crossline-header-text" *ngIf="editMode || (!editMode && currentCustomer)">{{ 'label.customer_details' | translate }}</h2>
-        </div>
+        </div>      
         <div class="qm-service-list__container" >
-        <qm-inputbox></qm-inputbox>
+        <qm-inputbox #f (onFlowNext)="doneButtonClick()"></qm-inputbox>
         </div>
     </div>
 </div>
-<div class="qm-flow-done-bar" *ngIf="((flowType === 'CREATE_APPOINTMENT' && currentCustomer) || flowType !== 'CREATE_APPOINTMENT') && !editMode">
+<div class="qm-flow-done-bar" *ngIf="((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT')">
     <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
 </div>

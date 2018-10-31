@@ -82,8 +82,8 @@ export class QmCustomerSearchBarComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.CustomerDispatchers.resetCustomers();
-    this.CustomerDispatchers.resetCustomerSearchText();
+    // this.CustomerDispatchers.resetCustomers();
+    // this.CustomerDispatchers.resetCustomerSearchText();
     this.subscriptions.unsubscribe();
   }
 

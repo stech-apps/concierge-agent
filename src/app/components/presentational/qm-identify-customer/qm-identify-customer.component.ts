@@ -78,5 +78,6 @@ export class QmIdentifyCustomerComponent implements OnInit {
     this.localStorage.setSettings(STORAGE_SUB_KEY.CUSTOMER_SKIP, this.isFlowSkip);
   }
 
+
   
 }

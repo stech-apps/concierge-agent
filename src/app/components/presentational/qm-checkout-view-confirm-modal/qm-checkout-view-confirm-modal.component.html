@@ -9,47 +9,52 @@
       </div>
       <div class="qm-modal__body">
         <div class="qm-modal-row">
-         <!--  phone feild  -->
+          <!--  phone feild  -->
           <div class="qm-standard-text-field" *ngIf="isSmsEnabled">
             <label class="qm-standard-text-field__label">
               <span class="qm-standard-text-field__top-container">
                 <span class="qm-standard-text-field__text">{{ 'field.notifyoptions.phone' | translate }}</span>
-                <span class="qm-standard-text-field__required">{{ 'required' | translate }}</span>
+                <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input type="text"
-                      class="qm-input qm-standard-text-field__input"
-                      placeholder=""
-                      maxlength="50"
-                      qmClearInput
-                      [(ngModel)]="phoneNumber"
-                      required
-                      name="phoneNumber"
-                      />
+                <input type="text" class="qm-input qm-standard-text-field__input" 
+                placeholder="" maxlength="50" qmClearInput [(ngModel)]="phoneNumber"
+                pattern="^[0-9\+\s]+$" #phoneRef="ngModel"
+                  required qmAllWhiteSpace name="phoneNumber" />
+              </span>
+              <span class="qm-standard-text-field__error-message">
+                <ng-container *ngIf="phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)">
+                  <ng-container *ngIf="phoneRef.errors.allwhitespace && !phoneRef.errors.required">
+                    {{ 'field.optionsForm.phoneNumber.error.allwhitespace' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="phoneRef.errors.pattern && !phoneRef.errors.required">
+                      {{ 'field.optionsForm.phoneNumber.error.invalid' | translate }}
+                  </ng-container>
+                </ng-container>
               </span>
             </label>
           </div>
           <!-- Email field -->
           <div class="qm-standard-text-field" *ngIf="isEmailEnabled">
-              <label class="qm-standard-text-field__label">
-                <span class="qm-standard-text-field__top-container">
-                  <span class="qm-standard-text-field__text">{{ 'field.notifyoptions.email' | translate }}</span>
-                  <span class="qm-standard-text-field__required">{{ 'required' | translate }}</span>
+            <label class="qm-standard-text-field__label">
+              <span class="qm-standard-text-field__top-container">
+                <span class="qm-standard-text-field__text">{{ 'field.notifyoptions.email' | translate }}</span>
+                <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
+              </span>
+              <span class="qm-standard-text-field__input-container">
+                <input type="text" class="qm-input qm-standard-text-field__input" placeholder="" maxlength="50" qmClearInput [(ngModel)]="email"
+                  required name="email" #emailRef="ngModel"
+                  pattern='^\s*(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))\s*$' />
+              </span>
+              <span class="qm-standard-text-field__error-message">
+                  <ng-container *ngIf="emailRef.invalid && (emailRef.dirty || emailRef.touched)">
+                    <ng-container *ngIf="emailRef.errors.pattern && !emailRef.errors.required">
+                        {{ 'field.optionsForm.email.error.invalid' | translate }}
+                    </ng-container>
+                  </ng-container>
                 </span>
-                <span class="qm-standard-text-field__input-container">
-                  <input type="text"
-                        class="qm-input qm-standard-text-field__input"
-                        placeholder=""
-                        maxlength="50"
-                        qmClearInput
-                        [(ngModel)]="email"
-                        required
-                        email
-                        name="email"
-                        />
-                </span>
-              </label>
-            </div>
+            </label>
+          </div>
         </div>
       </div>
       <div class="qm-modal__footer">

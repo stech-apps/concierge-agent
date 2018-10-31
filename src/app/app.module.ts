@@ -164,6 +164,7 @@ import { QmCentralLoginComponent } from './components/presentational/qm-central-
 import { QmHighlightPipe } from './pipes/qm-highlight.pipe';
 import { QmNotesComponent } from './components/presentational/qm-notes/qm-notes.component';
 import { QmAddnotesModalComponent } from './components/presentational/qm-addnotes-modal/qm-addnotes-modal.component';
+import { QmAllWhiteSpaceDirective } from './directives/qm-all-white-space.directive';
 
 
 // Global options for Toastr
@@ -255,7 +256,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmCentralLoginComponent,
     QmHighlightPipe,
     QmNotesComponent,
-    QmAddnotesModalComponent
+    QmAddnotesModalComponent,
+    QmAllWhiteSpaceDirective
 
   ],
   entryComponents: [

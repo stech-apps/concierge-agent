@@ -62,7 +62,7 @@
     // visibility: hidden;
     font-size: rem(12px);
     line-height: rem(16px);
-    color: $primary-color;
+    color: $primary-pink;
     min-height: rem(16px);
     min-width: 1px;
   }
@@ -92,6 +92,8 @@
 
     .qm-standard-text-field__error-message {
       visibility: visible;
+      color: $primary-pink;
+      font-size: 14px;
     }
   }
 }

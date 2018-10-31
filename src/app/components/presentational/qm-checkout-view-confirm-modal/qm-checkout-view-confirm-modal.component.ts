@@ -146,12 +146,26 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       'label.options.emailandsms.heading'
     ]).subscribe((messages) => {
 
-      if (this.isEmailEnabled && this.isSmsEnabled && !this.customer.properties.email && !this.customer.properties.phoneNumber) {
-        this.optionsHeading = messages['label.options.emailandsms.heading'];
-        this.isEmailAndSmsEmpty = true;
+      if (this.isEmailEnabled && this.isSmsEnabled)
+      {
+        if(!this.customer.properties.email && !this.customer.properties.phoneNumber) {
+          this.optionsHeading = messages['label.options.emailandsms.heading'];
+          this.isEmailAndSmsEmpty = true;
+        } 
+        else if(!this.customer.properties.phoneNumber) {
+          this.optionsHeading = messages['label.options.smsonly.heading'];
+          this.isEmailEnabled = false;
+          this.isEmailAndSmsEmpty = false;
+        }
+        else if(!this.customer.properties.email) {
+          this.optionsHeading = messages['label.options.emailonly.heading'];
+          this.isSmsEnabled = false;
+          this.isEmailAndSmsEmpty = false;
+        }
       }
       else if (this.isEmailEnabled && !this.isSmsEnabled && !this.customer.properties.email) {
         this.optionsHeading = messages['label.options.emailonly.heading'];
+
         this.isEmailAndSmsEmpty = false;
       } else if (this.isSmsEnabled && !this.customer.properties.phoneNumber) {
         this.optionsHeading = messages['label.options.smsonly.heading'];
@@ -216,7 +230,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   public accept() {
-      this.activeModal.close({ 'email' : this.email , 'phone': this.phoneNumber});    
+      this.activeModal.close({ 'email' : (this.email || '').trim() , 'phone': (this.phoneNumber || '').trim()});    
   }
 
   public dismiss() {

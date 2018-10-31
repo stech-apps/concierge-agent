@@ -20,8 +20,30 @@
     }
 
 .qm-search__icon{
-    right: 1.2em;
-    color: black;
+    @at-root [dir="ltr"] & {
+        right: 1.2em;
+    }
+    @at-root [dir="rtl"] & {
+        left: 1.2em;
+    }
+    color:  $dark-transparent42;
     z-index: 1000;
     position: relative;
+}
+.qm-close__icon{
+    @at-root [dir="ltr"] & {
+        right: 1.4em;
+    }
+    @at-root [dir="rtl"] & {
+        left: 1.4em;
+    }
+    color:  $dark-transparent42;
+    z-index: 1000;
+    position: relative;
+    font-size: 1.5em;
+}
+
+.qm-action-btn--only-icon{
+    width: 0px;
+    margin-top: 10px;
 }

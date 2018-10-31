@@ -12,9 +12,14 @@
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div>
                      <br>
-                      <input #firstName qmClearInput class="qm-input-box__input"  
+                      <input #firstName class="qm-input-box__input"  
                       type="text" name='firstName' formControlName = "firstName"
                       maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                     
+                      <div *ngIf="firstName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="firstName.value =''"></i>
+                      </div>      
+                      
                       <div class="qm-form-error-message" *ngIf="customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
                   </div>
               </div>
@@ -24,7 +29,10 @@
                       <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div> 
-                      <input qmClearInput class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <div *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="lastName.value =''"></i>
+                      </div> 
                       <div class="qm-form-error-message" *ngIf="customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
               </div>
             </div>
@@ -32,7 +40,10 @@
             <!-- Email Section -->
             <div class="qm-input-box__row">
                   <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'email'|translate }}</label>
-                  <input  qmClearInput class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
+                  <input class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
+                  <div *ngIf="email.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                      <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="email.value =''"></i>
+                  </div> 
                   <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
             </div>
 
@@ -41,7 +52,10 @@
                   <div class="qm-input-box__col-50">
                       <div class="qm-input-box__left-side">
                         <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'phone'|translate }}</label>
-                        <input qmClearInput class="qm-input-box__input" type="text" inputmode="numeric" name='phone' formControlName = "phone" #phone>
+                        <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone>
+                        <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                            <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="phone.value =''"></i>
+                        </span> 
                         <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid'|translate}}</div>
                       </div>
                 </div>
@@ -55,7 +69,7 @@
                         <!-- Month -->
                         <div class="qm-input-box__month-element-container"> 
                             <label for="month" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'month'|translate }}</label>
-                            <ng-select #monthSelect [items]="months"
+                            <ng-select #month       [items]="months"
                                                     [selectOnTab]="true"
                                                     [clearable]="false"
                                                     notFoundText="{{ 'label.no.items.found' | translate }}"
@@ -99,25 +113,38 @@
           </div>
           <div class="qm-input-box__col-2">
               <div class="qm-input-box__button-container">
-                <div class="qm-button qm-secondary-button-defult" (click)="cancel();firstName.value==''" *ngIf="editMode">
-                  Cancel
+
+                <!-- Cancel Button -->
+                <div class="qm-button qm-secondary-button-defult" (click)="cancel()" *ngIf="editMode">
+                  {{'cancel'|translate}}
                 </div> 
-                <div class="qm-button qm-secondary-button-defult" (click)="firstName.value='';lastName.value='';email.value='';phone.value=''" *ngIf="!editMode && (firstName.value!='')">
-                  Cancel
+                <div class="qm-button qm-secondary-button-disabled" [ngClass]="{'qm-secondary-button-defult': ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))}"  *ngIf="!editMode && currentCustomer">
+                    {{'button.discard.changes'|translate}}
+                  </div> 
+                <div class="qm-button qm-secondary-button-defult" (click)="firstName.value='';lastName.value='';email.value='';phone.value=''" *ngIf="(!editMode && !currentCustomer)&& (firstName.value!='')">
+                    {{'cancel'|translate}}
                 </div>
 
-                <div class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
-                  <span *ngIf="!currentCustomer"> {{'button_save_and_add'|translate}} </span>
-                  <span *ngIf="currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"> {{'button_add'|translate}} </span>
-                  <span *ngIf="currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"> {{'button_save_and_add'|translate}} </span>
+                <!-- Save Button -->
+
+                <!-- To add new a customer -->
+                <div  *ngIf="!currentCustomer" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
+                  <span> {{'button_save_and_add'|translate}} </span>
+                </div>
+
+                <!-- To select a customer -->
+                <div *ngIf="editMode && currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="next()">
+                  <span> {{'button_add'|translate}} </span>
+                </div>
+                <!-- To update a custoemr -->
+                <div *ngIf="editMode && currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
+                  <span > {{'button_save_and_add'|translate}} </span>
                 </div> 
 
-              
-                <!-- <button class="qm-input-box__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()">
-                  <span>
-                      {{'cancel'|translate}}
-                    </span>
-                  </button> -->
+                <!-- from confirm view -->
+                <div *ngIf="!editMode && currentCustomer" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid && customerCreateForm.dirty }" (click)="update()" >
+                  <span > {{'button.save.changes'|translate}} </span>
+                </div> 
                 </div>
           </div>
     </div>

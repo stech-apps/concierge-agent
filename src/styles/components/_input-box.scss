@@ -317,3 +317,9 @@ input::-ms-clear {
   font-weight: 500;
   cursor: pointer;
 }
+
+
+mark {
+  font-weight: bold !important;
+  background: transparent !important;
+}

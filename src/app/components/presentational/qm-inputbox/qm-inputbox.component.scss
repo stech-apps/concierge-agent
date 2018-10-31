@@ -1,0 +1,65 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
+
+// placeholder styles
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        font-size: 1.1em;
+        font-weight: 100;
+    }
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        font-size: 1.1em;
+        font-weight: 100;
+    }
+::-ms-input-placeholder { /* Microsoft Edge */
+        font-size: 1.1em;
+        font-weight: 100;
+    }
+
+.qm-search__icon{
+    right: 1.2em;
+    color:  $dark-transparent42;
+    z-index: 1000;
+    position: relative;
+}
+.qm-close__icon{
+    
+    color:  $dark-transparent42;
+    z-index: 1000;
+    position: relative;
+    font-size: 1.5em;
+    @at-root [dir="ltr"] & {
+        right: 1.4em;
+    }
+    @at-root [dir="rtl"] & {
+        left: 1.4em;
+    }
+}
+
+.qm-action-btn--only-icon{
+    width: 0px;
+
+    vertical-align: middle
+}
+
+
+/* IE 11 */
+@media all and (-ms-high-contrast:none) {
+    :host {
+        @at-root [dir="ltr"] & {
+            text-align: right;
+        }
+        @at-root [dir="rtl"] & {
+            text-align: left;
+        }
+        }
+        .qm-action-btn--only-icon{
+            
+            margin-top: -5.2em;
+        }
+  }
+
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

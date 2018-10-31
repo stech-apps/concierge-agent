@@ -25,8 +25,6 @@ export class QmInputboxComponent implements OnInit {
   customers: ICustomer[];
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
-  invalidFirstName:boolean;
-  invalidLastName:boolean;
   countryCodeNumber:string;
   day:number;
   controls: any;
@@ -213,42 +211,22 @@ export class QmInputboxComponent implements OnInit {
    
   }
 
-  public decline() {
-    // this.activeModal.close(false);
-    // this.customerDispatchers.resetCurrentCustomer();
-  }
-
   public accept() {
-   console.log(this.trimCustomer());
-    if(this.customerCreateForm.controls.firstName.invalid){
-      this.invalidFirstName=true
-    }else if (this.customerCreateForm.controls.lastName.invalid){
-      this.invalidLastName=true
-    }
     if(this.customerCreateForm.valid){
-      // this.activeModal.close(this.customerCreateForm.value); 
       if(this.currentCustomer){
         this.customerDispatchers.updateCustomer(this.preparedCustomer());
-        this.updateList(this.preparedCustomer());
         this.customerDispatchers.selectCustomer(this.preparedCustomer());
+        this.customerDispatchers.editCustomerMode(false);
       }else{
         this.customerDispatchers.createCustomer(this.trimCustomer());
       }
-      }
-      this.customerDispatchers.resetCurrentCustomer();
-      
+      }      
     }
+
+  public next(){
+    this.customerDispatchers.editCustomerMode(false);
+  }
   
-  updateList(customer:ICustomer){
-    let updateItem = this.customers.find(this.findIndexToUpdate, customer.id);
-    let index = this.customers.indexOf(updateItem);
-    this.customers[index] = customer;
-
-  }
-
-  findIndexToUpdate(newItem) { 
-    return newItem.id === this;
-  }
 
   trimCustomer():ICustomer{
     if(this.customerCreateForm.value.phone== this.countrycode){
@@ -267,7 +245,9 @@ export class QmInputboxComponent implements OnInit {
 
 
   preparedCustomer():ICustomer{
+    
     if(this.currentCustomer){
+      this.editCustomer = this.currentCustomer;
       const customerToSave : ICustomer = {
         ...this.editCustomer,
         ...this.trimCustomer(),
@@ -382,4 +362,13 @@ export class QmInputboxComponent implements OnInit {
     this.customerDispatchers.resetCurrentCustomer();
     this.customerDispatchers.editCustomerMode(false);
   }
+
+  update(){
+    if(this.customerCreateForm.valid && ((this.currentCustomer.firstName != this.customerCreateForm.value.firstName )||(this.currentCustomer.lastName != this.customerCreateForm.value.lastName )||(this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone )||(this.currentCustomer.properties.email != this.customerCreateForm.value.email )||(this.date.year &&(this.date.year != this.customerCreateForm.value.dateOfBirth.year))||(!this.date.year && this.customerCreateForm.value.dateOfBirth.year)||(this.date.day &&(this.date.day != this.customerCreateForm.value.dateOfBirth.day))||(!this.date.day && this.customerCreateForm.value.dateOfBirth.year)||(this.date.month!=this.customerCreateForm.value.dateOfBirth.month))){
+      this.accept();
+    }else if(this.customerCreateForm.valid){
+      this.next();
+    }
+  }
+  
 }

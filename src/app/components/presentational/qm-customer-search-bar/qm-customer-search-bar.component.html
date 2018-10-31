@@ -1,8 +1,11 @@
 <div class="customer-search" dir="{{ userDirection$ | async }}">
   <div style="width:100%;margin:auto;display: flex;">
-    <input qmClearInput type="search" placeholder="{{ 'search_customer' | translate }}" class="qm-search__input" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value.trim())" autocomplete="off"> 
-      <button *ngIf="!customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+    <input type="search" placeholder="{{ 'search_customer' | translate }}" class="qm-search__input" id="customerSearch" name="q" [ngModel]="searchText" #customerSearch (input)="search(customerSearch.value.trim())" autocomplete="off"> 
+      <div *ngIf="!customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
         <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-      </button>   
+      </div>
+      <div *ngIf="customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="resetSearch()"></i>
+      </div>      
   </div>
 </div>

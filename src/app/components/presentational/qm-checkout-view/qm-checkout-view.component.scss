@@ -4,22 +4,19 @@
   display: flex;
   justify-content: center;
   color: #000000;
-
   &__summary-grouping {
     padding: 0 0.75rem;
-    &:hover {     
+    &:hover {
       background-color: $secondary-hover;
       cursor: pointer;
-      .qm-summary-item { 
-          color: $secondary-color;
-      } 
+      .qm-summary-item {
+        color: $secondary-color;
+      }
       h2 {
         color: #2c3230;
-      }   
+      }
     }
   }
-
-
   .qm-summary-item {
     display: flex;
     line-height: 44px;
@@ -32,10 +29,12 @@
       color: $secondary-color;
       display: inline-block;
     }
-
     &__text {
       display: inline-block;
       max-width: calc(100% - 50px);
+      &--time-period {
+        display: flex;
+      }
     }
   }
   &__summary {
@@ -47,6 +46,7 @@
     margin-right: 24px;
     margin-left: 24px;
     max-width: 34%;
+    overflow-y: auto;
     @at-root [dir='rtl'] & {
       margin-left: 24px;
     }
@@ -58,7 +58,7 @@
       line-height: 32px;
       text-align: left;
       @at-root [dir='rtl'] & {
-      text-align: right;
+        text-align: right;
       }
     }
     h3 {
@@ -70,7 +70,7 @@
       margin-bottom: 0.6rem;
       margin-left: 0.5rem;
       @at-root [dir='rtl'] & {
-      text-align: right;
+        text-align: right;
       }
     }
   } // ############### notification area
@@ -100,7 +100,7 @@
     }
     button {
       height: 80px;
-      [class^="icon"]  {
+      [class^="icon"] {
         font-size: 2.5rem;
         line-height: 80px;
       }

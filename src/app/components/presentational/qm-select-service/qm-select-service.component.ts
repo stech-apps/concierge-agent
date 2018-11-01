@@ -259,6 +259,11 @@ export class QmSelectServiceComponent implements OnInit {
 
   handleServiceList(selectedService: IServiceViewModel, isRemove: boolean){
     this.selectedServiceList.push(selectedService);
+    this.selectedServiceList = this.selectedServiceList.filter(
+      (val: IService) =>
+        val.id !== 0
+    );
+    
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.timeSlotDispatchers.resetTimeslots();
       this.timeSlotDispatchers.deselectTimeslot();
@@ -267,10 +272,7 @@ export class QmSelectServiceComponent implements OnInit {
       this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
     }
     else{
-      this.selectedServiceList = this.selectedServiceList.filter(
-        (val: IService) =>
-          val.id !== 0
-      );
+   
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
       if(isRemove){
         this.filteredServiceList = this.filteredServiceList.filter(

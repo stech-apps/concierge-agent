@@ -871,6 +871,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return timeString;
   }
 
+  getStartTime() {
+    return moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+  }
+
+  getEndTime() {
+    return moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+  }
+
   handleTimeoutError(err: DataServiceError<any>, msg: string) {
     if (err.errorCode === '0') {
       this.translateService.get(msg).subscribe(v => {

@@ -116,7 +116,9 @@ export class QmNotesComponent implements OnInit, OnDestroy {
     this.notesInputOpened = !this.notesInputOpened;
     const modal = this.modalService.openNotesModal(this.notes);
     modal.result.then((value)=> {
-      this.onNotesChanged.emit(value)
+      if(value !== null) {
+        this.onNotesChanged.emit(value);
+      }
     });
   }
 

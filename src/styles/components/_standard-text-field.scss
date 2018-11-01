@@ -8,6 +8,8 @@
     }
   }
 
+
+
   &__label {
     width: 100%;
   }
@@ -46,6 +48,9 @@
       background: $disabled-background;
     }
     padding: .5rem .75rem;
+     &.ng-invalid.ng-dirty {
+      border: 2px solid #E50046;
+    }
   }
 
   &__input.clear-enabled-input {

@@ -107,6 +107,11 @@
     margin-top: rem(60px);
   }
 
+  &--sm {
+    max-width: rem(420px + $standard-margin * 2);
+    width: 100%;
+  }
+
   &--md {
     max-width: rem(510px + $standard-margin * 2);
     width: 100%;

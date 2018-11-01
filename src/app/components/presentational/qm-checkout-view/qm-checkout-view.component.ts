@@ -544,28 +544,30 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateAppointment() {
-    this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
-      if (result) {
-        this.saveFrequentService();
-        this.showSuccessMessage(result);
-        this.onFlowExit.emit();
-      }
-    }, error => {
-      const err = new DataServiceError(error, null);
-      if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
-        this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
+    this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr,
+      this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType())
+      .subscribe(result => {
+        if (result) {
           this.saveFrequentService();
           this.showSuccessMessage(result);
           this.onFlowExit.emit();
-        }, error => {
-          this.saveFrequentService();
-          this.showErrorMessage(error);
-          this.onFlowExit.emit();
-        })
-      } else if (err.errorCode === '0') {
-        this.handleTimeoutError(err, 'appointment_create_fail');
-      }
-    });
+        }
+      }, error => {
+        const err = new DataServiceError(error, null);
+        if (err.errorCode === Q_ERROR_CODE.CREATED_APPOINTMENT_NOT_FOUND) {
+          this.calendarService.bookAppointment(this.selectedAppointment, this.noteTextStr, this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType()).subscribe(result => {
+            this.saveFrequentService();
+            this.showSuccessMessage(result);
+            this.onFlowExit.emit();
+          }, error => {
+            this.saveFrequentService();
+            this.showErrorMessage(error);
+            this.onFlowExit.emit();
+          })
+        } else if (err.errorCode === '0') {
+          this.handleTimeoutError(err, 'appointment_create_fail');
+        }
+      });
   }
 
   setCreateVisit() {
@@ -615,27 +617,55 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   showSuccessMessage(result: any) {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      this.translateService.get(['appointment_for_service', 'created_on_branch', 'appointment_time']).subscribe(v => {
-        var serviceName = ""
-        result.services.forEach(val => {
-          if (serviceName.length > 0) {
-            serviceName = serviceName + ", " + val.name;
+      this.translateService.get(['label.appcreated.heading',
+        'label.appcreated.subheading',
+        'appointment_time', 'label.notifyoptions.smsandemail',
+        'label.notifyoptions.sms', 'label.notifyoptions.email']).subscribe(v => {
+          var serviceName = ""
+          result.services.forEach(val => {
+            if (serviceName.length > 0) {
+              serviceName = serviceName + ", " + val.name;
+            }
+            else {
+              serviceName = val.name;
+            }
+          });
+
+          const fieldList = [{
+            icon: 'calendar',
+            label: moment(this.selectedAppointment.start)
+              .tz(this.selectedAppointment.branch.fullTimeZone).format('dddd DD MMMM')
+          },
+          {
+            icon: 'clock',
+            label: this.getTimePeriod()
+          },
+          {
+            icon: 'home',
+            label: this.selectedAppointment.branch.name
+          },
+          {
+            icon: 'service',
+            label: this.appServices
           }
-          else {
-            serviceName = val.name;
+          ];
+
+          let subheadingText = v['label.appcreated.subheading'];
+          if (this.emailAndSmsSelected) {
+            subheadingText += ` ${v['label.notifyoptions.smsandemail']}`
           }
-        })
-        var successMessage = {
-          firstLineName: v.appointment_for_service,
-          firstLineText: serviceName.toUpperCase(),
-          SecondLineName: v.created_on_branch,
-          SecondLineText: result.branch.name.toUpperCase(),
-          icon: "correct",
-          LastLineName: v.appointment_time,
-          LastLineText: this.buildDate(result)
-        }
-        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
-      });
+          else if (this.emailSelected) {
+            subheadingText += ` ${v['label.notifyoptions.email']}`
+          }
+          else if (this.smsSelected) {
+            subheadingText += ` ${v['label.notifyoptions.sms']}`
+          }
+
+          this.qmModalService.openDoneModal(v['label.appcreated.heading'],
+          subheadingText, fieldList);
+
+          //this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+        });
     }
     else if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       this.translateService.get('visit_created').subscribe(v => {
@@ -859,7 +889,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   goToPanel(ix: number) {
-    if(!this.isMultiBranchEnabled && ix !=0) {
+    if (!this.isMultiBranchEnabled && ix != 0) {
       ix = ix - 1;
     }
     this.gotToPanelByIndex.emit(ix);

@@ -1,0 +1,59 @@
+.qm-done-modal {
+    .qm-modal {
+        &__header{
+            justify-content: center;
+        }
+    }
+
+    &__header-icon {
+        color: $secondary-color;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    &__detail-item {
+        display: flex;
+        padding-top: 1rem;
+
+        &--icon {
+            margin-right: 1rem;
+            margin-left: 1rem;
+            color: $dark-transparent82;
+        }
+
+        &--text {
+            color: $dark-transparent82;
+            font-size: 18px;
+            font-weight: $font-weight-light;
+            line-height: 24px;
+        }
+    }
+
+    &__subheader {
+        color: rgba(0,0,0,0.82);
+        font-size: 24px;
+        font-weight: $font-weight-light;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    &__details-heading {
+        color: rgba(0, 0, 0, 0.72);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+
+        text-align: left;
+        @at-root [dir='rtl'] & {
+           text-align: right;
+        }
+    }
+
+    .qm-btn--primary {
+        width: 200px;
+        height: 44px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

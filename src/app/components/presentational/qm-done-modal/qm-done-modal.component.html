@@ -1,0 +1,33 @@
+<div class="qm-modal qm-done-modal qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
+  <form class="qm-modal__box-container">
+    <div class="qm-modal__header">
+        <i class="qm-action-btn__icon qm-done-modal__header-icon icon-done-solid"  aria-hidden="true"></i>
+      <span class="qm-modal__headline">{{ (heading) | translate }}</span>
+    </div>
+    <div class="qm-done-modal__subheader">
+      {{ (subHeading) | translate }}
+    </div>
+    <div class="qm-modal__body">
+      <div class="qm-modal-row">
+        <h3 class="qm-done-modal__details-heading">{{ 'label.appconfirm.details.heading' | translate }}</h3>
+
+        <ng-container *ngFor="let field of fieldList">
+          <div class="qm-done-modal__detail-item">
+            <i class="qm-action-btn__icon qm-done-modal__detail-item--icon" [ngClass]="field.icon ? 'icon-' + field.icon : ''" aria-hidden="true"></i>
+            <div class="qm-done-modal__detail-item--text qm-text-overflow-fix">{{field.label}}</div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+    <div class="qm-modal__footer">
+      <div class="qm-generic-layout qm-generic-layout--justify-center">
+        <button class="qm-btn qm-btn--primary qm-btn-finish" (click)="activeModal.close()">
+          <span class="qm-btn__text" title="{{ 'button.label.ok' | translate }}">
+            {{ 'button.label.ok' | translate }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -4,6 +4,7 @@ import { Injectable, ApplicationRef } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { QmModalComponent } from "./qm-modal.component";
+import { QmDoneModalComponent } from 'src/app/components/presentational/qm-done-modal/qm-done-modal.component';
 
 @Injectable()
 export class QmModalService {
@@ -78,6 +79,14 @@ export class QmModalService {
     const modal = this.modalService.open(QmAddnotesModalComponent, { centered: true });
     modal.componentInstance.isOnUpdate = true;
     modal.componentInstance.notes = notesText;
+    return modal;
+  }
+
+  openDoneModal(heading: string, subheading: string, fieldList: Array<{icon: string, label: string}>) {
+    const modal = this.modalService.open(QmDoneModalComponent, { centered: true });
+    modal.componentInstance.fieldList = fieldList;
+    modal.componentInstance.heading = heading;
+    modal.componentInstance.subHeading = subheading;
     return modal;
   }
 }

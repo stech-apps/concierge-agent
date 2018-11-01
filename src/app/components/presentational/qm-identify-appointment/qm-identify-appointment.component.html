@@ -1,5 +1,5 @@
 
-<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container">
   <div class="qm-pannel-inner-container"> 
         <div class="qm-flow-sub-header">
             <div class="qm-flow-sub-header__left">
@@ -23,7 +23,47 @@
               </div>
               <span class="qm-identify-appointment__refresh-button"> Refresh <i class="icon-refresh qm-action-btn__icon "></i></span>
             </div>
+        </div>
 
+        <div class="qm-identify-appointment__table-container">
+          <table class="qm-identify-appointment__customer-table">
+            <thead class="qm-identify-appointment__customer-table__header">
+              <tr [ngClass]="{'qm-sort-desc' : isDescending}">
+                <th class="qm-identify-appointment__customer-table__col-5"></th>
+                <th (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" [ngClass]="{'qm-sort-active' : sortColumn === 'start' || sortColumn === 'startTime' }" class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
+                <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-15">{{ 'date' | translate }}</th>
+                <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-5">{{ 'id' | translate }}</th>
+                <th (click)="sortAppointments('firstName')" [ngClass]="{'qm-sort-active' : sortColumn === 'firstName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
+                <th (click)="sortAppointments('lastName')" [ngClass]="{'qm-sort-active' : sortColumn === 'lastName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>
+                <th (click)="sortAppointments('branch')" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-sort-active' : sortColumn === 'branch'}" class="qm-identify-appointment__customer-table__col-15">{{ 'branch' | translate }}</th>
+                <th (click)="sortAppointments('services')" [ngClass]="{'qm-sort-active' : sortColumn === 'services'}" class="qm-identify-appointment__customer-table__col-20">{{ 'service' | translate }}</th>
+                <th class="qm-identify-appointment__customer-table__col-5"></th>
+              </tr>
+            </thead>
+      
+      
+            <tbody *ngIf="appointments && appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
+              [style.max-height]="height">
+              <ng-container *ngFor="let app of appointments | sortAppointments: [sortColumn]: isDescending">
+                <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
+                  <td class="qm-identify-appointment__customer-table__col-5"></td>
+                  <td class="qm-identify-appointment__customer-table__col-10">{{getTime((app.startTime || app.start ), (app.branch && app.branch.fullTimeZone || ''))}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-15">{{getDate((app.endTime || app.end),( app.branch && app.branch.fullTimeZone || ''))}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-5">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-15" *ngIf="useCalendarEndpoint">{{app.branch?.name}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
+                  <td class="qm-identify-appointment__customer-table__col-5"></td>
+                </tr>
+              </ng-container>
+      
+            </tbody>
+      
+            <div class="qm-loader-container" *ngIf="showLoading()">
+              <qm-loader [color]="black"></qm-loader>
+            </div>
+          </table>
         </div>
       </div>
     
@@ -47,7 +87,7 @@
 
 
 
-<!-- <div class="qm-flow-sub-header" *ngIf="selectedCustomer">
+<div class="qm-flow-sub-header" *ngIf="selectedCustomer">
   <div class="qm-flow-sub-header__right">
     <div class="qm-done-button" (click)="onDone()">
       {{'banner_done_label' | translate }}
@@ -388,44 +428,5 @@
     {{'customer_not_found' | translate }}
   </div>
 
-  <div class="qm-identify-appointment__table-container">
-    <table class="qm-identify-appointment__customer-table">
-      <thead class="qm-identify-appointment__customer-table__header">
-        <tr [ngClass]="{'qm-sort-desc' : isDescending}">
-          <th class="qm-identify-appointment__customer-table__col-5"></th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" [ngClass]="{'qm-sort-active' : sortColumn === 'start' || sortColumn === 'startTime' }" class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-15">{{ 'date' | translate }}</th>
-          <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-5">{{ 'id' | translate }}</th>
-          <th (click)="sortAppointments('firstName')" [ngClass]="{'qm-sort-active' : sortColumn === 'firstName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
-          <th (click)="sortAppointments('lastName')" [ngClass]="{'qm-sort-active' : sortColumn === 'lastName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>
-          <th (click)="sortAppointments('branch')" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-sort-active' : sortColumn === 'branch'}" class="qm-identify-appointment__customer-table__col-15">{{ 'branch' | translate }}</th>
-          <th (click)="sortAppointments('services')" [ngClass]="{'qm-sort-active' : sortColumn === 'services'}" class="qm-identify-appointment__customer-table__col-20">{{ 'service' | translate }}</th>
-          <th class="qm-identify-appointment__customer-table__col-5"></th>
-        </tr>
-      </thead>
-
-
-      <tbody *ngIf="appointments && appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
-        [style.max-height]="height">
-        <ng-container *ngFor="let app of appointments | sortAppointments: [sortColumn]: isDescending">
-          <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
-            <td class="qm-identify-appointment__customer-table__col-5"></td>
-            <td class="qm-identify-appointment__customer-table__col-10">{{getTime((app.startTime || app.start ), (app.branch && app.branch.fullTimeZone || ''))}}</td>
-            <td class="qm-identify-appointment__customer-table__col-15">{{getDate((app.endTime || app.end),( app.branch && app.branch.fullTimeZone || ''))}}</td>
-            <td class="qm-identify-appointment__customer-table__col-5">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
-            <td class="qm-identify-appointment__customer-table__col-15" *ngIf="useCalendarEndpoint">{{app.branch?.name}}</td>
-            <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
-            <td class="qm-identify-appointment__customer-table__col-5"></td>
-          </tr>
-        </ng-container>
-
-      </tbody>
-
-      <div class="qm-loader-container" *ngIf="showLoading()">
-        <qm-loader [color]="black"></qm-loader>
-      </div>
-    </table>
-  </div>
-</div> -->
+ 
+</div>

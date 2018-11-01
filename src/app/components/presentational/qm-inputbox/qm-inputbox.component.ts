@@ -364,7 +364,7 @@ export class QmInputboxComponent implements OnInit {
   update(){
     if(this.customerCreateForm.valid && ((this.currentCustomer.firstName != this.customerCreateForm.value.firstName )||(this.currentCustomer.lastName != this.customerCreateForm.value.lastName )||(this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone )||(this.currentCustomer.properties.email != this.customerCreateForm.value.email )||(this.date.year &&(this.date.year != this.customerCreateForm.value.dateOfBirth.year))||(!this.date.year && this.customerCreateForm.value.dateOfBirth.year)||(this.date.day &&(this.date.day != this.customerCreateForm.value.dateOfBirth.day))||(!this.date.day && this.customerCreateForm.value.dateOfBirth.year)||(this.date.month!=this.customerCreateForm.value.dateOfBirth.month))){
       this.accept();
-    }else if(this.customerCreateForm.valid){
+    }else if(this.customerCreateForm.valid && this.customerCreateForm.dirty ){
         this.onFlowNext.emit();
         this.customerCreateForm.markAsPristine()
     }

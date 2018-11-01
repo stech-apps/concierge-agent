@@ -1,4 +1,53 @@
-<div class="qm-flow-sub-header" *ngIf="selectedCustomer">
+
+<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+  <div class="qm-pannel-inner-container"> 
+        <div class="qm-flow-sub-header">
+            <div class="qm-flow-sub-header__left">
+              <h1>{{ 'identify_appointment' | translate}}</h1>
+            </div>
+        </div>
+        <br>
+      <div class="qm-identify-appointment"> 
+
+        <div class="qm-identify-appointment__button-container">
+            <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-button-selected"> Appointment list</div>
+            <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button"> <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>Booking ID</div>
+            <div class="qm-identify-appointment__pannel-button"> <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span> Customer</div>
+        </div>
+        <hr class="qm-identify-appointment__pannel-bottom-bar">
+
+        <div class="qm-identify-appointment__pannel-container">
+            <div class="qm-identify-appointment__pannel-header"> Upcomming appointments 
+              <div class="qm-identify-appointment__time-container">
+                10.00AM - 2.00PM   <i class="icon-edit qm-action-btn__icon "></i>
+              </div>
+              <span class="qm-identify-appointment__refresh-button"> Refresh <i class="icon-refresh qm-action-btn__icon "></i></span>
+            </div>
+
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="qm-flow-sub-header" *ngIf="selectedCustomer">
   <div class="qm-flow-sub-header__right">
     <div class="qm-done-button" (click)="onDone()">
       {{'banner_done_label' | translate }}
@@ -379,4 +428,4 @@
       </div>
     </table>
   </div>
-</div>
+</div> -->

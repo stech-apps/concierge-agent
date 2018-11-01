@@ -7,9 +7,9 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { TimeslotDispatchers, AccountDispatchers, UserSelectors } from '../../../../store';
+import { TimeslotDispatchers, AccountDispatchers, UserSelectors, ServicePointSelectors } from '../../../../store';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,8 +22,10 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   activeHeader:number;
   public isFlowSkip = true;
   userDirection$: Observable<string>;
+  private subscriptions: Subscription = new Subscription();
   @Input() FlowName: string;  
   @Output() headerClicked = new EventEmitter<QmFlowPanelComponent>();
+  mltyBrnch:boolean;
 
   constructor(
     private router: Router,
@@ -34,12 +36,20 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     private AccountDispatchers:AccountDispatchers,
     private localStorage: LocalStorage,
     private userSelectors: UserSelectors,
+    private servicePointSelectors:ServicePointSelectors
   ) {
 
     this.activeHeader = 0;
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
     
-   
+    const uttSubscription = this.servicePointSelectors.uttParameters$
+      .subscribe(uttParameters => {
+        if (uttParameters) {
+         this.mltyBrnch = uttParameters.mltyBrnch;
+        }
+      })
+      .unsubscribe();
+    this.subscriptions.add(uttSubscription);
    }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
@@ -51,13 +61,12 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     this.userDirection$ = this.userSelectors.userDirection$;   
   }
   ngAfterContentInit(){
-    if(this.FlowName=='create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined)){
+    if(this.FlowName=='create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){
       this.activeHeader = 1;
     }    
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
-    console.log(flowPanel);
     this.headerClicked.emit(flowPanel);
     // let panelFound = false;
     // if (flowPanel.isContentVisible && flowPanel.hasResult()) {

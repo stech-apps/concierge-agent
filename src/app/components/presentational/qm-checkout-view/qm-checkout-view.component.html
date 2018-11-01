@@ -1,5 +1,5 @@
 <div class="qm-checkout-view" dir="{{userDirection$ | async}}">
-
+  <!-- summary card -->
   <div class="qm-checkout-view__summary" *ngIf="selectedAppointment">
     <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(3)">
       <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
@@ -40,7 +40,41 @@
     </div>
     <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
   </div>
+  <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
+      
+    <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
+          <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
+          <div class="radio-container">
+    
+            <div *ngIf="isVipLvl1Enabled" class="level">
+              <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">
+                <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()">
+                <label class="label" for="vip_lvl_1" [ngStyle]="{'background': vipLevel1Checked ? '#03996C' : 'transparent'}"></label>
+              </div>
+              <span class="label">{{ 'vip_one_label' | translate }}</span>
+            </div>
+    
+            <div *ngIf="isVipLvl2Enabled" class="level">
+              <div class="checkbox-container" [ngStyle]="{'border': vipLevel2Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">
+                <input class="checkbox" type="checkbox" id="vip_lvl_2" [ngModel]="vipLevel2Checked" (click)="onVip2Clicked()">
+                <label class="label" for="vip_lvl_2" [ngStyle]="{'background': vipLevel2Checked ? '#03996C' : 'transparent'}"></label>
+              </div>
+              <span class="label">{{ 'vip_two_label' | translate }}</span>
+            </div>
+    
+            <div *ngIf="isVipLvl3Enabled" class="level">
+              <div class="checkbox-container" [ngStyle]="{'border': vipLevel3Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">
+                <input class="checkbox" type="checkbox" id="vip_lvl_3" [ngModel]="vipLevel3Checked" (click)="onVip3Clicked()">
+                <label class="label" for="vip_lvl_3" [ngStyle]="{'background': vipLevel3Checked ? '#03996C' : 'transparent'}"></label>
+              </div>
+              <span class="label">{{ 'vip_three_label' | translate }}</span>
+            </div>
+    
+          </div>
+    
+      </div>
+
     <div class="qm-checkout-view__notifications-heading">{{'label.appconfirm.notification.heading' | translate}}</div>
     <div class="qm-checkout-view__notifications-question">
       {{'label.appconfirm.notification.question' | translate }}
@@ -74,37 +108,7 @@
       </div>
     </div>
 
-    <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
-      <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
-      <div class="radio-container">
-
-        <div *ngIf="isVipLvl1Enabled" class="level">
-          <div class="checkbox-container" [ngStyle]="{'background': vipLevel1Checked ? whiteColor : '#c9c9c9'}">
-            <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()">
-            <label class="label" for="vip_lvl_1" [ngStyle]="{'background': vipLevel1Checked ? themeColor : 'transparent'}"></label>
-          </div>
-          <span class="label">{{ 'vip_one_label' | translate }}</span>
-        </div>
-
-        <div *ngIf="isVipLvl2Enabled" class="level">
-          <div class="checkbox-container" [ngStyle]="{'background': vipLevel2Checked ? whiteColor : '#c9c9c9'}">
-            <input class="checkbox" type="checkbox" id="vip_lvl_2" [ngModel]="vipLevel2Checked" (click)="onVip2Clicked()">
-            <label class="label" for="vip_lvl_2" [ngStyle]="{'background': vipLevel2Checked ? themeColor : 'transparent'}"></label>
-          </div>
-          <span class="label">{{ 'vip_two_label' | translate }}</span>
-        </div>
-
-        <div *ngIf="isVipLvl3Enabled" class="level">
-          <div class="checkbox-container" [ngStyle]="{'background': vipLevel3Checked ? whiteColor : '#c9c9c9'}">
-            <input class="checkbox" type="checkbox" id="vip_lvl_3" [ngModel]="vipLevel3Checked" (click)="onVip3Clicked()">
-            <label class="label" for="vip_lvl_3" [ngStyle]="{'background': vipLevel3Checked ? themeColor : 'transparent'}"></label>
-          </div>
-          <span class="label">{{ 'vip_three_label' | translate }}</span>
-        </div>
-
-      </div>
-
-    </div>
+    
 
     <div *ngIf="flowTypeStr === 'ARRIVE_APPOINTMENT'" class="qm-checkout-view__details-container">
       <div (click)="toggleCollapse()">

@@ -10,349 +10,357 @@
   font-style: normal;
 }
 
-
 [class^="icon-"], [class*=" icon-"] {
-/* use !important to prevent issues with browser extensions that change fonts */
-font-family: 'icomoon' !important;
-speak: none;
-font-style: normal;
-font-weight: normal;
-font-variant: normal;
-text-transform: none;
-line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-/* Better Font Rendering =========== */
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-emailsms:before {
+  content: "\e96e";
+}
+.icon-smartphone:before {
+  content: "\e96f";
+}
+.icon-ticket-small:before {
+  content: "\e970";
+}
 .icon-info:before {
-content: "\e96d";
+  content: "\e96d";
 }
-.icon-arrive-appointment:before {
-content: "\e96c";
+.icon-arriveappointment:before {
+  content: "\e96c";
 }
-.icon-create-appointment:before {
-content: "\e968";
+.icon-createappointment:before {
+  content: "\e968";
 }
-.icon-edit-appointment:before {
-content: "\e969";
+.icon-editappointment:before {
+  content: "\e969";
 }
-.icon-edit-visit:before {
-content: "\e96a";
+.icon-editvisit:before {
+  content: "\e96a";
 }
-.icon-add-visit:before {
-content: "\e96b";
+.icon-addvisit:before {
+  content: "\e96b";
 }
 .icon-add:before {
-content: "\e900";
+  content: "\e900";
 }
 .icon-add-smaller:before {
-content: "\e901";
+  content: "\e901";
 }
 .icon-caret-down:before {
-content: "\e902";
+  content: "\e902";
 }
 .icon-caret-left:before {
-content: "\e903";
+  content: "\e903";
 }
 .icon-caret-right:before {
-content: "\e904";
+  content: "\e904";
 }
 .icon-caret-up:before {
-content: "\e905";
+  content: "\e905";
 }
 .icon-check:before {
-content: "\e906";
+  content: "\e906";
 }
 .icon-close:before {
-content: "\e907";
+  content: "\e907";
 }
 .icon-close-smaller:before {
-content: "\e908";
+  content: "\e908";
 }
 .icon-expand:before {
-content: "\e909";
+  content: "\e909";
 }
 .icon-more:before {
-content: "\e90a";
+  content: "\e90a";
 }
 .icon-move-drag:before {
-content: "\e90b";
+  content: "\e90b";
 }
 .icon-move-up-down:before {
-content: "\e90c";
+  content: "\e90c";
 }
 .icon-refresh:before {
-content: "\e90d";
+  content: "\e90d";
 }
 .icon-sidebar:before {
-content: "\e90e";
+  content: "\e90e";
 }
 .icon-sidebar-hide:before {
-content: "\e90f";
+  content: "\e90f";
 }
 .icon-sidebar-show:before {
-content: "\e910";
+  content: "\e910";
 }
 .icon-subtract:before {
-content: "\e911";
+  content: "\e911";
 }
 .icon-subtract-smaller:before {
-content: "\e912";
+  content: "\e912";
 }
 .icon-radiobutton-checked:before {
-content: "\e966";
+  content: "\e966";
 }
 .icon-radiobutton-unchecked:before {
-content: "\e967";
+  content: "\e967";
 }
 .icon-calendar:before {
-content: "\e962";
+  content: "\e962";
 }
 .icon-view:before {
-content: "\e963";
+  content: "\e963";
 }
 .icon-checkbox-checked:before {
-content: "\e95e";
+  content: "\e95e";
 }
 .icon-checkbox-checked-rtl:before {
-content: "\e960";
+  content: "\e960";
 }
 .icon-checkbox-unchecked:before {
-content: "\e961";
+  content: "\e961";
 }
 .icon-radiobutton:before {
-content: "\e95f";
+  content: "\e95f";
 }
 .icon-delete-secondary:before {
-content: "\e964";
+  content: "\e964";
 }
 .icon-print:before {
-content: "\e965";
+  content: "\e965";
 }
 .icon-mail:before {
-content: "\e95c";
+  content: "\e95c";
 }
 .icon-phone:before {
-content: "\e95d";
+  content: "\e95d";
 }
 .icon-add-circle-solid:before {
-content: "\e951";
+  content: "\e951";
 }
 .icon-alert-star:before {
-content: "\e913";
+  content: "\e913";
 }
 .icon-announce:before {
-content: "\e914";
+  content: "\e914";
 }
 .icon-cherry-pick:before {
-content: "\e915";
+  content: "\e915";
 }
 .icon-cherry-pick-solid:before {
-content: "\e916";
+  content: "\e916";
 }
 .icon-clock:before {
-content: "\e917";
+  content: "\e917";
 }
 .icon-clock-solid:before {
-content: "\e918";
+  content: "\e918";
 }
 .icon-customer:before {
-content: "\e919";
+  content: "\e919";
 }
 .icon-customer-add:before {
-content: "\e91a";
+  content: "\e91a";
 }
 .icon-customer-solid:before {
-content: "\e91b";
+  content: "\e91b";
 }
 .icon-delete:before {
-content: "\e91c";
+  content: "\e91c";
 }
 .icon-edit:before {
-content: "\e91d";
+  content: "\e91d";
 }
 .icon-exit:before {
-content: "\e91e";
+  content: "\e91e";
 }
 .icon-filter:before {
-content: "\e91f";
+  content: "\e91f";
 }
 .icon-help:before {
-content: "\e920";
+  content: "\e920";
 }
 .icon-home:before {
-content: "\e921";
+  content: "\e921";
 }
 .icon-hourglass:before {
-content: "\e922";
+  content: "\e922";
 }
 .icon-warn:before {
-content: "\e923";
+  content: "\e923";
 }
 .icon-location:before {
-content: "\e924";
+  content: "\e924";
 }
 .icon-lock:before {
-content: "\e925";
+  content: "\e925";
 }
 .icon-mark:before {
-content: "\e926";
+  content: "\e926";
 }
 .icon-message:before {
-content: "\e927";
+  content: "\e927";
 }
 .icon-outcome:before {
-content: "\e928";
+  content: "\e928";
 }
 .icon-port:before {
-content: "\e929";
+  content: "\e929";
 }
 .icon-queue:before {
-content: "\e92a";
+  content: "\e92a";
 }
 .icon-queue-first:before {
-content: "\e92b";
+  content: "\e92b";
 }
 .icon-queue-last:before {
-content: "\e92c";
+  content: "\e92c";
 }
 .icon-scan-qr:before {
-content: "\e92d";
+  content: "\e92d";
 }
 .icon-screen:before {
-content: "\e92e";
+  content: "\e92e";
 }
 .icon-search:before {
-content: "\e92f";
+  content: "\e92f";
 }
 .icon-search-circle:before {
-content: "\e930";
+  content: "\e930";
 }
 .icon-search-solid:before {
-content: "\e931";
+  content: "\e931";
 }
 .icon-server:before {
-content: "\e932";
+  content: "\e932";
 }
 .icon-service:before {
-content: "\e933";
+  content: "\e933";
 }
 .icon-service-add:before {
-content: "\e934";
+  content: "\e934";
 }
 .icon-service-solid:before {
-content: "\e935";
+  content: "\e935";
 }
 .icon-share:before {
-content: "\e936";
+  content: "\e936";
 }
 .icon-share-social:before {
-content: "\e937";
+  content: "\e937";
 }
 .icon-shield:before {
-content: "\e938";
+  content: "\e938";
 }
 .icon-ticket:before {
-content: "\e939";
+  content: "\e939";
 }
 .icon-ticketless:before {
-content: "\e93a";
+  content: "\e93a";
 }
 .icon-ticket-solid:before {
-content: "\e93b";
+  content: "\e93b";
 }
 .icon-user-details:before {
-content: "\e93c";
+  content: "\e93c";
 }
 .icon-video:before {
-content: "\e93d";
+  content: "\e93d";
 }
 .icon-video-none:before {
-content: "\e93e";
+  content: "\e93e";
 }
 .icon-done-rtl:before {
-content: "\e945";
+  content: "\e945";
 }
 .icon-check-rtl:before {
-content: "\e93f";
+  content: "\e93f";
 }
 .icon-announce-rtl:before {
-content: "\e940";
+  content: "\e940";
 }
 .icon-exit-rtl:before {
-content: "\e941";
+  content: "\e941";
 }
 .icon-mark-rtl:before {
-content: "\e942";
+  content: "\e942";
 }
 .icon-call-next-solid-rtl:before {
-content: "\e943";
+  content: "\e943";
 }
 .icon-complete-rtl:before {
-content: "\e944";
+  content: "\e944";
 }
 .icon-transfer-rtl:before {
-content: "\e947";
+  content: "\e947";
 }
 .icon-walk-in-rtl:before {
-content: "\e948";
+  content: "\e948";
 }
 .icon-wrap-up:before {
-content: "\e95b";
+  content: "\e95b";
 }
 .icon-recycle-tilted:before {
-content: "\e952";
+  content: "\e952";
 }
 .icon-done-solid:before {
-content: "\e946";
+  content: "\e946";
 }
 .icon-add-circle:before {
-content: "\e949";
+  content: "\e949";
 }
 .icon-briefcase:before {
-content: "\e94a";
+  content: "\e94a";
 }
 .icon-briefcase-solid:before {
-content: "\e94b";
+  content: "\e94b";
 }
 .icon-call-next:before {
-content: "\e94c";
+  content: "\e94c";
 }
 .icon-call-next-solid:before {
-content: "\e94d";
+  content: "\e94d";
 }
 .icon-close-circle:before {
-content: "\e94e";
+  content: "\e94e";
 }
 .icon-close-square:before {
-content: "\e94f";
+  content: "\e94f";
 }
 .icon-complete:before {
-content: "\e950";
+  content: "\e950";
 }
 .icon-gears:before {
-content: "\e953";
+  content: "\e953";
 }
 .icon-no-show:before {
-content: "\e954";
+  content: "\e954";
 }
 .icon-pause:before {
-content: "\e955";
+  content: "\e955";
 }
 .icon-previous:before {
-content: "\e956";
+  content: "\e956";
 }
 .icon-recall:before {
-content: "\e957";
+  content: "\e957";
 }
 .icon-recycle:before {
-content: "\e958";
+  content: "\e958";
 }
 .icon-transfer:before {
-content: "\e959";
+  content: "\e959";
 }
 .icon-walk-in:before {
-content: "\e95a";
+  content: "\e95a";
 }

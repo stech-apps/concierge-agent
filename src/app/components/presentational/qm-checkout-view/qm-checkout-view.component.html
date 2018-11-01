@@ -46,7 +46,7 @@
       {{'label.appconfirm.notification.question' | translate }}
     </div>
     <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
-      <span class="icon-phone"></span>
+      <span class="icon-smartphone"></span>
       <span>{{ 'send_sms' | translate}}</span>
     </button>
     <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
@@ -55,7 +55,7 @@
     </button>
     <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
       (click)="onEmailAndSmsSelected()">
-      <span class="icon-mail"></span>
+      <span class="icon-emailsms"></span>
       <span>{{ 'send_sms_and_email' | translate}}</span>
     </button>
 

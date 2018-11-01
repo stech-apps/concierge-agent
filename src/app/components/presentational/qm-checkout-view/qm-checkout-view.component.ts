@@ -632,13 +632,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           });
 
           const fieldList = [{
-            icon: 'calendar',
+            icon: 'calendar-light',
             label: moment(this.selectedAppointment.start)
               .tz(this.selectedAppointment.branch.fullTimeZone).format('dddd DD MMMM')
           },
           {
             icon: 'clock',
-            label: this.getTimePeriod()
+            label: `<span>${this.getStartTime()}</span><span>&nbsp;-&nbsp;</span><span>${this.getEndTime()}</span>` //rtl issue in simple concat
           },
           {
             icon: 'home',

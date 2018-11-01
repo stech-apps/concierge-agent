@@ -13,7 +13,7 @@
         <ng-container *ngFor="let field of fieldList">
           <div class="qm-done-modal__detail-item">
             <i class="qm-action-btn__icon qm-done-modal__detail-item--icon" [ngClass]="field.icon ? 'icon-' + field.icon : ''" aria-hidden="true"></i>
-            <div class="qm-done-modal__detail-item--text qm-text-overflow-fix">{{field.label}}</div>
+            <div class="qm-done-modal__detail-item--text qm-text-overflow-fix" [innerHtml]="field.label"></div>
           </div>
         </ng-container>
       </div>

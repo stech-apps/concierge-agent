@@ -105,6 +105,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   desktopQRCodeListnerTimer: any;
   isQRReaderOpen = false;
   isQRReaderClose = false;
+  flowType: string;
+  editMode: boolean;
+  currentCustomer: ICustomer;
 
   readonly SEARCH_STATES = {
     DURATION: 'duration',

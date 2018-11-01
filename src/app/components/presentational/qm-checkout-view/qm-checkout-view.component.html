@@ -14,6 +14,7 @@
       </div>
     </div>
 
+  
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
     <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)">
@@ -42,11 +43,11 @@
   </div>
   <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
-      
+
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
           <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
           <div class="radio-container">
-    
+              <button style="background-color:steelblue" (click)="test()"> Test</button>
             <div *ngIf="isVipLvl1Enabled" class="level">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">
                 <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()">
@@ -83,6 +84,17 @@
       <span class="icon-smartphone"></span>
       <span>{{ 'send_sms' | translate}}</span>
     </button>
+
+    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
+        <span class="icon-ticket-small"></span>
+        <span>{{ 'print_ticket' | translate}}</span>
+      </button>
+
+    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketlessSelected}" *ngIf="ticketlessActionEnabled" (click)="onTicketlessSelected()">
+       
+        <span>{{ 'ticketless' | translate}}</span>
+    </button>
+  
     <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
       <span class="icon-mail"></span>
       <span>{{ 'email' | translate}}</span>

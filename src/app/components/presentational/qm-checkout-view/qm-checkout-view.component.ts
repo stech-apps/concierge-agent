@@ -149,7 +149,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
-
+    console.log(this.flowType);
+    
     this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
@@ -216,6 +217,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(selectedAppointmentSubscription);
 
+  }
+  test(){
+    console.log(this.flowType);
   }
 
   ngOnInit() {
@@ -425,33 +429,41 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   onEmailSelected() {
     if (this.emailSelected) {
       this.emailSelected = false;
-      this.emailColor = this.whiteColor;
       this.smsSelected ? this.buttonEnabled = true : this.buttonEnabled = false;
       return;
     }
     this.emailSelected = true;
     this.emailAndSmsSelected = false;
     this.smsSelected = false;
-
-    this.emailColor = this.themeColor;
     this.buttonEnabled = true;
   }
 
 
   onTicketSelected() {
-    if (this.ticketlessSelected) {
-      this.ticketlessSelected = false;
-      this.ticketlessColor = this.whiteColor;
-    } else if (this.ticketSelected) {
+    // if (this.ticketlessSelected) {
+      
+    //   this.ticketlessSelected = false;
+    //   this.ticketlessColor = this.whiteColor;
+    // } else if (this.ticketSelected) {
+    //   this.ticketSelected = false;
+    //   this.ticketColor = this.whiteColor;
+    //   this.smsSelected ? this.buttonEnabled = true : this.buttonEnabled = false;
+    //   return;
+    // }
+
+    // this.ticketSelected = true;
+    // this.ticketColor = this.themeColor;
+    // this.buttonEnabled = true;
+    if (this.ticketSelected) {
       this.ticketSelected = false;
-      this.ticketColor = this.whiteColor;
       this.smsSelected ? this.buttonEnabled = true : this.buttonEnabled = false;
       return;
+    } else {
+      this.ticketSelected = true;
+      this.buttonEnabled = true;
+      this.ticketlessSelected= false;
+      this.smsSelected = false     
     }
-
-    this.ticketSelected = true;
-    this.ticketColor = this.themeColor;
-    this.buttonEnabled = true;
   }
 
   onSmsSelected() {

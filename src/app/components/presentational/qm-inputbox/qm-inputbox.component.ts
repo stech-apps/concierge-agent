@@ -371,6 +371,18 @@ export class QmInputboxComponent implements OnInit {
   }
   discard(){
     this.onFlowNext.emit();
+    this.customerCreateForm.patchValue({
+      firstName: this.currentCustomer.firstName,
+      lastName:this.currentCustomer.lastName,
+      phone:this.currentCustomer.properties.phoneNumber,
+      email:this.currentCustomer.properties.email,
+      dateOfBirth: {
+        month: this.date.month ? this.date.month : null,
+        day: this.date.day ? this.date.day : '',
+        year: this.date.year ? this.date.year : ''
+      }
+    })
+
   }
 
   clearInputFeild(name){

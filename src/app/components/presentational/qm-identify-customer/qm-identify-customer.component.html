@@ -1,4 +1,4 @@
-<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
     <div class="qm-pannel-inner-container"> 
         <div class="qm-flow-sub-header">
             <div class="qm-flow-sub-header__left">
@@ -49,7 +49,7 @@
         </div>
         <br>
 
-        <div class="qm-crossline-header-container" *ngIf="customers.length==0" >
+        <div class="qm-crossline-header-container" >
             <div class="qm-crossline-header" ></div>
             <h2 class="qm-crossline-header-text" *ngIf="!editMode && !currentCustomer">{{ 'label.add_customer' | translate }}</h2>
             <h2 class="qm-crossline-header-text" *ngIf="editMode || (!editMode && currentCustomer)">{{ 'label.customer_details' | translate }}</h2>

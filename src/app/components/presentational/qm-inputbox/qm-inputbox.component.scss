@@ -52,6 +52,9 @@
             text-align: left;
         }
         }
+
+
+      
         .qm-action-btn--only-icon{
             
             margin-top: -5.2em;
@@ -62,4 +65,16 @@
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+.qm-dob-label{
+    color: $dark-transparent42;
+    font-weight: 500;
+}
+.qm-form-error-message{
+    @at-root [dir="ltr"] & {
+        text-align: left;
+    }
+    @at-root [dir="rtl"] & {
+        text-align: right;
+    }
 }

@@ -1,5 +1,5 @@
 <div class="qm-checkout-view" dir="{{userDirection$ | async}}">
-  <!-- summary card -->
+  <!-- summary card for create appointment-->
   <div class="qm-checkout-view__summary" *ngIf="selectedAppointment">
     <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(3)">
       <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
@@ -17,23 +17,23 @@
   
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)">
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-calendar-light"></span>
-        <span class="qm-summary-item__text">{{selectedAppointment?.start | date: 'EEEE dd MMMM' }}</span>
+        <span class="qm-summary-item__text" >{{selectedAppointment?.start | date: 'EEEE dd MMMM' }}</span>
       </div>
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-clock"></span>
         <span class="qm-summary-item__text qm-summary-item__text--time-period"><span>{{getStartTime()}}</span><span>&nbsp;-&nbsp;</span><span>{{getEndTime()}}</span></span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)">
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-home"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment.branch.name}}</span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(1)">
+    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(1)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-service"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
@@ -41,13 +41,47 @@
     </div>
     <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
   </div>
+
+  <!-- summary card for create visit-->
+  <div class="qm-checkout-view__summary qm-checkout-view__summary-create-visit" *ngIf="flowType=='CREATE_VISIT'">
+      <div class="qm-checkout-view__summary-grouping" >
+        <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+        <div class="qm-summary-item" *ngIf="selectedCustomer"> 
+          <span class="qm-summary-itm__icon icon-phone"></span>
+          <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
+        </div>
+  
+        <div class="qm-summary-item" *ngIf="selectedCustomer">
+          <span class="qm-summary-item__icon icon-mail"></span>
+          <span class="qm-summary-item__text qm-text-overflow-fix" >{{ selectedCustomer.properties?.email }}</span>
+        </div>
+      </div>
+  
+    
+  
+      <h3>{{ 'label.visit.details.heading' | translate }}</h3>
+      
+      <div class="qm-checkout-view__summary-grouping" *ngIf="selectedBranch">
+        <div class="qm-summary-item">
+          <span class="qm-summary-item__icon icon-home"></span>
+          <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedBranch.name}}</span>
+        </div>
+      </div>
+      <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)"  *ngIf="appServices">
+        <div class="qm-summary-item">
+          <span class="qm-summary-item__icon icon-service"></span>
+          <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
+        </div>
+      </div>
+      <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
+    </div>
+
   <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
-
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
-          <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
+        <button (click)="test()"> Test</button> 
+      <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
           <div class="radio-container">
-              <button style="background-color:steelblue" (click)="test()"> Test</button>
             <div *ngIf="isVipLvl1Enabled" class="level">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">
                 <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()">

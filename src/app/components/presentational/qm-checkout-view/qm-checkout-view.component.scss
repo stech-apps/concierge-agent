@@ -37,6 +37,7 @@
       }
     }
   }
+  
   &__summary {
     flex: 1;
     height: calc(100vh - 75px);
@@ -63,7 +64,7 @@
     }
     h3 {
       color: rgba(0, 0, 0, 0.72);
-      font-size: 16px;
+      font-size: 1.1em;
       font-weight: 500;
       line-height: 24px;
       margin-top: 0.6rem;
@@ -73,7 +74,28 @@
         text-align: right;
       }
     }
-  } // ############### notification area
+  }
+  &__summary-create-visit{
+    
+    min-height: 60vh;
+    max-width: 34%;
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    h3 {
+      color: $dark-transparent82;
+      font-size: 18px;
+      font-weight: 300;
+    }
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    &__summary-create-visit{
+      height: 0px;
+    }
+  }
+  
+  // ############### notification area
   &__notifications {
     flex: 1.5;
     height: calc(100vh - 75px);

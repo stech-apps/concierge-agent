@@ -122,7 +122,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   appId: number;
   appCustomer: string;
   appServices: string;
-
+  
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private customerSelector: CustomerSelector,
@@ -219,7 +219,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   }
   test(){
-    console.log(this.flowType);
+    console.log(this.selectedBranch);
   }
 
   ngOnInit() {

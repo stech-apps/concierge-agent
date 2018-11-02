@@ -21,7 +21,7 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true" [title]="'create_confirm'">
+  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true" [title]="'create_confirm'" class="qm-checkout-view-flowpanel">
     <qm-flow-panel-header  (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()" >
       <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>

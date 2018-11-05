@@ -23,7 +23,8 @@ import {
   CalendarBranchSelectors,
   NativeApiSelectors,
   NativeApiDispatchers,
-  QueueDispatchers
+  QueueDispatchers,
+  SystemInfoSelectors
 } from "src/store";
 import { ICustomer } from "src/models/ICustomer";
 import { filter } from "rxjs/internal/operators/filter";
@@ -163,6 +164,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   appointmentDeselected: EventEmitter<any> = new EventEmitter();
 
   appointments: IAppointment[] = [];
+  timeConvention$: Observable<string> = new Observable<string>();
+  timeConvention: string = '24';
 
   height: string;
 
@@ -181,10 +184,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private nativeApiSelector: NativeApiSelectors,
     private util: Util,
     private nativeApiDispatcher: NativeApiDispatchers,
-    private modalService: QmModalService
+    private modalService: QmModalService,
+    private systemInfoSelectors: SystemInfoSelectors
   ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
   }
 
   ngOnInit() {
@@ -414,6 +419,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     );
     this.subscriptions.add(qrCodeScannerSubscription);
+
+    const timeConventionSub = this.timeConvention$.subscribe((tc)=> {
+        this.timeConvention = tc;
+    });
+
+    this.subscriptions.add(timeConventionSub);
   }
 
   initializeSortState() {

@@ -1,0 +1,96 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+qm-time-filter-items {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.qm-time-filter {
+  &__header {
+    font-size: 21px;
+    font-weight: $font-weight-medium;
+    line-height: 24px;
+    color: $timefilter-header;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 1.35rem;
+
+    &-icon {
+      margin-right: 0;
+      margin-left: 0;
+      font-size: 1.75rem;
+      &:hover {
+        color: $dark-transparent82;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__selectors-parent {
+    display: flex;
+  }
+
+  &__subheader {
+    color: $dark-transparent42;
+    font-size: 18px;
+    font-weight: $font-weight-medium;
+    margin-bottom: 1.5rem;
+
+    @at-root [dir="rtl"] & {
+      text-align: right;
+    }
+  }
+
+  &__start,
+  &__end {
+    display: flex;
+    height: 35vh;
+    flex: 1;
+    border: 1px solid #d5d5d5;
+  }
+
+  &__start {
+    margin-right: 2rem;
+    position: relative;
+
+    &-heading {
+      position: absolute;
+      color: $dark-transparent82;
+      font-size: 16px;
+      top: -1.8rem;
+    }
+
+    @at-root [dir="rtl"] & {
+      margin-left: 2rem;
+      margin-right: 0;
+    }
+  }
+
+  &__end {
+    position: relative;
+    &-heading {
+      position: absolute;
+      color: $dark-transparent82;
+      font-size: 16px;
+      top: -1.8rem;
+    }
+
+    &--invalid {
+      border: 2px solid $primary-pink;
+    }
+  }
+
+  &__validation-error {
+    color: $primary-pink;
+    font-size: 16px;
+    position: absolute;
+    margin-top: 0.2rem;
+  }
+
+  .qm-btn--primary-disabled {
+    background-color: rgba(0,0,0,0.42);
+    color: $white;
+    border: none;
+  }
+}

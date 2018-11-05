@@ -1,0 +1,53 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+
+
+.qm-time-filter__items {
+
+}
+
+.qm-time-filter__item {
+    border: 1px solid #D5D5D5;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
+    width: 134px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    margin-left: 0.7rem;
+    cursor: pointer;
+
+    &--time {
+        color: $dark-transparent82;
+        font-size: 18px;
+        font-weight: $font-weight-light;
+    }
+
+    &--meridian {
+        color: $dark-transparent42;
+        font-size: 14px;
+        margin-left: 0.23rem;
+
+        @at-root [dir='rtl'] & {
+            margin-right: 0.23rem;
+        }
+    }
+
+    &--hover {
+        background-color: $secondary-color; 
+    }
+
+    &--selected {
+        background-color: $secondary-color;
+        
+
+        .qm-time-filter__item { 
+            &--time, &--meridian { 
+                color: $white;
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+@import '../../../../styles/base/_component-manifest.scss';
+
+.qm-timelist-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 56px;
+    width: 56px;
+    height: 100%;
+    background-color: $dark-transparent04;
+    justify-content: space-around;
+
+    &__btn {
+        background: 0 0;
+        border: 0;
+        color: rgba(0,0,0,.72);
+        font-weight: $font-weight-light;
+        cursor: pointer;
+        font-size: 18px;
+
+        &:hover {
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+
+qm-timelist-siderbar {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

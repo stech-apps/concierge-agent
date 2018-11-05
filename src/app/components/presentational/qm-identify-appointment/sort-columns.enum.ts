@@ -1,13 +1,17 @@
 export enum SortColumns {
-    start = "start",
-    startDate = "startDate",
-    startTime = "startTime",
-    startTimeDate = "startTimeDate",
-    branch = "branch",
-    date = "date",
     id = "id",
     qpId = "qpId",
+    startTime = "startTime",
+    startTimeDate = "startTimeDate",
+    start = "start",
+    date = "date",
+    startDate = "startDate",
+    name = "name",
+    custName = "custName",
+    servicesDisplayLabel = "servicesDisplayLabel",
+    branch = "branch",
     first_name = "firstName",
     last_name = "lastName",
     services = "services"
+
 }

@@ -1,0 +1,44 @@
+<div class="qm-modal qm-time-filter qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
+  <form class="qm-modal__box-container">
+    <div class="qm-modal__header qm-time-filter__header">
+      <span class="qm-time-filter__header-text qm-text-overflow-fix">{{ header }}</span>
+      <i class="qm-action-btn__icon qm-time-filter__header-icon icon-close" (click)="activeModal.close()" aria-hidden="true"></i>
+    </div>
+    <div class="qm-time-filter__subheader qm-text-overflow-fix">
+      {{ subheader }}
+    </div>
+    <div class="qm-modal__body">
+      <div class="qm-time-filter__selectors-parent">
+        <div class="qm-time-filter__start">
+          <div class="qm-time-filter__start-heading qm-text-overflow-fix">
+            {{'label.timefilter.starttime' | translate}}
+          </div>
+          <qm-timelist-sidebar  (optionClicked)="fis.scrollToClosest($event)">
+          </qm-timelist-sidebar>
+          <qm-time-filter-items #fis (onTimeSelect)="onTimeStartSelect($event)">            
+          </qm-time-filter-items>
+        </div>
+        <div class="qm-time-filter__end" [ngClass]="{ 'qm-time-filter__end--invalid' : validationFailed}">
+          <div class="qm-time-filter__end-heading qm-text-overflow-fix">
+            {{'label.timefilter.endtime' | translate}}
+          </div>
+          <qm-timelist-sidebar (optionClicked)="fi.scrollToClosest($event)">
+          </qm-timelist-sidebar>
+          <qm-time-filter-items #fi (onTimeSelect)="onTimeEndSelect($event)"></qm-time-filter-items>
+        </div>       
+      </div>
+      <div class="qm-time-filter__validation-error qm-text-overflow-fix" *ngIf="validationFailed">
+          {{ 'label.timefilter.validation.error' | translate }} 
+        </div>
+    </div>
+    <div class="qm-modal__footer">
+      <div class="qm-generic-layout qm-generic-layout--align-right">
+        <button class="qm-btn qm-btn--primary qm-timefilter-apply" [ngClass]="{'qm-btn--primary-disabled': validationFailed || (!selectedStartTime || !selectedEndTime)}" (click)="onApplyClick()">
+          <span class="qm-btn__text" title="{{ 'button.label.apply' | translate }}">
+            {{ 'button.label.apply' | translate }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

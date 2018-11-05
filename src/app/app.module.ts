@@ -166,6 +166,9 @@ import { QmNotesComponent } from './components/presentational/qm-notes/qm-notes.
 import { QmAddnotesModalComponent } from './components/presentational/qm-addnotes-modal/qm-addnotes-modal.component';
 import { QmAllWhiteSpaceDirective } from './directives/qm-all-white-space.directive';
 import { QmDoneModalComponent } from './components/presentational/qm-done-modal/qm-done-modal.component';
+import { QmTimeFilterComponent } from './components/containers/qm-time-filter/qm-time-filter.component';
+import { QmTimelistSidebarComponent } from './components/presentational/qm-timelist-sidebar/qm-timelist-sidebar.component';
+import { QmTimeFilterItemsComponent } from './components/containers/qm-time-filter-items/qm-time-filter-items.component';
 
 
 // Global options for Toastr
@@ -259,7 +262,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmNotesComponent,
     QmAddnotesModalComponent,
     QmAllWhiteSpaceDirective,
-    QmDoneModalComponent
+    QmDoneModalComponent,
+    QmTimeFilterComponent,
+    QmTimelistSidebarComponent,
+    QmTimeFilterItemsComponent
 
   ],
   entryComponents: [
@@ -270,7 +276,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmClearInputButtonComponent,
     QmNotesModalComponent,
     QmAddnotesModalComponent,
-    QmDoneModalComponent
+    QmDoneModalComponent,
+    QmTimeFilterComponent
   ],
   imports: [
     BrowserModule,

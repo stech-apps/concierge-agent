@@ -1,4 +1,4 @@
-@import '../../../../styles/base/_component-manifest.scss';
+@import "../../../../styles/base/_component-manifest.scss";
 .qm-flow-sub-header {
   height: 2.8rem;
   display: flex;
@@ -11,12 +11,12 @@
   }
 }
 
-.qm-identify-appointment{
-  &__button-container{
-    display:flex
+.qm-identify-appointment {
+  &__button-container {
+    display: flex;
   }
 
-  &__pannel-button{
+  &__pannel-button {
     background-color: $white;
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.22);
     color: $dark-transparent82;
@@ -25,30 +25,129 @@
     cursor: pointer;
   }
 
-  &__pannel-middle-button{
-    margin:0px 12px;
+  &__pannel-middle-button {
+    margin: 0px 12px;
   }
-  &__pannel-button-selected{
-    background-color:  $pale-aquamarine;
+  &__pannel-button-selected {
+    background-color: $pale-aquamarine;
     color: $white;
   }
-  &__pannel-bottom-bar{
+  &__pannel-bottom-bar {
     margin-top: 0;
     border-top: 3px solid $pale-aquamarine;
   }
 
-  &__pannel-header{
+  &__pannel-header {
     color: $dark-transparent82;
     margin-top: 15px;
     font-size: 1.1em;
     display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding-bottom: $standard-padding/2;
+    position: relative;
   }
-  &__time-container{
+  &__time-container {
     padding: 0px 10px;
     color: $pale-aquamarine;
+    cursor: pointer;
+    &:hover {
+      color: $dark-transparent82;
+    }
   }
-  &__refresh-button{
-    float: right;
+  &__refresh-button {
+    right: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $dark-transparent62;
+    &:hover {
+      color: $dark-transparent82;
+      cursor: pointer;
+    }
+    .icon-refresh {
+      padding-right: 0;
+      
+    }
+
+    @at-root [dir="rtl"] & {
+      left: 0;
+      right: auto;
+    }
+  }
+
+  // TABLE AREA 
+  &__customer-table {
+    display: flex;
+    flex-wrap: wrap;
+
+    
+  // TABLE HEADER AREA 
+    &__header {
+      display: flex;
+      line-height: 56px;
+      color: $dark-transparent62;
+      font-weight: $font-weight-medium;
+
+      & > div {
+        &:first-child {
+          padding-left: 1rem;
+        }
+
+        &:hover {
+          cursor: pointer;
+          color: $dark-transparent82;
+        }
+      }
+    }
+    width: 100%;
+
+    i {
+      font-size: 16px;
+      margin-left: 1rem;
+    }
+
+    &.qm-sort-inactive {
+      cursor: default;
+    }
+
+    &__list {
+      display: flex;
+      width: 100%;
+      background-color: #FFFFFF;
+      box-shadow: 2px 4px 4px 0 $dark-transparent04;
+      border: 1px solid $listitem-border-color;
+      font-size: 18px;
+      line-height: 56px;
+      color: $dark-transparent82;
+      margin-bottom: 0.6rem;
+      position: relative;
+
+      &:hover {
+        background-color: $dark-transparent04;
+        cursor: pointer;
+        .icon-info { 
+          color: $dark-transparent82;
+        }
+      }
+
+      & > div:first-child {
+        padding-left: 1rem;
+      }
+
+      .icon-info {
+        position: absolute;
+        right: -3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 28px;
+        cursor: pointer;
+        color: $dark-transparent62;
+
+        @at-root [dir="rtl"] & {
+          left: -3rem;
+        }
+      }
+    }
   }
 }
 
@@ -79,7 +178,7 @@
 //       top: 0;
 //       left: 0px;
 //       height: 42px;
-//       white-space: nowrap; 
+//       white-space: nowrap;
 //       overflow: hidden;
 //       text-overflow: ellipsis;
 //       width:100px;
@@ -181,7 +280,7 @@
 //     &__col-20 {
 //       width: 20%;
 //     }
-    
+
 //   }
 //   &__tbody {
 //     display: block;
@@ -311,7 +410,7 @@
 //     @at-root [dir="ltr"]{
 //       right: 11.25%;
 //     }
-   
+
 //     transform: translateX(50%);
 //     top: 3.8rem;
 //     cursor: pointer;
@@ -415,7 +514,7 @@
 //     input {
 //       padding-left: 0;
 //       padding-right: 1rem;
-//       white-space: nowrap; 
+//       white-space: nowrap;
 //       overflow: hidden;
 //       text-overflow: ellipsis;
 //     }
@@ -435,7 +534,6 @@
 //   @at-root [dir='rtl'] & {
 //     text-align: right;
 //   }
-
 
 // }
 
@@ -518,7 +616,7 @@
 
 // .qm-duration-category {
 //   display: flex;
-//   color: $black;  
+//   color: $black;
 //   background-color: $white;
 
 //   &__date {
@@ -536,8 +634,8 @@
 //   &__time {
 //     flex: 1;
 //     line-height: 3rem;
-//     justify-content: center;   
-//     display: flex; 
+//     justify-content: center;
+//     display: flex;
 //     cursor: pointer;
 //     &--active {
 //       background-color: $app-theme;
@@ -546,7 +644,7 @@
 //   }
 // }
 
-// .qm-enable-search-by-day { 
+// .qm-enable-search-by-day {
 //   .qm-command-buttons-container {
 //       margin-top: 1rem;
 //   }
@@ -564,7 +662,6 @@
 //   top: 685px;
 //   padding: 5px 50px;
 // }
-
 
 // th {
 //   cursor: pointer;
@@ -587,12 +684,12 @@
 //       }
 //     }
 //   }
-// } 
+// }
 
 // .qm-details-text-feild{
-//   white-space: nowrap; 
+//   white-space: nowrap;
 //   overflow: hidden;
 //   text-overflow: ellipsis;
 //   width:80%;
-  
+
 // }

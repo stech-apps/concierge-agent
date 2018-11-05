@@ -1,72 +1,88 @@
+<div class="qm-pannel-container" dir="{{userDirection$ | async}}">
+  <div class="qm-pannel-inner-container">
+    <div class="qm-flow-sub-header">
+      <div class="qm-flow-sub-header__left">
+        <h1>{{ 'identify_appointment' | translate}}</h1>
+      </div>
+    </div>
+    <br>
+    <div class="qm-identify-appointment">
 
-<div class="qm-pannel-container">
-  <div class="qm-pannel-inner-container"> 
-        <div class="qm-flow-sub-header">
-            <div class="qm-flow-sub-header__left">
-              <h1>{{ 'identify_appointment' | translate}}</h1>
-            </div>
-        </div>
-        <br>
-      <div class="qm-identify-appointment"> 
+      <div class="qm-identify-appointment__button-container">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')"
+          [ngClass]="{'qm-identify-appointment__pannel-button-selected': (selectedSearchIcon === 'initial' || !selectedSearchIcon) }">
+          {{'tab.arriveappointment.appointmentlist' | translate }}</div>
+        <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
+          [ngClass]="{'qm-identify-appointment__pannel-button-selected': selectedSearchIcon === 'id' }"> <span> <i
+              aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>{{'tab.arriveappointment.bookingid' | translate }}</div>
+        <div class="qm-identify-appointment__pannel-button"
+        (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': selectedSearchIcon === 'customer' }"> <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>
+          {{'tab.arriveappointment.customer' | translate }}</div>
+      </div>
+      <hr class="qm-identify-appointment__pannel-bottom-bar">
 
-        <div class="qm-identify-appointment__button-container">
-            <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-button-selected"> Appointment list</div>
-            <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button"> <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>Booking ID</div>
-            <div class="qm-identify-appointment__pannel-button"> <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span> Customer</div>
-        </div>
-        <hr class="qm-identify-appointment__pannel-bottom-bar">
-
-        <div class="qm-identify-appointment__pannel-container">
-            <div class="qm-identify-appointment__pannel-header"> Upcomming appointments 
-              <div class="qm-identify-appointment__time-container">
-                10.00AM - 2.00PM   <i class="icon-edit qm-action-btn__icon "></i>
-              </div>
-              <span class="qm-identify-appointment__refresh-button"> Refresh <i class="icon-refresh qm-action-btn__icon "></i></span>
-            </div>
-        </div>
-
-        <div class="qm-identify-appointment__table-container">
-          <table class="qm-identify-appointment__customer-table">
-            <thead class="qm-identify-appointment__customer-table__header">
-              <tr [ngClass]="{'qm-sort-desc' : isDescending}">
-                <th class="qm-identify-appointment__customer-table__col-5"></th>
-                <th (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" [ngClass]="{'qm-sort-active' : sortColumn === 'start' || sortColumn === 'startTime' }" class="qm-identify-appointment__customer-table__col-10">{{ 'time' | translate }}</th>
-                <th (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" [ngClass]="{'qm-sort-inactive' : !useCalendarEndpoint, 'qm-sort-active' : useCalendarEndpoint && (sortColumn === 'startDate' || sortColumn === 'startTimeDate')}" class="qm-identify-appointment__customer-table__col-15">{{ 'date' | translate }}</th>
-                <th (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" [ngClass]="{'qm-sort-active' : sortColumn === 'id' ||  sortColumn === 'qpId'}" class="qm-identify-appointment__customer-table__col-5">{{ 'id' | translate }}</th>
-                <th (click)="sortAppointments('firstName')" [ngClass]="{'qm-sort-active' : sortColumn === 'firstName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'first_name' | translate }}</th>
-                <th (click)="sortAppointments('lastName')" [ngClass]="{'qm-sort-active' : sortColumn === 'lastName'}" class="qm-identify-appointment__customer-table__col-20">{{ 'last_name' | translate }}</th>
-                <th (click)="sortAppointments('branch')" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-sort-active' : sortColumn === 'branch'}" class="qm-identify-appointment__customer-table__col-15">{{ 'branch' | translate }}</th>
-                <th (click)="sortAppointments('services')" [ngClass]="{'qm-sort-active' : sortColumn === 'services'}" class="qm-identify-appointment__customer-table__col-20">{{ 'service' | translate }}</th>
-                <th class="qm-identify-appointment__customer-table__col-5"></th>
-              </tr>
-            </thead>
-      
-      
-            <tbody *ngIf="appointments && appointments.length!=0 && showAppointmentCollection && !showLoading()" class="qm-identify-appointment__tbody"
-              [style.max-height]="height">
-              <ng-container *ngFor="let app of appointments | sortAppointments: [sortColumn]: isDescending">
-                <tr *ngIf="!selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)" class="qm-identify-appointment__customer-table__list"  tabindex="0" (click)="onAppointmentSelect(app)">
-                  <td class="qm-identify-appointment__customer-table__col-5"></td>
-                  <td class="qm-identify-appointment__customer-table__col-10">{{getTime((app.startTime || app.start ), (app.branch && app.branch.fullTimeZone || ''))}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-15">{{getDate((app.endTime || app.end),( app.branch && app.branch.fullTimeZone || ''))}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-5">{{ useCalendarEndpoint ? app.qpId : app.id}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.firstName}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-20">{{app.customers[0]?.lastName}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-15" *ngIf="useCalendarEndpoint">{{app.branch?.name}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-20">{{app.services.length > 1 ? app.services?.length + ' ' + ('services_selected' | translate).toLowerCase() : app.services[0]?.name}}</td>
-                  <td class="qm-identify-appointment__customer-table__col-5"></td>
-                </tr>
-              </ng-container>
-      
-            </tbody>
-      
-            <div class="qm-loader-container" *ngIf="showLoading()">
-              <qm-loader [color]="black"></qm-loader>
-            </div>
-          </table>
+      <div class="qm-identify-appointment__pannel-container">
+        <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
+          <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
+           <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime | date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
+          </div>
+          <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{ 'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
         </div>
       </div>
-    
+
+      <div class="qm-identify-appointment__table-container">
+        <div class="qm-identify-appointment__customer-table">
+          <div class="qm-identify-appointment__customer-table__header qm-table__row">
+            <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')"
+              class="qm-table__cell-10  qm-text-overflow-fix">{{ 'list.arriveappointment.heading.id' |
+              translate }}
+              <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
+            </div>
+            <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')"
+              class="qm-table__cell-10 qm-text-overflow-fix"><span>{{ 'list.arriveappointment.heading.time'
+                | translate }}</span><span>
+                <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
+              </span>
+            </div>
+            <div (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')"
+              class="qm-table__cell-15  qm-text-overflow-fix">{{ 'list.arriveappointment.heading.date' |
+              translate }}
+              <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDate') : getSortIcons('startTimeDate')"></i>
+            </div>
+
+            <div (click)="sortAppointments('custName')" 
+              class="qm-table__cell-20  qm-text-overflow-fix">{{ 'list.arriveappointment.heading.name' |
+              translate }}
+              <i class="qm-action-btn__icon" [ngClass]="getSortIcons('custName')"></i></div>
+            <div (click)="sortAppointments('servicesDisplayLabel')"
+              class="qm-table__cell-20  qm-text-overflow-fix">{{ 'list.arriveappointment.heading.service' |
+              translate }}
+              <i class="qm-action-btn__icon" [ngClass]="getSortIcons('servicesDisplayLabel')"></i></div>
+          </div>
+
+          <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
+            <div *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)"
+              class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
+              <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId :
+                app.id}}</div>
+              <div class="qm-table__cell-10 qm-text-overflow-fix">{{getTime((app.startTime || app.start ),
+                (app.branch && app.branch.fullTimeZone || ''))}}</div>
+              <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
+                app.branch && app.branch.fullTimeZone || ''))}}</div>
+
+              <div class="qm-table__cell-20 qm-text-overflow-fix">{{app.custName}}</div>
+              <div class="qm-table__cell-20 qm-text-overflow-fix">{{app.servicesDisplayLabel}}</div>
+              <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
+                aria-hidden="true"></i>
+            </div>
+          </ng-container>
+          <div class="qm-loader-container" *ngIf="showLoading()">
+            <qm-loader [color]="black"></qm-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -87,7 +103,7 @@
 
 
 
-<div class="qm-flow-sub-header" *ngIf="selectedCustomer">
+<!-- <div class="qm-flow-sub-header" *ngIf="selectedCustomer">
   <div class="qm-flow-sub-header__right">
     <div class="qm-done-button" (click)="onDone()">
       {{'banner_done_label' | translate }}
@@ -95,7 +111,7 @@
   </div>
 </div>
 
-<div class="qm-identify-appointment" [ngClass] ="{'qm-enable-search-by-day': enableSearchByDay}" dir="{{userDirection$ | async}}">
+<div class="qm-identify-appointment" [ngClass]="{'qm-enable-search-by-day': enableSearchByDay}" dir="{{userDirection$ | async}}">
   <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
   </div>
   <div class="qm-identify-appointment__search-container">
@@ -121,11 +137,9 @@
                         0,0,1-1,2.6,4.9,4.9,0,0,1-3.51,1.49l-.81,0a.85.85,0,0,0-.94,1v2.06a.84.84,0,0,0,1,1l1.29.06A6.38,6.38,
                         0,0,1,65,35.89a4.8,4.8,0,0,1,.5,7.14,4.91,4.91,0,0,1-3.65,1.43A6.08,6.08,0,0,1,58,43.18a5.57,5.57,0,0,
                         0-1.57-1,.74.74,0,0,0-.64.48L54.44,45a1.3,1.3,0,0,0-.19.56,1.22,1.22,0,0,0,.56.89A11.05,11.05,0,0,0,62,
-                        49a9.76,9.76,0,0,0,4.49-1,7.65,7.65,0,0,0,1-.58,7.38,7.38,0,0,0,1-.79c0-.17,0-.34,0-.51A14,14,0,0,1,71.26,37.77Z"
-            />
+                        49a9.76,9.76,0,0,0,4.49-1,7.65,7.65,0,0,0,1-.58,7.38,7.38,0,0,0,1-.79c0-.17,0-.34,0-.51A14,14,0,0,1,71.26,37.77Z" />
             <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M109.51,72.73a3.69,3.69,0,0,1-5.2,0l-13-13-.49-.49a3.33,3.33,0,0,1-.25-.28A3.53,3.53,0,0,1,90,58a14,14,
-                        0,0,0,4.67-4.83,3.06,3.06,0,0,1,.92.5A3.09,3.09,0,0,1,96,54l.4.4,13.09,13.08A3.69,3.69,0,0,1,109.51,72.73Z"
-            />
+                        0,0,0,4.67-4.83,3.06,3.06,0,0,1,.92.5A3.09,3.09,0,0,1,96,54l.4.4,13.09,13.08A3.69,3.69,0,0,1,109.51,72.73Z" />
             <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M88.43,32.23A14.3,14.3,0,0,0,86,31.44,15.11,15.11,0,0,0,67.42,46.16c0,.44,0,.87.06,1.3A15.1,
                         15.1,0,0,0,86,60.88,14.57,14.57,0,0,0,90.58,59a15.12,15.12,0,0,0-2.15-26.73Zm6.28,21A14,14,0,0,1,90,58a11.93,
                         11.93,0,0,1-1.61.88,13.74,13.74,0,0,1-2.45.88,14.4,14.4,0,0,1-3.44.42A14.08,14.08,0,0,1,68.48,46.67c0-.17,
@@ -156,8 +170,7 @@
             <path d="M37.89,0h0C27.62,0,19.3,8.9,19.31,19.82a20.7,20.7,0,0,0,5.42,14.06A17.81,17.81,
                         0,0,0,37.89,39.8h0a17.82,17.82,0,0,0,13.17-6,20.67,20.67,0,0,0,5.39-14.07C56.46,8.87,
                         48.13,0,37.89,0Zm0,37.7h0a15.75,15.75,0,0,1-11.62-5.24,18.59,18.59,0,0,1-4.86-12.64c0-9.76,
-                        7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,54.38,19.78a18.64,18.64,0,0,1-4.84,12.65A15.74,15.74,0,0,1,37.91,37.7Z"
-            />
+                        7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,54.38,19.78a18.64,18.64,0,0,1-4.84,12.65A15.74,15.74,0,0,1,37.91,37.7Z" />
             <path class="cls-12" d="M74.81,65.61c0-.31-.07-.61-.11-.9s-.1-.72-.15-1.07c-.32.14-.66.27-1,.38a14.07,
                         14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87l-1-.39c-.36-.13-.71-.24-1-.34a25.66,25.66,0,0,
                         0-6.83-1.19c-3.44,3.19-10.47,3.41-11.37,3.42s-7.93-.21-11.38-3.4c0,0-10.27,0-17.37,7.6-5.21,
@@ -181,13 +194,11 @@
             <path d="M69.16,35.53a15.06,15.06,0,0,0-11.26,5h0c-.25.28-.49.56-.72.86s-.44.59-.64.9A15.13,
                         15.13,0,0,0,73.69,65.08c.34-.11.68-.23,1-.37s.67-.27,1-.42h0a12.17,12.17,0,0,0,1.5-.83,15.12,15.12,
                         0,0,0-8-27.92ZM81.33,57.69a14.08,14.08,0,0,1-4.67,4.85,9.52,9.52,0,0,1-1.12.64c-.32.17-.65.32-1,.46s-.66.27-1,
-                        .38a14.07,14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84A14.05,14.05,0,0,1,81.33,57.69Z"
-            />
+                        .38a14.07,14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84A14.05,14.05,0,0,1,81.33,57.69Z" />
             <path d="M69.16,34.48A16.13,16.13,0,0,0,56.83,40.2c-.25.29-.48.58-.71.89s-.42.6-.62.91A16.16,16.16,
                         0,0,0,73.79,66.13c.35-.1.7-.22,1-.34s.69-.27,1-.43A16,16,0,0,0,83,58.94,16.17,16.17,0,0,0,69.16,
                         34.48Zm6.38,28.7c-.32.17-.65.32-1,.46s-.66.27-1,.38a14.07,14.07,0,0,
-                        1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84a14.06,14.06,0,1,1,17.7,21.56A9.52,9.52,0,0,1,75.54,63.18Z"
-            />
+                        1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84a14.06,14.06,0,1,1,17.7,21.56A9.52,9.52,0,0,1,75.54,63.18Z" />
           </g>
         </g>
       </svg>
@@ -309,7 +320,7 @@
     </button>
   </div>
 
-  <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()"  dir="{{userDirection$ | async}}">
+  <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()" dir="{{userDirection$ | async}}">
     <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
       <g id="Layer_2" data-name="Layer 2">
         <g id="Layer_1-2" data-name="Layer 1">
@@ -337,15 +348,18 @@
   </button>
 
   <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText"
-      [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''" id="searchAppointmentField" class="qm-details-text-feild"/>
+    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()"
+      [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
+      id="searchAppointmentField" class="qm-details-text-feild" />
     <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
 
     <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="selectedSearchIcon === 'duration'">
 
       <div class="qm-duration-category" *ngIf="enableSearchByDay">
-        <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date' | translate}}</div>
-        <div class="qm-duration-category__time" (click)="toggleDurationSelection(0)" [ngClass]="{'qm-duration-category__time--active' : !isInDateDurationSelection}">{{'time' | translate}}</div>
+        <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date'
+          | translate}}</div>
+        <div class="qm-duration-category__time" (click)="toggleDurationSelection(0)" [ngClass]="{'qm-duration-category__time--active' : !isInDateDurationSelection}">{{'time'
+          | translate}}</div>
       </div>
 
       <div class="qm-duration-control__header" *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
@@ -357,7 +371,7 @@
         </div>
       </div>
 
-      <div class="qm-step-controls-container" >
+      <div class="qm-step-controls-container">
         <ng-container *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
           <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController"
             [(ngModel)]="fromTime"></ngb-timepicker>
@@ -368,14 +382,15 @@
         <ng-container *ngIf="(enableSearchByDay && isInDateDurationSelection)">
           <div class="qm-calendar-container">
             <qm-calendar [enableAllFutureDates]="enableSearchByDay" [enabledDates]="[]" [selectedDates]="selectedDates"
-            (onSelectDate)="onSelectDate($event)"></qm-calendar>
-          </div>          
+              (onSelectDate)="onSelectDate($event)"></qm-calendar>
+          </div>
         </ng-container>
       </div>
       <div class="qm-command-buttons-container">
         <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
-        <button class="ok" [disabled]="invalidDateSelected" [ngClass]="{'invalid-time': invalidDateSelected}" (click)="onSelectTime()">{{'ok' | translate}}</button>
-      </div>     
+        <button class="ok" [disabled]="invalidDateSelected" [ngClass]="{'invalid-time': invalidDateSelected}" (click)="onSelectTime()">{{'ok'
+          | translate}}</button>
+      </div>
     </div>
     <div class="qm-date-time-selection-footer-text" *ngIf="useCalendarEndpoint && currentSearchState === SEARCH_STATES.DURATION 
     && showModalBackDrop">
@@ -428,5 +443,4 @@
     {{'customer_not_found' | translate }}
   </div>
 
- 
-</div>
+</div>-->

@@ -4,6 +4,8 @@ import { ICalendarService } from './ICalendarService';
 
 export interface IAppointment {
   publicId?: string;
+  custName?: string;
+  servicesDisplayLabel?: string;
   status?: any;
   created?: number;
   updated?: number;

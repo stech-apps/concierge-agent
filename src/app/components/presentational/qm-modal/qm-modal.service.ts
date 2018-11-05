@@ -5,9 +5,11 @@ import { Subscription } from 'rxjs';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { QmModalComponent } from "./qm-modal.component";
 import { QmDoneModalComponent } from 'src/app/components/presentational/qm-done-modal/qm-done-modal.component';
+import { QmTimeFilterComponent } from '../../containers/qm-time-filter/qm-time-filter.component';
 
 @Injectable()
 export class QmModalService {
+
   constructor(
     private modalService: NgbModal,
     private translate: TranslateService,
@@ -87,6 +89,17 @@ export class QmModalService {
     modal.componentInstance.fieldList = fieldList;
     modal.componentInstance.heading = heading;
     modal.componentInstance.subHeading = subheading;
+    return modal;
+  }
+
+  openTimeFilter(header?: string, subheader?: string, is24HourFormat: boolean = true): any {
+    const modal = this.modalService.open(QmTimeFilterComponent, { centered: true,
+    windowClass : 'qm-time-filter__modal',
+    backdropClass: 'qm-time-filter__backdrop'
+  });
+
+    modal.componentInstance.header = header;
+    modal.componentInstance.subheader = subheader;
     return modal;
   }
 }

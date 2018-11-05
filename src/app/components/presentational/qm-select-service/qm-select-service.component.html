@@ -1,6 +1,6 @@
 
 
-<div class="qm-pannel-container" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
   <div class="qm-pannel-inner-container"> <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
   <h1 class="qm-text-overflow-fix">{{ 'label.service.heading' | translate}}</h1>

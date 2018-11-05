@@ -2,6 +2,14 @@ input::-ms-clear {
   display: none;
 }
 
+input:focus, textarea {
+  outline: none !important;
+}
+input:focus{
+ 
+  border: 1px solid $dark-transparent42;
+}
+
 .qm-form-error-message{
   color:$primary-pink;
   font-size: 0.8em;
@@ -16,11 +24,13 @@ input::-ms-clear {
   // overflow: auto;
   
 
+
   &__input {
     height: 3em;
     width: 100%;
     padding: 0 1em;
     border: 1px solid rgba(0, 0, 0, 0.12);
+
   }
 
   input.ng-invalid.ng-touched {
@@ -160,6 +170,12 @@ input::-ms-clear {
     display: flex;
     flex-direction: row;
     margin: rem(0px 0px 20px 0px);
+    @at-root [dir="ltr"] & {
+      float: right;;
+    }
+    @at-root [dir="rtl"] & {
+      float: left;
+    }
   }  
 }
 
@@ -269,10 +285,15 @@ input::-ms-clear {
 }
 
 .qm-button{
-  padding: 1em 2em;
+  padding: 1em 1em;
   border-radius: 4px;
   color: $white;
   margin: 0px 6px;
+  width: 155px;
+  text-align: center;
+  white-space: nowrap;
+   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

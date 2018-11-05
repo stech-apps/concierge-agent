@@ -106,6 +106,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   noteText$: Observable<string>;
   noteTextStr: string = '';
   loading: boolean = false;
+  isCustomerFlowHidden:boolean;
 
   selectedVIPLevel: VIP_LEVEL = VIP_LEVEL.NONE;
   selectedAppointment: IAppointment;
@@ -177,9 +178,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
-        if (customer) {
+    
           this.selectedCustomer = customer;
-          console.log(customer);
+          if (customer) {
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
         }
@@ -287,6 +288,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       );
       this.subscriptions.add(calendarServiceSubscription);
     }
+
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if (params !== null && params !== undefined) {
+        this.isCustomerFlowHidden = params.hideCustomer;
+      }
+    });
+    this.subscriptions.add(servicePointsSubscription);
 
   }
 
@@ -440,30 +448,18 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
 
   onTicketSelected() {
-    // if (this.ticketlessSelected) {
+    if (this.ticketlessSelected) {
       
-    //   this.ticketlessSelected = false;
-    //   this.ticketlessColor = this.whiteColor;
-    // } else if (this.ticketSelected) {
-    //   this.ticketSelected = false;
-    //   this.ticketColor = this.whiteColor;
-    //   this.smsSelected ? this.buttonEnabled = true : this.buttonEnabled = false;
-    //   return;
-    // }
-
-    // this.ticketSelected = true;
-    // this.ticketColor = this.themeColor;
-    // this.buttonEnabled = true;
-    if (this.ticketSelected) {
+      this.ticketlessSelected = false;
+    } else if (this.ticketSelected) {
       this.ticketSelected = false;
       this.smsSelected ? this.buttonEnabled = true : this.buttonEnabled = false;
       return;
-    } else {
-      this.ticketSelected = true;
-      this.buttonEnabled = true;
-      this.ticketlessSelected= false;
-      this.smsSelected = false     
     }
+
+    this.ticketSelected = true;
+    this.buttonEnabled = true;
+  
   }
 
   onSmsSelected() {
@@ -909,10 +905,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   goToPanel(ix: number) {
+
+  if(this.flowType == 'CREATE_APPOINTMENT'){
     if (!this.isMultiBranchEnabled && ix != 0) {
       ix = ix - 1;
     }
     this.gotToPanelByIndex.emit(ix);
+  }else if(this.flowType == 'CREATE_VISIT')
+      this.gotToPanelByIndex.emit(ix);
   }
+    
 }
 

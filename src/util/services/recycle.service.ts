@@ -43,6 +43,7 @@ export class Recycle {
       this.servicePoolDispatcher.resetServicePointPool();
       this.staffPoolDispatchers.resetStaffPool();
       this.nativeApiDispatchers.resetQRCodeInfo();
+      this.customerDispatcher.editCustomerMode(false);
       // this.reserveDispatchers.unreserveAppointment();
   }
 

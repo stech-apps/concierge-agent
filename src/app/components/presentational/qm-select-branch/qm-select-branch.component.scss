@@ -34,6 +34,9 @@
             font-weight: 800;
             background-color: transparent;
         }
+        @at-root [dir='rtl'] & {
+            text-align: right;
+          } 
     }
 }
 

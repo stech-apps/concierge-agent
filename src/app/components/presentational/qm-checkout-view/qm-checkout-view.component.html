@@ -44,26 +44,44 @@
 
   <!-- summary card for create visit-->
   <div class="qm-checkout-view__summary qm-checkout-view__summary-create-visit" *ngIf="flowType=='CREATE_VISIT'">
-      <div class="qm-checkout-view__summary-grouping" >
-        <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
-        <div class="qm-summary-item" *ngIf="selectedCustomer"> 
-          <span class="qm-summary-itm__icon icon-phone"></span>
-          <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
-        </div>
+   
   
-        <div class="qm-summary-item" *ngIf="selectedCustomer">
-          <span class="qm-summary-item__icon icon-mail"></span>
-          <span class="qm-summary-item__text qm-text-overflow-fix" >{{ selectedCustomer.properties?.email }}</span>
-        </div>
+      <!-- 1 Unlinked Customer (No customer is selected) when utt is enabled-->
+      <div class="qm-summary-item qm-checkout-view__section">
+          <div *ngIf="!selectedCustomer && !isCustomerFlowHidden" class="qm-checkout-view__unlinked-customer">
+              <h3>Unlinked customer</h3>
+          </div>
+      <!-- 2 No Add Customer utt disabled-->
+          <div *ngIf="isCustomerFlowHidden qm-checkout-view__section">
+            <h3>{{ 'label.visit.details.heading' | translate }}</h3>
+          </div>
       </div>
-  
+
+      <!-- 3 if selected customer and utt enabled  -->
+      <div class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
+          <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+                    
+          <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.phoneNumber"> 
+            <span class="qm-summary-item__icon icon-phone"></span>
+            <span class="qm-summary-item__text qm-text-overflow-fix">{{ selectedCustomer.properties?.phoneNumber }}</span>
+          </div>
     
-  
-      <h3>{{ 'label.visit.details.heading' | translate }}</h3>
-      
-      <div class="qm-checkout-view__summary-grouping" *ngIf="selectedBranch">
+          <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.email">
+            <span class="qm-summary-item__icon icon-mail"></span>
+            <span class="qm-summary-item__text qm-text-overflow-fix" >{{ selectedCustomer.properties?.email }}</span>
+          </div>
+      </div>
+
+      <!-- If customer flow is hidden -->
+      <div class="qm-summary-item qm-checkout-view__section">
+          <div *ngIf="!isCustomerFlowHidden">
+            <h4>{{ 'label.visit.details.heading' | translate }}</h4>
+          </div>
+      </div>
+
+      <div class="qm-checkout-view__summary-grouping-non-selective " *ngIf="selectedBranch">
         <div class="qm-summary-item">
-          <span class="qm-summary-item__icon icon-home"></span>
+          <span class="qm-summary-item__icon icon-home non-selective" style="color:rgba(0,0,0,0.82);"></span>
           <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedBranch.name}}</span>
         </div>
       </div>
@@ -79,7 +97,6 @@
   <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
-        <button (click)="test()"> Test</button> 
       <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
           <div class="radio-container">
             <div *ngIf="isVipLvl1Enabled" class="level">
@@ -108,19 +125,23 @@
     
           </div>
     
-      </div>
-
-    <div class="qm-checkout-view__notifications-heading">{{'label.appconfirm.notification.heading' | translate}}</div>
-    <div class="qm-checkout-view__notifications-question">
-      {{'label.appconfirm.notification.question' | translate }}
     </div>
-    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
+
+    <div class="qm-checkout-view__notifications-heading">{{'label.visitconfirm.notification.heading' | translate}}</div>
+    <div class="qm-checkout-view__notifications-question">
+      {{'label.visit.confirm.question' | translate }}
+    </div>
+    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
+      <div style="width:50%;text-align:end">
       <span class="icon-smartphone"></span>
+      </div>
       <span>{{ 'send_sms' | translate}}</span>
     </button>
 
-    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
+    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
+      <div style="width:50%;text-align:end">
         <span class="icon-ticket-small"></span>
+      </div>
         <span>{{ 'print_ticket' | translate}}</span>
       </button>
 

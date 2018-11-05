@@ -45,13 +45,13 @@
             <qm-customer-search-bar ></qm-customer-search-bar>
             <!-- customer search results -->
             <qm-customer-search></qm-customer-search>
-            <div class="qm-info-text" *ngIf="customers.length==0" > <i class="icon-info qm-details-icon"></i> Search customer by phone number, mail, first or last name </div>
+            <div class="qm-info-text" *ngIf="customers.length==0" > <i class="icon-info qm-details-icon"></i> {{'label.customer_change_tip'|translate}} </div>
         </div>
         <br>
 
         <div class="qm-crossline-header-container" >
-            <div class="qm-crossline-header" ></div>
-            <h2 class="qm-crossline-header-text" *ngIf="!editMode && !currentCustomer">{{ 'label.add_customer' | translate }}</h2>
+            <div class="qm-crossline-header" *ngIf="(!editMode && !currentCustomer && customers.length==0)||(editMode || (!editMode && currentCustomer))" ></div>
+            <h2 class="qm-crossline-header-text" *ngIf="!editMode && !currentCustomer && customers.length==0">{{ 'label.add_customer' | translate }}</h2>
             <h2 class="qm-crossline-header-text" *ngIf="editMode || (!editMode && currentCustomer)">{{ 'label.customer_details' | translate }}</h2>
         </div>      
         <div class="qm-service-list__container" >

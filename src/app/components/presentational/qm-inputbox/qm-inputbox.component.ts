@@ -371,6 +371,7 @@ export class QmInputboxComponent implements OnInit {
   }
   discard(){
     this.onFlowNext.emit();
+    this.customerCreateForm.markAsPristine() 
     this.customerCreateForm.patchValue({
       firstName: this.currentCustomer.firstName,
       lastName:this.currentCustomer.lastName,

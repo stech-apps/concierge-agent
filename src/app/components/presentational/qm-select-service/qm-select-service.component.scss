@@ -17,6 +17,7 @@
 
     .qm-list__item {
         position: relative;
+       
     }
 
     .qm-flow-sub-header {
@@ -54,6 +55,14 @@
 
     &__header {
         margin-top: 2rem;
+    }
+    &__item {
+        &--text{
+            white-space: nowrap; 
+            // width: 50px; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
     }
 }
 
@@ -126,9 +135,7 @@
         }
 
 
-        &--text{
-            text-overflow: ellipsis;
-        }
+       
 
         i {
             position: absolute;

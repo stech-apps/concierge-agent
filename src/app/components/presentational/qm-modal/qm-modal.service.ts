@@ -84,11 +84,12 @@ export class QmModalService {
     return modal;
   }
 
-  openDoneModal(heading: string, subheading: string, fieldList: Array<{icon: string, label: string}>) {
+  openDoneModal(heading: string, subheading: string, fieldList?: Array<{icon: string, label: string}>,visitId?:string) {
     const modal = this.modalService.open(QmDoneModalComponent, { centered: true });
     modal.componentInstance.fieldList = fieldList;
     modal.componentInstance.heading = heading;
     modal.componentInstance.subHeading = subheading;
+    modal.componentInstance.visitID = visitId;
     return modal;
   }
 

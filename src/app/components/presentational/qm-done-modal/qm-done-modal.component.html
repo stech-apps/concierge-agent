@@ -9,17 +9,21 @@
     </div>
     <div class="qm-modal__body">
       <div class="qm-modal-row">
-        <h3 class="qm-done-modal__details-heading">{{ 'label.appconfirm.details.heading' | translate }}</h3>
+        <h3 class="qm-done-modal__details-heading" *ngIf="fieldList.legth>0">{{ 'label.appconfirm.details.heading' | translate }}</h3>
+     
         <ng-container *ngFor="let field of fieldList">
           <div class="qm-done-modal__detail-item">
             <i class="qm-action-btn__icon qm-done-modal__detail-item--icon" [ngClass]="field.icon ? 'icon-' + field.icon : ''" aria-hidden="true"></i>
             <div class="qm-done-modal__detail-item--text qm-text-overflow-fix" [innerHtml]="field.label"></div>
           </div>
         </ng-container>
+        <div class="qm-done-modal__visitId qm-done-modal__subheader" *ngIf="visitID">
+        {{'visit_id_label'|translate}} : <span style="font-weight:500"> {{ (visitID)}} </span> 
+        </div>
       </div>
     </div>
     <div class="qm-modal__footer">
-      <div class="qm-generic-layout qm-generic-layout--justify-center">
+      <div class="qm-generic-layout qm-generic-layout--justify-center">   
         <button class="qm-btn qm-btn--primary qm-btn-finish" (click)="activeModal.close()">
           <span class="qm-btn__text" title="{{ 'button.label.ok' | translate }}">
             {{ 'button.label.ok' | translate }}

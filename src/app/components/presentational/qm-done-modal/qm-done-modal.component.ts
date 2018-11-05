@@ -13,6 +13,7 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
   heading: string = '';
   subHeading: string = '';
   fieldList: Array<{icon: string, label: string}> = [];
+  visitID:string;
 
   userDirection$: Observable<string>;
   userDirection: string;
@@ -22,6 +23,8 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+   
+    
 
     const userSubscription = this.userDirection$.subscribe((ud)=> {
       this.userDirection = ud;
@@ -32,5 +35,8 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+  test(){
+    console.log(this.visitID);
   }
 }

@@ -132,5 +132,11 @@
   }
 }
 .qm-button-plain-with-icon{
-  justify-content: start;
+  justify-content: flex-start;
+}
+.qm-button-icon-container{
+  width:45%;
+  text-align:right;
+  padding-right: 10px;
+  
 }

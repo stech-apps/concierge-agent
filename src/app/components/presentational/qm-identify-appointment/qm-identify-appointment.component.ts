@@ -165,7 +165,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   appointments: IAppointment[] = [];
   timeConvention$: Observable<string> = new Observable<string>();
-  timeConvention: string = '24';
+  timeConvention: string = "24";
 
   height: string;
 
@@ -420,8 +420,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.add(qrCodeScannerSubscription);
 
-    const timeConventionSub = this.timeConvention$.subscribe((tc)=> {
-        this.timeConvention = tc;
+    const timeConventionSub = this.timeConvention$.subscribe(tc => {
+      this.timeConvention = tc;
     });
 
     this.subscriptions.add(timeConventionSub);
@@ -1137,24 +1137,92 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     let appointmentInfo = "";
 
     if (this.selectedAppointment) {
-      appointmentInfo = `${this.selectedAppointment.customers[0].firstName} `;
-      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
+      let timeformat = "hh:mm A   DD/MM/YYYY";
+      if (this.timeConvention === "24") {
+        timeformat = "HH:mm   DD/MM/YYYY";
+      }
 
+      //time data 
       if (this.useCalendarEndpoint) {
         appointmentInfo += moment(this.selectedAppointment.start)
           .tz(
             this.selectedAppointment.branch.fullTimeZone ||
               this.selectedCalendarBranch.fullTimeZone
           )
-          .format("YYYY-MM-DD HH:mm");
+          .format(timeformat);
       } else {
-        appointmentInfo += this.selectedAppointment.startTime
-          .replace("T", " ")
-          .slice(0, -3);
+        appointmentInfo += moment(this.selectedAppointment.startTime)
+          .format(timeformat);
       }
+
+      appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
+      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
     }
     return appointmentInfo;
   }
+
+  getSelectedAppointmentInfoTime() {
+    let appointmentInfo = "";
+    let timeformat = "hh:mm A";
+    if (this.timeConvention === "24") {
+      timeformat = "HH:mm";
+    }
+
+    if(this.selectedAppointment) {
+      //time data 
+      if (this.useCalendarEndpoint) {
+        appointmentInfo += moment(this.selectedAppointment.start)
+          .tz(
+            this.selectedAppointment.branch.fullTimeZone ||
+              this.selectedCalendarBranch.fullTimeZone
+          )
+          .format(timeformat);
+      } else {
+        appointmentInfo += moment(this.selectedAppointment.startTime)
+          .format(timeformat);
+      }
+
+    }
+
+    return appointmentInfo;
+  }
+
+  getSelectedAppointmentInfoDate() {
+    let appointmentInfo = "";
+
+    if(this.selectedAppointment) {
+      //time data 
+      if (this.useCalendarEndpoint) {
+        appointmentInfo += moment(this.selectedAppointment.start)
+          .tz(
+            this.selectedAppointment.branch.fullTimeZone ||
+              this.selectedCalendarBranch.fullTimeZone
+          )
+          .format('DD/MM/YYYY');
+      } else {
+        appointmentInfo += moment(this.selectedAppointment.startTime)
+          .format('DD/MM/YYYY');
+      }
+
+    }
+
+    return appointmentInfo;
+  }
+
+  
+  getSelectedAppointmentInfoCustomer() {
+    let appointmentInfo = "";
+
+    if (this.selectedAppointment) {
+
+      appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
+      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
+    }
+    
+    return appointmentInfo;
+  }
+
+
 
   deselectAppointment() {
     this.selectedAppointment = null;
@@ -1230,7 +1298,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   showTimeFilter() {
-
     this.translateService
       .get(["heading.timefilter", "subheading.timefilter"])
       .subscribe(messages => {
@@ -1240,10 +1307,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             messages["heading.timefilter"],
             messages["subheading.timefilter"],
             false
-          ).result
-          .then((tfs: { start: moment.Moment; end: moment.Moment }) => {
-
-            if(tfs && tfs.start && tfs.end) {
+          )
+          .result.then((tfs: { start: moment.Moment; end: moment.Moment }) => {
+            if (tfs && tfs.start && tfs.end) {
               this.fromTime = {
                 hour: tfs.start.hour(),
                 minute: 0,
@@ -1263,6 +1329,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             }
           });
       });
+  }
+
+  getSelectedAppointmentDetails(): string {
+    return "";
   }
 
   sortAppointments(sortColumn: string) {

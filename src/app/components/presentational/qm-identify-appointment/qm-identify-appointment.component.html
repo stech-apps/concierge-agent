@@ -5,9 +5,18 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
     </div>
+    <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
+      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{ 'label.identify.appointment.selected' | translate }}</div>
+      <div class="qm-identify-appointment__selected--details">
+        <span>{{getSelectedAppointmentInfoTime()}}</span>
+        <span>{{getSelectedAppointmentInfoDate()}}</span>
+        <span>{{getSelectedAppointmentInfoCustomer()}}</span>
+        <span class="qm-identify-appointment__selected__close-btn"  (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
+      </div>
+      <span class="qm-identify-appointment__selected--icon"><i class="icon-info"></i></span>
+    </div>
     <br>
     <div class="qm-identify-appointment">
-
       <div class="qm-identify-appointment__button-container">
         <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (selectedSearchIcon === 'initial' || !selectedSearchIcon) }">
           {{'tab.arriveappointment.appointmentlist' | translate }}</div>
@@ -37,9 +46,6 @@
                 date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
             </div>
           </ng-container>
-
-
-
           <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{
             'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
         </div>
@@ -76,7 +82,7 @@
           </div>
 
           <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
-            <div *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)"
+            <div (click)="onAppointmentSelect(app)" *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)"
               class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
               <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId :
                 app.id}}</div>

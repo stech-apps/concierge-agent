@@ -12,6 +12,65 @@
 }
 
 .qm-identify-appointment {
+  &__selected {
+    color: $dark-transparent82;
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+
+    &--text {
+      max-width: 35%;
+      padding: 1rem;
+    }
+
+    &__close-btn {
+      color: $primary-pink;
+      font-size: 14px;
+      &:hover {
+        cursor: pointer;
+        color: $dark-transparent82;
+      }
+      i {
+        font-size: 1.5rem;
+        font-weight: $font-weight-bold;
+      }
+    }
+    &--details {
+      border: 1px solid #d5d5d5;
+      background-color: #ffffff;
+      box-shadow: 2px 4px 4px 0 $dark-transparent04;
+      width: 60%;
+      height: 56px;
+      line-height: 56px;
+      font-size: 18px;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      display: flex;
+      justify-content: space-between;
+
+
+      span {
+        display: inline-block;
+        margin-left: 1rem;
+        @at-root [dir="rtl"] & {
+          margin-right: 1rem;
+        }
+      }
+    }
+
+    &--icon {
+      font-size: 32px;
+      color: $dark-transparent62;
+
+      &:hover {
+        color: $dark-transparent82;
+        cursor: pointer;
+      }
+    }
+  }
+
   &__button-container {
     display: flex;
   }
@@ -66,7 +125,6 @@
     }
     .icon-refresh {
       padding-right: 0;
-      
     }
 
     @at-root [dir="rtl"] & {
@@ -75,13 +133,12 @@
     }
   }
 
-  // TABLE AREA 
+  // TABLE AREA
   &__customer-table {
     display: flex;
     flex-wrap: wrap;
 
-    
-  // TABLE HEADER AREA 
+    // TABLE HEADER AREA
     &__header {
       display: flex;
       line-height: 56px;
@@ -113,7 +170,7 @@
     &__list {
       display: flex;
       width: 100%;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
       border: 1px solid $listitem-border-color;
       font-size: 18px;
@@ -125,7 +182,7 @@
       &:hover {
         background-color: $dark-transparent04;
         cursor: pointer;
-        .icon-info { 
+        .icon-info {
           color: $dark-transparent82;
         }
       }

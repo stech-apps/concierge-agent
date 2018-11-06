@@ -127,6 +127,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   editMode: boolean;
   currentCustomer: ICustomer;
   sortColumnPriorities: Array<string> = [];
+  requestDelayed: boolean = false;
+  requestDelayHandle: any;
 
   readonly SEARCH_STATES = {
     DURATION: "duration",
@@ -157,9 +159,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   enableSearchByDay: boolean = false;
 
   @Output()
-  appointmentSelected: EventEmitter<IAppointment> = new EventEmitter<
-    IAppointment
-  >();
+  appointmentSelected: EventEmitter<IAppointment> = new EventEmitter<IAppointment>();
 
   @Output()
   appointmentDeselected: EventEmitter<any> = new EventEmitter();
@@ -272,7 +272,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 x => x.qpId == this.selectedBranch.id
               );
               this.handleAppointmentResponse(apps);
-            }, ()=> console.log('xxxxxxxxxxxxxxxxxxxxxx')
+            }
             )
             .unsubscribe();
         }
@@ -506,12 +506,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             })
             .unsubscribe();
         } else {
-          var appDate = new Date(this.qrCodeContent.appointment_date).setHours(
-            0,
-            0,
-            0,
-            0
-          );
+          var appDate = new Date(this.qrCodeContent.appointment_date).setHours(0, 0, 0, 0);
           var todayDate = new Date().setHours(0, 0, 0, 0);
           if (appDate != todayDate) {
             this.translateService
@@ -679,6 +674,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
+    if(this.requestDelayHandle) {
+      clearTimeout(this.requestDelayHandle);
+    }
+    this.requestDelayed = false;
+
     if (apps && apps.length > 0) {
       apps = apps.map(a => {
         a.custName = `${a.customers[0] ? a.customers[0].firstName : ""} ${
@@ -986,6 +986,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         id: (this.qrCodeValue || "").trim()
       };
     }
+
+    if(this.requestDelayHandle) {
+      clearTimeout(this.requestDelayHandle);
+    }
+    this.requestDelayed = false;
+    this.requestDelayHandle = setTimeout(()=> {
+      this.requestDelayed = true;
+    }, 3000);
 
     if (this.useCalendarEndpoint) {
       this.appointmentDispatchers.searchCalendarAppointments(searchQuery);

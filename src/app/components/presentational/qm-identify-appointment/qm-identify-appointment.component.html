@@ -52,17 +52,17 @@
           </button>
         </div>
 
-        <div class="qm-identify-appointment__search-area-warning" *ngIf="!isShowAppointmentNotFound || (searchText || '').trim().length === 0">
+        <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
             <i class="icon-info qm-action-btn__icon "></i>
             {{'label.identify.bookingid.warning' | translate}}
         </div>
 
-        <div class="qm-identify-appointment__search-area-not-found" *ngIf="isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+        <div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
           {{'label.identify.appointment.notfound' | translate}}
         </div>
 
-        <div class="qm-identify-appointment__search-area-loading" *ngIf="true">
-          {{'label.identify.appointment.loading' | translate}}
+        <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
+            <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
         </div>
       </ng-container>
 

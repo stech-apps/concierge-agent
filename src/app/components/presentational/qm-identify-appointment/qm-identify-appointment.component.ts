@@ -1273,7 +1273,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   showLoading() {
-    return !this.isLoaded && this.isLoading;
+    return   !this.isLoaded && this.isLoading;
   }
 
   showLoadingCustomers() {

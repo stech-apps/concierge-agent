@@ -58,6 +58,10 @@
         <div class="qm-identify-appointment__search-area-not-found" *ngIf="isShowAppointmentNotFound && (searchText || '').trim().length > 0">
           {{'label.identify.appointment.notfound' | translate}}
         </div>
+
+        <div class="qm-identify-appointment__search-area-loading"  *ngIf="showLoading()">
+            {{'label.identify.appointment.notfound' | translate}}
+        </div>
       </div>
 
       <ng-container *ngIf="selectedSearchIcon != 'id'">
@@ -129,9 +133,9 @@
                   aria-hidden="true"></i>
               </div>
             </ng-container>
-            <div class="qm-loader-container" *ngIf="showLoading()">
+          <!--   <div class="qm-loader-container" *ngIf="showLoading()">
               <qm-loader [color]="black"></qm-loader>
-            </div>
+            </div> -->
           </div>
         </div>
     </ng-container>

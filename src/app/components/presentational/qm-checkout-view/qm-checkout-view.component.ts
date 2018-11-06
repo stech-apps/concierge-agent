@@ -423,7 +423,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
               this.selectedCustomer.properties['phoneNumber'] = result.phone;
             }
 
-            this.customerDispatcher.updateCustomer(this.selectedCustomer);
+            // this.customerDispatcher.updateCustomer(this.selectedCustomer);
             this.handleCheckoutCompletion();
           }
         },

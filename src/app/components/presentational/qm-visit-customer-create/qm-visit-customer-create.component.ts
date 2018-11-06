@@ -28,12 +28,13 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   invalidLastName: string;
   accept: any;
   countryCode: string = '';
+  userDirection$: Observable<string>;
 
   constructor(
-    private fb: FormBuilder,
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
     private localStorage: LocalStorage,
+    private userSelectors:UserSelectors,
     private translateService: TranslateService,
     private toastService: ToastService,
     private servicePointSelectors: ServicePointSelectors,
@@ -41,19 +42,20 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   ) { 
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
+    this.userDirection$ = this.userSelectors.userDirection$;
 
     const customerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
       if(customer){
         this.trimCustomer();
-      }
-    });
+        }
+      }); 
     this.subscriptions.add(customerSubscription);
     
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
         this.countryCode = params.countryCode;
-      }
+        }
     });
     this.subscriptions.add(servicePointsSubscription);
   }
@@ -77,16 +79,6 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     })
   }
 
-  clearCustomer(){
-    this.customerDispatchers.resetTempCustomer();
-    this.customerCreateForm.patchValue({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: this.countryCode
-    });
-  }
-
   trimCustomer(){
     var phoneNo = this.currentCustomer.phone.trim()
     if(phoneNo === "" || phoneNo === null){
@@ -107,7 +99,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       });
     }
     else{
-      this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
+      this.customerDispatchers.selectCustomer(this.prepareSaveCustomer());
       this.onFlowNext.emit();
     }
   }
@@ -163,4 +155,14 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   onSwitchChange(){
     this.localStorage.setSettings(STORAGE_SUB_KEY.CUSTOMER_SKIP, this.isFlowSkip);
   }
+  clearInputFeild(name){
+    
+    switch(name){
+      case "firstName": this.customerCreateForm.patchValue({ firstName: ''});break;
+      case "lastName": this.customerCreateForm.patchValue({ lastName: ''});break;
+      case "phone": this.customerCreateForm.patchValue({ phone: ''});break;
+      case "email": this.customerCreateForm.patchValue({ email: ''});break;
+                         
+    }
+   }
 }

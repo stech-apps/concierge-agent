@@ -11,6 +11,9 @@
     &--info {
       font-size: 18px;
       color: $dark-transparent42;
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
     }
 
     &--info-active {

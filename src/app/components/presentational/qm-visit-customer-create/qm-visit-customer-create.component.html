@@ -1,67 +1,97 @@
-<div class="qm-flow-sub-header">
-    <div class="qm-flow-sub-header__left">
+<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+  <div class="qm-pannel-inner-container" dir="{{ userDirection$ | async }}"> 
+    
+    <div class="qm-flow-sub-header">
+      <div class="qm-flow-sub-header__right" *ngIf="flowType != 'CREATE_APPOINTMENT'">
         <div class="qm-checkbox__container">
           <label for="qm-checkbox" class="qm-checkbox-label">
-            <input id="qm-checkbox"class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
+          <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
             <div class="qm-checkbox__selector">
-                <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-                <div class="qm-checkbox__selector-icon-text">{{ 'skip_branch_label' | translate }}</div>
+              <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
+                <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
             </div>
           </label>
+          <button  type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
+            <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
+          </button>
         </div>
-    </div>
-    <div class="qm-flow-sub-header__right">
-      <div class="qm-done-button" (click)="doneButtonClick()">
-        {{'banner_done_label' | translate }}
       </div>
     </div>
-</div>
-  
+    <br>
+
+  <div class="qm-crossline-header-container" *ngIf="!editMode && !currentCustomer">
+    <div class="qm-crossline-header"></div>
+    <h2 class="qm-crossline-header-text">{{ 'addCustomer_heading' | translate }}</h2>
+    <br>
+  </div>
+
+
   <div>
-      <div class="qm-identify__customer-select-container" *ngIf="currentCustomer && (currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 || currentCustomer.phone.length > 0 || currentCustomer.email.length > 0) === true">
-          <span class="qm-flow-selected-customer">{{ currentCustomer.firstName.length > 0 || currentCustomer.lastName.length > 0 ? (currentCustomer.firstName + ' ' + currentCustomer.lastName) : ('anonimous_customer' | translate) }}</span>
-          <i (click)="clearCustomer()" class="icon-close qm-clear-customer" aria-hidden="true"></i>
-        </div>
-        <div class="qm-input-box qm-input-box__extend">
-      <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
+    
+      <div class="qm-input-box qm-input-box__extend">
+        <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
           <div class="qm-input-box__input-section">
-              <div class="qm-input-box__row">
-                  <div class="qm-input-box__col-1" >
-                    <label for="firstName" class="qm-input-box__inputbox-name">{{'first_name'|translate }}</label>
-                  </div>
-                  <div class="qm-input-box__col-2">
-                      <input  type="text" name='firstName' formControlName = "firstName" #firstName maxlength="50" [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                      <i *ngIf="firstName.value.trim()" (click)="clearFirstName()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-                  </div>
+            <!-- First Name and Last Name section -->
+            <div class="qm-input-box__row">
+              <div class="qm-input-box__col-50">
+                <div class="qm-input-box__left-side">
+                    <div>
+                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'first_name'|translate }}</label>
+                      <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                    </div>
+                     <br>
+                      <input #firstName class="qm-input-box__input" type="text" name='firstName' formControlName = "firstName"
+                      maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                     
+                      <div *ngIf="firstName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('firstName')"></i>
+                      </div>      
+                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
                 </div>
-                <div class="qm-input-box__row">
-                    <div class="qm-input-box__col-1">
-                        <label for="lastName" class="qm-input-box__inputbox-name">{{'last_name'|translate }}</label>
+              </div>
+              <div class="qm-input-box__col-50">
+                  <div>
+                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>
+                    <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                  </div> 
+                    <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                    <div *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                        <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('lastName')"></i>
+                    </div> 
+                    <div class="qm-form-error-message" *ngIf="customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
+              </div>
+            </div>
+
+            <!-- Email Section -->
+            <div class="qm-input-box__row">
+                <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'email'|translate }}</label>
+                <input class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
+                <div *ngIf="email.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('email')"></i>
+                </div> 
+                <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
+            </div>
+            
+          <!-- Phone Section  -->
+            <div class="qm-input-box__row">
+                <div class="qm-input-box__col-50">
+                    <div class="qm-input-box__left-side">
+                      <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'phone'|translate }}</label>
+                      <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone>
+                      <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
+                      </span> 
+                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid'|translate}}</div>
                     </div>
-                    <div class="qm-input-box__col-2" >
-                      <input type="text" name='lastName' formControlName = "lastName" #lastName  maxlength="50" [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                      <i *ngIf="lastName.value.trim()" (click)="clearLastName() " class="icon-close qm-clear-search" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                  <div class="qm-input-box__row">
-                      <div class="qm-input-box__col-1">
-                          <label for="phone" class="qm-input-box__inputbox-name">{{'phone'|translate }}</label>
-                      </div>
-                      <div class="qm-input-box__col-2">
-                        <input type="text" name='phone' formControlName = "phone" #phone>
-                        <i *ngIf="phone.value.trim() && phone.value.trim() != countryCode"   (click)="clearPhoneNum()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  <div class="qm-input-box__row">
-                        <div class="qm-input-box__col-1">
-                            <label for="email" class="qm-input-box__inputbox-name">{{'email'|translate }}</label>
-                        </div>
-                        <div class="qm-input-box__col-2">
-                          <input type="text" name='email' formControlName = "email" #email>
-                          <i *ngIf="email.value.trim()" (click)="clearEmail()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-                        </div>
-                  </div>
+                </div>
+            </div>
+
           </div>
         </form>
       </div>
   </div>
+  </div>
+  </div>
+<div class="qm-flow-done-bar" *ngIf="((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT')">
+    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
+</div>

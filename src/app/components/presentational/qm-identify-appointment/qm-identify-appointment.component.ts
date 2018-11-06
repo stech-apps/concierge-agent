@@ -1336,6 +1336,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (!pattern.test(inputChar)) {
       $event.preventDefault();
     }
+
+    if($event.keyCode === 13 && this.searchText) {
+      this.onEnterPressed();
+    }
   }
 
   sortAppointments(sortColumn: string) {

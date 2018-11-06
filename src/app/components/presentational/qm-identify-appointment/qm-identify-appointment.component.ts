@@ -118,6 +118,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   qrCodeListnerTimer: any;
   isQrCodeLoaded = false;
   isMultiBranchEnable = false;
+  isShowAppointmentNotFound = false;
   branchList: IBranch[];
   desktopQRCodeListnerTimer: any;
   isQRReaderOpen = false;
@@ -271,7 +272,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 x => x.qpId == this.selectedBranch.id
               );
               this.handleAppointmentResponse(apps);
-            })
+            }, ()=> console.log('xxxxxxxxxxxxxxxxxxxxxx')
+            )
             .unsubscribe();
         }
       );
@@ -523,22 +525,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               })
               .unsubscribe();
           } else {
-            this.translateService
-              .get("appointment_not_found")
-              .subscribe((notfoundString: string) => {
-                this.toastService.infoToast(notfoundString);
-              })
-              .unsubscribe();
+           this.isShowAppointmentNotFound = true;
           }
         }
       }
     } else {
-      this.translateService
-        .get("appointment_not_found")
-        .subscribe((notfoundString: string) => {
-          this.toastService.infoToast(notfoundString);
-        })
-        .unsubscribe();
+      this.isShowAppointmentNotFound = true;
     }
   }
 
@@ -763,7 +755,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         apps.filter(ap => ap.status === this.ARRIVED_APPOINTMENT_STATE_ID)
           .length === 0
       ) {
-        this.showAppointmentNotFoundError();
+       this.isShowAppointmentNotFound = true;
       }
     }
   }
@@ -1156,7 +1148,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
 
       appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
-      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
+      appointmentInfo += `${this.selectedAppointment.customers[0].lastName}`;
     }
     return appointmentInfo;
   }
@@ -1333,6 +1325,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   getSelectedAppointmentDetails(): string {
     return "";
+  }
+
+  restrictNumbers($event) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode($event.charCode);
+    if(this.isShowAppointmentNotFound) {
+      this.isShowAppointmentNotFound = false;
+    }
+    if (!pattern.test(inputChar)) {
+      $event.preventDefault();
+    }
   }
 
   sortAppointments(sortColumn: string) {

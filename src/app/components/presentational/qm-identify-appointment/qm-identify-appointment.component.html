@@ -5,13 +5,16 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
     </div>
+
+
     <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
-      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{ 'label.identify.appointment.selected' | translate }}</div>
+      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
+        'label.identify.appointment.selected' | translate }}</div>
       <div class="qm-identify-appointment__selected--details">
         <span>{{getSelectedAppointmentInfoTime()}}</span>
         <span>{{getSelectedAppointmentInfoDate()}}</span>
         <span>{{getSelectedAppointmentInfoCustomer()}}</span>
-        <span class="qm-identify-appointment__selected__close-btn"  (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
+        <span class="qm-identify-appointment__selected__close-btn" (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
       </div>
       <span class="qm-identify-appointment__selected--icon"><i class="icon-info"></i></span>
     </div>
@@ -30,9 +33,39 @@
       </div>
       <hr class="qm-identify-appointment__pannel-bottom-bar">
 
+      <!--###### ID SEARCH AREA ###### -->
+      <div class="qm-identify-appointment__search-area" *ngIf="selectedSearchIcon === 'id'">
+        <div class="qm-search qm-search--large">
+          <input [(ngModel)]="searchText"  (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input" name="serviceSearchInput" (keypress)="restrictNumbers($event)"
+            type="search" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}" [formControl]="searchInputController"
+            id="searchAppointmentField">
+
+          <button  *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+            <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+            <span class="sr-only">Search</span>
+          </button>
+        </div>
+
+        <button (click)="onEnterPressed()" [disabled]="(searchText || '').trim().length === 0" class="qm-btn qm-btn--primary">
+          {{'label.identify.appointment.fetch' | translate}}
+        </button>
+
+        <div class="qm-identify-appointment__search-area-warning" *ngIf="!isShowAppointmentNotFound || (searchText || '').trim().length === 0">
+          <i class="icon-info qm-action-btn__icon "></i>
+          {{'label.identify.bookingid.warning' | translate}}
+        </div>
+
+        <div class="qm-identify-appointment__search-area-not-found" *ngIf="isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+          {{'label.identify.appointment.notfound' | translate}}
+        </div>
+      </div>
+
+      <ng-container *ngIf="selectedSearchIcon != 'id'">
+
+
       <div class="qm-identify-appointment__pannel-container">
         <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
-          <ng-container  *ngIf="timeConvention === 'AMPM'">
+          <ng-container *ngIf="timeConvention === 'AMPM'">
             <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
               <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                 date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
@@ -41,7 +74,7 @@
 
           <ng-container *ngIf="timeConvention === '24'">
             <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-              <span>{{selectedFromTime | date: 'HH:mm'}}</span> 
+              <span>{{selectedFromTime | date: 'HH:mm'}}</span>
               <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                 date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
             </div>
@@ -102,6 +135,8 @@
           </div>
         </div>
       </div>
+    </ng-container>
+
     </div>
 
   </div>

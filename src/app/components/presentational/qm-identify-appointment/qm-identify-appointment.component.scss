@@ -12,6 +12,64 @@
 }
 
 .qm-identify-appointment {
+
+  &__search-area {
+    display: flex;
+    padding-bottom: calc(100vh - 400px);
+    position: relative;
+    .qm-search--large {
+      display: flex;  
+      width: 50%;
+    }
+
+    .qm-btn--primary {
+      width: 10rem;
+      margin-left: 1rem;
+      align-items: center;
+
+      @at-root [dir='rtl'] & {
+        margin-right: 1rem;
+      }
+    }
+
+    &-not-found {
+      position: absolute;
+      color: $dark-transparent82;
+      font-weight: $font-weight-light;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+      width: 65%;
+      text-align: center;
+      align-items: center;
+      top: 57px;
+      min-height: 108px;
+      left: 0;
+
+      @at-root [dir='rtl'] & {
+        right: 0;
+        left: auto;
+      }
+    }
+
+    &-warning {
+      position: absolute;
+      top: 4.2rem;
+      color: $dark-transparent42;
+      left: 0;
+      i {
+        color: $dark-transparent82;
+      }
+      @at-root [dir='rtl'] & {
+        margin-right: 1rem;
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+
+
   &__selected {
     color: $dark-transparent82;
     display: flex;

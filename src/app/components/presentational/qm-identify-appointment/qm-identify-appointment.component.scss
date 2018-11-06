@@ -168,6 +168,7 @@
   &__time-container {
     padding: 0px 10px;
     color: $pale-aquamarine;
+    display: flex;
     cursor: pointer;
     &:hover {
       color: $dark-transparent82;

@@ -1,8 +1,8 @@
-<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container" [ngStyle]="{'height': !editMode  ? 'calc(100% - 12vh)' : '100%'}">
   <div class="qm-pannel-inner-container" dir="{{ userDirection$ | async }}"> 
     
     <div class="qm-flow-sub-header">
-      <div class="qm-flow-sub-header__right" *ngIf="flowType != 'CREATE_APPOINTMENT'">
+      <div class="qm-flow-sub-header__right">
         <div class="qm-checkbox__container">
           <label for="qm-checkbox" class="qm-checkbox-label">
           <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
@@ -19,13 +19,11 @@
     </div>
     <br>
 
-  <div class="qm-crossline-header-container" *ngIf="!editMode && !currentCustomer">
+  <div class="qm-crossline-header-container" >
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text">{{ 'addCustomer_heading' | translate }}</h2>
     <br>
   </div>
-
-
   <div>
     
       <div class="qm-input-box qm-input-box__extend">
@@ -37,28 +35,24 @@
                 <div class="qm-input-box__left-side">
                     <div>
                       <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'first_name'|translate }}</label>
-                      <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div>
                      <br>
                       <input #firstName class="qm-input-box__input" type="text" name='firstName' formControlName = "firstName"
-                      maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                      maxlength="50"  [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
                      
                       <div *ngIf="firstName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('firstName')"></i>
                       </div>      
-                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
                 </div>
               </div>
               <div class="qm-input-box__col-50">
                   <div>
-                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>
-                    <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>           
                   </div> 
-                    <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                    <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
                     <div *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                         <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('lastName')"></i>
                     </div> 
-                    <div class="qm-form-error-message" *ngIf="customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
               </div>
             </div>
 
@@ -71,7 +65,7 @@
                 </div> 
                 <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
             </div>
-            
+
           <!-- Phone Section  -->
             <div class="qm-input-box__row">
                 <div class="qm-input-box__col-50">
@@ -92,6 +86,6 @@
   </div>
   </div>
   </div>
-<div class="qm-flow-done-bar" *ngIf="((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT')">
+<div class="qm-flow-done-bar">
     <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
 </div>

@@ -48,11 +48,11 @@
   
       <!-- 1 Unlinked Customer (No customer is selected) when utt is enabled-->
       <div class="qm-summary-item qm-checkout-view__section">
-          <div *ngIf="!selectedCustomer && !isCustomerFlowHidden" class="qm-checkout-view__unlinked-customer">
+          <div *ngIf="( !tempCustomer && !selectedCustomer ) && !isCustomerFlowHidden" class="qm-checkout-view__unlinked-customer">
               <h3>Unlinked customer</h3>
           </div>
       <!-- 2 No Add Customer utt disabled-->
-          <div *ngIf="isCustomerFlowHidden qm-checkout-view__section">
+          <div *ngIf="isCustomerFlowHidden">
             <h3>{{ 'label.visit.details.heading' | translate }}</h3>
           </div>
       </div>
@@ -60,15 +60,25 @@
       <!-- 3 if selected customer and utt enabled  -->
       <div class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
           <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+          <h2 *ngIf="tempCustomer && tempCustomer.firstName">{{tempCustomer.firstName}} <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
                     
           <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.phoneNumber"> 
             <span class="qm-summary-item__icon icon-phone"></span>
             <span class="qm-summary-item__text qm-text-overflow-fix">{{ selectedCustomer.properties?.phoneNumber }}</span>
           </div>
+
+          <div class="qm-summary-item" *ngIf="tempCustomer && tempCustomer.phone"> 
+            <span class="qm-summary-item__icon icon-phone"></span>
+            <span class="qm-summary-item__text qm-text-overflow-fix">{{ tempCustomer.phone }}</span>
+          </div>
     
           <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.email">
             <span class="qm-summary-item__icon icon-mail"></span>
             <span class="qm-summary-item__text qm-text-overflow-fix" >{{ selectedCustomer.properties?.email }}</span>
+          </div>
+          <div class="qm-summary-item" *ngIf="tempCustomer && tempCustomer.email">
+            <span class="qm-summary-item__icon icon-mail"></span>
+            <span class="qm-summary-item__text qm-text-overflow-fix" >{{ tempCustomer.email }}</span>
           </div>
       </div>
 

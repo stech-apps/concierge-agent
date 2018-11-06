@@ -2,12 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
 import { CustomerDispatchers, CustomerSelector, ServicePointSelectors, UserSelectors } from '../../../../store';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { FormControl,FormGroup,FormBuilder,Validators} from '@angular/forms';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
@@ -29,6 +24,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   accept: any;
   countryCode: string = '';
   userDirection$: Observable<string>;
+  editMode:boolean;
 
   constructor(
     private customerDispatchers:CustomerDispatchers,
@@ -44,6 +40,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
     this.userDirection$ = this.userSelectors.userDirection$;
 
+    // Assign temp customer to cutsomer object
     const customerSubscription = this.customerSelectors.tempCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
       if(customer){
@@ -99,7 +96,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       });
     }
     else{
-      this.customerDispatchers.selectCustomer(this.prepareSaveCustomer());
+      this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
       this.onFlowNext.emit();
     }
   }
@@ -128,41 +125,17 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     return customer;
   }
 
-  clearFirstName(){
-    this.customerCreateForm.patchValue({
-      firstName:''
-    });
-  }
-
-  clearLastName(){
-    this.customerCreateForm.patchValue({
-      lastName:''
-    });
-  }
-
-  clearPhoneNum(){
-    this.customerCreateForm.patchValue({
-      phone: this.countryCode
-    });
-  }
-
-  clearEmail(){
-    this.customerCreateForm.patchValue({
-      email:''
-    });
-  }
-
+  
   onSwitchChange(){
     this.localStorage.setSettings(STORAGE_SUB_KEY.CUSTOMER_SKIP, this.isFlowSkip);
   }
+
   clearInputFeild(name){
-    
     switch(name){
       case "firstName": this.customerCreateForm.patchValue({ firstName: ''});break;
       case "lastName": this.customerCreateForm.patchValue({ lastName: ''});break;
       case "phone": this.customerCreateForm.patchValue({ phone: ''});break;
-      case "email": this.customerCreateForm.patchValue({ email: ''});break;
-                         
+      case "email": this.customerCreateForm.patchValue({ email: ''});break;                       
     }
    }
 }

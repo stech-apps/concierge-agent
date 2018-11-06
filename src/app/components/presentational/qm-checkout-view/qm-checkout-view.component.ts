@@ -1,29 +1,10 @@
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import {
-  CREATE_VISIT,
-  CREATE_APPOINTMENT,
-  ARRIVE_APPOINTMENT
-} from "./../../../../constants/utt-parameters";
-import {
-  ServicePointSelectors,
-  CustomerSelector,
-  ReserveSelectors,
-  DataServiceError,
-  TimeslotSelectors,
-  BranchSelectors,
-  ServiceSelectors,
-  InfoMsgDispatchers,
-  CustomerDispatchers,
-  NoteSelectors,
-  NoteDispatchers,
-  CalendarBranchDispatchers,
-  CalendarServiceDispatchers,
-  ArriveAppointmentSelectors,
-  UserSelectors,
-  CalendarBranchSelectors,
-  CalendarServiceSelectors
+import { CREATE_VISIT,CREATE_APPOINTMENT,ARRIVE_APPOINTMENT} from "./../../../../constants/utt-parameters";
+import { ServicePointSelectors,CustomerSelector,ReserveSelectors,DataServiceError, TimeslotSelectors,BranchSelectors,
+  ServiceSelectors,InfoMsgDispatchers,CustomerDispatchers,NoteSelectors,NoteDispatchers,CalendarBranchDispatchers,
+  CalendarServiceDispatchers,ArriveAppointmentSelectors,UserSelectors,CalendarBranchSelectors,CalendarServiceSelectors
 } from "../../../../store";
 import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { IBranch } from './../../../../models/IBranch';

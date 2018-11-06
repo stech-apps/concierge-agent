@@ -15,7 +15,6 @@
 
   &__search-area {
     display: flex;
-    padding-bottom: calc(100vh - 400px);
     position: relative;
     .qm-search--large {
       display: flex;  
@@ -33,7 +32,6 @@
     }
 
     &-not-found {
-      position: absolute;
       display: flex;
       color: $dark-transparent82;
       font-weight: $font-weight-light;
@@ -41,31 +39,26 @@
       font-size: 18px;
       border: 1px solid rgba(0,0,0,0.12);
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
-      width: 65%;
+      width: 50%;
       text-align: center;
       align-items: center;
-      top: 57px;
-      min-height: 108px;
-      left: 0;
+      justify-content: center;
+      height: 108px;
       background-color: $white;
-
-      @at-root [dir='rtl'] & {
-        right: 0;
-        left: auto;
-      }
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
     }
 
     &-warning {
-      position: absolute;
-      top: 4.2rem;
+      text-align: left;
+      margin-top: 0.75rem;
+
       color: $dark-transparent42;
-      left: 0;
       i {
         color: $dark-transparent82;
       }
       @at-root [dir='rtl'] & {
-        right: 0;
-        left: auto;
+        text-align: right;
       }
     }
   }

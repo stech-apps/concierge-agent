@@ -18,9 +18,9 @@
               </span>
               <span class="qm-standard-text-field__input-container">
                 <input type="text" class="qm-input qm-standard-text-field__input" 
-                placeholder="" maxlength="50" qmClearInput [(ngModel)]="phoneNumber"
-                pattern="^[0-9\+\s]+$" #phoneRef="ngModel"
-                  required qmAllWhiteSpace name="phoneNumber" />
+                      placeholder="" maxlength="50" qmClearInput [(ngModel)]="phoneNumber"
+                      pattern="^[0-9\+\s]+$" #phoneRef="ngModel"
+                      required qmAllWhiteSpace name="phoneNumber" />
               </span>
               <span class="qm-standard-text-field__error-message">
                 <ng-container *ngIf="phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)">

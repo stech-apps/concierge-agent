@@ -6,7 +6,6 @@ import { ServicePointSelectors,CustomerSelector,ReserveSelectors,DataServiceErro
   ServiceSelectors,InfoMsgDispatchers,CustomerDispatchers,NoteSelectors,NoteDispatchers,CalendarBranchDispatchers,
   CalendarServiceDispatchers,ArriveAppointmentSelectors,UserSelectors,CalendarBranchSelectors,CalendarServiceSelectors
 } from "../../../../store";
-import { ICalendarBranch } from './../../../../models/ICalendarBranch';
 import { IBranch } from './../../../../models/IBranch';
 import { IUTTParameter } from "../../../../models/IUTTParameter";
 import { IAppointment } from "../../../../models/IAppointment";
@@ -40,7 +39,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   flowTypeStr: string;
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
-
   @Output()
   gotToPanelByIndex: EventEmitter<number> = new EventEmitter<number>();
 
@@ -83,7 +81,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   emailColor: string = this.whiteColor;
   ticketlessColor: string = this.whiteColor;
 
-  buttonText: string;
+  
   noteText$: Observable<string>;
   noteTextStr: string = '';
   loading: boolean = false;
@@ -131,13 +129,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
-    console.log(this.flowType);
+
     
     this.uttParameters$ = servicePointSelectors.uttParameters$;
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
-          this.themeColor = uttParameters.highlightColor;
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
           this.isVipLvl2Enabled = uttParameters.vipLvl2;
@@ -147,10 +144,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.ticketActionEnabled = uttParameters.printerEnable;
           this.ticketlessActionEnabled = uttParameters.ticketLess;
           this.isMultiBranchEnabled = uttParameters.mltyBrnch;
-
-          if (this.themeColor === "customized") {
-            this.themeColor = uttParameters.customizeHighlightColor;
-          }
         }
       })
       .unsubscribe();
@@ -159,7 +152,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
-    
           this.selectedCustomer = customer;
           if (customer) {
           this.customerEmail = customer.properties.email;
@@ -170,7 +162,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     const appointmentSubscription = this.reserveSelectors.reservedAppointment$.subscribe((appointment) => {
       if (appointment) {
-        console.log(appointment);
         this.selectedAppointment = appointment;
       }
     });
@@ -200,9 +191,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.subscriptions.add(selectedAppointmentSubscription);
 
   }
-  test(){
-    console.log(this.selectedBranch);
-  }
+
 
   ngOnInit() {
 
@@ -213,16 +202,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.isVipLvl1Enabled = false;
         this.isVipLvl2Enabled = false;
         this.isVipLvl3Enabled = false;
-        this.buttonText = "create_appointment_action";
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.emailActionEnabled = false;
         this.flowTypeStr = FLOW_TYPE.ARRIVE_APPOINTMENT;
-        this.buttonText = "arrive";
         break;
       case FLOW_TYPE.CREATE_VISIT:
         this.emailActionEnabled = false;
-        this.buttonText = "checkin";
         break;
       default:
         break;
@@ -391,7 +377,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   onButtonPressed() {
     if (this.isShowNotifyOptionsInput()) {
-      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', this.emailSelected || this.emailAndSmsSelected, this.smsSelected || this.emailAndSmsSelected,
+      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation', 
+      this.emailSelected || this.emailAndSmsSelected,
+       this.smsSelected || this.emailAndSmsSelected,
         this.themeColor, 'ok', 'cancel',
         (result: any) => {
           if (result) {
@@ -660,11 +648,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
       
       this.translateService.get(['visit_created',
-        'label.appcreated.subheading',
+        'label.visitcreated.subheading',
          'label.notifyoptions.smsandemail',
         'label.notifyoptions.sms', 'label.notifyoptions.email','label.notifyoptions.ticket']).subscribe(v => {
 
-          let subheadingText = v['label.appcreated.subheading'];
+          let subheadingText = v['label.visitcreated.subheading'];
           if (this.ticketlessSelected) {
             subheadingText = "";
           }
@@ -903,6 +891,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.noteTextStr = value;
   }
 
+  // Go to previous panels
   goToPanel(ix: number) {
 
   if(this.flowType == 'CREATE_APPOINTMENT'){

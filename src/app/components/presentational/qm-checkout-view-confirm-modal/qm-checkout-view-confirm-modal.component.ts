@@ -9,6 +9,7 @@ import { Util } from '../../../../util/util';
 import { ICustomer } from '../../../../models/ICustomer';
 import { SPService } from "../../../../util/services/rest/sp.service";
 import { AutoClose } from "./../../../../util/services/autoclose.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-checkout-view-confirm-modal',
@@ -27,7 +28,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   btnOkText: string;
   btnCancelText: string;
   userDirection$: Observable<string>;
-  confirmModalForm: FormGroup;
   showEmailTick: boolean = false;
   showPhoneTick: boolean = false;
   customer: ICustomer;
@@ -35,7 +35,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   phoneColor: string = "#ffffff";
   optionsHeading: string = '';
   phoneNumber: string = '';
-  email: string = '';
+  email: String = '';
 
 
 
@@ -48,8 +48,10 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     private translationService: TranslateService,
     private spService: SPService,
     private util: Util,
-    private customerDispatchers: CustomerDispatchers
+    private customerDispatchers: CustomerDispatchers,
+    private router: Router,
   ) {
+
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
         if (customer) {
@@ -82,70 +84,41 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    
+
     const themeSubscription = this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
       this.util.setApplicationTheme(openSp);
     })
     this.subscriptions.add(themeSubscription);
 
-    const phoneValidators = this.util.phoneNoValidator().concat([Validators.required]);
-    const emailValidators = this.util.emailValidator().concat([Validators.required]);
     this.userDirection$ = this.userSelectors.userDirection$;
 
-    this.confirmModalForm = new FormGroup({
-      phone: new FormControl('', phoneValidators),
-      email: new FormControl('', emailValidators)
-    })
+    // customer phone number is not available 
     if (this.customerSms != undefined) {
+      // customer phone number not available and country code not availabe
       if (this.customerSms === '' && this.countryCode != '') {
-        this.confirmModalForm.patchValue({
-          phone: this.countryCode
-        })
-
-      } else {
-        this.confirmModalForm.patchValue({
-          phone: this.customerSms
-        })
-      }
-
+          this.phoneNumber = this.countryCode;
+        }else{
+          this.phoneNumber = this.customerSms;
+          }
     } else if (this.countryCode != '') {
-      this.confirmModalForm.patchValue({
-        phone: this.countryCode
-      })
+          this.phoneNumber= this.countryCode;
     }
-
+    
+    // customer email is  availble
     if (this.customerEmail != null) {
-      this.confirmModalForm.patchValue({
-        email: this.customerEmail
-      })
+        this.email = this.customerEmail;
     }
 
-    const emailSubscription = this.confirmModalForm.get('email').valueChanges.subscribe(() => {
-      if (this.confirmModalForm.controls['email'].dirty) {
-        this.showEmailTick = false;
-      }
-    });
-    this.subscriptions.add(emailSubscription);
-
-    const phoneSubscription = this.confirmModalForm.get('phone').valueChanges.subscribe(() => {
-      this.setphoneColor(this.confirmModalForm.controls['phone'].value);
-      if (this.confirmModalForm.controls['phone'].dirty) {
-        this.showPhoneTick = false;
-      }
-    });
-    this.subscriptions.add(phoneSubscription);
-
-
-    if (!this.isEmailEnabled) {
-      this.confirmModalForm.get('email').disable();
-    } else if (!this.isSmsEnabled) {
-      this.confirmModalForm.get('phone').disable();
-    }
+   
 
     this.translationService.get(['label.options.smsonly.heading',
       'label.options.emailonly.heading',
       'label.options.emailandsms.heading'
-    ]).subscribe((messages) => {
-
+      ]).subscribe((messages) => {
+        if(this.router.url!="/profile"){
+          this.optionsHeading = messages['label.options.smsonly.heading'];
+        }else{
       if (this.customer && this.isEmailEnabled && this.isSmsEnabled)
       {
         if(!this.customer.properties.email && !this.customer.properties.phoneNumber) {
@@ -171,32 +144,14 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
         this.optionsHeading = messages['label.options.smsonly.heading'];
         this.isEmailAndSmsEmpty = false;
       }
+    }
     });
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-  validatePhone(): boolean {
-    this.confirmModalForm.controls['phone'].patchValue(this.confirmModalForm.controls['phone'].value.trim());
-    if (this.customer && this.confirmModalForm.controls['phone'].valid) {
-      this.updateCustomer(this.preparedCustomer(), false);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  validateEmail(): boolean {
-    this.confirmModalForm.controls['email'].patchValue(this.confirmModalForm.controls['email'].value.trim());
-    if (this.customer && this.confirmModalForm.controls['email'].valid && this.confirmModalForm.controls['email'].value != '') {
-      this.updateCustomer(this.preparedCustomer(), true);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+ 
   updateCustomer(customer: ICustomer, fromEmail: boolean) {
     this.spService.updateCustomerPartially(customer).subscribe(
       result => {
@@ -212,19 +167,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
 
-  clearPhone() {
-    this.confirmModalForm.patchValue({
-      phone: this.countryCode != '' ? this.countryCode : ''
-    });
-    this.showPhoneTick = false;
-  }
-
-  clearEmail() {
-    this.confirmModalForm.patchValue({
-      email: ''
-    });
-    this.showEmailTick = false;
-  }
   public decline() {
     this.activeModal.close(false);
   }
@@ -237,27 +179,17 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     this.activeModal.dismiss();
   }
 
-  private preparedCustomer(): ICustomer {
+  // private preparedCustomer(): ICustomer {
 
-    const customerSave: ICustomer = {
-      ...this.customer,
-      id: this.customer.id,
-      properties: {
-        phoneNumber: this.isSmsEnabled ? this.confirmModalForm.value.phone.trim() : this.customer.properties.phoneNumber,
-        email: this.isEmailEnabled ? this.confirmModalForm.value.email.trim() : this.customer.properties.email
-      }
-    }
-    return customerSave
-  }
-
-
-
-  setphoneColor(phoneNo: string) {
-    // if (this.countryCode === null) {
-    phoneNo === '' || this.confirmModalForm.controls['phone'].valid ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
-    // } else if (this.countryCode != null) {
-    //   phoneNo == '' || phoneNo === this.countryCode || (phoneNo.length > this.countryCode.length && this.confirmModalForm.controls['phone'].valid) ? this.phoneColor = '#ffffff' : this.phoneColor = '#F5A9A9';
-    // }
-  }
+  //   const customerSave: ICustomer = {
+  //     ...this.customer,
+  //     id: this.customer.id,
+  //     properties: {
+  //       phoneNumber: this.isSmsEnabled ? this.confirmModalForm.value.phone.trim() : this.customer.properties.phoneNumber,
+  //       email: this.isEmailEnabled ? this.confirmModalForm.value.email.trim() : this.customer.properties.email
+  //     }
+  //   }
+  //   return customerSave
+  // }
 
 }

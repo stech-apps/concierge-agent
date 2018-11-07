@@ -96,8 +96,14 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       });
     }
     else{
-      this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
-      this.onFlowNext.emit();
+      if(this.customerCreateForm.value.firstName!=''||this.customerCreateForm.value.lastName!=''||(this.customerCreateForm.value.phone!='' && this.customerCreateForm.value.phone!=this.countryCode)||this.customerCreateForm.value.email!=''){
+        this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
+        this.onFlowNext.emit();
+      }else{
+        this.customerDispatchers.resetTempCustomer();
+        this.onFlowNext.emit();
+      }
+      
     }
   }
 

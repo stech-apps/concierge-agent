@@ -1,6 +1,8 @@
 import { tap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
+// import { ServicePointSelectors } from "../../../../store";
+
 
 export function whiteSpaceValidator(control: FormControl) {
     const whiteSpaceErrorObject = { 'allwhitespace': true };
@@ -13,6 +15,7 @@ export function whiteSpaceValidator(control: FormControl) {
             }
             return !control.dirty || isValid ? null : whiteSpaceErrorObject;
         }));
+        
 }
 
 export function whiteSpaceValidatorSynchrounous(control: FormControl) {
@@ -26,3 +29,8 @@ export function whiteSpaceValidatorSynchrounous(control: FormControl) {
     return !control.dirty || isValid ? null : whiteSpaceErrorObject;
 
 }
+
+export function validateNotEqualToFactory(c: FormControl) {
+
+  }
+  

@@ -7,7 +7,7 @@
       <td style="width: 20%" (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
       <td style="width: 20%" (click)="selectCustomer(customer)"><div class="search-list-text" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
       <td style="width: 20%" (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
-      <td style="width: 10%" (click)="selectCustomer(customer)"> 
+      <td style="width: 10%" *ngIf="!isInArriveFlow" (click)="selectCustomer(customer)"> 
           <div class="svg-container" (click)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>
           </div>
@@ -17,7 +17,7 @@
     
     
   </tbody>
-  <tbody *ngIf="showNoResults()" class="tbody">
+  <tbody *ngIf="showNoResults()" class="tbody customer-not-found--feedback">
    <tr  class="customer-list">
     <td class="search-list-text" style="text-align:center"> {{ (noCustomerFeedback || 'customer_not_found') | translate }} </td>
     </tr>

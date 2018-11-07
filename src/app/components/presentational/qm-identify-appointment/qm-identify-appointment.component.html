@@ -159,9 +159,9 @@
                   <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                   <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
                 </button> -->
-                <qm-customer-search-bar ></qm-customer-search-bar>
+                <qm-customer-search-bar [isInArriveFlow]="true"></qm-customer-search-bar>
                 <!-- customer search results -->
-                <qm-customer-search noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
+                <qm-customer-search  [isInArriveFlow] = "true" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
                 
               </div>
             </div>
@@ -171,9 +171,9 @@
                 {{'label.identify.appointment.customerwarning' | translate}}
             </div>
     
-            <div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+            <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
               {{'label.identify.appointment.customernotfound' | translate}}
-            </div>
+            </div-->
     
             <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
                 <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}

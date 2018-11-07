@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { CustomerSelector,CustomerDispatchers, ServicePointSelectors, UserSelectors } from '../../../../store';
@@ -28,6 +28,8 @@ export class QmCustomerSearchBarComponent implements OnInit {
   customerLoaded$:Observable<boolean>;
   selectedUser:ICustomer;
   newcustomer:ICustomer;
+
+  @Input() public isInArriveFlow: boolean;
   
 
   private CHARACTER_THRESHOLD = 2;
@@ -100,6 +102,11 @@ export class QmCustomerSearchBarComponent implements OnInit {
   }
 
   handleCustomerSearch(text:string){
-    this.CustomerDispatchers.fetchCustomers(text);
+    if(this.isInArriveFlow) {
+      this.CustomerDispatchers.fetchAppointmentCustomers(text);
+    }
+    else {
+      this.CustomerDispatchers.fetchCustomers(text);
+    }
   }
 }

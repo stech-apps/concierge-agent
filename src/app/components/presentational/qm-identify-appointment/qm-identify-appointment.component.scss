@@ -82,6 +82,7 @@
     .qm-search--large {
       width: 100%;
       margin: 0;
+      min-height: 54px;
     }
 
     qm-customer-search-bar {
@@ -93,6 +94,8 @@
           width: 50%;
           margin: 0;
         }
+
+
       }
     }
 
@@ -100,6 +103,34 @@
       width: 90%;
       position: relative;
       top: 56px;
+
+      ::ng-deep .customer-not-found--feedback {
+        border: 1px solid rgba(0,0,0,0.12);
+        background-color: #FFFFFF;
+        box-shadow: 0 2px 4px 0 rgba(219, 164, 164, 0.12);
+
+        .customer-list {
+          font-size: 18px;
+          font-weight: $font-weight-light;
+          color: rgba(0,0,0,0.82);
+          border: none;
+
+          td {
+            white-space: normal;
+            vertical-align: middle;
+            height: 102px;
+          }
+        }
+      }
+
+      ::ng-deep .customer-table {
+        background-color: $white;
+        font-size: 18px;
+      }
+
+      ::ng-deep .qm-action-btn--only-icon {
+        margin-top: 16px;
+      }
     }
   }
 

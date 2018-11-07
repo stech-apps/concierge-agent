@@ -23,6 +23,7 @@ export class QmCustomerSearchComponent implements OnInit {
   searchText:string;
 
   @Input() public noCustomerFeedback: string = null;
+  @Input() public isInArriveFlow: boolean = false;
 
 constructor(
     private CustomerDispatchers: CustomerDispatchers,
@@ -49,7 +50,16 @@ constructor(
     const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
 
+    if(this.isInArriveFlow) {
+      const customerSubscription = this.CustomerSelectors.appointmentSearchCustomers$.subscribe((customer) => this.customers = customer);
+      this.subscriptions.add(customerSubscription);
+    } else {
+      const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
+      this.subscriptions.add(customerSubscription);
+    }
+
     this.customers$ = this.CustomerSelectors.customer$;
+
 
     const customerLoadedSubscription = this.customerLoaded$.subscribe(
       (customerLoaded:boolean)=> (this.customerLoaded= customerLoaded)

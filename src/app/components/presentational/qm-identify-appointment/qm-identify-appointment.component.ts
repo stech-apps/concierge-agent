@@ -129,6 +129,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   sortColumnPriorities: Array<string> = [];
   requestDelayed: boolean = false;
   requestDelayHandle: any;
+  showSearchResultsArea = true;
 
   readonly SEARCH_STATES = {
     DURATION: "duration",
@@ -427,6 +428,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(timeConventionSub);
+
+    const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
+      this.currentCustomer = customer;
+
+      if(this.currentCustomer && this.currentSearchState === this.SEARCH_STATES.CUSTOMER){
+        this.onCustomerSelect(customer);
+      }
+    });
+
+    this.subscriptions.add(customerSubscription);
   }
 
   initializeSortState() {
@@ -674,6 +685,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
+
     if(this.requestDelayHandle) {
       clearTimeout(this.requestDelayHandle);
     }
@@ -691,6 +703,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         return a;
       });
       this.appointments = this.applyAppointmentFilters(apps);
+      this.showSearchResultsArea = true;
     } else {
       this.appointments = [];
     }
@@ -847,10 +860,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onSearchButtonClick(searchButton) {
+    this.showSearchResultsArea = searchButton === this.SEARCH_STATES.INITIAL;
     this.isSearchInputOpen = !this.isSearchInputOpen;
     this.showAppointmentCollection = true;
 
     if (searchButton == this.SEARCH_STATES.ID) {
+
       this.searchPlaceHolderKey = "please_enter_id_and_press_enter";
     } else if (searchButton === this.SEARCH_STATES.CUSTOMER) {
       this.searchPlaceHolderKey = "please_enter_customer_attributes";

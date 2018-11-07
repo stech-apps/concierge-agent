@@ -78,6 +78,31 @@
     }
   }
 
+  &__customer-search-area {
+    .qm-search--large {
+      width: 100%;
+      margin: 0;
+    }
+
+    qm-customer-search-bar {
+      position: absolute;
+      width: 100%;
+
+      ::ng-deep .customer-search {
+        > div {
+          width: 50%;
+          margin: 0;
+        }
+      }
+    }
+
+    qm-customer-search {
+      width: 90%;
+      position: relative;
+      top: 56px;
+    }
+  }
+
 
   &__selected {
     color: $dark-transparent82;

@@ -19,7 +19,7 @@
   </tbody>
   <tbody *ngIf="showNoResults()" class="tbody">
    <tr  class="customer-list">
-    <td class="search-list-text" style="text-align:center"> {{'customer_not_found'| translate}} </td>
+    <td class="search-list-text" style="text-align:center"> {{ (noCustomerFeedback || 'customer_not_found') | translate }} </td>
     </tr>
   </tbody>
 </table>

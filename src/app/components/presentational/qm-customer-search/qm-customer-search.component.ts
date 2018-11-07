@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
 import { CustomerDispatchers, CustomerSelector, UserSelectors, } from '../../../../store';
@@ -20,7 +20,9 @@ export class QmCustomerSearchComponent implements OnInit {
   customers$: Observable<ICustomer[]>
   private subscriptions : Subscription = new Subscription();
   userDirection$: Observable<string>; 
-  searchText:string
+  searchText:string;
+
+  @Input() public noCustomerFeedback: string = null;
 
 constructor(
     private CustomerDispatchers: CustomerDispatchers,

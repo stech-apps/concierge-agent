@@ -40,7 +40,7 @@
 
       <!--###### APPOINTMENT LIST AREA ###### -->
       <ng-container *ngIf="showSearchResultsArea">
-          <div class="qm-identify-appointment__pannel-container">
+          <div class="qm-identify-appointment__pannel-container" *ngIf="selectedSearchIcon !== 'customer'">
             <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
               <ng-container *ngIf="timeConvention === 'AMPM'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">

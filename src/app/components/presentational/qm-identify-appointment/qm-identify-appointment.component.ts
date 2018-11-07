@@ -318,6 +318,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               this.currentSearchState === this.SEARCH_STATES.CUSTOMER)
           ) {
             this.customerNotFound = true;
+            this.showSearchResultsArea = false;
           } else {
             this.customerNotFound = false;
           }
@@ -335,6 +336,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               this.currentSearchState === this.SEARCH_STATES.CUSTOMER)
           ) {
             this.customerNotFound = true;
+            this.showSearchResultsArea = false;
           } else {
             this.customerNotFound = false;
           }
@@ -869,6 +871,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.searchPlaceHolderKey = "please_enter_id_and_press_enter";
     } else if (searchButton === this.SEARCH_STATES.CUSTOMER) {
       this.searchPlaceHolderKey = "please_enter_customer_attributes";
+      this.showSearchResultsArea = false;
     } else if (searchButton === this.SEARCH_STATES.DURATION) {
       this.setDefaultDuration();
       if (this.enableSearchByDay) {

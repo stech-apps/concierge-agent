@@ -94,8 +94,11 @@
           width: 50%;
           margin: 0;
         }
+      }
 
-
+      
+      ::ng-deep .qm-action-btn--only-icon {
+        margin-top: 16px;
       }
     }
 
@@ -128,9 +131,6 @@
         font-size: 18px;
       }
 
-      ::ng-deep .qm-action-btn--only-icon {
-        margin-top: 16px;
-      }
     }
   }
 

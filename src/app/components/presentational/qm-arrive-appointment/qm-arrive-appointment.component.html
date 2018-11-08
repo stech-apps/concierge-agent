@@ -17,7 +17,7 @@
         <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
       </qm-flow-panel-header>
       <qm-flow-panel-content>
-          <qm-select-service (onFlowNext)="f.onFlowNext(px)" [flowType]="flowType"></qm-select-service>
+          <qm-select-service (onFlowNext)="f.onFlowNext(px)" [flowType]="'ARRIVE_APPOINTMENT'"></qm-select-service>
       </qm-flow-panel-content>
     </qm-flow-panel>
     <qm-flow-panel #px [title]="'arrive_confirm'">
@@ -25,7 +25,7 @@
           <qm-flow-panel-title>{{ 'arrive_confirm' | translate}}</qm-flow-panel-title>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
-          <qm-checkout-view [flowType]="flowType" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
+          <qm-checkout-view [flowType]="'ARRIVE_APPOINTMENT'" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
       </qm-flow-panel-content>
       </qm-flow-panel>
 </qm-flow>  

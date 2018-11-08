@@ -101,12 +101,12 @@
                       <!-- Day -->
                       <div class="qm-input-box__day-element-container qm-input-box__dob-element-container" > 
                           <label for="day" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'day'|translate }}</label>
-                          <input class="qm-input-box__input" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
+                          <input class="qm-input-box__input" #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" > 
                       </div>
                       <!-- Year -->
                       <div class="qm-input-box__year-element-container qm-input-box__dob-element-container"> 
                           <label for="year" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'year'|translate }}</label>
-                          <input class="qm-input-box__input" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
+                          <input class="qm-input-box__input" #year formControlName="year"  type="text" maxlength="4" placeholder="YYYY" name="year" />
                       </div>
                       <br>
                     </div>

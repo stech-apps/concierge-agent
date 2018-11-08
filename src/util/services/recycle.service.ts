@@ -45,6 +45,8 @@ export class Recycle {
       this.nativeApiDispatchers.resetQRCodeInfo();
       this.customerDispatcher.editCustomerMode(false);
       // this.reserveDispatchers.unreserveAppointment();
+      this.customerDispatcher.resetCustomerSearchText();
+      this.customerDispatcher.resetCustomers();
   }
 
   removeAppCache(){

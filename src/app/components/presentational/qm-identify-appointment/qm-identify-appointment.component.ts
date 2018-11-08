@@ -130,6 +130,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   requestDelayed: boolean = false;
   requestDelayHandle: any;
   showSearchResultsArea = true;
+  qrScanerOn = false;
 
   readonly SEARCH_STATES = {
     DURATION: "duration",
@@ -877,14 +878,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       if (this.enableSearchByDay) {
         this.isInDateDurationSelection = true;
       }
-    } else if (searchButton === this.SEARCH_STATES.QR) {
+    } 
+    
+    
+    else if (searchButton === this.SEARCH_STATES.QR) {
       if (this.nativeApi.isNativeBrowser()) {
         this.nativeApi.openQRScanner();
+        
       } else {
-        var searchBox = document.getElementById(
-          "searchAppointmentField"
-        ) as any;
-        this.searchPlaceHolderKey = "qr_code_scanner";
+        this.qrScanerOn=true;
+        var searchBox = document.getElementById("idField") as any;
         searchBox.focus();
         this.nativeApiDispatcher.openQRCodeScanner();
       }
@@ -1379,5 +1382,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.isDescending = false;
     }
     this.sortColumn = sortColumn;
+  }
+  foucusInput(){
+    var searchBox = document.getElementById("idField") as any;
+    searchBox.focus();
   }
 }

@@ -1,6 +1,7 @@
 import { tap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
+import { NG_VALIDATORS, FormControl, Validator, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ServicePointSelectors } from '../store';
 // import { ServicePointSelectors } from "../../../../store";
 
 
@@ -15,7 +16,7 @@ export function whiteSpaceValidator(control: FormControl) {
             }
             return !control.dirty || isValid ? null : whiteSpaceErrorObject;
         }));
-        
+
 }
 
 export function whiteSpaceValidatorSynchrounous(control: FormControl) {
@@ -30,7 +31,24 @@ export function whiteSpaceValidatorSynchrounous(control: FormControl) {
 
 }
 
-export function validateNotEqualToFactory(c: FormControl) {
+export function validateNotEqualToFactory(c: FormControl, servicePointSelectors: ServicePointSelectors): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
 
-  }
-  
+        return new Promise(function (resolve, reject) {
+
+            console.log(servicePointSelectors)
+
+            servicePointSelectors.uttParameters$.subscribe(cc => {
+
+                if(c.value == cc.countryCode) {
+                    resolve({ phoneInvalid: true });
+                }
+                else {
+                    resolve(null);
+                }
+               
+            });
+
+        });
+    };
+}

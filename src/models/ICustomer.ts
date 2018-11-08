@@ -3,8 +3,8 @@ import { ICustomerProperty } from "./ICustomerProperty";
 export interface ICustomer {
   id?: number;
   qpId?: number;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   properties?: ICustomerProperty;
   publicId?: string;
   lastInteractionTimestamp?: string;

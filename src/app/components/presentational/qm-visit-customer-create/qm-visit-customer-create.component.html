@@ -80,6 +80,46 @@
                 </div>
             </div>
 
+              <!-- DOB Section -->
+              <div class="qm-input-box__row">
+                  <div class="qm-input-box__left-side" formGroupName="dateOfBirth">
+                    <label for="date_of_birth" class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label" >{{'date_of_birth'|translate }}</label>
+                    <div class="qm-input-box__dob-container">
+                      <!-- Month -->
+                      <div class="qm-input-box__month-element-container"> 
+                          <label for="month" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'month'|translate }}</label>
+                          <ng-select #month       [items]="months"
+                                                  [selectOnTab]="true"
+                                                  [clearable]="false"
+                                                  notFoundText="{{ 'label.no.items.found' | translate }}"
+                                                  bindValue="value"
+                                                  placeholder="{{ 'field.createCustomerForm.month' | translate }}"
+                                                  formControlName="month"
+                                                  dropdownPosition="bottom">
+                          </ng-select>
+                      </div>
+                      <!-- Day -->
+                      <div class="qm-input-box__day-element-container qm-input-box__dob-element-container" > 
+                          <label for="day" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'day'|translate }}</label>
+                          <input class="qm-input-box__input" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
+                      </div>
+                      <!-- Year -->
+                      <div class="qm-input-box__year-element-container qm-input-box__dob-element-container"> 
+                          <label for="year" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'year'|translate }}</label>
+                          <input class="qm-input-box__input" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
+                      </div>
+                      <br>
+                    </div>
+                  
+                  </div>
+            </div>
+            <div>
+            
+                <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')">{{ 'error.form.dob.incompleteDob' | translate }}</div>
+              </div>
+         
+    
+
           </div>
         </form>
       </div>

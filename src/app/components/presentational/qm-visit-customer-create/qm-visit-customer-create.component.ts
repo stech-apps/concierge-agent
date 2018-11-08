@@ -7,6 +7,7 @@ import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
 import { Util } from '../../../../util/util';
+import { NgOption } from '@ng-select/ng-select';
 
 @Component({
   selector: 'qm-visit-customer-create',
@@ -26,6 +27,30 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   userDirection$: Observable<string>;
   editMode:boolean;
 
+  date = {
+    day: '',
+    month: '',
+    year: ''
+  };
+
+  private dateLabelKeys: string[] = [
+    'calendar.month.none',
+    'calendar.month.january',
+    'calendar.month.february',
+    'calendar.month.march',
+    'calendar.month.april',
+    'calendar.month.may',
+    'calendar.month.june',
+    'calendar.month.july',
+    'calendar.month.august',
+    'calendar.month.september',
+    'calendar.month.october',
+    'calendar.month.november',
+    'calendar.month.december'
+  ];
+  
+  public months: NgOption[];
+
   constructor(
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
@@ -34,7 +59,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     private translateService: TranslateService,
     private toastService: ToastService,
     private servicePointSelectors: ServicePointSelectors,
-    private util: Util
+    private util: Util,
+    private fb:FormBuilder,
   ) { 
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
@@ -62,20 +88,92 @@ export class QmVisitCustomerCreateComponent implements OnInit {
 
   ngOnInit() {
     this.buildCustomerFrom();
+    // Add month names to an array
+    const translateSubscription = this.translateService
+    .get(this.dateLabelKeys)
+    .subscribe((dateLabels: string[]) => {
+      this.months = [
+        { value: '', label: dateLabels['calendar.month.none'] },
+        { value: '01', label: dateLabels['calendar.month.january'] },
+        { value: '02', label: dateLabels['calendar.month.february'] },
+        { value: '03', label: dateLabels['calendar.month.march'] },
+        { value: '04', label: dateLabels['calendar.month.april'] },
+        { value: '05', label: dateLabels['calendar.month.may'] },
+        { value: '06', label: dateLabels['calendar.month.june'] },
+        { value: '07', label: dateLabels['calendar.month.july'] },
+        { value: '08', label: dateLabels['calendar.month.august'] },
+        { value: '09', label: dateLabels['calendar.month.september'] },
+        { value: '10', label: dateLabels['calendar.month.october'] },
+        { value: '11', label: dateLabels['calendar.month.november'] },
+        { value: '12', label: dateLabels['calendar.month.december'] }
+      ];
+    });
+
+    this.subscriptions.add(translateSubscription);
+
   }
 
   buildCustomerFrom(){
     const phoneValidators = this.util.phoneNoValidator();
     const emailValidators = this.util.emailValidator();
-  
+    let dayValidators = [Validators.maxLength(2), Validators.max(31)];
+    let yearValidators = [Validators.maxLength(4), Validators.min(1)];
+    let monthValidators = [];
+    dayValidators = [...dayValidators];
+    yearValidators = [...yearValidators];
+    monthValidators = [...monthValidators];
+
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl(''),
       lastName:new FormControl(''),
       phone:new FormControl(this.countryCode, phoneValidators),
-      email:new FormControl('',emailValidators)
+      email:new FormControl('',emailValidators),
+      dateOfBirth: this.fb.group(
+        {
+          month: [null, monthValidators],
+          day: ['', dayValidators],
+          year: ['', yearValidators]
+        },
+        {
+          validator: this.isValidDOBEntered.bind(this)
+        }
+      )
     })
   }
 
+   
+  // Date of Birth validation
+  isValidDOBEntered(control: FormGroup) {
+    let errors = null;
+    if (control.value) {
+      // invalid date check for leap year
+      if (control.value.year && control.value.month && control.value.day) {
+        const d = new Date(
+          control.value.year,
+          parseInt(control.value.month, 10) - 1,
+          control.value.day
+        );
+        if (d && d.getMonth() + 1 !== parseInt(control.value.month, 10)) {
+          control.setErrors({
+            invalidDay: true
+          });
+          errors = { ...errors, invalidDay: true };
+        }
+      } else if (
+        control.value.year ||
+        control.value.month ||
+        control.value.day
+      ) {
+        control.setErrors({
+          incompleteDay: true
+        });
+        errors = { ...errors, incompleteDob: true };
+      }
+    }
+
+    return errors;
+  }
+  
   trimCustomer(){
     var phoneNo = this.currentCustomer.phone.trim()
     if(phoneNo === "" || phoneNo === null){
@@ -85,8 +183,33 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       firstName: this.currentCustomer.firstName.trim(),
       lastName: this.currentCustomer.lastName.trim(),
       email: this.currentCustomer.email.trim(),
-      phone: phoneNo
+      phone: phoneNo,
+      dateOfBirth:this.getDateOfBirth()
     });
+  }
+
+  getDateOfBirth(): string {
+    const formModel = this.customerCreateForm.value;
+    let year = String(formModel.dateOfBirth.year);
+    const month = formModel.dateOfBirth.month as string;
+    let day = formModel.dateOfBirth.day as string;
+
+    if (day && parseInt(day, 10)) {
+      const intDay = parseInt(day, 10);
+      if (intDay < 10) {
+        day = '0' + intDay;
+      }
+    }
+    year = this.leftPadWithZeros(year, 4);
+    return year && month && day ? year + '-' + month + '-' + day : '';
+  }
+
+  // Add 0 to make the year as 4 digits
+  leftPadWithZeros(sourceString, length) {
+    while (sourceString.length < length) {
+      sourceString = '0' + sourceString;
+    }
+    return sourceString;
   }
 
   doneButtonClick() {

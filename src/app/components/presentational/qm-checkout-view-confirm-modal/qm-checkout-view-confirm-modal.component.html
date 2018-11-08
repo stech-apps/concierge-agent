@@ -1,6 +1,6 @@
 <qm-auto-close>
   <div class="qm-modal qm-add-notes-modal qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
-    <form class="qm-modal__box-container" #optionsForm="ngForm">
+    <form class="qm-modal__box-container" [formGroup]="confirmModalForm" #optionsForm="ngForm">
       <div class="qm-modal__header">
         <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-modal__close-btn" (click)="activeModal.close()">
           <span class="sr-only">{{ optionsHeading }}</span>
@@ -17,19 +17,12 @@
                 <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input type="text" class="qm-input qm-standard-text-field__input" 
-                      placeholder="" maxlength="50" qmClearInput [(ngModel)]="phoneNumber"
-                      pattern="^[0-9\+\s]+$" #phoneRef="ngModel"
-                      required qmAllWhiteSpace name="phoneNumber" />
+                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input"  type="tel" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
               </span>
+          
               <span class="qm-standard-text-field__error-message">
-                <ng-container *ngIf="phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)">
-                  <ng-container *ngIf="phoneRef.errors.allwhitespace && !phoneRef.errors.required">
-                    {{ 'field.optionsForm.phoneNumber.error.allwhitespace' | translate }}
-                  </ng-container>
-                  <ng-container *ngIf="phoneRef.errors.pattern && !phoneRef.errors.required">
+                <ng-container *ngIf="confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty">
                       {{ 'field.optionsForm.phoneNumber.error.invalid' | translate }}
-                  </ng-container>
                 </ng-container>
               </span>
             </label>
@@ -42,16 +35,13 @@
                 <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input type="text" class="qm-input qm-standard-text-field__input" placeholder="" maxlength="50" qmClearInput [(ngModel)]="email"
-                  required name="email" #emailRef="ngModel"
-                  pattern='^\s*(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))\s*$' />
+                <input required qmAllWhiteSpace required class="qm-input-box__input" id="email" type="text" name='email' formControlName = "email" #email  >
               </span>
               <span class="qm-standard-text-field__error-message">
-                  <ng-container *ngIf="emailRef.invalid && (emailRef.dirty || emailRef.touched)">
-                    <ng-container *ngIf="emailRef.errors.pattern && !emailRef.errors.required">
-                        {{ 'field.optionsForm.email.error.invalid' | translate }}
-                    </ng-container>
+                  <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">
+                      {{ 'field.optionsForm.email.error.invalid' | translate }}
                   </ng-container>
+                 
                 </span>
             </label>
           </div>
@@ -64,7 +54,7 @@
               {{ 'button.label.cancel' | translate }}
             </span>
           </button>
-          <button [disabled]="!optionsForm.form.valid" class="qm-btn qm-btn--primary qm-btn-finish" (click)="accept()">
+          <button [disabled]="!confirmModalForm.valid" class="qm-btn qm-btn--primary qm-btn-finish" (click)="accept()">
             <span class="qm-btn__text" title="{{ 'button.label.finish' | translate }}">
               {{ 'button.label.finish' | translate }}
             </span>

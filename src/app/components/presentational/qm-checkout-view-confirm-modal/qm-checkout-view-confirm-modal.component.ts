@@ -36,6 +36,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   optionsHeading: string = '';
   phoneNumber: string = '';
   email: String = '';
+  confirmModalForm:FormGroup;
+  countryCodeNumber:string;
 
 
 
@@ -84,7 +86,14 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+      
+    // Customer creation form
+    const emailValidators = this.util.emailValidator();
+
+    this.confirmModalForm = new FormGroup({
+      phone: new FormControl('',Validators.pattern(this.regexvalue())),
+      email:new FormControl('',emailValidators)   
+    })
 
     const themeSubscription = this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
       this.util.setApplicationTheme(openSp);
@@ -97,13 +106,20 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     if (this.customerSms != undefined) {
       // customer phone number not available and country code not availabe
       if (this.customerSms === '' && this.countryCode != '') {
-          this.phoneNumber = this.countryCode;
+        this.confirmModalForm.patchValue({
+          phone: this.countryCode
+        });
         }else{
-          this.phoneNumber = this.customerSms;
+          this.confirmModalForm.patchValue({
+            phone: this.customerSms
+          });
+
           }
     } else if (this.countryCode != '') {
-          this.phoneNumber= this.countryCode;
-    }
+      this.confirmModalForm.patchValue({
+        phone: this.countryCode
+      });
+    };
     
     // customer email is  availble
     if (this.customerEmail != null) {
@@ -116,7 +132,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       'label.options.emailonly.heading',
       'label.options.emailandsms.heading'
       ]).subscribe((messages) => {
-        if(this.router.url!="/profile"){
+        if(this.router.url=="/home/create-visit"){
           this.optionsHeading = messages['label.options.smsonly.heading'];
         }else{
       if (this.customer && this.isEmailEnabled && this.isSmsEnabled)
@@ -172,7 +188,9 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   public accept() {
-      this.activeModal.close({ 'email' : (this.email || '').trim() , 'phone': (this.phoneNumber || '').trim()});    
+    console.log({ 'email' : (this.confirmModalForm.value.email).trim() , 'phone': (this.confirmModalForm.value.phone).trim()});
+    
+      this.activeModal.close({ 'email' : (this.confirmModalForm.value.email).trim() , 'phone': (this.confirmModalForm.value.phone).trim()});    
   }
 
   public dismiss() {
@@ -191,5 +209,33 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   //   }
   //   return customerSave
   // }
+  test(){
+    // console.log(this.phoneValidators);
+    
+  }
+  public regexvalue(){
+    if(this.countryCode[0]=='+'){
+      this.countryCodeNumber = this.countryCode.substring(1); 
+    }else{
+      this.countryCodeNumber = this.countryCode;
+    }  
+     let regex = new RegExp(this.firstValue());
+     return regex
+  }
 
+  firstValue(){
+    let a = '^(?!\\\+?';
+    let b = '94$)([0-9\\\+\\\s]+)';
+    console.log(a + b);
+    
+    return  a + b; 
+  }
+  restrictNumbers($event) {
+    const pattern = /[0-9\+\s]/;
+    const inputChar = String.fromCharCode($event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      $event.preventDefault();
+    }
+  }
 }

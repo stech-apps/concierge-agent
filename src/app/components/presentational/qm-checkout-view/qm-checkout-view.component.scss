@@ -59,6 +59,13 @@
     @at-root [dir='rtl'] & {
       margin-left: 24px;
     }
+
+    &--arive {
+      h2, .qm-summary-item__icon {
+        color: $black;        
+      }
+    }
+
     h2 {
       color: $primary-pink;
       font-size: 24px;

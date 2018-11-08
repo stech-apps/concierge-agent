@@ -215,7 +215,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
+      const branchSubscription = this.branchSelector.selectedBranch$.subscribe((branch) => {
+        this.selectedBranch = branch;
+      });
+      
       this.subscriptions.add(branchSubscription);
 
       const serviceSubscription = this.serviceSelectors.selectedServices$.subscribe(
@@ -867,11 +870,22 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   getStartTime() {
-    return moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+    console.log(this.selectedAppointment);
+
+    if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      return moment(this.selectedAppointment.startTime).format('hh:mm A');
+    } else {
+      return moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+    }
   }
 
   getEndTime() {
-    return moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+    if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
+      return moment(this.selectedAppointment.endTime).format('hh:mm A');
+    }
+    else {
+      return moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+    }
   }
 
   handleTimeoutError(err: DataServiceError<any>, msg: string) {

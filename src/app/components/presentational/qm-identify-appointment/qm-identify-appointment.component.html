@@ -21,26 +21,26 @@
     <br>
     <div class="qm-identify-appointment">
       <div class="qm-identify-appointment__button-container">
-        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (selectedSearchIcon === 'initial' || !selectedSearchIcon) }">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') }">
           {{'tab.arriveappointment.appointmentlist' | translate }}</div>
         <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
-          [ngClass]="{'qm-identify-appointment__pannel-button-selected': selectedSearchIcon === 'id' }"> <span> <i
+          [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'id' }"> <span> <i
               aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>{{'tab.arriveappointment.bookingid'
           | translate }}</div>
-        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': selectedSearchIcon === 'customer' }">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'customer' }">
           <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>
           {{'tab.arriveappointment.customer' | translate }}</div>
       </div>
       <hr class="qm-identify-appointment__pannel-bottom-bar">
 
       <!--###### ID SEARCH AREA ###### -->
-      <ng-container *ngIf="selectedSearchIcon === 'id'; then idsearchArea"></ng-container>
-      <ng-container *ngIf="selectedSearchIcon === 'customer'; then customerSearchArea"></ng-container>
+      <ng-container *ngIf="currentSearchState === 'id'; then idsearchArea"></ng-container>
+      <ng-container *ngIf="currentSearchState === 'customer'; then customerSearchArea"></ng-container>
 
 
       <!--###### APPOINTMENT LIST AREA ###### -->
       <ng-container *ngIf="showSearchResultsArea">
-          <div class="qm-identify-appointment__pannel-container" *ngIf="selectedSearchIcon !== 'customer'">
+          <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
             <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
               <ng-container *ngIf="timeConvention === 'AMPM'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
@@ -118,8 +118,8 @@
       <ng-template #idsearchArea>
         <div class="qm-identify-appointment__search-area">
           <div class="qm-search qm-search--large">
-            <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
-              name="serviceSearchInput" (keypress)="restrictNumbers($event)" type="search" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}"
+            <input [(ngModel)]="searchText" qmClearInput class="qm-search__input"
+              name="serviceSearchInput" (keyup)="restrictNumbers($event)" type="tel" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}"
               [formControl]="searchInputController" id="searchAppointmentField">
 
             <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
@@ -179,11 +179,12 @@
                 <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
             </div>
       </ng-template>
-
-
     </div>
-
   </div>
+</div>
+
+<div class="qm-flow-done-bar" *ngIf="selectedAppointment">
+  <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
 </div>
 
 
@@ -215,7 +216,7 @@
   <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
   </div>
   <div class="qm-identify-appointment__search-container">
-    <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'id' }">
+    <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'id' }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.58 73.8">
         <g id="Layer_2" data-name="Layer 2">
           <g id="Layer_1-2" data-name="Layer 1">
@@ -258,7 +259,7 @@
       </div>
     </button>
 
-    <button class="qm-search-icon" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'customer' }">
+    <button class="qm-search-icon" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'customer' }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.21 78.29">
 
         <g id="Layer_2" data-name="Layer 2">
@@ -308,7 +309,7 @@
       </div>
     </button>
 
-    <button class="qm-search-icon" (click)="onSearchButtonClick('duration')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'duration' }">
+    <button class="qm-search-icon" (click)="onSearchButtonClick('duration')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'duration' }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.36 76.21">
 
         <g id="Layer_2" data-name="Layer 2">
@@ -366,7 +367,7 @@
         {{'date_and_time' | translate }}
       </div>
     </button>
-    <button class="qm-search-icon" (click)="onSearchButtonClick('qr')" [ngClass]="{'qm-search-icon--selected': selectedSearchIcon === 'qr' }">
+    <button class="qm-search-icon" (click)="onSearchButtonClick('qr')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'qr' }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.19 71.66">
         <g id="Layer_2" data-name="Layer 2">
           <g id="Layer_1-2" data-name="Layer 1">
@@ -453,7 +454,7 @@
       id="searchAppointmentField" class="qm-details-text-feild" />
     <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
 
-    <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="selectedSearchIcon === 'duration'">
+    <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="currentSearchState === 'duration'">
 
       <div class="qm-duration-category" *ngIf="enableSearchByDay">
         <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date'

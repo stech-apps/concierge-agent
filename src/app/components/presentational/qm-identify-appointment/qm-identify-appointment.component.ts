@@ -929,13 +929,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.appointments = this.defaultAppointmentCollection;
     this.selectedCustomer = null;
     //this.arriveAppointmentDispatchers.deselectAppointment();
-
-    if (
-      searchButton === this.SEARCH_STATES.QR &&
-      this.nativeApi.isNativeBrowser()
-    ) {
-      this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
-    }
   }
 
   onSelectTime() {
@@ -1087,21 +1080,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.currentSearchState !== this.SEARCH_STATES.CUSTOMER ||
       this.currentSearchState !== this.SEARCH_STATES.QR
     ) {
-      const trimmedSearchText = (this.searchText || "").trim();
+      let trimmedSearchText = (this.searchText || "").trim();
       if (trimmedSearchText) {
-        if (
-          this.currentSearchState === this.SEARCH_STATES.ID &&
-          !/^-{0,1}\d+$/.test(trimmedSearchText)
-        ) {
-          this.translateService
-            .get("appointment_invalid_entry")
-            .subscribe(msg => {
-              this.toastService.infoToast(msg);
-            })
-            .unsubscribe();
-        } else {
-          this.inputChanged.next(trimmedSearchText);
-        }
+        if (this.currentSearchState === this.SEARCH_STATES.ID) {
+          trimmedSearchText = trimmedSearchText.replace(/[^0-9]/g, "");          
+        } 
+        this.searchText = trimmedSearchText;
+        this.inputChanged.next(trimmedSearchText);
+        
       } else if (this.currentSearchState === this.SEARCH_STATES.ID) {
         this.translateService
           .get("please_enter_id_and_press_enter")
@@ -1231,7 +1217,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   getSelectedAppointmentInfoCustomer() {
     let appointmentInfo = "";
 
-    if (this.selectedAppointment) {
+    if (this.selectedAppointment && this.selectedAppointment.customers[0]) {
 
       appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
       appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
@@ -1288,7 +1274,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDone() {
+  doneButtonClick() {
     this.onFlowNext.emit();
   }
 
@@ -1355,16 +1341,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   restrictNumbers($event) {
     const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode($event.charCode);
+    const inputChar = String.fromCharCode($event.keyCode);
     if(this.isShowAppointmentNotFound) {
       this.isShowAppointmentNotFound = false;
     }
-    if (!pattern.test(inputChar)) {
-      $event.preventDefault();
+    console.log($event);
+    if($event.keyCode === 13 && this.searchText) {
+      this.searchText = $event.target.value.replace(/[^0-9]/g, "");
+      this.onEnterPressed();
     }
 
-    if($event.keyCode === 13 && this.searchText) {
-      this.onEnterPressed();
+    if (!pattern.test(inputChar)) {
+      $event.target.value = $event.target.value.replace(/[^0-9]/g, "");
+      this.searchText = $event.target.value;
     }
   }
 

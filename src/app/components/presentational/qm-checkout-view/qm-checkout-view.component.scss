@@ -4,10 +4,10 @@
   display: flex;
   justify-content: center;
   color: #000000;
-  &__section{
+  &__section {
     padding: 0.5rem 0;
   }
-  &__summary-grouping-non-selective{
+  &__summary-grouping-non-selective {
     padding: 0 0.75rem;
   }
 
@@ -24,6 +24,7 @@
       }
     }
   }
+
   .qm-summary-item {
     display: flex;
     line-height: 44px;
@@ -45,7 +46,7 @@
       }
     }
   }
-  
+
   &__summary {
     flex: 1;
     height: calc(100vh - 75px);
@@ -56,14 +57,8 @@
     margin-left: 24px;
     max-width: 34%;
     overflow-y: auto;
-    @at-root [dir='rtl'] & {
+    @at-root [dir="rtl"] & {
       margin-left: 24px;
-    }
-
-    &--arive {
-      h2, .qm-summary-item__icon {
-        color: $black;        
-      }
     }
 
     h2 {
@@ -73,7 +68,7 @@
       letter-spacing: -0.17px;
       line-height: 32px;
       text-align: left;
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         text-align: right;
       }
     }
@@ -85,21 +80,36 @@
       margin-top: 0.6rem;
       margin-bottom: 0.6rem;
       margin-left: 0.5rem;
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         text-align: right;
       }
     }
+
+    &--arive {
+      h2,
+      .qm-summary-item__icon {
+        color: $black;
+      }
+
+      .qm-checkout-view__summary-grouping {
+        &:hover {
+          background-color: $white;
+          cursor: auto;
+          .qm-summary-item {
+            color: $black;
+          }
+        }
+      }
+    }
   }
-  &__unlinked-customer{
-    h2{
+  &__unlinked-customer {
+    h2 {
       color: $dark-transparent82;
       font-weight: 300;
-      padding: 10px 0px;  
+      padding: 10px 0px;
     }
-    
   }
-  &__summary-create-visit{
-    
+  &__summary-create-visit {
     min-height: 60vh;
     max-width: 34%;
     height: fit-content;
@@ -119,18 +129,18 @@
       margin-top: 0.6rem;
       margin-bottom: 0.6rem;
       margin-left: 0.5rem;
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         text-align: right;
       }
     }
   }
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
-    &__summary-create-visit{
+    &__summary-create-visit {
       height: 0px;
     }
   }
-  
+
   // ############### notification area
   &__notifications {
     flex: 1.5;
@@ -148,7 +158,7 @@
       padding-bottom: 1.75rem;
     }
     color: rgba(0, 0, 0, 0.42);
-    >* {
+    > * {
       width: 65%;
     }
     &-heading {
@@ -166,7 +176,7 @@
         line-height: 80px;
       }
     }
-    button~button {
+    button ~ button {
       margin-top: 1.25rem;
     }
   }
@@ -220,9 +230,9 @@
     align-items: center;
     .vip-label {
       flex: 1;
+      color: $dark-transparent82;
       white-space: nowrap;
-      font-weight: 900;
-      font-size: smaller;
+      font-size: 24px;
       @include add-text-ellipsis;
       width: auto;
       text-align: left;
@@ -273,7 +283,7 @@
           }
         }
         .label {
-          font-size: .85em;
+          font-size: 0.85em;
         }
       }
     }
@@ -333,7 +343,8 @@
       .table {
         width: 100%;
         table-layout: fixed;
-        .tr {}
+        .tr {
+        }
         .label {
           text-align: left;
           font-size: 12px;
@@ -403,10 +414,10 @@
 .qm-back-drop {
   height: 100vh;
   position: absolute;
-  background-color: rgba($color: #000000, $alpha: 1.0)
+  background-color: rgba($color: #000000, $alpha: 1);
 }
 
-.icon-customer-add{
+.icon-customer-add {
   color: $pale-aquamarine;
   cursor: pointer;
   align-self: center;

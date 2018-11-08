@@ -35,7 +35,7 @@
   &__textarea {
     display: block;
     width: 100%;
-
+    
     resize: none;
     font-size: 18px;
     color: rgba(0,0,0,0.82);
@@ -43,6 +43,10 @@
 
     &[disabled] {
       background: $disabled-background;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 

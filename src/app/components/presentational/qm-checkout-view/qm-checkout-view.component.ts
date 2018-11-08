@@ -738,7 +738,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
         this.qmModalService.openDoneModal(v['label.arrive.success.heading'],
           subheadingText, [], result.ticketId);
-
       });
     }
   }

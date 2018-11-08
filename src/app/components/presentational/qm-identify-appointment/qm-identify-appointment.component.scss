@@ -300,8 +300,28 @@
       font-size: 18px;
       line-height: 56px;
       color: $dark-transparent82;
-      margin-bottom: 0.6rem;
       position: relative;
+
+      &-parent {
+        width: 100%;
+        position: relative;
+        margin-bottom: 0.6rem;
+
+        .icon-info {
+          position: absolute;
+          right: -3rem;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 28px;
+          cursor: pointer;
+          color: $dark-transparent62;
+  
+          @at-root [dir="rtl"] & {
+            left: -3.5rem;
+            right: auto;
+          }
+        }
+      }
 
       &:hover {
         background-color: $dark-transparent04;
@@ -313,20 +333,6 @@
 
       & > div:first-child {
         padding-left: 1rem;
-      }
-
-      .icon-info {
-        position: absolute;
-        right: -3rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 28px;
-        cursor: pointer;
-        color: $dark-transparent62;
-
-        @at-root [dir="rtl"] & {
-          left: -3rem;
-        }
       }
     }
   }

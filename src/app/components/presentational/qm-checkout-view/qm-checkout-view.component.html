@@ -12,9 +12,7 @@
         <span class="qm-summary-item__icon icon-mail"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.email }}</span>
       </div>
-    </div>
-
-  
+    </div>  
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
     <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" *ngIf="selectedAppointment">

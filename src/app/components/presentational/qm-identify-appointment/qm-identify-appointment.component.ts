@@ -1166,8 +1166,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           .format(timeformat);
       }
 
-      appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
-      appointmentInfo += `${this.selectedAppointment.customers[0].lastName}`;
+      appointmentInfo += `${this.selectedAppointment.customers[0] ? this.selectedAppointment.customers[0].firstName : ''} `;
+      appointmentInfo += `${this.selectedAppointment.customers[0] ? this.selectedAppointment.customers[0].lastName : ''}`;
     }
     return appointmentInfo;
   }
@@ -1227,7 +1227,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.selectedAppointment && this.selectedAppointment.customers[0]) {
 
       appointmentInfo += `${this.selectedAppointment.customers[0].firstName} `;
-      appointmentInfo += `${this.selectedAppointment.customers[0].lastName} - `;
+      appointmentInfo += `${this.selectedAppointment.customers[0].lastName}`;
     }
     
     return appointmentInfo;
@@ -1312,7 +1312,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.translateService
       .get(["heading.timefilter", "subheading.timefilter"])
       .subscribe(messages => {
-        console.log(messages);
         this.modalService
           .openTimeFilter(
             messages["heading.timefilter"],
@@ -1352,7 +1351,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if(this.isShowAppointmentNotFound) {
       this.isShowAppointmentNotFound = false;
     }
-    console.log($event);
+    
     if($event.keyCode === 13 && this.searchText) {
       this.searchText = $event.target.value.replace(/[^0-9]/g, "");
       this.onEnterPressed();

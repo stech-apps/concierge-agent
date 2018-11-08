@@ -722,18 +722,23 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.qmModalService.openDoneModal(v['visit_created'],
             subheadingText, [], result.ticketId);
 
-
-
         });
     }
     else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      this.translateService.get('arrived').subscribe(v => {
-        var successMessage = {
-          firstLineName: v,
-          firstLineText: result.ticketId,
-          icon: "correct"
+      this.translateService.get(['visit_id_label',
+      'label.arrive.success.subheadingsms', 'label.arrive.success.subheadingticket', 'label.arrive.success.heading']).subscribe(v => {
+
+        let subheadingText = '';
+        if (this.ticketSelected) {
+          subheadingText = v['label.arrive.success.subheadingticket'];
+
+        } else if (this.smsSelected) {
+          subheadingText += `${v['label.arrive.success.subheadingsms']}`
         }
-        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+
+        this.qmModalService.openDoneModal(v['label.arrive.success.heading'],
+          subheadingText, [], result.ticketId);
+
       });
     }
   }

@@ -232,7 +232,10 @@
       flex: 1;
       color: $dark-transparent82;
       white-space: nowrap;
-      font-size: 24px;
+      font-weight: normal;
+      font-size: 1.4em;
+      color: $dark-transparent82;
+    
       @include add-text-ellipsis;
       width: auto;
       text-align: left;

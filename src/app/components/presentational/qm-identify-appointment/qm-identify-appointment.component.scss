@@ -337,6 +337,21 @@
   vertical-align: middle;
   padding-right: 8px;
 }
+
+.icon-scan-qr{
+  color: $primary-pink;
+  font-size: 4em;
+ 
+}
+.scan-qr-container{
+  padding: 10px 15px;
+  background-color: white;
+  box-shadow: 2px 4px 4px 0 $dark-transparent04;
+  color: $primary-pink;
+  text-align: center;
+  margin-top: 40px;
+  border: 1px solid $dark-transparent12;
+}
 // .qm-identify-appointment {
 //   &__search-input {
 //     width: $appointment-identify-searchbar-width;

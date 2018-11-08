@@ -1316,9 +1316,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           .openTimeFilter(
             messages["heading.timefilter"],
             messages["subheading.timefilter"],
-            false
+            false,
+            this.useCalendarEndpoint,
+            this.selectedFromTime,
+            this.selectedToTime
           )
-          .result.then((tfs: { start: moment.Moment; end: moment.Moment }) => {
+          .result.then((tfs: { start: moment.Moment; end: moment.Moment, date?: CalendarDate }) => {
             if (tfs && tfs.start && tfs.end) {
               this.fromTime = {
                 hour: tfs.start.hour(),
@@ -1334,6 +1337,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
               this.selectedFromTime = tfs.start;
               this.selectedToTime = tfs.end;
+              this.selectedDate = tfs.date;
               this.currentSearchState = this.SEARCH_STATES.DURATION;
               this.searchAppointments();
             }

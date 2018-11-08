@@ -7,6 +7,61 @@ qm-time-filter-items {
 }
 
 .qm-time-filter {
+
+  &__date-container {
+    position: relative;
+  }
+
+  &__calendar-placeholder {
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    top: 89px;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    border: 1px solid $dark-transparent12;
+  }
+
+  &__date {
+    &-label {
+      color: rgba(0, 0, 0, 0.62);
+      font-size: 16px;
+      height: 2rem;
+      position: relative;
+    }
+    &-text {
+      height: 56px;
+      width: 100%;
+      border: 1px solid #d5d5d5;
+      background-color: $white;
+      box-shadow: 2px 4px 4px 0 $dark-transparent04;
+      margin-bottom: 3rem;
+      display: flex;
+
+      &--label {
+        flex-basis: 90%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        color: $dark-transparent82;
+        font-size: 20px;
+        font-weight: $font-weight-light;
+        line-height: 56px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .icon-calendar-light {
+        color: $secondary-color;
+        cursor: pointer;
+        line-height: 56px;
+        font-size: 2rem;
+        &:hover {
+          color: $dark-transparent82;
+        }
+        @at-root [dir="rtl"] & {
+        }
+      }
+    }
+  }
   &__header {
     font-size: 21px;
     font-weight: $font-weight-medium;
@@ -89,7 +144,7 @@ qm-time-filter-items {
   }
 
   .qm-btn--primary-disabled {
-    background-color: rgba(0,0,0,0.42);
+    background-color: rgba(0, 0, 0, 0.42);
     color: $white;
     border: none;
   }

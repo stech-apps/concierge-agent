@@ -1,65 +1,137 @@
-<div class="qm-pannel-container" [ngStyle]="{'height':  ((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT') && !editMode  ? 'calc(100% - 12vh)' : '100%'}">
-    <div class="qm-pannel-inner-container"> 
-        <div class="qm-flow-sub-header">
-            <div class="qm-flow-sub-header__left">
+<div
+  class="qm-pannel-container"
+  [ngStyle]="{
+    height:
+      ((flowType === 'CREATE_APPOINTMENT' &&
+        currentCustomer &&
+        !f.customerCreateForm.dirty &&
+        !editMode) ||
+        flowType !== 'CREATE_APPOINTMENT') &&
+      !editMode
+        ? 'calc(100% - 12vh)'
+        : '100%'
+  }"
+>
+  <div class="qm-pannel-inner-container">
+    <div class="qm-flow-sub-header">
+      <div class="qm-flow-sub-header__left">
+        <h1 *ngIf="!currentCustomer || (currentCustomer && !editMode)">
+          {{ "select_customer_header" | translate }}
+        </h1>
+        <h1 *ngIf="currentCustomer && editMode">
+          {{ "edit_customer" | translate }}
+        </h1>
 
-                <h1 *ngIf="!currentCustomer || (currentCustomer && !editMode)">{{ 'select_customer_header' | translate}}</h1>
-                <h1 *ngIf="currentCustomer && editMode">{{ 'edit_customer' | translate}}</h1>
-
-                <!-- Selected Cutomer box -->
-                <div class="qm-selected-box" *ngIf="currentCustomer && !editMode">
-                    <div class="qm-selected-box__heading">{{ 'label.selected.customer' | translate }}</div>
-                    <div class="qm-selected-box__content">
-                        <div class="qm-selected-box__text">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</div>
-                        <i aria-hidden="true" class="icon-delete" (click)="clearCustomer()"></i>
-                    </div>
-                </div>
-    
+        <!-- Selected Cutomer box -->
+        <div class="qm-selected-box" *ngIf="currentCustomer && !editMode">
+          <div class="qm-selected-box__heading">
+            {{ "label.selected.customer" | translate }}
+          </div>
+          <div class="qm-selected-box__content">
+            <div class="qm-selected-box__text">
+              {{ currentCustomer.firstName + " " + currentCustomer.lastName }}
             </div>
-            <div class="qm-flow-sub-header__right" *ngIf="flowType != 'CREATE_APPOINTMENT'">
-                <div class="qm-checkbox__container">
-                  <label for="qm-checkbox" class="qm-checkbox-label">
-                    <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
-                    <div class="qm-checkbox__selector">
-                      <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-                      <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
-                    </div>
-                  </label>
-                  <button  type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
-                    <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
-                  </button>
-                </div>
+            <i
+              aria-hidden="true"
+              class="icon-delete"
+              (click)="clearCustomer()"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div
+        class="qm-flow-sub-header__right"
+        *ngIf="flowType != 'CREATE_APPOINTMENT'"
+      >
+        <div class="qm-checkbox__container">
+          <label for="qm-checkbox" class="qm-checkbox-label">
+            <input
+              id="qm-checkbox"
+              class="qm-checkbox"
+              type="checkbox"
+              (change)="onSwitchChange()"
+              [(ngModel)]="isFlowSkip"
+            />
+            <div class="qm-checkbox__selector">
+              <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
+              <div class="qm-checkbox__selector-icon-text">
+                {{ "label.skip.branch" | translate }}
               </div>
-
+            </div>
+          </label>
+          <button
+            type="button"
+            class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn"
+          >
+            <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
+          </button>
         </div>
-
-
-        <div class="qm-crossline-header-container" *ngIf="!editMode && !currentCustomer">
-            <div class="qm-crossline-header"></div>
-            <h2 class="qm-crossline-header-text">{{ 'label.link_customer' | translate }}</h2>
-            <br>
-        </div>
-
-        <div class="qm-customer-search-component" *ngIf="!editMode && !currentCustomer">
-            <!-- customer Serach bar -->
-            <qm-customer-search-bar ></qm-customer-search-bar>
-            <!-- customer search results -->
-            <qm-customer-search></qm-customer-search>
-            <div class="qm-info-text" *ngIf="customers.length==0">
-                <i class="icon-info qm-details-icon"></i> {{'label.customer_change_tip'|translate}} </div>
-        </div>
-        <br>
-
-        <div class="qm-crossline-header-container" >
-            <div class="qm-crossline-header" *ngIf="(!editMode && !currentCustomer && customers.length==0)||(editMode || (!editMode && currentCustomer))" ></div>
-            <h2 class="qm-crossline-header-text" *ngIf="!editMode && !currentCustomer && customers.length==0">{{ 'label.add_customer' | translate }}</h2>
-            <h2 class="qm-crossline-header-text" *ngIf="editMode || (!editMode && currentCustomer)">{{ 'label.customer_details' | translate }}</h2>
-        </div>      
-        <div class="qm-service-list__container" >
-        <qm-inputbox #f (onFlowNext)="doneButtonClick()"></qm-inputbox>
-        </div>
+      </div>
     </div>
+
+    <div
+      class="qm-crossline-header-container"
+      *ngIf="!editMode && !currentCustomer"
+    >
+      <div class="qm-crossline-header"></div>
+      <h2 class="qm-crossline-header-text">
+        {{ "label.link_customer" | translate }}
+      </h2>
+      <br />
+    </div>
+
+    <div
+      class="qm-customer-search-component"
+      *ngIf="!editMode && !currentCustomer"
+    >
+      <!-- customer Serach bar -->
+      <qm-customer-search-bar></qm-customer-search-bar>
+      <!-- customer search results -->
+      <qm-customer-search></qm-customer-search>
+      <div class="qm-info-text" *ngIf="customers.length == 0">
+        <i class="icon-info qm-details-icon"></i>
+        {{ "label.customer_change_tip" | translate }}
+      </div>
+    </div>
+    <br />
+
+    <div class="qm-crossline-header-container">
+      <div
+        class="qm-crossline-header"
+        *ngIf="
+          (!editMode && !currentCustomer && customers.length == 0) ||
+          (editMode || (!editMode && currentCustomer))
+        "
+      ></div>
+      <h2
+        class="qm-crossline-header-text"
+        *ngIf="!editMode && !currentCustomer && customers.length == 0"
+      >
+        {{ "label.add_customer" | translate }}
+      </h2>
+      <h2
+        class="qm-crossline-header-text"
+        *ngIf="editMode || (!editMode && currentCustomer)"
+      >
+        {{ "label.customer_details" | translate }}
+      </h2>
+    </div>
+    <div class="qm-service-list__container">
+      <qm-inputbox #f (onFlowNext)="doneButtonClick()"></qm-inputbox>
+    </div>
+  </div>
 </div>
-<div class="qm-flow-done-bar" *ngIf="((flowType === 'CREATE_APPOINTMENT' && currentCustomer && !f.customerCreateForm.dirty && !editMode) || flowType !== 'CREATE_APPOINTMENT')">
-    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
+<div
+  class="qm-flow-done-bar"
+  *ngIf="
+    (flowType === 'CREATE_APPOINTMENT' &&
+      currentCustomer &&
+      !f.customerCreateForm.dirty &&
+      !editMode) ||
+    flowType !== 'CREATE_APPOINTMENT'
+  "
+>
+  <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()">
+    {{ "banner_done_label" | translate }}
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ElementRef } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, ElementRef, Input } from "@angular/core";
 import { UserSelectors, SystemInfoSelectors } from "src/store";
 import { Observable, Subscription } from "rxjs";
 import * as moment from "moment";
@@ -22,7 +22,9 @@ export class QmTimeFilterItemsComponent implements OnInit {
   userDirection$: Observable<string> = new Observable<string>();
   timeConvention: string = "24";
   timeCollection: Array<moment.Moment> = [];
-  selectedTime: moment.Moment;
+
+  @Input() 
+  public selectedTime: moment.Moment;
 
   @Output()
   public onTimeSelect = new EventEmitter<moment.Moment>();
@@ -35,6 +37,8 @@ export class QmTimeFilterItemsComponent implements OnInit {
     );
 
     this.subscriptions.add(systemInfoSub);
+    console.log(this.selectedTime);
+    
   }
 
   ngOnDestroy() {
@@ -42,7 +46,7 @@ export class QmTimeFilterItemsComponent implements OnInit {
   }
 
   generateTimeCollection() {
-    const currentHourStarted = moment().startOf("hour");
+    const currentHourStarted = moment().startOf("day");
     const currentDayEnd = moment()
       .endOf("day")
       .add(1, "second");

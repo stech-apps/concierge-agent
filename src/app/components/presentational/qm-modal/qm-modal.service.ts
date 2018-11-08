@@ -6,6 +6,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { QmModalComponent } from "./qm-modal.component";
 import { QmDoneModalComponent } from 'src/app/components/presentational/qm-done-modal/qm-done-modal.component';
 import { QmTimeFilterComponent } from '../../containers/qm-time-filter/qm-time-filter.component';
+import * as  moment from 'moment';
 
 @Injectable()
 export class QmModalService {
@@ -93,7 +94,9 @@ export class QmModalService {
     return modal;
   }
 
-  openTimeFilter(header?: string, subheader?: string, is24HourFormat: boolean = true): any {
+  openTimeFilter(header?: string, subheader?: string, is24HourFormat: boolean = true,
+    showDateFilter: boolean = false,
+    selectedStartTime?: moment.Moment, selectedEndTime?: moment.Moment): any {
     const modal = this.modalService.open(QmTimeFilterComponent, { centered: true,
     windowClass : 'qm-time-filter__modal',
     backdropClass: 'qm-time-filter__backdrop'
@@ -101,6 +104,9 @@ export class QmModalService {
 
     modal.componentInstance.header = header;
     modal.componentInstance.subheader = subheader;
+    modal.componentInstance.showDateFilter = showDateFilter;
+    modal.componentInstance.selectedStartTime = selectedStartTime;
+    modal.componentInstance.selectedEndTime = selectedEndTime;
     return modal;
   }
 }

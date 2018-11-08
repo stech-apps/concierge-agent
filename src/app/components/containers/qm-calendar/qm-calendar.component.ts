@@ -31,6 +31,8 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
   @Input() enableAllFutureDates: boolean = false;
+  @Input() enableToday: boolean = false;
+  @Input() emitOnInitialSelection: boolean = true;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
   @Input() enabledDates: moment.Moment[] = [];
 
@@ -194,7 +196,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
           mDate: d,
         };
 
-        if (isSelectedDay) {
+        if (isSelectedDay && this.emitOnInitialSelection) {
           this.selectDate(calDay);
         }
 

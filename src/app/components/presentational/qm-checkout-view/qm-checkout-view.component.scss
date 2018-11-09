@@ -59,6 +59,8 @@
     overflow-y: auto;
     margin-top: 10px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    // display: table-cell;
+    vertical-align: bottom;
     @at-root [dir="rtl"] & {
       margin-left: 24px;
     }

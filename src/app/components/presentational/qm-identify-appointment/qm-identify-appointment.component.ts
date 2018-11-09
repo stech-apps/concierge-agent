@@ -183,7 +183,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private customerSelectors: CustomerSelector,
     private calendarBranchSelectors: CalendarBranchSelectors,
     private userSelectors: UserSelectors,
-    private nativeApi: NativeApiService,
+    public nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private util: Util,
     private nativeApiDispatcher: NativeApiDispatchers,

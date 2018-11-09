@@ -925,8 +925,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   getStartTime() {
-    console.log(this.selectedAppointment);
-
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       return moment(this.selectedAppointment.startTime).format('hh:mm A');
     } else {

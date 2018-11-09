@@ -302,8 +302,8 @@ export class QmInputboxComponent implements OnInit {
     const inputChar = String.fromCharCode($event.charCode);
 
     if (!pattern.test(inputChar)) {
-      // $event.preventDefault();
-      $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, "");
+      $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, '');
+      this.customerCreateForm.patchValue({ phone: $event.target.value})
     }
   }
 

@@ -36,8 +36,6 @@ export function validateNotEqualToFactory(c: FormControl, servicePointSelectors:
 
         return new Promise(function (resolve, reject) {
 
-            console.log(servicePointSelectors)
-
             servicePointSelectors.uttParameters$.subscribe(cc => {
 
                 if(c.value == cc.countryCode) {

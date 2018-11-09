@@ -269,6 +269,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     }
    }
    restrictNumbers($event){
-    $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, "");
+    $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, '');
+    this.customerCreateForm.patchValue({ phone: $event.target.value})
    }
 }

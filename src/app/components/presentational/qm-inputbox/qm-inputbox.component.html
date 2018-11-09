@@ -52,7 +52,7 @@
                   <div class="qm-input-box__col-50">
                       <div class="qm-input-box__left-side">
                         <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'phone'|translate }}</label>
-                        <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone>
+                        <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
                         <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                             <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
                         </span> 

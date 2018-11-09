@@ -1,0 +1,25 @@
+.qm-modal-generic {
+  .qm-modal__message {
+    color: rgba(0, 0, 0, 0.82);
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 32px;
+    text-align: center;
+  }
+
+  .qm-modal__button-container {
+      display: flex;
+      justify-content: center;
+      padding-top: 4rem;
+      button {
+        height: 44px;
+        width: 100px;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: 300;
+        color: #FFFFFF;
+        border: none;
+        margin: 1rem;
+      }
+  }
+}

@@ -9,7 +9,6 @@
 
       &__cell-#{$attr-value} {
          width: $attr-value * 1% ;
-         display: flex;
          padding-left: 1rem;
          padding-right: 1rem;
       }

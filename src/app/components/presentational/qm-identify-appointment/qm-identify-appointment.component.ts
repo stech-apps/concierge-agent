@@ -149,7 +149,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readonly ARRIVED_APPOINTMENT_STATE_ID = 30;
   readonly ARRIVED_APPOINTMENT_STATE = "ARRIVED";
 
-  isFetchBlock: boolean = false;
+  isRefreshDisabled: boolean = false;
 
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter<any>();
@@ -196,6 +196,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    if(this.useCalendarEndpoint) {
+      this.selectedDate = {mDate: moment()};
+    }
+
     this.initializeSortState();
     const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe(
       value => {
@@ -1261,7 +1266,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   refreshAppointments() {
-    if (this.isFetchBlock === false) {
+    if (this.isRefreshDisabled === false) {
       this.selectedSearchIcon = "";
       this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
       const servicePointsSubscription = this.servicePointSelectors.uttParameters$
@@ -1272,10 +1277,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.searchAppointments();
           setTimeout(() => {
             //<<<---    using ()=> syntax
-            this.isFetchBlock = false;
+            this.isRefreshDisabled = false;
           }, 30000);
 
-          this.isFetchBlock = true;
+          this.isRefreshDisabled = true;
         })
         .unsubscribe();
     }

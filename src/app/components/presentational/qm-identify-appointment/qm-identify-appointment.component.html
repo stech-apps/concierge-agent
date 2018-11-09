@@ -12,7 +12,6 @@
       </div>
     </div>
 
-
     <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
       <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
         'label.identify.appointment.selected' | translate }}</div>
@@ -50,7 +49,7 @@
             <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
               <ng-container *ngIf="timeConvention === 'AMPM'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                  <span *ngIf="userCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM,'}}</span>
+                  <span *ngIf="useCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM, '}}</span>
                   &nbsp;
                   <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                     date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
@@ -64,7 +63,7 @@
                     date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
                 </div>
               </ng-container>
-              <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{
+              <span class="qm-identify-appointment__refresh-button" [ngClass]="{'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled}" (click)="refreshAppointments()"> {{
                 'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
             </div>
           </div>

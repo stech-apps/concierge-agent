@@ -59,15 +59,6 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
       selectedElements.forEach(element => {
         element.scrollIntoView();
       });
-
-      let timeSlotParents = this.elRef.nativeElement.querySelectorAll(
-        "qm-time-filter-items"
-      );
-
-      // time slot filter parents
-      timeSlotParents.forEach(p => {
-        p.scrollTop -= 135;
-      });
     }
   }
 

@@ -140,10 +140,15 @@
     display: flex;
     font-size: 18px;
     align-items: center;
+    width: calc(100% - 106px);
 
     &--text {
       max-width: 35%;
-      padding: 1rem;
+      padding: 1rem 1rem 1rem 0;
+
+      @at-root [dir='rtl'] & {
+        padding: 1rem 0 1rem 1rem;
+      }
     }
 
     &__close-btn {
@@ -243,10 +248,20 @@
     top: 50%;
     transform: translateY(-50%);
     color: $dark-transparent62;
+
     &:hover {
       color: $dark-transparent82;
       cursor: pointer;
     }
+
+    
+    &--disabled {
+      color: rgba(0, 0, 0, 0.25);
+      &:hover {
+        color: rgba(0, 0, 0, 0.25);
+        cursor: default;
+      }
+   }
     .icon-refresh {
       padding-right: 0;
     }

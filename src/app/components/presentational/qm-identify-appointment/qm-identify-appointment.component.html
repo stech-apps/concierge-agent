@@ -1,5 +1,4 @@
 <div class="qm-pannel-container" dir="{{userDirection$ | async}}">
-<<<<<<< HEAD
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
       <div class="qm-flow-sub-header__left">
@@ -15,41 +14,29 @@
 
 
     <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
-      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{ 'label.identify.appointment.selected'
-        | translate }}</div>
+      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
+        'label.identify.appointment.selected' | translate }}</div>
       <div class="qm-identify-appointment__selected--details">
         <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
         <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
         <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
         <span class="qm-identify-appointment__selected__close-btn" (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
-=======
-    <div class="qm-pannel-inner-container">
-      <div class="qm-flow-sub-header">
-        <div class="qm-flow-sub-header__left">
-          <h1>{{ 'identify_appointment' | translate}}</h1>
-        </div>
-        <div class="qm-flow-sub-header__right">
-         <div class="scan-qr-container" (click)="onSearchButtonClick('qr')">
-          <i class="qm-action-btn__icon icon-scan-qr"></i>
-          <div> {{'scan_qr'|translate}}</div>
-        </div>
-        </div>
->>>>>>> edit flow
       </div>
-  
-  
-      <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
-        <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
-          'label.identify.appointment.selected' | translate }}</div>
-        <div class="qm-identify-appointment__selected--details">
-          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
-          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
-          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
-          <span class="qm-identify-appointment__selected__close-btn" (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
-        </div>
-        <span class="qm-identify-appointment__selected--icon"><i class="icon-info"></i></span>
+      <span class="qm-identify-appointment__selected--icon"><i class="icon-info"></i></span>
+    </div>
+    <br>
+    <div class="qm-identify-appointment">
+      <div class="qm-identify-appointment__button-container">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') }">
+          {{'tab.arriveappointment.appointmentlist' | translate }}</div>
+        <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
+          [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'id' }"> <span> <i
+              aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>{{'tab.arriveappointment.bookingid'
+          | translate }}</div>
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'customer' }">
+          <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>
+          {{'tab.arriveappointment.customer' | translate }}</div>
       </div>
-<<<<<<< HEAD
       <hr class="qm-identify-appointment__pannel-bottom-bar">
 
       <!--###### ID SEARCH AREA ###### -->
@@ -59,53 +46,27 @@
 
       <!--###### APPOINTMENT LIST AREA ###### -->
       <ng-container *ngIf="showSearchResultsArea">
-        <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
-          <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
-            <ng-container *ngIf="timeConvention === 'AMPM'">
-              <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime | date:'hh:mm
-                  a'}}
-                </span> <i class="icon-edit qm-action-btn__icon "></i>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="timeConvention === '24'">
-              <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                <span>{{selectedFromTime | date: 'HH:mm'}}</span>
-                <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime | date:'HH:mm'}}
-                </span> <i class="icon-edit qm-action-btn__icon "></i>
-              </div>
-            </ng-container>
-            <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{ 'label.arriveappointment.refresh'
-              | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
-          </div>
-        </div>
-
-        <div class="qm-identify-appointment__table-container">
-          <div class="qm-identify-appointment__customer-table">
-            <div class="qm-identify-appointment__customer-table__header qm-table__row">
-              <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" class="qm-table__cell-10  qm-text-overflow-fix">{{
-                'list.arriveappointment.heading.id' | translate }}
-                <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
-              </div>
-              <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-10 qm-text-overflow-fix"><span>{{
-                  'list.arriveappointment.heading.time' | translate }}</span><span>
-                  <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
-                </span>
-              </div>
-              <div (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" class="qm-table__cell-15  qm-text-overflow-fix">{{
-                'list.arriveappointment.heading.date' | translate }}
-                <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDate') : getSortIcons('startTimeDate')"></i>
-              </div>
-
-              <div (click)="sortAppointments('custName')" class="qm-table__cell-20  qm-text-overflow-fix">{{ 'list.arriveappointment.heading.name'
-                | translate }}
-                <i class="qm-action-btn__icon" [ngClass]="getSortIcons('custName')"></i></div>
-              <div (click)="sortAppointments('servicesDisplayLabel')" class="qm-table__cell-20  qm-text-overflow-fix">{{
-                'list.arriveappointment.heading.service' | translate }}
-                <i class="qm-action-btn__icon" [ngClass]="getSortIcons('servicesDisplayLabel')"></i></div>
+          <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
+            <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
+              <ng-container *ngIf="timeConvention === 'AMPM'">
+                <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
+                  <span *ngIf="userCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM,'}}</span>
+                  &nbsp;
+                  <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
+                    date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
+                </div>
+              </ng-container>
+  
+              <ng-container *ngIf="timeConvention === '24'">
+                <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
+                  <span>{{selectedFromTime | date: 'HH:mm'}}</span>
+                  <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
+                    date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
+                </div>
+              </ng-container>
+              <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{
+                'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
             </div>
-<<<<<<< .mine
           </div>
   
           <div class="qm-identify-appointment__table-container">
@@ -118,22 +79,7 @@
                   <span>
                     <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
                   </span>
-=======
-
-            <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
-              <div (click)="onAppointmentSelect(app)" *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)"
-                class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
-                <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId : app.id}}
-
-
-
-
-
-
-
->>>>>>> .theirs
                 </div>
-<<<<<<< .mine
                 <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-10 qm-text-overflow-fix"><span>{{
                     'list.arriveappointment.heading.time'
                     | translate }}</span><span>
@@ -162,38 +108,7 @@
                      <i class="qm-action-btn__icon" [ngClass]="getSortIcons('servicesDisplayLabel')"></i>
                   </span>
                  </div>
-=======
-                <div class="qm-table__cell-10 qm-text-overflow-fix">{{getTime((app.startTime || app.start ), (app.branch
-                  && app.branch.fullTimeZone || ''))}}</div>
-                <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),( app.branch && app.branch.fullTimeZone
-                  || ''))}}</div>
-
-                <div class="qm-table__cell-20 qm-text-overflow-fix">{{app.custName}}</div>
-                <div class="qm-table__cell-20 qm-text-overflow-fix">{{app.servicesDisplayLabel}}</div>
-                <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
-                  aria-hidden="true"></i>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
               </div>
-<<<<<<< .mine
   
               <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
                <div class="qm-identify-appointment__customer-table__list-parent" 
@@ -206,279 +121,59 @@
                       (app.branch && app.branch.fullTimeZone || ''))}}</div>
                     <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
                       app.branch && app.branch.fullTimeZone || ''))}}</div>
-=======
-      <br>
-      <div class="qm-identify-appointment">
-        <div class="qm-identify-appointment__button-container">
-          <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') }">
-            {{'tab.arriveappointment.appointmentlist' | translate }}</div>
-          <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
-            [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'id' }"> <span> <i
-                aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>{{'tab.arriveappointment.bookingid'
-            | translate }}</div>
-          <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'customer' }">
-            <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>
-            {{'tab.arriveappointment.customer' | translate }}</div>
-        </div>
-        <hr class="qm-identify-appointment__pannel-bottom-bar">
-  
-        <!--###### ID SEARCH AREA ###### -->
-        <ng-container *ngIf="currentSearchState === 'id'; then idsearchArea"></ng-container>
-        <ng-container *ngIf="currentSearchState === 'customer'; then customerSearchArea"></ng-container>
-  
-  
-        <!--###### APPOINTMENT LIST AREA ###### -->
-        <ng-container *ngIf="showSearchResultsArea">
-            <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
-              <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
-                <ng-container *ngIf="timeConvention === 'AMPM'">
-                  <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                    <span *ngIf="userCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM,'}}</span>
-                    &nbsp;
-                    <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
-                      date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
-                  </div>
-                </ng-container>
     
-                <ng-container *ngIf="timeConvention === '24'">
-                  <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                    <span>{{selectedFromTime | date: 'HH:mm'}}</span>
-                    <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
-                      date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
+                    <div class="qm-table__cell-30 qm-text-overflow-fix">{{app.custName}}</div>
+                    <div class="qm-table__cell-35 qm-text-overflow-fix">{{app.servicesDisplayLabel}}</div>                 
                   </div>
-                </ng-container>
-                <span class="qm-identify-appointment__refresh-button" (click)="refreshAppointments()"> {{
-                  'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
-              </div>
-            </div>
->>>>>>> edit flow
-    
-            <div class="qm-identify-appointment__table-container">
-              <div class="qm-identify-appointment__customer-table">
-                <div class="qm-identify-appointment__customer-table__header qm-table__row">
-                  <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" class="qm-table__cell-10  qm-text-overflow-fix">
-                    <span>{{
-                    'list.arriveappointment.heading.id' |
-                    translate }}</span>
-                    <span>
-                      <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
-                    </span>
-                  </div>
-                  <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-10 qm-text-overflow-fix"><span>{{
-                      'list.arriveappointment.heading.time'
-                      | translate }}</span><span>
-                      <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
-                    </span>
-                  </div>
-<<<<<<< HEAD
                   <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
                 aria-hidden="true"></i>
                </div> 
               </ng-container>
               <!--   <div class="qm-loader-container" *ngIf="showLoading()">
-=======
-            </ng-container>
-            <!--   <div class="qm-loader-container" *ngIf="showLoading()">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
                 <qm-loader [color]="black"></qm-loader>
               </div> -->
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
 
-      <!--####################### Id template ###############-->
+     <!--####################### Id template ###############-->
       <ng-template #idsearchArea>
         <div class="qm-identify-appointment__search-area">
           <div class="qm-search qm-search--large">
-            <input [(ngModel)]="searchText" qmClearInput class="qm-search__input" name="serviceSearchInput" (keyup)="restrictNumbers($event)"
-              type="tel" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}" [formControl]="searchInputController"
-              id="searchAppointmentField">
+            <input [(ngModel)]="searchText" qmClearInput class="qm-search__input"
+              name="serviceSearchInput" (keyup)="restrictNumbers($event)" type="tel" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}"
+              [formControl]="searchInputController" id="searchAppointmentField">
 
             <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
               <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
               <span class="sr-only">Search</span>
-=======
-                  <div (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" class="qm-table__cell-15  qm-text-overflow-fix">
-                    <span>{{
-                        'list.arriveappointment.heading.date' |
-                        translate }}</span>
-                    <span><i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDate') : getSortIcons('startTimeDate')"></i></span> 
-                  </div>
-    
-                  <div (click)="sortAppointments('custName')" class="qm-table__cell-30  qm-text-overflow-fix">
-                    <span>
-                        {{
-                          'list.arriveappointment.heading.name' |
-                          translate }}
-                    </span>
-                   <span><i class="qm-action-btn__icon" [ngClass]="getSortIcons('custName')"></i></span> </div>
-                  <div (click)="sortAppointments('servicesDisplayLabel')" class="qm-table__cell-35  qm-text-overflow-fix">
-                    <span>{{
-                    'list.arriveappointment.heading.service' |
-                    translate }}</span>
-                    <span>
-                       <i class="qm-action-btn__icon" [ngClass]="getSortIcons('servicesDisplayLabel')"></i>
-                    </span>
-                   </div>
-                </div>
-    
-                <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
-                 <div class="qm-identify-appointment__customer-table__list-parent" 
-                    *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">
-                    <div (click)="onAppointmentSelect(app)" 
-                      class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
-                      <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId :
-                        app.id}}</div>
-                      <div class="qm-table__cell-10 qm-text-overflow-fix">{{getTime((app.startTime || app.start ),
-                        (app.branch && app.branch.fullTimeZone || ''))}}</div>
-                      <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
-                        app.branch && app.branch.fullTimeZone || ''))}}</div>
-      
-                      <div class="qm-table__cell-30 qm-text-overflow-fix">{{app.custName}}</div>
-                      <div class="qm-table__cell-35 qm-text-overflow-fix">{{app.servicesDisplayLabel}}</div>                 
-                    </div>
-                    <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
-                  aria-hidden="true"></i>
-                 </div> 
-                </ng-container>
-                <!--   <div class="qm-loader-container" *ngIf="showLoading()">
-                  <qm-loader [color]="black"></qm-loader>
-                </div> -->
-              </div>
-            </div>
-          </ng-container>
-  
-       <!--####################### Id template ###############-->
-        <ng-template #idsearchArea>
-          <div class="qm-identify-appointment__search-area">
-            <div class="qm-search qm-search--large">
-              <input [(ngModel)]="searchText" qmClearInput class="qm-search__input"
-                name="serviceSearchInput" (keyup)="restrictNumbers($event)" type="tel" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}"
-                [formControl]="searchInputController" id="searchAppointmentField">
-  
-              <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
-                <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-                <span class="sr-only">Search</span>
-              </button>
-            </div>
-  
-            <button (click)="onEnterPressed()" [disabled]="(searchText || '').trim().length === 0" class="qm-btn qm-btn--primary">
-              {{'label.identify.appointment.fetch' | translate}}
->>>>>>> edit flow
             </button>
           </div>
-  
-          <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
-              <i class="icon-info qm-action-btn__icon "></i>
-              {{'label.identify.bookingid.warning' | translate}}
-          </div>
-  
-          <div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
-            {{'label.identify.appointment.notfound' | translate}}
-          </div>
-  
-          <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
-              <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
-          </div>
-        </ng-template>
-  
-        <!--####################### Customer template ###############-->
-        <ng-template #customerSearchArea>
-            <div class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area">
-                <div class="qm-search qm-search--large">
-                  <!-- <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
-                    name="customerSearchInput" type="search" placeholder="{{'label.identify.appointment.customerplaceholder' | translate}}"
-                    [formControl]="searchInputController" id="searchCustomer">
-      
-                  <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
-                    <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-                    <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
-                  </button> -->
-                  <qm-customer-search-bar [isInArriveFlow]="true"></qm-customer-search-bar>
-                  <!-- customer search results -->
-                  <qm-customer-search  [isInArriveFlow] = "true" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
-                  
-                </div>
-              </div>
-      
-              <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
-                  <i class="icon-info qm-action-btn__icon "></i>
-                  {{'label.identify.appointment.customerwarning' | translate}}
-              </div>
-      
-              <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
-                {{'label.identify.appointment.customernotfound' | translate}}
-              </div-->
-      
-              <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
-                  <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
-              </div>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-<<<<<<< HEAD
-  
-  <!-- qr modal -->
-  <div class="qm-qr-code-modal" *ngIf="qrScanerOn" (click)="foucusInput()">
-      <div class="qm-qr-code-modal__container">
-        <div class="qm-qr-code-modal__heading">
-          <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>
-          <div class="qm-qr-code-modal__close-container" > <i class="icon-close" (click)="closeqr()"></i></div>
+
+          <button (click)="onEnterPressed()" [disabled]="(searchText || '').trim().length === 0" class="qm-btn qm-btn--primary">
+            {{'label.identify.appointment.fetch' | translate}}
+          </button>
         </div>
-<<<<<<< HEAD
 
         <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
-          <i class="icon-info qm-action-btn__icon "></i>
-          {{'label.identify.bookingid.warning' | translate}}
-=======
-        <div class="qm-qr-code-modal__content">
-          <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
-          <div>{{'ready_to_scan'|translate}}</div>
->>>>>>> edit flow
+            <i class="icon-info qm-action-btn__icon "></i>
+            {{'label.identify.bookingid.warning' | translate}}
         </div>
-        <div class="qm-qr-code-modal__text-line">
-          <div>
-            {{'point_the_scanenr'|translate}}
-          </div>
-          <div>
-            <input type="text" id="idField" autofocus [(ngModel)]="qrCodeValue" (input)="onSearchChange($event.target.value)" >
-          </div>
-        </div>
-      </div>
-=======
-</div>
 
-<<<<<<< HEAD
+        <div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+          {{'label.identify.appointment.notfound' | translate}}
+        </div>
+
         <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
-          <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
+            <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
         </div>
       </ng-template>
 
       <!--####################### Customer template ###############-->
       <ng-template #customerSearchArea>
-        <div class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area">
-          <div class="qm-search qm-search--large">
-            <!-- <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
+          <div class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area">
+              <div class="qm-search qm-search--large">
+                <!-- <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
                   name="customerSearchInput" type="search" placeholder="{{'label.identify.appointment.customerplaceholder' | translate}}"
                   [formControl]="searchInputController" id="searchCustomer">
     
@@ -486,52 +181,29 @@
                   <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                   <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
                 </button> -->
-            <qm-customer-search-bar [isInArriveFlow]="true"></qm-customer-search-bar>
-            <!-- customer search results -->
-            <qm-customer-search [isInArriveFlow]="true" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
-
-          </div>
-        </div>
-
-        <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
-          <i class="icon-info qm-action-btn__icon "></i>
-          {{'label.identify.appointment.customerwarning' | translate}}
-        </div>
-
-        <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+                <qm-customer-search-bar [isInArriveFlow]="true"></qm-customer-search-bar>
+                <!-- customer search results -->
+                <qm-customer-search  [isInArriveFlow] = "true" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
+                
+              </div>
+            </div>
+    
+            <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">
+                <i class="icon-info qm-action-btn__icon "></i>
+                {{'label.identify.appointment.customerwarning' | translate}}
+            </div>
+    
+            <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
               {{'label.identify.appointment.customernotfound' | translate}}
             </div-->
-
-        <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
-          <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
-        </div>
+    
+            <div class="qm-identify-appointment__search-area-loading" *ngIf="showLoading()">
+                <span class="qm-spinner"></span> {{'label.identify.appointment.loading' | translate}}
+            </div>
       </ng-template>
-=======
-<!-- qr modal -->
-<div class="qm-qr-code-modal" *ngIf="qrScanerOn" (click)="foucusInput()">
-    <div class="qm-qr-code-modal__container">
-      <div class="qm-qr-code-modal__heading">
-        <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>
-        <div class="qm-qr-code-modal__close-container" > <i class="icon-close" (click)="closeqr()"></i></div>
-      </div>
-      <div class="qm-qr-code-modal__content">
-        <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
-        <div>{{'ready_to_scan'|translate}}</div>
-      </div>
-      <div class="qm-qr-code-modal__text-line">
-        <div>
-          {{'point_the_scanenr'|translate}}
-        </div>
-        <div>
-          <input type="text" id="idField" autofocus [(ngModel)]="qrCodeValue" (input)="onSearchChange($event.target.value)" >
-        </div>
-      </div>
->>>>>>> edit flow
     </div>
   </div>
-
-<!-- qr modal -->
-<div class="qm-qr-code-modal" *ngIf="isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
+</div><div class="qm-qr-code-modal" *ngIf="isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
       <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>
@@ -554,6 +226,34 @@
     </div>
   </div>
 </div>
+
+<div class="qm-flow-done-bar" *ngIf="selectedAppointment">
+<div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="qm-flow-sub-header" *ngIf="selectedCustomer">
+<div class="qm-flow-sub-header__right">
+  <div class="qm-done-button" (click)="onDone()">
+    {{'banner_done_label' | translate }}
+>>>>>>> qr modal
+  </div>
 
 <div class="qm-flow-done-bar" *ngIf="selectedAppointment">
   <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
@@ -580,368 +280,340 @@
   <div class="qm-flow-sub-header__right">
     <div class="qm-done-button" (click)="onDone()">
       {{'banner_done_label' | translate }}
->>>>>>> qr modal
     </div>
-  
-  <div class="qm-flow-done-bar" *ngIf="selectedAppointment">
-    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <!-- <div class="qm-flow-sub-header" *ngIf="selectedCustomer">
-    <div class="qm-flow-sub-header__right">
-      <div class="qm-done-button" (click)="onDone()">
-        {{'banner_done_label' | translate }}
+</div>
+
+<div class="qm-identify-appointment" [ngClass]="{'qm-enable-search-by-day': enableSearchByDay}" dir="{{userDirection$ | async}}">
+  <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
+  </div>
+  <div class="qm-identify-appointment__search-container">
+    <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'id' }">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.58 73.8">
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M83.94,0H4.49C2,0,0,1.73,0,3.85V63c0,2.12,2,3.85,4.49,3.85H83.94c2.47,0,4.49-1.73,4.49-3.85V58.93a13.74,
+                        13.74,0,0,1-2.45.88V63a1.91,1.91,0,0,1-2,1.75H4.49a1.91,1.91,0,0,1-2-1.75V3.85a1.91,1.91,0,0,1,2-1.75H83.94a1.91,
+                        1.91,0,0,1,2,1.75V32.51a13.73,13.73,0,0,1,2.45.88V3.85C88.43,1.73,86.41,0,83.94,0Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M23,19H15.66a.84.84,0,0,0-1,1v2.31c0,.66.31,1,1,1H19c.23,0,.35.13.35.39v24.2a.84.84,0,
+                        0,0,1,1H23a.84.84,0,0,0,1-1V20A.84.84,0,0,0,23,19Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M48.77,44.29H37.9c-.1,0-.15,0-.15-.08s.09-.19.27-.37l5.88-5.63q5.8-5.57,5.8-10.48a8.82,8.82,0
+                        ,0,0-2.52-6.5,8.57,8.57,0,0,0-6.36-2.46A9.35,9.35,0,0,0,33.65,22c-.82.91-1.24,1.53-1.24,1.86a.85.85,
+                        0,0,0,.12.43s.56.63,1.57,1.73c.39.42.69.64.89.64a.74.74,0,0,0,.59-.33,6.17,6.17,0,0,1,5.16-3.07,4.34,
+                        4.34,0,0,1,4.4,4.43,8,8,0,0,1-1.78,4.75,48.57,48.57,0,0,1-3.92,4.13L37.5,38.47l-3.85,3.76c-.8.8-1.43,
+                        1.43-1.9,1.88-.72.69-1.08,1.18-1.08,1.46a2.51,2.51,0,0,0,.09.56L31.29,48a1,1,0,0,0,1,.81H48.77c.66,
+                        0,1-.31,1-1V45.26C49.76,44.6,49.43,44.28,48.77,44.29Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M71.26,37.77a7.41,7.41,0,0,0-.38-1.24,7.29,7.29,0,0,0-.5-1A8.89,8.89,0,0,0,67,
+                        32.41c-.34-.19-.52-.33-.52-.41s0-.1.14-.15a6.54,6.54,0,0,0,2.17-2.37,7.15,7.15,0,0,0-1.14-8.56,8,8,0,0,
+                        0-5.9-2.23,10,10,0,0,0-6.56,2.45,1.32,1.32,0,0,0-.61.95,1.29,1.29,0,0,0,.18.54l1.05,2.17a.68.68,0,0,
+                        0,.62.47,2,2,0,0,0,.85-.5A6.41,6.41,0,0,1,61.5,23.1a3.7,3.7,0,0,1,2.76,1,3,3,0,0,1,.89,2.2,3.72,3.72,
+                        0,0,1-1,2.6,4.9,4.9,0,0,1-3.51,1.49l-.81,0a.85.85,0,0,0-.94,1v2.06a.84.84,0,0,0,1,1l1.29.06A6.38,6.38,
+                        0,0,1,65,35.89a4.8,4.8,0,0,1,.5,7.14,4.91,4.91,0,0,1-3.65,1.43A6.08,6.08,0,0,1,58,43.18a5.57,5.57,0,0,
+                        0-1.57-1,.74.74,0,0,0-.64.48L54.44,45a1.3,1.3,0,0,0-.19.56,1.22,1.22,0,0,0,.56.89A11.05,11.05,0,0,0,62,
+                        49a9.76,9.76,0,0,0,4.49-1,7.65,7.65,0,0,0,1-.58,7.38,7.38,0,0,0,1-.79c0-.17,0-.34,0-.51A14,14,0,0,1,71.26,37.77Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M109.51,72.73a3.69,3.69,0,0,1-5.2,0l-13-13-.49-.49a3.33,3.33,0,0,1-.25-.28A3.53,3.53,0,0,1,90,58a14,14,
+                        0,0,0,4.67-4.83,3.06,3.06,0,0,1,.92.5A3.09,3.09,0,0,1,96,54l.4.4,13.09,13.08A3.69,3.69,0,0,1,109.51,72.73Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M88.43,32.23A14.3,14.3,0,0,0,86,31.44,15.11,15.11,0,0,0,67.42,46.16c0,.44,0,.87.06,1.3A15.1,
+                        15.1,0,0,0,86,60.88,14.57,14.57,0,0,0,90.58,59a15.12,15.12,0,0,0-2.15-26.73Zm6.28,21A14,14,0,0,1,90,58a11.93,
+                        11.93,0,0,1-1.61.88,13.74,13.74,0,0,1-2.45.88,14.4,14.4,0,0,1-3.44.42A14.08,14.08,0,0,1,68.48,46.67c0-.17,
+                        0-.34,0-.51A14.1,14.1,0,0,1,82.54,32.09a14.4,14.4,0,0,1,3.44.42,13.73,13.73,0,0,1,2.45.88,14.06,14.06,0,0,
+                        1,6.28,19.83Z" />
+            <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M88.43,31.1A15.74,15.74,0,0,0,86,30.36a16.14,16.14,0,0,0-15.6,5.16,16.08,16.08,0,0,0-4,10.64A16.65,16.65,
+                        0,0,0,66.48,48,16.17,16.17,0,0,0,86,62a15.93,15.93,0,0,0,5.34-2.23,16.28,16.28,0,0,0,5.1-5.28,16.17,16.17,0,
+                        0,0-8-23.35Zm0,27.83a13.74,13.74,0,0,1-2.45.88,14.4,14.4,0,0,1-3.44.42A14.08,14.08,0,0,1,68.48,46.67c0-.17,
+                        0-.34,0-.51A14.1,14.1,0,0,1,82.54,32.09a14.4,14.4,0,0,1,3.44.42,13.73,13.73,0,0,1,2.45.88A14,14,0,0,1,90,58,
+                        11.93,11.93,0,0,1,88.43,58.93Z" />
+          </g>
+        </g>
+      </svg>
+      <div class="qm-search-icon__text">
+        {{'id' | translate }}
       </div>
-    </div>
-  </div>
-  
-  <div class="qm-identify-appointment" [ngClass]="{'qm-enable-search-by-day': enableSearchByDay}" dir="{{userDirection$ | async}}">
-    <div class="identify-appointment-backdrop" *ngIf="showModalBackDrop">
-    </div>
-    <div class="qm-identify-appointment__search-container">
-      <button class="qm-search-icon" (click)="onSearchButtonClick('id')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'id' }">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.58 73.8">
-          <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M83.94,0H4.49C2,0,0,1.73,0,3.85V63c0,2.12,2,3.85,4.49,3.85H83.94c2.47,0,4.49-1.73,4.49-3.85V58.93a13.74,
-                          13.74,0,0,1-2.45.88V63a1.91,1.91,0,0,1-2,1.75H4.49a1.91,1.91,0,0,1-2-1.75V3.85a1.91,1.91,0,0,1,2-1.75H83.94a1.91,
-                          1.91,0,0,1,2,1.75V32.51a13.73,13.73,0,0,1,2.45.88V3.85C88.43,1.73,86.41,0,83.94,0Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M23,19H15.66a.84.84,0,0,0-1,1v2.31c0,.66.31,1,1,1H19c.23,0,.35.13.35.39v24.2a.84.84,0,
-                          0,0,1,1H23a.84.84,0,0,0,1-1V20A.84.84,0,0,0,23,19Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M48.77,44.29H37.9c-.1,0-.15,0-.15-.08s.09-.19.27-.37l5.88-5.63q5.8-5.57,5.8-10.48a8.82,8.82,0
-                          ,0,0-2.52-6.5,8.57,8.57,0,0,0-6.36-2.46A9.35,9.35,0,0,0,33.65,22c-.82.91-1.24,1.53-1.24,1.86a.85.85,
-                          0,0,0,.12.43s.56.63,1.57,1.73c.39.42.69.64.89.64a.74.74,0,0,0,.59-.33,6.17,6.17,0,0,1,5.16-3.07,4.34,
-                          4.34,0,0,1,4.4,4.43,8,8,0,0,1-1.78,4.75,48.57,48.57,0,0,1-3.92,4.13L37.5,38.47l-3.85,3.76c-.8.8-1.43,
-                          1.43-1.9,1.88-.72.69-1.08,1.18-1.08,1.46a2.51,2.51,0,0,0,.09.56L31.29,48a1,1,0,0,0,1,.81H48.77c.66,
-                          0,1-.31,1-1V45.26C49.76,44.6,49.43,44.28,48.77,44.29Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M71.26,37.77a7.41,7.41,0,0,0-.38-1.24,7.29,7.29,0,0,0-.5-1A8.89,8.89,0,0,0,67,
-                          32.41c-.34-.19-.52-.33-.52-.41s0-.1.14-.15a6.54,6.54,0,0,0,2.17-2.37,7.15,7.15,0,0,0-1.14-8.56,8,8,0,0,
-                          0-5.9-2.23,10,10,0,0,0-6.56,2.45,1.32,1.32,0,0,0-.61.95,1.29,1.29,0,0,0,.18.54l1.05,2.17a.68.68,0,0,
-                          0,.62.47,2,2,0,0,0,.85-.5A6.41,6.41,0,0,1,61.5,23.1a3.7,3.7,0,0,1,2.76,1,3,3,0,0,1,.89,2.2,3.72,3.72,
-                          0,0,1-1,2.6,4.9,4.9,0,0,1-3.51,1.49l-.81,0a.85.85,0,0,0-.94,1v2.06a.84.84,0,0,0,1,1l1.29.06A6.38,6.38,
-                          0,0,1,65,35.89a4.8,4.8,0,0,1,.5,7.14,4.91,4.91,0,0,1-3.65,1.43A6.08,6.08,0,0,1,58,43.18a5.57,5.57,0,0,
-                          0-1.57-1,.74.74,0,0,0-.64.48L54.44,45a1.3,1.3,0,0,0-.19.56,1.22,1.22,0,0,0,.56.89A11.05,11.05,0,0,0,62,
-                          49a9.76,9.76,0,0,0,4.49-1,7.65,7.65,0,0,0,1-.58,7.38,7.38,0,0,0,1-.79c0-.17,0-.34,0-.51A14,14,0,0,1,71.26,37.77Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M109.51,72.73a3.69,3.69,0,0,1-5.2,0l-13-13-.49-.49a3.33,3.33,0,0,1-.25-.28A3.53,3.53,0,0,1,90,58a14,14,
-                          0,0,0,4.67-4.83,3.06,3.06,0,0,1,.92.5A3.09,3.09,0,0,1,96,54l.4.4,13.09,13.08A3.69,3.69,0,0,1,109.51,72.73Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M88.43,32.23A14.3,14.3,0,0,0,86,31.44,15.11,15.11,0,0,0,67.42,46.16c0,.44,0,.87.06,1.3A15.1,
-                          15.1,0,0,0,86,60.88,14.57,14.57,0,0,0,90.58,59a15.12,15.12,0,0,0-2.15-26.73Zm6.28,21A14,14,0,0,1,90,58a11.93,
-                          11.93,0,0,1-1.61.88,13.74,13.74,0,0,1-2.45.88,14.4,14.4,0,0,1-3.44.42A14.08,14.08,0,0,1,68.48,46.67c0-.17,
-                          0-.34,0-.51A14.1,14.1,0,0,1,82.54,32.09a14.4,14.4,0,0,1,3.44.42,13.73,13.73,0,0,1,2.45.88,14.06,14.06,0,0,
-                          1,6.28,19.83Z" />
-              <path ng-class="{cls_11_clicked:searchByIdClicked == true,cls_11:searchByIdClicked != true}" d="M88.43,31.1A15.74,15.74,0,0,0,86,30.36a16.14,16.14,0,0,0-15.6,5.16,16.08,16.08,0,0,0-4,10.64A16.65,16.65,
-                          0,0,0,66.48,48,16.17,16.17,0,0,0,86,62a15.93,15.93,0,0,0,5.34-2.23,16.28,16.28,0,0,0,5.1-5.28,16.17,16.17,0,
-                          0,0-8-23.35Zm0,27.83a13.74,13.74,0,0,1-2.45.88,14.4,14.4,0,0,1-3.44.42A14.08,14.08,0,0,1,68.48,46.67c0-.17,
-                          0-.34,0-.51A14.1,14.1,0,0,1,82.54,32.09a14.4,14.4,0,0,1,3.44.42,13.73,13.73,0,0,1,2.45.88A14,14,0,0,1,90,58,
-                          11.93,11.93,0,0,1,88.43,58.93Z" />
-            </g>
-          </g>
-        </svg>
-        <div class="qm-search-icon__text">
-          {{'id' | translate }}
-        </div>
-      </button>
-  
-      <button class="qm-search-icon" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'customer' }">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.21 78.29">
-  
-          <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-              <path d="M37.87,1.05c-9.7,0-17.52,8.42-17.51,18.77s7.86,18.94,17.55,18.93,
-                                                            17.53-8.63,17.51-19S47.57,1,37.87,1.05ZM49.54,32.43A15.74,15.74,0,0,1,37.91,37.7h0a15.75,15.75,
-                                                            0,0,1-11.62-5.24,18.59,18.59,0,0,1-4.86-12.64c0-9.76,7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,
-                                                            54.38,19.78A18.64,18.64,0,0,1,49.54,32.43Z" />
-              <path d="M37.89,0h0C27.62,0,19.3,8.9,19.31,19.82a20.7,20.7,0,0,0,5.42,14.06A17.81,17.81,
-                          0,0,0,37.89,39.8h0a17.82,17.82,0,0,0,13.17-6,20.67,20.67,0,0,0,5.39-14.07C56.46,8.87,
-                          48.13,0,37.89,0Zm0,37.7h0a15.75,15.75,0,0,1-11.62-5.24,18.59,18.59,0,0,1-4.86-12.64c0-9.76,
-                          7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,54.38,19.78a18.64,18.64,0,0,1-4.84,12.65A15.74,15.74,0,0,1,37.91,37.7Z" />
-              <path class="cls-12" d="M74.81,65.61c0-.31-.07-.61-.11-.9s-.1-.72-.15-1.07c-.32.14-.66.27-1,.38a14.07,
-                          14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87l-1-.39c-.36-.13-.71-.24-1-.34a25.66,25.66,0,0,
-                          0-6.83-1.19c-3.44,3.19-10.47,3.41-11.37,3.42s-7.93-.21-11.38-3.4c0,0-10.27,0-17.37,7.6-5.21,
-                          5.56-7,9.16-8.09,18.17C.06,74.49,29.3,77.07,38,77.06s37.49-2.62,36.87-11.27A1.09,1.09,0,0,0,
-                          74.81,65.61Zm-2,2.6c-2.6,2.93-9.53,4.88-16.71,6.1A123.49,123.49,0,0,1,38,76h0C30.68,76,8.24,
-                          74.12,3,68.29a3.08,3.08,0,0,1-.92-2.48c1-9,2.86-12.29,7.81-17.57,5.94-6.33,14.35-7.15,16.23-7.25,
-                          3.76,3.12,10.41,3.37,11.77,3.38s8-.28,11.74-3.41a26.29,26.29,0,0,1,5.83,1A16.16,16.16,0,0,0,
-                          73.79,66.13,3.25,3.25,0,0,1,72.85,68.21Z" />
-              <path d="M75.85,65.48s0-.08,0-.12c-.05-.37-.09-.72-.14-1.07h0c0-.38-.1-.74-.16-1.1-.32.17-.65.32-1,
-                          .46s-.66.27-1,.38c0,.34.09.7.14,1.06s0,.43.08.65a2.69,2.69,0,0,1,0,.4,3.25,3.25,0,0,1-.94,2.08c-2.6,
-                          2.93-9.53,4.88-16.71,6.1A123.49,123.49,0,0,1,38,76h0C30.68,76,8.24,74.12,3,68.29a3.08,3.08,0,
-                          0,1-.92-2.48c1-9,2.86-12.29,7.81-17.57,5.94-6.33,14.35-7.15,16.23-7.25,3.76,3.12,10.41,3.37,
-                          11.77,3.38s8-.28,11.74-3.41a26.29,26.29,0,0,1,5.83,1l1,.33,1,
-                          .36c.21-.3.43-.59.65-.87s.48-.57.75-.84c-.36-.15-.71-.29-1.06-.41h0c-.36-.14-.71-.26-1.06-.37a27,
-                          27,0,0,0-7.54-1.35,1,1,0,0,0-.71.28c-2.59,2.4-7.93,3.1-10.65,3.14s-8.09-.73-10.68-3.12a1.1,1.1,0,0,
-                          0-.71-.27h0c-.44,0-10.8.13-18.13,7.93C3.18,52.37,1.13,56,0,65.57a5.17,5.17,0,0,0,1.44,4.12c5.75,
-                          6.44,28.65,8.42,36.43,8.42h0c7.73,0,30.73-2,36.47-8.5A5.18,5.18,0,0,0,75.85,65.48Z" />
-              <path d="M96.13,77.21a3.67,3.67,0,0,1-5.2,0L77.45,63.73a3.33,3.33,0,0,1-.25-.28,3.53,3.53,0,0,1-.54-.91,
-                          14.08,14.08,0,0,0,4.67-4.85,3.12,3.12,0,0,1,.92.52,2.44,2.44,0,0,1,.39.33l.4.4L96.13,72A3.68,
-                          3.68,0,0,1,96.13,77.21Z" />
-              <path d="M69.16,35.53a15.06,15.06,0,0,0-11.26,5h0c-.25.28-.49.56-.72.86s-.44.59-.64.9A15.13,
-                          15.13,0,0,0,73.69,65.08c.34-.11.68-.23,1-.37s.67-.27,1-.42h0a12.17,12.17,0,0,0,1.5-.83,15.12,15.12,
-                          0,0,0-8-27.92ZM81.33,57.69a14.08,14.08,0,0,1-4.67,4.85,9.52,9.52,0,0,1-1.12.64c-.32.17-.65.32-1,.46s-.66.27-1,
-                          .38a14.07,14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84A14.05,14.05,0,0,1,81.33,57.69Z" />
-              <path d="M69.16,34.48A16.13,16.13,0,0,0,56.83,40.2c-.25.29-.48.58-.71.89s-.42.6-.62.91A16.16,16.16,
-                          0,0,0,73.79,66.13c.35-.1.7-.22,1-.34s.69-.27,1-.43A16,16,0,0,0,83,58.94,16.17,16.17,0,0,0,69.16,
-                          34.48Zm6.38,28.7c-.32.17-.65.32-1,.46s-.66.27-1,.38a14.07,14.07,0,0,
-                          1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84a14.06,14.06,0,1,1,17.7,21.56A9.52,9.52,0,0,1,75.54,63.18Z" />
-            </g>
-          </g>
-        </svg>
-  
-        <div class="qm-search-icon__text">
-          {{'by_customer' | translate }}
-        </div>
-      </button>
-  
-      <button class="qm-search-icon" (click)="onSearchButtonClick('duration')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'duration' }">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.36 76.21">
-  
-          <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-              <path d="M14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,0,1,0,0-2.1Zm7.06,16.25a1,1,
-                          0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.07A1.06,1.06,
-                          0,0,0,21.78,52.18Zm0-31.88-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,
-                          0A1.06,1.06,0,0,0,21.78,20.3ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,
-                          37,4.56Zm0,53.63a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,37,58.19Zm22.75-44a1,1,
-                          0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,
-                          59.73,14.23ZM37,1A35.93,35.93,0,1,0,61.19,63.53,11.21,11.21,0,0,1,60.13,63a34.86,34.86,0,1,
-                          1,11.5-30,10.57,10.57,0,0,1,1.09.34A35.91,35.91,0,0,0,37,1ZM59.73,14.23a1,1,0,0,0-1.48,
-                          0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,59.73,
-                          14.23ZM37,58.19a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,37,58.19ZM37,4.56a1,1,
-                          0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,37,4.56ZM21.78,20.3l-6.07-6.07a1,1,0,0,0-1.48,
-                          1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,0,0,0,21.78,20.3Zm0,31.88a1,1,0,0,0-1.48,
-                          0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,
-                          52.18ZM14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,0,1,0,0-2.1Zm0,0H5.61a1,1,0,1,0,0,2.1h9.11a1,
-                          1,0,1,0,0-2.1Zm7.06,16.25a1,1,0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,
-                          0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,52.18Zm0-31.88-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,
-                          6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,0,0,0,21.78,20.3ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,
-                          0,2.1,0V5.61A1,1,0,0,0,37,4.56Zm0,53.63a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,
-                          37,58.19Zm22.75-44a1,1,0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,
-                          0l6.07-6.08A1,1,0,0,0,59.73,14.23Zm0,0a1,1,0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,
-                          1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,59.73,14.23ZM37,58.19a1,1,0,0,0-1,1v9.1a1,1,0,1,
-                          0,2.1,0v-9.1A1,1,0,0,0,37,58.19ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,
-                          37,4.56ZM21.78,20.3l-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,
-                          0,0,0,21.78,20.3Zm0,31.88a1,1,0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,
-                          0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,52.18ZM14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,
-                          0,1,0,0-2.1Z" />
-              <path d="M37,0a37,37,0,1,0,25.3,63.93c-.37-.12-.73-.25-1.09-.4A11.21,11.21,
-                          0,0,1,60.13,63a34.86,34.86,0,1,1,11.5-30,10.57,10.57,0,0,1,1.09.34,11.46,11.46,0,0,1,1.1.44A37,
-                          37,0,0,0,37,0Z" />
-              <path d="M38,5.61v9.11a1.05,1.05,0,1,1-2.1,0V5.61a1.05,1.05,0,0,1,2.1,0Z" />
-              <path d="M38,59.24v9.1a1.05,1.05,0,0,1-2.1,0v-9.1a1.05,1.05,0,0,1,2.1,0Z" />
-              <path d="M15.77,37a1,1,0,0,1-1,1.05H5.61a1.05,1.05,0,1,1,0-2.1h9.11A1,1,0,0,1,15.77,37Z" />
-              <path d="M59.73,15.71l-6.07,6.08a1.06,1.06,0,0,1-1.48,0,1.06,1.06,0,0,1,0-1.49l6.07-6.07a1,1,0
-                          ,1,1,1.48,1.48Z" />
-              <path d="M21.78,53.67l-6.07,6.07a1.06,1.06,0,0,1-1.48,0,1.06,1.06,0,0,1,0-1.49l6.07-6.07a1,1,0,0,
-                          1,1.48,0A1.06,1.06,0,0,1,21.78,53.67Z" />
-              <path d="M21.78,21.79a1.06,1.06,0,0,1-1.48,0l-6.07-6.08a1,1,0,0,1,1.48-1.48l6.07,6.07A1.06,1.06,
-                          0,0,1,21.78,21.79Z" />
-              <path d="M94.29,69.94,81.2,56.85a16,16,0,0,0,2.29-8.28,16.17,16.17,0,0,0-9.67-14.8,11.46,11.46,0,
-                          0,0-1.1-.44A10.57,10.57,0,0,0,71.63,33a15.74,15.74,0,0,0-4.31-.59A16.09,16.09,0,0,0,57.17,
-                          36,1.53,1.53,0,0,0,56,35.4H37.45L27.18,26a1.57,1.57,0,1,0-2.12,2.32L36.23,38.55H54.65A16.13,
-                          16.13,0,0,0,60.13,63a11.21,11.21,0,0,0,1.06.49c.36.15.72.28,1.09.4A16.11,16.11,0,0,0,76.1,
-                          62.14l13,13a3.67,3.67,0,1,0,5.19-5.2ZM74.82,60.46a13.92,13.92,0,0,1-7.5,2.18A13.66,13.66,0,
-                          0,1,64,62.23a10.11,10.11,0,0,1-1.11-.32,10.22,10.22,0,0,1-1.09-.42A13.37,13.37,0,0,1,59.16,
-                          60a14,14,0,0,1-.71-22.36,13.56,13.56,0,0,1,2.69-1.73,14,14,0,0,1,10.67-.69c.37.12.72.26,
-                          1.07.41s.73.33,1.07.51a14.09,14.09,0,0,1,7.44,12.41,14.09,14.09,0,0,1-6.57,11.89Z" />
-            </g>
-          </g>
-        </svg>
-        <div class="qm-search-icon__text">
-          {{'date_and_time' | translate }}
-        </div>
-      </button>
-      <button class="qm-search-icon" (click)="onSearchButtonClick('qr')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'qr' }">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.19 71.66">
-          <g id="Layer_2" data-name="Layer 2">
-            <g id="Layer_1-2" data-name="Layer 1">
-              <path d="M0,.06V22.88H22.86V.06ZM19.71,19.73H3.19V3.21H19.71Z" />
-              <path d="M0,44.58V67.4H22.86V44.58ZM19.71,64.25H3.19V47.73H19.71Z" />
-              <path d="M43.58.06V22.88H66.39V.06ZM63.25,19.73H46.72V3.21H63.25Z" />
-              <rect x="9.03" y="9.42" width="5.03" height="5.03" />
-              <rect x="9.03" y="53.07" width="5.03" height="5.03" />
-              <rect x="52.48" y="9.42" width="5.03" height="5.03" />
-              <rect x="29.69" y="5.03" width="5.03" height="5.03" />
-              <rect x="34.39" y="14.45" width="5.03" height="5.03" />
-              <rect x="39.3" y="33.7" width="6.52" height="5.03" />
-              <rect x="44.32" y="28.9" width="5.03" height="5.03" />
-              <rect x="25.74" y="47.7" width="17.87" height="5.03" />
-              <rect x="24.66" y="23.87" width="5.03" height="5.03" />
-              <rect x="43.61" y="57.04" width="5.03" height="5.03" />
-              <rect x="54.99" y="61.72" width="5.03" height="5.03" />
-              <path d="M65,57v5H60v-4a13.77,13.77,0,0,0,4.45-1Z" />
-              <rect x="10.08" y="28.9" width="12.15" height="5.03" />
-              <rect x="5.05" y="33.67" width="5.03" height="5.03" />
-              <rect x="26.14" y="38.72" width="5.03" height="5.03" />
-              <rect y="28.9" width="5.03" height="5.03" />
-              <rect x="14.99" y="33.67" width="30.83" height="5.03" />
-              <rect x="25.74" y="57.04" width="5.03" height="5.03" transform="translate(56.5 119.11) rotate(180)" />
-              <rect x="25.74" y="61.72" width="22.9" height="5.03" transform="translate(74.38 128.48) rotate(180)" />
-              <rect x="29.69" width="9.72" height="5.03" />
-              <rect x="29.69" y="9.42" width="9.72" height="5.03" />
-              <rect x="29.69" y="19.39" width="9.72" height="5.03" />
-              <rect x="33.91" y="52.2" width="5.03" height="5.03" />
-              <rect x="29.69" y="28.9" width="5.03" height="5.03" />
-              <path d="M86.11,70.58a3.66,3.66,0,0,1-5.19,0L67.44,57.1a3.33,3.33,0,0,1-.25-.28,
-                          3.87,3.87,0,0,1-.55-.91,14.17,14.17,0,0,0,4.68-4.84,3.32,3.32,0,0,1,.92.51,
-                          2.44,2.44,0,0,1,.39.33L86.11,65.39A3.66,3.66,0,0,1,86.11,70.58Z" />
-              <path d="M59.14,28.9a15,15,0,0,0-9.79,3.6,16.31,16.31,0,0,0-1.46,
-                          1.42,14.9,14.9,0,0,0-2.07,2.95A13.63,13.63,0,0,0,45,38.7a0,0,0,0,0,0,0A15.12,
-                          15.12,0,0,0,59.14,59.14l.87,0A14.8,14.8,0,0,0,65,58a15.13,15.13,0,0,
-                          0-5.9-29ZM71.32,51.07a14.17,14.17,0,0,1-4.68,4.84A13.93,13.93,0,0,1,60,
-                          58.06q-.44,0-.87,0A14.07,14.07,0,1,1,73.22,44,13.93,13.93,0,0,1,71.32,51.07Z" />
-              <path d="M59.14,27.85a16.06,16.06,0,0,0-12.6,6.07c-.26.31-.49.63-.72.95a16.23,16.23,
-                          0,0,0-1.94,3.83s0,0,0,0a16,16,0,0,0-.47,9,6.69,6.69,0,0,0,.2.77A16.18,16.18,0,0,
-                          0,59.14,60.18l.87,0a16.15,16.15,0,0,0,5-1.1,15.05,15.05,0,0,0,2.88-1.48A16.19,16.19,
-                          0,0,0,73,52.3,16,16,0,0,0,75.31,44,16.18,16.18,0,0,0,59.14,27.85ZM64.46,57a13.77,13.77,
-                          0,0,1-4.45,1q-.44,0-.87,0A14.07,14.07,0,1,1,73.22,44a13.93,13.93,0,0,1-1.9,7,14.17,14.17,
-                          0,0,1-4.68,4.84A13.64,13.64,0,0,1,64.46,57Z" />
-            </g>
-          </g>
-        </svg>
-        <div class="qm-search-icon__text">
-          {{'scan_qr' | translate }}
-        </div>
-      </button>
-    </div>
-  
-    <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()" dir="{{userDirection$ | async}}">
-      <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
-        <g id="Layer_2" data-name="Layer 2">
-          <g id="Layer_1-2" data-name="Layer 1">
-            <path class="refreshBtnStyleEnable" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
-            <polygon points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
-            <path class="refreshBtnStyleEnable" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
-            <polygon points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
-          </g>
-        </g>
-      </svg>
-  
-      <svg *ngIf="isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
-        <defs>
-  
-        </defs>
-        <g id="Layer_2" data-name="Layer 2">
-          <g id="Layer_1-2" data-name="Layer 1">
-            <path class="refreshBtnStyleDisable-1" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
-            <polygon class="refreshBtnStyleDisable-2" points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
-            <path class="refreshBtnStyleDisable-1" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
-            <polygon class="refreshBtnStyleDisable-2" points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
-          </g>
-        </g>
-      </svg>
     </button>
-  
-    <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
-      <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()"
-        [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
-        id="searchAppointmentField" class="qm-details-text-feild" />
-      <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
-  
-      <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="currentSearchState === 'duration'">
-  
-        <div class="qm-duration-category" *ngIf="enableSearchByDay">
-          <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date'
-            | translate}}</div>
-          <div class="qm-duration-category__time" (click)="toggleDurationSelection(0)" [ngClass]="{'qm-duration-category__time--active' : !isInDateDurationSelection}">{{'time'
-            | translate}}</div>
+
+    <button class="qm-search-icon" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'customer' }">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.21 78.29">
+
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <path d="M37.87,1.05c-9.7,0-17.52,8.42-17.51,18.77s7.86,18.94,17.55,18.93,
+                                                          17.53-8.63,17.51-19S47.57,1,37.87,1.05ZM49.54,32.43A15.74,15.74,0,0,1,37.91,37.7h0a15.75,15.75,
+                                                          0,0,1-11.62-5.24,18.59,18.59,0,0,1-4.86-12.64c0-9.76,7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,
+                                                          54.38,19.78A18.64,18.64,0,0,1,49.54,32.43Z" />
+            <path d="M37.89,0h0C27.62,0,19.3,8.9,19.31,19.82a20.7,20.7,0,0,0,5.42,14.06A17.81,17.81,
+                        0,0,0,37.89,39.8h0a17.82,17.82,0,0,0,13.17-6,20.67,20.67,0,0,0,5.39-14.07C56.46,8.87,
+                        48.13,0,37.89,0Zm0,37.7h0a15.75,15.75,0,0,1-11.62-5.24,18.59,18.59,0,0,1-4.86-12.64c0-9.76,
+                        7.37-17.71,16.46-17.72h0C47,2.1,54.36,10,54.38,19.78a18.64,18.64,0,0,1-4.84,12.65A15.74,15.74,0,0,1,37.91,37.7Z" />
+            <path class="cls-12" d="M74.81,65.61c0-.31-.07-.61-.11-.9s-.1-.72-.15-1.07c-.32.14-.66.27-1,.38a14.07,
+                        14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87l-1-.39c-.36-.13-.71-.24-1-.34a25.66,25.66,0,0,
+                        0-6.83-1.19c-3.44,3.19-10.47,3.41-11.37,3.42s-7.93-.21-11.38-3.4c0,0-10.27,0-17.37,7.6-5.21,
+                        5.56-7,9.16-8.09,18.17C.06,74.49,29.3,77.07,38,77.06s37.49-2.62,36.87-11.27A1.09,1.09,0,0,0,
+                        74.81,65.61Zm-2,2.6c-2.6,2.93-9.53,4.88-16.71,6.1A123.49,123.49,0,0,1,38,76h0C30.68,76,8.24,
+                        74.12,3,68.29a3.08,3.08,0,0,1-.92-2.48c1-9,2.86-12.29,7.81-17.57,5.94-6.33,14.35-7.15,16.23-7.25,
+                        3.76,3.12,10.41,3.37,11.77,3.38s8-.28,11.74-3.41a26.29,26.29,0,0,1,5.83,1A16.16,16.16,0,0,0,
+                        73.79,66.13,3.25,3.25,0,0,1,72.85,68.21Z" />
+            <path d="M75.85,65.48s0-.08,0-.12c-.05-.37-.09-.72-.14-1.07h0c0-.38-.1-.74-.16-1.1-.32.17-.65.32-1,
+                        .46s-.66.27-1,.38c0,.34.09.7.14,1.06s0,.43.08.65a2.69,2.69,0,0,1,0,.4,3.25,3.25,0,0,1-.94,2.08c-2.6,
+                        2.93-9.53,4.88-16.71,6.1A123.49,123.49,0,0,1,38,76h0C30.68,76,8.24,74.12,3,68.29a3.08,3.08,0,
+                        0,1-.92-2.48c1-9,2.86-12.29,7.81-17.57,5.94-6.33,14.35-7.15,16.23-7.25,3.76,3.12,10.41,3.37,
+                        11.77,3.38s8-.28,11.74-3.41a26.29,26.29,0,0,1,5.83,1l1,.33,1,
+                        .36c.21-.3.43-.59.65-.87s.48-.57.75-.84c-.36-.15-.71-.29-1.06-.41h0c-.36-.14-.71-.26-1.06-.37a27,
+                        27,0,0,0-7.54-1.35,1,1,0,0,0-.71.28c-2.59,2.4-7.93,3.1-10.65,3.14s-8.09-.73-10.68-3.12a1.1,1.1,0,0,
+                        0-.71-.27h0c-.44,0-10.8.13-18.13,7.93C3.18,52.37,1.13,56,0,65.57a5.17,5.17,0,0,0,1.44,4.12c5.75,
+                        6.44,28.65,8.42,36.43,8.42h0c7.73,0,30.73-2,36.47-8.5A5.18,5.18,0,0,0,75.85,65.48Z" />
+            <path d="M96.13,77.21a3.67,3.67,0,0,1-5.2,0L77.45,63.73a3.33,3.33,0,0,1-.25-.28,3.53,3.53,0,0,1-.54-.91,
+                        14.08,14.08,0,0,0,4.67-4.85,3.12,3.12,0,0,1,.92.52,2.44,2.44,0,0,1,.39.33l.4.4L96.13,72A3.68,
+                        3.68,0,0,1,96.13,77.21Z" />
+            <path d="M69.16,35.53a15.06,15.06,0,0,0-11.26,5h0c-.25.28-.49.56-.72.86s-.44.59-.64.9A15.13,
+                        15.13,0,0,0,73.69,65.08c.34-.11.68-.23,1-.37s.67-.27,1-.42h0a12.17,12.17,0,0,0,1.5-.83,15.12,15.12,
+                        0,0,0-8-27.92ZM81.33,57.69a14.08,14.08,0,0,1-4.67,4.85,9.52,9.52,0,0,1-1.12.64c-.32.17-.65.32-1,.46s-.66.27-1,
+                        .38a14.07,14.07,0,0,1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84A14.05,14.05,0,0,1,81.33,57.69Z" />
+            <path d="M69.16,34.48A16.13,16.13,0,0,0,56.83,40.2c-.25.29-.48.58-.71.89s-.42.6-.62.91A16.16,16.16,
+                        0,0,0,73.79,66.13c.35-.1.7-.22,1-.34s.69-.27,1-.43A16,16,0,0,0,83,58.94,16.17,16.17,0,0,0,69.16,
+                        34.48Zm6.38,28.7c-.32.17-.65.32-1,.46s-.66.27-1,.38a14.07,14.07,0,0,
+                        1-16-21.33c.21-.3.43-.59.65-.87s.48-.57.75-.84a14.06,14.06,0,1,1,17.7,21.56A9.52,9.52,0,0,1,75.54,63.18Z" />
+          </g>
+        </g>
+      </svg>
+
+      <div class="qm-search-icon__text">
+        {{'by_customer' | translate }}
+      </div>
+    </button>
+
+    <button class="qm-search-icon" (click)="onSearchButtonClick('duration')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'duration' }">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.36 76.21">
+
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <path d="M14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,0,1,0,0-2.1Zm7.06,16.25a1,1,
+                        0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.07A1.06,1.06,
+                        0,0,0,21.78,52.18Zm0-31.88-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,
+                        0A1.06,1.06,0,0,0,21.78,20.3ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,
+                        37,4.56Zm0,53.63a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,37,58.19Zm22.75-44a1,1,
+                        0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,
+                        59.73,14.23ZM37,1A35.93,35.93,0,1,0,61.19,63.53,11.21,11.21,0,0,1,60.13,63a34.86,34.86,0,1,
+                        1,11.5-30,10.57,10.57,0,0,1,1.09.34A35.91,35.91,0,0,0,37,1ZM59.73,14.23a1,1,0,0,0-1.48,
+                        0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,59.73,
+                        14.23ZM37,58.19a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,37,58.19ZM37,4.56a1,1,
+                        0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,37,4.56ZM21.78,20.3l-6.07-6.07a1,1,0,0,0-1.48,
+                        1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,0,0,0,21.78,20.3Zm0,31.88a1,1,0,0,0-1.48,
+                        0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,
+                        52.18ZM14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,0,1,0,0-2.1Zm0,0H5.61a1,1,0,1,0,0,2.1h9.11a1,
+                        1,0,1,0,0-2.1Zm7.06,16.25a1,1,0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,
+                        0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,52.18Zm0-31.88-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,
+                        6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,0,0,0,21.78,20.3ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,
+                        0,2.1,0V5.61A1,1,0,0,0,37,4.56Zm0,53.63a1,1,0,0,0-1,1v9.1a1,1,0,1,0,2.1,0v-9.1A1,1,0,0,0,
+                        37,58.19Zm22.75-44a1,1,0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,0,1.48,
+                        0l6.07-6.08A1,1,0,0,0,59.73,14.23Zm0,0a1,1,0,0,0-1.48,0L52.18,20.3a1.06,1.06,0,0,0,0,1.49,
+                        1.06,1.06,0,0,0,1.48,0l6.07-6.08A1,1,0,0,0,59.73,14.23ZM37,58.19a1,1,0,0,0-1,1v9.1a1,1,0,1,
+                        0,2.1,0v-9.1A1,1,0,0,0,37,58.19ZM37,4.56a1,1,0,0,0-1,1v9.11a1,1,0,1,0,2.1,0V5.61A1,1,0,0,0,
+                        37,4.56ZM21.78,20.3l-6.07-6.07a1,1,0,0,0-1.48,1.48l6.07,6.08a1.06,1.06,0,0,0,1.48,0A1.06,1.06,
+                        0,0,0,21.78,20.3Zm0,31.88a1,1,0,0,0-1.48,0l-6.07,6.07a1.06,1.06,0,0,0,0,1.49,1.06,1.06,0,0,
+                        0,1.48,0l6.07-6.07A1.06,1.06,0,0,0,21.78,52.18ZM14.72,35.93H5.61a1,1,0,1,0,0,2.1h9.11a1,1,
+                        0,1,0,0-2.1Z" />
+            <path d="M37,0a37,37,0,1,0,25.3,63.93c-.37-.12-.73-.25-1.09-.4A11.21,11.21,
+                        0,0,1,60.13,63a34.86,34.86,0,1,1,11.5-30,10.57,10.57,0,0,1,1.09.34,11.46,11.46,0,0,1,1.1.44A37,
+                        37,0,0,0,37,0Z" />
+            <path d="M38,5.61v9.11a1.05,1.05,0,1,1-2.1,0V5.61a1.05,1.05,0,0,1,2.1,0Z" />
+            <path d="M38,59.24v9.1a1.05,1.05,0,0,1-2.1,0v-9.1a1.05,1.05,0,0,1,2.1,0Z" />
+            <path d="M15.77,37a1,1,0,0,1-1,1.05H5.61a1.05,1.05,0,1,1,0-2.1h9.11A1,1,0,0,1,15.77,37Z" />
+            <path d="M59.73,15.71l-6.07,6.08a1.06,1.06,0,0,1-1.48,0,1.06,1.06,0,0,1,0-1.49l6.07-6.07a1,1,0
+                        ,1,1,1.48,1.48Z" />
+            <path d="M21.78,53.67l-6.07,6.07a1.06,1.06,0,0,1-1.48,0,1.06,1.06,0,0,1,0-1.49l6.07-6.07a1,1,0,0,
+                        1,1.48,0A1.06,1.06,0,0,1,21.78,53.67Z" />
+            <path d="M21.78,21.79a1.06,1.06,0,0,1-1.48,0l-6.07-6.08a1,1,0,0,1,1.48-1.48l6.07,6.07A1.06,1.06,
+                        0,0,1,21.78,21.79Z" />
+            <path d="M94.29,69.94,81.2,56.85a16,16,0,0,0,2.29-8.28,16.17,16.17,0,0,0-9.67-14.8,11.46,11.46,0,
+                        0,0-1.1-.44A10.57,10.57,0,0,0,71.63,33a15.74,15.74,0,0,0-4.31-.59A16.09,16.09,0,0,0,57.17,
+                        36,1.53,1.53,0,0,0,56,35.4H37.45L27.18,26a1.57,1.57,0,1,0-2.12,2.32L36.23,38.55H54.65A16.13,
+                        16.13,0,0,0,60.13,63a11.21,11.21,0,0,0,1.06.49c.36.15.72.28,1.09.4A16.11,16.11,0,0,0,76.1,
+                        62.14l13,13a3.67,3.67,0,1,0,5.19-5.2ZM74.82,60.46a13.92,13.92,0,0,1-7.5,2.18A13.66,13.66,0,
+                        0,1,64,62.23a10.11,10.11,0,0,1-1.11-.32,10.22,10.22,0,0,1-1.09-.42A13.37,13.37,0,0,1,59.16,
+                        60a14,14,0,0,1-.71-22.36,13.56,13.56,0,0,1,2.69-1.73,14,14,0,0,1,10.67-.69c.37.12.72.26,
+                        1.07.41s.73.33,1.07.51a14.09,14.09,0,0,1,7.44,12.41,14.09,14.09,0,0,1-6.57,11.89Z" />
+          </g>
+        </g>
+      </svg>
+      <div class="qm-search-icon__text">
+        {{'date_and_time' | translate }}
+      </div>
+    </button>
+    <button class="qm-search-icon" (click)="onSearchButtonClick('qr')" [ngClass]="{'qm-search-icon--selected': currentSearchState === 'qr' }">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.19 71.66">
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <path d="M0,.06V22.88H22.86V.06ZM19.71,19.73H3.19V3.21H19.71Z" />
+            <path d="M0,44.58V67.4H22.86V44.58ZM19.71,64.25H3.19V47.73H19.71Z" />
+            <path d="M43.58.06V22.88H66.39V.06ZM63.25,19.73H46.72V3.21H63.25Z" />
+            <rect x="9.03" y="9.42" width="5.03" height="5.03" />
+            <rect x="9.03" y="53.07" width="5.03" height="5.03" />
+            <rect x="52.48" y="9.42" width="5.03" height="5.03" />
+            <rect x="29.69" y="5.03" width="5.03" height="5.03" />
+            <rect x="34.39" y="14.45" width="5.03" height="5.03" />
+            <rect x="39.3" y="33.7" width="6.52" height="5.03" />
+            <rect x="44.32" y="28.9" width="5.03" height="5.03" />
+            <rect x="25.74" y="47.7" width="17.87" height="5.03" />
+            <rect x="24.66" y="23.87" width="5.03" height="5.03" />
+            <rect x="43.61" y="57.04" width="5.03" height="5.03" />
+            <rect x="54.99" y="61.72" width="5.03" height="5.03" />
+            <path d="M65,57v5H60v-4a13.77,13.77,0,0,0,4.45-1Z" />
+            <rect x="10.08" y="28.9" width="12.15" height="5.03" />
+            <rect x="5.05" y="33.67" width="5.03" height="5.03" />
+            <rect x="26.14" y="38.72" width="5.03" height="5.03" />
+            <rect y="28.9" width="5.03" height="5.03" />
+            <rect x="14.99" y="33.67" width="30.83" height="5.03" />
+            <rect x="25.74" y="57.04" width="5.03" height="5.03" transform="translate(56.5 119.11) rotate(180)" />
+            <rect x="25.74" y="61.72" width="22.9" height="5.03" transform="translate(74.38 128.48) rotate(180)" />
+            <rect x="29.69" width="9.72" height="5.03" />
+            <rect x="29.69" y="9.42" width="9.72" height="5.03" />
+            <rect x="29.69" y="19.39" width="9.72" height="5.03" />
+            <rect x="33.91" y="52.2" width="5.03" height="5.03" />
+            <rect x="29.69" y="28.9" width="5.03" height="5.03" />
+            <path d="M86.11,70.58a3.66,3.66,0,0,1-5.19,0L67.44,57.1a3.33,3.33,0,0,1-.25-.28,
+                        3.87,3.87,0,0,1-.55-.91,14.17,14.17,0,0,0,4.68-4.84,3.32,3.32,0,0,1,.92.51,
+                        2.44,2.44,0,0,1,.39.33L86.11,65.39A3.66,3.66,0,0,1,86.11,70.58Z" />
+            <path d="M59.14,28.9a15,15,0,0,0-9.79,3.6,16.31,16.31,0,0,0-1.46,
+                        1.42,14.9,14.9,0,0,0-2.07,2.95A13.63,13.63,0,0,0,45,38.7a0,0,0,0,0,0,0A15.12,
+                        15.12,0,0,0,59.14,59.14l.87,0A14.8,14.8,0,0,0,65,58a15.13,15.13,0,0,
+                        0-5.9-29ZM71.32,51.07a14.17,14.17,0,0,1-4.68,4.84A13.93,13.93,0,0,1,60,
+                        58.06q-.44,0-.87,0A14.07,14.07,0,1,1,73.22,44,13.93,13.93,0,0,1,71.32,51.07Z" />
+            <path d="M59.14,27.85a16.06,16.06,0,0,0-12.6,6.07c-.26.31-.49.63-.72.95a16.23,16.23,
+                        0,0,0-1.94,3.83s0,0,0,0a16,16,0,0,0-.47,9,6.69,6.69,0,0,0,.2.77A16.18,16.18,0,0,
+                        0,59.14,60.18l.87,0a16.15,16.15,0,0,0,5-1.1,15.05,15.05,0,0,0,2.88-1.48A16.19,16.19,
+                        0,0,0,73,52.3,16,16,0,0,0,75.31,44,16.18,16.18,0,0,0,59.14,27.85ZM64.46,57a13.77,13.77,
+                        0,0,1-4.45,1q-.44,0-.87,0A14.07,14.07,0,1,1,73.22,44a13.93,13.93,0,0,1-1.9,7,14.17,14.17,
+                        0,0,1-4.68,4.84A13.64,13.64,0,0,1,64.46,57Z" />
+          </g>
+        </g>
+      </svg>
+      <div class="qm-search-icon__text">
+        {{'scan_qr' | translate }}
+      </div>
+    </button>
+  </div>
+
+  <button class="qm-appointment-refresh" *ngIf="enableAppointmentLoad" (click)="refreshAppointments()" dir="{{userDirection$ | async}}">
+    <svg *ngIf="!isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
+      <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+          <path class="refreshBtnStyleEnable" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
+          <polygon points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
+          <path class="refreshBtnStyleEnable" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
+          <polygon points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
+        </g>
+      </g>
+    </svg>
+
+    <svg *ngIf="isFetchBlock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.1 70.11">
+      <defs>
+
+      </defs>
+      <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+          <path class="refreshBtnStyleDisable-1" d="M3.38,27.53A32.06,32.06,0,0,1,60.23,15.87" />
+          <polygon class="refreshBtnStyleDisable-2" points="47.17 17.75 66.45 31.93 69.1 8.14 47.17 17.75" />
+          <path class="refreshBtnStyleDisable-1" d="M8.87,54.25A32.06,32.06,0,0,0,65.31,44.09" />
+          <polygon class="refreshBtnStyleDisable-2" points="0 61.97 2.65 38.18 21.92 52.37 0 61.97" />
+        </g>
+      </g>
+    </svg>
+  </button>
+
+  <div [@slideInOut]="inputAnimationState" class="qm-identify-appointment__search-input">
+    <input type="text" (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()"
+      [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
+      id="searchAppointmentField" class="qm-details-text-feild" />
+    <i class="icon-close qm-arrive-searchinput-close" (click)="clearInput()"></i>
+
+    <div class="qm-duration-control" [ngClass]="{'qm-in-time-selection':  !isInDateDurationSelection}" *ngIf="currentSearchState === 'duration'">
+
+      <div class="qm-duration-category" *ngIf="enableSearchByDay">
+        <div class="qm-duration-category__date" (click)="toggleDurationSelection(1)" [ngClass]="{'qm-duration-category__date--active' : isInDateDurationSelection }">{{'date'
+          | translate}}</div>
+        <div class="qm-duration-category__time" (click)="toggleDurationSelection(0)" [ngClass]="{'qm-duration-category__time--active' : !isInDateDurationSelection}">{{'time'
+          | translate}}</div>
+      </div>
+
+      <div class="qm-duration-control__header" *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
+        <div class="left">
+          {{'from' | translate}}
         </div>
-  
-        <div class="qm-duration-control__header" *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
-          <div class="left">
-            {{'from' | translate}}
-          </div>
-          <div class="right">
-            {{'to' | translate}}
-          </div>
-        </div>
-  
-        <div class="qm-step-controls-container">
-          <ng-container *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
-            <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController"
-              [(ngModel)]="fromTime"></ngb-timepicker>
-            <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="toTimeController"
-              [(ngModel)]="toTime"></ngb-timepicker>
-          </ng-container>
-  
-          <ng-container *ngIf="(enableSearchByDay && isInDateDurationSelection)">
-            <div class="qm-calendar-container">
-              <qm-calendar [enableAllFutureDates]="enableSearchByDay" [enabledDates]="[]" [selectedDates]="selectedDates"
-                (onSelectDate)="onSelectDate($event)"></qm-calendar>
-            </div>
-          </ng-container>
-        </div>
-        <div class="qm-command-buttons-container">
-          <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
-          <button class="ok" [disabled]="invalidDateSelected" [ngClass]="{'invalid-time': invalidDateSelected}" (click)="onSelectTime()">{{'ok'
-            | translate}}</button>
+        <div class="right">
+          {{'to' | translate}}
         </div>
       </div>
-      <div class="qm-date-time-selection-footer-text" *ngIf="useCalendarEndpoint && currentSearchState === SEARCH_STATES.DURATION 
-      && showModalBackDrop">
-        {{'current_branch_only' | translate: selectedBranchFormatted}}
+
+      <div class="qm-step-controls-container">
+        <ng-container *ngIf="!enableSearchByDay || (enableSearchByDay && !isInDateDurationSelection)">
+          <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="fromTimeController"
+            [(ngModel)]="fromTime"></ngb-timepicker>
+          <ngb-timepicker readonlyInputs="true" [ngClass]="{'invalid-time': invalidDateSelected}" [formControl]="toTimeController"
+            [(ngModel)]="toTime"></ngb-timepicker>
+        </ng-container>
+
+        <ng-container *ngIf="(enableSearchByDay && isInDateDurationSelection)">
+          <div class="qm-calendar-container">
+            <qm-calendar [enableAllFutureDates]="enableSearchByDay" [enabledDates]="[]" [selectedDates]="selectedDates"
+              (onSelectDate)="onSelectDate($event)"></qm-calendar>
+          </div>
+        </ng-container>
+      </div>
+      <div class="qm-command-buttons-container">
+        <button class="cancel" (click)="onCancel()">{{'cancel' | translate}}</button>
+        <button class="ok" [disabled]="invalidDateSelected" [ngClass]="{'invalid-time': invalidDateSelected}" (click)="onSelectTime()">{{'ok'
+          | translate}}</button>
       </div>
     </div>
-  
-    <div class="qm-customer-search-loader" *ngIf="showLoadingCustomers()">
-      <qm-loader [color]="white"></qm-loader>
-  
+    <div class="qm-date-time-selection-footer-text" *ngIf="useCalendarEndpoint && currentSearchState === SEARCH_STATES.DURATION 
+    && showModalBackDrop">
+      {{'current_branch_only' | translate: selectedBranchFormatted}}
     </div>
-    <div class="qm-customer-search-results" *ngIf="showCustomerResults">
-      <div class="qm-cutomer-item" (click)="onCustomerSelect(c)" *ngFor="let c of searchedCustomers">
-        <div class="qm-cutomer-item-name">
-          <div class="qm-cutomer-item-name__label">
-            {{ 'name' | translate}}
-          </div>
-          <div class="qm-customer-item-name__value">
-            {{c.firstName + ' ' + c.lastName}}
-          </div>
+  </div>
+
+  <div class="qm-customer-search-loader" *ngIf="showLoadingCustomers()">
+    <qm-loader [color]="white"></qm-loader>
+
+  </div>
+  <div class="qm-customer-search-results" *ngIf="showCustomerResults">
+    <div class="qm-cutomer-item" (click)="onCustomerSelect(c)" *ngFor="let c of searchedCustomers">
+      <div class="qm-cutomer-item-name">
+        <div class="qm-cutomer-item-name__label">
+          {{ 'name' | translate}}
         </div>
-        <div class="qm-cutomer-item-email">
-          <div class="qm-customer-item-email__label">
-            {{ 'email' | translate}}
-          </div>
-          <div class="qm-customer-item-email__value">
-            {{ c.properties.email }} </div>
-  
-        </div>
-        <div class="qm-cutomer-item-phone">
-          <div class="qm-customer-item-email__label">
-            {{'mobile_number' | translate }}
-          </div>
-          <div class="qm-customer-item-email__value">
-            {{ c.properties.phoneNumber }}
-          </div>
-  
+        <div class="qm-customer-item-name__value">
+          {{c.firstName + ' ' + c.lastName}}
         </div>
       </div>
-    </div>
-  
-    <div class="qm-selected-appointment-container" *ngIf="selectedAppointment">
-      <div class="qm-selected-appointment">
-        <div class="qm-selected-appointment-text">{{getSelectedAppointmentInfo()}}</div>
-        <i class="icon-close" (click)="deselectAppointment()"></i>
+      <div class="qm-cutomer-item-email">
+        <div class="qm-customer-item-email__label">
+          {{ 'email' | translate}}
+        </div>
+        <div class="qm-customer-item-email__value">
+          {{ c.properties.email }} </div>
+
+      </div>
+      <div class="qm-cutomer-item-phone">
+        <div class="qm-customer-item-email__label">
+          {{'mobile_number' | translate }}
+        </div>
+        <div class="qm-customer-item-email__value">
+          {{ c.properties.phoneNumber }}
+        </div>
+
       </div>
     </div>
-  
-    <div class="qm-customer-not-found" *ngIf="customerNotFound">
-      {{'customer_not_found' | translate }}
+  </div>
+
+  <div class="qm-selected-appointment-container" *ngIf="selectedAppointment">
+    <div class="qm-selected-appointment">
+      <div class="qm-selected-appointment-text">{{getSelectedAppointmentInfo()}}</div>
+      <i class="icon-close" (click)="deselectAppointment()"></i>
     </div>
-  
-  </div>-->
+  </div>
+
+  <div class="qm-customer-not-found" *ngIf="customerNotFound">
+    {{'customer_not_found' | translate }}
+  </div>
+
+</div>-->

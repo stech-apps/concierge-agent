@@ -11,6 +11,9 @@
     }
 
     .search-list-text{
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow: hidden;
         mark {
             font-weight: bold;
             background-color: transparent;
@@ -26,9 +29,7 @@
     }
     th{ 
         height: 50px;
-        white-space: nowrap;
-        text-overflow:ellipsis;
-        overflow: hidden;
+        
         max-width:1px;
         width: 20%;
         text-align: left;

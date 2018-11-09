@@ -233,9 +233,22 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   restrictNumbers($event) {
     const pattern = /[0-9\+\s]/;
     const inputChar = String.fromCharCode($event.charCode);
+    
+    console.log($event.keyCode);
 
     if (!pattern.test(inputChar)) {
       $event.preventDefault();
     }
   }
+
+//   _keyUp(event: any) {
+//     const pattern = /[0-9\+\-\ ]/;
+//     let inputChar = String.fromCharCode(event.charCode);
+
+//     if (!pattern.test(inputChar)) {
+//       // invalid character, prevent input
+//       event.preventDefault();
+//     }
+// }
+
 }

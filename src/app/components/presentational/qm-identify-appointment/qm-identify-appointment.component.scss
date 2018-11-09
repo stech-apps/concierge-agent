@@ -339,7 +339,7 @@
 }
 
 .icon-scan-qr{
-  color: $primary-pink;
+  // color: $primary-pink;
   font-size: 4em;
   padding: 0px 5px;
  
@@ -348,7 +348,7 @@
   padding: 10px 15px;
   background-color: white;
   box-shadow: 2px 4px 4px 0 $dark-transparent04;
-  color: $primary-pink;
+  // color: $primary-pink;
   text-align: center;
   margin-top: 40px;
   border: 1px solid $dark-transparent12;
@@ -396,6 +396,9 @@
     flex: 1;
     text-align: right;
     cursor: pointer;
+    @at-root [dir="rtl"] & {
+            text-align: left;
+          }
   }
   &__content{
     text-align: center;
@@ -419,10 +422,10 @@
     text-align: center
   }
   input{
-    // position: absolute;
-    // width: 0;
-    // height: 0;
-    // left: -400vw;
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -400vw;
   }
 
 }

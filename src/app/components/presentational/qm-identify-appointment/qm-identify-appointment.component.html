@@ -5,7 +5,7 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
       <div class="qm-flow-sub-header__right">
-        <div class="scan-qr-container" (click)="onSearchButtonClick('qr')">
+        <div class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" (click)="onSearchButtonClick('qr')">
           <i class="qm-action-btn__icon icon-scan-qr"></i>
           <div> {{'scan_qr'|translate}}</div>
         </div>
@@ -186,11 +186,11 @@
 </div>
 
 <!-- qr modal -->
-<div class="qm-qr-code-modal" *ngIf="qrScanerOn" (click)="foucusInput()">
+<div class="qm-qr-code-modal" *ngIf="isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
       <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>
-      <div class="qm-qr-code-modal__close-container" > <i class="icon-close" (click)="qrScanerOn=false"></i></div>
+      <div class="qm-qr-code-modal__close-container" > <i class="icon-close" (click)="closeqr()"></i></div>
     </div>
     <div class="qm-qr-code-modal__content">
       <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
@@ -201,11 +201,13 @@
         {{'point_the_scanenr'|translate}}
       </div>
       <div>
-        <input type="text" id="idField" autofocus>
+        <!-- <input type="text" id="idField" autofocus  (input)="onSearchChange($event.target.value)" > -->
+        <input *ngIf="inputAnimationState" type="text" autofocus (input)="onSeachTextChanged()" [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()"
+        [(ngModel)]="searchText" [formControl]="searchInputController" [placeholder]="(searchPlaceHolderKey | translate) || ''"
+        id="idField" class="qm-details-text-feild" />
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="qm-flow-done-bar" *ngIf="selectedAppointment">

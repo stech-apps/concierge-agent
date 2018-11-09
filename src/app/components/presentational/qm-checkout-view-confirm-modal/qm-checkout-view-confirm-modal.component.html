@@ -17,7 +17,7 @@
                 <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input"  type="tel" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
+                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input"  type="tel" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
               </span>
           
               <span class="qm-standard-text-field__error-message">

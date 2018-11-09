@@ -5,7 +5,7 @@ import { SelectAppointment } from "./../../../../store/actions/arrive-appointmen
 import { IBranch } from "src/models/IBranch";
 import { Subscription, Observable } from "rxjs";
 import { OnDestroy, Input } from "@angular/core";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, timeout } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { FormControl } from "@angular/forms";
 import * as moment from "moment";
@@ -121,7 +121,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isShowAppointmentNotFound = false;
   branchList: IBranch[];
   desktopQRCodeListnerTimer: any;
-  isQRReaderOpen = false;
+  // isQRReaderOpen = false;
   isQRReaderClose = false;
   flowType: string;
   editMode: boolean;
@@ -130,7 +130,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   requestDelayed: boolean = false;
   requestDelayHandle: any;
   showSearchResultsArea = true;
-  qrScanerOn = false;
+  isQRReaderOpen = false;
 
   readonly SEARCH_STATES = {
     DURATION: "duration",
@@ -468,6 +468,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           var date = this.qrCodeContent.appointment_date;
           var branchName = this.qrCodeContent.branch_name;
           this.searchAppointments();
+          console.log("sss");
+          
         } catch (err) {
           this.showQRCodeError();
         }
@@ -886,9 +888,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.nativeApi.openQRScanner();
         
       } else {
-        this.qrScanerOn=true;
-        var searchBox = document.getElementById("idField") as any;
-        searchBox.focus();
+        this.isQRReaderOpen=true;
+        setTimeout( () => { 
+          var searchBox = document.getElementById("idField") as any;
+          searchBox.focus();
+         }, 100 );      
         this.nativeApiDispatcher.openQRCodeScanner();
       }
     }
@@ -1386,5 +1390,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   foucusInput(){
     var searchBox = document.getElementById("idField") as any;
     searchBox.focus();
+  }
+  
+  onSearchChange(searchValue : string ) {  
+    this.qrCodeValue =  searchValue ;
+  }
+
+  // close qr view
+  closeqr(){
+    this.qrCodeValue='';
+    this.isQRReaderOpen=false;
+    this.removeQRCodeListner();
   }
 }

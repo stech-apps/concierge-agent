@@ -267,7 +267,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       case "email": this.customerCreateForm.patchValue({ email: ''});break;                       
     }
    }
-   restrictNumbers(){
-     
+   restrictNumbers($event){
+    $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, "");
    }
 }

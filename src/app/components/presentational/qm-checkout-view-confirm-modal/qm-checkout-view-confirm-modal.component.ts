@@ -237,7 +237,8 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     console.log($event.keyCode);
 
     if (!pattern.test(inputChar)) {
-      $event.preventDefault();
+      // $event.preventDefault();
+      $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, "");
     }
   }
 

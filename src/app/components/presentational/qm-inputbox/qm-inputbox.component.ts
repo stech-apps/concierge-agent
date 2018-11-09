@@ -302,7 +302,8 @@ export class QmInputboxComponent implements OnInit {
     const inputChar = String.fromCharCode($event.charCode);
 
     if (!pattern.test(inputChar)) {
-      $event.preventDefault();
+      // $event.preventDefault();
+      $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, "");
     }
   }
 

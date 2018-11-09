@@ -35,6 +35,7 @@
   }
 
   &__heading {
+    color: $black;
     @at-root [dir='rtl'] & {
       margin-left: 1rem;
       // flex: 1;

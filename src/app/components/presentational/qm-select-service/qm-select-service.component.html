@@ -3,7 +3,7 @@
 <div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
   <div class="qm-pannel-inner-container"> <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
-  <h1 class="qm-text-overflow-fix">{{ 'label.service.heading' | translate}}</h1>
+  <h1 class="qm-text-overflow-fix">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
   <div class="qm-selected-box" *ngIf="selectedServiceList && selectedServiceList.length > 0">
     <div class="qm-selected-box__heading">{{ 'label.selected.service' | translate }}</div>
 

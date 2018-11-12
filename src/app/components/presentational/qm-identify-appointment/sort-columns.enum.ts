@@ -10,6 +10,7 @@ export enum SortColumns {
     custName = "custName",
     servicesDisplayLabel = "servicesDisplayLabel",
     branch = "branch",
+    branchDisplayLabel = "branchDisplayLabel",
     first_name = "firstName",
     last_name = "lastName",
     services = "services"

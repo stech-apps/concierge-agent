@@ -703,13 +703,29 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     if (apps && apps.length > 0) {
       apps = apps.map(a => {
-        a.custName = `${a.customers[0] ? a.customers[0].firstName : ""} ${
-          a.customers[0] ? a.customers[0].lastName : ""
-        }`;
-        a.servicesDisplayLabel =
+
+        a.custName = '';
+        if(a.customers[0]) {
+          a.custName = `${a.customers[0] ? a.customers[0].firstName : ""} ${
+            a.customers[0] ? a.customers[0].lastName : ""
+          }`;
+        }
+
+        a.servicesDisplayLabel = '';
+
+        if(a.services && a.services.length > 0) {
+          a.servicesDisplayLabel =
           a.services.length > 1
             ? `${a.services[0].name} +${a.services.length - 1}`
             : a.services[0].name;
+        }
+
+        a.branchDisplayLabel = ''
+
+        if(this.useCalendarEndpoint) {
+          a.branchDisplayLabel = a.branch.name;
+        }
+
         return a;
       });
       this.appointments = this.applyAppointmentFilters(apps);

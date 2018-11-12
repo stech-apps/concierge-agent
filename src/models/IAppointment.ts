@@ -6,6 +6,7 @@ export interface IAppointment {
   publicId?: string;
   custName?: string;
   servicesDisplayLabel?: string;
+  branchDisplayLabel?: string;
   status?: any;
   created?: number;
   updated?: number;

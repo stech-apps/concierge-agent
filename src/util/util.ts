@@ -77,7 +77,8 @@ export class Util {
     }
 
     buildPhoneNumber(number: string) {
-        return number.replace("+", "");
+        // return number.replace("+", "");
+        return number;
     }
 
     phoneNoValidator() {

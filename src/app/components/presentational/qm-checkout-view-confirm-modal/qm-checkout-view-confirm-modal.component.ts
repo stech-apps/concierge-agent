@@ -209,10 +209,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   //   }
   //   return customerSave
   // }
-  test(){
-    // console.log(this.phoneValidators);
-    
-  }
   public regexvalue(){
     if(this.countryCode[0]=='+'){
       this.countryCodeNumber = this.countryCode.substring(1); 
@@ -225,9 +221,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   firstValue(){
     let a = '^(?!\\\+?';
-    let b = '94$)([0-9\\\+\\\s]+)';
-    console.log(a + b);
-    
+    let b = '94$)([0-9\\\+\\\s]+)';   
     return  a + b; 
   }
   restrictNumbers($event) {

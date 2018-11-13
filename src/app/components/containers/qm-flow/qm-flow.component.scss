@@ -23,7 +23,7 @@
 
 .qm-fishes-first { 
     margin-top: 7px;
-    width: calc((100vw - 350px)/5);
+    width: calc((100vw - 349px)/5);
     height: 60px;
     position: relative;
     background: $light-transparent12;
@@ -182,3 +182,15 @@
   .qm-fishes-first-element-text{
     margin: 0 !important;
   }
+
+  // IE specific solution
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    .qm-fishes-text, .qm-active-text{
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
+      // display: list-item;
+      // margin: auto;
+      // padding: 18px 24px;
+    }
+}

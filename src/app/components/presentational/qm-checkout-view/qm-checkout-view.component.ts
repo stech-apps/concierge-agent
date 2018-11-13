@@ -398,6 +398,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           (result: any) => {
             if (result) {
               if (result.phone) {
+               
+                
                 this.customerSms = result.phone;
                   if(this.selectedCustomer){
                     this.selectedCustomer.properties['phoneNumber'] = result.phone;    
@@ -407,7 +409,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
                     const Tcustomer: ICustomer = {
                       phone: result.phone
                     };
-
+                   
                     this.customerDispatcher.setTempCustomers(Tcustomer);
                   }
                 
@@ -436,8 +438,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
                 this.customerSms = result.phone;
                 this.selectedCustomer.properties['phoneNumber'] = result.phone;
               }
-              console.log('ssss');
-
+            
               if (this.router.url != "/home/create-visit") {
                 this.customerDispatcher.updateCustomer(this.selectedCustomer);
 

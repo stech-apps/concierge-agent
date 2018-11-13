@@ -41,6 +41,7 @@ import { Util } from "../../../../util/util";
 import { QmModalService } from "../qm-modal/qm-modal.service";
 import { start } from "repl";
 import { timingSafeEqual } from "crypto";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -131,6 +132,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   requestDelayHandle: any;
   showSearchResultsArea = true;
   isQRReaderOpen = false;
+  qrButtonVisible = false;
 
   readonly SEARCH_STATES = {
     DURATION: "duration",
@@ -188,7 +190,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private util: Util,
     private nativeApiDispatcher: NativeApiDispatchers,
     private modalService: QmModalService,
-    private systemInfoSelectors: SystemInfoSelectors
+    private systemInfoSelectors: SystemInfoSelectors,
+    private router:Router
   ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -298,6 +301,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const uttSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       uttParameters => {
         if (uttParameters) {
+          if( this.router.url == "/home/arrive-appointment" ){
+              if(uttParameters.appointmentQR){
+                this.qrButtonVisible = true;
+              }
+          }else{
+            if(uttParameters.visitQR){
+              this.qrButtonVisible = true;
+            }
+          }
+         
+          console.log(uttParameters);
           this.enableAppointmentLoad = uttParameters.fetchAppointment;
           this.isMultiBranchEnable = uttParameters.mltyBrnch;
         }

@@ -9,7 +9,7 @@
     </div>
     <div class="qm-modal__body">
       <div class="qm-modal-row">
-        <h3 class="qm-done-modal__details-heading" *ngIf="fieldList && fieldList.length>0">{{ 'label.appconfirm.details.heading' | translate }}</h3>
+        <h3 class="qm-done-modal__details-heading" *ngIf="fieldList && fieldList.length>0">{{ ( fieldListHeading || 'label.appconfirm.details.heading') | translate }}</h3>
      
         <ng-container *ngFor="let field of fieldList">
           <div class="qm-done-modal__detail-item">

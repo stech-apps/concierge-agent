@@ -16,7 +16,7 @@
               <span class="qm-reschedule__selected--icon"><i class="icon-info"></i></span>
             </div>   
             <div class="qm-btn qm-btn--primary qm-reschedule__selected-cancel-button qm-text-overflow-fix" 
-            (click)="onDeleteAppointment()">{{ 'label.cancel.appointment' | translate}}</div>
+            (click)="onCancelAppointment()">{{ 'label.cancel.appointment' | translate}}</div>
         </div>
 
       <div class="qm-reschedule__selected-branch qm-text-overflow-fix">{{ this.editAppointment?.branch?.name }}</div>
@@ -27,7 +27,7 @@
           </div>
       
          <!--  <button class="qm-reschedule-button" *ngIf="isRescheduleEnabledInUtt" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
-          <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button> -->
+          <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onCancelAppointment()">{{ 'delete' | translate }}</button> -->
         </div>
         <div class="qm-reschedule-select-slots">
           <div class="qm-time-slot-header qm-time-header">{{ getSelectedAppointmentInfoDate("ddd DD MMMM") | translate}}</div>

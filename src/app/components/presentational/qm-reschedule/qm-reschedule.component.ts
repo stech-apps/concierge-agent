@@ -244,7 +244,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDeleteAppointment() {
+  onCancelAppointment() {
     this.qmModalService.openForTransKeys(
       "",
       "modal.cancel.appointment.message",

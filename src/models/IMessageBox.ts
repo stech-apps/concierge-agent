@@ -6,4 +6,10 @@ export interface IMessageBox{
     icon?:string;
     LastLineName?:string;
     LastLineText?:string;
+
+    heading?: string;
+    subheading?: string;
+    fieldList?: Array<any>;
+    dynamicTransKeys? : any;
+    fieldListHeading?: string;
 }

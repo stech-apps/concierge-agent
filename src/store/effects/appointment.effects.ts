@@ -118,25 +118,66 @@ export class AppointmentEffects {
       )
     );
 
+
   @Effect()
   rescheduleAppointmentSuccess$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS)
     .pipe(
       switchMap((action: AppointmentActions.RescheduleAppointmentSuccess) => {
-        return this.translateService.get(['appointment_reschedule_success', 'appointment_new_date_time']).pipe(
+        return this.translateService.get(['label.notifyoptions.smsandemail', 'label.notifyoptions.email', 
+        'label.notifyoptions.sms']).pipe(
           switchMap((messages) => {
-            var successMessage = {
-              firstLineName: messages['appointment_reschedule_success'],
-              firstLineText: action.payload.branch.name,
-              icon: "correct",
-              LastLineName: messages['appointment_new_date_time'],
-              LastLineText: action.payload.start.replace('T', ', ')
+
+            let confirmText = '';
+            const customer = (action.payload.customers[0]);
+            if(customer.email && customer.phone) {
+              confirmText = messages['label.notifyoptions.smsandemail']
             }
-            return [new AppointmentActions.UpdateMessageInfo(successMessage)]
+            else if (customer.email){
+              confirmText = messages['label.notifyoptions.email']
+            }
+            else if(customer.phone) {
+              confirmText = messages['label.notifyoptions.sms']
+            }
+
+            var successMessage = {
+              heading: "heading.reschedule.done",
+              subheading: confirmText ? "subheading.reschedule.done" : '',
+              fieldListHeading: "label.reschedule.done.modal.fieldsheading",
+              dynamicTransKeys: { confirmOptions: confirmText},
+              fieldList: [
+                {
+                  icon: "calendar-light",
+                  label: moment(action.payload.start)
+                    .tz(action.payload.branch.fullTimeZone)
+                    .format("dddd DD MMMM")
+                },
+                {
+                  icon: "clock",
+                  label: `<span>${
+                              moment(action.payload.start)
+                              .tz(action.payload.branch.fullTimeZone)
+                              .format("hh:mm A")}
+                            </span>
+                            <span>&nbsp;-&nbsp;</span><span>${
+                                moment(
+                                action.payload.end
+                                ).tz(action.payload.branch.fullTimeZone).format("hh:mm A")}
+                            </span>`
+                },
+                {
+                  icon: "home",
+                  label: action.payload.branch.name
+                }
+              ]
+            };
+            return [new AppointmentActions.UpdateMessageInfo(successMessage)];
           })
         );
       })
     );
+
+    
 
   @Effect()
   rescheduleAppointmentFailed$: Observable<Action> = this.actions$

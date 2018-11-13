@@ -13,6 +13,7 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
   heading: string = '';
   subHeading: string = '';
   fieldList: Array<{icon: string, label: string}> = [];
+  fieldListHeading: string = '';
   visitID:string;
 
   userDirection$: Observable<string>;

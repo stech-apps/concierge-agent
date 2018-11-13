@@ -39,6 +39,70 @@
     }
 }
 
+.qm-reschedule {
+    &__selected-branch {
+        color: $dark-transparent42;
+        font-weight: $font-weight-medium;
+    }
+
+    
+  &__selected {
+    color: $dark-transparent82;
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    width: calc(100% - 106px);
+
+    &--text {
+      max-width: 35%;
+      padding: 1rem 1rem 1rem 0;
+
+      @at-root [dir='rtl'] & {
+        padding: 1rem 0 1rem 1rem;
+      }
+    }
+
+    &--details {
+      border: 1px solid #d5d5d5;
+      background-color: #ffffff;
+      box-shadow: 2px 4px 4px 0 $dark-transparent04;
+      width: 60%;
+      height: 56px;
+      line-height: 56px;
+      font-size: 18px;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      display: flex;
+      justify-content: space-between;
+
+
+      span {
+        display: inline-block;
+        margin-left: 1rem;
+        @at-root [dir="rtl"] & {
+          margin-right: 1rem;
+        }
+      }
+    }
+
+    &--icon {
+      font-size: 32px;
+      color: $dark-transparent62;
+
+      i {
+          line-height: 56px;
+      }
+
+      &:hover {
+        color: $dark-transparent82;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .qm-reschedule-select {
 
     &__content {
@@ -47,8 +111,10 @@
 
     &-slots {
         flex: 1;
-        margin: 0.5rem 3rem 1rem 1rem;
+        margin: 0.5rem 0 1rem 1rem;
         color: black;
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.12);
     }
 }
 
@@ -59,25 +125,27 @@
 
     &-slots {
         flex: 1;
+       
     }
 }
 
 .qm-time-header {
-    background: #bdbdbd;
-    font-size: 1rem;
-    font-family: $secondary-font-regular;
-    letter-spacing: $extended-letter-spacing ;
+    background: $secondary-color;
+    font-size: rem(21px);
     text-align: center;
     padding: 0.5rem;
-    color: $black;
+    font-weight: $font-weight-medium;
+    color: $white;
 }
 
 .qm-calendar-container {
-    margin: 0.5rem 1rem 1rem 3rem;
+    margin: 0.5rem 1rem 1rem 0;
+    flex: 1;
 }
 
 .qm-calendar-placeholder {
     background-color: $calendar-background;
+    border: 1px solid rgba(0,0,0,0.12);
 }
 
 .qm-reschedule-time-select-slots {

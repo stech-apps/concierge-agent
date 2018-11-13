@@ -1,17 +1,46 @@
-<div class="qm-reschedule-select__content">
-  <div class="qm-calendar-container">
-     <div class="qm-calendar-header qm-time-header" *ngIf="editAppointment">{{editAppointment.branch.name}}</div>
-    <div class="qm-calendar-placeholder">
-      <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
-    </div>
+<div class="qm-pannel-container" dir="{{userDirection$ | async}}">
+    <div class="qm-pannel-inner-container">
+        <div class="qm-flow-sub-header">
+            <div class="qm-flow-sub-header__left">
+              <h1>{{ 'edit_checkIn' | translate}}</h1>
+            </div>
+            <div class="qm-flow-sub-header__right">
+              <div class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" (click)="onSearchButtonClick('qr')">
+                <i class="qm-action-btn__icon icon-scan-qr"></i>
+                <div> {{'scan_qr'|translate}}</div>
+              </div>
+            </div>
+        </div>
 
-    <button class="qm-reschedule-button" *ngIf="isRescheduleEnabledInUtt" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
-    <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button>
-  </div>
-  <div class="qm-reschedule-select-slots">
-    <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
-    <div class="qm-time-slot-placeholder">
-      <qm-time-slots [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+        <div class="qm-reschedule__selected" *ngIf="editAppointment">
+            <div class="qm-reschedule__selected--text qm-text-overflow-fix">{{
+              'label.booked.appointment.selected' | translate }}</div>
+            <div class="qm-reschedule__selected--details">
+              <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
+              <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
+              <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
+              <span class="qm-reschedule__selected--icon"><i class="icon-info"></i></span>
+            </div>
+            
+        </div>
+
+      <div class="qm-reschedule__selected-branch">Selected Branch</div>
+      <div class="qm-reschedule-select__content">
+        <div class="qm-calendar-container">
+          <div class="qm-calendar-placeholder">
+            <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
+          </div>
+      
+         <!--  <button class="qm-reschedule-button" *ngIf="isRescheduleEnabledInUtt" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
+          <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button> -->
+        </div>
+        <div class="qm-reschedule-select-slots">
+          <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
+          <div class="qm-time-slot-placeholder">
+            <qm-time-slots [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 </div>
+

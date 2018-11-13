@@ -1,14 +1,8 @@
-<div class="qm-pannel-container" dir="{{userDirection$ | async}}">
+<div class="qm-pannel-container">
     <div class="qm-pannel-inner-container">
         <div class="qm-flow-sub-header">
             <div class="qm-flow-sub-header__left">
               <h1>{{ 'edit_checkIn' | translate}}</h1>
-            </div>
-            <div class="qm-flow-sub-header__right">
-              <div class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" (click)="onSearchButtonClick('qr')">
-                <i class="qm-action-btn__icon icon-scan-qr"></i>
-                <div> {{'scan_qr'|translate}}</div>
-              </div>
             </div>
         </div>
 
@@ -20,8 +14,8 @@
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
               <span class="qm-reschedule__selected--icon"><i class="icon-info"></i></span>
-            </div>
-            
+            </div>   
+            <div class="qm-btn--primary">{{ 'label.cancel.appointment' | translate}}</div>
         </div>
 
       <div class="qm-reschedule__selected-branch">Selected Branch</div>

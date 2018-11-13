@@ -76,14 +76,6 @@ export class AppointmentEffects {
       withLatestFrom(this.store$.select((state: IAppState) => state.appointments)),
       switchMap(() => {
         return this.translateService.get('appointment_deleted_success');
-      }),
-      switchMap((v) => {
-        var successMessage = {
-          firstLineName: v,
-          firstLineText: '',
-          icon: "correct"
-        }
-        return [new AppointmentActions.UpdateMessageInfo(successMessage)]
       })
     );
 

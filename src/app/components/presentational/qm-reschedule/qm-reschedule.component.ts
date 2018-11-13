@@ -63,6 +63,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isDeleteEnabledInUtt: boolean = true;
   isOriginalAppointmentTimeChanged = false;
   timeConvention: string = "24";
+  userDirection$: Observable<string>;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -83,15 +84,14 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private qmModalService: QmModalService,
     private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
     private appointmentDispatchers: AppointmentDispatchers,
-    private appointmentSelectors: AppointmentSelectors,
     private calendarBranchSelectors: CalendarBranchSelectors,
-    private infoMessageDispatchers: InfoMsgDispatchers,
-    private translationService: TranslateService,
     private servicePointSelectors: ServicePointSelectors,
-    private systemInfoSelectors: SystemInfoSelectors
+    private systemInfoSelectors: SystemInfoSelectors,
+    private translationService: TranslateService
   ) {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
+    this.userDirection$ = this.userSelectors.userDirection$;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -171,6 +171,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       }
     );
 
+
+
     this.subscriptions.add(calendarBranchsSub);
     this.subscriptions.add(timeConventionSub);
     this.subscriptions.add(uttSubscription);
@@ -245,30 +247,45 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   onDeleteAppointment() {
     this.qmModalService.openForTransKeys(
       "",
-      "confirm_delete",
+      "modal.cancel.appointment.message",
       "yes",
       "no",
       result => {
         if (result) {
           this.appointmentDispatchers.deleteAppointment(
             this.editAppointment,
-            () => {},
-            error => {}
+            () => {
+
+              this.showCancelAppointmentSuccessMessage();
+            },
+            () => { }
           );
           this.onFlowExit.next(true);
         }
       },
       () => {
         this.onFlowExit.next(true);
+      },  {
+        date : this.getSelectedAppointmentInfoDate("DD MMM YYYY")
       }
     );
+  }
+
+  showCancelAppointmentSuccessMessage() {   
+      this.translationService
+        .get(['label.appointment.cancel.heading',
+        'label.appointment.cancel.subheading'], { date : this.getSelectedAppointmentInfoDate('DD MMMM YYYY')})
+        .subscribe(v => {
+          this.qmModalService.openDoneModal(v['label.appointment.cancel.heading'],
+          v['label.appointment.cancel.subheading'], []);
+        });
   }
 
   onRescheduleAppointment() {
     if (this.enableReschedule) {
       this.qmModalService.openForTransKeys(
         "",
-        "confirm_reschedule",
+        "modal.reschedule.appointment.message",
         "yes",
         "no",
         result => {
@@ -321,7 +338,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     return appointmentInfo;
   }
 
-  getSelectedAppointmentInfoDate() {
+  getSelectedAppointmentInfoDate(timeFormat = "DD/MM/YYYY") {
     let appointmentInfo = "";
 
     if (this.editAppointment) {
@@ -331,7 +348,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
             this.editAppointment.branch.fullTimeZone ||
               this.selectedCalendarBranch.fullTimeZone
           )
-          .format("DD/MM/YYYY");
+          .format(timeFormat);
     }
     return appointmentInfo;
   }

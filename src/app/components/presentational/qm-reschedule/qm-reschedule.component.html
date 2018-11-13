@@ -1,4 +1,4 @@
-<div class="qm-pannel-container">
+<div class="qm-pannel-container" dir ="{{ userDirection$ | async }}">
     <div class="qm-pannel-inner-container">
         <div class="qm-flow-sub-header">
             <div class="qm-flow-sub-header__left">
@@ -15,10 +15,11 @@
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
               <span class="qm-reschedule__selected--icon"><i class="icon-info"></i></span>
             </div>   
-            <div class="qm-btn--primary">{{ 'label.cancel.appointment' | translate}}</div>
+            <div class="qm-btn qm-btn--primary qm-reschedule__selected-cancel-button qm-text-overflow-fix" 
+            (click)="onDeleteAppointment()">{{ 'label.cancel.appointment' | translate}}</div>
         </div>
 
-      <div class="qm-reschedule__selected-branch">Selected Branch</div>
+      <div class="qm-reschedule__selected-branch qm-text-overflow-fix">{{ this.editAppointment?.branch?.name }}</div>
       <div class="qm-reschedule-select__content">
         <div class="qm-calendar-container">
           <div class="qm-calendar-placeholder">
@@ -29,12 +30,16 @@
           <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onDeleteAppointment()">{{ 'delete' | translate }}</button> -->
         </div>
         <div class="qm-reschedule-select-slots">
-          <div class="qm-time-slot-header qm-time-header">{{'time_slots' | translate}}</div>
+          <div class="qm-time-slot-header qm-time-header">{{ getSelectedAppointmentInfoDate("ddd DD MMMM") | translate}}</div>
           <div class="qm-time-slot-placeholder">
             <qm-time-slots [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
           </div>
         </div>
       </div>
     </div>
+</div>
+
+<div class="qm-flow-done-bar" *ngIf="isRescheduleEnabledInUtt && enableReschedule"  (click)="onRescheduleAppointment()">
+    <div class="qm-flow-done-bar__done-button"> {{'reschedule' | translate }}</div>
 </div>
 

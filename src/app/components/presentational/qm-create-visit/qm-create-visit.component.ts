@@ -7,8 +7,8 @@ import { ICustomer } from '../../../../models/ICustomer';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 export enum CUSTOMER_SAVE_OPTION {
-  DB = "db",
-  VISIT = "visit"
+  DB = 'db',
+  VISIT = 'visit'
 }
 
 @Component({
@@ -41,7 +41,7 @@ export class QmCreateVisitComponent implements OnInit {
     private serviceSelectors: ServiceSelectors,
     private customerSelectors: CustomerSelector,
     private localStorage: LocalStorage,
-    private timeSlotDispatchers:TimeslotDispatchers
+    private timeSlotDispatchers: TimeslotDispatchers
   ) {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
@@ -49,8 +49,7 @@ export class QmCreateVisitComponent implements OnInit {
         this.isCustomerFlowHidden = params.hideCustomer;
         if (params.saveCustomerOption === CUSTOMER_SAVE_OPTION.VISIT) {
           this.isCustomerStoreDB = false;
-        }
-        else {
+        } else {
           this.isCustomerStoreDB = true;
         }
       }

@@ -59,7 +59,7 @@
       <!-- 3 if selected customer and utt enabled  -->
       <div class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
           <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
-          <h2 *ngIf="tempCustomer && tempCustomer.firstName">{{tempCustomer.firstName}} <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
+          <h2 ><span *ngIf="tempCustomer && tempCustomer.firstName"> {{tempCustomer.firstName + ' '}}</span> <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
                     
           <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.phoneNumber"> 
             <span class="qm-summary-item__icon icon-phone"></span>

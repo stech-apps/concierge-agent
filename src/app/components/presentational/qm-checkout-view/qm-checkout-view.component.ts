@@ -175,6 +175,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.tempCustomer = customer;
         this.customerEmail = customer.email;
         this.customerSms = customer.phone;
+      }else{
+        this.tempCustomer = null;
+        this.customerEmail = null;
+        this.customerSms = null;
       }
     });
     this.subscriptions.add(tempCustomerSubscription);

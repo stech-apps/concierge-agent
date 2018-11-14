@@ -219,12 +219,13 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       });
     }
     else{
-      if((this.customerCreateForm.value.firstName && this.customerCreateForm.value.firstName.trim()!='')||(this.customerCreateForm.value.lastName && this.customerCreateForm.value.lastName.trim()!='')||(this.customerCreateForm.value.phone && this.customerCreateForm.value.phone.trim()!='' && this.customerCreateForm.value.phone.trim()!=this.countryCode)||(this.customerCreateForm.value.email && this.customerCreateForm.value.email.trim()!='')){
+      if(this.customerCreateForm.value && (this.customerCreateForm.value.firstName && this.customerCreateForm.value.firstName.trim()!='')||(this.customerCreateForm.value.lastName && this.customerCreateForm.value.lastName.trim()!='')||(this.customerCreateForm.value.phone && this.customerCreateForm.value.phone.trim()!='' && this.customerCreateForm.value.phone.trim()!=this.countryCode)||(this.customerCreateForm.value.email && this.customerCreateForm.value.email.trim()!='')){
         this.customerDispatchers.setTempCustomers(this.prepareSaveCustomer());
         this.onFlowNext.emit();
       }else{
         this.customerDispatchers.resetTempCustomer();
         this.customerCreateForm.reset();
+        // this.customerDispatchers.resetTempCustomer();
         this.onFlowNext.emit();
       }
       

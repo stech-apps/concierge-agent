@@ -9,9 +9,10 @@
           <i class="qm-action-btn__icon icon-scan-qr"></i>
           <div> {{'scan_qr'|translate}}</div>
         </div>
+
       </div>
     </div>
-
+    <input type="text" (keyup)="keydown($event)" >
     <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
       <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
         'label.identify.appointment.selected' | translate }}</div>

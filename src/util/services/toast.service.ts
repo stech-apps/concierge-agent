@@ -12,7 +12,7 @@ export class ToastService {
     messageClass: 'qm-toast__message',
     easing: 'ease-in-out',
     closeButton: true,
-    timeOut: 0
+    timeOut: 5000
   };
 
   private successOptions: Object = {
@@ -47,6 +47,7 @@ export class ToastService {
     toastClass: 'toast qm-toast qm-toast--danger',
     closeButton: true,
     tapToDismiss: false,
+
     disableTimeOut: true
   };
 
@@ -63,79 +64,30 @@ export class ToastService {
   }
 
   successToast(text: string) {
-    const ToastSubscription = this.toastrService.success(text, '', this.infoOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    })
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
-
     return this.toastrService.success(text, '', this.successOptions);
   }
 
   infoToast(text: string) {
-    const ToastSubscription = this.toastrService.success(text, '', this.infoOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    })
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
     return this.toastrService.success(text, '', this.infoOptions);
   }
 
 
   errorToast(text: string) {
-    const ToastSubscription = this.toastrService.error(text, '', this.infoOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    })
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
     this.toastrService.error(text, '', this.errorOptions);
   }
 
   htmlSuccessToast(text: string) {
-    const ToastSubscription = this.toastrService.success(text, '', this.infoOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    })
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
     this.toastrService.success(text, '', this.htmlSuccessOptions);
   }
 
   // Create toast that does not expire
   infiniteToast(text: string) {
-    const ToastSubscription = this.toastrService.error(text, '', this.infoOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    })
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
     this.toastrService.error(text, '', this.infiniteOptions);
   }
 
 
   // Create toast that does not expire
   stickyToast(text: string) {
-    const ToastSubscription = this.toastrService.error(text, '', this.stickyToastOptions);
-    ToastSubscription.onShown.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "100vh";
-    });
-    ToastSubscription.onHidden.subscribe((val) => {
-      document.getElementById('backdrop').style.height = "0vh";
-
-    })
     this.toastrService.error(text, '', this.stickyToastOptions);
   }
 

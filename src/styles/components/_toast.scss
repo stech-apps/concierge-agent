@@ -12,7 +12,7 @@
   padding: 0;
   display: flex;
   align-items: center;
-  color: $light-transparent42;
+  color: $toast-text-color;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -32,6 +32,7 @@
   &:focus,
   &:active {
     outline: none;
+    font-weight: $font-weight-medium;
     &:before {
       color: $toast-text-color;
     }
@@ -45,7 +46,7 @@
   padding: rem($standard-padding $standard-padding / 2 $standard-padding $standard-padding * 1.5);
   color: $toast-text-color;
   background: $tertiary-color;
-  max-width: 500px;
+  max-width: 50vw;
   width: 100%;
   z-index: 3;
   margin: 0 auto;
@@ -83,9 +84,12 @@
   &__message {
    
     flex: 3 1 auto;
+    padding-right: 2rem;
         
     @at-root [dir="rtl"]  & {
-      text-align: right;      
+      text-align: right;
+      padding-left: 2rem;
+      padding-right: 0;      
     }
   }
 
@@ -99,7 +103,7 @@
   }
 
   &--info {
-    background: $toast-error-background-color;
+    background: $toast-success-background-color;
   }
 }
 

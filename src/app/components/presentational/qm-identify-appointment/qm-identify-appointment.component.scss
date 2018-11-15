@@ -409,7 +409,10 @@
     font-size: 1.7em;
     font-weight: 300;
     padding: 10px 40px;
-    flex: 1;
+    flex: 9;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__close-container{
     color: $dark-transparent42;

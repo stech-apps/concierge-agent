@@ -76,7 +76,8 @@
                                                     bindValue="value"
                                                     placeholder="{{ 'field.createCustomerForm.month' | translate }}"
                                                     formControlName="month"
-                                                    dropdownPosition="bottom">
+                                                    dropdownPosition="bottom"
+                                                    (click)="ScrollToBottom()">
                             </ng-select>
                         </div>
                         <!-- Day -->

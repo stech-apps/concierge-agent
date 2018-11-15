@@ -397,5 +397,9 @@ export class QmInputboxComponent implements OnInit {
                         
    }
   }
+  ScrollToBottom(){
+    var searchBox = document.getElementById("inputbox").scrollHeight;
+    
+  }
   
 }

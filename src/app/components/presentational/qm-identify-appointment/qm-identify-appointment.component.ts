@@ -419,6 +419,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.removeDesktopQRReader();
           }
         }
+        else{
+          console.log('ssss');
+          
+        }
       }
     );
     this.subscriptions.add(qrCodeSubscription);
@@ -517,6 +521,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.toastService.infoToast(noappointments);
       })
       .unsubscribe();
+      this.currentSearchState = this.previousSearchState;
+      this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
   }
 
   showAppointmentNotFoundError() {
@@ -701,6 +707,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.toastService.infoToast(noappointments);
         })
         .unsubscribe();
+        this.currentSearchState = this.previousSearchState;
+        this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
     }
   }
 

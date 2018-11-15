@@ -1,6 +1,11 @@
 .backdrop_height{
-    height: 100vh;
+    
 }
 .backdrop{
-    background-color:rgba(0,0,0,0.5);width: 100vw;position: absolute;z-index: 100;top:0;overflow: hidden;
+    background-color:rgba(0,0,0,0.5);
+    width: 100vw;
+    position: fixed;
+    z-index: 100;
+    top:0;
+    overflow: hidden;
 }

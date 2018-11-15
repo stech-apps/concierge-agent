@@ -37,7 +37,7 @@
         <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
       </div>
     </div>
-    <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
+    <qm-notes *ngIf="isNoteEnabled" (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
   </div>
 
   <!-- summary card for create visit-->
@@ -100,7 +100,7 @@
           <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
         </div>
       </div>
-      <qm-notes (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
+      <qm-notes *ngIf="isNoteEnabled" (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
     </div>
 
   <!-- right pannel -->

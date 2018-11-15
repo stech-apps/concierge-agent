@@ -138,6 +138,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
+          console.log(uttParameters);
+          
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
           this.isVipLvl2Enabled = uttParameters.vipLvl2;
@@ -159,6 +161,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         if (customer) {
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
+        }
+        else{
+          this.customerEmail = null;
+          this.customerSms = null;
         }
       });
     this.subscriptions.add(customerSubscription);

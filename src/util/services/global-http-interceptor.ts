@@ -27,7 +27,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     private timeToWaitBeforeStartPing = 3000;
     private localTimeoutBeforeStartPing;
-    private native_ping_period = 5000;
+    private native_ping_period = 1000;
     private http_timeout = 5000;
     private native_max_ping_count_for_message = 2;
     private lastRequestAction = 'NONE';

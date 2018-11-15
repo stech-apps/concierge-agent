@@ -273,11 +273,11 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   showCancelAppointmentSuccessMessage() {   
       this.translationService
-        .get(['label.appointment.cancel.heading',
-        'label.appointment.cancel.subheading'], { date : this.getSelectedAppointmentInfoDate('DD MMMM YYYY')})
+        .get(['label.appointment.cancel.done.heading',
+        'label.appointment.cancel.done.subheading'], { date : this.getSelectedAppointmentInfoDate('DD MMMM YYYY')})
         .subscribe(v => {
-          this.qmModalService.openDoneModal(v['label.appointment.cancel.heading'],
-          v['label.appointment.cancel.subheading'], []);
+          this.qmModalService.openDoneModal(v['label.appointment.cancel.done.heading'],
+          v['label.appointment.cancel.done.subheading'], []);
         });
   }
 
@@ -351,6 +351,22 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           .format(timeFormat);
     }
     return appointmentInfo;
+  }
+
+  getSelectedDate(timeFormat = "DD/MM/YYYY") {
+    let selectedDate = ''
+    if(this.currentlyActiveDate) {
+      selectedDate = this.currentlyActiveDate.mDate.tz(
+        this.editAppointment.branch.fullTimeZone ||
+          this.selectedCalendarBranch.fullTimeZone
+      )
+      .format(timeFormat);
+    }
+    else {
+      selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
+    }
+
+    return selectedDate;
   }
 
   getSelectedAppointmentInfoCustomer() {

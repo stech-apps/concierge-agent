@@ -1,6 +1,7 @@
 .toast-container {
   margin: 0 auto;
   max-width: 70%;
+  font-size: 18px;
 }
 
 
@@ -84,17 +85,7 @@
     flex: 3 1 auto;
         
     @at-root [dir="rtl"]  & {
-      background: $info-icon no-repeat;
-      text-align: right;
-      padding-right:  rem($standard-padding *5);
-      background-position: 300px 0;
-      
-    }
-    @at-root [dir="ltr"] & {
-      background: $info-icon no-repeat;
-      padding-right: rem($standard-padding /2);
-      padding-left:  rem($standard-padding *5);
-      background-position: left;
+      text-align: right;      
     }
   }
 

@@ -30,7 +30,7 @@
           <button class="qm-delete-button" *ngIf="isDeleteEnabledInUtt" (click)="onCancelAppointment()">{{ 'delete' | translate }}</button> -->
         </div>
         <div class="qm-reschedule-select-slots">
-          <div class="qm-time-slot-header qm-time-header">{{ getSelectedAppointmentInfoDate("ddd DD MMMM") | translate}}</div>
+          <div class="qm-time-slot-header qm-time-header">{{ getSelectedDate("ddd DD MMMM") | translate}}</div>
           <div class="qm-time-slot-placeholder">
             <qm-time-slots [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
           </div>

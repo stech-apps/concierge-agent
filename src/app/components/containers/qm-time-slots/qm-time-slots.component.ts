@@ -10,7 +10,7 @@ import { TimeslotSelectors, UserSelectors, SystemInfoSelectors } from 'src/store
   templateUrl: './qm-time-slots.component.html',
   styleUrls: ['./qm-time-slots.component.scss']
 })
-export class QmTimeSlotsComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
+export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   isTimeSlotLoading: boolean;
 
   timeSlotCategories: Array<ITimeSlotCategory> = [];
@@ -36,9 +36,6 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy, AfterViewInit, O
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 
-  ngOnChanges(changes: SimpleChanges) {
-    
-  }
 
   ngOnInit() {
     const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
@@ -160,7 +157,6 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy, AfterViewInit, O
   }
 
   timeSlotSelect(timeSlot: ITimeSlot) {
-
     this.timeSlots.forEach(ti => {
       ti.isActive = false;
     });

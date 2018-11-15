@@ -1,4 +1,4 @@
-import { OnDestroy, EventEmitter, Input, ElementRef } from '@angular/core';
+import { OnDestroy, EventEmitter, Input, ElementRef, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { ITimeSlot } from './../../../../models/ITimeSlot';
 import { ITimeSlotCategory } from './../../../../models/ITimeInterval';
@@ -10,7 +10,7 @@ import { TimeslotSelectors, UserSelectors, SystemInfoSelectors } from 'src/store
   templateUrl: './qm-time-slots.component.html',
   styleUrls: ['./qm-time-slots.component.scss']
 })
-export class QmTimeSlotsComponent implements OnInit, OnDestroy {
+export class QmTimeSlotsComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   isTimeSlotLoading: boolean;
 
   timeSlotCategories: Array<ITimeSlotCategory> = [];
@@ -35,6 +35,10 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
+
+  ngOnChanges(changes: SimpleChanges) {
+    
+  }
 
   ngOnInit() {
     const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
@@ -67,6 +71,11 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
           this.timeSlots.sort((a, b) => a.title.localeCompare(b.title));
           this.selectedCategory = preselectedTimeSlotCategory;
+
+          setTimeout(()=> {
+            this.scrollToPreselectedItem();
+          });
+         
         }
         else {
           this.selectedCategory = this.timeSlots[0].category;
@@ -86,6 +95,20 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(timeSlotSubscription);
     this.subscriptions.add(timeSlotLoadingSubscription);
     this.subscriptions.add(timeConventionSubscriptioon);
+  }
+
+  scrollToPreselectedItem() {
+
+    if(this.preselectedTimeSlot) {
+      let preselectIndex = this.getPositionOfTimeInList(this.preselectedTimeSlot);
+      if(preselectIndex) {
+        const timeSlotControls = this.elRef.nativeElement.querySelectorAll(
+          '.qm-time-select-slot'
+        );
+
+        timeSlotControls[preselectIndex].scrollIntoView();
+      }
+    }
   }
   
   ngOnDestroy() {

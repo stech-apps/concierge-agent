@@ -179,9 +179,11 @@ export class QmSelectServiceComponent implements OnInit {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
+        console.log(params);
         this.multiServiceEnabled = params.mltyService;
         this.mostFrequentServiceCount = params.serviceThreshold2ShowHideServiceCategories;
         this.searchFieldServiceCount = params.serviceThreshold2ShowHideSearchArea;
+        this.checkMultiServiceSettings();
       }
     });
     this.subscriptions.add(servicePointsSubscription);
@@ -190,6 +192,11 @@ export class QmSelectServiceComponent implements OnInit {
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterServices(text));
 
+
+
+  }
+
+  checkMultiServiceSettings() {
     let storeKey: STORAGE_SUB_KEY;
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_CA;
@@ -200,8 +207,15 @@ export class QmSelectServiceComponent implements OnInit {
     else if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
       storeKey = STORAGE_SUB_KEY.MULTI_SERVICE_ENABLE_AA;
     }
+
     if(this.multiServiceEnabled){
-      this.isMultiServiceOn = this.localStorage.getSettingForKey(storeKey);
+      let multiServiceSetting = this.localStorage.getSettingForKey(storeKey);
+      if (typeof multiServiceSetting !== 'undefined') {
+        this.isMultiServiceOn = multiServiceSetting;
+      }
+      else {
+        this.isMultiServiceOn = true;
+      }
     }
     else{
       this.isMultiServiceOn = false;

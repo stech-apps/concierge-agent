@@ -75,7 +75,7 @@ export class AppointmentEffects {
       }),
       withLatestFrom(this.store$.select((state: IAppState) => state.appointments)),
       switchMap(() => {
-        return this.translateService.get('appointment_deleted_success');
+        return [new AppointmentActions.UpdateMessageInfo(null)];
       })
     );
 

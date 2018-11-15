@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="qm-modal__button-container">
-        <button class="qm-modal__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()"
+        <button class="qm-modal__secondary-button btn-light-active-action :active btn-plain" (click)="decline(); autoCloseService.refreshAutoClose()"
           *ngIf="btnCancelText && btnCancelText.length > 0">
           <span title="{{ btnCancelText }}">
             {{ btnCancelText }}

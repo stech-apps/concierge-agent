@@ -191,9 +191,9 @@
                   <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                   <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
                 </button> -->
-                <qm-customer-search-bar [isInArriveFlow]="true"></qm-customer-search-bar>
+                <qm-customer-search-bar [isInArriveFlow]="!useCalendarEndpoint"></qm-customer-search-bar>
                 <!-- customer search results -->
-                <qm-customer-search  [isInArriveFlow] = "true" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
+                <qm-customer-search  [isInArriveFlow] = "!useCalendarEndpoint" noCustomerFeedback="label.identify.appointment.customernotfound"></qm-customer-search>
                 
               </div>
             </div>

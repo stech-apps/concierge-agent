@@ -419,10 +419,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.removeDesktopQRReader();
           }
         }
-        else{
-          console.log('ssss');
-          
-        }
+      
       }
     );
     this.subscriptions.add(qrCodeSubscription);
@@ -441,8 +438,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.checkDesktopQRReaderValue();
           }
         } else {
+          if(this.previousSearchState){
+            this.currentSearchState = this.previousSearchState;
+            this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;  
+          }
+          
           if (!this.nativeApi.isNativeBrowser()) {
             this.removeQRCodeListner();
+
           }
           this.isQRReaderClose = true;
         }
@@ -1449,8 +1452,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.isQRReaderOpen = false;
     this.removeQRCodeListner();
     this.nativeApiDispatcher.closeQRCodeScanner();
-    this.currentSearchState = this.previousSearchState;
-    this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
+    // this.currentSearchState = this.previousSearchState;
+    // this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
   }
   keydown($event) {
     const inputChar = String.fromCharCode($event.keyCode);

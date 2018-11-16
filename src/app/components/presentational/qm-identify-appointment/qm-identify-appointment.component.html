@@ -5,7 +5,7 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
       <div class="qm-flow-sub-header__right">
-        <div *ngIf="qrButtonVisible" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" (click)="onSearchButtonClick('qr')">
+        <div (click)="onSearchButtonClick('qr')" *ngIf="qrButtonVisible" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
           <i class="qm-action-btn__icon icon-scan-qr"></i>
           <div> {{'scan_qr'|translate}}</div>
         </div>

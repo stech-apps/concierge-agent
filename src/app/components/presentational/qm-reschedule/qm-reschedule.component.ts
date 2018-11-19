@@ -171,8 +171,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       }
     );
 
-
-
     this.subscriptions.add(calendarBranchsSub);
     this.subscriptions.add(timeConventionSub);
     this.subscriptions.add(uttSubscription);
@@ -255,30 +253,38 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           this.appointmentDispatchers.deleteAppointment(
             this.editAppointment,
             () => {
-
               this.showCancelAppointmentSuccessMessage();
             },
-            () => { }
+            () => {}
           );
           this.onFlowExit.next(true);
         }
       },
       () => {
         this.onFlowExit.next(true);
-      },  {
-        date : this.getSelectedAppointmentInfoDate("DD MMM YYYY")
+      },
+      {
+        date: this.getSelectedAppointmentInfoDate("DD MMM YYYY")
       }
     );
   }
 
-  showCancelAppointmentSuccessMessage() {   
-      this.translationService
-        .get(['label.appointment.cancel.done.heading',
-        'label.appointment.cancel.done.subheading'], { date : this.getSelectedAppointmentInfoDate('DD MMMM YYYY')})
-        .subscribe(v => {
-          this.qmModalService.openDoneModal(v['label.appointment.cancel.done.heading'],
-          v['label.appointment.cancel.done.subheading'], []);
-        });
+  showCancelAppointmentSuccessMessage() {
+    this.translationService
+      .get(
+        [
+          "label.appointment.cancel.done.heading",
+          "label.appointment.cancel.done.subheading"
+        ],
+        { date: this.getSelectedAppointmentInfoDate("DD MMMM YYYY") }
+      )
+      .subscribe(v => {
+        this.qmModalService.openDoneModal(
+          v["label.appointment.cancel.done.heading"],
+          v["label.appointment.cancel.done.subheading"],
+          []
+        );
+      });
   }
 
   onRescheduleAppointment() {
@@ -343,29 +349,30 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
     if (this.editAppointment) {
       //time data
-        appointmentInfo += moment(this.editAppointment.start)
-          .tz(
-            this.editAppointment.branch.fullTimeZone ||
-              this.selectedCalendarBranch.fullTimeZone
-          )
-          .format(timeFormat);
+      appointmentInfo += moment(this.editAppointment.start)
+        .tz(
+          this.editAppointment.branch.fullTimeZone ||
+            this.selectedCalendarBranch.fullTimeZone
+        )
+        .format(timeFormat);
     }
     return appointmentInfo;
   }
 
   getSelectedDate(timeFormat = "DD/MM/YYYY") {
-    let selectedDate = ''
-    if(this.currentlyActiveDate) {
-      selectedDate = this.currentlyActiveDate.mDate.tz(
-        this.editAppointment.branch.fullTimeZone ||
-          this.selectedCalendarBranch.fullTimeZone
-      )
-      .format(timeFormat);
-    }
-    else {
-      selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
-    }
-
+    let selectedDate = "";
+    
+      if (this.editAppointment && this.currentlyActiveDate) {
+        selectedDate = this.currentlyActiveDate.mDate
+          .tz(
+            this.editAppointment.branch.fullTimeZone ||
+              this.selectedCalendarBranch.fullTimeZone
+          )
+          .format(timeFormat);
+      } else {
+        selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
+      }
+    
     return selectedDate;
   }
 

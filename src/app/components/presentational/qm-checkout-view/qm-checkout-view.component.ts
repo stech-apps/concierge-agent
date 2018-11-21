@@ -5,7 +5,7 @@ import { CREATE_VISIT, CREATE_APPOINTMENT, ARRIVE_APPOINTMENT } from "./../../..
 import {
   ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors,
   ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers, NoteSelectors, NoteDispatchers, CalendarBranchDispatchers,
-  CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors, CalendarBranchSelectors, CalendarServiceSelectors
+  CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors, CalendarBranchSelectors, CalendarServiceSelectors, SystemInfoSelectors
 } from "../../../../store";
 import { IBranch } from './../../../../models/IBranch';
 import { IUTTParameter } from "../../../../models/IUTTParameter";
@@ -104,6 +104,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   appId: number;
   appCustomer: string;
   appServices: string;
+  timeFormat: string = 'HH:mm';
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -129,9 +130,19 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors,
     private CalendarBranchSelectors: CalendarBranchSelectors,
     private calendarServiceSelectors: CalendarServiceSelectors,
-    private router: Router
+    private router: Router,
+    private systemInfoSelectors: SystemInfoSelectors
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
+
+    const timeConventionSub = this.systemInfoSelectors.timeConvention$.subscribe((tc) => {
+      if(tc === 'AMPM') {
+        this.timeFormat = 'hh:mm A';
+      }
+      else {
+        this.timeFormat = 'HH:mm';
+      }
+    });
 
 
     this.uttParameters$ = servicePointSelectors.uttParameters$;
@@ -148,7 +159,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.emailActionEnabled = uttParameters.sndEmail;
           this.ticketActionEnabled = uttParameters.printerEnable;
           this.ticketlessActionEnabled = uttParameters.ticketLess;
-          this.isMultiBranchEnabled = uttParameters.mltyBrnch;
+          this.isMultiBranchEnabled = uttParameters.mltyBrnch;         
         }
       })
       .unsubscribe();
@@ -201,8 +212,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.genarateAppointmentData();
       }
     });
-    this.subscriptions.add(selectedAppointmentSubscription);
 
+    this.subscriptions.add(selectedAppointmentSubscription);
+    this.subscriptions.add(timeConventionSub);
   }
 
 
@@ -924,31 +936,31 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   private buildDate(appointment: IAppointment) {
-    let dateObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format('YYYY-MM-DD, HH:mm');
+    let dateObj = moment(appointment.start).tz(appointment.branch.fullTimeZone).format(`YYYY-MM-DD, ${this.timeFormat}`);
     return dateObj;
   }
 
   getTimePeriod() {
-    let timeString = moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
-    timeString += ` - ${moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A')}`;
+    let timeString = moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format(this.timeFormat);
+    timeString += ` - ${moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format(this.timeFormat)}`;
 
     return timeString;
   }
 
   getStartTime() {
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      return moment(this.selectedAppointment.startTime).format('hh:mm A');
+      return moment(this.selectedAppointment.startTime).format(this.timeFormat);
     } else {
-      return moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+      return moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone).format(this.timeFormat);
     }
   }
 
   getEndTime() {
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      return moment(this.selectedAppointment.endTime).format('hh:mm A');
+      return moment(this.selectedAppointment.endTime).format(this.timeFormat);
     }
     else {
-      return moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format('hh:mm A');
+      return moment(this.selectedAppointment.end).tz(this.selectedAppointment.branch.fullTimeZone).format(this.timeFormat);
     }
   }
 

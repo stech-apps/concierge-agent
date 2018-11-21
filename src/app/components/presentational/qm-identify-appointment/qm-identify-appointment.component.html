@@ -80,7 +80,7 @@
                     <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
                   </span>
                 </div>
-                <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-10 qm-text-overflow-fix"><span>{{
+                <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-15 qm-text-overflow-fix"><span>{{
                     'list.arriveappointment.heading.time'
                     | translate }}</span><span>
                     <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
@@ -109,7 +109,7 @@
                   </span>
                  </div>
 
-                 <div *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')" class="qm-table__cell-35  qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
+                 <div *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')" class="qm-table__cell-30  qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
                   <span>{{
                   'list.arriveappointment.heading.branch' |
                   translate }}</span>
@@ -126,14 +126,14 @@
                     class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
                     <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId :
                       app.id}}</div>
-                    <div class="qm-table__cell-10 qm-text-overflow-fix">{{getTime((app.startTime || app.start ),
-                      (app.branch && app.branch.fullTimeZone || ''))}}</div>
+                    <div class="qm-table__cell-15 qm-text-overflow-fix">
+                      {{ (app.startTime || app.start ) | qmTimeFormat : (app.branch && app.branch.fullTimeZone || '') | async }}</div>
                     <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
                       app.branch && app.branch.fullTimeZone || ''))}}</div>
     
                     <div class="qm-table__cell-30 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.custName}}</div>
                     <div class="qm-table__cell-35 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">{{app.servicesDisplayLabel}}</div>   
-                    <div class="qm-table__cell-35 qm-text-overflow-fix" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.branch?.name}}</div>   
+                    <div class="qm-table__cell-30 qm-text-overflow-fix" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.branch?.name}}</div>   
                   </div>
                   <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
                 aria-hidden="true"></i>

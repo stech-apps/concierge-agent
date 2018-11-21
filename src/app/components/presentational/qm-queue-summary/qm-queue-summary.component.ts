@@ -16,7 +16,7 @@ export class QmQueueSummaryComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
-  private userDirection$:  Observable<string>;
+  userDirection$:  Observable<string>;
   public queueSummary: any;
   selectedQueue:Queue;
   searchText: string;

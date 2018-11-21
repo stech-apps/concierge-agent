@@ -761,39 +761,39 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.toastService.infoToast(err.errorMsg);
         }
         else {
-          this.showTostMessage('request_fail');
+          this.showErrorToastMessage('request_fail');
         }
       }
       else if (error.status === ERROR_STATUS.BAD_REQUEST) {
-        this.showTostMessage('booking_appointment_error');
+        this.showErrorToastMessage('booking_appointment_error');
       }
       else {
-        this.showTostMessage('request_fail');
+        this.showErrorToastMessage('request_fail');
       }
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
         if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
-          this.showTostMessage('printer_error');
+          this.showErrorToastMessage('printer_error');
         }
         else if (err.errorMsg.length > 0) {
           if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
-            this.showTostMessage('queue_full');
+            this.showErrorToastMessage('queue_full');
           }
         }
         else {
-          this.showTostMessage('request_fail');
+          this.showErrorToastMessage('request_fail');
         }
       }
       else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
-        this.showTostMessage('paper_jam');
+        this.showErrorToastMessage('paper_jam');
       }
       else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
-        this.showTostMessage('out_of_paper');
+        this.showErrorToastMessage('out_of_paper');
       }
       else {
-        this.showTostMessage('visit_timeout');
+        this.showErrorToastMessage('visit_timeout');
       }
 
       if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
@@ -810,26 +810,26 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
         if (err.errorCode === Q_ERROR_CODE.APPOINTMENT_USED_VISIT) {
-          this.showTostMessage('appointment_already_used');
+          this.showErrorToastMessage('appointment_already_used');
         } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
-          this.showTostMessage('printer_error');
+          this.showErrorToastMessage('printer_error');
         } else if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
-          this.showTostMessage('queue_full');
+          this.showErrorToastMessage('queue_full');
         } else {
-          this.showTostMessage('request_fail');
+          this.showErrorToastMessage('request_fail');
         }
       }
       else if (error.status === ERROR_STATUS.NOT_FOUND) {
-        this.showTostMessage('appointment_not_found_detail');
+        this.showErrorToastMessage('appointment_not_found_detail');
       }
       else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
-        this.showTostMessage('paper_jam');
+        this.showErrorToastMessage('paper_jam');
       }
       else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
-        this.showTostMessage('out_of_paper');
+        this.showErrorToastMessage('out_of_paper');
       }
       else {
-        this.showTostMessage('visit_timeout');
+        this.showErrorToastMessage('visit_timeout');
       }
 
       if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
@@ -844,9 +844,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  showTostMessage(msgKey: string) {
+  showErrorToastMessage(msgKey: string,) {
     this.translateService.get(msgKey).subscribe(v => {
-      this.toastService.infoToast(v);
+      this.toastService.errorToast(v);
     });
   }
 

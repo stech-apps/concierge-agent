@@ -79,9 +79,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
         if(info && info.heading) {
             this.showDoneModal(info);
         }
-        else {
-          this.MessageBoxInfo = info;
-        }
+        /* else {
+          this.MessageBoxInfo = info; ********** we no longer use message box *************
+        } */
       }
     );
     this.subscriptions.add(MsgBoxSubscription);

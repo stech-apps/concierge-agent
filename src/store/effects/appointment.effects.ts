@@ -92,12 +92,12 @@ export class AppointmentEffects {
             };
 
             if (action.payload["errorCode"] === ERROR_CODE_APPOINTMENT_NOT_FOUND) {
-              this.toastService.infoToast(messages['appointment_not_found_detail']);
+              this.toastService.errorToast(messages['appointment_not_found_detail']);
             }
             else {
               let errMsg: string = (((action.payload["responseData"] || "")["error"] || "")["msg"] || "");
               if (errMsg.length) {
-                this.toastService.infoToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
+                this.toastService.errorToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
               }
             }
 
@@ -192,11 +192,11 @@ export class AppointmentEffects {
             };
 
             if (action.payload["errorCode"] === 'E461') {
-              this.toastService.infoToast(messages['appointment_already_used']);
+              this.toastService.errorToast(messages['appointment_already_used']);
             }
             else {
               if (action.payload["errorMsg"]) {
-                this.toastService.infoToast(action.payload["errorMsg"]);
+                this.toastService.errorToast(action.payload["errorMsg"]);
               }
             }
 

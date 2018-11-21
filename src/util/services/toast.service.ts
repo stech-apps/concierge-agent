@@ -1,7 +1,5 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class ToastService {
@@ -47,7 +45,6 @@ export class ToastService {
     toastClass: 'toast qm-toast qm-toast--danger',
     closeButton: true,
     tapToDismiss: false,
-
     disableTimeOut: true
   };
 
@@ -98,5 +95,5 @@ export class ToastService {
       .map(toast => this.toastrService.clear(toast.toastId));
   }
 
-  constructor(private toastrService: ToastrService, private sanitizer: DomSanitizer) { }
+  constructor(private toastrService: ToastrService) { }
 }

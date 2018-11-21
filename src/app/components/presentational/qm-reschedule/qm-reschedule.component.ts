@@ -207,6 +207,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       if (moment(this.editAppointment.start).date() !== date.mDate.date()) {
         this.originalAppointmentTime = null;
       }
+      this.enableReschedule = false;
     }
   }
 
@@ -361,7 +362,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   getSelectedDate(timeFormat = "DD/MM/YYYY") {
     let selectedDate = "";
-    
+
       if (this.editAppointment && this.currentlyActiveDate) {
         selectedDate = this.currentlyActiveDate.mDate
           .tz(

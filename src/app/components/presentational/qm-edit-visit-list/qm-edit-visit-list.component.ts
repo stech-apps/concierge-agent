@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors, NativeApiDispatchers } from '../../../../store';
+import { UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors, NativeApiDispatchers, SystemInfoSelectors } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
 import { QmModalService } from '../qm-modal/qm-modal.service';
@@ -10,6 +10,7 @@ import { ERROR_STATUS, Q_ERROR_CODE } from '../../../../util/q-error';
 import { ToastService } from '../../../../util/services/toast.service';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { Util } from '../../../../util/util';
+import * as moment from 'moment-timezone';
 
 
 enum SortBy {
@@ -57,11 +58,13 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canTransferQWait: boolean = false;
   canDelete: boolean = false;
   canCherryPick: boolean = false;
+  private timeoutHandle = null;
 
   dsOrOutcomeExists: boolean = false;
   visitSearchText: string;
   desktopQRCodeListnerTimer: any;
-
+  timeConvention$: Observable<string> = new Observable<string>();
+  timeConvention: string = "24";
 
   constructor(
     private userSelectors: UserSelectors,
@@ -81,13 +84,17 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private nativeApiSelector: NativeApiSelectors,
     private util: Util,
     private nativeApiDispatcher: NativeApiDispatchers,
-    private queueDispatcher: QueueDispatchers
+    private queueDispatcher: QueueDispatchers,
+    private systemInfoSelectors: SystemInfoSelectors
   ) {
+    this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
     this.userDirection$ = this.userSelectors.userDirection$;
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
     });
     this.subscriptions.add(branchSub);
+
+   
 
     const servicePointSub = this.servicePointSelectors.openServicePoint$.subscribe(servicePoint => {
       this.selectedSpId = servicePoint.id;
@@ -107,6 +114,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedQueueSub);
+
+    const timeConventionSub = this.timeConvention$.subscribe(tc => {
+      this.timeConvention = tc;
+    });
+
+    this.subscriptions.add(timeConventionSub);
 
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if (value != null) {
@@ -202,7 +215,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    // this.timeoutHandle = setTimeout(() => {
+    //   this.queueDispatcher.resetSelectedQueue();
+    //   this.visitDispatchers.resetQueueInfo;
+    //  }, 10000)
   }
 
   resetQRReader() {
@@ -522,5 +538,18 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    clearTimeout(this.timeoutHandle);
+  }
+
+  getAppointmentTime(visit){
+    let timeformat = "hh:mm A";
+    if (this.timeConvention === "24") {
+      timeformat = "HH:mm";
+    }
+    if(visit.appointmentTime==='-'){
+      return '-';
+    }else{
+      return moment(visit.appointmentTime,'HH:mm').format(timeformat);
+    }    
   }
 }

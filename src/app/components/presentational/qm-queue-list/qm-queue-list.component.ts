@@ -1,8 +1,8 @@
 import { QueueIndicator } from './../../../../util/services/queue-indication.helper';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Queue } from './../../../../models/IQueue';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, ServicePointSelectors } from 'src/store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, ServicePointSelectors, UserSelectors } from 'src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Router } from '@angular/router';
@@ -32,6 +32,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   canTransferQWait: boolean;
   canDelete: boolean;
   cancherypick: boolean;
+  userDirection$: Observable<string>;
 
   isFirstTime: boolean;
 
@@ -44,7 +45,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private router: Router,
     private servicePointSelectors: ServicePointSelectors,
     private translateService: TranslateService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private userSelectors: UserSelectors
   ) {
     this.sortedBy = "Queue"
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -55,7 +57,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(branchSubscription);
-
+    this.userDirection$ = this.userSelectors.userDirection$;
     const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) {
         this.showEstWaitTime = uttpParams.estWaitTime;
@@ -155,7 +157,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     } else {
       this.queueDispatchers.setectQueue(q);
       this.queueService.stopQueuePoll();
-      this.router.navigate(['home/edit-visit']);
+      // this.router.navigate(['home/edit-visit']);
     }
 
   }

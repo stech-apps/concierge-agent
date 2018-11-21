@@ -30,18 +30,19 @@
         cursor: pointer;
     }
     font-size: rem(14px);
+    overflow: auto;
 }
 
 .qm-visit-list {
     margin: rem($standard-margin * 1.5) rem($standard-margin*0.5) 0 rem($standard-margin*0.5);
+    color: $dark-transparent62;
+    padding: 10px;
   
     &__headers {
         justify-content: center;
         align-items: center;
         text-align: center;
         height: 3rem;
-        margin-right: 2rem;
-        margin-left: 2rem;
         i {
             font-size: 1.2rem;
             padding-right: rem(8px);
@@ -52,10 +53,9 @@
     }
     &-header-item {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        // align-items: center;
         min-width: 0;
-        text-transform: uppercase;
         &-label {
             @include add-text-ellipsis;
             width: inherit;
@@ -76,16 +76,13 @@
     &-body-row {
         background-color: white;
         color: black;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        height: 3rem;
-        border-bottom: 1px solid #e9e9e9;
+        height: 4rem;
+        margin: 3px 0px;
+        border: 1px solid #D5D5D5;
+        box-shadow: 0 0 4px 0 $dark-transparent12;
         &-caret-view {
-            display: flex;
-         padding-left: 10px;
-         justify-content: center;
-         
+            display: flex;        
         }
 
 
@@ -95,7 +92,7 @@
             width: inherit;
         }
     }
-    background-color: $wating-list-background;
+    
 }
 
 [dir='rtl'] :host {
@@ -196,4 +193,20 @@
 }
 .disabled-true-btn-color {
     fill: #bdbdbd !important;
+}
+
+.qm-first-element-header{
+    margin-left: 15px;
+    @at-root [dir="rtl"] {
+        margin-right: 15px;
+    }
+}
+
+.qm-first-element{
+    margin-left: 15px;
+    color:$pale-aquamarine;
+    font-weight: bold;
+    @at-root [dir="rtl"] {
+        margin-right: 15px;
+    }
 }

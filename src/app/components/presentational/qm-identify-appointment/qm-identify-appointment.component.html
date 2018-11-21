@@ -213,7 +213,8 @@
       </ng-template>
     </div>
   </div>
-</div><div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
+</div>
+<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
       <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>

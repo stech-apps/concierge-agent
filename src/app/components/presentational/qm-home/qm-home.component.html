@@ -6,7 +6,8 @@
     <div class="qm-home-summary-area" *ngIf="isShowQueueView && !MessageBoxInfo">
        
       <qm-queue-summary></qm-queue-summary>
-      <qm-queue-list></qm-queue-list>
+      <qm-queue-list *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>
+      <qm-edit-visit-list *ngIf="selelctedQueue || selectedVisit"></qm-edit-visit-list>
       </div>
   </div>
   <qm-home-menu class="animated slideInUp"></qm-home-menu>

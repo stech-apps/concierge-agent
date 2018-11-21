@@ -3,7 +3,8 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import {
   ServicePointSelectors,
   BranchDispatchers,
-  BranchSelectors
+  BranchSelectors,
+  QueueSelectors
 } from "src/store/services";
 import { Subscription, Observable } from "rxjs";
 import { Util } from "src/util/util";
@@ -14,6 +15,8 @@ import { IServicePoint } from "../../../../models/IServicePoint";
 import { IBranch } from "../../../../models/IBranch";
 import { TranslateService } from "@ngx-translate/core";
 import { QmModalService } from "../qm-modal/qm-modal.service";
+import { Queue } from "../../../../models/IQueue";
+import { Visit } from "../../../../models/IVisit";
 
 @Component({
   selector: "qm-qm-home",
@@ -30,6 +33,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   navServicePoint: IServicePoint;
   SelectedBranch: IBranch;
   previousBranch: IBranch;
+  selelctedQueue: Queue;
+  selectedVisit : Visit;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -40,7 +45,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private branchDispatchers: BranchDispatchers,
     private branchSelectors: BranchSelectors,
     private qmModalService: QmModalService,
-    private translationService: TranslateService
+    private translationService: TranslateService,
+    private queueSelectors:QueueSelectors
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -53,6 +59,16 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     );
     this.subscriptions.add(servicePointsSubscription);
     this.util.setSelectedApplicationTheme();
+
+    const queueSubscription = this.queueSelectors.selectedQueue$.subscribe(q=>{
+      this.selelctedQueue = q;
+    })
+    this.subscriptions.add(queueSubscription);
+
+    const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
+      this.selectedVisit = selectedVisit
+    })
+    this.subscriptions.add(selectedVisitSubscription);
   }
 
   ngOnInit() {

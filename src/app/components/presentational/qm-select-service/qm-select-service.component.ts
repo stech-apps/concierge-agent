@@ -179,8 +179,14 @@ export class QmSelectServiceComponent implements OnInit {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
-        console.log(params);
-        this.multiServiceEnabled = params.mltyService;
+        console.log(params.mltyService);
+        if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
+          this.multiServiceEnabled = params.mltyService;
+        }
+        else {
+          this.multiServiceEnabled = true; // multi service switch is only considered for create flows
+        }
+
         this.mostFrequentServiceCount = params.serviceThreshold2ShowHideServiceCategories;
         this.searchFieldServiceCount = params.serviceThreshold2ShowHideSearchArea;
         this.checkMultiServiceSettings();
@@ -214,11 +220,8 @@ export class QmSelectServiceComponent implements OnInit {
         this.isMultiServiceOn = multiServiceSetting;
       }
       else {
-        this.isMultiServiceOn = true;
+        this.isMultiServiceOn = false;
       }
-    }
-    else{
-      this.isMultiServiceOn = false;
     }
   }
 

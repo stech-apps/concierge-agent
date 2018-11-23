@@ -45,7 +45,7 @@ export class QmQueueSummaryComponent implements OnInit {
     private queueVisitsDispatchers: QueueVisitsDispatchers,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private nativeApi: NativeApiService,
+    public nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
     private util: Util,

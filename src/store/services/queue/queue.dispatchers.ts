@@ -44,4 +44,11 @@ export class QueueDispatchers {
   resetError(){
     this.store.dispatch(new QueueActions.ResetError());
   }
+  resetFetchVisitError(){
+    this.store.dispatch(new QueueActions.ResetFetchVisitError());
+  }
+  setectQueueName(QueueName:string){
+    this.store.dispatch(new QueueActions.SelectQueueName(QueueName));
+  }
+
 }

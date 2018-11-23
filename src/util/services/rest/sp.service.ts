@@ -250,6 +250,8 @@ export class SPService implements OnDestroy {
       visit.appointmentTime ? visit.appointmentTime = this.formatHHMMSSIntoHHMM(visit.appointmentTime.split("T")[1]) : null;
       this.addHyphonIfInvalidValue(visit);
       visit.visitId = visit.id;
+      visit.queueId = visit.parameterMap.currentQueueOrigId;
+
     return visit;
   }
 

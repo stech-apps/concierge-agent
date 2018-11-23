@@ -13,6 +13,5 @@ export interface Visit {
   parameterMap?: any,
   waitingTimeStr?: any,
   currentVisitService?: any,
-
-
+  queuename?:string
 }

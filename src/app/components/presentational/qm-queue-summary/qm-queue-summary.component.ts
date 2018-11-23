@@ -33,6 +33,9 @@ export class QmQueueSummaryComponent implements OnInit {
   editVisitEnable:boolean;
   noVisitId:boolean;
   invalidVisitId:boolean;
+  isSelectedVisitFail:boolean;
+  isInvalidVisitEntry:boolean;
+  queueName:string;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -70,10 +73,27 @@ export class QmQueueSummaryComponent implements OnInit {
 
     this.subscriptions.add(queueSubscription);
 
+
+    const queueNameSubscription = this.queueSelectors.queueName$.subscribe((name) => {
+      this.queueName = name;
+    });
+
+    this.subscriptions.add(queueNameSubscription);
+
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
     })
     this.subscriptions.add(QueueSelectorSubscription);
+
+    const QueueVisitErrorSubscription = this.queueSelectors.isFetchVisiitError$.subscribe((error)=>{
+      if(error){
+        this.isSelectedVisitFail = true;
+      }else{
+        this.isSelectedVisitFail = false;
+      }
+
+    })
+    this.subscriptions.add(QueueVisitErrorSubscription);
 
 
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
@@ -149,19 +169,19 @@ export class QmQueueSummaryComponent implements OnInit {
     }
     this.visitSearchText = visitSearchText;
     this.noVisitId = false;
+    this.isInvalidVisitEntry = false;
 
     if (this.visitSearchText.trim().length == 0) {
       this.noVisitId = true;
       return;
 
     } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
-      this.translateService.get('visit_invalid_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
+      this.isInvalidVisitEntry = true;
       return;
     }
 
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
+    this.queueDispatchers.resetSelectedQueue();
 
   }
 
@@ -169,14 +189,13 @@ export class QmQueueSummaryComponent implements OnInit {
     this.visitSearchText = visitSearchText;
  
     this.noVisitId = false;
+    this.isInvalidVisitEntry = false;
     if (this.visitSearchText.trim().length == 0) {
       this.noVisitId = true;
       return;
 
     } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
-      this.translateService.get('visit_invalid_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
+      this.isInvalidVisitEntry = true;
       return;
       
     }
@@ -227,6 +246,12 @@ export class QmQueueSummaryComponent implements OnInit {
 
   closeqr(){
     this.isQRReaderOpen = false;
+    
   }
 
+  clearInput(){
+    this.queueDispatchers.resetFetchVisitError();
+    this.searchText = null;
+    this.isInvalidVisitEntry = false;
+  }
 }

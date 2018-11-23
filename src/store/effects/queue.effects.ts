@@ -43,20 +43,6 @@ export class QueueEffects {
       this.queueDataService.getSelectedVist(fetchSelectedVisit.branch,fetchSelectedVisit.searchText),
       QueueActions.FetchSelectedVisitInfoSuccess,
       QueueActions.FetchSelectedVisitInfoFail
-    )),
-    tap(
-      (action: QueueActions.FetchSelectedVisitInfoSuccess) => {
-        if (action.payload[0] == null) {
-                   
-          this.translateService.get('visit_not_found').subscribe(
-            (label: string) => {
-              this.toastService.infoToast(label);
-            }
-          ).unsubscribe();
-
-        }
-      }
-    ),
-    
+    )),    
   )
 }

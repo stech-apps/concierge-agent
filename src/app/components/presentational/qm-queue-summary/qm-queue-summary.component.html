@@ -4,7 +4,7 @@
     name="q" #visitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())"
     autocomplete="off"  [ngStyle]="{'border':  noVisitId  ? '1px solid #E50046' : '1px solid rgba(0, 0, 0, 0.82)'}" >
     <div *ngIf="visitSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="visitSearch.value=''"></i>
+    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInput();visitSearch.value=''"></i>
     </div>
     <button class="qm-button qm-primary-button-default" (click)="searchVisit(visitSearch.value.trim().toUpperCase())"> Search</button>
     <div (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
@@ -13,13 +13,16 @@
     </div>
 </div>
 <!-- visit not found -->
-<div class="qm-visit-no-visit-found">
-  No visit ID match your input.Please make sure you entered the full visit ID. eg.A1003
+<div class="qm-visit-no-visit-found" *ngIf="isSelectedVisitFail || isInvalidVisitEntry">
+  <span *ngIf="isInvalidVisitEntry">{{'visit_invalid_entry'|translate}} </span>
+  <span *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{'no_visit_match'|translate}} </span>
+
 </div>
+
 
 <!-- No visit id -->
 <div class="qm-visit-error-message" *ngIf="noVisitId">
-  Please enter a valid Id
+  {{'invaild_visit_id'|translate}}
 </div>
 
 <br>
@@ -33,6 +36,7 @@
 <div class="qm-queue-list-title" *ngIf="selectedQueue || selectedVisit">
   <span (click)="resetQueue()" class="qm-back-icon"> <i class="icon-caret-left"></i> </span>
   <span class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue">{{selectedQueue.name}}</span>
+  <span class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{queueName}}</span>
   <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
   <span class="qm-queue-summary--value" *ngIf="selectedQueue">{{selectedQueue.customersWaiting}} </span>
 </div>

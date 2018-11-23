@@ -11,6 +11,8 @@ export interface IQueueState {
   error: Object;
   selectedVisit: Visit;
   selectedQueue: Queue;
+  FetchVisitError:Object;
+  queueName:string;
 }
 
 const initialState = {
@@ -19,7 +21,9 @@ const initialState = {
   loaded: false,
   error: null,
   selectedVisit: null,
-  selectedQueue: null
+  selectedQueue: null,
+  FetchVisitError:null,
+  queueName:null
 };
 
 export function reducer(
@@ -63,14 +67,16 @@ export function reducer(
       return {
         ...state,
         selectedVisit: action.payload[0],
-        error: action.payload[0] ? null : "error"
+        error: action.payload[0] ? null : "error",
+        FetchVisitError: action.payload[0] ? null : "error"
       };
     }
 
     case QueueActions.FETCH_SELECTED_VISIT_INFO_FAIL: {
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        FetchVisitError:action.payload
       };
     }
 
@@ -108,6 +114,24 @@ export function reducer(
       return {
         ...state,
         error: null
+      };
+    }
+    case QueueActions.RESET_FETCH_VISIT_ERROR: {
+      return {
+        ...state,
+        FetchVisitError: null
+      };
+    }
+    case QueueActions.SELECT_QUEUE_NAME: {
+      return {
+        ...state,
+        queueName:action.payload
+      };
+    }
+    case QueueActions.RESET_QUEUE_NAME: {
+      return {
+        ...state,
+        queueName:null
       };
     }
 

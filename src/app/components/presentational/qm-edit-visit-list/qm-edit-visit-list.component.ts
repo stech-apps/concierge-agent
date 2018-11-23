@@ -65,6 +65,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   desktopQRCodeListnerTimer: any;
   timeConvention$: Observable<string> = new Observable<string>();
   timeConvention: string = "24";
+  queueSummary:any
 
   constructor(
     private userSelectors: UserSelectors,
@@ -85,7 +86,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private util: Util,
     private nativeApiDispatcher: NativeApiDispatchers,
     private queueDispatcher: QueueDispatchers,
-    private systemInfoSelectors: SystemInfoSelectors
+    private systemInfoSelectors: SystemInfoSelectors,
+    
   ) {
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -101,6 +103,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(servicePointSub);
 
+    const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
+      this.queueSummary = qs;
+    });
+
+    this.subscriptions.add(queueSubscription);
 
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       if (queue) {
@@ -192,6 +199,13 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
+          var selectedQ = this.queueSummary.queues.find(obj => {
+            return obj.id === this.visits[0].queueId
+          });
+          // console.log(selectedQ);
+          
+          this.queueDispatcher.setectQueueName(selectedQ.name);
+          
         }, error => {
           // console.log(error);
           this.translateService.get('request_fail').subscribe(v => {

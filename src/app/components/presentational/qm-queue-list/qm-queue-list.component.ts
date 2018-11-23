@@ -46,7 +46,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private queueDispatcher: QueueDispatchers
   ) {
     this.sortedBy = "Queue"
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
@@ -157,6 +158,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     } else {
       this.queueDispatchers.setectQueue(q);
       this.queueService.stopQueuePoll();
+      this.queueDispatcher.setectQueueName(null);
       // this.router.navigate(['home/edit-visit']);
     }
 

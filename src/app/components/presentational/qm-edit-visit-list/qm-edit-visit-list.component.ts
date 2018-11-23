@@ -89,14 +89,20 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     
   ) {
+    // 24 hour time converstion
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
+    const timeConventionSub = this.timeConvention$.subscribe(tc => {
+      this.timeConvention = tc;
+    });
+    this.subscriptions.add(timeConventionSub);
+
+
     this.userDirection$ = this.userSelectors.userDirection$;
+
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
     });
     this.subscriptions.add(branchSub);
-
-   
 
     const servicePointSub = this.servicePointSelectors.openServicePoint$.subscribe(servicePoint => {
       this.selectedSpId = servicePoint.id;
@@ -106,9 +112,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
     });
-
     this.subscriptions.add(queueSubscription);
 
+    //get visits for selected queue 
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       if (queue) {
         this.selectedQueueId = queue.id;
@@ -122,36 +128,32 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(selectedQueueSub);
 
-    const timeConventionSub = this.timeConvention$.subscribe(tc => {
-      this.timeConvention = tc;
-    });
+   
+    // const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
+    //   if (value != null) {
+    //     this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
+    //     if (!this.nativeApi.isNativeBrowser()) {
+    //       this.removeDesktopQRReader();
+    //     }
+    //   }
+    // });
+    // this.subscriptions.add(qrCodeSubscription);
 
-    this.subscriptions.add(timeConventionSub);
+    // const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
+    //   if (value === true) {
+    //     this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
+    //     this.util.qrCodeListner();
+    //     if (!this.nativeApi.isNativeBrowser()) {
+    //       this.checkDesktopQRReaderValue();
+    //     }
+    //   }
+    //   else {
+    //     this.util.removeQRCodeListner();
+    //   }
+    // });
+    // this.subscriptions.add(qrCodeScannerSubscription);
 
-    const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
-      if (value != null) {
-        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
-        if (!this.nativeApi.isNativeBrowser()) {
-          this.removeDesktopQRReader();
-        }
-      }
-    });
-    this.subscriptions.add(qrCodeSubscription);
-
-    const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
-      if (value === true) {
-        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
-        this.util.qrCodeListner();
-        if (!this.nativeApi.isNativeBrowser()) {
-          this.checkDesktopQRReaderValue();
-        }
-      }
-      else {
-        this.util.removeQRCodeListner();
-      }
-    });
-    this.subscriptions.add(qrCodeScannerSubscription);
-
+    // get visit list
     const queueVisitsSub = this.queueVisitsSelectors.queueVisits$.subscribe(visitList => {
       this.visits = visitList;
       this.visitClicked = false;
@@ -165,7 +167,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(queueVisitsSub);
 
-
+    //check utt settings for enabling trasnfer options 
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
@@ -190,6 +192,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       .unsubscribe();
     this.subscriptions.add(uttSubscription);
 
+
     const visitSub = this.queueSelectors.selectedVisit$.subscribe(result => {
       //check id defined to detect the search query request
       if (result && !result.id) {
@@ -199,15 +202,14 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
+     
+          // to apply name of the queue of selected visit  
           var selectedQ = this.queueSummary.queues.find(obj => {
             return obj.id === this.visits[0].queueId
-          });
-          // console.log(selectedQ);
-          
+          });     
           this.queueDispatcher.setectQueueName(selectedQ.name);
           
         }, error => {
-          // console.log(error);
           this.translateService.get('request_fail').subscribe(v => {
             this.toastService.infoToast(v);
           });
@@ -222,8 +224,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       if (!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0) {
         this.resetQRReader();
         this.queueDispatcher.resetError();
-        console.log("reset");
-        
       }
     })
     this.subscriptions.add(visiInfoFail)
@@ -244,7 +244,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     });
     this.searchText = "";
     if (!this.nativeApi.isNativeBrowser()) {
-      this.removeDesktopQRReader();
+      // this.removeDesktopQRReader();
     }
   }
 
@@ -331,23 +331,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
 
-  resetSearch() {
-    this.searchText = '';
-
-    if (this.selectedbranchId && this.selectedQueueId) {
-      this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
-    }
-
-  }
-
-  handleInput($event) {
-    if ($event.target.value.length == 0) {
-      if (this.selectedbranchId && this.selectedQueueId) {
-        this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
-      }
-    }
-  }
-
 
   selectVisit(index: number, visitId: number) {
     this.selectedVisitId === visitId && this.visits.length > 1 ? this.visitClicked = !this.visitClicked : this.visitClicked = true;
@@ -358,69 +341,69 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.resetQRReader();
   }
 
-  onQRCodeSelect() {
-    this.queueDispatcher.resetError();
-    if (this.nativeApi.isNativeBrowser()) {
-      this.nativeApi.openQRScanner();
-    }
-    else {
-      var searchBox = document.getElementById("visitSearchVisit") as any;
-      this.translateService.get('qr_code_scanner').subscribe(v => {
-        searchBox.placeholder = v
-      });
-      searchBox.focus();
-      this.nativeApiDispatcher.openQRCodeScanner();
-    }
-  }
+  // onQRCodeSelect() {
+  //   this.queueDispatcher.resetError();
+  //   if (this.nativeApi.isNativeBrowser()) {
+  //     this.nativeApi.openQRScanner();
+  //   }
+  //   else {
+  //     var searchBox = document.getElementById("visitSearchVisit") as any;
+  //     this.translateService.get('qr_code_scanner').subscribe(v => {
+  //       searchBox.placeholder = v
+  //     });
+  //     searchBox.focus();
+  //     this.nativeApiDispatcher.openQRCodeScanner();
+  //   }
+  // }
 
-  checkDesktopQRReaderValue() {
-    this.desktopQRCodeListnerTimer = setInterval(() => {
-      if (this.searchText && this.searchText.length > 0) {
-        this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
-      }
-    }, 1000);
-  }
+  // checkDesktopQRReaderValue() {
+  //   this.desktopQRCodeListnerTimer = setInterval(() => {
+  //     if (this.searchText && this.searchText.length > 0) {
+  //       this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+  //     }
+  //   }, 1000);
+  // }
 
-  removeDesktopQRReader() {
-    if (this.desktopQRCodeListnerTimer) {
-      clearInterval(this.desktopQRCodeListnerTimer);
-    }
-  }
+  // removeDesktopQRReader() {
+  //   if (this.desktopQRCodeListnerTimer) {
+  //     clearInterval(this.desktopQRCodeListnerTimer);
+  //   }
+  // }
 
-  dismissKeyboard(event) {
-    var elem = event.currentTarget || event.target;
-    // #142130605 - Requirement remove keyboard when enter pressed
-    elem.blur();
-  }
-
-
-  isAppointmentIdValid(val: string) {
-    return /^[0-9a-zA-Z]+$/.test(val);
-  }
+  // dismissKeyboard(event) {
+  //   var elem = event.currentTarget || event.target;
+  //   // #142130605 - Requirement remove keyboard when enter pressed
+  //   elem.blur();
+  // }
 
 
-  keyDownFunction(event, visitSearchText: string) {
-    if (event) {
-      this.dismissKeyboard(event);
-    }
-    this.visitSearchText = visitSearchText;
+  // isAppointmentIdValid(val: string) {
+  //   return /^[0-9a-zA-Z]+$/.test(val);
+  // }
 
-    if (this.visitSearchText.trim().length == 0) {
-      this.translateService.get('visit_no_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
-      return;
 
-    } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
-      this.translateService.get('visit_invalid_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
-      return;
-    }
+  // keyDownFunction(event, visitSearchText: string) {
+  //   if (event) {
+  //     this.dismissKeyboard(event);
+  //   }
+  //   this.visitSearchText = visitSearchText;
 
-    this.visitDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
+  //   if (this.visitSearchText.trim().length == 0) {
+  //     this.translateService.get('visit_no_entry').subscribe(v => {
+  //       this.toastService.infoToast(v);
+  //     });
+  //     return;
 
-  }
+  //   } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
+  //     this.translateService.get('visit_invalid_entry').subscribe(v => {
+  //       this.toastService.infoToast(v);
+  //     });
+  //     return;
+  //   }
+
+  //   this.visitDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
+
+  // }
 
   transferToQ(visit) {
     this.NextFlow.emit("tq");

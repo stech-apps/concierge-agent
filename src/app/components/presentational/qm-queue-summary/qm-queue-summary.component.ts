@@ -149,7 +149,10 @@ export class QmQueueSummaryComponent implements OnInit {
 
   resetQueue(){
     this.queueDispatchers.resetSelectedQueue();   
-    this.queueDispatchers.setectVisit(null); 
+    this.queueDispatchers.setectVisit(null);
+    var searchBox = document.getElementById("visitSearchVisit") as any;
+    searchBox.value="";
+
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

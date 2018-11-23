@@ -96,7 +96,7 @@ export class Util {
                 this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
                 this.qrRelatedData = null;
             }
-        }, 1000);
+        }, 3000);
     }
 
     removeQRCodeListner() {

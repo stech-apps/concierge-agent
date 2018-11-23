@@ -8,7 +8,7 @@
 
 
 .qm-queue-list-title{
-  margin-left: ($standard-padding/2);
+  margin-left: ($standard-padding);
   // display: flex;
   color: $dark-transparent82;
   
@@ -42,19 +42,20 @@
 }
 
 .qm-search-visit-container{
-  padding: 15px;
+  padding: 0px 15px;
   input{
     padding: 13px;
-    width: 300px;
+    width: 18vw;
   }
 }
 
 .qm-close__icon{
     
   color:  $dark-transparent42;
-  z-index: 1000;
+  z-index: 20;
   position: relative;
   font-size: 1.5em;
+  margin-top: 15px;
   @at-root [dir="ltr"] & {
       right: 1.4em;
   }
@@ -103,7 +104,7 @@ input {
   top:0;
   left: 0;
   right: 0;
-  z-index: 10000000;
+  z-index: 100;
 
   &__container{
    position:fixed; 
@@ -164,10 +165,38 @@ input {
     text-align: center
   }
   input{
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: -400vw;
+    // position: absolute;
+    // width: 0;
+    // height: 0;
+    // left: -400vw;
   }
 
+}
+.qm-visit-error-message{
+  display:flex;
+  padding: 0px 15px;
+  font-size: 0.9em;
+  color: $primary-pink;
+}
+
+.qm-visit-no-visit-found{
+  display:flex;
+  color: $dark-transparent82;
+  padding: 15px 15px;
+    font-size: 1em;
+    border: 1px solid $dark-transparent12;
+    width: 45vw;
+    margin: 0px 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px 0 $dark-transparent12;
+  
+  
+}
+
+hr{
+  width: 97%;
+  color: $dark-transparent42;
+  border: 0;
+  border-top: 1px solid $dark-transparent12;
+ 
 }

@@ -1,11 +1,13 @@
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
-import { QueueSelectors, QueueDispatchers, BranchSelectors, QueueVisitsDispatchers } from 'src/store';
+import { QueueSelectors, QueueDispatchers, BranchSelectors, QueueVisitsDispatchers, NativeApiSelectors, NativeApiDispatchers, ServicePointSelectors } from 'src/store';
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
 import { Visit } from '../../../../models/IVisit';
+import { NativeApiService } from '../../../../util/services/native-api.service';
+import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-queue-summary',
@@ -27,6 +29,10 @@ export class QmQueueSummaryComponent implements OnInit {
   visitSearchText: string;
   selectedVisit:Visit
   isQRReaderOpen:boolean;
+  desktopQRCodeListnerTimer: any;
+  editVisitEnable:boolean;
+  noVisitId:boolean;
+  invalidVisitId:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -36,7 +42,11 @@ export class QmQueueSummaryComponent implements OnInit {
     private queueVisitsDispatchers: QueueVisitsDispatchers,
     private translateService: TranslateService,
     private toastService: ToastService,
-
+    private nativeApi: NativeApiService,
+    private nativeApiSelector: NativeApiSelectors,
+    private nativeApiDispatcher: NativeApiDispatchers,
+    private util: Util,
+    private servicePointSelectors:ServicePointSelectors
   
   ) {
 
@@ -46,6 +56,13 @@ export class QmQueueSummaryComponent implements OnInit {
 
     this.subscriptions.add(selectedVisitSubscription);
     
+    const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
+      if (uttpParams) { 
+        this.editVisitEnable = uttpParams.editVisit;
+        
+       }
+    })
+    this.subscriptions.add(uttpSubscriptions);
 
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
@@ -77,6 +94,33 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(selectedQueueSub);
 
+
+    // regarding QR code
+    
+    const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
+      if (value != null) {
+        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
+        if (!this.nativeApi.isNativeBrowser()) {
+          this.removeDesktopQRReader();
+        }
+      }
+    });
+    this.subscriptions.add(qrCodeSubscription);
+
+    const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
+      if (value === true) {
+        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
+        this.util.qrCodeListner();
+        if (!this.nativeApi.isNativeBrowser()) {
+          this.checkDesktopQRReaderValue();
+        }
+      }
+      else {
+        this.util.removeQRCodeListner();
+      }
+    });
+    this.subscriptions.add(qrCodeScannerSubscription);
+
   }
 
   ngOnInit() {
@@ -104,11 +148,10 @@ export class QmQueueSummaryComponent implements OnInit {
       this.dismissKeyboard(event);
     }
     this.visitSearchText = visitSearchText;
+    this.noVisitId = false;
 
     if (this.visitSearchText.trim().length == 0) {
-      this.translateService.get('visit_no_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
+      this.noVisitId = true;
       return;
 
     } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
@@ -124,11 +167,10 @@ export class QmQueueSummaryComponent implements OnInit {
 
   searchVisit(visitSearchText:string){
     this.visitSearchText = visitSearchText;
-
+ 
+    this.noVisitId = false;
     if (this.visitSearchText.trim().length == 0) {
-      this.translateService.get('visit_no_entry').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
+      this.noVisitId = true;
       return;
 
     } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
@@ -136,6 +178,7 @@ export class QmQueueSummaryComponent implements OnInit {
         this.toastService.infoToast(v);
       });
       return;
+      
     }
 
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
@@ -153,6 +196,33 @@ export class QmQueueSummaryComponent implements OnInit {
 
   SearchQRButtonClick(){
     this.isQRReaderOpen = true;
+    this.queueDispatchers.resetError();
+    if (this.nativeApi.isNativeBrowser()) {
+      this.nativeApi.openQRScanner();
+    }
+    else {
+      var searchBox = document.getElementById("visitSearch") as any;
+      this.translateService.get('qr_code_scanner').subscribe(v => {
+        searchBox.placeholder = v
+      });
+      searchBox.focus();
+      this.nativeApiDispatcher.openQRCodeScanner();
+    }
+  }
+
+  
+  checkDesktopQRReaderValue() {
+    this.desktopQRCodeListnerTimer = setInterval(() => {
+      if (this.searchText && this.searchText.length > 0) {
+        this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+      }
+    }, 1000);
+  }
+
+  removeDesktopQRReader() {
+    if (this.desktopQRCodeListnerTimer) {
+      clearInterval(this.desktopQRCodeListnerTimer);
+    }
   }
 
   closeqr(){

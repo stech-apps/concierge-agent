@@ -208,6 +208,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       if (!this.nativeApi.isNativeBrowser() && val && this.searchText.length > 0) {
         this.resetQRReader();
         this.queueDispatcher.resetError();
+        console.log("reset");
+        
       }
     })
     this.subscriptions.add(visiInfoFail)

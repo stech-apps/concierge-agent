@@ -99,8 +99,9 @@
 }
 
 .qm-col-15{
-    width: 16%;
+    width: 20%;
     padding: 0 1%;
+    font-weight: 500;
     @at-root [dir="ltr"] & {
         text-align: right;
         justify-content: flex-end;
@@ -113,6 +114,6 @@
 }
 
 .qm-col-45{
-    width: 46%;
+    width: 40%;
     color: $pale-aquamarine;
 }

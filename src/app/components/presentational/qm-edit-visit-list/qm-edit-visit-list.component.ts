@@ -495,12 +495,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             const err = new DataServiceError(error, null);
             if (error.status == ERROR_STATUS.NOT_FOUND) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
             else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
               this.translateService.get('visit_already_called').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             } else if (err.errorCode === '0') {
               this.translateService.get('request_fail').subscribe(v => {
@@ -510,7 +510,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             }
             else {
               this.translateService.get('request_fail').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
           }

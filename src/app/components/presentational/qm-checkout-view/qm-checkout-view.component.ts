@@ -664,8 +664,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.showErrorMessage(error);
         this.saveFrequentService();
       }
-
-
+      this.onFlowExit.emit();
     })
   }
 

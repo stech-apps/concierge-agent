@@ -110,6 +110,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         ];
         this.isOriginalAppointmentTimeChanged = false;
       }
+      else {
+        //this.timeSlotDispatchers.deselectTimeslot();
+      }
       this.fetchReservableDates();
     }
   }

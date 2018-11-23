@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, tap, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 
 import * as AppointmentActions from './../actions';
-import { AppointmentDataService } from '../services';
+import { AppointmentDataService, SystemInfoSelectors } from '../services';
 import { IAppState, DataServiceError } from 'src/store';
 import * as moment from 'moment';
 import { IAppointmentState } from 'src/store/reducers/appointment.reducer';
@@ -18,14 +18,19 @@ const toAction = AppointmentActions.toAction();
 
 @Injectable()
 export class AppointmentEffects {
+
   constructor(
     private actions$: Actions,
     private store$: Store<IAppState>,
     private translate: TranslateService,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private appointmentDataService: AppointmentDataService
-  ) { }
+    private appointmentDataService: AppointmentDataService,
+    private systemInfoSelectors: SystemInfoSelectors
+  ) { 
+
+
+  }
 
   @Effect()
   searchAppointments$: Observable<Action> = this.actions$
@@ -127,6 +132,11 @@ export class AppointmentEffects {
         return this.translateService.get(['label.notifyoptions.smsandemail', 'label.notifyoptions.email', 
         'label.notifyoptions.sms']).pipe(
           switchMap((messages) => {
+            let timeFormat: string = 'HH:mm';
+
+            this.systemInfoSelectors.timeConvention$.subscribe((tc)=> {
+              timeFormat = tc === 'AMPM' ? 'hh:mm A' : 'HH:mm';
+            }).unsubscribe();
 
             let confirmText = '';
             const customer = (action.payload.customers[0]);
@@ -157,12 +167,12 @@ export class AppointmentEffects {
                   label: `<span>${
                               moment(action.payload.start)
                               .tz(action.payload.branch.fullTimeZone)
-                              .format("hh:mm A")}
+                              .format(timeFormat)}
                             </span>
                             <span>&nbsp;-&nbsp;</span><span>${
                                 moment(
                                 action.payload.end
-                                ).tz(action.payload.branch.fullTimeZone).format("hh:mm A")}
+                                ).tz(action.payload.branch.fullTimeZone).format(timeFormat)}
                             </span>`
                 },
                 {

@@ -197,9 +197,6 @@ export class QmSelectServiceComponent implements OnInit {
     this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterServices(text));
-
-
-
   }
 
   checkMultiServiceSettings() {

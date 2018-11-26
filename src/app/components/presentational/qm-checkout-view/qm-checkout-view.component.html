@@ -31,7 +31,7 @@
         <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment?.branch?.name || selectedBranch?.name}}</span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(1)"  *ngIf="selectedAppointment">
+    <div class="qm-checkout-view__summary-grouping qm-services-grouping" (click)="goToPanel(1)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-service"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
@@ -42,8 +42,6 @@
 
   <!-- summary card for create visit-->
   <div class="qm-checkout-view__summary qm-checkout-view__summary-create-visit" *ngIf="flowType=='CREATE_VISIT'">
-   
-  
       <!-- 1 Unlinked Customer (No customer is selected) when utt is enabled-->
       <div class="qm-summary-item qm-checkout-view__section" style="max-width:100%">
           <div style="display:flex;width: 100%;position: relative;" *ngIf="( !tempCustomer && !selectedCustomer ) && !isCustomerFlowHidden" class="qm-checkout-view__unlinked-customer">

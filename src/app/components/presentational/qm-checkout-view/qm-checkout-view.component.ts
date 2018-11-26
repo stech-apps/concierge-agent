@@ -42,7 +42,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter<any>();
   @Output()
-  gotToPanelByIndex: EventEmitter<number> = new EventEmitter<number>();
+  goToPanelByIndex: EventEmitter<number> = new EventEmitter<number>();
 
   private subscriptions: Subscription = new Subscription();
   uttParameters$: Observable<IUTTParameter>;
@@ -982,15 +982,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   // Go to previous panels
   goToPanel(ix: number) {
-
     if (this.flowType == 'CREATE_APPOINTMENT') {
       if (!this.isMultiBranchEnabled && ix != 0) {
         ix = ix - 1;
       }
-      this.gotToPanelByIndex.emit(ix);
-    } else if (this.flowType == 'CREATE_VISIT')
-      this.gotToPanelByIndex.emit(ix);
+    }
+    this.goToPanelByIndex.emit(ix);
   }
-
 }
 

@@ -95,7 +95,7 @@
         color: $black;
       }
 
-      .qm-checkout-view__summary-grouping {
+      .qm-checkout-view__summary-grouping:not(.qm-services-grouping) {
         &:hover {
           background-color: $white;
           cursor: auto;
@@ -104,6 +104,8 @@
           }
         }
       }
+
+
     }
   }
   &__unlinked-customer {

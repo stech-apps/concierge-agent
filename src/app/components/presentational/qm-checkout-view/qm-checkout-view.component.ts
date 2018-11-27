@@ -748,10 +748,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
     else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       this.translateService.get(['visit_id_label',
-      'label.arrive.success.subheadingsms', 'label.arrive.success.subheadingticket', 'label.arrive.success.heading']).subscribe(v => {
+      'label.arrive.success.subheadingsms', 'label.arrive.success.subheadingticket', 'label.arrive.success.heading', 'label.arrive.success.subheadingticketandsms']).subscribe(v => {
 
         let subheadingText = '';
-        if (this.ticketSelected) {
+
+        if(this.ticketSelected && this.smsSelected) {
+          subheadingText = v['label.arrive.success.subheadingticketandsms'];
+        }
+        else if (this.ticketSelected) {
           subheadingText = v['label.arrive.success.subheadingticket'];
 
         } else if (this.smsSelected) {

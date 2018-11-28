@@ -23,7 +23,8 @@ import {
   Input,
   SimpleChanges,
   EventEmitter,
-  Output
+  Output,
+  ViewChild
 } from "@angular/core";
 import { CalendarDate } from "src/app/components/containers/qm-calendar/qm-calendar.component";
 import * as moment from "moment";
@@ -66,6 +67,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   
   timeConvention: string = "24";
   userDirection$: Observable<string>;
+  @ViewChild('qmcalendar') qmCalendar: Element;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -94,6 +96,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.userDirection$ = this.userSelectors.userDirection$;
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -108,7 +111,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           "HH:mm"
         );
         this.selectedDates = [
-          { selected: true, mDate: calculatedAppointmentTime }
+          { selected: false, mDate: calculatedAppointmentTime }
         ];
         this.isOriginalAppointmentTimeChanged = false;
       }
@@ -183,6 +186,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   onSelectDate(date: CalendarDate) {
     this.isDateSelected = true;
+    this.timeSlotDispatchers.deselectTimeslot();
 
     if (
       this.editAppointment &&
@@ -234,6 +238,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onCancelAppointment() {
+    this.isDateSelected = false;
+
     this.qmModalService.openForTransKeys(
       "",
       "modal.cancel.appointment.message",

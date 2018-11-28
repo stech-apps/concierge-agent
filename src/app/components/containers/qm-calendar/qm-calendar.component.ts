@@ -140,6 +140,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   generateCalendar(): void {
+    console.log('generate calendar called');
     this.genarateDynamicDayList();
     this.currentDate = this.currentDate.locale('en');
     const dates = this.fillDates(this.currentDate);

@@ -4,7 +4,7 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors, SystemInfoDataService } from 'src/store';
 
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -58,7 +58,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
     private toastService: ToastService, private translateService: TranslateService,
-    private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private branchSelector: BranchSelectors,
+    private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private systemInfoService: SystemInfoDataService, private branchSelector: BranchSelectors,
     private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors, private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors) {
 
   }
@@ -169,39 +169,36 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);
       const calendarBranchSub = this.calendarBranchSelector.branches$.subscribe((branches => {
-        if(branches && branches.length > 0){
+        if (branches && branches.length > 0){
           var selectedBranch = branches.filter(res => {
             return res.qpId === calendarBranchId;
-          })
-          if(selectedBranch){
+          });
+          if (selectedBranch) {
             calendarBranchId = selectedBranch[0].id;
           }
         }
       }));
       this.subscriptions.add(calendarBranchSub);
-  
 
       if (calendarBranchId && calendarBranchId > 0) {
         //insert hostaddress if using QAgent(OnHold)
-        this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
+          this.systemInfoService.getServicePointSystemInfo().subscribe(
           value => {
-            if (value && value.branch.publicId) {
+            if (value && value.productName) {
               this.handleUttRequirements(route);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.infoToast(v);
-              })
+              });
             }
           }, error => {
-            if(error.status === 401){
+            if (error.status === 401){
               this.router.navigate(['home/central-login'], { queryParams : {route} });
-            }
-            else{
+            } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.infoToast(v);
               });
             }
-            
           }
         );
       }

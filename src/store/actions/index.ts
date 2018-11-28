@@ -1,6 +1,7 @@
 // Barrel
 export * from './data.actions';
 export * from './system-info.actions';
+export * from './sp-system-info.actions';
 export * from './license.actions';
 export * from './user.actions';
 export * from './user-status.actions';

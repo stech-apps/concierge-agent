@@ -18,11 +18,11 @@ export class SystemInfoDispatchers {
     this.store.dispatch(new SystemInfoActions.SetDistributedAgent);
   }
 
-  setAuthorizationHeader(headers: HttpHeaders){
+  setAuthorizationHeader(headers: HttpHeaders) {
     this.store.dispatch(new SystemInfoActions.SetAuthorization(headers));
   }
 
-  resetAuthorizationHeader(){
+  resetAuthorizationHeader() {
     this.store.dispatch(new SystemInfoActions.ResetAuthorization);
   }
 }

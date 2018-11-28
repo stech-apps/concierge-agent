@@ -62,6 +62,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isRescheduleEnabledInUtt: boolean = true;
   isDeleteEnabledInUtt: boolean = true;
   isOriginalAppointmentTimeChanged = false;
+  isDateSelected: boolean = false;
+  
   timeConvention: string = "24";
   userDirection$: Observable<string>;
 
@@ -125,23 +127,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe(
       (dates: moment.Moment[]) => {
         this.reservableDates = dates;
-        if (this.editAppointment) {
-          if (this.reservableDates[0].isAfter(this.editAppointment.start)) {
-            this.selectedDates = [
-              {
-                mDate: this.reservableDates[0],
-                selected: true
-              }
-            ];
-          } else {
-            this.selectedDates = [
-              {
-                mDate: moment(this.editAppointment.start),
-                selected: true
-              }
-            ];
-          }
-        }
       }
     );
 
@@ -197,6 +182,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
+    this.isDateSelected = true;
+
     if (
       this.editAppointment &&
       this.editAppointment.services &&

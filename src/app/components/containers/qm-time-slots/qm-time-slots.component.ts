@@ -33,6 +33,9 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   @Input()
   preselectedTimeSlot: string;
 
+  @Input() 
+  public isShowTimeSlots: boolean = true;
+
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 

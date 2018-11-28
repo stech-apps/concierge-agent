@@ -726,10 +726,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.translateService.get(['visit_created',
         'label.visitcreated.subheading',
         'label.notifyoptions.smsandemail',
-        'label.notifyoptions.sms', 'label.notifyoptions.email', 'label.notifyoptions.ticket']).subscribe(v => {
+        'label.notifyoptions.sms', 'label.notifyoptions.email', 'label.notifyoptions.ticket', 'label.createvisit.success.subheadingticketandsms']).subscribe(v => {
 
           let subheadingText = v['label.visitcreated.subheading'];
-          if (this.ticketlessSelected) {
+          if(this.ticketSelected && this.smsSelected) {
+            subheadingText = v['label.createvisit.success.subheadingticketandsms'];
+          }
+          else if (this.ticketlessSelected) {
             subheadingText = "";
           }
           else if (this.ticketSelected) {

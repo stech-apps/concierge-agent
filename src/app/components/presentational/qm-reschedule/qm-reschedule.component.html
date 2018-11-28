@@ -23,7 +23,7 @@
       <div class="qm-reschedule-select__content">
         <div class="qm-calendar-container">
           <div class="qm-calendar-placeholder">
-            <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
+            <qm-calendar [enabledDates]="reservableDates" [selectedDates]="[]" (onSelectDate)="onSelectDate($event)"></qm-calendar>
           </div>
       
          <!--  <button class="qm-reschedule-button" *ngIf="isRescheduleEnabledInUtt" [ngClass]="{'qm-reschedule-button--active': enableReschedule }"  (click)="onRescheduleAppointment()">{{ 'reschedule' | translate }}</button>
@@ -32,7 +32,7 @@
         <div class="qm-reschedule-select-slots">
           <div class="qm-time-slot-header qm-time-header">{{ getSelectedDate("ddd DD MMMM") | translate}}</div>
           <div class="qm-time-slot-placeholder">
-            <qm-time-slots [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
+            <qm-time-slots [isShowTimeSlots] = "isDateSelected"  [preselectedTimeSlot]="originalAppointmentTime" (onTimeSlotSelect)="onTimeSlotSelect($event)"></qm-time-slots>
           </div>
         </div>
       </div>

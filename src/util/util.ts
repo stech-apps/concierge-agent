@@ -89,27 +89,7 @@ export class Util {
         return [Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)];
     }
 
-    qrCodeListner() {
-        this.qrCodeListnerTimer = setInterval(() => {
-            if (this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded) {
-                this.qrRelatedData.isQrCodeLoaded = false;
-                this.queueDispatcher.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
-                this.qrRelatedData = null;
-            }
-        }, 3000);
-    }
-
-    removeQRCodeListner() {
-        if (this.qrCodeListnerTimer) {
-            this.qrRelatedData = null;
-            clearInterval(this.qrCodeListnerTimer);
-        }
-    }
-
-    setQRRelatedData(qrData: any) {
-        this.qrRelatedData = qrData;
-    }
-
+  
     getLocaleDate(dateString: string) {
         var date = new Date(dateString);
         var timeOffset = date.getTimezoneOffset();

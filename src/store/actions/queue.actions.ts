@@ -42,7 +42,7 @@ export class UpdateQueueInfo implements Action {
 
 export class FetchSelectedVisitInfo implements Action {
   readonly type = FETCH_SELECTED_VISIT_INFO;
-  constructor(public branch:number,public searchText:string) {}
+  constructor(public branch:number,public searchText:string,public isQRScan?:boolean) {}
 }
 
 export class FetchSelectedVisitInfoFail implements Action {

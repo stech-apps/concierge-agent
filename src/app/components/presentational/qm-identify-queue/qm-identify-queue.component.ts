@@ -68,10 +68,7 @@ export class QmIdentifyQueueComponent implements OnInit {
 
   const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
     if(value != null){
-      this.util.setQRRelatedData({ "branchId": this.selectedBranch.id, "qrCode": value, "isQrCodeLoaded": true})
-      if(!this.nativeApi.isNativeBrowser()){
-        this.removeDesktopQRReader();
-      }
+  
     }
   });
   this.subscriptions.add(qrCodeSubscription);
@@ -87,14 +84,13 @@ this.subscriptions.add(uttSubscription);
 
   const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
     if(value === true){
-      this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false})
-      this.util.qrCodeListner();
+    
       if(!this.nativeApi.isNativeBrowser()){
         this.checkDesktopQRReaderValue();
       }
     }
     else{
-      this.util.removeQRCodeListner();
+    
     }
   });
   this.subscriptions.add(qrCodeScannerSubscription);

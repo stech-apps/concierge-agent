@@ -2,18 +2,19 @@
 <div *ngIf="editVisitEnable" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}">
   <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearchVisit"
     name="q" #visitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())"
-    autocomplete="off"  [ngStyle]="{'border':  noVisitId  ? '1px solid #E50046' : '1px solid rgba(0, 0, 0, 0.82)'}" >
+    autocomplete="off" >
     <div *ngIf="visitSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
     <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInput();visitSearch.value=''"></i>
     </div>
     <button class="qm-button qm-primary-button-default" (click)="searchVisit(visitSearch.value.trim().toUpperCase())"> Search</button>
-    <div (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
+    <div *ngIf="visitQR" (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
       <i class="qm-action-btn__icon icon-scan-qr"></i>
       <div> {{'scan_qr'|translate}}</div>
     </div>
 </div>
+
 <!-- visit not found -->
-<div class="qm-visit-no-visit-found" *ngIf="isSelectedVisitFail || isInvalidVisitEntry">
+<div class="qm-visit-no-visit-found"  *ngIf=  "!isRequestFromQR && (isSelectedVisitFail || isInvalidVisitEntry)">
   <span *ngIf="isInvalidVisitEntry">{{'visit_invalid_entry'|translate}} </span>
   <span *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{'no_visit_match'|translate}} </span>
 
@@ -21,9 +22,9 @@
 
 
 <!-- No visit id -->
-<div class="qm-visit-error-message" *ngIf="noVisitId">
+<!-- <div class="qm-visit-error-message" *ngIf="noVisitId">
   {{'invaild_visit_id'|translate}}
-</div>
+</div> -->
 
 <br>
 <div class="qm-queue-list-title" *ngIf="!selectedQueue && !selectedVisit">
@@ -43,6 +44,8 @@
 
 <hr>
 
+<!-- Qr modal -->
+
 <div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
@@ -58,8 +61,8 @@
         {{'point_the_scanenr'|translate}}
       </div>
       <div>
-        <input class="qm-identify-visit-search__input" type="search" id="visitSearch"
-        name="q" [(ngModel)]="searchText" #visitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())" autocomplete="off">
+        <input class="qm-identify-visit-search__input" type="search" id="SearchFeild"
+        name="q" #qrvisitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,qrvisitSearch.value.trim().toUpperCase())" autocomplete="off">
       </div>
     </div>
   </div>

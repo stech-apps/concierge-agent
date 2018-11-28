@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
 import { Visit } from '../../../../models/IVisit';
 import { NativeApiService } from '../../../../util/services/native-api.service';
-import { Util } from '../../../../util/util';
 
 @Component({
   selector: 'qm-queue-summary',
@@ -21,7 +20,7 @@ export class QmQueueSummaryComponent implements OnInit {
   userDirection$:  Observable<string>;
   public queueSummary: any;
   selectedQueue:Queue;
-  searchText: string;
+  searchText: string; // qr value
   selectedbranchId: number;
   selectedSpId: number;
   selectedQueueId: number;
@@ -36,6 +35,10 @@ export class QmQueueSummaryComponent implements OnInit {
   isSelectedVisitFail:boolean;
   isInvalidVisitEntry:boolean;
   queueName:string;
+  qrCodeListnerTimer: any;
+  public qrRelatedData: any;
+  isRequestFromQR:boolean;
+  visitQR:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -48,7 +51,7 @@ export class QmQueueSummaryComponent implements OnInit {
     public nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
-    private util: Util,
+   
     private servicePointSelectors:ServicePointSelectors
   
   ) {
@@ -56,42 +59,50 @@ export class QmQueueSummaryComponent implements OnInit {
     const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
       this.selectedVisit = selectedVisit
     })
-
     this.subscriptions.add(selectedVisitSubscription);
     
+
     const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) { 
         this.editVisitEnable = uttpParams.editVisit;
-        
+        this.visitQR = uttpParams.visitQR;       
        }
     })
     this.subscriptions.add(uttpSubscriptions);
 
+
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
     });
-
     this.subscriptions.add(queueSubscription);
 
 
     const queueNameSubscription = this.queueSelectors.queueName$.subscribe((name) => {
       this.queueName = name;
     });
-
     this.subscriptions.add(queueNameSubscription);
+
 
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
     })
     this.subscriptions.add(QueueSelectorSubscription);
 
+    // check the visit error
     const QueueVisitErrorSubscription = this.queueSelectors.isFetchVisiitError$.subscribe((error)=>{
       if(error){
         this.isSelectedVisitFail = true;
+        if(this.isRequestFromQR){
+        this.translateService.get('visit_not_found').subscribe(
+          (label: string) => {
+            this.toastService.infoToast(label);
+          }
+        ).unsubscribe();
+        this.queueDispatchers.resetFetchVisitError();
+      }
       }else{
         this.isSelectedVisitFail = false;
       }
-
     })
     this.subscriptions.add(QueueVisitErrorSubscription);
 
@@ -117,9 +128,10 @@ export class QmQueueSummaryComponent implements OnInit {
 
     // regarding QR code
     
+    // QR code subscription
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
       if (value != null) {
-        this.util.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
+        this.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
         if (!this.nativeApi.isNativeBrowser()) {
           this.removeDesktopQRReader();
         }
@@ -127,16 +139,21 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(qrCodeSubscription);
 
+    
+
+  //QR Scanner subscription 
     const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe((value) => {
       if (value === true) {
-        this.util.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
-        this.util.qrCodeListner();
+        this.setQRRelatedData({ "branchId": null, "qrCode": null, "isQrCodeLoaded": false })
+        this.qrCodeListner();
         if (!this.nativeApi.isNativeBrowser()) {
           this.checkDesktopQRReaderValue();
         }
       }
       else {
-        this.util.removeQRCodeListner();
+        this.removeQRCodeListner();
+        
+        this.isQRReaderOpen = false; 
       }
     });
     this.subscriptions.add(qrCodeScannerSubscription);
@@ -163,6 +180,8 @@ export class QmQueueSummaryComponent implements OnInit {
       if (this.selectedbranchId && this.selectedQueueId) {
         this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
       }
+    }else{
+      this.searchText = $event.target.value
     }
   }
 
@@ -182,7 +201,7 @@ export class QmQueueSummaryComponent implements OnInit {
       this.isInvalidVisitEntry = true;
       return;
     }
-
+    this.isRequestFromQR = false;
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
     this.queueDispatchers.resetSelectedQueue();
 
@@ -196,13 +215,11 @@ export class QmQueueSummaryComponent implements OnInit {
     if (this.visitSearchText.trim().length == 0) {
       this.noVisitId = true;
       return;
-
     } else if (!this.isAppointmentIdValid(this.visitSearchText.trim())) {
       this.isInvalidVisitEntry = true;
-      return;
-      
+      return;     
     }
-
+    this.isRequestFromQR = false;
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
   }
 
@@ -223,12 +240,15 @@ export class QmQueueSummaryComponent implements OnInit {
       this.nativeApi.openQRScanner();
     }
     else {
-      var searchBox = document.getElementById("visitSearch") as any;
+      this.nativeApiDispatcher.openQRCodeScanner();
+      setTimeout(() => {
+      var searchBox = document.getElementById("SearchFeild") as any;
       this.translateService.get('qr_code_scanner').subscribe(v => {
         searchBox.placeholder = v
       });
       searchBox.focus();
-      this.nativeApiDispatcher.openQRCodeScanner();
+      }, 100);
+    
     }
   }
 
@@ -237,6 +257,8 @@ export class QmQueueSummaryComponent implements OnInit {
     this.desktopQRCodeListnerTimer = setInterval(() => {
       if (this.searchText && this.searchText.length > 0) {
         this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
+        console.log('text');
+        
       }
     }, 1000);
   }
@@ -248,7 +270,10 @@ export class QmQueueSummaryComponent implements OnInit {
   }
 
   closeqr(){
-    this.isQRReaderOpen = false;
+    this.isQRReaderOpen = false; 
+    this.searchText = '';
+    this.nativeApiDispatcher.closeQRCodeScanner();
+    this.removeQRCodeListner();
     
   }
 
@@ -257,4 +282,37 @@ export class QmQueueSummaryComponent implements OnInit {
     this.searchText = null;
     this.isInvalidVisitEntry = false;
   }
+  foucusInput(){
+    var searchBox = document.getElementById("SearchFeild") as any;
+    searchBox.focus();
+  }
+
+  // from util file
+  qrCodeListner() {
+    this.qrCodeListnerTimer = setInterval(() => {
+        if (this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded) {
+            this.qrRelatedData.isQrCodeLoaded = false;
+            this.isRequestFromQR = true;
+            this.queueDispatchers.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+            this.searchText = '';
+            this.qrRelatedData = null;
+            this.removeQRCodeListner();
+            // this.isQRReaderOpen = false;
+            this.nativeApiDispatcher.closeQRCodeScanner();
+        }
+    }, 1000);
+}
+
+removeQRCodeListner() {
+    if (this.qrCodeListnerTimer) {
+        this.qrRelatedData = null;
+        this.isQRReaderOpen = false;
+        clearInterval(this.qrCodeListnerTimer);
+    }
+}
+
+setQRRelatedData(qrData: any) {
+    this.qrRelatedData = qrData;
+}
+
 }

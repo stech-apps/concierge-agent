@@ -407,6 +407,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   transferToQ(visit) {
     this.NextFlow.emit("tq");
+    console.log('tq');
+    
     this.visitDispatchers.setectVisit(visit);
     this.onFlowNext.emit();
   }

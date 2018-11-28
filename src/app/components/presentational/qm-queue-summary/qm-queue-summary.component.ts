@@ -99,6 +99,7 @@ export class QmQueueSummaryComponent implements OnInit {
           }
         ).unsubscribe();
         this.queueDispatchers.resetFetchVisitError();
+        this.queueDispatchers.resetSelectedQueue();
       }
       }else{
         this.isSelectedVisitFail = false;
@@ -281,6 +282,7 @@ export class QmQueueSummaryComponent implements OnInit {
     this.queueDispatchers.resetFetchVisitError();
     this.searchText = null;
     this.isInvalidVisitEntry = false;
+    this.queueDispatchers.setectVisit(null);
   }
   foucusInput(){
     var searchBox = document.getElementById("SearchFeild") as any;

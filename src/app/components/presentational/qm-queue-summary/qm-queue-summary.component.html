@@ -43,6 +43,14 @@
     <div>{{ "scan_qr" | translate }}</div>
   </div>
 </div>
+<div class="qm-visit-loading" *ngIf="!queueVisitIDloaded && queueVisitIDloading">
+  <div class="qm-loading-visits">
+    <span class="qm-spinner"></span>
+    <div class="qm-loading-visits__content">
+      {{('label.visits.loading.text' | translate)}}
+    </div>
+  </div>
+</div>
 
 <!-- visit not found -->
 <div
@@ -57,12 +65,6 @@
   </span>
 </div>
 
-<!-- No visit id -->
-<!--
-  <div class="qm-visit-error-message" *ngIf="noVisitId">
-    {{'invaild_visit_id'|translate}}
-  </div>
--->
 
 <br />
 <div class="qm-queue-list-title" *ngIf="!selectedQueue && !selectedVisit">
@@ -82,7 +84,7 @@
   <span (click)="resetQueue()" class="qm-back-icon">
     <i class="icon-caret-left"></i>
   </span>
-  <span class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue">{{
+  <span class="qm-queue-list-title__label-text-captial"  *ngIf="selectedQueue && !queueName">{{
     selectedQueue.name
   }}</span>
   <span class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{

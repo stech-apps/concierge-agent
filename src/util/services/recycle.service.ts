@@ -47,6 +47,7 @@ export class Recycle {
       // this.reserveDispatchers.unreserveAppointment();
       this.customerDispatcher.resetCustomerSearchText();
       this.customerDispatcher.resetCustomers();
+      this.queueDispatchers.resetFetchVisitError();
   }
 
   removeAppCache(){

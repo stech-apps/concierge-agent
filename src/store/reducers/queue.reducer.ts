@@ -8,6 +8,8 @@ export interface IQueueState {
   allQueueSummary: any;
   loading: boolean;
   loaded: boolean;
+  queueVisitIDloading:boolean;
+  queueVisitIDloaded:boolean;
   error: Object;
   selectedVisit: Visit;
   selectedQueue: Queue;
@@ -25,7 +27,9 @@ const initialState = {
   queueFetchFailCount: 0,
   selectedQueue: null,
   FetchVisitError:null,
-  queueName:null
+  queueName:null,
+  queueVisitIDloading:null,
+  queueVisitIDloaded:null
 };
 
 export function reducer(
@@ -65,12 +69,16 @@ export function reducer(
     case QueueActions.FETCH_SELECTED_VISIT_INFO: {
       return {
         ...state,
+        queueVisitIDloading: true,
+        queueVisitIDloaded: false,
         error: null
       };
     }
     case QueueActions.FETCH_SELECTED_VISIT_INFO_SUCCESS: {
       return {
         ...state,
+        queueVisitIDloading: false,
+        queueVisitIDloaded: true,
         selectedVisit: action.payload[0],
         error: action.payload[0] ? null : "error",
         FetchVisitError: action.payload[0] ? null : "error"
@@ -80,6 +88,8 @@ export function reducer(
     case QueueActions.FETCH_SELECTED_VISIT_INFO_FAIL: {
       return {
         ...state,
+        queueVisitIDloading: false,
+        queueVisitIDloaded: true,
         error: action.payload,
         FetchVisitError:action.payload
       };
@@ -179,12 +189,14 @@ export function reducer(
   }
 
   function updateQueueList(queueList: any, queueInfo: Queue) {
+    if(queueInfo && queueList.queues){
     var queue = queueList.queues.find(queue => queue.id === queueInfo.id);
     let index = queueList.queues.indexOf(queue);
     queue.customersWaiting = queueInfo.customersWaiting;
     queue.waitingTime = queueInfo.waitingTime;
     queueList.queues[index] = queue;
     return queueList.queues;
+  }
   }
 
   function processQueueInfo(queueInfo) {

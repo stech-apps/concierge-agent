@@ -11,7 +11,6 @@ export class FilterStaffPoolPipe implements PipeTransform {
     if(!StaffPool || !filterText) {
       return StaffPool;
     }
-
     return StaffPool.filter(b => b.firstName.toUpperCase().includes(filterText.toUpperCase())|| b.lastName.toUpperCase().includes(filterText.toUpperCase())|| b.userName.toUpperCase().includes(filterText.toUpperCase()));
   }
 

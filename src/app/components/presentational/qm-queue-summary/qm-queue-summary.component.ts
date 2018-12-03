@@ -40,6 +40,8 @@ export class QmQueueSummaryComponent implements OnInit {
   queueFetchFailed: boolean;
   isRequestFromQR:boolean;
   visitQR:boolean;
+  queueVisitIDloading:boolean;
+  queueVisitIDloaded:boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -57,11 +59,23 @@ export class QmQueueSummaryComponent implements OnInit {
   
   ) {
 
+    
+
     const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
       this.selectedVisit = selectedVisit
     })
     this.subscriptions.add(selectedVisitSubscription);
     
+    const VisitSearchLoadedSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((s)=>{
+      this.queueVisitIDloaded = s
+    })
+    this.subscriptions.add(VisitSearchLoadedSubscription);
+
+    const VisitSearchLoadingSubscription = this.queueSelectors.queueVisitIDloading$.subscribe((s)=>{
+      this.queueVisitIDloading = s
+    })
+    this.subscriptions.add(VisitSearchLoadingSubscription);
+
 
     const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) { 
@@ -96,7 +110,7 @@ export class QmQueueSummaryComponent implements OnInit {
         if(this.isRequestFromQR){
         this.translateService.get('visit_not_found').subscribe(
           (label: string) => {
-            this.toastService.infoToast(label);
+            this.toastService.errorToast(label);
           }
         ).unsubscribe();
         this.queueDispatchers.resetFetchVisitError();
@@ -104,6 +118,7 @@ export class QmQueueSummaryComponent implements OnInit {
       }
       }else{
         this.isSelectedVisitFail = false;
+        console.log("hello");
       }
     })
     this.subscriptions.add(QueueVisitErrorSubscription);
@@ -175,6 +190,8 @@ export class QmQueueSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    
+    
   }
 
   resetQueue(){
@@ -193,10 +210,19 @@ export class QmQueueSummaryComponent implements OnInit {
       if (this.selectedbranchId && this.selectedQueueId) {
         this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
       }
+    }
+  }
+  
+  handleInputQR($event) {
+    if ($event.target.value.length == 0) {
+      if (this.selectedbranchId && this.selectedQueueId) {
+        this.queueVisitsDispatchers.fetchQueueVisits(this.selectedbranchId, this.selectedQueueId);
+      }
     }else{
       this.searchText = $event.target.value
     }
   }
+
 
   keyDownFunction(event, visitSearchText: string) {
     if (event) {
@@ -216,6 +242,7 @@ export class QmQueueSummaryComponent implements OnInit {
     }
     this.isRequestFromQR = false;
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
+    this.visitSearchText = null;
     this.queueDispatchers.resetSelectedQueue();
 
   }
@@ -248,6 +275,8 @@ export class QmQueueSummaryComponent implements OnInit {
 
   SearchQRButtonClick(){
     this.isQRReaderOpen = true;
+    var searchBox = document.getElementById("visitSearchVisit") as any;
+    searchBox.value = '';
     this.queueDispatchers.resetError();
     if (this.nativeApi.isNativeBrowser()) {
       this.nativeApi.openQRScanner();

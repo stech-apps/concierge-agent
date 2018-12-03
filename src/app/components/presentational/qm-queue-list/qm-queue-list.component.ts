@@ -35,6 +35,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   userDirection$: Observable<string>;
   queueFetchFailed: boolean;
 
+  editVisitEnable:boolean;
   isFirstTime: boolean;
 
   constructor(
@@ -71,6 +72,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
         this.canTransferQWait = uttpParams.btnTransferSort;
         this.canDelete = uttpParams.delVisit;
         this.cancherypick = uttpParams.cherryPick;
+        this.editVisitEnable = uttpParams.editVisit;
       }
     })
     this.subscriptions.add(uttpSubscriptions);
@@ -160,7 +162,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   }
 
   selectQueue(q) {
-
+    if(this.editVisitEnable){
+   
     if (this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
       (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) {
       this.translateService.get('no_actions_available').subscribe(v => {
@@ -174,5 +177,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     }
 
   }
+  
+}
 
 }

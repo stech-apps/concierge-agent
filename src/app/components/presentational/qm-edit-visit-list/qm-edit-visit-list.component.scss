@@ -24,7 +24,6 @@
 }
 
 :host {
-
     .sort-icon {
         margin-left: 0.4rem;
         cursor: pointer;
@@ -63,7 +62,7 @@
     }
 
     &-body-row-container {
-        width: 100%;
+        // width: 100%;
         position: relative;
     }
 
@@ -149,13 +148,20 @@
         .qm-title{
             flex:10;
         }
-        qm-icon{
+        .qm-icon{
             flex: 1;
+            text-align: center;
+        }
+        .icon-close{
+            cursor: pointer;
+            color: $primary-pink;
+            font-weight: 800;
         }
     }
 
     &__rec{
         box-shadow: 0 0 8px 0 rgba(0,0,0,0.34);
+        background: white;
     }
 
     
@@ -186,20 +192,9 @@
         padding: 0 2em;
         text-align: center;
         justify-content: center;
-
-   
-
-        .visit-transfer-queue-btn svg,
-        .visit-transfer-sp-btn svg,
-        .visit-transfer-staff-btn svg {
-            width: 60px !important;
-            display: flex;
         
-        }
-        .visit-cherry-pick-btn svg,
-        .visit-delete-btn svg {
-            width: 30px !important;
-            
+        .visit-delete-btn {
+            cursor: pointer;
         }
     }
 
@@ -229,10 +224,11 @@
             padding: 0px 10px;
         }
         .label{
-            flex: 10;
+            flex: 8;
             text-align: left; 
             @include add-text-ellipsis ;
             margin-top: 15px;
+
         }
     }
     .visit-tray-option-bottom{
@@ -256,7 +252,7 @@
             flex:1;
             font-size: 2.2em;
             padding: 0px 10px;
-            color: $primary-pink;
+            color: $primary-pink; 
         }
         .label{
             flex: 10;
@@ -308,4 +304,12 @@
     @at-root [dir="rtl"] {
         margin-right: 15px;
     }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .visit-tray-option{
+        .label{
+            padding: 0px 10px;
+        }
+    }   
 }

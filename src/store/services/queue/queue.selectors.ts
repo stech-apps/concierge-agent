@@ -44,6 +44,15 @@ const getQueueFetchFailCount = createSelector(
     getQueueState,
     (state:IQueueState) => state.queueFetchFailCount
 )
+const getqueueVisitIDloading = createSelector(
+    getQueueState,
+    (state:IQueueState) => state.queueVisitIDloading
+)
+
+const getqueueVisitIDloaded = createSelector(
+    getQueueState,
+    (state:IQueueState) => state.queueVisitIDloaded
+)
 
 @Injectable()
 export class QueueSelectors {
@@ -56,4 +65,6 @@ export class QueueSelectors {
     isFetchVisiitError$ = this.store.select(isFetchVisiitError);
     queueName$ = this.store.select(getQueueName);
     queueFetchFailCount$ = this.store.select(getQueueFetchFailCount);
+    queueVisitIDloading$ =  this.store.select(getqueueVisitIDloading);
+    queueVisitIDloaded$ = this.store.select(getqueueVisitIDloaded);
 }

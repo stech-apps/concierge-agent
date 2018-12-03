@@ -1,16 +1,17 @@
 @import '../../../../styles/base/_component-manifest.scss';
 .qm-identify-visit-search{
-    width: 100%;
+    width: 90%;
+    margin: auto;
 
     &__input{
-        padding: 8px;
-        width: 60%;
+        padding: 15px;
+        width: 100%;
         margin: auto;
       
         margin-bottom: 5px;
     }
     &__search-container{
-            margin-left: 30%;
+            display: flex;
     }
     &__or-text{
         padding:0px 10px
@@ -50,7 +51,8 @@
         align-items: center;
         text-align: left;
         min-width: 0;
-        text-transform: uppercase;
+       color:$dark-transparent62;
+       font-weight: 500;
 
         &-label {
           @include add-text-ellipsis;
@@ -78,28 +80,36 @@
       }
     }
 
-    background-color: $wating-list-background;
+    // background-color: $wating-list-background;
+    // border-bottom: 1px solid $dark-transparent12;
 }
 
 .qm-service-point-list-body-row-first-label{
     padding-left: 2rem;
+    color: $dark-transparent82;
 }
 .qm-service-point-list-body-row-second-label{
     margin-left: -2rem;
 }
 
 .qm-clear-search{ 
-    margin: 0px 10px 0px -25px;
-    position: relative;
-    z-index: 2;
-    color: black;
-    @at-root [dir="rtl"] {
-        .qm-clear-search{
-         margin: 0px -25px 0px 10px;
-        }
-       }
-       
- 
+    // margin: 0px 10px 0px -25px;
+    // position: relative;
+    // z-index: 2;
+    // color: black;
+    // @at-root [dir="rtl"] {
+    //     .qm-clear-search{
+    //      margin: 0px -25px 0px 10px;
+    //     }
+    //    }
+    margin-left: -35px;
+    margin-top: 14px;
+    color: $dark-transparent42;
+    @at-root [dir="rtl"] & {
+      margin-right: -35px;
+  }
+  font-size: 1.4em;
+  cursor: pointer;
 }
 
 .qm-no-results{
@@ -110,4 +120,11 @@
     padding-top: 14vh;
 }
 
-
+.qm-search__icon{
+    margin-left: -35px;
+    margin-top: 13px;
+    color: $dark-transparent42;
+    @at-root [dir="rtl"] & {
+      margin-right: -35px;
+  }
+  }

@@ -1,9 +1,13 @@
 <div class="qm-flow-sub-header">
-    <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
+    <div *ngIf="!(this.loaded && this.StaffPool.length===0)" class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
       <div class="qm-identify-visit-search__search-container">
       <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
-      <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class="icon-close qm-clear-search" aria-hidden="true"></i>
-  
+      <div class="qm-action-btn--only-icon">
+      <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+      </div>
+      <div class="qm-action-btn--only-icon">
+          <i *ngIf="!visitSearch.value.trim()"  aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+        </div>
       </div>
     </div>
   
@@ -13,13 +17,15 @@
    <div class="qm-service-point-list__container">
       <div class="qm-service-point-list">
   
-          <div class="qm-service-point-list__headers qm-flex-grid">
+          <div *ngIf="!(this.loaded && this.StaffPool.length===0)" class="qm-service-point-list__headers qm-flex-grid">
             <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyLastName()">
-              <div class="qm-service-point-list-header-item-label">{{'last_name' | translate}}</div>
+              <div class="qm-service-point-list-header-item-label">{{'name' | translate}}</div>
               <div><i  *ngIf="sortedBy =='LAST_NAME' && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>
-  
-            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyFirstName()" >
+            <div *ngIf="(this.loaded && this.StaffPool.length===0)">
+              {{'empty_user_pool'|translate}} asijdasml
+            </div>
+            <!-- <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyFirstName()" >
               <div class="qm-service-point-list-header-item-label">{{'first_name' | translate}}</div>
               <div><i *ngIf="sortedBy =='FIRST_NAME'  && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
             </div>       
@@ -28,16 +34,16 @@
             <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyUserName()">
                 <div class="qm-service-point-list-header-item-label">{{'user_name' | translate}}</div>
                 <div><i *ngIf="sortedBy =='USER_NAME'  && StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
-              </div>       
+              </div>        -->
 
           </div>
         
           <div class="qm-service-point-list__body">
             <div *ngFor="let s of StaffPool |filterStaffPool : filterText ">
             <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectPool(s.id)">
-                <div class="qm-col qm-service-point-list-body-row-first-label">{{s.lastName}}</div>
-                <div class="qm-col qm-service-point-list-body-row-second-label">{{s.firstName}}</div>
-                <div class="qm-col qm-service-point-list-body-row-second-label">{{s.userName}}</div>
+                <div class="qm-col qm-service-point-list-body-row-first-label">{{s.firstName}} {{s.lastName}}</div>
+                <!-- <div class="qm-col qm-service-point-list-body-row-second-label">{{s.firstName}}</div> -->
+                <!-- <div class="qm-col qm-service-point-list-body-row-second-label">{{s.userName}}</div> -->
               </div>
           </div>
           </div>

@@ -65,13 +65,13 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     const staffPoolSubscription = this.StaffPoolSelectors.StaffPool$.subscribe((staffPool)=>{
  
         this.StaffPool = staffPool;
-        if(this.loaded && this.StaffPool.length===0){
-          this.translateService.get('empty_user_pool').subscribe(
-            (noappointments: string) => {
-              this.toastService.infoToast(noappointments);
-            }
-          ).unsubscribe();
-        }
+        // if(this.loaded && this.StaffPool.length===0){
+        //   this.translateService.get('empty_user_pool').subscribe(
+        //     (noappointments: string) => {
+        //       this.toastService.infoToast(noappointments);
+        //     }
+        //   ).unsubscribe();
+        // }
       
      });
     this.subscriptions.add(staffPoolSubscription);
@@ -107,7 +107,10 @@ export class QmTransferToStaffPoolComponent implements OnInit {
 
 
   selectPool(s){
+    
+    
     if(this.selectedVisit){
+      console.log('aaaa');
       this.translateService.get('transfer_visit_to_staff_member_confirm_box',
       {
         visit: this.selectedVisit.ticketId,

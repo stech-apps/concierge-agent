@@ -171,6 +171,7 @@ import { QmTimelistSidebarComponent } from './components/presentational/qm-timel
 import { QmTimeFilterItemsComponent } from './components/containers/qm-time-filter-items/qm-time-filter-items.component';
 import { QmPhoneNumberValidatorDirective } from './directives/qm-phone-number-validator.directive';
 import { QmTimeFormatPipe } from './pipes/qm-time-format.pipe';
+import { QmDropDownFilterPipe } from './components/presentational/qm-drop-down/qm-drop-down-filter.pipe';
 
 
 // Global options for Toastr
@@ -269,7 +270,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmTimelistSidebarComponent,
     QmTimeFilterItemsComponent,
     QmPhoneNumberValidatorDirective,
-    QmTimeFormatPipe
+    QmTimeFormatPipe,
+    QmDropDownFilterPipe
 
   ],
   entryComponents: [

@@ -16,6 +16,7 @@ export class QmDropDownComponent implements OnInit {
   @ViewChild('dropdownContent') dropDownContent: ElementRef;
   isExpanded = false;
   userDirection$: Observable<string>;
+  searchText: string;
 
   constructor(private userSelectors: UserSelectors) {
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -26,6 +27,9 @@ export class QmDropDownComponent implements OnInit {
 
   @Input()
   caption: string;
+
+  @Input()
+  searchPlaceHolder: string;
 
 
   @Input()
@@ -50,5 +54,14 @@ export class QmDropDownComponent implements OnInit {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
     $event.stopPropagation();
+  }
+
+  handleInput(searchText: string) {
+
+  }
+
+  clickOnSearch($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
   }
 }

@@ -117,6 +117,11 @@
   position: absolute;
   right: calc(50% - 366px);
   top: 298px;
+
+  @at-root [dir="rtl"] & { 
+    left: calc(50% - 440px);
+    right: auto;
+  }
 }
 
 @media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
@@ -124,5 +129,10 @@
     top: auto;
     bottom: 195px;
     right: calc(50% - 201px);
+
+    @at-root [dir="rtl"] & { 
+        left: calc(50% - 201px);
+        right: auto;
+      }
   }
 }

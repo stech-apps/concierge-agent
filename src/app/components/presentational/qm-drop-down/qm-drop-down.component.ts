@@ -29,8 +29,10 @@ export class QmDropDownComponent implements OnInit {
   caption: string;
 
   @Input()
-  searchPlaceHolder: string;
+  itemSelected: boolean;
 
+  @Input()
+  searchPlaceHolder: string;
 
   @Input()
   labelProperty: string = 'text';
@@ -54,6 +56,7 @@ export class QmDropDownComponent implements OnInit {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
     $event.stopPropagation();
+    this.itemSelected = true;
   }
 
   handleInput(searchText: string) {

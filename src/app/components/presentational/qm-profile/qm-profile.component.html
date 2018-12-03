@@ -5,9 +5,9 @@
       {{ 'label.select.profile.settings' | translate}}
     </div>
     <div class="qm-dropdown-heading">{{'label.profile.branch' | translate}}</div>
-    <qm-drop-down #bdd (onExpand)="collapseSiblingDropDowns(sdd)" [searchPlaceHolder]="'label.branch.search'"  [caption]="selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)" labelProperty="name"></qm-drop-down>
+    <qm-drop-down class="qm-branch-dd" #bdd (onExpand)="collapseSiblingDropDowns(sdd)" [searchPlaceHolder]="'label.branch.search'"  [caption]="selectedBranch?.name" [itemSelected]="!!selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)" labelProperty="name"></qm-drop-down>
     <div  class="qm-dropdown-heading">{{'label.profile.service' | translate}}</div>
-    <qm-drop-down #sdd (onExpand)="collapseSiblingDropDowns(bdd)" [searchPlaceHolder]="'placeholder.profile.servicepoint'"  [caption]="selectedServicePoint?.name" (itemClick)="onServicePointSelect($event)" [items]="servicePoints" labelProperty="name"></qm-drop-down>
+    <qm-drop-down #sdd (onExpand)="collapseSiblingDropDowns(bdd)" [searchPlaceHolder]="'placeholder.profile.servicepoint'"  [caption]="selectedServicePoint?.name" [itemSelected]="!!selectedServicePoint?.name" (itemClick)="onServicePointSelect($event)" [items]="servicePoints" labelProperty="name"></qm-drop-down>
 
     <div class="qm-use-as-default">
       <!--input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/-->

@@ -1,11 +1,11 @@
 <div class="qm-dropdown" dir="{{userDirection$ | async}}">
   <button class="qm-dropdown-button" (click)="dropDownExpand($event)">
-    <div class="qm-dropdown-button--label">{{caption | translate}}</div>
+    <div class="qm-dropdown-button--label" [ngClass]="{'qm-dropdown-button--label-selected': itemSelected}">{{caption | translate}}</div>
     <div class="qm-dropdown-button--arrow  icon-caret-down" *ngIf="items.length > 0"></div>
   </button>
   <div class="qm-dropdown__content" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
 
-      <div class="qm-search qm-search--large">
+      <div class="qm-search qm-search--large qm-dd-search">
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
           <input [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched"

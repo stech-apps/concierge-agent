@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export const servicePoint = '/rest/servicepoint';
 export const restEndpoint = '/rest';
+export const centralRestEndPoint = '/qsystem/rest';
 export const calendarEndpoint = '/calendar-backend/api/v1';
 export const calendarPublicEndpoint = '/calendar-backend/public/api/v1';
 export const calendarPublicEndpointV2 = '/calendar-backend/public/api/v2';

@@ -1,13 +1,12 @@
 
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
-import { calendarEndpoint,restEndpoint, servicePoint , DataServiceError } from '../data.service';
+import { restEndpoint, centralRestEndPoint } from '../data.service';
 
 import { ISystemInfo } from '../../../models/ISystemInfo';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -22,7 +21,7 @@ export class SystemInfoDataService {
 
   getServicePointSystemInfo(): Observable<ISystemInfo> {
     return this.http
-    .get<ISystemInfo>(`${servicePoint}/systemInformation`)
+    .get<ISystemInfo>(`${centralRestEndPoint}/servicepoint/systemInformation`)
     .pipe();
   }
 }

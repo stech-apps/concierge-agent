@@ -11,6 +11,7 @@ export interface IQueueState {
   error: Object;
   selectedVisit: Visit;
   selectedQueue: Queue;
+  queueFetchFailCount: number;
   FetchVisitError:Object;
   queueName:string;
 }
@@ -21,6 +22,7 @@ const initialState = {
   loaded: false,
   error: null,
   selectedVisit: null,
+  queueFetchFailCount: 0,
   selectedQueue: null,
   FetchVisitError:null,
   queueName:null
@@ -34,6 +36,7 @@ export function reducer(
     case QueueActions.FETCH_QUEUE_INFO_SUCCESS: {
       return {
         ...state,
+        queueFetchFailCount: 0,
         allQueueSummary: processQueueInfo(action.payload),
         loading: true,
         error: null
@@ -44,6 +47,7 @@ export function reducer(
         ...state,
         loading: false,
         loaded: false,
+        queueFetchFailCount: state.queueFetchFailCount + 1,
         error: {
           ...action.payload
         }
@@ -52,6 +56,7 @@ export function reducer(
     case QueueActions.UPDATE_QUEUE_INFO: {
       return {
         ...state,
+        queueFetchFailCount: 0,
         allQueueSummary: processQueueInfo(updateQueueList(state.allQueueSummary, action.payload)),
         loading: true,
         error: null

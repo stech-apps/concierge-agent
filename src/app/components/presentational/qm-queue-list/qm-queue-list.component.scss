@@ -1,119 +1,128 @@
-
-@import '../../../../styles/base/_component-manifest.scss';
+@import "../../../../styles/base/_component-manifest.scss";
 :host {
-    font-size: rem(12px);
+  font-size: rem(12px);
 }
 
 .qm-queue-list {
-    margin-top: rem($standard-margin * 1.5);
-    padding: 0 3em;
+  margin-top: rem($standard-margin * 1.5);
+  padding: 0 3em;
 
-   .sort-icon {
-        margin-left: 0.4rem;
-        cursor: pointer;
-        color: $dark-transparent62;
-   }
+  .sort-icon {
+    margin-left: 0.4rem;
+    cursor: pointer;
+    color: $dark-transparent62;
+  }
 
-   .max-wait-time-container {
-       display: flex;
+  .max-wait-time-container {
+    display: flex;
     //    justify-content: center;
-   }
+  }
 
-   .max-wait-time {
-        font-size: 1.3rem;
+  .max-wait-time {
+    font-size: 1.3rem;
 
-        &.gray-indicator {
-            visibility: hidden;
-        }
-
-        &.red-indicator {
-            color: $queue-indicator-red;
-        }
-
-        &.yellow-indicator {
-            color: $queue-indicator-yellow;
-        }
-   }
-
-    &__headers {
-        height: 3rem;
-        font-size: 1.2em;
-        border-bottom: 1px solid $header-text-color;
-        i {
-            font-size: 1.2rem;
-            padding-right: rem(8px);
-            @at-root [dir="rtl"] & {
-                margin-left: 0.2rem;
-            }
-        }
+    &.gray-indicator {
+      visibility: hidden;
     }
 
-    &-header-item {
-        display: flex;
-        // justify-content: center;
-        // align-items: center;
-        min-width: 0;
+    &.red-indicator {
+      color: $queue-indicator-red;
+    }
 
-        &-label {
-           
-            overflow: hidden;
-            text-overflow: ellipsis;
-          font-weight: 500;
-          color: $dark-transparent62;
+    &.yellow-indicator {
+      color: $queue-indicator-yellow;
+    }
+  }
+
+  &__headers {
+    height: 3rem;
+    font-size: 1.2em;
+    border-bottom: 1px solid $header-text-color;
+    i {
+      font-size: 1.2rem;
+      padding-right: rem(8px);
+      @at-root [dir="rtl"] & {
+        margin-left: 0.2rem;
       }
     }
+  }
 
+  &-header-item {
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    min-width: 0;
 
-
-    &-body-row {
-        // justify-content: center;
-        // align-items: center;
-        // text-align: center;
-        height: 3rem;
-
-        &-label {
-          @include add-text-ellipsis;
-          width:inherit;
-         
-         
-          font-weight: normal;
-      }
+    &-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+      color: $dark-transparent62;
     }
+  }
 
-    
+  &-body-row {
+    // justify-content: center;
+    // align-items: center;
+    // text-align: center;
+    height: 3rem;
 
-    &__body {
-        max-height: calc(100vh - 382px);
-        overflow-y: auto;
-        color: $dark-transparent62;
-        font-size: 1.4em
+    &-label {
+      @include add-text-ellipsis;
+      width: inherit;
+
+      font-weight: normal;
     }
+  }
+
+  &__body {
+    max-height: calc(100vh - 382px);
+    overflow-y: auto;
+    color: $dark-transparent62;
+    font-size: 1.4em;
+  }
 }
 
-[dir='rtl'] :host {
-    .qm-queue-list {
-        i {
-            margin-left: 0.25rem;
-        }
+[dir="rtl"] :host {
+  .qm-queue-list {
+    i {
+      margin-left: 0.25rem;
     }
+  }
 }
 
-.qm-col-15{
-    width: 20%;
-    padding: 0 1%;
-    font-weight: 500;
-    @at-root [dir="ltr"] & {
-        text-align: right;
-        justify-content: flex-end;
-        justify-items: right;
-        float: right;
-    }
-    @at-root [dir="rtl"] & {
-        text-align: left;
-    }
+.qm-col-15 {
+  width: 20%;
+  padding: 0 1%;
+  font-weight: 500;
+  @at-root [dir="ltr"] & {
+    text-align: right;
+    justify-content: flex-end;
+    justify-items: right;
+    float: right;
+  }
+  @at-root [dir="rtl"] & {
+    text-align: left;
+  }
 }
 
-.qm-col-45{
-    width: 40%;
-    color: $pale-aquamarine;
+.qm-col-45 {
+  width: 40%;
+  color: $pale-aquamarine;
+}
+
+.qm-queue-failed-count {
+  font-size: 18px;
+  text-align: center;
+  position: absolute;
+  right: calc(50% - 366px);
+  top: 298px;
+}
+
+@media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
+  .qm-queue-failed-count {
+    top: auto;
+    bottom: 195px;
+    right: calc(50% - 201px);
+  }
 }

@@ -33,6 +33,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   canDelete: boolean;
   cancherypick: boolean;
   userDirection$: Observable<string>;
+  queueFetchFailed: boolean;
 
   isFirstTime: boolean;
 
@@ -74,6 +75,16 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.add(uttpSubscriptions);
 
+    const queueFetchFailCountSub = this.queueSelectors.queueFetchFailCount$.subscribe((c)=> {
+      if(c === 2) {
+        this.queueFetchFailed = true;
+      }
+      else if(c === 0 ) {
+        this.queueFetchFailed = false;
+      }
+    });
+
+    this.subscriptions.add(queueFetchFailCountSub);
   }
 
   ngOnInit() {

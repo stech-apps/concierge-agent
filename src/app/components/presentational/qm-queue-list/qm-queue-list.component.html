@@ -16,18 +16,24 @@
     </div>
     
     <div  *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'ql_est_wait_time' | translate}} </div>
-  </div>
+  </div>  
 
   <div class="qm-queue-list__body">
     <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" (click)="selectQueue(q)">
-        <div class="qm-col-45   ">{{q.name}}</div>
-        <div class="qm-col-15">{{q.customersWaiting }}</div>
-        <div class="qm-col-15 max-wait-time-container">
+        <div class="qm-col-45">{{q.name}}</div>
+       
+        <div class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</div>
+        <div class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
           <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
           <div> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></div>
         </div>
-        <div  *ngIf="showEstWaitTime" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></div>
-    </div>
+        <div  *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></div>
+    </div>  
     
+    <div *ngIf="queueFetchFailed" class="qm-queue-failed-count">
+      <div><i class="qm-action-btn__icon icon-warn" aria-hidden="true"></i></div>
+      <div>{{'ql_connectivity_issue' | translate}}</div>
+      <div>{{'ql_unble_to_update_queue' | translate}}</div>
+    </div>
   </div>
 </div>

@@ -29,7 +29,7 @@ export class QueueEffects {
         toAction(
           this.queueDataService.getQueueInformation(fetchQueueRequest.payload),
           QueueActions.FetchQueueInfoSuccess,
-          QueueActions.FetchAccountInfoFail
+          QueueActions.FetchQueueInfoFail
         )
       )
     );

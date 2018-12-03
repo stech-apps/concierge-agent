@@ -1,68 +1,137 @@
-
-<div *ngIf="editVisitEnable" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}">
-  <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearchVisit"
-    name="q" #visitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,visitSearch.value.trim().toUpperCase())"
-    autocomplete="off" >
-    <div *ngIf="visitSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInput();visitSearch.value=''"></i>
-    </div>
-    <button class="qm-button qm-primary-button-default" (click)="searchVisit(visitSearch.value.trim().toUpperCase())"> Search</button>
-    <div *ngIf="visitQR" (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
-      <i class="qm-action-btn__icon icon-scan-qr"></i>
-      <div> {{'scan_qr'|translate}}</div>
-    </div>
+<div
+  *ngIf="editVisitEnable"
+  style="display:flex"
+  class="qm-search-visit-container qm-queue-summary__left"
+  dir="{{ userDirection$ | async }}"
+>
+  <input
+    class="qm-identify-visit-search__input"
+    type="search"
+    placeholder="{{ 'visit_search_placeholder' | translate }}"
+    id="visitSearchVisit"
+    name="q"
+    #visitSearch
+    (input)="handleInput($event)"
+    (keydown.enter)="
+      keyDownFunction($event, visitSearch.value.trim().toUpperCase())
+    "
+    autocomplete="off"
+  />
+  <div
+    *ngIf="visitSearch.value.trim()"
+    class="qm-action-btn qm-action-btn--only-icon"
+  >
+    <i
+      aria-hidden="true"
+      class="qm-action-btn__icon icon-close qm-close__icon"
+      (click)="clearInput(); visitSearch.value = ''"
+    ></i>
+  </div>
+  <button
+    class="qm-button qm-primary-button-default"
+    (click)="searchVisit(visitSearch.value.trim().toUpperCase())"
+  >
+    Search
+  </button>
+  <div
+    *ngIf="visitQR"
+    (click)="SearchQRButtonClick()"
+    class="scan-qr-container"
+    [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }"
+  >
+    <i class="qm-action-btn__icon icon-scan-qr"></i>
+    <div>{{ "scan_qr" | translate }}</div>
+  </div>
 </div>
 
 <!-- visit not found -->
-<div class="qm-visit-no-visit-found"  *ngIf=  "!isRequestFromQR && (isSelectedVisitFail || isInvalidVisitEntry)">
-  <span *ngIf="isInvalidVisitEntry">{{'visit_invalid_entry'|translate}} </span>
-  <span *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{'no_visit_match'|translate}} </span>
-
+<div
+  class="qm-visit-no-visit-found"
+  *ngIf="!isRequestFromQR && (isSelectedVisitFail || isInvalidVisitEntry)"
+>
+  <span *ngIf="isInvalidVisitEntry"
+    >{{ "visit_invalid_entry" | translate }}
+  </span>
+  <span *ngIf="!isInvalidVisitEntry && isSelectedVisitFail"
+    >{{ "no_visit_match" | translate }}
+  </span>
 </div>
 
-
 <!-- No visit id -->
-<!-- <div class="qm-visit-error-message" *ngIf="noVisitId">
-  {{'invaild_visit_id'|translate}}
-</div> -->
+<!--
+  <div class="qm-visit-error-message" *ngIf="noVisitId">
+    {{'invaild_visit_id'|translate}}
+  </div>
+-->
 
-<br>
+<br />
 <div class="qm-queue-list-title" *ngIf="!selectedQueue && !selectedVisit">
-  <span class="qm-queue-list-title__label-text">{{'ql_queue_status_label'|translate}}</span>
-  <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
-  <span class="qm-queue-summary--value">{{queueSummary.totalCustomersWaiting}} </span>
-  <span> {{'people_waiting_label'|translate}}</span>
+  <span class="qm-queue-list-title__label-text">{{
+    "ql_queue_status_label" | translate
+  }}</span>
+  <ng-container *ngIf="!queueFetchFailed">
+    <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
+    <span class="qm-queue-summary--value"
+      >{{ queueSummary.totalCustomersWaiting }}
+    </span>
+    <span> {{ "people_waiting_label" | translate }}</span>
+  </ng-container>
 </div>
 
 <div class="qm-queue-list-title" *ngIf="selectedQueue || selectedVisit">
-  <span (click)="resetQueue()" class="qm-back-icon"> <i class="icon-caret-left"></i> </span>
-  <span class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue">{{selectedQueue.name}}</span>
-  <span class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{queueName}}</span>
+  <span (click)="resetQueue()" class="qm-back-icon">
+    <i class="icon-caret-left"></i>
+  </span>
+  <span class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue">{{
+    selectedQueue.name
+  }}</span>
+  <span class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{
+    queueName
+  }}</span>
   <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
-  <span class="qm-queue-summary--value" *ngIf="selectedQueue">{{selectedQueue.customersWaiting}} </span>
+  <span class="qm-queue-summary--value" *ngIf="selectedQueue"
+    >{{ selectedQueue.customersWaiting }}
+  </span>
 </div>
 
-<hr>
+<hr />
 
 <!-- Qr modal -->
 
-<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
+<div
+  class="qm-qr-code-modal"
+  *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen"
+  (click)="foucusInput()"
+  dir="{{userDirection$ | async}}"
+>
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
-      <h1 class="qm-qr-code-modal__heading-text">{{ 'scan_qr_code' | translate}}</h1>
-      <div class="qm-qr-code-modal__close-container" > <i class="icon-close" (click)="closeqr()"></i></div>
+      <h1 class="qm-qr-code-modal__heading-text">
+        {{ "scan_qr_code" | translate }}
+      </h1>
+      <div class="qm-qr-code-modal__close-container">
+        <i class="icon-close" (click)="closeqr()"></i>
+      </div>
     </div>
     <div class="qm-qr-code-modal__content">
       <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
-      <div>{{'ready_to_scan'|translate}}</div>
+      <div>{{ "ready_to_scan" | translate }}</div>
     </div>
     <div class="qm-qr-code-modal__text-line">
+      <div>{{ "point_the_scanenr" | translate }}</div>
       <div>
-        {{'point_the_scanenr'|translate}}
-      </div>
-      <div>
-        <input class="qm-identify-visit-search__input" type="search" id="SearchFeild"
-        name="q" #qrvisitSearch (input)="handleInput($event)" (keydown.enter)="keyDownFunction($event,qrvisitSearch.value.trim().toUpperCase())" autocomplete="off">
+        <input
+          class="qm-identify-visit-search__input"
+          type="search"
+          id="SearchFeild"
+          name="q"
+          #qrvisitSearch
+          (input)="handleInput($event)"
+          (keydown.enter)="
+            keyDownFunction($event, qrvisitSearch.value.trim().toUpperCase())
+          "
+          autocomplete="off"
+        />
       </div>
     </div>
   </div>

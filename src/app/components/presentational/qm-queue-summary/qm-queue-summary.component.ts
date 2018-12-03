@@ -37,6 +37,7 @@ export class QmQueueSummaryComponent implements OnInit {
   queueName:string;
   qrCodeListnerTimer: any;
   public qrRelatedData: any;
+  queueFetchFailed: boolean;
   isRequestFromQR:boolean;
   visitQR:boolean;
 
@@ -159,6 +160,17 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(qrCodeScannerSubscription);
 
+    const queueFetchSub = this.queueSelectors.queueFetchFailCount$.subscribe((fc) => {
+
+      if(fc === 2) {
+        this.queueFetchFailed = true;
+      }
+      else if(fc ===0 ) {
+        this.queueFetchFailed = false;
+      }
+
+    });
+    this.subscriptions.add(queueFetchSub);
   }
 
   ngOnInit() {

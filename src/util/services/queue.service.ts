@@ -10,7 +10,7 @@ export class QueueService {
   private subscriptions: Subscription = new Subscription();
   private queuePoll = null;
   private selectedBranch: IBranch;
-  private queuePollIntervl = 60;
+  private queuePollIntervl = 1;
   private isShowQueueView: boolean;
 
   constructor(

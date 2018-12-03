@@ -7,19 +7,25 @@
     width: 100%;
     margin: 0.5rem 0;
     position: relative;
+
+
     &-button {
         width: 100%;
         margin: 0;
         min-height: 3rem;
-        background: $primary-color;
-        border: 1px solid $drop-down-border-color;
-        border-radius: .25rem;
-        color: $light-gray2;
+        background: $white;
+        border: 1px solid rgba(0,0,0,0.12);
+        color: $dark-transparent42;
         display: flex;
         align-items: center;
         display: flex;
         padding: 1rem;
         cursor: pointer;
+        
+        &--arrow {
+            color: black;
+            font-size: 25px;
+        }
 
         &--label {
             flex: 1;

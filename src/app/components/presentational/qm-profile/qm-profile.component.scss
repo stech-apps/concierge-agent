@@ -13,13 +13,17 @@
     flex-direction: column;
     align-items: center;
     margin: rem(154px) auto 0 auto;
-    width: 40%;
+    border-radius: 4px;
+    background-color: $white;
+    color: $dark-transparent82;
+    padding: 2rem;
+    width: 30%;
     &__title {
-      font-family: Montserrat-UltraLight;
-      letter-spacing: $extended-letter-spacing;
-      margin-bottom: 4.6rem;
-      font-size: 1.3rem;
-      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 28px;
+      letter-spacing: -0.2px;
+     
+      text-align: left;
       @include add-text-ellipsis;
     }
   }
@@ -27,14 +31,20 @@
     width: 100%;
     margin: 0.5rem 0;
     position: relative;
+
+    &-heading {
+      font-size: 14px;
+      color: $dark-transparent62;
+      width: 100%;
+    }
+
     &-button {
       width: 100%;
       margin: 0;
       min-height: 3rem;
-      background: $primary-color;
       border: 1px solid $drop-down-border-color;
+      background: $white;
       border-radius: .25rem;
-      color: $light-gray2;
       display: flex;
       align-items: center;
       display: flex;
@@ -87,30 +97,38 @@
       text-decoration: underline;
     }
   }
+
+  .qm-checkbox__selector-icon-text {
+    font-size: 18px;
+    color: $dark-transparent82;
+    font-weight: 300;
+    padding-left: 0.5rem;
+  }
 }
 
-.qm-profile-ok {
-  font-family: $secondary-font-semi-bold;
-  margin-top: 10%;
-  border: $border-thick solid;
-  line-height: 3em;
-  font-size: 1.3em;
-  font-weight: $font-weight-bold;
-  border-radius: 4px;
-  letter-spacing: $extended-letter-spacing;
+.qm-profile-button-container {
+  display: flex;
   width: 100%;
+  justify-content: flex-end;
+}
+
+.qm-profile-ok , .qm-profile-cancel  {
+  margin-top: 1rem;
+  border: $border-thin solid;
+  line-height: 2.6rem;
+  font-size: 18px;
+  border-radius: 6px;
   text-align: center;
   cursor: pointer;
   @include add-text-ellipsis;
+  width: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: 300;
 }
 
 .qm-profile-cancel {
-  letter-spacing: $extended-letter-spacing;
-  font-size: $font-small;
-  font-family: $secondary-font-light;
-  margin-top: 10%;
-  text-align: center;
-  @include add-text-ellipsis;
+  margin-right: 1.5rem;
 }
 
 [dir="rtl"] {

@@ -1,9 +1,21 @@
 <div class="qm-dropdown" dir="{{userDirection$ | async}}">
   <button class="qm-dropdown-button" (click)="dropDownExpand($event)">
     <div class="qm-dropdown-button--label">{{caption | translate}}</div>
-    <div class="qm-dropdown-button--arrow triangle-down"></div>
+    <div class="qm-dropdown-button--arrow  icon-caret-down"></div>
   </button>
   <div class="qm-dropdown__content" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
+
+      <div class="qm-search qm-search--large">
+          <label class="sr-only" for="dropDownSearch">{{'branch_search_placeholder' | translate}}</label>
+          <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
+            id="dropDownSearch" name="q" type="search" placeholder="{{'label.branch.search' | translate}}">
+    
+          <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+            <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+            <span class="sr-only">Search</span>
+          </button>
+        </div>
+
     <a *ngFor="let item of items" (click)="itemClick(item, $event)" >{{item[labelProperty]}}</a>
   </div>
 </div>

@@ -2,17 +2,38 @@
   <qm-page-header></qm-page-header>
   <div class="qm-profile-content">
     <div class="qm-profile-content__title">
-      {{ 'user_settings' | translate}}
+      {{ 'label.select.profile.settings' | translate}}
     </div>
+    <div class="qm-dropdown-heading">{{'label.profile.branch' | translate}}</div>
     <qm-drop-down #bdd (onExpand)="collapseSiblingDropDowns(sdd)"  [caption]="selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)" labelProperty="name"></qm-drop-down>
+    <div  class="qm-dropdown-heading">{{'label.profile.service' | translate}}</div>
     <qm-drop-down #sdd (onExpand)="collapseSiblingDropDowns(bdd)"  [caption]="selectedServicePoint?.name" (itemClick)="onServicePointSelect($event)" [items]="servicePoints" labelProperty="name"></qm-drop-down>
 
     <div class="qm-use-as-default">
-      <input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/>
-      <span>{{ 'use_as_default' | translate }}</span>
+      <!--input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/-->
+
+      <label for="qm-checkbox" class="qm-checkbox-label">
+          <input
+            id="qm-checkbox"
+            class="qm-checkbox"
+            type="checkbox"
+            [(ngModel)]="isEnableUseDefault"
+          />
+          <div class="qm-checkbox__selector">
+            <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
+            <div class="qm-checkbox__selector-icon-text">
+                <span>{{ 'use_as_default' | translate }}</span>
+            </div>
+          </div>
+      </label>
+
     </div>
-    <div class="qm-profile-ok" (click)="onConfirmProfile()">{{ 'ok' | translate}}</div>
-    <div class="qm-profile-cancel" (click)="onCancel()">{{ 'cancel' | translate}}</div>
+
+    <div class="qm-profile-button-container">
+        <div class="qm-profile-cancel qm-btn--secondary btn-light-active-action :active btn-plain" (click)="onCancel()">{{ 'cancel' | translate}}</div>
+        <div class="qm-profile-ok qm-btn--primary btn-light-active-action :active" (click)="onConfirmProfile()">{{ 'button.profile.apply' | translate}}</div>
+    </div>
+
     <!-- temp -->
     <!-- <hr>
     <p (click)="goToCustomer()"> customers</p>

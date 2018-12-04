@@ -44,7 +44,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   sortingIndicator: string = SortBy.VISITID;
   selectedVisitId: number;
   visitClicked: boolean = false;
-
+  userDirection: string;
   visitOptionStatus : string;
   
 
@@ -99,6 +99,13 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitOptionStatus = 'none';
 
     this.userDirection$ = this.userSelectors.userDirection$;
+    
+
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(value=>{
+      this.userDirection = value; 
+    })
+    this.subscriptions.add(userDirectionSubscription);
+    
 
     const branchSub = this.branchSelectors.selectedBranch$.subscribe(branch => {
       this.selectedbranchId = branch.id;
@@ -308,24 +315,28 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitOptionStatus = 'initial';
   }
 
+  closeVisitOptions(){
+    this.visitClicked = false;
+    this.visitOptionStatus = 'none';
+  }
  
   transferToQ(visit) {
-    this.NextFlow.emit("tq");
-    console.log('tq');
+    // this.NextFlow.emit("tq");
     this.visitDispatchers.setectVisit(visit);
-    this.onFlowNext.emit();
+    this.visitOptionStatus = 'tq';
+ 
   }
 
   transferToStaffPool(visit) {
-    this.NextFlow.emit("tsp");
+    // this.NextFlow.emit("tsp");
     this.visitDispatchers.setectVisit(visit);
-    this.onFlowNext.emit();
+    this.visitOptionStatus = 'staff';
   }
 
   transferToSPfPool(visit) {
-    this.NextFlow.emit("tspp");
+
     this.visitDispatchers.setectVisit(visit);
-    this.onFlowNext.emit();
+    this.visitOptionStatus = 'cp';
   }
 
   cherryPickVisit(index: number, event: Event) {
@@ -463,5 +474,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.queueDispatcher.resetSelectedQueue();
     this.queueDispatcher.resetFetchVisitError();
     this.queueDispatcher.resetQueueInfo();
+  }
+
+  backToQueueOptionsButton(){
+    this.visitOptionStatus = 'initial';
   }
 }

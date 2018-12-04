@@ -70,7 +70,7 @@
         background-color: white;
         color: black;
         align-items: center;
-        height: 4rem;
+        min-height: 4rem;
         margin: 3px 0px;
         border: 1px solid #D5D5D5;
         box-shadow: 0 0 4px 0 $dark-transparent12;
@@ -112,7 +112,7 @@
     position: relative;
     z-index: 2;
     color: black;
-    @at-root [dir="rtl"] {
+    @at-root [dir="rtl"] & {
         .qm-clear-search {
             margin: 0px -25px 0px 10px;
         }
@@ -136,6 +136,11 @@
     margin-left: 12px;
     margin-top: -87px;
     margin-bottom: 10px;
+
+    @at-root [dir="rtl"] & {
+        margin-right: 12px;
+        text-align: right;
+    }
     
 
     &__heading{
@@ -229,6 +234,10 @@
             @include add-text-ellipsis ;
             margin-top: 15px;
 
+            @at-root [dir="rtl"] & {
+                text-align: right;
+            }            
+
         }
     }
     .visit-tray-option-bottom{
@@ -259,9 +268,7 @@
             @include add-text-ellipsis ;
             margin-top: 15px;
         }
-        .bottom-icon-container{
-            
-        }
+     
     }
    
 }
@@ -292,7 +299,7 @@
 
 .qm-first-element-header{
     margin-left: 15px;
-    @at-root [dir="rtl"] {
+    @at-root [dir="rtl"] & {
         margin-right: 15px;
     }
 }
@@ -301,8 +308,19 @@
     margin-left: 15px;
     color:$pale-aquamarine;
     font-weight: bold;
-    @at-root [dir="rtl"] {
+    @at-root [dir="rtl"] & {
         margin-right: 15px;
+    }
+}
+
+.qm-icon_back{
+    color: $primary-pink;
+    cursor: pointer;
+    }
+
+.qm-body-item{
+    @at-root [dir="rtl"] {
+        text-align: right;
     }
 }
 
@@ -313,3 +331,4 @@
         }
     }   
 }
+

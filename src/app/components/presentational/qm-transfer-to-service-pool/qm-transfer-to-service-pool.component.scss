@@ -1,16 +1,20 @@
 @import '../../../../styles/base/_component-manifest.scss';
 .qm-identify-visit-search{
-    width: 100%;
+    width: 90%;
+    margin: auto;
 
     &__input{
-        padding: 8px;
-        width: 60%;
+        padding: 15px;
+        width: 100%;
         margin: auto;
-      
+        border: 1px solid $dark-transparent12;
         margin-bottom: 5px;
     }
+    &__input:focus{
+        border: 1px solid $dark-transparent42;
+    }
     &__search-container{
-            margin-left: 30%;
+        display: flex;
     }
     &__or-text{
         padding:0px 10px
@@ -20,13 +24,22 @@
     font-size: rem(14px);
 }
 .qm-service-point-list {
-    margin: rem($standard-margin * 1.5) rem($standard-margin*0.5) 0 rem($standard-margin*0.5);
+    margin: rem($standard-margin * 0.5) 0;
    
 
    .sort-icon {
         margin-left: 0.4rem;
         cursor: pointer;
    }
+
+   hr{
+    width: 90%;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid $dark-transparent12;
+    padding: 0; 
+}
 
   
     &__headers {
@@ -67,7 +80,7 @@
         align-items: center;
         text-align: left;
         height: 3rem;
-        border-bottom: 2px solid $light-gray1;
+        // border-bottom: 2px solid $light-gray1;
         padding: 5px 0px;
 
 
@@ -77,12 +90,16 @@
         
       }
     }
+    &-body-row:hover{
+        background-color: rgba(0,0,0,0.04);;
+        cursor: pointer;
+    }
 
-    background-color: $wating-list-background;
 }
 
 .qm-service-point-list-body-row-first-label{
     padding-left: 2rem;
+    color: $dark-transparent82;
 }
 .qm-service-point-list-body-row-second-label{
     margin-left: -2rem;
@@ -109,15 +126,14 @@
 }
 
 .qm-clear-search{ 
-    margin: 0px 10px 0px -25px;
-    position: relative;
-    z-index: 2;
-    color: black;
-    @at-root [dir="rtl"] {
-        .qm-clear-search{
-         margin: 0px -25px 0px 10px;
-        }
-       }
+    margin-left: -35px;
+    margin-top: 14px;
+    color: $dark-transparent42;
+    @at-root [dir="rtl"] & {
+      margin-right: -35px;
+  }
+  font-size: 1.4em;
+  cursor: pointer;
 }
 
 .qm-no-results{
@@ -125,5 +141,14 @@
     margin: auto;
     position: unset;
     display: table;
-    padding-top: 14vh;
+    padding: 20px;
 }
+
+.qm-search__icon{
+    margin-left: -35px;
+    margin-top: 13px;
+    color: $dark-transparent42;
+    @at-root [dir="rtl"] & {
+      margin-right: -35px;
+  }
+  }

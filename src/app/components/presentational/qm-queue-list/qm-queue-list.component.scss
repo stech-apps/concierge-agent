@@ -58,13 +58,16 @@
       text-overflow: ellipsis;
       font-weight: 500;
       color: $dark-transparent62;
+      @at-root [dir="ltr"] & {
+        text-align: right;
+      }
+      @at-root [dir="rtl"] & {
+        text-align: left;
+      }
     }
   }
 
   &-body-row {
-    // justify-content: center;
-    // align-items: center;
-    // text-align: center;
     height: 3rem;
 
     &-label {
@@ -95,9 +98,9 @@
   width: 20%;
   padding: 0 1%;
   font-weight: 500;
+  justify-content: flex-end;
   @at-root [dir="ltr"] & {
     text-align: right;
-    justify-content: flex-end;
     justify-items: right;
     float: right;
   }
@@ -109,6 +112,12 @@
 .qm-col-45 {
   width: 40%;
   color: $pale-aquamarine;
+  @at-root [dir="ltr"] & {
+    text-align: left;
+  }
+  @at-root [dir="rtl"] & {
+    text-align: right;
+  }
 }
 
 .qm-queue-failed-count {

@@ -1,5 +1,5 @@
-<div *ngIf=" visits && !visits.length" class="inner-box">
-   
+<div *ngIf=" visits && !visits.length" class="inner-box" dir="{{userDirection$ | async}}">
+
   <div class="no-visits-message" *ngIf="selectedQueueName">
     <p>
       <span>{{ 'no_visits_msg_line_one_left_text' | translate}}</span>&nbsp;<strong>{{selectedQueueName}}</strong>&nbsp;<span>
@@ -9,12 +9,12 @@
       <span>{{ 'no_visits_msg_line_two_left_text' | translate}}</span>&nbsp;<span class="text-deco" (click)="goBackToQueueSection()">{{
         'no_visits_msg_line_two_right_text' | translate}}</span>
     </p>
-    
+
   </div>
 
 </div>
 
-<div *ngIf="visits">
+<div *ngIf="visits" dir="{{userDirection$ | async}}">
   <div class="qm-visit-list" *ngIf="visits.length>0">
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
@@ -43,21 +43,23 @@
 
     </div>
 
-    <div *ngIf="visits.length" class="qm-visit-list__body">
-       
-      <div class="qm-visit-list-body-row-container" *ngFor="let visit of visits; index as i" >
-         
+    <div *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
+
+      <div class="qm-visit-list-body-row-container" *ngFor="let visit of visits; index as i">
+
         <div (click)="selectVisit(i,visit.visitId)" class="qm-flex-grid qm-visit-list-body-row" [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId}">
-          <div class="qm-col qm-visit-list-body-row-caret-view">
+          <div class="qm-col qm-body-item qm-visit-list-body-row-caret-view">
             <div class="qm-visit-list-body-row-label qm-first-element"> {{visit.ticketId}} </div>
           </div>
-          <div class="qm-col">{{visit.customerName }}</div>
-          <div class="qm-col "> {{visit.serviceName }} </div>
-          <div class="qm-col "> {{getAppointmentTime(visit)}}</div>
-          <div class="qm-col">{{ visit.waitingTimeStr }}</div>
+          <div class="qm-col qm-body-item">{{visit.customerName }}</div>
+          <div class="qm-col qm-body-item"> {{visit.serviceName }} </div>
+          <div class="qm-col qm-body-item"> {{getAppointmentTime(visit)}}</div>
+          <div class="qm-col qm-body-item">{{ visit.waitingTimeStr }}</div>
         </div>
-            <!-- Edit visit options -->
-        <div *ngIf="visitClicked && selectedVisitId === visit.visitId" class="qm-visit-list__options">
+
+        <!-- Edit visit options -->
+        <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
+                class="qm-visit-list__options">
           <div class="triangle-with-shadow"></div>
           <div class="qm-visit-list__options__rec">
             <div class="qm-visit-list__options__heading">
@@ -65,13 +67,13 @@
                 {{'visit_options'|translate}}
               </div>
               <div class="qm-icon">
-                <i class="icon-close"  (click)="selectVisit(i,visit.visitId)"></i>
+                <i class="icon-close" (click)=" closeVisitOptions()"></i>
               </div>
 
             </div>
             <div class="qm-visit-list__options__container">
 
-              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" >
+              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn">
                 <span class="content" (click)="transferToQ(visit)">
                   <span class="icon">
                     <i class="icon-queue"></i>
@@ -81,7 +83,7 @@
                   </span>
                 </span>
               </span>
-              <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn" >
+              <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn">
 
                 <span class="content" (click)="transferToStaffPool(visit)">
                   <span class="icon">
@@ -92,7 +94,7 @@
                   </span>
                 </span>
               </span>
-              <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn" >
+              <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn">
                 <span class="content" (click)="transferToSPfPool(visit)">
                   <span class="icon">
                     <i class="icon-screen"></i>
@@ -112,29 +114,40 @@
                 </span>
                 <span *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn" (click)="cherryPickVisit(i,$event)" [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}">
                   <span class="bottom-icon-container">
-                    <span class="icon" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> <i class="icon-check"></i></span>
-                    <span class="content" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> {{'serve'| translate}}</span>
+                    <span class="icon" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> 
+                      <i *ngIf="userDirection === 'ltr'" class="icon-check" ></i>
+                      <i *ngIf="userDirection === 'rtl'" class="icon-check-rtl" ></i>
+                    </span>
+                    <span class="content" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> {{'serve'|
+                      translate}}
+                    </span>
                   </span>
                 </span>
               </div>
             </div>
           </div>
         </div>
+
         <!-- second options -->
-        <!-- <div class="qm-visit-list__options" *ngIf="visitClicked && selectedVisitId === visit.visitId">
-            <div class="triangle-with-shadow"></div>
-            <div class="qm-visit-list__options__rec">
-                <div class="qm-visit-list__options__heading">
-                    <div class="qm-title">
-                      STAFF MEMBER
-                    </div>
-                    <div class="qm-icon">
-                      <i class="icon-close"  (click)="selectVisit(i,visit.visitId)"></i>
-                    </div>
-                </div>
-                <qm-transfer-to-staff-pool></qm-transfer-to-staff-pool>
+        <div class="qm-visit-list__options" *ngIf="visitClicked && selectedVisitId === visit.visitId && (visitOptionStatus === 'staff' || visitOptionStatus === 'cp' || visitOptionStatus === 'tq')">
+          <div class="triangle-with-shadow"></div>
+          <div class="qm-visit-list__options__rec">
+            <div class="qm-visit-list__options__heading">
+              <div class="qm-title">
+                <i class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
+                <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
+                <span *ngIf ="visitOptionStatus === 'tq'">SELECT QUEUE AND TRANSFER OPTION </span>
+              </div>
+              <div class="qm-icon">
+                <i class="icon-close" (click)="closeVisitOptions()"></i>
+              </div>
+            </div>
+            <qm-transfer-to-staff-pool *ngIf ="this.visitOptionStatus === 'staff'"></qm-transfer-to-staff-pool>
+            <qm-transfer-to-service-pool *ngIf ="this.visitOptionStatus === 'cp'"></qm-transfer-to-service-pool>
+            <qm-trasfer-to-queue *ngIf ="this.visitOptionStatus === 'tq'"></qm-trasfer-to-queue>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

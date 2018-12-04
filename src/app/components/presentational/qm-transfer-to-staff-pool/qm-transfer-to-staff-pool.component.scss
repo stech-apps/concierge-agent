@@ -7,8 +7,11 @@
         padding: 15px;
         width: 100%;
         margin: auto;
-      
+        border: 1px solid $dark-transparent12;
         margin-bottom: 5px;
+    }
+    &__input:focus{
+        border: 1px solid $dark-transparent42;
     }
     &__search-container{
             display: flex;
@@ -21,7 +24,7 @@
     font-size: rem(14px);
 }
 .qm-service-point-list {
-    margin: rem($standard-margin * 1.5) rem($standard-margin*0.5) 0 rem($standard-margin*0.5);
+    margin: rem($standard-margin * 0.5) 0;
    
 
    .sort-icon {
@@ -29,11 +32,19 @@
         cursor: pointer;
    }
 
+   hr{
+       width: 90%;
+       display: block;
+       height: 1px;
+       border: 0;
+       border-top: 1px solid $dark-transparent12;
+       padding: 0; 
+   }
   
     &__headers {
         justify-content: left;
         text-align: left;
-        height: 3rem;
+        // height: 3rem;
         margin-right: 2rem;
         margin-left: 2rem;
    
@@ -69,7 +80,6 @@
         align-items: center;
         text-align: left;
         height: 3rem;
-        border-bottom: 2px solid $light-gray1;
         padding: 5px 0px;
 
 
@@ -78,6 +88,11 @@
           width:inherit;
         
       }
+    }
+
+    &-body-row:hover{
+        background-color: rgba(0,0,0,0.04);;
+        cursor: pointer;
     }
 
     // background-color: $wating-list-background;
@@ -117,7 +132,7 @@
     margin: auto;
     position: unset;
     display: table;
-    padding-top: 14vh;
+    padding: 20px;
 }
 
 .qm-search__icon{

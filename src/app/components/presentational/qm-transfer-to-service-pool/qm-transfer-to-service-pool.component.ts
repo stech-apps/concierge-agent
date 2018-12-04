@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError } from '../../../../store';
+import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, QueueDispatchers } from '../../../../store';
 import { ServicePointPoolDispatchers } from '../../../../store';
 import { IBranch } from '../../../../models/IBranch';
 import { IServicePointPool } from '../../../../models/IServicePointPool';
@@ -28,7 +28,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
   selectedVisit:Visit;
   selectedServicePoint:IServicePoint
   searchText:string;
-  sortedBy:string = "SERVICE_POINT";
+ 
   sortAscending = true;
   inputChanged: Subject<string> = new Subject<string>();
   filterText: string = '';
@@ -46,7 +46,8 @@ export class QmTransferToServicePoolComponent implements OnInit {
     private servicePointSelectors:ServicePointSelectors,
     private infoMsgBoxDispatcher:InfoMsgDispatchers,
     private router:Router,
-    private toastService:ToastService
+    private toastService:ToastService,
+    private queueDispatchers:QueueDispatchers
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;   
   
@@ -84,7 +85,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
           }
         ).unsubscribe();
       }else{
-        this.sortQueueList("SERVICE_POINT");
+        this.sortQueueList();
       }
       
 
@@ -139,13 +140,12 @@ export class QmTransferToServicePoolComponent implements OnInit {
             this.spService.servicePointTransfer(this.currentBranch,this.selectedServicePoint,s,this.selectedVisit).subscribe( result=>{
              
               this.translateService.get('visit_transferred').subscribe((label)=>{
-                var successMessage = {
-                  firstLineName: label,
-                  firstLineText:this.selectedVisit.ticketId,
-                  icon: "correct",
-                }
-                this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
-                this.router.navigate(["/home"]);
+                // var successMessage = {
+                //   firstLineName: label,
+                //   firstLineText:this.selectedVisit.ticketId,
+                //   icon: "correct",
+                // }
+                this.toastService.infoToast(label);
               });
             }
             , error => {
@@ -154,25 +154,28 @@ export class QmTransferToServicePoolComponent implements OnInit {
               
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.infoToast(v);
+                  this.toastService.errorToast(v);
                 });
               }  else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.infoToast(v);
+                  this.toastService.errorToast(v);
                 });
               } else if (err.errorCode === '0') {
                 this.translateService.get('request_fail').subscribe(v => {
-                  this.router.navigate(["/home"]);
                   this.toastService.errorToast(v);
                 });
               }
               else {
                 this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.infoToast(v);
+                  this.toastService.errorToast(v);
                 });
               }
             }
           )
+          this.queueDispatchers.resetSelectedQueue();
+          this.queueDispatchers.setectVisit(null);
+          this.queueDispatchers.resetFetchVisitError();
+          this.queueDispatchers.resetQueueInfo();
             }
       }, () => {
       })
@@ -182,28 +185,21 @@ export class QmTransferToServicePoolComponent implements OnInit {
   
     onSortClickbyServicePoint(){
       this.sortAscending = !this.sortAscending;
-      this.sortQueueList("SERVICE_POINT");
-      this.sortedBy = "SERVICE_POINT";  
+      this.sortQueueList();
+      // this.sortedBy = "SERVICE_POINT";  
     }
 
-    onSortClickbyState(){
-      this.sortAscending = !this.sortAscending;
-      this.sortQueueList("STATE");
-      this.sortedBy = "STATE";  
-    }
+  
 
-    sortQueueList(type) {
+    sortQueueList() {
       if (this.servicePoints) {
         // sort by name
         this.servicePoints = this.servicePoints.sort((a, b) => {
 
-              if(type=="SERVICE_POINT"){
+              
                 var nameA = a.name.toUpperCase(); // ignore upper and lowercase
                 var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-               } else if (type == "STATE"){
-                var nameA = a.state.toUpperCase();
-                var nameB = b.state.toUpperCase();
-               }
+               
                 if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
                   return -1;
                 }

@@ -74,9 +74,7 @@
   <ng-container *ngIf="!queueFetchFailed">
     <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
     <span class="qm-queue-summary--value"
-      >{{ queueSummary.totalCustomersWaiting }}
-    </span>
-    <span> {{ "people_waiting_label" | translate }}</span>
+      >{{ queueSummary.totalCustomersWaiting }}  {{ "people_waiting_label" | translate }}</span>
   </ng-container>
 </div>
 
@@ -84,10 +82,10 @@
   <span (click)="resetQueue()" class="qm-back-icon">
     <i class="icon-caret-left"></i>
   </span>
-  <span class="qm-queue-list-title__label-text-captial"  *ngIf="selectedQueue && !queueName">{{
+  <span (click)="resetQueue()" class="qm-queue-list-title__label-text-captial"  *ngIf="selectedQueue && !queueName">{{
     selectedQueue.name
   }}</span>
-  <span class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{
+  <span  (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{
     queueName
   }}</span>
   <span><i class="icon-customer-solid" aria-hidden="true"></i></span>

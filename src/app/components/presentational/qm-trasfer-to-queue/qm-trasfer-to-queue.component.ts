@@ -210,13 +210,13 @@ OnTransferButtonClick(type){
           this.spService.queueTransfer(this.selectedBranch,this.selectedServicePoint,this.DropDownselectedQueue,this.selectedVisit,type).subscribe( result=>{
            
             this.translateService.get('visit_transferred').subscribe((label)=>{
-              var successMessage = {
-                firstLineName: label,
-                firstLineText:this.selectedVisit.ticketId,
-                icon: "correct",
-              }
-              this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
-              this.router.navigate(["/home"]);
+              // var successMessage = {
+              //   firstLineName: label,
+              //   firstLineText:this.selectedVisit.ticketId,
+              //   icon: "correct",
+              // }
+              this.toastService.infoToast(label);
+              // this.router.navigate(["/home"]);
             });
           }, error => {
             const err = new DataServiceError(error, null);
@@ -224,26 +224,31 @@ OnTransferButtonClick(type){
             
             if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
             else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             } else if (err.errorCode === '0') {
               this.translateService.get('request_fail').subscribe(v => {
-                this.router.navigate(["/home"]);
                 this.toastService.errorToast(v);
               });
             }
             else {
               this.translateService.get('request_fail').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
           }
         )
+          
+          this.queueDispatchers.resetSelectedQueue();
+          this.queueDispatchers.setectVisit(null);
+          this.queueDispatchers.resetFetchVisitError();
+          this.queueDispatchers.resetQueueInfo();
+
           }
     }, () => {
     })

@@ -8,8 +8,8 @@
 
 
 .qm-queue-list-title{
-  margin-left: ($standard-padding);
-  // display: flex;
+  margin: 0 ($standard-padding);
+  display: flex;
   color: $dark-transparent82;
   
   &__label-text{
@@ -96,6 +96,10 @@
 
 input {
   outline:none;
+  border: 1px solid $dark-transparent12;
+ }
+ 
+ input:focus{
   border: 1px solid $dark-transparent42;
  }
 

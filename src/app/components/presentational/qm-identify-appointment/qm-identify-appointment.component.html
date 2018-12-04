@@ -118,7 +118,6 @@
                   </span>
                  </div>
               </div>
-  
               <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
                <div class="qm-identify-appointment__customer-table__list-parent" 
                   *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">

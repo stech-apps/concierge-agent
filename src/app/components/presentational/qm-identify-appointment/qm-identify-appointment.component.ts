@@ -770,8 +770,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.selectedAppointment = apps[0];
         this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
         this.showAppointmentCollection = false;
+        this.showSearchResultsArea = false;
         this.onAppointmentSelect(this.selectedAppointment);
         this.showModalBackDrop = false;
+        this.searchText = '';
       }
 
       // search appointment is already arrived? then notifiy user

@@ -132,6 +132,7 @@ export function reducer(
             return {
               ...state,
               customers: [],
+              appointmentCustomers: [],
               loading: false,
               loaded: false
             };

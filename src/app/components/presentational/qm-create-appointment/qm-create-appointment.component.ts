@@ -8,6 +8,7 @@ import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { ICustomer } from '../../../../models/ICustomer';
+import { ICalendarBranchViewModel } from 'src/models/ICalendarBranchViewModel';
 
 @Component({
   selector: 'qm-qm-create-appointment',
@@ -79,6 +80,24 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
 
   
   ngOnInit() {
+    
+    const calendarBranchSubscription = this.calendarBranchSelectors.branches$.subscribe((bs) => {
+      let calendarBranches = <Array<ICalendarBranchViewModel>>bs;
+
+      this.branchSelectors.selectedBranch$.subscribe((spBranch) => {
+        //if flow is skipped then use the service point branch as current branch
+        if (this.isFlowSkip) {
+          calendarBranches.forEach((cb) => {
+            if (spBranch.id === cb.qpId) {
+              this.currentBranch = cb;
+              this.calendarBranchDispatchers.selectCalendarBranch(cb);
+            }
+          });
+        }        
+      });
+    }); 
+
+    this.subscriptions.add(calendarBranchSubscription);
   }
 
   ngOnDestroy() {

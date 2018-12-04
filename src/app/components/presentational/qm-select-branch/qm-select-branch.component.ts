@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } from '@angular/core';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors, TimeslotDispatchers, ReserveDispatchers } from 'src/store';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors, TimeslotDispatchers, ReserveDispatchers, ServicePointSelectors } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
@@ -50,11 +50,13 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     private branchSelectors: BranchSelectors,
     private localStorage: LocalStorage,
     private timeSlotDispatchers: TimeslotDispatchers,
-    private reserveDispatcher: ReserveDispatchers
+    private reserveDispatcher: ReserveDispatchers,
+    private servicePointSelectors: ServicePointSelectors
   ) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
 
+  
     if (this.isFlowSkip === undefined) {
       this.isFlowSkip = true;
     }
@@ -71,9 +73,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
               this.calendarBranchDispatchers.selectCalendarBranch(cb);
             }
           });
-        }
+        }        
       });
-    });
+    });  
 
 
     this.subscriptions.add(calendarBranchSubscription);
@@ -88,7 +90,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     if (this.currentBranch.id && this.currentBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if (v) {
-          this.calendarBranchDispatchers.selectCalendarBranch(branch);
+          //this.calendarBranchDispatchers.selectCalendarBranch(branch);
           this.timeSlotDispatchers.deselectTimeslot();
           this.currentBranch = branch;
           this.goToNext();
@@ -98,7 +100,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     else if (!this.currentBranch.id) {
       this.timeSlotDispatchers.deselectTimeslot();
       this.currentBranch = branch;
-      this.calendarBranchDispatchers.selectCalendarBranch(branch);
+      //this.calendarBranchDispatchers.selectCalendarBranch(branch);
       this.goToNext();
     }
   }

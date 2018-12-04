@@ -1,45 +1,87 @@
-<div class="qm-page-root qm-profile " dir="{{userDirection$ | async}}" (click)="closeDropDown(bdd, sdd)">
+<div
+  class="qm-page-root qm-profile "
+  dir="{{userDirection$ | async}}"
+  (click)="closeDropDown(bdd, sdd)"
+>
   <qm-page-header></qm-page-header>
   <div class="qm-profile-content">
     <div class="qm-profile-content__title">
-      {{ 'label.select.profile.settings' | translate}}
+      {{ "label.select.profile.settings" | translate }}
     </div>
-    <div class="qm-dropdown-heading">{{'label.profile.branch' | translate}}</div>
-    <qm-drop-down class="qm-branch-dd" #bdd (onExpand)="collapseSiblingDropDowns(sdd)" [searchPlaceHolder]="'label.branch.search'"  [caption]="selectedBranch?.name" [itemSelected]="!!selectedBranch?.name" [items]="branches" (itemClick)="onBranchSelect($event)" labelProperty="name"></qm-drop-down>
-    <div  class="qm-dropdown-heading">{{'label.profile.service' | translate}}</div>
-    <qm-drop-down #sdd (onExpand)="collapseSiblingDropDowns(bdd)" [searchPlaceHolder]="'placeholder.profile.servicepoint'"  [caption]="selectedServicePoint?.name" [itemSelected]="!!selectedServicePoint?.name" (itemClick)="onServicePointSelect($event)" [items]="servicePoints" labelProperty="name"></qm-drop-down>
+    <div class="qm-dropdown-heading">
+      {{ "label.profile.branch" | translate }}
+    </div>
+    <qm-drop-down
+      class="qm-branch-dd"
+      #bdd
+      (onExpand)="collapseSiblingDropDowns(sdd)"
+      [searchPlaceHolder]="'label.branch.search'"
+      [caption]="selectedBranch?.name"
+      [isItemSelected]="selectedBranch?.id > -1"
+      [items]="branches"
+      (itemClick)="onBranchSelect($event)"
+      labelProperty="name"
+    ></qm-drop-down>
+    <div class="qm-dropdown-heading">
+      {{ "label.profile.service" | translate }}
+    </div>
+    <qm-drop-down
+      #sdd
+      (onExpand)="collapseSiblingDropDowns(bdd)"
+      [searchPlaceHolder]="'placeholder.profile.servicepoint'"
+      [caption]="selectedServicePoint?.name"
+      [isItemSelected]="selectedServicePoint?.id > -1"
+      (itemClick)="onServicePointSelect($event)"
+      [items]="servicePoints"
+      labelProperty="name"
+    ></qm-drop-down>
 
     <div class="qm-use-as-default">
-      <!--input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/-->
+      <!--
+        input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/
+      -->
 
       <label for="qm-checkbox" class="qm-checkbox-label">
-          <input
-            id="qm-checkbox"
-            class="qm-checkbox"
-            type="checkbox"
-            [(ngModel)]="isEnableUseDefault"
-          />
-          <div class="qm-checkbox__selector">
-            <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-            <div class="qm-checkbox__selector-icon-text">
-                <span>{{ 'use_as_default' | translate }}</span>
-            </div>
+        <input
+          id="qm-checkbox"
+          class="qm-checkbox"
+          type="checkbox"
+          [(ngModel)]="isEnableUseDefault"
+        />
+        <div class="qm-checkbox__selector">
+          <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
+          <div class="qm-checkbox__selector-icon-text">
+            <span>{{ "use_as_default" | translate }}</span>
           </div>
+        </div>
       </label>
-
     </div>
 
     <div class="qm-profile-button-container">
-        <div class="qm-profile-cancel qm-btn--secondary btn-light-active-action :active btn-plain" (click)="onCancel()">{{ 'cancel' | translate}}</div>
-        <div class="qm-profile-ok qm-btn--primary btn-light-active-action :active" (click)="onConfirmProfile()">{{ 'button.profile.apply' | translate}}</div>
+      <div
+        class="qm-profile-cancel qm-btn--secondary btn-light-active-action :active btn-plain"
+        (click)="onCancel()"
+      >
+        {{ "cancel" | translate }}
+      </div>
+      <div
+        class="qm-profile-ok qm-btn--primary btn-light-active-action :active"
+        (click)="onConfirmProfile()"
+      >
+        {{ "button.profile.apply" | translate }}
+      </div>
     </div>
 
     <!-- temp -->
-    <!-- <hr>
-    <p (click)="goToCustomer()"> customers</p>
-    <hr>  -->
+    <!--
+      <hr>
+      <p (click)="goToCustomer()"> customers</p>
+      <hr>
+    -->
     <div class="qm-privacy-policy" *ngIf="privacyPolicyUrl">
-      <div (click)="showPrivacyPolicyUrl()"> {{ 'privacy_policy' | translate}}</div>
+      <div (click)="showPrivacyPolicyUrl()">
+        {{ "privacy_policy" | translate }}
+      </div>
     </div>
   </div>
 </div>

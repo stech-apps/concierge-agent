@@ -22,7 +22,7 @@
       margin-bottom: 2rem;
       font-size: 28px;
       letter-spacing: -0.2px;
-     
+      font-weight: 300;     
       text-align: left;
       @include add-text-ellipsis;
     }
@@ -131,8 +131,20 @@
   margin-bottom: 2rem;
 }
 
+.qm-dropdown-heading {
+  text-align: left;
+
+  @at-root [dir='rtl'] & {
+    text-align: right;
+  }
+}
+
 .qm-profile-cancel {
   margin-right: 1.5rem;
+  @at-root [dir='rtl'] & {
+    margin-left: 1.5rem;
+    margin-right: auto;
+  }
 }
 
 [dir="rtl"] {

@@ -17,6 +17,7 @@ export class QmDropDownComponent implements OnInit {
   isExpanded = false;
   userDirection$: Observable<string>;
   searchText: string;
+  selectedItem: any
 
   constructor(private userSelectors: UserSelectors) {
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -29,7 +30,7 @@ export class QmDropDownComponent implements OnInit {
   caption: string;
 
   @Input()
-  itemSelected: boolean;
+  isItemSelected: boolean;
 
   @Input()
   searchPlaceHolder: string;
@@ -56,7 +57,8 @@ export class QmDropDownComponent implements OnInit {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
     $event.stopPropagation();
-    this.itemSelected = true;
+    this.isItemSelected = true;
+    this.selectedItem = item;
   }
 
   handleInput(searchText: string) {

@@ -1,134 +1,169 @@
-import { NativeApiService } from '../../../../util/services/native-api.service';
-import { IServicePoint } from '../../../../models/IServicePoint';
-import { IService } from '../../../../models/IService';
-import { IDropDownItem } from '../../../../models/IDropDownItem';
-import { IBranch } from '../../../../models/IBranch';
-import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NativeApiService } from "../../../../util/services/native-api.service";
+import { IServicePoint } from "../../../../models/IServicePoint";
+import { IService } from "../../../../models/IService";
+import { IDropDownItem } from "../../../../models/IDropDownItem";
+import { IBranch } from "../../../../models/IBranch";
+import { Subscription, Observable } from "rxjs";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
-  BranchSelectors, ServiceSelectors, ServicePointSelectors, ServicePointDispatchers,
+  BranchSelectors,
+  ServiceSelectors,
+  ServicePointSelectors,
+  ServicePointDispatchers,
   BranchDispatchers,
   UserSelectors,
   UserStatusSelectors
-} from '../../../../../src/store';
-import { QEvents } from 'src/util/services/qevents/qevents.service'
-import { TranslateService } from '@ngx-translate/core';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ToastService } from '../../../../util/services/toast.service';
+} from "../../../../../src/store";
+import { QEvents } from "src/util/services/qevents/qevents.service";
+import { TranslateService } from "@ngx-translate/core";
+import { AfterViewInit } from "@angular/core/src/metadata/lifecycle_hooks";
+import { ToastService } from "../../../../util/services/toast.service";
 import { APP_URL } from "../../../../util/url-helper";
-import { SPService } from '../../../../util/services/rest/sp.service';
-import { IUserStatus } from '../../../../models/IUserStatus';
-import { USER_STATE } from '../../../../util/q-state';
-import { LoginService } from '../../../../util/services/login.service';
-import { Router,NavigationEnd   } from '@angular/router';
-import { PlatformSelectors, AccountDispatchers } from 'src/store/services';
-import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
-import { servicePoint } from '../../../../store/services/data.service';
-import { ActivatedRoute } from '@angular/router';
-import { IAccount } from '../../../../models/IAccount';
-import { Recycle } from '../../../../util/services/recycle.service';
+import { SPService } from "../../../../util/services/rest/sp.service";
+import { IUserStatus } from "../../../../models/IUserStatus";
+import { USER_STATE } from "../../../../util/q-state";
+import { LoginService } from "../../../../util/services/login.service";
+import { Router, NavigationEnd } from "@angular/router";
+import { PlatformSelectors, AccountDispatchers } from "src/store/services";
+import { LocalStorage, STORAGE_SUB_KEY } from "../../../../util/local-storage";
+import { servicePoint } from "../../../../store/services/data.service";
+import { ActivatedRoute } from "@angular/router";
+import { IAccount } from "../../../../models/IAccount";
+import { Recycle } from "../../../../util/services/recycle.service";
 
 @Component({
-  selector: 'qm-profile',
-  templateUrl: './qm-profile.component.html',
-  styleUrls: ['./qm-profile.component.scss']
+  selector: "qm-profile",
+  templateUrl: "./qm-profile.component.html",
+  styleUrls: ["./qm-profile.component.scss"]
 })
 export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
-
   private subscriptions: Subscription = new Subscription();
   branches: IBranch[] = new Array<IBranch>();
   servicePoints: IServicePoint[] = new Array<IServicePoint>();
   selectedServicePoint: IServicePoint;
-  navServicePoint:IServicePoint ;
+  navServicePoint: IServicePoint;
   selectedBranch: IBranch;
   privacyPolicyUrl: string = null;
   userDirection$: Observable<string>;
   isEnableUseDefault: boolean;
-  previousBranch:IBranch;
+  previousBranch: IBranch;
   user: IAccount;
 
-  constructor(private branchSelectors: BranchSelectors, private servicePointSelectors: ServicePointSelectors, private branchDispatchers: BranchDispatchers,
-    private servicePointDispatchers: ServicePointDispatchers, public qevents: QEvents, private translateService: TranslateService,
-    private nativeApiService: NativeApiService, private toastService: ToastService, private spService: SPService, private loginService: LoginService,
-    private userSelectors: UserSelectors, private router:Router, private userStatusSelectors: UserStatusSelectors, 
+  constructor(
+    private branchSelectors: BranchSelectors,
+    private servicePointSelectors: ServicePointSelectors,
+    private branchDispatchers: BranchDispatchers,
+    private servicePointDispatchers: ServicePointDispatchers,
+    public qevents: QEvents,
+    private translateService: TranslateService,
+    private nativeApiService: NativeApiService,
+    private toastService: ToastService,
+    private spService: SPService,
+    private loginService: LoginService,
+    private userSelectors: UserSelectors,
+    private router: Router,
+    private userStatusSelectors: UserStatusSelectors,
     private ActivatedRoute: ActivatedRoute,
-    private platformSelectors: PlatformSelectors, private localStorage: LocalStorage, private accountDispatchers: AccountDispatchers, private recycleService: Recycle) {
+    private platformSelectors: PlatformSelectors,
+    private localStorage: LocalStorage,
+    private accountDispatchers: AccountDispatchers,
+    private recycleService: Recycle
+  ) {
+    const userSubscription = this.userSelectors.user$.subscribe(
+      user => (this.user = user)
+    );
+    this.subscriptions.add(userSubscription);
 
-      
-      const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
-      this.subscriptions.add(userSubscription);
+    this.isEnableUseDefault = this.localStorage.getSettingForKey(
+      STORAGE_SUB_KEY.REMEMBER_LOGIN
+    );
+    // console.log(this.isEnableUseDefault);
 
-      this.isEnableUseDefault = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.REMEMBER_LOGIN);
-     // console.log(this.isEnableUseDefault);
-
-      
-      const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe((spo)=>{
-        this.navServicePoint = spo
+    const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe(
+      spo => {
+        this.navServicePoint = spo;
       }
     );
     this.subscriptions.add(navServiceSubscription);
 
     this.servicePointDispatchers.setOpenServicePoint(null);
-       
-     this.setDefaultServicePoint();
-     
-      this.selectedBranch = {
-        name: 'branch',
-        id: -1
-      };
 
-    
-      const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe((branch)=>{
+    this.setDefaultServicePoint();
+
+    this.translateService
+      .get(["label.profile.select.branch"])
+      .subscribe(messages => {
+
+        this.selectedBranch = {
+          name: messages['label.profile.select.branch'],
+          id: -1
+        };
+
+      });
+
+  
+
+    const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe(
+      branch => {
         this.previousBranch = branch;
-    })
+      }
+    );
     this.subscriptions.add(previousBranchSubscription);
 
-    const branchSubscription = this.branchSelectors.branches$.subscribe((bs) => {
+    const branchSubscription = this.branchSelectors.branches$.subscribe(bs => {
       this.branches = bs;
       this.setDefaultServicePoint();
       if (bs.length === 1) {
         this.onBranchSelect(bs[0]);
-      }
-      else{
+      } else {
         this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_BRANCH);
       }
     });
     this.subscriptions.add(branchSubscription);
 
-    const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe((sps) => {
-     
-      this.servicePoints = sps;
-      if (sps.length === 1) {
-        this.onServicePointSelect(sps[0]);
-        if (this.branches.length === 1 && !this.previousBranch) {
+    const servicePointsSubscription = this.servicePointSelectors.servicePoints$.subscribe(
+      sps => {
+        this.servicePoints = sps;
+        if (sps.length === 1) {
+          this.onServicePointSelect(sps[0]);
+          if (this.branches.length === 1 && !this.previousBranch) {
+            this.onConfirmProfile();
+          }
+        } else {
+          this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_WORKSTATION);
+        }
+
+        if (
+          this.isEnableUseDefault &&
+          sps.length > 0 &&
+          this.selectedBranch &&
+          this.selectedServicePoint &&
+          !this.previousBranch
+        ) {
           this.onConfirmProfile();
         }
       }
-      else{
-        this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_WORKSTATION);
-        
-      }
-
-      if(this.isEnableUseDefault && sps.length > 0 && this.selectedBranch && this.selectedServicePoint && !this.previousBranch){
-        this.onConfirmProfile();
-      }
-    });
+    );
     this.subscriptions.add(servicePointsSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
   }
 
-  ngOnInit() {
-}
+  ngOnInit() {}
 
   setDefaultServicePoint() {
-   
-    this.selectedServicePoint = {
-      name: 'service_point',
-      id: -1,
-      unitId: null,
-      parameters: null,
-      state: null
-    };
+    this.translateService
+      .get(["label.profile.select.servicepoint"])
+      .subscribe(messages => {
+
+        this.selectedServicePoint = {
+          name: messages["label.profile.select.servicepoint"],
+          id: -1,
+          unitId: null,
+          parameters: null,
+          state: null
+        };
+
+      });
   }
 
   ngOnDestroy() {
@@ -137,13 +172,13 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.nativeApiService.showNativeLoader(false);
-    
-    
   }
 
   onBranchSelect(selectedBranch: IBranch) {
     if (this.selectedBranch.id != selectedBranch.id) {
-      this.servicePointDispatchers.fetchServicePointsByBranch(selectedBranch.id);
+      this.servicePointDispatchers.fetchServicePointsByBranch(
+        selectedBranch.id
+      );
       this.selectedBranch = selectedBranch;
       this.branchDispatchers.selectBranch(selectedBranch);
       this.setDefaultServicePoint();
@@ -151,93 +186,98 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onServicePointSelect(selectedSp: IServicePoint) {
-    
     this.selectedServicePoint = selectedSp;
-    if (this.selectedServicePoint.parameters.privacyPolicy && this.selectedServicePoint.parameters.privacyPolicy.length > 0) {
+    if (
+      this.selectedServicePoint.parameters.privacyPolicy &&
+      this.selectedServicePoint.parameters.privacyPolicy.length > 0
+    ) {
       this.privacyPolicyUrl = this.selectedServicePoint.parameters.privacyPolicy;
-    }
-    else {
-      this.privacyPolicyUrl = '';
+    } else {
+      this.privacyPolicyUrl = "";
     }
   }
 
   collapseSiblingDropDowns(dd: any) {
     dd.isExpanded = false;
   }
-  
 
   onCancel() {
-    if(this.previousBranch){
+    if (this.previousBranch) {
       this.branchDispatchers.selectBranch(this.previousBranch);
       this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
-      this.router.navigate(['home']);
-    } else{
-
+      this.router.navigate(["home"]);
+    } else {
       if (this.nativeApiService.isNativeBrowser()) {
         this.nativeApiService.logOut();
-      }
-      else {
+      } else {
         window.location.href = APP_URL;
       }
     }
-  
   }
 
   onConfirmProfile() {
     this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
     if (this.selectedBranch.id === -1 && !this.isEnableUseDefault) {
-      this.translateService.get('no_branch_set').subscribe(v => {
+      this.translateService.get("no_branch_set").subscribe(v => {
         this.toastService.infoToast(v);
       });
-    }
-    else if (this.selectedServicePoint.id === -1 && !this.isEnableUseDefault) {
-      this.translateService.get('no_workstation_set').subscribe(v => {
+    } else if (
+      this.selectedServicePoint.id === -1 &&
+      !this.isEnableUseDefault
+    ) {
+      this.translateService.get("no_workstation_set").subscribe(v => {
         this.toastService.infoToast(v);
       });
+    } else if (
+      this.previousBranch &&
+      this.previousBranch.id == this.selectedBranch.id &&
+      (this.navServicePoint &&
+        this.selectedServicePoint.id == this.navServicePoint.id)
+    ) {
+      this.branchDispatchers.selectBranch(this.previousBranch);
+      this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
+      this.router.navigate(["home"]);
+    } else {
+      this.recycleService.removeAppCache();
+      this.loginService.login(
+        this.selectedBranch,
+        this.selectedServicePoint,
+        this.user,
+        this.previousBranch
+      );
     }
-    
-    
-      else if((this.previousBranch && this.previousBranch.id == this.selectedBranch.id)&&(this.navServicePoint && this.selectedServicePoint.id == this.navServicePoint.id)){
-        this.branchDispatchers.selectBranch(this.previousBranch);
-        this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
-        this.router.navigate(['home']);
-      }else {
-        this.recycleService.removeAppCache();
-        this.loginService.login(this.selectedBranch, this.selectedServicePoint, this.user, this.previousBranch);
-      }
-     
-    
   }
 
   showPrivacyPolicyUrl($event) {
-    this.platformSelectors.isMobile$.subscribe((isMobile)=> {
-      if(isMobile) {
-        this.nativeApiService.showPrivacy(this.privacyPolicyUrl);
-      }
-      else {
-        window.open(this.privacyPolicyUrl, "_blank");
-      }
-    }).unsubscribe();
+    this.platformSelectors.isMobile$
+      .subscribe(isMobile => {
+        if (isMobile) {
+          this.nativeApiService.showPrivacy(this.privacyPolicyUrl);
+        } else {
+          window.open(this.privacyPolicyUrl, "_blank");
+        }
+      })
+      .unsubscribe();
   }
 
-  checkPreviousSelection(key: STORAGE_SUB_KEY){
+  checkPreviousSelection(key: STORAGE_SUB_KEY) {
     var previousSelection = this.localStorage.getSettings();
-    if(previousSelection.length === 0){
-      return
+    if (previousSelection.length === 0) {
+      return;
     }
-    if(key === STORAGE_SUB_KEY.ACTIVE_BRANCH){
+    if (key === STORAGE_SUB_KEY.ACTIVE_BRANCH) {
       var priviousBranchSelection = this.branches.filter(val => {
-        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_BRANCH]
-      })
-      if(priviousBranchSelection.length > 0){
+        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_BRANCH];
+      });
+      if (priviousBranchSelection.length > 0) {
         this.onBranchSelect(priviousBranchSelection[0]);
       }
     }
-    if(key === STORAGE_SUB_KEY.ACTIVE_WORKSTATION){
+    if (key === STORAGE_SUB_KEY.ACTIVE_WORKSTATION) {
       var priviousWorksationSelection = this.servicePoints.filter(val => {
-        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_WORKSTATION]
-      })
-      if(priviousWorksationSelection.length > 0){
+        return val.id === previousSelection[STORAGE_SUB_KEY.ACTIVE_WORKSTATION];
+      });
+      if (priviousWorksationSelection.length > 0) {
         this.onServicePointSelect(priviousWorksationSelection[0]);
       }
     }
@@ -246,13 +286,12 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   // onSwitchChange(){
   //   this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
   // }
-  
-  // Temp function
-  goToCustomer(){
-   this.router.navigate(['customers']);
-   // console.log(this.branches)
-  }
 
+  // Temp function
+  goToCustomer() {
+    this.router.navigate(["customers"]);
+    // console.log(this.branches)
+  }
 
   closeDropDown(dd1, dd2) {
     dd1.isExpanded = false;

@@ -8,6 +8,13 @@
     margin: 0.5rem 0;
     position: relative;
 
+    &--noitems {
+        .qm-dropdown-button {
+            border-style: dashed;
+            background-color: rgba(0,0,0,.04);
+        }       
+    }
+
     .qm-dd-search {
         padding: 1rem;
         ::ng-deep .qm-search__btn {

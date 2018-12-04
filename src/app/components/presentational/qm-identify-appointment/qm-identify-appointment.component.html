@@ -59,6 +59,8 @@
   
               <ng-container *ngIf="timeConvention === '24'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
+                    <span *ngIf="useCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM, '}}</span>
+                    &nbsp;
                   <span>{{selectedFromTime | date: 'HH:mm'}}</span>
                   <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                     date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>

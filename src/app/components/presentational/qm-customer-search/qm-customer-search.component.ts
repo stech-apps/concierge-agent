@@ -24,6 +24,7 @@ export class QmCustomerSearchComponent implements OnInit {
 
   @Input() public noCustomerFeedback: string = null;
   @Input() public isInArriveFlow: boolean = false;
+  @Input() public isCustomerEditable: boolean = true;
 
 constructor(
     private CustomerDispatchers: CustomerDispatchers,

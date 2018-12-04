@@ -66,7 +66,7 @@
                     date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
                 </div>
               </ng-container>
-              <span class="qm-identify-appointment__refresh-button" [ngClass]="{'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled}" (click)="refreshAppointments()"> {{
+              <span *ngIf="enableAppointmentLoad" class="qm-identify-appointment__refresh-button" [ngClass]="{'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled}" (click)="refreshAppointments()"> {{
                 'label.arriveappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
             </div>
           </div>

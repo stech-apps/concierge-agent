@@ -101,6 +101,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["editAppointment"] && this.editAppointment) {
+      console.log('edit appointment changed');
+      this.timeSlotDispatchers.deselectTimeslot();
       this.enableReschedule = false;
       window["moment"] = moment;
       const calculatedAppointmentTime = moment(this.editAppointment.start).tz(
@@ -110,9 +112,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         this.originalAppointmentTime = calculatedAppointmentTime.format(
           "HH:mm"
         );
-        this.selectedDates = [
-          { selected: false, mDate: calculatedAppointmentTime }
-        ];
+        this.selectedDates = [];
+        this.isDateSelected = false;
         this.isOriginalAppointmentTimeChanged = false;
       }
       else {

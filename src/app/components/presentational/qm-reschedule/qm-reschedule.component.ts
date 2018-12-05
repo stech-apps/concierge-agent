@@ -116,9 +116,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         this.isDateSelected = false;
         this.isOriginalAppointmentTimeChanged = false;
       }
-      else {
-        this.timeSlotDispatchers.deselectTimeslot();
-      }
+
+      this.timeSlotDispatchers.deselectTimeslot();
       this.fetchReservableDates();
     }
   }
@@ -187,7 +186,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   onSelectDate(date: CalendarDate) {
     this.isDateSelected = true;
-    this.timeSlotDispatchers.deselectTimeslot();
+    this.originalAppointmentTime = null;
 
     if (
       this.editAppointment &&
@@ -204,6 +203,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       }
       this.enableReschedule = false;
     }
+
+    this.timeSlotDispatchers.deselectTimeslot();
   }
 
   onTimeSlotSelect(time: { title: string }) {

@@ -25,6 +25,10 @@
       font-weight: 300;     
       text-align: left;
       @include add-text-ellipsis;
+
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
     }
   }
   .qm-dropdown {

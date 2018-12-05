@@ -34,7 +34,7 @@
     color: $dark-transparent42;
     @at-root [dir='rtl'] & {
       right: auto;
-      left: rem($base-unit / 2);
+      left: rem($base-unit * 1.5);
     }
   }
 }

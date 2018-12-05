@@ -55,6 +55,8 @@ export class QmTransferToStaffPoolComponent implements OnInit {
            });
     this.subscriptions.add(staffPoolLoadingSubscription);
 
+    this.userDirection$ = this.userSelectors.userDirection$;
+
     const staffPoolLoadedSubscription = this.StaffPoolSelectors.StaffPoolLoaded$.subscribe((loaded)=>{
           this.loaded = loaded;
           });
@@ -178,8 +180,8 @@ sortQueueList() {
   if (this.StaffPool) {
     // sort by name
     this.StaffPool = this.StaffPool.sort((a, b) => {
-            var nameA = a.lastName.toUpperCase(); // ignore upper and lowercase
-            var nameB = b.lastName.toUpperCase(); // ignore upper and lowercase
+            var nameA = a.firstName.toUpperCase() + a.lastName.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.firstName.toUpperCase() + b.lastName.toUpperCase(); // ignore upper and lowercase
            
             if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
               return -1;

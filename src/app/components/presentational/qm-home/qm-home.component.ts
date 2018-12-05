@@ -35,6 +35,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   previousBranch: IBranch;
   selelctedQueue: Queue;
   selectedVisit : Visit;
+  editVisitEnable: boolean;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -54,6 +55,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
         if (params) {
           this.isQuickServeEnable = params.quickServe;
           this.isShowQueueView = params.queueView;
+          this.editVisitEnable = params.editVisit;
         }
       }
     );

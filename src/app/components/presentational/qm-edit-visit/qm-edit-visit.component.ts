@@ -12,32 +12,39 @@ import { Visit } from '../../../../models/IVisit';
   styleUrls: ['./qm-edit-visit.component.scss']
 })
 export class QmEditVisitComponent implements OnInit {
-  SelectedVisit:Visit
-  selectedQueue:Queue;
+  SelectedVisit: Visit
+  selectedQueue: Queue;
   userDirection$: Observable<string> = new Observable<string>();
   private subscriptions: Subscription = new Subscription();
   flowType= FLOW_TYPE.EDIT_VIST;
   selectedCustomer: ICustomer;
-  currentFlow:string;
-  HeaderSelectedVisit:Visit;
-  visitFlowActive:boolean;
-  queueFlowActive:boolean;
+  currentFlow: string;
+  HeaderSelectedVisit: Visit;
+  visitFlowActive: boolean;
+  queueFlowActive: boolean;
+  userDirections: string;
 
   @Output() Transfer: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private queueSelectors:QueueSelectors,
-    private QueueDispatchers:QueueDispatchers,
+  constructor(private queueSelectors: QueueSelectors,
+    private QueueDispatchers: QueueDispatchers,
     private userSelectors: UserSelectors,
-    private staffPoolDispatchers:StaffPoolDispatchers,
-    private servicePointPoolDispatchers:ServicePointPoolDispatchers,
-    private queueDispatchers:QueueDispatchers,
-    private servicePoolDispatcher:ServicePointPoolDispatchers
+    private staffPoolDispatchers: StaffPoolDispatchers,
+    private servicePointPoolDispatchers: ServicePointPoolDispatchers,
+    private queueDispatchers: QueueDispatchers,
+    private servicePoolDispatcher: ServicePointPoolDispatchers
   ) { 
     const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
       this.selectedQueue = queue;
     })
     this.subscriptions.add(QueueSelectorSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
+
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
+      this.userDirections = direction;
+    });
+    this.subscriptions.add(userDirectionSubscription);
+    
 
     const VisitSubscription = this.queueSelectors.selectedVisit$.subscribe((visit)=>{
       this.SelectedVisit=visit;

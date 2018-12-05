@@ -1,54 +1,50 @@
 <div class="qm-flow-sub-header">
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
-    <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="spSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)" #spSearch autocomplete="off"> 
-    <div class="qm-action-btn--only-icon">
-      <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="spSearch"
+        name="q" [ngModel]="searchText" (input)="handleInput($event)" #spSearch autocomplete="off">
+      <div class="qm-action-btn--only-icon">
+        <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
+          aria-hidden="true"></i>
       </div>
       <div class="qm-action-btn--only-icon">
-          <i *ngIf="!spSearch.value.trim()"  aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-        </div>
+        <i *ngIf="!spSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+      </div>
     </div>
   </div>
 
 </div>
 
 
- <div class="qm-service-point-list__container">
-    <div class="qm-service-point-list">
+<div class="qm-service-point-list__container" dir="{{ userDirection$ | async }}">
+  <div class="qm-service-point-list">
 
-        <div class="qm-service-point-list__headers qm-flex-grid">
-          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyServicePoint()">
-            <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
-            <div><i  *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+    <div class="qm-service-point-list__headers qm-flex-grid">
+      <div class="qm-service-point-list-header-item qm-flex-grid" (click)="onSortClickbyServicePoint()">
+        <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
+        <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="qm-service-point-list__body">
+      <div *ngFor="let s of servicePoints  | filterServicePoints : filterText">
+        <div class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
+          <div class="qm-service-point-list-body-row-first-label">{{s.name}}</div>
+          <span *ngIf="s.state == 'CLOSED'">
+            <i class="icon-lock"></i>
+          </span>
+          <div *ngIf="s.state == 'OPEN'" class="qm-col qm-service-point-list-body-row-second-label">
+            <!-- <span class="sp-open-icon"> </span> -->
           </div>
-     
-<!-- 
-          <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyState()">
-            <div class="qm-service-point-list-header-item-label">{{'state' | translate}}</div>
-            <div><i *ngIf="sortedBy =='STATE' && servicePoints.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i></div>
-          </div>        -->
-        </div>
-      <hr>
-        <div class="qm-service-point-list__body">
-          <div *ngFor="let s of servicePoints  | filterServicePoints : filterText:sortedBy:sortAscending">
-          <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
-              <div class="qm-col qm-service-point-list-body-row-first-label">{{s.name}}</div>
-              <div *ngIf="s.state == 'CLOSED'" class="qm-col qm-service-point-list-body-row-second-label">
-                <span  class="sp-closed-icon"> </span>
-                  <!-- {{'closed'|translate}} -->
-              </div>
-              <div *ngIf="s.state == 'OPEN'" class="qm-col qm-service-point-list-body-row-second-label">
-                  <span class="sp-open-icon"> </span>
-                    <!-- {{'open'|translate}} -->
-                </div>
 
-             
-            </div>
-        </div>
 
         </div>
-      </div> 
-      <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded  && filterText!=''"> {{'service_point_not_found' |translate}} </div>
+      </div>
 
-</div> 
+    </div>
+  </div>
+  <div class="qm-no-results" *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded  && filterText!=''">
+  {{'service_point_not_found' |translate}} </div>
+
+</div>

@@ -1,5 +1,4 @@
 <div class="qm-flow-sub-header">
-
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
       <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_queue' | translate }}" id="visitSearch"
@@ -13,11 +12,10 @@
       </div>
     </div>
   </div>
-
 </div>
 
 
-<div class="qm-queue-list__container">
+<div class="qm-queue-list__container" dir="{{ userDirection$ | async }}">
   <div class="qm-queue-list">
     <div class="qm-queue-list__headers qm-flex-grid">
 
@@ -26,15 +24,15 @@
         <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">
         <div class="qm-queue-list-header-item-label">{{'transfer_first'|translate}}</div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast">
         <div class="qm-queue-list-header-item-label">{{'transfer_last'|translate}} </div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort">
         <div class="qm-queue-list-header-item-label"> {{'transfer_sort'|translate}} </div>
       </div>
 
@@ -42,7 +40,7 @@
     <hr>
 
     <div class="qm-queue-list__body">
-      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending" >
+      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending">
 
         <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
           <div class="qm-col-45 qm-queue-list-body-row-label">{{q.name}}</div>
@@ -50,11 +48,11 @@
             <i class="icon-queue-first" (click)="OnTransferButtonClick('FIRST')"></i>
           </div>
           <div class="qm-col-15" *ngIf="btnTransferLast">
-            <i class="icon-queue-last"  (click)="OnTransferButtonClick('LAST')"></i>
+            <i class="icon-queue-last" (click)="OnTransferButtonClick('LAST')"></i>
 
           </div>
-          <div class="qm-col-15" *ngIf = "btnTransferSort">
-            <i class="icon-clock"  (click)="OnTransferButtonClick('SORTED')"></i>
+          <div class="qm-col-15" *ngIf="btnTransferSort">
+            <i class="icon-clock" (click)="OnTransferButtonClick('SORTED')"></i>
           </div>
         </div>
       </div>

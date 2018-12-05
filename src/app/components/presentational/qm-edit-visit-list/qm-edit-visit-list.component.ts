@@ -144,6 +144,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       //if only one visit in queue open visit options
       if (this.visits.length === 1) {
         this.visitClicked = true;
+        this.visitOptionStatus = 'initial';
         this.selectedVisitId = this.visits[0].visitId;
         this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
       }

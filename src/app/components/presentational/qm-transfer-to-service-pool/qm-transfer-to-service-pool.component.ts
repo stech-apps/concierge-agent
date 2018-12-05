@@ -197,18 +197,37 @@ export class QmTransferToServicePoolComponent implements OnInit {
         this.servicePoints = this.servicePoints.sort((a, b) => {
 
               
-                var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                // var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                // var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+
+                var stateA = a.state.toUpperCase(); // ignore upper and lowercase
+                var stateB = b.state.toUpperCase(); // ignore upper and lowercase
                
-                if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+                if ((stateA < stateB && this.sortAscending) || (stateA > stateB && !this.sortAscending) ) {
                   return -1;
                 }
-                if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+                if ((stateA > stateB && this.sortAscending) || (stateA < stateB && !this.sortAscending)) {
                   return 1;
                 }
+
+
+                if(stateA === stateB){
+                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  
+                  if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {
+                    return -1;
+                  }
+                  if ((nameA > nameB && this.sortAscending) || (nameA < nameB && !this.sortAscending)) {
+                    return 1;
+                  }
+                }
+               
+
+
                 // names must be equal
                 return 0;
-          });
+          })
       }
     
     }

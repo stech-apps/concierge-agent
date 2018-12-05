@@ -19,21 +19,21 @@
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'visit' | translate}}</div>
-        <div *ngIf="sortingIndicator==='VISITID'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc === true, 'icon-caret-down': sortByVisitIdAsc !==  true }"></i></div>
+        <div *ngIf="sortingIndicator==='VISITID'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true }"></i></div>
       </div>
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByCustomer()">
         <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
-        <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc === true, 'icon-caret-down': sortByCustomerAsc !==  true }"></i></div>
+        <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true }"></i></div>
       </div>
 
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByService()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
-        <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc === true, 'icon-caret-down': sortByServiceAsc !==  true }"></i></div>
+        <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true }"></i></div>
       </div>
 
       <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByAppTime()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
-        <div *ngIf="sortingIndicator==='APPTIME'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc === true, 'icon-caret-down': sortByAppTimeAsc !==  true }"></i></div>
+        <div *ngIf="sortingIndicator==='APPTIME'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true }"></i></div>
       </div>
 
 
@@ -134,7 +134,8 @@
           <div class="qm-visit-list__options__rec">
             <div class="qm-visit-list__options__heading">
               <div class="qm-title">
-                <i class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'tq'">SELECT QUEUE AND TRANSFER OPTION </span>

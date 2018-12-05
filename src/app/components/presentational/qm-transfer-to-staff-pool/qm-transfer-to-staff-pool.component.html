@@ -13,7 +13,7 @@
   </div>
   
   
-   <div class="qm-service-point-list__container">
+   <div class="qm-service-point-list__container" dir="{{ userDirection$ | async }}">
       <div class="qm-service-point-list">
         <div style="padding-bottom:20px;text-align:center" *ngIf="(this.loaded && this.StaffPool.length===0)">
           {{'empty_user_pool'|translate}} 

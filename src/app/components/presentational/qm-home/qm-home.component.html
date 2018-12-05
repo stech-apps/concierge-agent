@@ -3,7 +3,7 @@
   <div class="qm-home-content">
     <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo" ></qm-message-box>
     <qm-quick-serve *ngIf="isQuickServeEnable && !MessageBoxInfo"></qm-quick-serve>
-    <div class="qm-home-summary-area" *ngIf="isShowQueueView && !MessageBoxInfo">
+    <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable">
        
       <qm-queue-summary></qm-queue-summary>
       <qm-queue-list *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>

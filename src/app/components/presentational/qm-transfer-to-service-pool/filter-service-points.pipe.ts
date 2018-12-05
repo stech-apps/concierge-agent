@@ -19,18 +19,14 @@ export class FilterServicePointsPipe implements PipeTransform {
 
   
   
-  sortQueueList(servicePoints, type, sortAscending) {
+  sortQueueList(servicePoints,sortAscending) {
     
       // sort by name
       servicePoints = servicePoints.sort((a, b) => {
 
-            if(type=="SERVICE_POINT"){
               var nameA = a.name.toUpperCase(); // ignore upper and lowercase
               var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-             } else if (type == "STATE"){
-              var nameA = a.state.toUpperCase();
-              var nameB = b.state.toUpperCase();
-             }
+            
               if ((nameA < nameB && sortAscending) || (nameA > nameB && !sortAscending) ) {
                 return -1;
               }

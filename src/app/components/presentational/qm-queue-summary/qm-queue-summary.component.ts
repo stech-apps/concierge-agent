@@ -26,48 +26,52 @@ export class QmQueueSummaryComponent implements OnInit {
   selectedQueueId: number;
   selectedQueueName: string;
   visitSearchText: string;
-  selectedVisit:Visit
-  isQRReaderOpen:boolean;
+  selectedVisit: Visit
+  isQRReaderOpen: boolean;
   desktopQRCodeListnerTimer: any;
-  editVisitEnable:boolean;
-  noVisitId:boolean;
-  invalidVisitId:boolean;
-  isSelectedVisitFail:boolean;
-  isInvalidVisitEntry:boolean;
-  queueName:string;
+  editVisitEnable: boolean;
+  noVisitId: boolean;
+  invalidVisitId: boolean;
+  isSelectedVisitFail: boolean;
+  isInvalidVisitEntry: boolean;
+  queueName: string;
   qrCodeListnerTimer: any;
   public qrRelatedData: any;
   queueFetchFailed: boolean;
-  isRequestFromQR:boolean;
-  visitQR:boolean;
-  queueVisitIDloading:boolean;
-  queueVisitIDloaded:boolean;
+  isRequestFromQR: boolean;
+  visitQR: boolean;
+  queueVisitIDloading: boolean;
+  queueVisitIDloaded: boolean;
+  userDirections: string;
 
   constructor(
     private queueSelectors: QueueSelectors,
     private userSelectors: UserSelectors,
-    private queueDispatchers:QueueDispatchers,
-    private branchSelectors:BranchSelectors,
+    private queueDispatchers: QueueDispatchers,
+    private branchSelectors: BranchSelectors,
     private queueVisitsDispatchers: QueueVisitsDispatchers,
     private translateService: TranslateService,
     private toastService: ToastService,
     public nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
-   
-    private servicePointSelectors:ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors
   
   ) {
 
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
+      this.userDirections = direction;
+    });
+    this.subscriptions.add(userDirectionSubscription);
     
 
     const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
-      this.selectedVisit = selectedVisit
+      this.selectedVisit = selectedVisit;
     })
     this.subscriptions.add(selectedVisitSubscription);
     
     const VisitSearchLoadedSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((s)=>{
-      this.queueVisitIDloaded = s
+      this.queueVisitIDloaded = s;
     })
     this.subscriptions.add(VisitSearchLoadedSubscription);
 

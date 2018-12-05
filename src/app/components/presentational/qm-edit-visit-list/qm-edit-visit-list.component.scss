@@ -152,6 +152,8 @@
         display: flex;
         .qm-title{
             flex:10;
+            display: flex;
+            align-items: center;
         }
         .qm-icon{
             flex: 1;

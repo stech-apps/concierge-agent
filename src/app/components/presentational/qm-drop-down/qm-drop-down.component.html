@@ -7,7 +7,7 @@
       <div class="qm-search qm-search--large qm-dd-search">
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
           <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
-                class="qm-search__input ng-pristine ng-valid ng-touched qm-tab"
+                class="qm-search__input ng-pristine ng-valid ng-touched "
             id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}">
     
           <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">

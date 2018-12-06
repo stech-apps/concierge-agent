@@ -178,3 +178,12 @@
     }
   }
 }
+
+.qm-profile-cancel:focus, .qm-profile-ok:focus {
+  border: 1px solid blue;
+}
+
+.qm-checkbox:focus ~.qm-checkbox__selector {
+  border: 1px solid blue;
+  padding-right: 1rem;
+}

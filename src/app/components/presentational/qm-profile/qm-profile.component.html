@@ -45,7 +45,7 @@
         <label for="qm-checkbox" class="qm-checkbox-label">
           <input
             id="qm-checkbox"
-            class="qm-checkbox"
+            class="qm-checkbox qm-tab"
             type="checkbox"
             [(ngModel)]="isEnableUseDefault"
           />
@@ -59,18 +59,18 @@
       </div>
 
       <div class="qm-profile-button-container">
-        <div 
-          class="qm-profile-cancel qm-btn--secondary btn-light-active-action :active btn-plain qm-tab"
+        <button tabindex="3"
+          class="qm-tab qm-profile-cancel qm-btn--secondary btn-light-active-action :active btn-plain qm-tab"
           (click)="onCancel()"
         >
           {{ "cancel" | translate }}
-        </div>
-        <div
-          class="qm-profile-ok qm-btn--primary btn-light-active-action :active qm-tab"
+      </button>
+        <button tabindex="4"
+          class="qm-tab qm-profile-ok qm-btn--primary btn-light-active-action :active"
           (click)="onConfirmProfile()"
         >
           {{ "button.profile.apply" | translate }}
-        </div>
+      </button>
       </div>
 
       <!-- temp -->

@@ -204,10 +204,10 @@ export class QmTransferToServicePoolComponent implements OnInit {
                 var stateB = b.state.toUpperCase(); // ignore upper and lowercase
                
                 if ((stateA < stateB && this.sortAscending) || (stateA > stateB && !this.sortAscending) ) {
-                  return -1;
+                  return 1;
                 }
                 if ((stateA > stateB && this.sortAscending) || (stateA < stateB && !this.sortAscending)) {
-                  return 1;
+                  return -1;
                 }
 
 

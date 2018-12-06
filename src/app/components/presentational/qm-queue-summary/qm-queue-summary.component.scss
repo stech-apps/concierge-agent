@@ -67,11 +67,13 @@
 }
 
 .qm-search__icon{
-  margin-left: -35px;
+  
   margin-top: 13px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
+} @at-root [dir="ltr"] & {
+  margin-left: -35px;
 }
 }
 

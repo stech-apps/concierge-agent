@@ -45,7 +45,7 @@
       <!-- 1 Unlinked Customer (No customer is selected) when utt is enabled-->
       <div class="qm-summary-item qm-checkout-view__section" style="max-width:100%">
           <div style="display:flex;width: 100%;position: relative;" *ngIf="( !tempCustomer && !selectedCustomer ) && !isCustomerFlowHidden" class="qm-checkout-view__unlinked-customer">
-              <h3>{{'unlinked_customer'|translate}}</h3>
+              <h3 (click)="goToPanel(1)" style="cursor:pointer">{{'unlinked_customer'|translate}}</h3>
               <i (click)="goToPanel(1)" class="qm-action-btn__icon icon-customer-add" aria-hidden="true"></i>
           </div>
       <!-- 2 No Add Customer utt disabled-->

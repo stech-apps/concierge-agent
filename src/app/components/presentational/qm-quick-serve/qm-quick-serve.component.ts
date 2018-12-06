@@ -1,6 +1,6 @@
 import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
@@ -9,6 +9,8 @@ import { IServicePoint } from '../../../../models/IServicePoint';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from 'src/util/services/toast.service';
 import { IServiceConfiguration } from '../../../../models/IServiceConfiguration';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { DEBOUNCE_TIME } from './../../../../constants/config';
 
 @Component({
   selector: 'qm-quick-serve',
@@ -24,9 +26,13 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   selectedService: IService;
   private selectedBranch: IBranch;
   private selectedServicePoint: IServicePoint;
-  private userDirection$:  Observable<string>;
+  userDirection$: Observable<string>;
   private isBottomBarVisible: boolean;
   private isTopBarVisible: boolean;
+  searchText: String;
+  filterText: string = '';
+  inputChanged: Subject<string> = new Subject<string>();
+
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -48,6 +54,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
 
     const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => {
       this.services = services;
+      this.sortQueueList();
       if(services.length > 0){
         setTimeout(() => {
           this.checkShadow();
@@ -78,6 +85,11 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedServiceSubscription);
+
+    this.inputChanged
+    .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
+    .subscribe(text => this.filterQueues(text));
+
   }
 
   ngOnInit() {
@@ -144,4 +156,50 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  
+filterQueues(newFilter: string) {
+  this.filterText = newFilter;
+ }
+
+  clearSearchText() {
+    this.filterText = "";
+  }
+
+  handleInput($event) {
+    // this.queueSearched = true;
+    this.inputChanged.next($event.target.value);
+  }
+
+
+
+  sortQueueList() {
+    if (this.services) {
+      // sort by name
+      this.services = this.services.sort((a, b) => {
+
+            
+              // var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+              // var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+
+              var stateA = a.internalName.toUpperCase(); // ignore upper and lowercase
+              var stateB = b.internalName.toUpperCase(); // ignore upper and lowercase
+             
+              if (stateA < stateB) {
+                return 1;
+              }
+              // if (stateA > stateB ) {
+              //   return -1;
+              // }          
+
+
+              // names must be equal
+              return 0;
+        })
+    }
+  
+  }
+
+
+  
 }

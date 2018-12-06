@@ -184,6 +184,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         this.resetQRReader();
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
           this.visits.splice(0, this.visits.length, visit);
+          this.visitOptionStatus = 'initial';
           this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
@@ -216,10 +217,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.timeoutHandle = setTimeout(() => {
-    //   this.queueDispatcher.resetSelectedQueue();
-    //   this.visitDispatchers.resetQueueInfo;
-    //  }, 10000)
+    this.StartAutoCollapse();
   }
 
   resetQRReader() {
@@ -314,17 +312,20 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.selectedVisitId = visitId;
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
     this.visitOptionStatus = 'initial';
+    this.ResetAutoCollapse();
   }
 
   closeVisitOptions(){
     this.visitClicked = false;
     this.visitOptionStatus = 'none';
+    this.ResetAutoCollapse();
   }
  
   transferToQ(visit) {
     // this.NextFlow.emit("tq");
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'tq';
+    this.ResetAutoCollapse();
  
   }
 
@@ -332,12 +333,14 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     // this.NextFlow.emit("tsp");
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'staff';
+    this.ResetAutoCollapse();
   }
 
   transferToSPfPool(visit) {
 
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'cp';
+    this.ResetAutoCollapse();
   }
 
   cherryPickVisit(index: number, event: Event) {
@@ -455,8 +458,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.StopAutoCollapse()
     this.subscriptions.unsubscribe();
-    clearTimeout(this.timeoutHandle);
   }
 
   getAppointmentTime(visit){
@@ -475,9 +478,37 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.queueDispatcher.resetSelectedQueue();
     this.queueDispatcher.resetFetchVisitError();
     this.queueDispatcher.resetQueueInfo();
+    this.queueDispatcher.setectVisit(null);
   }
 
   backToQueueOptionsButton(){
     this.visitOptionStatus = 'initial';
+  }
+
+
+  // AutoColoapse fuctions
+
+  StartAutoCollapse(){
+    this.timeoutHandle = setTimeout(()=>{
+      if(this.visitOptionStatus==='none'||((this.visits.length === 1)&& this.visitOptionStatus==='initial')){
+        this.resetQueueView();
+      } else if(this.visitOptionStatus==='initial'){
+        this.visitOptionStatus='none';
+        this.ResetAutoCollapse();
+      }else{
+        this.visitOptionStatus = 'initial';
+        this.ResetAutoCollapse();
+      }
+      }, 120000);
+  }
+
+  StopAutoCollapse(){
+    clearTimeout(this.timeoutHandle);
+  }
+
+  ResetAutoCollapse(){
+    this.StopAutoCollapse();
+    this.StartAutoCollapse();
+
   }
 }

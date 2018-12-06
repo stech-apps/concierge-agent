@@ -309,6 +309,11 @@ input:focus{
   font-weight: 500;
 }
 
+.qm-primary-button-default:active{
+  background: $dark-transparent82;
+  border: 1px $dark-transparent82;
+  font-weight: 500;
+}
 .qm-primary-button-default{
   background: $primary-pink;
   border: 1px $primary-pink;

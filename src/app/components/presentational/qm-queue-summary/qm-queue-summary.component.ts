@@ -92,6 +92,8 @@ export class QmQueueSummaryComponent implements OnInit {
 
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
+      // var searchBox = document.getElementById("visitSearchVisit") as any;
+      // searchBox.value="";
     });
     this.subscriptions.add(queueSubscription);
 
@@ -122,7 +124,7 @@ export class QmQueueSummaryComponent implements OnInit {
       }
       }else{
         this.isSelectedVisitFail = false;
-        console.log("hello");
+     
       }
     })
     this.subscriptions.add(QueueVisitErrorSubscription);

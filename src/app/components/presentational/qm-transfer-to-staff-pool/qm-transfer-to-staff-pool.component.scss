@@ -76,12 +76,16 @@
     &-body-row {
         background-color: white;
         color:black;
-       
+        margin-right: 2rem;
+        // margin-left: 2rem;
         align-items: center;
         text-align: left;
         height: 3rem;
         padding: 5px 0px;
 
+        @at-root [dir="rtl"] & {
+            text-align: right;
+        }
 
         &-label {
           @include add-text-ellipsis;

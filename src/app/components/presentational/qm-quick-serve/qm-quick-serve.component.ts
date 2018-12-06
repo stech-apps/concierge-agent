@@ -32,6 +32,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   searchText: String;
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
+  showToolTip: boolean;
 
 
   constructor(
@@ -44,6 +45,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private userSelectors: UserSelectors
   ){
+
+    this.showToolTip =false;
     this.userDirection$ = this.userSelectors.userDirection$;
     
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
@@ -121,8 +124,8 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   onServe() {
     this.spService.quickServe(this.selectedBranch, this.selectedServicePoint, this.selectedService).subscribe((status: any) => {
       if(status){
-        this.translateService.get('customer_served').subscribe(v => {
-          this.toastService.infoToast(v + ' - ' + this.selectedService.internalName.toUpperCase());
+        this.translateService.get('quick_serve_toast').subscribe(v => {
+          this.toastService.infoToast(this.selectedService.internalName + ' ' + v);
           this.selectedService = null;
         });
       }
@@ -200,6 +203,9 @@ filterQueues(newFilter: string) {
   
   }
 
+  showHideToolTip(){
+    this.showToolTip = !this.showToolTip;
+  }
 
   
 }

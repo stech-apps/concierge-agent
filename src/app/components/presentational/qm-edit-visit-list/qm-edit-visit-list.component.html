@@ -149,7 +149,9 @@
             <qm-trasfer-to-queue *ngIf ="this.visitOptionStatus === 'tq'"></qm-trasfer-to-queue>
           </div>
         </div>
+       
       </div>
     </div>
+    <div class="visit-option-back-drop" *ngIf="visitClicked && this.visitOptionStatus !== 'none'" (click)="closeVisitOptions()"> </div>
   </div>
 </div>

@@ -172,6 +172,7 @@ import { QmTimeFilterItemsComponent } from './components/containers/qm-time-filt
 import { QmPhoneNumberValidatorDirective } from './directives/qm-phone-number-validator.directive';
 import { QmTimeFormatPipe } from './pipes/qm-time-format.pipe';
 import { QmDropDownFilterPipe } from './components/presentational/qm-drop-down/qm-drop-down-filter.pipe';
+import { QmTabberComponent } from './components/containers/qm-tabber/qm-tabber.component';
 import { FilterQuickServeServicePipe } from './components/presentational/qm-quick-serve/filter-quick-serve-service.pipe';
 
 

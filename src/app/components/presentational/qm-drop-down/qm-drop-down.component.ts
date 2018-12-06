@@ -1,30 +1,39 @@
-import { Observable } from 'rxjs';
-import { IDropDownItem } from './../../../../models/IDropDownItem';
+import { Observable } from "rxjs";
+import { IDropDownItem } from "./../../../../models/IDropDownItem";
 import {
-  Component, OnInit, Input, ViewChild, ElementRef,
-  Output, EventEmitter
-} from '@angular/core';
-import { UserSelectors } from 'src/store';
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter
+} from "@angular/core";
+import { UserSelectors } from "src/store";
 
 @Component({
-  selector: 'qm-drop-down',
-  templateUrl: './qm-drop-down.component.html',
-  styleUrls: ['./qm-drop-down.component.scss']
+  selector: "qm-drop-down",
+  templateUrl: "./qm-drop-down.component.html",
+  styleUrls: ["./qm-drop-down.component.scss"]
 })
 export class QmDropDownComponent implements OnInit {
+  @ViewChild("dropdownContent") dropDownContent: ElementRef;
+  @ViewChild("searchInput") searchInput: ElementRef;
 
-  @ViewChild('dropdownContent') dropDownContent: ElementRef;
+  ngAfterViewInit() {
+    
+  }
+
   isExpanded = false;
   userDirection$: Observable<string>;
   searchText: string;
-  selectedItem: any
+  selectedItem: any;
 
   constructor(private userSelectors: UserSelectors) {
     this.userDirection$ = this.userSelectors.userDirection$;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   @Input()
   caption: string;
@@ -36,12 +45,12 @@ export class QmDropDownComponent implements OnInit {
   searchPlaceHolder: string;
 
   @Input()
-  labelProperty: string = 'text';
+  labelProperty: string = "text";
 
   @Input()
   items: Array<IDropDownItem | any>;
 
-  @Output('itemClick')
+  @Output("itemClick")
   itemClickCallBack: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
@@ -51,6 +60,7 @@ export class QmDropDownComponent implements OnInit {
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
     $event.stopPropagation();
+    setTimeout(() => this.searchInput.nativeElement.focus());
   }
 
   itemClick(item: IDropDownItem | any, $event) {
@@ -61,9 +71,7 @@ export class QmDropDownComponent implements OnInit {
     this.selectedItem = item;
   }
 
-  handleInput(searchText: string) {
-
-  }
+  handleInput(searchText: string) {}
 
   clickOnSearch($event) {
     $event.stopPropagation();

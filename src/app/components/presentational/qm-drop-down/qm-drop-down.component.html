@@ -1,13 +1,13 @@
-<div class="qm-dropdown" [ngClass]="{'qm-dropdown--unselected': isItemSelected, 'qm-dropdown--noitems': !isItemSelected && items.length === 0 }" dir="{{userDirection$ | async}}">
-  <button class="qm-dropdown-button" (click)="dropDownExpand($event)">
+<div class="qm-dropdown" tabindex="0" [ngClass]="{'qm-dropdown--unselected': isItemSelected, 'qm-dropdown--noitems': !isItemSelected && items.length === 0 }" dir="{{userDirection$ | async}}">
+  <button class="qm-dropdown-button qm-tab qm-tab-click" (click)="dropDownExpand($event)">
     <div class="qm-dropdown-button--label" [ngClass]="{'qm-dropdown-button--label-selected': isItemSelected}">{{caption | translate}}</div>
     <div class="qm-dropdown-button--arrow  icon-caret-down" [ngClass]="{'icon-caret-up': isExpanded}" *ngIf="items.length > 0"></div>
   </button>
   <div class="qm-dropdown__content" *ngIf="items.length > 0" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
-          <input [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
-                class="qm-search__input ng-pristine ng-valid ng-touched"
+          <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
+                class="qm-search__input ng-pristine ng-valid ng-touched qm-tab"
             id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}">
     
           <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">

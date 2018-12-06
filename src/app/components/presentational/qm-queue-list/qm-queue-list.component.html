@@ -19,8 +19,10 @@
   </div>  
 
   <div class="qm-queue-list__body">
-    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" [ngStyle]="{'cursor': editVisitEnable ? 'pointer' : ''}" (click)="selectQueue(q)" >
-        <div class="qm-col-45"  [ngStyle]="{'color': editVisitEnable ? '#03996C' : 'rgba(0,0,0,0.82)'}">{{q.name}}</div>
+    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+    (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" (click)="selectQueue(q)" >
+        <div class="qm-col-45"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#03996C' : 'rgba(0,0,0,0.82)'}">{{q.name}}</div>
         <div class="qm-col-15">{{q.customersWaiting }}</div>
         <div class="qm-col-15 max-wait-time-container">
           <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>

@@ -19,7 +19,8 @@ import {
   ServicePointSelectors,
   BranchSelectors,
   AppointmentDispatchers,
-  ReserveDispatchers
+  ReserveDispatchers,
+  QueueDispatchers
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -73,7 +74,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private nativeApiService: NativeApiService,
     private branchSelectors: BranchSelectors,
     private servicePointSelectors: ServicePointSelectors,
-    private reserveDispatchers:ReserveDispatchers
+    private reserveDispatchers:ReserveDispatchers,
+    private queueDispatchers: QueueDispatchers
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -131,5 +133,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   }
   editClick(){
     this.router.navigate(['/profile']);
+    this.queueDispatchers.resetSelectedQueue();
+    this.queueDispatchers.setectVisit(null);
+    this.queueDispatchers.resetFetchVisitError();
   }
 }

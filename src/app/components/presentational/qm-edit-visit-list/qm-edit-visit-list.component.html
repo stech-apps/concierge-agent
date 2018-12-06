@@ -138,7 +138,7 @@
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
-                <span *ngIf ="visitOptionStatus === 'tq'">SELECT QUEUE AND TRANSFER OPTION </span>
+                <span *ngIf ="visitOptionStatus === 'tq'">{{'queue_transfer'|translate}} </span>
               </div>
               <div class="qm-icon">
                 <i class="icon-close" (click)="closeVisitOptions()"></i>

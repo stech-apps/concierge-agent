@@ -103,13 +103,13 @@ ngOnInit() {
     this.sortQueueList('QUEUE');
   });
   this.subscriptions.add(queueListSubscription);
-  if (this.queueCollection.length === 0) {
-    this.translateService.get('empty_queues').subscribe(
-      (noappointments: string) => {
-        this.toastService.infoToast(noappointments);
-      }
-    ).unsubscribe();
-  }
+  // if (this.queueCollection.length === 0) {
+  //   this.translateService.get('empty_queues').subscribe(
+  //     (noappointments: string) => {
+  //       this.toastService.infoToast(noappointments);
+  //     }
+  //   ).unsubscribe();
+  // }
 }
 
 

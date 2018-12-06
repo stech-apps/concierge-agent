@@ -44,6 +44,15 @@ export class QmQueueSummaryComponent implements OnInit {
   queueVisitIDloaded: boolean;
   userDirections: string;
 
+  canTransferSP: boolean;
+  canTransferQ: boolean;
+  canTransferStaff: boolean;
+  canTransferQFirst: boolean;
+  canTransferQLast: boolean;
+  canTransferQWait: boolean;
+  canDelete: boolean;
+  cancherypick: boolean;
+
   constructor(
     private queueSelectors: QueueSelectors,
     private userSelectors: UserSelectors,
@@ -84,7 +93,15 @@ export class QmQueueSummaryComponent implements OnInit {
     const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) { 
         this.editVisitEnable = uttpParams.editVisit;
-        this.visitQR = uttpParams.visitQR;       
+        this.visitQR = uttpParams.visitQR;
+        this.canTransferSP = uttpParams.trServPool;
+        this.canTransferQ = uttpParams.btnQueueTransfer
+        this.canTransferStaff = uttpParams.trUserPool;
+        this.canTransferQFirst = uttpParams.btnTransferFirst;
+        this.canTransferQLast = uttpParams.btnTransferLast;
+        this.canTransferQWait = uttpParams.btnTransferSort;
+        this.canDelete = uttpParams.delVisit;
+        this.cancherypick = uttpParams.cherryPick;       
        }
     })
     this.subscriptions.add(uttpSubscriptions);

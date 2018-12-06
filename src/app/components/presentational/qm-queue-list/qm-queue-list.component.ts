@@ -166,14 +166,12 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
    
     if (this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
       (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) {
-      this.translateService.get('no_actions_available').subscribe(v => {
-        this.toastService.infoToast(v);
-      });
+      
     } else {
       this.queueDispatchers.setectQueue(q);
       this.queueService.stopQueuePoll();
       this.queueDispatcher.setectQueueName(null);
-      // this.router.navigate(['home/edit-visit']);
+
     }
 
   }

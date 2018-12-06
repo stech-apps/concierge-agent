@@ -274,8 +274,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmPhoneNumberValidatorDirective,
     QmTimeFormatPipe,
     QmDropDownFilterPipe,
-    FilterQuickServeServicePipe
-
+    FilterQuickServeServicePipe,
+    QmTabberComponent
   ],
   entryComponents: [
     QmCustomToastComponent,

@@ -7,7 +7,9 @@ import {
   ViewChild,
   ElementRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  HostListener,
+  SimpleChanges
 } from "@angular/core";
 import { UserSelectors } from "src/store";
 
@@ -19,9 +21,21 @@ import { UserSelectors } from "src/store";
 export class QmDropDownComponent implements OnInit {
   @ViewChild("dropdownContent") dropDownContent: ElementRef;
   @ViewChild("searchInput") searchInput: ElementRef;
+  @HostListener("window:keydown", ["$event"])
+  onKeyUp(ev: KeyboardEvent) {
+    this.triggerKeyPress(ev);
+  }
 
-  ngAfterViewInit() {
-    
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["items"]) {
+      let preselectedItem = this.items.find(
+        i => i[this.labelProperty] === this.caption
+      );
+      if (preselectedItem) {
+        this.highlightedItemId = preselectedItem.id;
+        this.selectedItem = preselectedItem;
+      }
+    }
   }
 
   isExpanded = false;
@@ -37,6 +51,8 @@ export class QmDropDownComponent implements OnInit {
 
   @Input()
   caption: string;
+
+  highlightedItemId: number;
 
   @Input()
   isItemSelected: boolean;
@@ -60,15 +76,20 @@ export class QmDropDownComponent implements OnInit {
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
     $event.stopPropagation();
-    setTimeout(() => this.searchInput.nativeElement.focus());
+    if(this.searchInput) {
+      setTimeout(() => this.searchInput.nativeElement.focus());
+    }
   }
 
   itemClick(item: IDropDownItem | any, $event) {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
-    $event.stopPropagation();
+    if($event) {
+      $event.stopPropagation();
+    }
     this.isItemSelected = true;
     this.selectedItem = item;
+    this.highlightedItemId = item.id;
   }
 
   handleInput(searchText: string) {}
@@ -76,5 +97,34 @@ export class QmDropDownComponent implements OnInit {
   clickOnSearch($event) {
     $event.stopPropagation();
     $event.preventDefault();
+  }
+
+  triggerKeyPress(e: KeyboardEvent) {
+    if (this.isExpanded) {
+      let currentIndex = this.items.findIndex(
+        x => x.id === this.highlightedItemId
+      );
+
+      switch (e.keyCode) {
+        case 38: // up
+          let prevItem = this.items[--currentIndex];
+
+          if (prevItem) {
+            this.highlightedItemId = prevItem.id;
+          }
+          break;
+        case 40: // down
+          let nextItem = this.items[++currentIndex];
+
+          if (nextItem) {
+            this.highlightedItemId = nextItem.id;
+          }
+
+          break;
+        case 13: // enter
+              this.itemClick(this.items[currentIndex], null);
+          break;
+      }
+    }
   }
 }

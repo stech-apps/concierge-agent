@@ -1,9 +1,9 @@
 <div class="qm-dropdown" tabindex="0" [ngClass]="{'qm-dropdown--unselected': isItemSelected, 'qm-dropdown--noitems': !isItemSelected && items.length === 0 }" dir="{{userDirection$ | async}}">
-  <button class="qm-dropdown-button qm-tab qm-tab-click" (click)="dropDownExpand($event)">
+  <button class="qm-dropdown-button qm-tab qm-tab-click" [ngClass]="{'qm-tab-click-active': isExpanded, 'qm-tab-disabled': (items.length < 2)}" (click)="dropDownExpand($event)">
     <div class="qm-dropdown-button--label" [ngClass]="{'qm-dropdown-button--label-selected': isItemSelected}">{{caption | translate}}</div>
-    <div class="qm-dropdown-button--arrow  icon-caret-down" [ngClass]="{'icon-caret-up': isExpanded}" *ngIf="items.length > 0"></div>
+    <div  class="qm-dropdown-button--arrow  icon-caret-down" [ngClass]="{'icon-caret-up': isExpanded}" *ngIf="items.length > 1"></div>
   </button>
-  <div class="qm-dropdown__content" *ngIf="items.length > 0" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
+  <div class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
           <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
@@ -16,6 +16,6 @@
           </button>
         </div>
 
-    <a *ngFor="let item of items | qmDropDownFilter : searchText : labelProperty" (click)="itemClick(item, $event)" [innerHtml]="item[labelProperty] | qmhighlight : searchText"></a>
+    <a *ngFor="let item of items | qmDropDownFilter : searchText : labelProperty" [ngClass]="{'qm-item-selected': highlightedItemId === item.id }"  (click)="itemClick(item, $event)" [innerHtml]="item[labelProperty] | qmhighlight : searchText"></a>
   </div>
 </div>

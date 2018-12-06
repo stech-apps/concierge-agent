@@ -8,6 +8,10 @@
     margin: 0.5rem 0;
     position: relative;
 
+    .qm-item-selected {
+        background: rgba(0,0,0,.12);
+    }
+
     &--noitems {
         .qm-dropdown-button {
             border-style: dashed;

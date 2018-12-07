@@ -13,6 +13,15 @@
     color: $dark-transparent62;
   }
 
+  .qm-queuefetch-failed {
+    .qm-queue-name {
+      display: block;
+      @include add-text-ellipsis;
+      width: 40%;
+      flex: none;
+    }
+  }
+
   .max-wait-time-container {
     display: flex;
     //    justify-content: center;
@@ -126,11 +135,11 @@
   font-size: 18px;
   text-align: center;
   position: absolute;
-  right: calc(50% - 366px);
+  right: 10px;
   top: 298px;
 
   @at-root [dir="rtl"] & { 
-    left: calc(50% - 440px);
+    left: 10px;
     right: auto;
   }
 }

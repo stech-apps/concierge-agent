@@ -18,13 +18,13 @@
     <div  *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'ql_est_wait_time' | translate}} </div>
   </div>  
 
-  <div class="qm-queue-list__body">
+  <div class="qm-queue-list__body" [ngClass]="{'qm-queuefetch-failed': queueFetchFailed}" >
     <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
     (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" (click)="selectQueue(q)" >
-        <div class="qm-col-45"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        <div class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
         (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#03996C' : 'rgba(0,0,0,0.82)'}">{{q.name}}</div>
-        <div class="qm-col-15">{{q.customersWaiting }}</div>
-        <div class="qm-col-15 max-wait-time-container">
+        <div class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</div>
+        <div class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
           <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
           <div> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></div>
         </div>

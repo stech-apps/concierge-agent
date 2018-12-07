@@ -11,6 +11,7 @@ export * from './platform.actions';
 export * from './branch.actions';
 export * from './service.actions';
 export * from './calendar-service.actions';
+export * from './calendar-system-info.actions';
 export * from './service-point.actions';
 export * from './queue.actions';
 export * from './customer.actions';
@@ -18,8 +19,9 @@ export * from './calendar-settings.actions';
 export * from './reservation-expiry-timer.actions';
 export * from './timeslot.actions';
 export * from './calendar-branch.actions';
+export * from './calendar-ping.actions';
 export * from './reserve.actions';
-export * from './information-message-box.actions'
+export * from './information-message-box.actions';
 export * from './note.actions';
 export * from './appointment.actions';
 export * from './arrive-appointment.actions';

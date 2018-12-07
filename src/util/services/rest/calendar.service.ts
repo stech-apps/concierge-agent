@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SystemInfoSelectors } from '../../../store';
 import { NativeApiService } from '../native-api.service';
+import { ISystemInfo } from 'src/models/ISystemInfo';
 
 export enum NOTIFICATION_TYPE {
   email = "email",
@@ -132,10 +133,16 @@ private buildTime(appointment: IAppointment){
     return customerInfo;
   }
 
-  getBranchWithPublicId(branchId:number){
-  return this.http
-  .get<ICalendarBranchCentralResponse>(`${this.hostAddress}${calendarEndpoint}/branches/${branchId}`, {headers : this.authorizationHeader }).pipe(
-    catchError(this.errorHandler.handleError(true))
-  );
-}
+    getBranchWithPublicId(branchId: number) {
+        return this.http
+        .get<ICalendarBranchCentralResponse>(`${this.hostAddress}${calendarEndpoint}/branches/${branchId}`, {headers : this.authorizationHeader }).pipe(
+                catchError(this.errorHandler.handleError(true))
+        );
+    }
+
+    getCalendarSettingsSystemInfo() {
+        return this.http
+          .get<ISystemInfo>(`${this.hostAddress}${calendarEndpoint}/settings/systemInformation`, {headers : this.authorizationHeader })
+          .pipe(catchError(this.errorHandler.handleError(true)));
+      }
 }

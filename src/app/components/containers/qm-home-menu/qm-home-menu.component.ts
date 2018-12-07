@@ -181,18 +181,20 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.subscriptions.add(calendarBranchSub);
 
       if (calendarBranchId && calendarBranchId > 0) {
-        //insert hostaddress if using QAgent(OnHold)
-          this.systemInfoService.getServicePointSystemInfo().subscribe(
+        // insert hostaddress if using QAgent(OnHold)
+          // this.calendarService.getBranchWithPublicId(calendarBranchId).subscribe(
+          this.calendarService.getCalendarSettingsSystemInfo().subscribe(
           value => {
-            if (value && value.productName) {
-              this.handleUttRequirements(route);
+            // if (value && value.branch.publicId) {
+              if (value && value.productName) {
+                this.handleUttRequirements(route);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.infoToast(v);
               });
             }
           }, error => {
-            if (error.status === 401){
+            if (error.status === 401) {
               this.router.navigate(['home/central-login'], { queryParams : {route} });
             } else {
               this.translateService.get('no_central_access').subscribe(v => {

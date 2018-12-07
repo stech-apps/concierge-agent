@@ -17,6 +17,7 @@ export * from './calendar-settings';
 export * from './reservation-expiry-timer';
 export * from './timeslot';
 export * from './calendar-branch';
+export * from './calendar-ping';
 export * from './reserve';
 export * from './Infomation-message-box';
 export * from './note';

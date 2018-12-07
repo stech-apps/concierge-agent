@@ -10,8 +10,9 @@ import { UserRoleEffects } from './user-role.effects';
 import { AccountEffects } from './account.effects';
 import { ServiceEffects } from './service.effects';
 import { CalendarServiceEffects } from './calendar-service.effects';
-import {CustomerEffects} from './customer.effects'
+import {CustomerEffects} from './customer.effects';
 import { CalendarSettingsEffects } from './calendar-settings.effects';
+import { CalendarSystemInfoEffects } from './calendar-system-info.effects';
 import { TimeslotEffects } from './timeslot.effects';
 import { CalendarBranchEffects } from './calendar-branch.effects';
 import { ReserveEffects } from './reserve.effects';

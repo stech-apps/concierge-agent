@@ -13,11 +13,11 @@ export class CalendarSettingsService {
   hostAddress: string;
   private subscriptions: Subscription = new Subscription();
   authorizationHeader: HttpHeaders;
-  
+
   constructor(
     private http: HttpClient,
     private errorHandler: GlobalErrorHandler,
-    private systemInfoSelector : SystemInfoSelectors
+    private systemInfoSelector: SystemInfoSelectors
   ) {
     const hostSubscription = this.systemInfoSelector.centralHostAddress$.subscribe((info) => this.hostAddress = info);
     this.subscriptions.add(hostSubscription);

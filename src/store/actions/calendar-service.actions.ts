@@ -26,22 +26,22 @@ export class FetchCalendarServices implements Action {
     readonly type = FETCH_CALENDAR_SERVICES;
     constructor(public payload: ICalendarBranch) {}
   }
-  
+
   export class FetchCalendarServicesFail implements Action {
     readonly type = FETCH_CALENDAR_SERVICES_FAIL;
     constructor(public payload: Object) {}
   }
-  
+
   export class FetchCalendarServicesSuccess implements Action {
     readonly type = FETCH_CALENDAR_SERVICES_SUCCESS;
     constructor(public payload: ICalendarServiceResponse) {}
   }
-  
+
   export class FetchServiceGroups implements Action {
     readonly type = FETCH_SERVICE_GROUPS;
     constructor(public payload: ICalendarService[], public branch: ICalendarBranch) {}
   }
-  
+
   export class FetchServiceGroupsFail implements Action {
     readonly type = FETCH_SERVICE_GROUPS_FAIL;
     constructor(public payload: Object) {}

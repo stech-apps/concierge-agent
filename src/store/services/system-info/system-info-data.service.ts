@@ -23,14 +23,16 @@ export class SystemInfoDataService {
 
   getSystemInfo(): Observable<ISystemInfo> {
     return this.http
-      .get<ISystemInfo>(`${restEndpoint}/managementinformation/systemInformation`)
+      // .get<ISystemInfo>(`${restEndpoint}/managementinformation/systemInformation`)
+      .get<ISystemInfo>(`${restEndpoint}/servicepoint/systemInformation`)
       .pipe();
   }
 
   getServicePointSystemInfo(): Observable<ISystemInfo> {
     return this.http
-    .get<ISystemInfo>(`${this.hostAddress}${centralRestEndPoint}/servicepoint/systemInformation`)
-    .pipe();
+    // .get<ISystemInfo>(`${this.hostAddress}${centralRestEndPoint}/servicepoint/systemInformation`)
+      .get<ISystemInfo>(`${restEndpoint}/servicepoint/systemInformation`)
+      .pipe();
   }
 
   getCalendarSettingsSystemInfo(): Observable<ISystemInfo> {

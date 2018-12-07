@@ -207,6 +207,7 @@ export function reducer(
     var customerCount = 0;
     var est_w_time = undefined;
     var maxWT = 0;
+    if(queueInfo){
     for (var i = 0; i < queueInfo.length; i++) {
       customerCount = customerCount + queueInfo[i].customersWaiting;
       est_w_time = (queueInfo[i].estimatedWaitingTime === -1) ? "-" : processEstWaitingTime(
@@ -223,13 +224,13 @@ export function reducer(
         id: queueInfo[i].id,
         estimatedWaitingTime: queueInfo[i].estimatedWaitingTime
       });
-
+    
       var tmpMaxWT = Math.round(queueInfo[i].waitingTime / 60);
       if (tmpMaxWT > maxWT) {
         maxWT = Math.round(queueInfo[i].waitingTime / 60);
       }
     }
-
+  }
     data.queues = queueInformation
     data.totalCustomersWaiting = customerCount;
     data.maxWaitingTime = maxWT;

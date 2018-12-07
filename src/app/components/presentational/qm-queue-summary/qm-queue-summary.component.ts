@@ -52,6 +52,7 @@ export class QmQueueSummaryComponent implements OnInit {
   canTransferQWait: boolean;
   canDelete: boolean;
   cancherypick: boolean;
+  inputText: string;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -76,6 +77,11 @@ export class QmQueueSummaryComponent implements OnInit {
 
     const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
       this.selectedVisit = selectedVisit;
+      if(!this.selectedVisit){
+        this.inputText = '';
+      }
+       
+        
     })
     this.subscriptions.add(selectedVisitSubscription);
     
@@ -109,8 +115,6 @@ export class QmQueueSummaryComponent implements OnInit {
 
     const queueSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
       this.queueSummary = qs;
-      // var searchBox = document.getElementById("visitSearchVisit") as any;
-      // searchBox.value="";
     });
     this.subscriptions.add(queueSubscription);
 
@@ -160,10 +164,9 @@ export class QmQueueSummaryComponent implements OnInit {
         }
       } else {
         this.selectedQueueId = null;
-        var searchBox = document.getElementById("visitSearchVisit") as any;
-        searchBox.value="";
-    
-      }
+        this.inputText = '';
+        
+            }
     });
     this.subscriptions.add(selectedQueueSub);
 
@@ -215,6 +218,7 @@ export class QmQueueSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+   
     
     
   }

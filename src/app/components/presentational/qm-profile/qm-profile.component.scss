@@ -187,3 +187,13 @@
   border: 1px solid blue;
   padding-right: 1rem;
 }
+
+.qm-error-message {
+  width: 100%;
+  color: #E50046;
+  font-size: 14px;
+  text-align: left;
+  @at-root [dir='rtl'] & {
+    text-align: right;
+  }
+}

@@ -48,6 +48,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   isEnableUseDefault: boolean;
   previousBranch: IBranch;
   user: IAccount;
+  errorMessage: string;
 
   constructor(
     private branchSelectors: BranchSelectors,
@@ -216,17 +217,20 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onConfirmProfile() {
+    this.errorMessage = null;
     this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
     if (this.selectedBranch.id === -1 && !this.isEnableUseDefault) {
       this.translateService.get("no_branch_set").subscribe(v => {
-        this.toastService.infoToast(v);
+        //this.toastService.infoToast(v);
+        this.errorMessage = v;
       });
     } else if (
       this.selectedServicePoint.id === -1 &&
       !this.isEnableUseDefault
     ) {
       this.translateService.get("no_workstation_set").subscribe(v => {
-        this.toastService.infoToast(v);
+        //this.toastService.infoToast(v);
+        this.errorMessage = v;
       });
     } else if (
       this.previousBranch &&

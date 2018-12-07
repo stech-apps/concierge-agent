@@ -37,6 +37,8 @@
         labelProperty="name"
       ></qm-drop-down>
 
+      <div class="qm-error-message" *ngIf="errorMessage"> {{ errorMessage }}</div>
+
       <div class="qm-use-as-default">
         <!--
           input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/

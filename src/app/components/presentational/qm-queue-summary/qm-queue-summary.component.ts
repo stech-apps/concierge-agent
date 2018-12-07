@@ -121,10 +121,7 @@ export class QmQueueSummaryComponent implements OnInit {
     this.subscriptions.add(queueNameSubscription);
 
 
-    const QueueSelectorSubscription = this.queueSelectors.selectedQueue$.subscribe((queue)=>{
-      this.selectedQueue = queue;
-    })
-    this.subscriptions.add(QueueSelectorSubscription);
+   
 
     // check the visit error
     const QueueVisitErrorSubscription = this.queueSelectors.isFetchVisiitError$.subscribe((error)=>{
@@ -152,7 +149,9 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(branchSub);
 
+
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
+      this.selectedQueue = queue;
       if (queue) {
         this.selectedQueueId = queue.id;
         this.selectedQueueName = queue.name;
@@ -161,6 +160,9 @@ export class QmQueueSummaryComponent implements OnInit {
         }
       } else {
         this.selectedQueueId = null;
+        var searchBox = document.getElementById("visitSearchVisit") as any;
+        searchBox.value="";
+    
       }
     });
     this.subscriptions.add(selectedQueueSub);

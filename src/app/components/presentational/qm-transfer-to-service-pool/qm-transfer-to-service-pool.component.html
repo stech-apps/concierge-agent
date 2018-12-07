@@ -21,7 +21,7 @@
     <div style="padding-bottom:20px;text-align:center" *ngIf="(this.loaded && this.servicePoints.length===0)">
       {{'empty_counter_pool'|translate}} 
     </div>
-    <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="(this.loaded && !this.servicePoints.length!==0)">
+    <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="(this.loaded && this.servicePoints.length!==0)">
       <div class="qm-service-point-list-header-item qm-flex-grid" (click)="onSortClickbyServicePoint()">
         <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
         <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>

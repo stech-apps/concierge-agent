@@ -127,6 +127,9 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
         this.translateService.get('quick_serve_toast').subscribe(v => {
           this.toastService.infoToast(this.selectedService.internalName + ' ' + v);
           this.selectedService = null;
+          var searchBox = document.getElementById("visitSearch") as any;
+          searchBox.value="";
+          this.filterText = '';
         });
       }
     });

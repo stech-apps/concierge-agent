@@ -35,6 +35,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   @Input() emitOnInitialSelection: boolean = true;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
   @Input() enabledDates: moment.Moment[] = [];
+  @Input() enableRegenerateOnSelectDatesChange: boolean = true;
 
   private _currentCalendarDates: CalendarDate[] = [];
 
@@ -65,6 +66,10 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       }
       this.generateCalendar();
     }
+  }
+
+  public refresh() {
+    this.generateCalendar();
   }
 
   // date checkers

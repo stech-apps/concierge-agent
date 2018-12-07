@@ -12,6 +12,7 @@ import {
   SimpleChanges
 } from "@angular/core";
 import { UserSelectors } from "src/store";
+import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directive";
 
 @Component({
   selector: "qm-drop-down",
@@ -20,6 +21,8 @@ import { UserSelectors } from "src/store";
 })
 export class QmDropDownComponent implements OnInit {
   @ViewChild("dropdownContent") dropDownContent: ElementRef;
+  @ViewChild("qmClearInputRef") qmClearInputRef: QmClearInputDirective;
+
   @ViewChild("searchInput") searchInput: ElementRef;
   @HostListener("window:keydown", ["$event"])
   onKeyUp(ev: KeyboardEvent) {
@@ -75,6 +78,8 @@ export class QmDropDownComponent implements OnInit {
   dropDownExpand($event) {
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
+    setTimeout(()=> this.searchText = '');
+    this.qmClearInputRef.update(this.searchText);
     $event.stopPropagation();
     if(this.searchInput) {
       setTimeout(() => this.searchInput.nativeElement.focus());

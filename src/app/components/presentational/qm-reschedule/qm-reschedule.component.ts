@@ -26,7 +26,7 @@ import {
   Output,
   ViewChild
 } from "@angular/core";
-import { CalendarDate } from "src/app/components/containers/qm-calendar/qm-calendar.component";
+import { CalendarDate, QmCalendarComponent } from "src/app/components/containers/qm-calendar/qm-calendar.component";
 import * as moment from "moment";
 import { IBookingInformation } from "src/models/IBookingInformation";
 import {
@@ -67,7 +67,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   
   timeConvention: string = "24";
   userDirection$: Observable<string>;
-  @ViewChild('qmcalendar') qmCalendar: Element;
+  @ViewChild('qmcalendar') qmCalendar: QmCalendarComponent;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -102,7 +102,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["editAppointment"] && this.editAppointment) {
       console.log('edit appointment changed');
-      this.timeSlotDispatchers.deselectTimeslot();
       this.enableReschedule = false;
       window["moment"] = moment;
       const calculatedAppointmentTime = moment(this.editAppointment.start).tz(
@@ -119,6 +118,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
       this.timeSlotDispatchers.deselectTimeslot();
       this.fetchReservableDates();
+      this.qmCalendar.refresh();
     }
   }
 

@@ -94,21 +94,18 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.translateService
       .get(["label.profile.select.branch"])
       .subscribe(messages => {
-
         this.selectedBranch = {
-          name: messages['label.profile.select.branch'],
+          name: messages["label.profile.select.branch"],
           id: -1
         };
-
       });
-
-  
 
     const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe(
       branch => {
         this.previousBranch = branch;
       }
     );
+
     this.subscriptions.add(previousBranchSubscription);
 
     const branchSubscription = this.branchSelectors.branches$.subscribe(bs => {
@@ -155,7 +152,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.translateService
       .get(["label.profile.select.servicepoint"])
       .subscribe(messages => {
-
         this.selectedServicePoint = {
           name: messages["label.profile.select.servicepoint"],
           id: -1,
@@ -163,7 +159,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
           parameters: null,
           state: null
         };
-
       });
   }
 

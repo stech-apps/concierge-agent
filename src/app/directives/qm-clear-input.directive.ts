@@ -7,6 +7,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Directive({
   selector: '[qmClearInput]',
+  exportAs: 'qmClearInputRef'
 })
 export class QmClearInputDirective implements OnInit  {
 
@@ -28,6 +29,9 @@ export class QmClearInputDirective implements OnInit  {
     this.updateButtonVisibility(event.target.value);
   }
 
+  update(text) {
+    this.updateButtonVisibility(text);
+  }
 
   ngOnInit(): void {
    /* const event = new Event('input', {

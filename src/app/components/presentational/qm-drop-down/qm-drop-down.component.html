@@ -6,7 +6,7 @@
   <div class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
-          <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" qmClearInput (input)="handleInput($event)"
+          <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched "
             id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}">
     

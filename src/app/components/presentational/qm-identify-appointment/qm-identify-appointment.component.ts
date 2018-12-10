@@ -581,8 +581,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (params) {
       this.uttFromTime = moment().subtract(params.gapFromTime, "minutes");
       this.selectedFromTime = this.uttFromTime;
+
+      if(!moment().isSame(this.selectedFromTime, 'day')){
+        this.selectedFromTime = moment().startOf('day');
+      }
+
       this.uttToTime = moment().add(params.gapToTime, "minutes");
       this.selectedToTime = this.uttToTime;
+
+      if(!moment().isSame(this.selectedToTime, 'day')){
+        this.selectedToTime = moment().endOf('day');
+      }
     }
   }
 
@@ -1423,6 +1432,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       $event.target.value = $event.target.value.replace(/[^0-9]/g, "");
       this.searchText = $event.target.value;
     }
+
+    this.clearInputDirective.update(this.searchText);
   }
 
   sortAppointments(sortColumn: string) {

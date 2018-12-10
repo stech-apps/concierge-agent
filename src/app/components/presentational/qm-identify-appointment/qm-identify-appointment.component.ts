@@ -4,7 +4,7 @@ import { ToastService } from "./../../../../util/services/toast.service";
 import { SelectAppointment } from "./../../../../store/actions/arrive-appointment.actions";
 import { IBranch } from "src/models/IBranch";
 import { Subscription, Observable } from "rxjs";
-import { OnDestroy, Input } from "@angular/core";
+import { OnDestroy, Input, ViewChild } from "@angular/core";
 import { debounceTime, timeout } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { FormControl } from "@angular/forms";
@@ -42,6 +42,7 @@ import { QmModalService } from "../qm-modal/qm-modal.service";
 import { start } from "repl";
 import { timingSafeEqual } from "crypto";
 import { Router } from "@angular/router";
+import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directive";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -157,6 +158,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readonly ARRIVED_APPOINTMENT_STATE = "ARRIVED";
 
   isRefreshDisabled: boolean = false;
+
+  @ViewChild('clearInputDirective') clearInputDirective: QmClearInputDirective;
 
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter<any>();
@@ -774,6 +777,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.onAppointmentSelect(this.selectedAppointment);
         this.showModalBackDrop = false;
         this.searchText = '';
+        this.clearInputDirective.update(this.searchText);
       }
 
       // search appointment is already arrived? then notifiy user

@@ -151,7 +151,7 @@
       <ng-template #idsearchArea>
         <div class="qm-identify-appointment__search-area">
           <div class="qm-search qm-search--large">
-            <input [(ngModel)]="searchText" qmClearInput class="qm-search__input"
+            <input [(ngModel)]="searchText" #clearInputDirective="qmClearInputRef" qmClearInput class="qm-search__input"
               name="serviceSearchInput" (keyup)="restrictNumbers($event)" type="tel" placeholder="{{'label.identify.appointment.searchbookingid' | translate}}"
               [formControl]="searchInputController" id="searchAppointmentField">
 

@@ -353,6 +353,7 @@ export class QmQueueSummaryComponent implements OnInit {
     this.searchText = null;
     this.isInvalidVisitEntry = false;
     this.queueDispatchers.setectVisit(null);
+    this.queueDispatchers.resetSelectedQueue();
   }
   foucusInput(){
     var searchBox = document.getElementById("SearchFeild") as any;

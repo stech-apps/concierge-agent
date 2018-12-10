@@ -135,7 +135,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         else {
 
             // handle retry logic when needed
-            if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url) && !this.isCentralAvailabilityChecking1(req.url) && !this.isSkipGetUrls(req.url)) {
+            if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url) && !this.isSkipGetUrls(req.url)) {
                 return this.zone.run(() => {
 
                     return next.handle(req).pipe(
@@ -287,12 +287,13 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     isCentralAvailabilityChecking(url) {
         const calendarUrl = '/calendar-backend/api/v1/branches/';
+        const calendarSystemInfoUrl = '/calendar-backend/api/v1/settings/systemInformation';
         if (url.includes(calendarUrl)) {
-            var urlParts = url.split(calendarUrl);
-            if (urlParts.length == 2) {
-                var sndPart = urlParts[1];
-                var sndPartArr = sndPart.split('/');
-                if (sndPartArr.length == 1) {
+            const urlParts = url.split(calendarUrl);
+            if (urlParts.length === 2) {
+                const sndPart = urlParts[1];
+                const sndPartArr = sndPart.split('/');
+                if (sndPartArr.length === 1) {
                     return true;
                 } else {
                     return false;
@@ -300,29 +301,14 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             } else {
                 return false;
             }
-        }
-        else {
-            return false;
-        }
-    }
-
-    isCentralAvailabilityChecking1(url) {
-        const calendarUrl = '/calendar-backend/api/v1/settings/systemInformation';
-        if (url.includes(calendarUrl)) {
-            var urlParts = url.split(calendarUrl);
-            if (urlParts.length == 2) {
-                var sndPart = urlParts[1];
-                var sndPartArr = sndPart.split('/');
-                if (sndPartArr.length == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        else {
+         } else if (url.includes(calendarSystemInfoUrl)) {
+             const urlParts = url.split(calendarSystemInfoUrl);
+             if (urlParts.length === 2) {
+                return true;
+             } else {
+                 return false;
+             }
+         } else {
             return false;
         }
     }

@@ -108,17 +108,13 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         this.editAppointment.branch.fullTimeZone
       );
       if (calculatedAppointmentTime.isAfter(moment.now())) {
-        this.originalAppointmentTime = calculatedAppointmentTime.format(
-          "HH:mm"
-        );
-        this.selectedDates = [];
-        this.isDateSelected = false;
         this.isOriginalAppointmentTimeChanged = false;
       }
-
+      this.selectedDates = [];
+      this.isDateSelected = false;
       this.timeSlotDispatchers.deselectTimeslot();
       this.fetchReservableDates();
-      this.qmCalendar.refresh();
+
     }
   }
 

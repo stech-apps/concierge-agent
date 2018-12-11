@@ -590,7 +590,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.selectedToTime = this.uttToTime;
 
       if(!moment().isSame(this.selectedToTime, 'day')){
-        this.selectedToTime = moment().endOf('day');
+        this.selectedToTime = moment().add(1, 'day').startOf('day');
       }
     }
   }
@@ -1208,8 +1208,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.onFlowNext.emit();
     this.appointmentSelected.emit(appointment);
     this.selectedCustomer = appointment.customers[0];
-
-
   }
 
   getSelectedAppointmentInfo() {

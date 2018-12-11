@@ -11,6 +11,7 @@
     display: flex;
     width: 100%;
     position: absolute;
+    left: 0;
   }
 
   &__form-content {
@@ -23,6 +24,9 @@
   &__form {
     box-sizing: border-box;
     margin-top: 0em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)
   }
 
   &__form-field {

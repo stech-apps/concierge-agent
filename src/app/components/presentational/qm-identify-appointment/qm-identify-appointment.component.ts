@@ -137,7 +137,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isQRReaderOpen = false;
   qrButtonVisible = false;
   isQRReaderClose = false;
-  isCustomerAppointmentSelected =  false;
 
 
   // Search States
@@ -467,7 +466,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.currentCustomer = customer;
 
       if (this.currentCustomer && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
-            this.isCustomerAppointmentSelected = false;
             this.onCustomerSelect(customer);
       }
     });
@@ -1201,7 +1199,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   onAppointmentSelect(appointment: IAppointment) {
     if(this.currentSearchState == this.SEARCH_STATES.CUSTOMER) {
       this.customerDispatchers.resetCustomerSearchText();
-      this.isCustomerAppointmentSelected = true;
       this.showSearchResultsArea = false;
     }
     //this.arriveAppointmentDispatchers.selectAppointment(appointment);
@@ -1316,9 +1313,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onCustomerSelect(customer: ICustomer) {
-    console.log(customer);
     this.customerSelectors.searchText$.subscribe((text)=> {
-      console.log(text);
       if(text) {
         this.searchText = `${customer.firstName} ${customer.lastName}`;
         this.showCustomerResults = false;

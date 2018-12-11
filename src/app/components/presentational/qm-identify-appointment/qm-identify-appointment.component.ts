@@ -137,6 +137,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isQRReaderOpen = false;
   qrButtonVisible = false;
   isQRReaderClose = false;
+  isCustomerAppointmentSelected =  false;
 
 
   // Search States
@@ -466,7 +467,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.currentCustomer = customer;
 
       if (this.currentCustomer && this.currentSearchState === this.SEARCH_STATES.CUSTOMER) {
-        this.onCustomerSelect(customer);
+            this.isCustomerAppointmentSelected = false;
+            this.onCustomerSelect(customer);
       }
     });
 
@@ -1197,6 +1199,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onAppointmentSelect(appointment: IAppointment) {
+    if(this.currentSearchState == this.SEARCH_STATES.CUSTOMER) {
+      this.customerDispatchers.resetCustomerSearchText();
+      this.isCustomerAppointmentSelected = true;
+      this.showSearchResultsArea = false;
+    }
     //this.arriveAppointmentDispatchers.selectAppointment(appointment);
     this.selectedAppointment = appointment;
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
@@ -1205,10 +1212,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.appointmentSelected.emit(appointment);
     this.selectedCustomer = appointment.customers[0];
 
-    if(this.currentSearchState == this.SEARCH_STATES.CUSTOMER) {
-      this.customerDispatchers.resetCustomerSearchText();
-      this.showSearchResultsArea = false;
-    }
+
   }
 
   getSelectedAppointmentInfo() {
@@ -1312,19 +1316,27 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onCustomerSelect(customer: ICustomer) {
-    this.searchText = `${customer.firstName} ${customer.lastName}`;
-    this.showCustomerResults = false;
-    this.showModalBackDrop = false;
-    this.isSearchInputReadOnly = true;
-    if (this.useCalendarEndpoint) {
-      this.appointmentDispatchers.searchCalendarAppointments({
-        customerId: customer.id
-      });
-    } else {
-      this.appointmentDispatchers.searchAppointments({
-        customerId: customer.id
-      });
-    }
+    console.log(customer);
+    this.customerSelectors.searchText$.subscribe((text)=> {
+      console.log(text);
+      if(text) {
+        this.searchText = `${customer.firstName} ${customer.lastName}`;
+        this.showCustomerResults = false;
+        this.showModalBackDrop = false;
+        this.isSearchInputReadOnly = true;
+    
+        if (this.useCalendarEndpoint) {
+          this.appointmentDispatchers.searchCalendarAppointments({
+            customerId: customer.id
+          });
+        } else {
+          this.appointmentDispatchers.searchAppointments({
+            customerId: customer.id
+          });
+        }
+      }
+    }).unsubscribe();
+  
   }
 
   refreshAppointments() {

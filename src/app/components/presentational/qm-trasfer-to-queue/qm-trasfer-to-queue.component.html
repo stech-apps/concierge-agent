@@ -48,7 +48,7 @@
       <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending">
 
         <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
-          <div class="qm-col-45 qm-queue-list-body-row-label">{{q.name}}</div>
+          <div class="qm-col-45 qm-queue-list-body-row-label" [innerHtml]="q.name | qmhighlight: filterText"></div>
           <div class="qm-col-15" *ngIf="btnTransferFirst">
             <i class="icon-queue-first" (click)="OnTransferButtonClick('FIRST')"></i>
           </div>

@@ -12,7 +12,10 @@
 
   </div>
 
+  
 </div>
+
+
 
 <div *ngIf="visits" dir="{{userDirection$ | async}}">
   <div class="qm-visit-list" *ngIf="visits.length>0">
@@ -40,14 +43,16 @@
       <div class="qm-visit-list-header-item qm-col qm-flex-grid">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
       </div>
-
+      <div class="info-icon-container"></div>
     </div>
+    
 
     <div *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
 
       <div class="qm-visit-list-body-row-container" *ngFor="let visit of visits; index as i">
-
-        <div (click)="selectVisit(i,visit.visitId)" class="qm-flex-grid qm-visit-list-body-row" [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId}">
+        <div style="display:flex">
+        <div (click)="selectVisit(i,visit.visitId)" class="qm-visit-list-body-row" [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId}">
+         <div class="qm-flex-grid ">
           <div class="qm-col qm-body-item qm-visit-list-body-row-caret-view">
             <div class="qm-visit-list-body-row-label qm-first-element"> {{visit.ticketId}} </div>
           </div>
@@ -56,7 +61,25 @@
           <div class="qm-col qm-body-item"> {{getAppointmentTime(visit)}}</div>
           <div class="qm-col qm-body-item">{{ visit.waitingTimeStr }}</div>
         </div>
-
+        <!-- Extended visit container -->
+          <div class="qm-expanded-visit-container" *ngIf="infoVisitId === visit.visitId">  
+            <div class="qm-flex-grid">
+            <i class="icon-clock qm-expanded-visit-container__icon"></i>  <span> {{getAppointmentTime(visit)}}</span>
+            </div>
+            <div class="qm-flex-grid">
+                <i class="icon-hourglass qm-expanded-visit-container__icon"></i>  <span>{{ visit.waitingTimeStr }}</span>
+            </div>
+            <div class="qm-flex-grid">
+                <i class="icon-service qm-expanded-visit-container__icon"></i>  <span>{{ visit.serviceName }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="info-icon-container">
+          <i class="icon-info qm-details-icon" (click)="selectedInfoButton(visit.visitId)"></i>
+        </div>
+        </div>
+     
         <!-- Edit visit options -->
         <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
                 class="qm-visit-list__options">
@@ -152,6 +175,5 @@
        
       </div>
     </div>
-    <div class="visit-option-back-drop" *ngIf="visitClicked && this.visitOptionStatus !== 'none'" (click)="closeVisitOptions()"> </div>
   </div>
 </div>

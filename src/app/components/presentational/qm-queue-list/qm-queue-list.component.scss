@@ -79,7 +79,7 @@
   }
 
   &-body-row {
-    height: 3rem;
+    padding: 0.6em 0;
 
     &-label {
       @include add-text-ellipsis;
@@ -155,4 +155,30 @@
         right: auto;
       }
   }
+}
+
+/* Extra small devices (phones, 768px and down) */
+@media only screen and (max-width: 768px) {
+  // not support
+}
+
+/* Small devices (XS display size -  768px and up) */
+@media only screen and (min-width: 768px) {
+  
+}
+
+/* Medium devices (S Display size - 1024px and up) */
+@media only screen and (min-width: 1024px) {
+ 
+} 
+
+/* Large devices (M Display size - 1440px and up) */
+@media only screen and (min-width: 1440px) {
+  
+} 
+
+/* Extra large devices (L display size - 1920px and up) */
+@media only screen and (min-width: 1920px) {
+
+
 }

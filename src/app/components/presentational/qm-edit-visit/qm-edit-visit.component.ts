@@ -77,7 +77,7 @@ export class QmEditVisitComponent implements OnInit {
     this.HeaderSelectedVisit=null;
     this.staffPoolDispatchers.resetStaffPool();
     this.servicePointPoolDispatchers.resetServicePointPool();
-    // this.QueueDispatchers.resetQueueInfo();
+    this.QueueDispatchers.resetQueueInfo();
   }
 
   NextFlow(flow){

@@ -46,6 +46,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   visitClicked: boolean = false;
   userDirection: string;
   visitOptionStatus : string;
+  infoVisitId:number;
   
 
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
@@ -463,6 +464,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   getAppointmentTime(visit){
+    console.log(visit);
+    
     let timeformat = "hh:mm A";
     if (this.timeConvention === "24") {
       timeformat = "HH:mm";
@@ -506,9 +509,16 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     clearTimeout(this.timeoutHandle);
   }
 
+  selectedInfoButton(id){
+    if(this.infoVisitId==id){
+      this.infoVisitId = null;
+    }else{
+      this.infoVisitId = id;
+    }    
+  }
+
   ResetAutoCollapse(){
     this.StopAutoCollapse();
     this.StartAutoCollapse();
-
   }
 }

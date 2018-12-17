@@ -75,15 +75,7 @@ export class QmQueueSummaryComponent implements OnInit {
     this.subscriptions.add(userDirectionSubscription);
     
 
-    const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
-      this.selectedVisit = selectedVisit;
-      if(!this.selectedVisit){
-        this.inputText = '';
-      }
-       
-        
-    })
-    this.subscriptions.add(selectedVisitSubscription);
+    
     
     const VisitSearchLoadedSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((s)=>{
       this.queueVisitIDloaded = s;
@@ -153,6 +145,16 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(branchSub);
 
+    const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
+      this.selectedVisit = selectedVisit;
+      if(!this.selectedVisit){
+        if(!this.isSelectedVisitFail&& !this.isInvalidVisitEntry){
+          this.inputText = '';
+        }       
+      }
+       
+    })
+    this.subscriptions.add(selectedVisitSubscription);
 
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       this.selectedQueue = queue;
@@ -164,8 +166,9 @@ export class QmQueueSummaryComponent implements OnInit {
         }
       } else {
         this.selectedQueueId = null;
-        this.inputText = '';
-        
+        if(!this.isSelectedVisitFail&& !this.isInvalidVisitEntry && !this.queueName && this.queueVisitIDloaded){
+          this.inputText = '';
+        }       
             }
     });
     this.subscriptions.add(selectedQueueSub);
@@ -227,6 +230,7 @@ export class QmQueueSummaryComponent implements OnInit {
     this.queueDispatchers.resetSelectedQueue();   
     this.queueDispatchers.setectVisit(null);
     var searchBox = document.getElementById("visitSearchVisit") as any;
+    this.queueDispatchers.resetFetchVisitError();
     searchBox.value="";
 
   }
@@ -328,8 +332,6 @@ export class QmQueueSummaryComponent implements OnInit {
     this.desktopQRCodeListnerTimer = setInterval(() => {
       if (this.searchText && this.searchText.length > 0) {
         this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
-        console.log('text');
-        
       }
     }, 1000);
   }

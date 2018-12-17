@@ -29,7 +29,7 @@
           <div class="qm-service-point-list__body">
             <div *ngFor="let s of StaffPool |filterStaffPool : filterText ">
             <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectPool(s.id)">
-                <div class="qm-col qm-service-point-list-body-row-first-label">{{s.firstName}} {{s.lastName}}</div>
+                <div class="qm-col qm-service-point-list-body-row-first-label" [innerHtml]="s.firstName + ' ' + s.lastName | qmhighlight: filterText"></div>
               </div>
           </div>
           </div>

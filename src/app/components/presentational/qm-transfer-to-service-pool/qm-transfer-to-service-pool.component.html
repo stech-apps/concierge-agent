@@ -32,7 +32,7 @@
     <div class="qm-service-point-list__body">
       <div *ngFor="let s of servicePoints  | filterServicePoints : filterText">
         <div class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
-          <div class="qm-service-point-list-body-row-first-label">{{s.name}}</div>
+          <div class="qm-service-point-list-body-row-first-label" [innerHtml]="s.name | qmhighlight: filterText"></div>
           <span *ngIf="s.state == 'CLOSED'">
             <i class="icon-lock"></i>
           </span>

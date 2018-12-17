@@ -14,15 +14,12 @@
   &__content {
     background-color: $white;
     padding-bottom: 10px;
-    min-width: 30vw;
+ 
     max-height: calc(100vh - 250px);
     border-radius: 4px;
   }
   &__header {
-    width: 90%;
-    margin: auto;
     color: $dark-transparent82;
-    font-size: 24px;
     line-height: 2em;
     padding-top: 20px;
     padding-bottom: 10px;
@@ -70,9 +67,6 @@
       // line-height: 2.5em;
       font-size: 16px;
       text-align: left;
-      // text-overflow: ellipsis;
-      // overflow: hidden;
-      // white-space: nowrap;
       margin: 0 15px;
       @at-root [dir='rtl'] & {
         text-align: right;
@@ -110,39 +104,12 @@
       background-color: rgba(0, 0, 0, 0.5);
     }
   }
-  &__list-shadow-top {
-    // position: relative;
-    // top: 5px;
-    // max-height: 8px;
-    // height: 7px;
   
-    // opacity: 0.7;
-    // margin-left: auto;
-    // margin-right: auto;
-    // content: "...";
-    // text-overflow: initial;
-    // color: transparent;
-    // width: 85.5%;
-    // z-index: 10;
-  }
-  &__list-shadow-bottom {
-    // position: relative;
-    // bottom: 5px;
-    // max-height: 8px;
-    // height: 7px;
-    // // box-shadow: inset 0px -3px 4px rgba(0, 0, 0, 1);
-    // opacity: 0.7;
-    // margin-left: auto;
-    // margin-right: auto;
-    // content: "...";
-    // text-overflow: initial;
-    // color: transparent;
-    // width: 85.5%;
-  }
 }
 
 .qm-option__help-btn{
   padding: 0 20px;
+  z-index: 40;
 }
 
 @media(max-width: 800px) {
@@ -201,13 +168,13 @@
 }
 
 .triangle {
-  width: 100px;
+  width: 65px;
   height: 77px;
   position: relative;
   overflow: hidden;
   margin: auto;
   top:-22px;
-  // box-shadow: 0 16px 10px -17px rgba(0, 0, 0, 0.5);
+
 }
 .triangle:after {
   content: "";
@@ -223,7 +190,7 @@
 
 .quick-serve-tooltip{
   width: 350px;
-    z-index: 50;
+    z-index: 30;
     position: absolute;
     margin-left: 12px;
     // margin-top: -87px;
@@ -238,9 +205,9 @@
     &__rec{
       background: $dark-transparent82;
       color: $white;
-      font-size: 0.6em;
+      font-size: 16px;
       padding: 10px;
-      line-height: 2em;
+      line-height: 24px;
       text-align: center;
       border-radius: 5px;
       margin-top: -22px;
@@ -259,3 +226,72 @@
   z-index: 100;
   // background: rgba(0, 0, 0, 0.5);
 } 
+
+/* Extra small devices (phones, 768px and down) */
+@media only screen and (max-width: 768px) {
+  .qm-quick-serve {
+    &__content {
+      width: 476px;
+    }
+    &__header {
+      font-size: 28px;
+      margin: 0px 32px;
+    }
+    }
+}
+
+/* Small devices (XS display size -  768px and up) */
+@media only screen and (min-width: 768px) {
+  .qm-quick-serve {
+  &__content {
+    width: 476px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+  }
+}
+
+/* Medium devices (S Display size - 1024px and up) */
+@media only screen and (min-width: 1024px) {
+  .qm-quick-serve {
+  &__content {
+    width: 368px;
+   
+  }
+  &__header {
+    font-size: 24px;
+    margin: 0px 20px;
+  }
+  }
+} 
+
+/* Medium devices (M Display size - 1440px and up) */
+@media only screen and (min-width: 1440px) {
+  .qm-quick-serve {
+  &__content {
+    width: 476px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+}
+
+} 
+
+/* Extra large devices (L display size - 1920px and up) */
+@media only screen and (min-width: 1920px) {
+  .qm-quick-serve {
+  &__content {
+    width: 520px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+
+}
+
+}

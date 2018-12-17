@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ElementRef, Input } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, ElementRef, Input, SimpleChanges, OnChanges } from "@angular/core";
 import { UserSelectors, SystemInfoSelectors } from "src/store";
 import { Observable, Subscription } from "rxjs";
 import * as moment from "moment";
@@ -8,14 +8,13 @@ import * as moment from "moment";
   templateUrl: "./qm-time-filter-items.component.html",
   styleUrls: ["./qm-time-filter-items.component.scss"]
 })
-export class QmTimeFilterItemsComponent implements OnInit {
+export class QmTimeFilterItemsComponent implements OnInit, OnChanges {
   constructor(
     private userSelectors: UserSelectors,
     private systemInfoSelectors: SystemInfoSelectors,
     private elRef: ElementRef
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
-    this.generateTimeCollection();
   }
 
   private subscriptions: Subscription = new Subscription();
@@ -24,7 +23,10 @@ export class QmTimeFilterItemsComponent implements OnInit {
   timeCollection: Array<moment.Moment> = [];
 
   @Input() 
-  public selectedTime: moment.Moment;
+  public selectedTime: moment.Moment = moment();
+
+  @Input()
+  public skipFirst: boolean = false;
 
   @Output()
   public onTimeSelect = new EventEmitter<moment.Moment>();
@@ -37,8 +39,13 @@ export class QmTimeFilterItemsComponent implements OnInit {
     );
 
     this.subscriptions.add(systemInfoSub);
-    console.log(this.selectedTime);
+    this.timeCollection = [];
+    this.generateTimeCollection();
     
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
   }
 
   ngOnDestroy() {
@@ -46,8 +53,9 @@ export class QmTimeFilterItemsComponent implements OnInit {
   }
 
   generateTimeCollection() {
-    const currentHourStarted = moment().startOf("day");
-    const currentDayEnd = moment()
+    console.log(this.selectedTime);
+    const currentHourStarted = this.selectedTime.clone().startOf("day");
+    const currentDayEnd = this.selectedTime.clone()
       .endOf("day")
       .add(1, "second");
     let timeItem = currentHourStarted;

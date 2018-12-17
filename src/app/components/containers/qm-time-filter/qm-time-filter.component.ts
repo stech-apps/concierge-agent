@@ -37,16 +37,17 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
   @Input()
   public selectedEndTime: moment.Moment;
   showDateFilter: boolean;
-  selectedDate: CalendarDate;
+  public selectedDate: CalendarDate;
   isCalendarOpen: boolean;
   isCalendarEverShown: boolean;
   @ViewChild("endContainer") endTimeFilters: TemplateRef<any>;
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
-    this.selectedDate = {
+    /*this.selectedDate = {
       mDate: moment()
     };
+    */
   }
 
   ngAfterViewInit() {
@@ -64,8 +65,8 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
 
   onApplyClick() {
     this.activeModal.close({
-      start: this.selectedStartTime,
-      end: this.selectedEndTime,
+      start: moment(this.selectedDate.mDate.format('YYYY-MM-DD') + ' ' + this.selectedStartTime.format('HH:mm')),
+      end:  moment(this.selectedDate.mDate.format('YYYY-MM-DD') + ' ' + this.selectedEndTime.format('HH:mm')),
       date: this.selectedDate
     });
   }

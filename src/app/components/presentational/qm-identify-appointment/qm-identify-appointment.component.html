@@ -50,7 +50,7 @@
             <div class="qm-identify-appointment__pannel-header"> {{ 'label.arriveappointment.upcoming' | translate }}
               <ng-container *ngIf="timeConvention === 'AMPM'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                  <span *ngIf="useCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM, '}}</span>
+                  <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
                   &nbsp;
                   <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                     date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
@@ -59,7 +59,7 @@
   
               <ng-container *ngIf="timeConvention === '24'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                    <span *ngIf="useCalendarEndpoint">{{selectedDate | amDateFormat : 'DD MMMM, '}}</span>
+                    <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
                     &nbsp;
                   <span>{{selectedFromTime | date: 'HH:mm'}}</span>
                   <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |

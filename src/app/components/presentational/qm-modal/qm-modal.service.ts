@@ -109,6 +109,7 @@ export class QmModalService {
     modal.componentInstance.showDateFilter = showDateFilter;
     modal.componentInstance.selectedStartTime = selectedStartTime;
     modal.componentInstance.selectedEndTime = selectedEndTime;
+    modal.componentInstance.selectedDate = {mDate : selectedStartTime};
     return modal;
   }
 }

@@ -49,13 +49,13 @@ export class Logout {
   }
 
   initiateLogout(force : boolean){
-    this.spService.logout(force).subscribe((status: any) => {
-      if(this.nativeApi.isNativeBrowser()){
-        this.nativeApi.logOut();
-      }
-      else{
-        window.location.href =  LOGOUT_URL;
-      }
-    })
+    this.spService.logout(force).subscribe();
+
+    if(this.nativeApi.isNativeBrowser()){
+      this.nativeApi.logOut();
+    }
+    else{
+      window.location.href =  LOGOUT_URL;
+    }
   }
 }

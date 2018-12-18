@@ -20,7 +20,7 @@
         </div>
 
       <div class="qm-reschedule__selected-branch qm-text-overflow-fix">{{ this.editAppointment?.branch?.name }}</div>
-      <div class="qm-reschedule-select__content">
+      <div class="qm-reschedule-select__content" *ngIf="isRescheduleEnabledInUtt">
         <div class="qm-calendar-container">
           <div class="qm-calendar-placeholder">
             <qm-calendar [selectedDates]="selectedDates" [enabledDates]="reservableDates" #qmcalendar (onSelectDate)="onSelectDate($event)"></qm-calendar>

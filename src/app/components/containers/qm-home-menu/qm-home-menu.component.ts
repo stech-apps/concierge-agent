@@ -71,7 +71,6 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.checkUserPermissions();
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
-    console.log(this.userDirection$);
     
     if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
       this.calendarBranchDispatcher.fetchCalendarBranches();

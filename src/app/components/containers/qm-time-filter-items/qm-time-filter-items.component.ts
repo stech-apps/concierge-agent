@@ -8,7 +8,7 @@ import * as moment from "moment";
   templateUrl: "./qm-time-filter-items.component.html",
   styleUrls: ["./qm-time-filter-items.component.scss"]
 })
-export class QmTimeFilterItemsComponent implements OnInit, OnChanges {
+export class QmTimeFilterItemsComponent implements OnInit {
   constructor(
     private userSelectors: UserSelectors,
     private systemInfoSelectors: SystemInfoSelectors,
@@ -40,12 +40,7 @@ export class QmTimeFilterItemsComponent implements OnInit, OnChanges {
 
     this.subscriptions.add(systemInfoSub);
     this.timeCollection = [];
-    this.generateTimeCollection();
-    
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
+    this.generateTimeCollection();    
   }
 
   ngOnDestroy() {
@@ -53,16 +48,16 @@ export class QmTimeFilterItemsComponent implements OnInit, OnChanges {
   }
 
   generateTimeCollection() {
-    console.log(this.selectedTime);
     const currentHourStarted = this.selectedTime.clone().startOf("day");
     const currentDayEnd = this.selectedTime.clone()
-      .endOf("day")
-      .add(1, "second");
+      .endOf("day");
+
     let timeItem = currentHourStarted;
     while (timeItem <= currentDayEnd) {
       this.timeCollection.push(timeItem.clone());
       timeItem = timeItem.add(1, "hour");
     }
+    this.timeCollection.push(currentDayEnd);
   }
 
   timeSelected(selectedTime: moment.Moment) {

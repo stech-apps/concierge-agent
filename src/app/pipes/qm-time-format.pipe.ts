@@ -20,7 +20,6 @@ export class QmTimeFormatPipe implements PipeTransform {
   }
 
   transform(timeString: string, timeZone?: any): Observable<string> {
-    console.log(timeString);
     if(timeString) {
       if(timeZone) {
         return this.systemInfoSelectors.timeConvention$.pipe(map(tc => {

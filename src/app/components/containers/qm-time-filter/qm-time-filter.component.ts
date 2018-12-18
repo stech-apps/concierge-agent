@@ -44,10 +44,6 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
-    /*this.selectedDate = {
-      mDate: moment()
-    };
-    */
   }
 
   ngAfterViewInit() {
@@ -98,12 +94,10 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
 
   showCalendar() {
     this.isCalendarOpen = true;
-    console.log(this.isCalendarOpen + "#### show calendar");
   }
 
   onSelectDate(selectedDate: CalendarDate) {
     this.selectedDate = selectedDate;
     this.isCalendarOpen = false;
-    console.log(this.isCalendarOpen + "1#### from on select date");
   }
 }

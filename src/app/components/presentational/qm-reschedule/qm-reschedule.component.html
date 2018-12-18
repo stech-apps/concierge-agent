@@ -19,7 +19,7 @@
             (click)="onCancelAppointment()">{{ 'label.cancel.appointment' | translate}}</div>
         </div>
 
-      <div class="qm-reschedule__selected-branch qm-text-overflow-fix">{{ this.editAppointment?.branch?.name }}</div>
+      <div class="qm-reschedule__selected-branch qm-text-overflow-fix" *ngIf="isRescheduleEnabledInUtt">{{ this.editAppointment?.branch?.name }}</div>
       <div class="qm-reschedule-select__content" *ngIf="isRescheduleEnabledInUtt">
         <div class="qm-calendar-container">
           <div class="qm-calendar-placeholder">

@@ -6,7 +6,16 @@ qm-time-filter-items {
   overflow-y: auto;
 }
 
+.qm-filter-tail {
+  width: 0;
+  height: 0;
+  border-top: 4px;
+  color: black;
+  position: absolute 
+}
+
 .qm-time-filter {
+  position: relative;
 
   &__date-container {
     position: relative;

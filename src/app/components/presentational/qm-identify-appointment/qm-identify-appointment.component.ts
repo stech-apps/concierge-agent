@@ -1114,15 +1114,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     } else {
       let now = moment();
       if (isFromTime) {
-        formattedDate = `${now.format("YYYY-MM-DD")}T${this.pad(
-          this.fromTime.hour,
-          2
-        )}:${this.pad(this.fromTime.minute, 2)}`;
+        formattedDate = `${now.format("YYYY-MM-DD")}T${this.selectedFromTime.format('HH:mm')}`;
       } else {
-        formattedDate = `${now.format("YYYY-MM-DD")}T${this.pad(
-          this.toTime.hour,
-          2
-        )}:${this.pad(this.toTime.minute, 2)}`;
+        formattedDate = `${now.format("YYYY-MM-DD")}T${this.selectedToTime.format('HH:mm')}`;
       }
     }
     // adjust the time zone for calendar endpoint

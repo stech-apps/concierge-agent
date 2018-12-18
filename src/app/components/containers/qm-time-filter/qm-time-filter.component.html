@@ -1,8 +1,10 @@
 <div
   class="qm-modal qm-time-filter qm-form-modal qm-modal--md"
   [dir]="userDirection$ | async"
-  cdkTrapFocus
->
+  cdkTrapFocus>
+
+  <div class="qm-filter-tail"></div>
+
   <form class="qm-modal__box-container">
     <div class="qm-modal__header qm-time-filter__header">
       <span class="qm-time-filter__header-text qm-text-overflow-fix">{{

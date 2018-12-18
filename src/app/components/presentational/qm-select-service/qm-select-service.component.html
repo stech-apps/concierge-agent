@@ -78,7 +78,7 @@
     <div class="qm-list">
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
          [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
-        <div (click)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
+        <div (click)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
           </div>
         <i class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
       </div>

@@ -1,69 +1,74 @@
-@import '../../../../styles/base/_component-manifest.scss';
+@import "../../../../styles/base/_component-manifest.scss";
 //qm-flow-sub-header
 
 :host(.qm-service-page) {
-    .qm-flow-sub-header__right {
-        align-items: flex-end;
-        margin-left: 16px;
-    }
+  .qm-flow-sub-header__right {
+    align-items: flex-end;
+    margin-left: 16px;
+  }
 
-    .qm-checkbox__selector-icon-text {
-        margin-left: 0.5rem;
-    }
-    
-    .qm-checkbox-label {
-        padding-right: 1rem;
-    }
+  .qm-checkbox__selector-icon-text {
+    margin-left: 0.5rem;
+  }
 
-    .qm-list__item {
-        position: relative;
-       
-    }
+  .qm-checkbox-label {
+    padding-right: 1rem;
+  }
 
-    .qm-flow-sub-header {
-        display: block;
-    }
+  .qm-list__item {
+    position: relative;
+  }
 
-    .qm-service-search-area {
-        display: flex;
-    }
+  .qm-flow-sub-header {
+    display: block;
+  }
+
+  .qm-service-search-area {
+    display: flex;
+  }
+}
+
+ .qm-list-item--frequent {
+     @at-root [dir='rtl'] & {
+         text-align: right;
+     }
 }
 
 .qm-service- {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: calc(100vh - 134px);
-    overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 134px);
+  overflow: auto;
 }
 
 .qm-service-list__container-ext {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: calc(100vh - 100px);
-    overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 100px);
+  overflow: auto;
 }
 
 .qm-service-list {
-    &__item-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 1.5rem;
-    }
+  &__item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
 
-    &__header {
-        margin-top: 2rem;
+  &__header {
+    margin-top: 2rem;
+  }
+  &__item {
+    &--text {
+      white-space: nowrap;
+      // width: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    &__item {
-        &--text{
-            white-space: nowrap; 
-            // width: 50px; 
-            overflow: hidden;
-            text-overflow: ellipsis; 
-        }
-    }
+  }
 }
 
 /* .qm-service-list {
@@ -152,23 +157,21 @@
 } */
 
 .qm-select-service {
-
-    &__search-heading  {
-        font-size: 1.125rem;
-        padding-top: 1rem;
-        mark {
-            font-weight: bold;
-            background: transparent;
-        }
-        padding-top: 1rem;
-        @at-root [dir='rtl'] & {
-            text-align: right;
-          }
+  &__search-heading {
+    font-size: 1.125rem;
+    padding-top: 1rem;
+    mark {
+      font-weight: bold;
+      background: transparent;
     }
-
-    &__foundbox {
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.42);
+    padding-top: 1rem;
+    @at-root [dir="rtl"] & {
+      text-align: right;
     }
+  }
 
+  &__foundbox {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.42);
+  }
 }

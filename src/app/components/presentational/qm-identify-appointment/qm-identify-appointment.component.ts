@@ -1105,14 +1105,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       if (isFromTime) {
         formattedDate = `${this.selectedDate.mDate.format(
           "YYYY-MM-DD"
-        )}T${this.pad(this.fromTime.hour, 2)}:${this.pad(
-          this.fromTime.minute,
-          2
-        )}`;
+        )}T${this.selectedFromTime.format('HH:mm')}`;
       } else {
         formattedDate = `${this.selectedDate.mDate.format(
           "YYYY-MM-DD"
-        )}T${this.pad(this.toTime.hour, 2)}:${this.pad(this.toTime.minute, 2)}`;
+        )}T${this.selectedToTime.format('HH:mm')}`;
       }
     } else {
       let now = moment();

@@ -25,7 +25,7 @@
         <span class="qm-summary-item__text qm-summary-item__text--time-period"><span>{{getStartTime()}}</span><span>&nbsp;-&nbsp;</span><span>{{getEndTime()}}</span></span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)"  *ngIf="selectedAppointment">
+    <div class="qm-checkout-view__summary-grouping" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-home"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment?.branch?.name || selectedBranch?.name}}</span>

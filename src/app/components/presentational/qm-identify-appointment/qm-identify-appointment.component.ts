@@ -592,6 +592,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       if(!moment().isSame(this.selectedToTime, 'day')){
         this.selectedToTime = moment().endOf('day');
       }
+
+      this.selectedDate =  { mDate : this.selectedFromTime.startOf('day') };
     }
   }
 
@@ -1052,8 +1054,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     ) {
       searchQuery = {
         ...searchQuery,
-        fromDate: this.getUttDefaultTimeForSearch(this.uttFromTime),
-        toDate: this.getUttDefaultTimeForSearch(this.uttToTime)
+        fromDate: this.getformattedTimeForDurationSearch(true),
+        toDate: this.getformattedTimeForDurationSearch(false)
       };
     } else if (this.currentSearchState === this.SEARCH_STATES.ID) {
       searchQuery = {

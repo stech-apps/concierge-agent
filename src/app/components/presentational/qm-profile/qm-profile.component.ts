@@ -91,14 +91,10 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.setDefaultServicePoint();
 
-    this.translateService
-      .get(["label.profile.select.branch"])
-      .subscribe(messages => {
-        this.selectedBranch = {
-          name: messages["label.profile.select.branch"],
-          id: -1
-        };
-      });
+    this.selectedBranch = {
+      name: 'label.profile.select.branch',
+      id: -1
+    };
 
     const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe(
       branch => {
@@ -149,17 +145,13 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {}
 
   setDefaultServicePoint() {
-    this.translateService
-      .get(["label.profile.select.servicepoint"])
-      .subscribe(messages => {
         this.selectedServicePoint = {
-          name: messages["label.profile.select.servicepoint"],
+          name: 'label.profile.select.servicepoint',
           id: -1,
           unitId: null,
           parameters: null,
           state: null
-        };
-      });
+      };
   }
 
   ngOnDestroy() {

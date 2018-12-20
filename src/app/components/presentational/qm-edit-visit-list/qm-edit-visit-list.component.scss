@@ -351,14 +351,18 @@
     }
     &__icon{
         font-size: 2em;
-    display: block;
-    vertical-align: middle;
-    align-self: center;
-    text-align: center;
-    align-items: center;
-    color: $dark-transparent42;
-    margin-top: 9px;
-    cursor: pointer;
+        display: block;
+        vertical-align: middle;
+        align-self: center;
+        text-align: center;
+        align-items: center;
+        color: $dark-transparent82;
+        margin-top: 9px;
+        cursor: pointer;
+        }
+    &__text{
+        margin-top:9px;
+        font-size: 18px;
     }
 }
 

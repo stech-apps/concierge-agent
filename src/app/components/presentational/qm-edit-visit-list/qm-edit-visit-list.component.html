@@ -59,20 +59,22 @@
           <div class="qm-col qm-body-item">{{visit.customerName }}</div>
           <div class="qm-col qm-body-item"> {{visit.serviceName }} </div>
           <div class="qm-col qm-body-item"> {{getAppointmentTime(visit)}}</div>
-          <div class="qm-col qm-body-item">{{ visit.waitingTimeStr }}</div>
+          <div class="qm-col qm-body-item">{{ visit.waitingTimeStr }} min</div>
         </div>
+        
         <!-- Extended visit container -->
           <div class="qm-expanded-visit-container" *ngIf="infoVisitId === visit.visitId">  
-            <div class="qm-flex-grid">
-            <i class="icon-clock qm-expanded-visit-container__icon"></i>  <span> {{getAppointmentTime(visit)}}</span>
+            <div class="qm-flex-grid" *ngIf="getAppointmentTime(visit)!='-'">
+            <i class="icon-clock qm-expanded-visit-container__icon"></i>  <span class="qm-expanded-visit-container__text"> {{getAppointmentTime(visit)}}</span>
             </div>
             <div class="qm-flex-grid">
-                <i class="icon-hourglass qm-expanded-visit-container__icon"></i>  <span>{{ visit.waitingTimeStr }}</span>
+                <i class="icon-hourglass qm-expanded-visit-container__icon"></i>  <span class="qm-expanded-visit-container__text">{{ visit.waitingTimeStr }} min</span>
             </div>
             <div class="qm-flex-grid">
-                <i class="icon-service qm-expanded-visit-container__icon"></i>  <span>{{ visit.serviceName }}</span>
+                <i class="icon-service qm-expanded-visit-container__icon"></i>  <span class="qm-expanded-visit-container__text">{{ visit.serviceName }}</span>
             </div>
           </div>
+
         </div>
         
         <div class="info-icon-container">

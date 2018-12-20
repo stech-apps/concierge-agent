@@ -26,11 +26,14 @@ export class QueueVisitsDataService {
 
   
   private formatTimeHHMM(totalSeconds) {
-    var hours = Math.floor(totalSeconds / 3600);
-    var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+    // var hours = Math.floor(totalSeconds / 3600);
+    // var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
 
-    var result = (hours < 10 ? "0" + hours : hours);
-    result += ":" + (minutes < 10 ? "0" + minutes : minutes);
+    // var result = (hours < 10 ? "0" + hours : hours);
+    // result += ":" + (minutes < 10 ? "0" + minutes : minutes);
+    
+    //requirement to show time in minutes 
+    var result = Math.floor(totalSeconds / 60);
     return result;
 } 
 

@@ -90,7 +90,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     if (this.currentBranch.id && this.currentBranch.id != branch.id) {
       this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
         if (v) {
-          //this.calendarBranchDispatchers.selectCalendarBranch(branch);
+          this.calendarBranchDispatchers.selectCalendarBranch(branch);
           this.timeSlotDispatchers.deselectTimeslot();
           this.currentBranch = branch;
           this.goToNext();
@@ -100,7 +100,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     else if (!this.currentBranch.id) {
       this.timeSlotDispatchers.deselectTimeslot();
       this.currentBranch = branch;
-      //this.calendarBranchDispatchers.selectCalendarBranch(branch);
+      this.calendarBranchDispatchers.selectCalendarBranch(branch);
       this.goToNext();
     }
   }

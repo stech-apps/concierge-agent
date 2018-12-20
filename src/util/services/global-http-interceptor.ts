@@ -54,8 +54,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (((this.isABlockedUrl(req.url))
-        ) && !this.isAResourceFile(req)) {
+        if ((this.isABlockedUrl(req.url) && req.method != 'GET') && !this.isAResourceFile(req)) {
 
             if (!this.serviceState.isActive()) {
                 this.lastRequestAction = req.method;
@@ -67,8 +66,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                 this.localTimeoutBeforeStartPing = setTimeout(() => {
                     // Show yellow network message only if not retrying get requesting...
                     if (this.serviceState.getCurrentTry() == 0) {
-                        //networkMessageController.setMessage(R.NETWORK_STATUS_MSG.POOR_NETWORK_MSG);
-                        //networkMessageController.showNetworkMessage();
                         this.translateService.get('poor_network_msg').subscribe((msg) => {
                             this.globalNotifyDispatchers.showWarning({ message: msg });
                         }).unsubscribe();
@@ -82,7 +79,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
             return next.handle(req).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })), tap((response: any) => {
                 if (response instanceof HttpResponse) {
-                    if ((this.isABlockedUrl(response.url) || req.method != 'GET') && !this.isAResourceFile(response)) {
+                    if ((this.isABlockedUrl(req.url) && req.method != 'GET') && !this.isAResourceFile(req)) {
                         //networkMessageController.hideNetworkMessage();
                         this.globalNotifyDispatchers.hideNotifications();
                         if (this.localTimeoutBeforeStartPing) {

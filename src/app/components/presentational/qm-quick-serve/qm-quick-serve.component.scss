@@ -1,6 +1,7 @@
 @import '../../../../styles/base/_component-manifest.scss';
 [dir='rtl'] .qm-quick-serve {
   margin-left: rem($standard-margin);
+  
 }
 
 
@@ -227,9 +228,11 @@
   // background: rgba(0, 0, 0, 0.5);
 } 
 
+
 /* Extra small devices (phones, 768px and down) */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   .qm-quick-serve {
+    // width: calc(100vw - 500px);
     &__content {
       width: 476px;
     }
@@ -240,9 +243,33 @@
     }
 }
 
+@media screen and (orientation:portrait) { 
+  .qm-quick-serve {
+    // width: calc(100vw - 500px);
+  &__content {
+    width: 476px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+  }
+}
+
 /* Small devices (XS display size -  768px and up) */
+@media only screen and (max-width: 767px) {
+  .qm-quick-serve {
+  width: 467px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  }
+  
+
+
 @media only screen and (min-width: 768px) {
   .qm-quick-serve {
+    width: calc(100vw - 500px);
   &__content {
     width: 476px;
   }
@@ -255,6 +282,7 @@
 
 /* Medium devices (S Display size - 1024px and up) */
 @media only screen and (min-width: 1024px) {
+  width: calc(100vw - 768px);
   .qm-quick-serve {
   &__content {
     width: 368px;
@@ -270,6 +298,7 @@
 /* Medium devices (M Display size - 1440px and up) */
 @media only screen and (min-width: 1440px) {
   .qm-quick-serve {
+    width: calc(100vw - 900px);
   &__content {
     width: 476px;
   }
@@ -284,6 +313,7 @@
 /* Extra large devices (L display size - 1920px and up) */
 @media only screen and (min-width: 1920px) {
   .qm-quick-serve {
+    width: calc(100vw - 1136px);
   &__content {
     width: 520px;
   }
@@ -295,3 +325,12 @@
 }
 
 }
+
+@media screen and (orientation:portrait) {
+  .qm-quick-serve {
+  width: 467px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+}
+

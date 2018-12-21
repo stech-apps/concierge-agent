@@ -2,13 +2,16 @@
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
     <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo" ></qm-message-box>
+    
     <qm-quick-serve *ngIf="isQuickServeEnable && !MessageBoxInfo"></qm-quick-serve>
-    <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable">
-       
+   
+    <div class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
+    <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary></qm-queue-summary>
       <qm-queue-list *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>
       <qm-edit-visit-list *ngIf="selelctedQueue || selectedVisit"></qm-edit-visit-list>
       </div>
+    </div>
   </div>
   <qm-home-menu class="animated slideInUp"></qm-home-menu>
   <router-outlet></router-outlet>

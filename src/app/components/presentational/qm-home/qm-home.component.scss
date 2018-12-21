@@ -11,12 +11,30 @@ $standard-home-margin : 1.5rem;
         display: flex;
         flex: 1;
         flex-direction: column; 
+        width: 100%;
+        min-height: 100%;
         // margin-left: $standard-home-margin;
-        background-color: $white;        
+        background-color: $white;
+        
+        
+        @at-root [dir="ltr"] & {
+            margin-left: auto;
+        }        
+
+        @at-root [dir="rtl"] & {
+            margin-right: auto;
+        }        
     }
     &__msg-box{
         width: 100%;height: 100vh;position: absolute;z-index: 2;left:0
     }   
+}
+
+
+.qm-summary-card{
+    width:100%;
+    height: 100%;
+    overflow: auto;
 }
 
 @media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
@@ -26,12 +44,12 @@ $standard-home-margin : 1.5rem;
 }
 
 /* Extra small devices (phones, 768px and down) */
-@media only screen and (max-width: 768px) {
-  
+@media only screen and (max-width: 767px) {
+    max-width: 500px;
   }
   
   /* Small devices (XS display size -  768px and up) */
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 769px) {
     .qm-home-summary-area {
         max-width: 500px;
     }

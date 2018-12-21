@@ -111,6 +111,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   }
 
   onServiceSelect(selectedService: IService) {
+    this.showToolTip = false;
     if(this.selectedService === selectedService){
       this.selectedService = null;
       this.serviceDispatchers.setSelectedServices([]);
@@ -122,6 +123,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   }
 
   onServe() {
+    this.showToolTip = false;
     this.spService.quickServe(this.selectedBranch, this.selectedServicePoint, this.selectedService).subscribe((status: any) => {
       if(status){
         this.translateService.get('quick_serve_toast').subscribe(v => {

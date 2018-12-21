@@ -3,21 +3,21 @@
     --app-theme: #{$qmatic-bordeaux};
 }
 
-// ::-webkit-scrollbar {
-//     width: 6px;
-//   }
+::-webkit-scrollbar {
+    width: 6px;
+  }
   
-//   ::-webkit-scrollbar-track {
-//     box-shadow: none;
-//     border-radius: 0;
-//     width: 6px;
-//     background-color: $dark-transparent12;
-//   }
+  ::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 0;
+    width: 6px;
+    background-color: $dark-transparent12;
+  }
   
-//   ::-webkit-scrollbar-thumb {
-//     box-shadow: none;
-//     background-color: $dark-transparent82;
-//   }
+  ::-webkit-scrollbar-thumb {
+    box-shadow: none;
+    background-color: $dark-transparent82;
+  }
   
 // ::-webkit-scrollbar{
 // width: 20px;

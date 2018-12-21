@@ -121,7 +121,7 @@
                  </div>
               </div>
               <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
-               <div class="qm-identify-appointment__customer-table__list-parent" 
+               <div class="qm-identify-appointment__customer-table__list-parent qm-table__row" 
                   *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">
                   <div (click)="onAppointmentSelect(app)" 
                     class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
@@ -130,8 +130,7 @@
                     <div class="qm-table__cell-15 qm-text-overflow-fix">
                       {{ (app.startTime || app.start ) | qmTimeFormat : (app.branch && app.branch.fullTimeZone || '') | async }}</div>
                     <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
-                      app.branch && app.branch.fullTimeZone || ''))}}</div>
-    
+                      app.branch && app.branch.fullTimeZone || ''))}}</div>    
                     <div class="qm-table__cell-30 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.custName}}</div>
                     <div class="qm-table__cell-35 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">{{app.servicesDisplayLabel}}</div>   
                     <div class="qm-table__cell-30 qm-text-overflow-fix" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.branch?.name}}</div>   

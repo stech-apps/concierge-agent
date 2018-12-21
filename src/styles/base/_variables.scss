@@ -1,18 +1,17 @@
-@import '../svgs/manifest';
-$primary-font-family: 'Roboto', sans-serif;
-$secondary-font-semi-bold: 'Montserrat-SemiBold';
-$secondary-font-regular: 'Montserrat-Regular';
-$secondary-font-light: 'Montserrat-Light';
-$tertiary-font-family: 'OpenSans-CondLight';
+@import "../svgs/manifest";
+$primary-font-family: "Roboto", sans-serif;
+$secondary-font-semi-bold: "Montserrat-SemiBold";
+$secondary-font-regular: "Montserrat-Regular";
+$secondary-font-light: "Montserrat-Light";
+$tertiary-font-family: "OpenSans-CondLight";
 $standard-border-radius: 4px;
 $extended-letter-spacing: 1px;
 $header-letter-spacing: 2px;
 $extended-letter-spacing-2: 2px;
-$font-family: 'Roboto', sans-serif;
+$font-family: "Roboto", sans-serif;
 $base-unit: 16px;
 
 $button-font-size: 18px;
-
 
 $standard-padding: 10px;
 $border-thick: 2px;
@@ -37,32 +36,38 @@ $font-weight-bold: 700;
 $font-small: 0.8rem;
 $font-medium: 0.9rem;
 
-
 // home page
 $home-menu-height: 7.5rem;
 
 // Z-indexes
 $z-index: (
   toastContainer: 150,
-  modal: 200,
+  modal: 200
 );
 
-$grid-columns:                12 !default;
-$grid-gutter-width:           16px !default;
-
+$grid-columns: 12 !default;
+$grid-gutter-width: 16px !default;
 // Breakpoints
 $grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 900px, //1025px, //992px
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 900px,
+  //1025px, //992px
+
     xl: 1200px
 ) !default;
 
+// Breakpoints
+$qm-device-breakpoints: (
+  xs-width: 768px,
+  sm-width: 1024px,
+  md-width: 1440px,
+  lg-width: 1920px
+) !default;
 
 $appointment-identify-searchbar-width: 55%;
-
-//search input
+// search input
 $standard-item-height: 56px;
 $large-search-input-height: $standard-item-height;
 $standar-line-height: 24px;

@@ -1,3 +1,5 @@
+
+
 @mixin sr-only {
   position: absolute;
   width: 1px;
@@ -12,39 +14,7 @@
 
 @mixin qm-background {
   background: #334366; /* Old browsers */
-  // background: -moz-linear-gradient(
-  //   top,
-  //   rgba(32, 44, 68, 1) 1%,
-  //   rgba(39, 54, 78, 1) 18%,
-  //   rgba(39, 54, 78, 1) 46%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 100%,
-  //   rgba(109, 105, 129, 1) 100%
-  // ); /* FF3.6-15 */
-  // background: -webkit-linear-gradient(
-  //   top,
-  //   rgba(32, 44, 68, 1) 1%,
-  //   rgba(39, 54, 78, 1) 18%,
-  //   rgba(39, 54, 78, 1) 46%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 100%,
-  //   rgba(109, 105, 129, 1) 100%
-  // ); /* Chrome10-25,Safari5.1-6 */
-  // background: linear-gradient(
-  //   to bottom,
-  //   rgba(32, 44, 68, 1) 1%,
-  //   rgba(39, 54, 78, 1) 18%,
-  //   rgba(39, 54, 78, 1) 46%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 93%,
-  //   rgba(109, 105, 129, 1) 100%,
-  //   rgba(109, 105, 129, 1) 100%
-  // ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
 }
 
 @mixin icomoon-styles {
@@ -158,4 +128,61 @@ $rem-px-only: false !default;
   display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+@mixin respond-to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($qm-device-breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media #{inspect(map-get($qm-device-breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+ 
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($qm-device-breakpoints)}.";
+  }
+}
+
+$xs-width: map-get($qm-device-breakpoints, xs-width );
+$sm-width: map-get($qm-device-breakpoints, sm-width );
+$md-width: map-get($qm-device-breakpoints, md-width );
+$lg-width: map-get($qm-device-breakpoints, lg-width );
+
+@mixin qm-xs-portrait {
+  @media (min-width: #{$xs-width}) and (max-width: #{$sm-width - 1px}) and (orientation: portrait){
+    @content;
+  }
+}
+
+@mixin qm-xs-landscape {
+  @media (min-width: #{$xs-width}) and (max-width: #{$sm-width - 1px}) and (orientation: landscape){
+    @content;
+  }
+}
+
+@mixin qm-xs {
+  @media (min-width: #{$xs-width}) and (max-width: #{$sm-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin qm-sm {
+  @media (min-width: #{$sm-width}) and (max-width: #{$md-width - 1px}){
+    @content;
+  }
+}
+
+@mixin qm-md {
+  @media (min-width: #{$md-width}) and (max-width: #{$lg-width - 1px}){
+    @content;
+  }
+}
+
+@mixin qm-lg {
+  @media (min-width: #{$lg-width}) {
+    @content;
+  }
 }

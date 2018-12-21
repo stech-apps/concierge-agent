@@ -209,6 +209,8 @@ filterQueues(newFilter: string) {
   }
 
   showHideToolTip(){
+    console.log("hello");
+    
     this.showToolTip = !this.showToolTip;
   }
 

@@ -1,10 +1,4 @@
 @import '../../../../styles/base/_component-manifest.scss';
-:host {
-  // display: flex;
-  margin-top: 5rem;
-
- 
-}
 
 
 .qm-queue-list-title{
@@ -241,8 +235,25 @@ hr{
  
 }
 
+
+
+@media screen and (orientation:portrait) {
+  :host {
+    margin-top: 30px;
+  }
+  .qm-search-visit-container{
+    input{
+      width: 50vw;
+    }
+  }
+  
+}
+
 /* Extra small devices (phones, 768px and down) */
 @media only screen and (max-width: 768px) {
+  :host {
+    margin-top: 24px;
+  }
   .qm-queue-list-title{
     &__label-text-captial{
       font-size: 16px;
@@ -258,6 +269,9 @@ hr{
 
 /* Small devices (XS display size -  768px and up) */
 @media only screen and (min-width: 768px) {
+  :host {
+    margin-top: 77px;
+  }
   .qm-queue-list-title{
     &__label-text-captial{
       font-size: 21px;
@@ -268,6 +282,10 @@ hr{
 
 /* Medium devices (S Display size - 1024px and up) */
 @media only screen and (min-width: 1024px) {
+  :host {
+    margin-top: 77px;
+  }
+
   .qm-queue-list-title{
     &__label-text-captial{
       font-size: 21px;
@@ -278,6 +296,10 @@ hr{
 
 /* Large devices (M Display size - 1440px and up) */
 @media only screen and (min-width: 1440px) {
+  :host {
+    margin-top: 112px;
+  }
+
   .qm-queue-list-title{
     &__label-text-captial{
       font-size: 21px;
@@ -288,20 +310,18 @@ hr{
 
 /* Extra large devices (L display size - 1920px and up) */
 @media only screen and (min-width: 1920px) {
+  :host {
+    margin-top: 112px;
+  }
+
   .qm-queue-list-title{
     &__label-text-captial{
       font-size: 21px;
     }
   }
 
+  
+
 }
 
-@media screen and (orientation:portrait) {
-  .qm-search-visit-container{
-    input{
-      width: 50vw;
-    }
-  }
-  
-}
 

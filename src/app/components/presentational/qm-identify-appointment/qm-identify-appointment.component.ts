@@ -593,7 +593,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.selectedToTime = moment().endOf('day');
       }
 
-      this.selectedDate =  { mDate : this.selectedFromTime.startOf('day') };
+      this.selectedDate =  { mDate : this.selectedFromTime.clone().startOf('day') };
     }
   }
 

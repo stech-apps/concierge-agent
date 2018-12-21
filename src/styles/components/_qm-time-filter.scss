@@ -2,6 +2,10 @@
   &__backdrop {
     background: transparent;
   }
+
+  &__header-icon {
+    color: $primary-pink;
+  }
 }
 
 @media (min-width: 576px) {

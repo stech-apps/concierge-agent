@@ -43,7 +43,7 @@ qm-time-filter-items {
       border: 1px solid #d5d5d5;
       background-color: $white;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
       display: flex;
 
       &--label {
@@ -54,6 +54,9 @@ qm-time-filter-items {
         line-height: 56px;
         padding-left: 1rem;
         padding-right: 1rem;
+        @at-root [dir='rtl'] & {
+          text-align: right;
+        }
       }
 
       &--date-icon {
@@ -67,8 +70,6 @@ qm-time-filter-items {
         font-size: 2rem;
         &:hover {
           color: $dark-transparent82;
-        }
-        @at-root [dir="rtl"] & {
         }
       }
     }
@@ -101,7 +102,7 @@ qm-time-filter-items {
     color: $dark-transparent42;
     font-size: 18px;
     font-weight: $font-weight-medium;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 
     @at-root [dir="rtl"] & {
       text-align: right;

@@ -1,8 +1,8 @@
 <div
   class="qm-modal qm-time-filter qm-form-modal qm-modal--md"
   [dir]="userDirection$ | async"
-  cdkTrapFocus>
-
+  cdkTrapFocus
+>
   <div class="qm-filter-tail"></div>
 
   <form class="qm-modal__box-container">
@@ -16,9 +16,7 @@
         aria-hidden="true"
       ></i>
     </div>
-    <div class="qm-time-filter__subheader qm-text-overflow-fix">
-      {{ subheader }}
-    </div>
+
     <div *ngIf="showDateFilter" class="qm-time-filter__date-container">
       <div class="qm-time-filter__date-label">
         {{ "label.timefilter.date" | translate }}
@@ -26,14 +24,24 @@
       <div class="qm-time-filter__date-text">
         <span class="qm-time-filter__date-text--label">
           {{ selectedDate.mDate | amDateFormat: "DD MMMM YYYY" }}</span
-        ><span (click)="showCalendar()" class="qm-time-filter__date-icon"> <i class="icon-calendar-light"></i></span>
+        ><span (click)="showCalendar()" class="qm-time-filter__date-icon">
+          <i class="icon-calendar-light"></i
+        ></span>
       </div>
 
       <div class="qm-time-filter__calendar-placeholder" *ngIf="isCalendarOpen">
-          <qm-calendar [emitOnInitialSelection]="false" [enableAllFutureDates]="true" [selectedDates]="[selectedDate]" (onSelectDate)="onSelectDate($event)"></qm-calendar>
+        <qm-calendar
+          [emitOnInitialSelection]="false"
+          [enableAllFutureDates]="true"
+          [selectedDates]="[selectedDate]"
+          (onSelectDate)="onSelectDate($event)"
+        ></qm-calendar>
       </div>
     </div>
     <div class="qm-modal__body">
+      <div class="qm-time-filter__subheader qm-text-overflow-fix">
+        {{ subheader }}
+      </div>
       <div class="qm-time-filter__selectors-parent">
         <div class="qm-time-filter__start">
           <div class="qm-time-filter__start-heading qm-text-overflow-fix">
@@ -41,12 +49,18 @@
           </div>
           <qm-timelist-sidebar (optionClicked)="fis.scrollToClosest($event)">
           </qm-timelist-sidebar>
-          <qm-time-filter-items #fis  [selectedTime]="selectedStartTime" (onTimeSelect)="onTimeStartSelect($event)">
+          <qm-time-filter-items
+            #fis
+            [selectedTime]="selectedStartTime"
+            (onTimeSelect)="onTimeStartSelect($event)"
+          >
           </qm-time-filter-items>
         </div>
-        <div #endContainer
+        <div
+          #endContainer
           class="qm-time-filter__end"
-          [ngClass]="{ 'qm-time-filter__end--invalid': validationFailed }"        >
+          [ngClass]="{ 'qm-time-filter__end--invalid': validationFailed }"
+        >
           <div class="qm-time-filter__end-heading qm-text-overflow-fix">
             {{ "label.timefilter.endtime" | translate }}
           </div>

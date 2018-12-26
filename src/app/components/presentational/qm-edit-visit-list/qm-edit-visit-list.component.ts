@@ -314,6 +314,15 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
     this.visitOptionStatus = 'initial';
     this.ResetAutoCollapse();
+
+    console.log(visitId+'-visitOptionContainer');
+    setTimeout(function () {
+          var objDiv = document.getElementById(visitId+'-visitOptionContainer');
+          objDiv.scrollIntoView();
+       
+      }, 100); 
+
+   
   }
 
   closeVisitOptions(){
@@ -464,7 +473,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   getAppointmentTime(visit){
-    console.log(visit);
+    
     
     let timeformat = "hh:mm A";
     if (this.timeConvention === "24") {

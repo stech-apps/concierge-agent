@@ -79,7 +79,7 @@
   }
 
   &-body-row {
-    padding: 0.6em 0;
+    // padding: 0.6em 0;
 
     &-label {
       @include add-text-ellipsis;
@@ -107,6 +107,7 @@
 
 .qm-col-15 {
   flex:1;
+  margin: auto;
   padding: 0 1%;
   font-weight: 500;
   justify-content: flex-end;
@@ -122,6 +123,7 @@
 
 .qm-col-45 {
   flex:3;
+  margin: auto;
   color: $pale-aquamarine;
   @at-root [dir="ltr"] & {
     text-align: left;
@@ -157,28 +159,12 @@
   }
 }
 
-/* Extra small devices (phones, 768px and down) */
-@media only screen and (max-width: 768px) {
-  // not support
-}
-
-/* Small devices (XS display size -  768px and up) */
-@media only screen and (min-width: 768px) {
-  
-}
-
-/* Medium devices (S Display size - 1024px and up) */
-@media only screen and (min-width: 1024px) {
- 
-} 
-
-/* Large devices (M Display size - 1440px and up) */
-@media only screen and (min-width: 1440px) {
-  
-} 
-
-/* Extra large devices (L display size - 1920px and up) */
-@media only screen and (min-width: 1920px) {
-
-
+@include qm-lg { 
+  .qm-queue-list {
+    margin-bottom: 8px;
+    &-body-row {
+      height: 48px;
+      margin-bottom: 8px;
+    }
+  }
 }

@@ -4,7 +4,7 @@ $standard-home-margin : 1.5rem;
 .qm-home-content {
     flex: 1;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
 
 
     .qm-home-summary-area {
@@ -37,40 +37,34 @@ $standard-home-margin : 1.5rem;
     overflow: auto;
 }
 
-@media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
+@media screen and (max-width: 1023px) {
     .qm-home-content {
         flex-direction: column;
     }
 }
 
-/* Extra small devices (phones, 768px and down) */
-@media only screen and (max-width: 767px) {
-    max-width: 500px;
-  }
-  
-  /* Small devices (XS display size -  768px and up) */
-  @media only screen and (min-width: 769px) {
+
+@include qm-xs {
     .qm-home-summary-area {
-        max-width: 500px;
+        // max-width: 768px;
     }
   }
   
-  /* Medium devices (S Display size - 1024px and up) */
-  @media only screen and (min-width: 1024px) {
+@include qm-sm{
     .qm-home-summary-area {
-        max-width:768px;
+        max-width:608px;
     }
   } 
   
-  /* Large devices (M Display size - 1440px and up) */
-  @media only screen and (min-width: 1440px) {
+  
+@include qm-md {
     .qm-home-summary-area {
-        max-width: 900px;
+        max-width: 852px;
     }
   } 
   
-  /* Extra large devices (L display size - 1920px and up) */
-  @media only screen and (min-width: 1920px) {
+
+@include qm-lg {
     .qm-home-summary-area {
         max-width: 1136px;
     }

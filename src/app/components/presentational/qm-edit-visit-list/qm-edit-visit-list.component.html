@@ -47,7 +47,7 @@
     </div>
     
 
-    <div *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
+    <div id="qm-visit-container" *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
 
       <div class="qm-visit-list-body-row-container" *ngFor="let visit of visits; index as i">
         <div style="display:flex">
@@ -84,7 +84,7 @@
      
         <!-- Edit visit options -->
         <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
-                class="qm-visit-list__options">
+                class="qm-visit-list__options" id="{{visit.visitId}}-visitOptionContainer">
           <div class="triangle-with-shadow"></div>
           <div class="qm-visit-list__options__rec">
             <div class="qm-visit-list__options__heading">

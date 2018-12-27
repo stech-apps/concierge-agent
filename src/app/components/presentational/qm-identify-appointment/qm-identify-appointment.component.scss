@@ -31,6 +31,12 @@
     @include qm-xs {
       width: 100%;
     }
+
+    .qm-pannel-container__identify--arrive & {
+      @include qm-xs {
+        width: auto;
+      }
+    }
   }
 
   &__search-area {
@@ -475,7 +481,6 @@
 
     &--edit {
       //table column sizes
-
       .qm-table {
         @include qm-lg {
           &__header-id {

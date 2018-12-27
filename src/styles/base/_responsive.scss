@@ -1,0 +1,25 @@
+@import '../util/mixins';
+
+@include qm-xs {
+    .qm-xs-hidden {
+        display: none !important;
+    }
+}
+
+@include qm-sm {
+    .qm-sm-hidden {
+        display: none !important;
+    }
+}
+
+@include qm-md {
+    .qm-md-hidden {
+        display: none !important;
+    }
+}
+
+@include qm-lg {
+    .qm-lg-hidden {
+        display: none !important;
+    }
+}

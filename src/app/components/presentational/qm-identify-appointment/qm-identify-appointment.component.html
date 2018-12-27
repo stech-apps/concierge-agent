@@ -1,5 +1,5 @@
-<div class="qm-pannel-container" dir="{{userDirection$ | async}}">
-  <div class="qm-pannel-inner-container">
+<div class="qm-pannel-container qm-pannel-container__identify" dir="{{userDirection$ | async}}">
+  <div class="qm-pannel-inner-container qm-pannel-inner-container__identify">
     <div class="qm-flow-sub-header">
       <div class="qm-flow-sub-header__left">
         <h1>{{ 'identify_appointment' | translate}}</h1>
@@ -74,7 +74,7 @@
           <div class="qm-identify-appointment__table-container">
             <div class="qm-identify-appointment__customer-table">
               <div class="qm-identify-appointment__customer-table__header qm-table__row">
-                <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" class="qm-table__cell-10  qm-text-overflow-fix">
+                <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__header-id  qm-text-overflow-fix">
                   <span>{{
                   'list.arriveappointment.heading.id' |
                   translate }}</span>
@@ -82,27 +82,17 @@
                     <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('qpid') : getSortIcons('id')"></i>
                   </span>
                 </div>
-                <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-15 qm-text-overflow-fix"><span>{{
-                    'list.arriveappointment.heading.time'
-                    | translate }}</span><span>
-                    <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
-                  </span>
-                </div>
-                <div (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" class="qm-table__cell-15  qm-text-overflow-fix">
-                  <span>{{
-                      'list.arriveappointment.heading.date' |
-                      translate }}</span>
-                  <span><i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDate') : getSortIcons('startTimeDate')"></i></span> 
-                </div>
+
   
-                <div (click)="sortAppointments('custName')" class="qm-table__cell-30  qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
+                <div (click)="sortAppointments('custName')" class="qm-table__cell-35 qm-table__cell-xs-35  qm-table__header-customer qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
                   <span>
                       {{
                         'list.arriveappointment.heading.name' |
                         translate }}
                   </span>
-                 <span><i class="qm-action-btn__icon" [ngClass]="getSortIcons('custName')"></i></span> </div>
-                <div (click)="sortAppointments('servicesDisplayLabel')" class="qm-table__cell-35  qm-text-overflow-fix" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">
+                 <span><i class="qm-action-btn__icon" [ngClass]="getSortIcons('custName')"></i></span> 
+                </div>
+                <div (click)="sortAppointments('servicesDisplayLabel')" class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">
                   <span>{{
                   'list.arriveappointment.heading.service' |
                   translate }}</span>
@@ -111,7 +101,7 @@
                   </span>
                  </div>
 
-                 <div *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')" class="qm-table__cell-30  qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
+                 <div *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')" class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden" [ngClass]="{'qm-table__cell-20' : useCalendarEndpoint}">
                   <span>{{
                   'list.arriveappointment.heading.branch' |
                   translate }}</span>
@@ -119,21 +109,34 @@
                      <i class="qm-action-btn__icon" [ngClass]="getSortIcons('branchDisplayLabel')"></i>
                   </span>
                  </div>
+                 <div (click)="sortAppointments(useCalendarEndpoint? 'start': 'startTime')" class="qm-table__cell-15  qm-table__header-time qm-table__cell-xs-20 qm-table__cell--align-right">
+                   <span>{{
+                  'list.arriveappointment.heading.time'
+                  | translate }}</span><span>
+                    <i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDateTime') : getSortIcons('startTime')"></i>
+                  </span>
+                </div>
+                <div (click)="sortAppointments(useCalendarEndpoint? 'startDate': 'startTimeDate')" class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-date qm-table__cell--align-right">
+                  <span>{{
+                      'list.arriveappointment.heading.date' |
+                      translate }}</span>
+                  <span><i class="qm-action-btn__icon" [ngClass]="useCalendarEndpoint ? getSortIcons('startDate') : getSortIcons('startTimeDate')"></i></span> 
+                </div>
               </div>
               <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
                <div class="qm-identify-appointment__customer-table__list-parent qm-table__row" 
                   *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">
                   <div (click)="onAppointmentSelect(app)" 
                     class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
-                    <div class="qm-table__cell-10 qm-text-overflow-fix">{{ useCalendarEndpoint ? app.qpId :
+                    <div class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">{{ useCalendarEndpoint ? app.qpId :
                       app.id}}</div>
-                    <div class="qm-table__cell-15 qm-text-overflow-fix">
+                    <div class="qm-table__cell-35  qm-table__customer qm-table__cell-customer" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.custName}}</div>
+                    <div class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">{{app.servicesDisplayLabel}}</div>   
+                    <div class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.branch?.name}}</div>   
+                    <div class="qm-table__cell-15 qm-table__cell-xs-20 qm-table__cell--align-right qm-table__cell-time">
                       {{ (app.startTime || app.start ) | qmTimeFormat : (app.branch && app.branch.fullTimeZone || '') | async }}</div>
-                    <div class="qm-table__cell-15 qm-text-overflow-fix">{{getDate((app.endTime || app.end),(
+                    <div class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__cell--align-right qm-table__cell-date">{{getDate((app.endTime || app.end),(
                       app.branch && app.branch.fullTimeZone || ''))}}</div>    
-                    <div class="qm-table__cell-30 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.custName}}</div>
-                    <div class="qm-table__cell-35 qm-text-overflow-fix" [ngClass]="{'qm-table__cell-25': useCalendarEndpoint}">{{app.servicesDisplayLabel}}</div>   
-                    <div class="qm-table__cell-30 qm-text-overflow-fix" *ngIf="useCalendarEndpoint" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.branch?.name}}</div>   
                   </div>
                   <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
                 aria-hidden="true"></i>

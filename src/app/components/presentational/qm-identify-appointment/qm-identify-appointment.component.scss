@@ -12,12 +12,11 @@
 }
 
 .qm-identify-appointment {
-
   &__search-area {
     display: flex;
     position: relative;
     .qm-search--large {
-      display: flex;  
+      display: flex;
       width: 50%;
     }
 
@@ -26,7 +25,7 @@
       margin-left: 1rem;
       align-items: center;
 
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         margin-right: 1rem;
       }
     }
@@ -37,8 +36,8 @@
       font-weight: $font-weight-light;
       text-align: center;
       font-size: 18px;
-      border: 1px solid rgba(0,0,0,0.12);
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
       width: 50%;
       text-align: center;
       align-items: center;
@@ -57,13 +56,13 @@
       i {
         color: $dark-transparent82;
       }
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         text-align: right;
       }
     }
 
     &-loading {
-      color:$dark-transparent82;
+      color: $dark-transparent82;
       font-size: 18px;
       font-weight: $font-weight-light;
       text-align: center;
@@ -73,8 +72,8 @@
       align-items: center;
       justify-content: center;
       background-color: $white;
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
-      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.12);
     }
   }
 
@@ -95,7 +94,7 @@
           margin: 0;
         }
       }
-      
+
       ::ng-deep .qm-action-btn--only-icon {
         margin-top: 16px;
       }
@@ -107,14 +106,14 @@
       top: 56px;
 
       ::ng-deep .customer-not-found--feedback {
-        border: 1px solid rgba(0,0,0,0.12);
-        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: #ffffff;
         box-shadow: 0 2px 4px 0 rgba(219, 164, 164, 0.12);
 
         .customer-list {
           font-size: 18px;
           font-weight: $font-weight-light;
-          color: rgba(0,0,0,0.82);
+          color: rgba(0, 0, 0, 0.82);
           border: none;
 
           td {
@@ -129,10 +128,8 @@
         background-color: $white;
         font-size: 18px;
       }
-
     }
   }
-
 
   &__selected {
     color: $dark-transparent82;
@@ -145,7 +142,7 @@
       max-width: 35%;
       padding: 1rem 1rem 1rem 0;
 
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         padding: 1rem 0 1rem 1rem;
       }
     }
@@ -176,7 +173,6 @@
       padding-right: 1rem;
       display: flex;
       justify-content: space-between;
-
 
       span {
         display: inline-block;
@@ -253,14 +249,13 @@
       cursor: pointer;
     }
 
-    
     &--disabled {
       color: rgba(0, 0, 0, 0.25);
       &:hover {
         color: rgba(0, 0, 0, 0.25);
         cursor: default;
       }
-   }
+    }
     .icon-refresh {
       padding-right: 0;
     }
@@ -281,6 +276,7 @@
       display: flex;
       color: $dark-transparent62;
       font-weight: $font-weight-medium;
+      font-size: 14px;
 
       & > div {
         &:first-child {
@@ -297,7 +293,7 @@
 
     i {
       font-size: 16px;
-      margin-left: 1rem;
+      margin-left: 0.15rem;
     }
 
     &.qm-sort-inactive {
@@ -310,13 +306,11 @@
       background-color: #ffffff;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
       border: 1px solid $listitem-border-color;
-      font-size: 18px;
-      line-height: 56px;
+      font-size: 16px;
       color: $dark-transparent82;
       position: relative;
 
       &-parent {
-        width: 100%;
         position: relative;
 
         .icon-info {
@@ -327,9 +321,9 @@
           font-size: 28px;
           cursor: pointer;
           color: $dark-transparent62;
-  
+
           @at-root [dir="rtl"] & {
-            left: -3.5rem;
+            left: -2.5rem;
             right: auto;
           }
         }
@@ -356,13 +350,12 @@
   padding-right: 8px;
 }
 
-.icon-scan-qr{
+.icon-scan-qr {
   // color: $primary-pink;
   font-size: 4em;
   padding: 0px 5px;
- 
 }
-.scan-qr-container{
+.scan-qr-container {
   padding: 10px 15px;
   background-color: white;
   box-shadow: 2px 4px 4px 0 $dark-transparent04;
@@ -374,47 +367,44 @@
   cursor: pointer;
 }
 
-
-
 // qr-code-modal related css
-.qm-qr-code-modal
-{background: rgba(0, 0, 0, 0.6);
+.qm-qr-code-modal {
+  background: rgba(0, 0, 0, 0.6);
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top:0;
+  top: 0;
   z-index: 10000000;
 
-  &__container{
-   position:fixed; 
-   top: 50%;
-   left: 50%; 
-   width:30em;
-   height:18em;
-   margin-top: -9em; 
-   margin-left: -15em;
-   border: 1px solid #ccc;
-   background-color: #f3f3f3;
+  &__container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 18em;
+    margin-top: -9em;
+    margin-left: -15em;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
   }
 
-  &__heading{
+  &__heading {
     display: flex;
-
   }
-  &__heading-text{
+  &__heading-text {
     color: $dark-transparent82;
     font-size: 1.7em;
     font-weight: 300;
     padding: 10px 40px;
     flex: 9;
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     @at-root [dir="rtl"] & {
       text-align: right;
     }
   }
-  &__close-container{
+  &__close-container {
     color: $dark-transparent42;
     padding: 25px;
     font-size: 1.8em;
@@ -422,10 +412,10 @@
     text-align: right;
     cursor: pointer;
     @at-root [dir="rtl"] & {
-            text-align: left;
-          }
+      text-align: left;
+    }
   }
-  &__content{
+  &__content {
     text-align: center;
     font-size: 1.5em;
     font-weight: 500;
@@ -434,23 +424,203 @@
     align-items: center;
     justify-content: center;
   }
-  &__done-icon{
+  &__done-icon {
     padding: 0px 10px;
-    color: $pale-aquamarine
+    color: $pale-aquamarine;
   }
-  &__text-line{
+  &__text-line {
     color: $dark-transparent82;
     font-size: 1.3em;
     font-weight: 300;
     padding: 20px 40px;
     flex: 1;
-    text-align: center
+    text-align: center;
   }
-  input{
+  input {
     position: absolute;
     width: 0;
     height: 0;
     left: -400vw;
   }
+}
 
+.qm-pannel-container {
+  &__identify {
+    height: 100%;
+    background-image: $identify-app-background;
+  }
+}
+
+.qm-pannel-inner-container {
+  &__identify {
+    height: 100%;
+    padding-right: 50px;
+    padding-left: 50px;
+    background-color: $white;
+
+    @include qm-md {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-block;
+      width: 1293px;
+    }
+
+    @include qm-sm {
+      width: map-get($qm-device-breakpoints, sm-width );
+    }
+
+    @include qm-xs {
+      width: map-get($qm-device-breakpoints, xs-width );
+    }
+  }
+}
+
+.qm-table {
+
+  @include qm-lg {
+    &__header-id {
+      width: 80px;
+    }
+
+    &__header-customer {
+      width: 295px;
+    }
+
+    &__header-service {
+      width: 295px;
+    }
+
+    &__header-branch {
+      width: 228px;
+    }
+
+    &__header-date {
+      width: 170px;
+    }
+
+    &__header-time {
+      width: 174px;
+    }
+
+    &__cell-id {
+      width: 80px;
+    }
+
+    &__cell-customer {
+      width: 295px;
+    }
+
+    &__cell-service {
+      width: 295px;
+    }
+
+    &__cell-branch {
+      width: 228px;
+    }
+
+    &__cell-date {
+      width: 170px;
+    }
+
+    &__cell-time {
+      width: 174px;
+    }
+  }
+  
+  @include qm-md {
+    &__header-id {
+      width: 80px;
+    }
+
+    &__header-customer {
+      width: 270px;
+    }
+
+    &__header-service {
+      width: 270px;
+    }
+
+    &__header-branch {
+      width: 220px;
+    }
+
+    &__header-date {
+      width: 170px;
+    }
+
+    &__header-time {
+      width: 174px;
+    }
+
+    &__cell-id {
+      width: 80px;
+    }
+
+    &__cell-customer {
+      width: 270px;
+    }
+
+    &__cell-service {
+      width: 270px;
+    }
+
+    &__cell-branch {
+      width: 220px;
+    }
+
+    &__cell-date {
+      width: 170px;
+    }
+
+    &__cell-time {
+      width: 174px;
+    }
+  }
+
+  @include qm-sm {
+    &__header-id {
+      width: 64px;
+    }
+
+    &__header-customer {
+      width: 220px;
+    }
+
+    &__header-service {
+      width: 220px;
+    }
+    &__header-branch {
+      width: 170px;
+    }
+    &__header-date {
+      width: 120px;
+    }
+
+    &__header-time {
+      width: 124px;
+    }
+
+    &__cell-id {
+      width: 64px;
+    }
+
+    &__cell-customer {
+      width: 220px;
+    }
+
+    &__cell-service {
+      width: 220px;
+    }
+    &__cell-branch {
+      width: 170px;
+    }
+    &__cell-date {
+      width: 120px;
+    }
+
+    &__cell-time {
+      width: 124px;
+    }
+  }
 }

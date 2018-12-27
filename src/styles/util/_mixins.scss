@@ -181,8 +181,21 @@ $lg-width: map-get($qm-device-breakpoints, lg-width );
   }
 }
 
+@mixin qm-sm-only {
+  @media (width: #{$sm-width}) {
+    @content;
+  }
+}
+
+
 @mixin qm-md {
   @media (min-width: #{$md-width}) and (max-width: #{$lg-width - 1px}){
+    @content;
+  }
+}
+
+@mixin qm-sm-to-md {
+  @media (min-width: #{$sm-width + 1px}) and (max-width: #{$md-width - 1px}){
     @content;
   }
 }

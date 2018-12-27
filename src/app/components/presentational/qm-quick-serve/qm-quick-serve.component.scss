@@ -240,6 +240,33 @@
 }
 
 
+@media only screen and (max-width: 768px) {
+  .qm-quick-serve {
+    &__list-container {
+      max-height: calc(27.5vh - 9rem);
+    }
+  }
+}
+
+
+@include qm-xs-lower { 
+  .qm-quick-serve {
+    &__list-container {
+      max-height: calc(27.5vh - 9rem);
+    }
+    
+  &__content {
+    width: 476px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+  
+}
+}
+
+
 @include qm-xs { 
   .qm-quick-serve {
     &__list-container {

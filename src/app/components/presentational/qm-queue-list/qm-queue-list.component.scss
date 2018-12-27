@@ -5,7 +5,7 @@
 
 .qm-queue-list {
   margin-top: rem($standard-margin * 1.5);
-  padding: 0 3em;
+  
 
   .sort-icon {
     margin-left: 0.4rem;
@@ -45,7 +45,7 @@
 
   &__headers {
     height: 3rem;
-    font-size: 1.2em;
+    font-size: 12px;
     border-bottom: 1px solid $header-text-color;
     i {
       font-size: 1.2rem;
@@ -90,7 +90,7 @@
   }
 
   &__body {
-    max-height: calc(100vh - 382px);
+   
     overflow-y: auto;
     color: $dark-transparent62;
     font-size: 1.4em;
@@ -161,10 +161,65 @@
 
 @include qm-lg { 
   .qm-queue-list {
-    margin-bottom: 8px;
+    margin: 8px 50px;
     &-body-row {
-      height: 48px;
+      min-height: 56px;
+      margin-bottom: 4px;
+    }
+    &__body {
+      max-height: calc(100vh - 495px);
+    }
+  }
+}
+
+@include qm-md { 
+  .qm-queue-list {
+    margin: 8px 48px;
+    &-body-row {
+      min-height: 48px;
+      margin-bottom: 4px;
+    }
+    &__body {
+      max-height: calc(100vh - 495px);
+    }
+  }
+}
+
+@include qm-sm { 
+  .qm-queue-list {
+    margin: 8px 40px;
+    &-body-row {
+      min-height: 56px;
       margin-bottom: 8px;
+    }
+    &__body {
+      max-height: calc(100vh - 460px);
+    }
+  }
+}
+
+@include qm-xs { 
+  .qm-queue-list {
+    margin: 8px 48px;
+    &-body-row {
+      min-height: 56px;
+      margin-bottom: 8px;
+    }
+    &__body {
+      max-height: calc(100vh - 870px);
+    }
+  }
+}
+
+@include qm-xs-lower { 
+  .qm-queue-list {
+    margin: 8px 48px;
+    &-body-row {
+      min-height: 56px;
+      margin-bottom: 8px;
+    }
+    &__body {
+      max-height: calc(100vh - 870px);
     }
   }
 }

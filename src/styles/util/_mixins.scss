@@ -163,6 +163,12 @@ $lg-width: map-get($qm-device-breakpoints, lg-width );
   }
 }
 
+@mixin qm-xs-lower {
+  @media (max-width: #{$xs-width}) {
+    @content;
+  }
+}
+
 @mixin qm-xs {
   @media (min-width: #{$xs-width}) and (max-width: #{$sm-width - 1px}) {
     @content;

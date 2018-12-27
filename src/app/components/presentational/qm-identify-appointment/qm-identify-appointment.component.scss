@@ -12,6 +12,27 @@
 }
 
 .qm-identify-appointment {
+  &__table-body {
+    width: auto;
+    height: calc(100vh - 394px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-right: -3.5rem;
+
+    @at-root [dir='rtl'] & {
+      margin-left: -3.5rem;
+      margin-right: 0;
+    }
+
+    .qm-done-bar--shown & {
+      height: calc(100vh - 490px);
+    }
+
+    @include qm-xs {
+      width: 100%;
+    }
+  }
+
   &__search-area {
     display: flex;
     position: relative;
@@ -314,13 +335,14 @@
         position: relative;
 
         .icon-info {
-          position: absolute;
-          right: -3rem;
-          top: 50%;
-          transform: translateY(-50%);
           font-size: 28px;
           cursor: pointer;
           color: $dark-transparent62;
+          line-height: $lg-md-row-height;
+
+          @include qm-sm {
+            line-height: $sm-xs-row-height;
+          }
 
           @at-root [dir="rtl"] & {
             left: -2.5rem;
@@ -352,18 +374,20 @@
 
 .icon-scan-qr {
   // color: $primary-pink;
-  font-size: 4em;
+  font-size: 2rem;
   padding: 0px 5px;
+}
+
+.qm-scan-text {
+  font-size: rem(14px);
 }
 .scan-qr-container {
   padding: 10px 15px;
   background-color: white;
-  box-shadow: 2px 4px 4px 0 $dark-transparent04;
   // position:absolute;
   text-align: center;
   // margin-top: -20px;
-  margin-top: 80px;
-  border: 1px solid $dark-transparent12;
+  margin-top: 138px;
   cursor: pointer;
 }
 
@@ -448,6 +472,338 @@
   &__identify {
     height: 100%;
     background-image: $identify-app-background;
+
+    &--edit {
+      //table column sizes
+
+      .qm-table {
+        @include qm-lg {
+          &__header-id {
+            width: 80px;
+          }
+
+          &__header-customer {
+            width: 295px;
+          }
+
+          &__header-service {
+            width: 295px;
+          }
+
+          &__header-branch {
+            width: 228px;
+          }
+
+          &__header-date {
+            width: 170px;
+          }
+
+          &__header-time {
+            width: 174px;
+          }
+
+          &__cell-id {
+            width: 80px;
+          }
+
+          &__cell-customer {
+            width: 295px;
+          }
+
+          &__cell-service {
+            width: 295px;
+          }
+
+          &__cell-branch {
+            width: 228px;
+          }
+
+          &__cell-date {
+            width: 170px;
+          }
+
+          &__cell-time {
+            width: 174px;
+          }
+        }
+
+        @include qm-md {
+          &__header-id {
+            width: 80px;
+          }
+
+          &__header-customer {
+            width: 270px;
+          }
+
+          &__header-service {
+            width: 270px;
+          }
+
+          &__header-branch {
+            width: 220px;
+          }
+
+          &__header-date {
+            width: 170px;
+          }
+
+          &__header-time {
+            width: 174px;
+          }
+
+          &__cell-id {
+            width: 80px;
+          }
+
+          &__cell-customer {
+            width: 270px;
+          }
+
+          &__cell-service {
+            width: 270px;
+          }
+
+          &__cell-branch {
+            width: 220px;
+          }
+
+          &__cell-date {
+            width: 170px;
+          }
+
+          &__cell-time {
+            width: 174px;
+          }
+        }
+
+        @include qm-xs {
+          .icon-info {
+            line-height: $sm-xs-row-height;
+          }
+        }
+
+        @include qm-sm {
+          &__header-id {
+            width: 64px;
+          }
+
+          &__header-customer {
+            width: 220px;
+          }
+
+          &__header-service {
+            width: 220px;
+          }
+          &__header-branch {
+            width: 170px;
+          }
+          &__header-date {
+            width: 120px;
+          }
+
+          &__header-time {
+            width: 124px;
+          }
+
+          &__cell-id {
+            width: 64px;
+          }
+
+          &__cell-customer {
+            width: 220px;
+          }
+
+          &__cell-service {
+            width: 220px;
+          }
+          &__cell-branch {
+            width: 170px;
+          }
+          &__cell-date {
+            width: 120px;
+          }
+
+          &__cell-time {
+            width: 124px;
+          }
+        }
+      }
+    }
+
+    &--arrive {
+      //table column sizes
+      .qm-table {
+        @include qm-lg {
+          &__header-id {
+            width: 100px;
+          }
+
+          &__header-customer {
+            width: 340px;
+          }
+
+          &__header-service {
+            width: 330px;
+          }
+
+          &__header-date {
+            width: 210px;
+          }
+
+          &__header-time {
+            width: 260px;
+          }
+
+          &__cell-id {
+            width: 100px;
+          }
+
+          &__cell-customer {
+            width: 340px;
+          }
+
+          &__cell-service {
+            width: 330px;
+          }
+
+          &__cell-date {
+            width: 210px;
+          }
+
+          &__cell-time {
+            width: 260px;
+          }
+        }
+
+        @include qm-md {
+          &__header-id {
+            width: 100px;
+          }
+
+          &__header-customer {
+            width: 340px;
+          }
+
+          &__header-service {
+            width: 340px;
+          }
+
+
+          &__header-date {
+            width: 210px;
+          }
+
+          &__header-time {
+            width: 200px;
+          }
+          &__cell-id {
+            width: 100px;
+          }
+
+          &__cell-customer {
+            width: 340px;
+          }
+
+          &__cell-service {
+            width: 340px;
+          }
+
+
+          &__cell-date {
+            width: 210px;
+          }
+
+          &__cell-time {
+            width: 200px;
+          }
+        }
+
+        @include qm-xs {
+          .icon-info {
+            line-height: $sm-xs-row-height;
+          }
+
+          &__header-id {
+            width: 70px;
+          }
+
+          &__header-customer {
+            width: 280px;
+          }
+
+          &__header-service {
+            width: 280px;
+          }
+          &__header-date {
+            width: 180px;
+          }
+
+          &__header-time {
+            width: 124px;
+          }
+
+          &__cell-id {
+            width: 70px;
+          }
+
+          &__cell-customer {
+            width: 280px;
+          }
+
+          &__cell-service {
+            width: 280px;
+          }
+          &__cell-date {
+            width: 180px;
+          }
+
+          &__cell-time {
+            width: 124px;
+          }
+        }
+
+        @include qm-sm {
+          &__header-id {
+            width: 70px;
+          }
+
+          &__header-customer {
+            width: 280px;
+          }
+
+          &__header-service {
+            width: 280px;
+          }
+          &__header-date {
+            width: 180px;
+          }
+
+          &__header-time {
+            width: 124px;
+          }
+
+          &__cell-id {
+            width: 70px;
+          }
+
+          &__cell-customer {
+            width: 280px;
+          }
+
+          &__cell-service {
+            width: 280px;
+          }
+          &__cell-date {
+            width: 180px;
+          }
+
+          &__cell-time {
+            width: 124px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -459,168 +815,15 @@
     background-color: $white;
 
     @include qm-md {
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      display: inline-block;
       width: 1293px;
     }
 
     @include qm-sm {
-      width: map-get($qm-device-breakpoints, sm-width );
+      width: map-get($qm-device-breakpoints, sm-width);
     }
 
     @include qm-xs {
-      width: map-get($qm-device-breakpoints, xs-width );
-    }
-  }
-}
-
-.qm-table {
-
-  @include qm-lg {
-    &__header-id {
-      width: 80px;
-    }
-
-    &__header-customer {
-      width: 295px;
-    }
-
-    &__header-service {
-      width: 295px;
-    }
-
-    &__header-branch {
-      width: 228px;
-    }
-
-    &__header-date {
-      width: 170px;
-    }
-
-    &__header-time {
-      width: 174px;
-    }
-
-    &__cell-id {
-      width: 80px;
-    }
-
-    &__cell-customer {
-      width: 295px;
-    }
-
-    &__cell-service {
-      width: 295px;
-    }
-
-    &__cell-branch {
-      width: 228px;
-    }
-
-    &__cell-date {
-      width: 170px;
-    }
-
-    &__cell-time {
-      width: 174px;
-    }
-  }
-  
-  @include qm-md {
-    &__header-id {
-      width: 80px;
-    }
-
-    &__header-customer {
-      width: 270px;
-    }
-
-    &__header-service {
-      width: 270px;
-    }
-
-    &__header-branch {
-      width: 220px;
-    }
-
-    &__header-date {
-      width: 170px;
-    }
-
-    &__header-time {
-      width: 174px;
-    }
-
-    &__cell-id {
-      width: 80px;
-    }
-
-    &__cell-customer {
-      width: 270px;
-    }
-
-    &__cell-service {
-      width: 270px;
-    }
-
-    &__cell-branch {
-      width: 220px;
-    }
-
-    &__cell-date {
-      width: 170px;
-    }
-
-    &__cell-time {
-      width: 174px;
-    }
-  }
-
-  @include qm-sm {
-    &__header-id {
-      width: 64px;
-    }
-
-    &__header-customer {
-      width: 220px;
-    }
-
-    &__header-service {
-      width: 220px;
-    }
-    &__header-branch {
-      width: 170px;
-    }
-    &__header-date {
-      width: 120px;
-    }
-
-    &__header-time {
-      width: 124px;
-    }
-
-    &__cell-id {
-      width: 64px;
-    }
-
-    &__cell-customer {
-      width: 220px;
-    }
-
-    &__cell-service {
-      width: 220px;
-    }
-    &__cell-branch {
-      width: 170px;
-    }
-    &__cell-date {
-      width: 120px;
-    }
-
-    &__cell-time {
-      width: 124px;
+      width: map-get($qm-device-breakpoints, xs-width);
     }
   }
 }

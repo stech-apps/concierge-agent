@@ -1,15 +1,14 @@
 .qm-table {
     &__row {
         display: flex;
-        min-height: 56px;
-
+        min-height: $sm-xs-row-height;
         @include qm-lg {
-            min-height: 48px;
+            min-height: $lg-md-row-height;
             margin-bottom: 4px;
         }
 
         @include qm-md {
-            min-height: 48px;
+            min-height: $lg-md-row-height;
             margin-bottom: 4px;
         }
 

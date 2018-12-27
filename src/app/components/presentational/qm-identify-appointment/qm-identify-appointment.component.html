@@ -49,7 +49,7 @@
       <!--###### APPOINTMENT LIST AREA ###### -->
       <ng-container *ngIf="showSearchResultsArea">
           <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
-            <div class="qm-identify-appointment__pannel-header"> {{ 'label.identifyappointment.upcoming' | translate }}
+            <div class="qm-identify-appointment__pannel-header"> {{ (useCalendarEndpoint ? 'label.identifyappointment.upcoming' : 'label.identifyappointment.appointments.today') | translate }}
               <ng-container *ngIf="timeConvention === 'AMPM'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
                   <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>

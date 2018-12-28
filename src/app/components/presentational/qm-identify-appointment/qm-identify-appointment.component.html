@@ -74,8 +74,8 @@
           </div>
   
           <div class="qm-identify-appointment__table-container">
-            <div class="qm-identify-appointment__customer-table">
-              <div class="qm-identify-appointment__customer-table__header qm-table__row">
+            <div class="qm-identify-appointment__appointment-table">
+              <div class="qm-identify-appointment__appointment-table__header qm-table__row">
                 <div (click)="sortAppointments(useCalendarEndpoint? 'qpId': 'id')" class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__header-id  qm-text-overflow-fix">
                   <span>{{
                   'list.identifyappointment.heading.id' |
@@ -127,10 +127,10 @@
               </div>
               <div class="qm-identify-appointment__table-body">
                   <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
-                      <div class="qm-identify-appointment__customer-table__list-parent qm-table__row" 
+                      <div class="qm-identify-appointment__appointment-table__list-parent qm-table__row" 
                          *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">
                          <div (click)="onAppointmentSelect(app)" 
-                           class="qm-identify-appointment__customer-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
+                           class="qm-identify-appointment__appointment-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
                            <div class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">{{ useCalendarEndpoint ? app.qpId :
                              app.id}}</div>
                            <div class="qm-table__cell-35  qm-table__customer qm-table__cell-customer" [ngClass]="{'qm-table__cell-20': useCalendarEndpoint}">{{app.custName}}</div>

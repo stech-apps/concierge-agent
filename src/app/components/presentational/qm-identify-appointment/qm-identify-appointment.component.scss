@@ -18,7 +18,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     margin-right: -3.5rem;
-
+    min-width: 50%;
     @at-root [dir='rtl'] & {
       margin-left: -3.5rem;
       margin-right: 0;
@@ -294,7 +294,7 @@
   }
 
   // TABLE AREA
-  &__customer-table {
+  &__appointment-table {
     display: flex;
     flex-wrap: wrap;
 

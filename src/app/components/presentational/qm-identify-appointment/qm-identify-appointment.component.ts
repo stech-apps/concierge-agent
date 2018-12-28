@@ -158,6 +158,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   readonly ARRIVED_APPOINTMENT_STATE = "ARRIVED";
 
   isRefreshDisabled: boolean = false;
+  isShowAppointmentInfo: boolean = false;
 
   @ViewChild('clearInputDirective') clearInputDirective: QmClearInputDirective;
 
@@ -1190,6 +1191,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onAppointmentSelect(appointment: IAppointment) {
+    
     if(this.currentSearchState == this.SEARCH_STATES.CUSTOMER) {
       this.customerDispatchers.resetCustomerSearchText();
       this.showSearchResultsArea = false;
@@ -1373,6 +1375,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return sortConfig;
   }
 
+  openAppointmentInfoModal() {
+    this.isShowAppointmentInfo = !this.isShowAppointmentInfo;
+  }
+
   showTimeFilter() {
     this.translateService
       .get(["heading.timefilter", "subheading.timefilter"])
@@ -1479,5 +1485,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const inputChar = String.fromCharCode($event.keyCode);
     console.log($event.key);
     $event.target.value.replace(/[^0-9]/g, "");
+  }
+
+  onAppointmentInfoClose($event: boolean) {
+    if($event) {
+      this.isShowAppointmentInfo = false;
+    }
   }
 }

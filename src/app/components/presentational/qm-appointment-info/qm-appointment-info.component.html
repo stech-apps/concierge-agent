@@ -1,0 +1,62 @@
+<div class="qm-appointment-info" [dir]="userDirection$ | async" cdkTrapFocus>
+  <div class="qm-appointment-info__header">
+    <div class="qm-appointment-info__id"> {{ appointmentInfo?.id }}</div>
+    <div class="qm-appointment-info__customer"> {{ appointmentInfo?.custName }}</div>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__birthdate">
+      <span class="qm-appointment-info-item__icon icon-calendar"></span>
+      <span class="qm-appointment-info-item__text">
+              {{ (appointmentInfo?.customers[0].dateOfBirth || '-') | amDateFormat : 'YYYY-MM-DD' }}
+      </span>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__telephone">
+      <span class="qm-appointment-info-item__icon icon-phone"></span>
+      <span class="qm-appointment-info-item__text">
+          {{ appointmentInfo?.customers[0].phone }}
+      </span>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__email">
+      <span class="qm-appointment-info-item__icon icon-mail">
+      </span>
+      <span class="qm-appointment-info-item__text">
+          {{ appointmentInfo?.customers[0].email }}
+      </span>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__datetimecontainer">
+    <div class="qm-appointment-info-item qm-appointment-info__date">
+        <span class="qm-appointment-info-item__icon icon-calendar">
+        </span>
+        <span class="qm-appointment-info-item__text">
+            {{ appointmentInfo?.start | amDateFormat : 'DD/MM/YYYY' }}
+        </span>
+    </div>
+    <div class="qm-appointment-info-item qm-appointment-info__time">
+        <span class="qm-appointment-info-item__icon icon-clock"></span>
+        <span class="qm-appointment-info-item__text">
+            {{ appointmentInfo?.start | qmTimeFormat | async}}
+        </span>
+    </div>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__services">
+      <span class="qm-appointment-info-item__icon icon-service">
+      </span>
+      <span class="qm-appointment-info-item__text">
+          {{ appointmentInfo?.servicesDisplayLabel }}
+      </span>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__branches">
+      <span class="qm-appointment-info-item__icon icon-home">       
+      </span>
+      <span class="qm-appointment-info-item__text">
+          {{ appointmentInfo?.branchDisplayLabel }}
+      </span>
+  </div>
+  <div class="qm-appointment-info-item qm-appointment-info__notes" *ngIf="appointmentInfo?.notes">
+      <span class="qm-appointment-info-item__icon icon-edit"></span>
+      <span class="qm-appointment-info-item__text">
+          {{ appointmentInfo?.notes}}
+      </span>
+  </div>
+</div>
+
+<div class="qm-appointment-info__modal" (click)="onModalClick()"></div>

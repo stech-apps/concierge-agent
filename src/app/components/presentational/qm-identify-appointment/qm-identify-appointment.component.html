@@ -14,18 +14,31 @@
 
       </div>
     </div>
-    <!-- <input type="text" (keyup)="keydown($event)" > -->
-    <div class="qm-identify-appointment__selected" *ngIf="selectedAppointment">
-      <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">{{
-        'label.identify.appointment.selected' | translate }}</div>
-      <div class="qm-identify-appointment__selected--details">
-        <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
-        <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
-        <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
-        <span class="qm-identify-appointment__selected__close-btn" (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
+    <!-- SELECTED APPOINTMENT INFO -->
+    <ng-container *ngIf="selectedAppointment">
+
+      <div class="qm-selected-label__container">
+          <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">
+              {{'label.identify.appointment.selected' | translate }} 
+          </div>
+         <qm-appointment-info (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="selectedAppointment" *ngIf="isShowAppointmentInfo"></qm-appointment-info>
       </div>
-      <span class="qm-identify-appointment__selected--icon"><i class="icon-info"></i></span>
-    </div>
+     
+
+      <div class="qm-identify-appointment__selected" [ngClass]="{'qm-appointment-info-shown': isShowAppointmentInfo}">
+        <div class="qm-identify-appointment__selected--details">
+          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
+          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
+          <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
+          <span class="qm-identify-appointment__selected__close-btn" (click)="deselectAppointment()"><i class="icon-close qm-action-btn__icon "></i></span>
+        </div>
+        <span class="qm-identify-appointment__selected--icon"  (click)="openAppointmentInfoModal()"><i class="icon-info"></i></span>
+      </div>
+
+
+
+
+    </ng-container>
     <br>
     <div class="qm-identify-appointment">
       <div class="qm-identify-appointment__button-container">

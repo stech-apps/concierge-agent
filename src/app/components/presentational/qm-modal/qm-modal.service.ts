@@ -7,6 +7,7 @@ import { QmModalComponent } from "./qm-modal.component";
 import { QmDoneModalComponent } from 'src/app/components/presentational/qm-done-modal/qm-done-modal.component';
 import { QmTimeFilterComponent } from '../../containers/qm-time-filter/qm-time-filter.component';
 import * as  moment from 'moment';
+import { QmAppointmentInfoComponent } from '../qm-appointment-info/qm-appointment-info.component';
 
 @Injectable()
 export class QmModalService {

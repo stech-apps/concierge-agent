@@ -1,0 +1,98 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
+.qm-appointment-info {
+  position: absolute;
+  left: 0;
+  top: 3rem;
+  color: $dark-transparent82;
+  background: $white;
+  border: 1px solid $dark-transparent12;
+  box-shadow: 0 4px 8px 0 $dark-transparent20;
+  z-index: 1051;
+  width: 542px;
+  height: 432px;
+  padding: $standard-padding;
+
+
+  &__datetimecontainer {
+    display: flex;
+  }
+
+  &__time {
+    padding-left: 1rem;
+    @at-root [dir="rtl"] & {
+      padding-right: 1rem;
+    }
+  }
+
+  &-item {
+    font-size: 18px;
+    font-weight: 400;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__icon {
+      font-size: 32px;
+      line-height: 32px;
+      padding-right: $standard-padding/2;
+
+      @at-root [dir="rtl"] & {
+        padding-left: $standard-padding/2;
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__id {
+    padding-right: 24px;
+    font-weight: 400;
+
+    @at-root [dir="rtl"] & {
+      padding-right: 0;
+      padding-left: 24px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  &__id,
+  &__customer {
+    font-size: 21px;
+    color: $dark-transparent82;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+
+  &__customer { 
+      font-weight: 500;
+  }
+  
+  &__notes {
+    align-items: flex-start;
+    padding-top: 0.5rem;
+
+    & .qm-appointment-info-item {
+      &__text {
+        display: inline-block;
+        max-height: 70px;
+        overflow-y: auto;
+        color: $dark-transparent42;
+      }
+    }
+  }
+
+  &__modal {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1050;
+  }
+}

@@ -11,6 +11,11 @@
   }
 }
 
+.qm-selected-label__container {
+  position: relative;
+  max-width: 35%;
+}
+
 .qm-identify-appointment {
   &__table-body {
     width: auto;
@@ -19,13 +24,13 @@
     overflow-x: hidden;
     margin-right: -3.5rem;
     min-width: 50%;
-    @at-root [dir='rtl'] & {
+    @at-root [dir="rtl"] & {
       margin-left: -3.5rem;
       margin-right: 0;
     }
 
     .qm-done-bar--shown & {
-      height: calc(100vh - 490px);
+      height: calc(100vh - 538px);
     }
 
     @include qm-xs {
@@ -166,11 +171,12 @@
     width: calc(100% - 106px);
 
     &--text {
-      max-width: 35%;
-      padding: 1rem 1rem 1rem 0;
+      padding: 0.5rem 1rem 1rem 0;
+      color: $dark-transparent62;
 
       @at-root [dir="rtl"] & {
         padding: 1rem 0 1rem 1rem;
+        text-align: right;
       }
     }
 
@@ -190,23 +196,19 @@
       border: 1px solid #d5d5d5;
       background-color: #ffffff;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
-      width: 60%;
-      height: 56px;
+      width: 578px;
+      height: 58px;
       line-height: 56px;
       font-size: 18px;
-      margin-left: 1rem;
-      margin-right: 1rem;
       padding-left: 1rem;
       padding-right: 1rem;
+      margin-right: 1rem;
       display: flex;
       justify-content: space-between;
 
-      span {
-        display: inline-block;
+      @at-root [dir="rtl"] & {
         margin-left: 1rem;
-        @at-root [dir="rtl"] & {
-          margin-right: 1rem;
-        }
+        margin-right: 0;
       }
     }
 
@@ -694,7 +696,6 @@
             width: 340px;
           }
 
-
           &__header-date {
             width: 210px;
           }
@@ -713,7 +714,6 @@
           &__cell-service {
             width: 340px;
           }
-
 
           &__cell-date {
             width: 210px;

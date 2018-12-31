@@ -1,4 +1,4 @@
-<div class="qm-appointment-info" [dir]="userDirection$ | async" cdkTrapFocus>
+<div class="qm-appointment-info" (click)="cardClick()" [ngClass]="{'qm-appointment-info--wide-card': useWideCard }" [dir]="userDirection$ | async" cdkTrapFocus>
   <div class="qm-appointment-info__header">
     <div class="qm-appointment-info__id"> {{ appointmentInfo?.id }}</div>
     <div class="qm-appointment-info__customer"> {{ appointmentInfo?.custName }}</div>
@@ -59,4 +59,4 @@
   </div>
 </div>
 
-<div class="qm-appointment-info__modal" (click)="onModalClick()"></div>
+<div class="qm-appointment-info__modal" *ngIf="!useWideCard" (click)="onModalClick()"></div>

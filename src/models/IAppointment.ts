@@ -30,4 +30,5 @@ export interface IAppointment {
   properties?: {
     notes?: string 
   }
+  showInfo?: boolean;
 }

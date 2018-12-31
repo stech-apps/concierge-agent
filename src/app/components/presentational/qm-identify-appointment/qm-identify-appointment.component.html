@@ -142,7 +142,7 @@
                   <ng-container *ngFor="let app of appointments | sortAppointments: [sortState, sortColumnPriorities]: isDescending">
                       <div class="qm-identify-appointment__appointment-table__list-parent qm-table__row" 
                          *ngIf="appointments && appointments.length > 0 && !selectedAppointment || (useCalendarEndpoint ? selectedAppointment.qpId != app.qpId : selectedAppointment.id != app.id)">
-                         <div (click)="onAppointmentSelect(app)" 
+                         <div *ngIf="!app.showInfo" (click)="onAppointmentSelect(app)" 
                            class="qm-identify-appointment__appointment-table__list" tabindex="0" (click)="onAppointmentSelect(app)">
                            <div class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">{{ useCalendarEndpoint ? app.qpId :
                              app.id}}</div>
@@ -154,7 +154,8 @@
                            <div class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__cell--align-right qm-table__cell-date">{{getDate((app.endTime || app.end),(
                              app.branch && app.branch.fullTimeZone || ''))}}</div>    
                          </div>
-                         <i (click)="app.showInfo = !app.showInfo" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
+                         <qm-appointment-info (onCardClick)="onAppointmentSelect($event)" [useWideCard]="true" (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="app" *ngIf="app.showInfo"></qm-appointment-info>
+                         <i (click)="expandAppointment(app)" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
                        aria-hidden="true"></i>
                       </div> 
                      </ng-container>                     

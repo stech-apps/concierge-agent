@@ -182,6 +182,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   timeConvention: string = "24";
 
   height: string;
+  expandedAppointment: any;
 
   constructor(
     private appointmentDispatchers: AppointmentDispatchers,
@@ -1203,6 +1204,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.onFlowNext.emit();
     this.appointmentSelected.emit(appointment);
     this.selectedCustomer = appointment.customers[0];
+    this.expandedAppointment.showInfo = false;
   }
 
   getSelectedAppointmentInfo() {
@@ -1491,5 +1493,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if($event) {
       this.isShowAppointmentInfo = false;
     }
+  }
+
+  expandAppointment(app) {
+    if(this.expandedAppointment && this.expandedAppointment.id != app.id) {
+      this.expandedAppointment.showInfo = false;
+    }
+    app.showInfo = !app.showInfo;
+    this.expandedAppointment = app;
   }
 }

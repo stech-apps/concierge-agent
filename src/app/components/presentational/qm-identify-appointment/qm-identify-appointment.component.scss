@@ -317,6 +317,14 @@
           color: $dark-transparent82;
         }
       }
+
+      @include qm-lg {
+        font-size: 12px;
+      }
+
+      @include qm-md {
+        font-size: 12px;
+      }
     }
     width: 100%;
 

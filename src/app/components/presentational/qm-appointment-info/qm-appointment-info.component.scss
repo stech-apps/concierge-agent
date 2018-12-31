@@ -1,5 +1,12 @@
 @import "../../../../styles/base/_component-manifest.scss";
 
+.qm-appointment-info-host--wide-card:host {
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
 .qm-appointment-info {
   position: absolute;
   left: 0;
@@ -27,8 +34,8 @@
 
   &-item {
     font-size: 18px;
-    font-weight: 400;
-    min-height: 48px;
+    font-weight: 300;
+    min-height: 42px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -47,7 +54,7 @@
 
   &__id {
     padding-right: 24px;
-    font-weight: 400;
+    font-weight: 300;
 
     @at-root [dir="rtl"] & {
       padding-right: 0;
@@ -94,5 +101,28 @@
       top: 0;
       bottom: 0;
       z-index: 1050;
+  }
+
+  &--wide-card {
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+    max-height: 386px;
+    height: auto;
+    padding-left: 1.5rem;
+
+    @at-root [dir='rtl'] & {
+      padding-right: 1.5rem;
+    }
+
+    @at-root & .qm-appointment-info__customer {
+      color: $primary-pink;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
   }
 }

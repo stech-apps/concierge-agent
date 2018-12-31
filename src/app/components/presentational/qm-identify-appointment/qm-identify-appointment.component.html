@@ -155,7 +155,7 @@
                              app.branch && app.branch.fullTimeZone || ''))}}</div>    
                          </div>
                          <qm-appointment-info [useCalendarEndpoint]="useCalendarEndpoint" (onCardClick)="onAppointmentSelect($event)" [useWideCard]="true" (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="app" *ngIf="app.showInfo"></qm-appointment-info>
-                         <i (click)="expandAppointment(app)" [ngClass]="{ 'icon-info--active' : app.showInfo}" class="qm-action-btn__icon icon-info"
+                         <i (click)="expandAppointment(app)" [ngClass]="{ 'icon-info--active, icon-info-solid' : app.showInfo}" class="qm-action-btn__icon icon-info"
                        aria-hidden="true"></i>
                       </div> 
                      </ng-container>                     

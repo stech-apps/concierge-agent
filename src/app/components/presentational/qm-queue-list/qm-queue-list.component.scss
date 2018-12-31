@@ -24,12 +24,16 @@
 
   .max-wait-time-container {
     display: flex;
-    //    justify-content: center;
+      
+  }
+  .qm-wait-icon-inside-container{
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   .max-wait-time {
     font-size: 1.3rem;
-
+    justify-content: center;
     &.gray-indicator {
       visibility: hidden;
     }

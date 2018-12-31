@@ -20,27 +20,27 @@
 <div *ngIf="visits" dir="{{userDirection$ | async}}">
   <div class="qm-visit-list" *ngIf="visits.length>0">
     <div class="qm-visit-list__headers qm-flex-grid">
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByVisitId()">
-        <div class="qm-visit-list-header-item-label qm-first-element-header">{{'visit' | translate}}</div>
+      <div class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
+        <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
         <div *ngIf="sortingIndicator==='VISITID'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true }"></i></div>
       </div>
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByCustomer()">
+      <div class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
         <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
         <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true }"></i></div>
       </div>
 
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByService()">
+      <div class="qm-visit-list-header-item qm-col-4 qm-service-col  qm-flex-grid" (click)="sortByService()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
         <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true }"></i></div>
       </div>
 
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid" (click)="sortByAppTime()">
+      <div class="qm-visit-list-header-item qm-col-3 qm-app-time-col qm-flex-grid" (click)="sortByAppTime()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
         <div *ngIf="sortingIndicator==='APPTIME'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true }"></i></div>
       </div>
 
 
-      <div class="qm-visit-list-header-item qm-col qm-flex-grid">
+      <div class="qm-visit-list-header-item qm-col-2 qm-wait-time-col qm-flex-grid">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
       </div>
       <div class="info-icon-container"></div>
@@ -49,17 +49,19 @@
 
     <div id="qm-visit-container" *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
 
-      <div class="qm-visit-list-body-row-container" *ngFor="let visit of visits; index as i">
-        <div style="display:flex">
+      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
+        <div style="display:flex"  id="{{visit.visitId}}-expanded-visit-info"> 
         <div (click)="selectVisit(i,visit.visitId)" class="qm-visit-list-body-row" [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId}">
-         <div class="qm-flex-grid ">
-          <div class="qm-col qm-body-item qm-visit-list-body-row-caret-view">
-            <div class="qm-visit-list-body-row-label qm-first-element"> {{visit.ticketId}} </div>
+         <div class="qm-flex-grid  qm-row-text">
+          <div class="qm-col-2 qm-body-item qm-visit-list-body-row-caret-view">
+            <div class="qm-visit-list-body-row-label qm-first-element " [ngClass]="{'qm-ticket-selected':  visits && visitClicked && selectedVisitId === visit.visitId,'qm-selected-visit-font':  infoVisitId === visit.visitId}"> 
+              {{visit.ticketId}} 
+            </div>
           </div>
-          <div class="qm-col qm-body-item">{{visit.customerName }}</div>
-          <div class="qm-col qm-body-item"> {{visit.serviceName }} </div>
-          <div class="qm-col qm-body-item"> {{getAppointmentTime(visit)}}</div>
-          <div class="qm-col qm-body-item">{{ visit.waitingTimeStr }} min</div>
+          <div class="qm-col-4 qm-customer-col qm-body-item" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">{{visit.customerName }}</div>
+          <div class="qm-col-4 qm-body-item qm-service-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{visit.serviceName }} </div>
+          <div class="qm-col-3 qm-body-item qm-app-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{getAppointmentTime(visit)}}</div>
+          <div class="qm-col-2 qm-body-item qm-wait-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}">{{ visit.waitingTimeStr }} min</div>
         </div>
         
         <!-- Extended visit container -->
@@ -78,7 +80,8 @@
         </div>
         
         <div class="info-icon-container">
-          <i class="icon-info qm-details-icon" (click)="selectedInfoButton(visit.visitId)"></i>
+          <i class="icon-info qm-details-icon" *ngIf="infoVisitId !== visit.visitId" (click)="selectedInfoButton(visit.visitId)"></i>
+          <i class="icon-info-solid qm-details-icon" *ngIf="infoVisitId === visit.visitId" (click)="selectedInfoButton(visit.visitId)"></i>
         </div>
         </div>
      
@@ -89,7 +92,7 @@
           <div class="qm-visit-list__options__rec">
             <div class="qm-visit-list__options__heading">
               <div class="qm-title">
-                {{'visit_options'|translate}}
+               <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> {{'visit_options'|translate}}
               </div>
               <div class="qm-icon">
                 <i class="icon-close" (click)=" closeVisitOptions()"></i>
@@ -154,10 +157,10 @@
         </div>
 
         <!-- second options -->
-        <div class="qm-visit-list__options" *ngIf="visitClicked && selectedVisitId === visit.visitId && (visitOptionStatus === 'staff' || visitOptionStatus === 'cp' || visitOptionStatus === 'tq')">
-          <div class="triangle-with-shadow"></div>
-          <div class="qm-visit-list__options__rec">
-            <div class="qm-visit-list__options__heading">
+        <div class="qm-visit-list__options-2" *ngIf="visitClicked && selectedVisitId === visit.visitId && (visitOptionStatus === 'staff' || visitOptionStatus === 'cp' || visitOptionStatus === 'tq')">
+          <!-- <div class="triangle-with-shadow"></div> -->
+          <div class="qm-visit-list__options-2__rec">
+            <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
                 <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>

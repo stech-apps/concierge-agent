@@ -2,9 +2,9 @@
   <qm-page-header></qm-page-header>
   <div class="qm-home-content">
     <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo" ></qm-message-box>
-    
-    <qm-quick-serve *ngIf="isQuickServeEnable && !MessageBoxInfo"></qm-quick-serve>
-   
+    <div class="qm-quick-serve-container" [ngStyle]="{'width':'100vw' }">
+      <qm-quick-serve *ngIf="isQuickServeEnable && !MessageBoxInfo"></qm-quick-serve>
+    </div>
     <div class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary></qm-queue-summary>

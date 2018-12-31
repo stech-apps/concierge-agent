@@ -25,7 +25,7 @@
         (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#03996C' : 'rgba(0,0,0,0.82)'}">{{q.name}}</div>
         <div class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</div>
         <div class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
-          <div><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
+          <div class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
           <div> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></div>
         </div>
         <div  *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></div>

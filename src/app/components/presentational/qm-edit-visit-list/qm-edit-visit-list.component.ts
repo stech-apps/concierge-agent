@@ -315,7 +315,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitOptionStatus = 'initial';
     this.ResetAutoCollapse();
 
-    console.log(visitId+'-visitOptionContainer');
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
           objDiv.scrollIntoView();
@@ -523,6 +522,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.infoVisitId = null;
     }else{
       this.infoVisitId = id;
+      setTimeout(function () {
+        var objDiv = document.getElementById(id+'-expanded-visit-info');
+        objDiv.scrollIntoView();
+     
+    }, 100); 
     }    
   }
 

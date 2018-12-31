@@ -14,7 +14,7 @@ $standard-home-margin : 1.5rem;
         width: 100%;
         min-height: 100%;
         // margin-left: $standard-home-margin;
-        background-color: $white;
+        background-color: #FAFAFA;
         
         
         @at-root [dir="ltr"] & {
@@ -30,6 +30,11 @@ $standard-home-margin : 1.5rem;
     }   
 }
 
+
+
+.qm-quick-serve-container{
+    // width: 100%;
+}
 
 .qm-summary-card{
     width:100%;

@@ -21,6 +21,8 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
   @Output()
   onCardClick = new EventEmitter<any>();
 
+  @Input() public useCalendarEndpoint: boolean;
+
   @Input()
   @HostBinding('class.qm-appointment-info-host--wide-card')
   useWideCard: boolean  = false;
@@ -31,6 +33,7 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    console.log(this.appointmentInfo);
   }
 
   ngAfterViewInit() {

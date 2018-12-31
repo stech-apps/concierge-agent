@@ -1,39 +1,48 @@
 <div class="qm-appointment-info" (click)="cardClick()" [ngClass]="{'qm-appointment-info--wide-card': useWideCard }" [dir]="userDirection$ | async" cdkTrapFocus>
   <div class="qm-appointment-info__header">
-    <div class="qm-appointment-info__id"> {{ appointmentInfo?.id }}</div>
+    <div class="qm-appointment-info__id"> {{ useCalendarEndpoint ? appointmentInfo.qpId : appointmentInfo.id }}</div>
     <div class="qm-appointment-info__customer"> {{ appointmentInfo?.custName }}</div>
   </div>
-  <div class="qm-appointment-info-item qm-appointment-info__birthdate">
+  <div class="qm-appointment-info-item qm-appointment-info__birthdate" >
       <span class="qm-appointment-info-item__icon icon-calendar"></span>
-      <span class="qm-appointment-info-item__text">
+      <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
               {{ (appointmentInfo?.customers[0].dateOfBirth || '-') | amDateFormat : 'YYYY-MM-DD' }}
+      </span>
+      <span class="qm-appointment-info-item__text" *ngIf="!useCalendarEndpoint">
+        {{ (appointmentInfo?.customers[0].properties?.dateOfBirth || '-') | amDateFormat : 'YYYY-MM-DD' }}
       </span>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__telephone">
       <span class="qm-appointment-info-item__icon icon-phone"></span>
-      <span class="qm-appointment-info-item__text">
+      <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
           {{ appointmentInfo?.customers[0].phone }}
+      </span>
+      <span class="qm-appointment-info-item__text" *ngIf="!useCalendarEndpoint">
+        {{ appointmentInfo?.customers[0].properties?.phoneNumber }}
       </span>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__email">
       <span class="qm-appointment-info-item__icon icon-mail">
       </span>
-      <span class="qm-appointment-info-item__text">
+      <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
           {{ appointmentInfo?.customers[0].email }}
       </span>
+      <span class="qm-appointment-info-item__text" *ngIf="!useCalendarEndpoint">
+        {{ appointmentInfo?.customers[0].properties?.email }}
+    </span>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__datetimecontainer">
     <div class="qm-appointment-info-item qm-appointment-info__date">
         <span class="qm-appointment-info-item__icon icon-calendar">
         </span>
         <span class="qm-appointment-info-item__text">
-            {{ appointmentInfo?.start | amDateFormat : 'DD/MM/YYYY' }}
+            {{ (appointmentInfo.startTime || appointmentInfo.start ) | amDateFormat : 'DD/MM/YYYY' }}
         </span>
     </div>
     <div class="qm-appointment-info-item qm-appointment-info__time">
         <span class="qm-appointment-info-item__icon icon-clock"></span>
         <span class="qm-appointment-info-item__text">
-            {{ appointmentInfo?.start | qmTimeFormat | async}}
+            {{ (appointmentInfo.startTime || appointmentInfo.start ) | qmTimeFormat : (appointmentInfo.branch && appointmentInfo.branch.fullTimeZone || '') | async }}
         </span>
     </div>
   </div>
@@ -44,7 +53,7 @@
           {{ appointmentInfo?.servicesDisplayLabel }}
       </span>
   </div>
-  <div class="qm-appointment-info-item qm-appointment-info__branches">
+  <div *ngIf="useCalendarEndpoint" class="qm-appointment-info-item qm-appointment-info__branches">
       <span class="qm-appointment-info-item__icon icon-home">       
       </span>
       <span class="qm-appointment-info-item__text">

@@ -21,8 +21,7 @@ export class SortAppointmentsPipe implements PipeTransform {
     // Check if is not null\
     if (!appointments || !sortColumn || isDesending === null) return appointments;
 
-    console.log(sortColumn);
-    console.log(isDesending);
+
     
     return _.orderBy(
       appointments,

@@ -1,4 +1,4 @@
-<div class="qm-pannel-container" dir ="{{ userDirection$ | async }}">
+<div class="qm-pannel-container qm-reschedule-root-container" dir ="{{ userDirection$ | async }}">
     <div class="qm-pannel-inner-container">
         <div class="qm-flow-sub-header">
             <div class="qm-flow-sub-header__left">
@@ -13,7 +13,9 @@
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoDate()}}</span>
               <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoCustomer()}}</span>
-              <span class="qm-reschedule__selected--icon"><i class="icon-info"></i></span>
+              <span class="qm-reschedule__selected--icon">
+                <i class="icon-info" [ngClass]="{'icon-info': !isShowExpandedAppointment, 'icon-info-solid': isShowExpandedAppointment}" (click)="expandAppointment()"></i></span>
+                
             </div>   
             <div *ngIf="isDeleteEnabledInUtt" class="qm-btn qm-btn--primary qm-reschedule__selected-cancel-button qm-text-overflow-fix" 
             (click)="onCancelAppointment()">{{ 'label.cancel.appointment' | translate}}</div>
@@ -37,6 +39,10 @@
         </div>
       </div>
     </div>
+
+    <qm-appointment-info [useCalendarEndpoint]="true" 
+                (onCardClick)="onAppointmentSelect($event)" [useWideCard]="false" (onClose)="expandAppointment()" 
+                [appointmentInfo]="editAppointment" *ngIf="isShowExpandedAppointment"></qm-appointment-info>
 </div>
 
 <div class="qm-flow-done-bar" *ngIf="isRescheduleEnabledInUtt && enableReschedule"  (click)="onRescheduleAppointment()">

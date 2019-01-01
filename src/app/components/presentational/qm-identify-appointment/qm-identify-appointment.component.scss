@@ -17,7 +17,19 @@
   max-width: 35%;
 }
 
+qm-identify-appointment{
+  ::ng-deep [dir='rtl'] & {
+    .qm-appointment-info {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
 .qm-identify-appointment {
+
+
+
   &__table-body {
     width: auto;
     height: calc(100vh - 394px);

@@ -1,56 +1,70 @@
 @import "../../../../styles/base/_component-manifest.scss";
 
+.qm-pannel-container {
+  height: 100%;
+}
+
+.qm-reschedule-root-container {
+  ::ng-deep .qm-appointment-info {
+    top: 10rem;
+    left: 15%;
+  }
+
+  &[dir="rtl"] ::ng-deep .qm-appointment-info {
+    right: 15%;
+    left: auto;
+  }
+}
+
 .qm-number-of-customers {
-    &__text {
-        color: $primary-text-color;
-        font-size: 0.7rem;
-        @at-root [dir="rtl"] & {
-            margin-left: rem($standard-margin / 2);
-         }
-        
+  &__text {
+    color: $primary-text-color;
+    font-size: 0.7rem;
+    @at-root [dir="rtl"] & {
+      margin-left: rem($standard-margin / 2);
     }
-    &__numeric {
-        display: flex;
-        margin-left: 1rem;
-        &-button {
-            background: $numeric-button-control;
-            width: 2rem;
-            height: 2rem;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7rem;
-            cursor: pointer;
+  }
+  &__numeric {
+    display: flex;
+    margin-left: 1rem;
+    &-button {
+      background: $numeric-button-control;
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.7rem;
+      cursor: pointer;
 
-            &:active {
-                opacity: 0.7;
-            }
-        }
-
-        &-value {
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: $primary-text-color;
-        }
+      &:active {
+        opacity: 0.7;
+      }
     }
+
+    &-value {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $primary-text-color;
+    }
+  }
 }
 
 .qm-reschedule {
-    &__selected-branch {
-        color: $dark-transparent42;
-        font-weight: $font-weight-medium;
-        width: 50%;
+  &__selected-branch {
+    color: $dark-transparent42;
+    font-weight: $font-weight-medium;
+    width: 50%;
 
-        @at-root [dir='rtl'] & {
-            text-align: right;
-        }
+    @at-root [dir="rtl"] & {
+      text-align: right;
     }
+  }
 
-    
   &__selected {
     color: $dark-transparent82;
     display: flex;
@@ -59,16 +73,16 @@
     width: 100%;
 
     &-cancel-button {
-        width: 280px;
-        display: inline-block;
-        text-align: center;
+      width: 280px;
+      display: inline-block;
+      text-align: center;
     }
 
     &--text {
       max-width: 35%;
       padding: 1rem 1rem 1rem 0;
 
-      @at-root [dir='rtl'] & {
+      @at-root [dir="rtl"] & {
         padding: 1rem 0 1rem 1rem;
       }
     }
@@ -88,7 +102,6 @@
       display: flex;
       justify-content: space-between;
 
-
       span {
         display: inline-block;
         margin-left: 1rem;
@@ -103,7 +116,7 @@
       color: $dark-transparent62;
 
       i {
-          line-height: 56px;
+        line-height: 56px;
       }
 
       &:hover {
@@ -115,90 +128,89 @@
 }
 
 .qm-reschedule-select {
-    &__content {
-        display: flex;
-    }
+  &__content {
+    display: flex;
+  }
 
-    &-slots {
-        flex: 1;
-        margin: 0.5rem 0 1rem 1rem;
-        color: black;
-        position: relative;
-        border: 1px solid rgba(0, 0, 0, 0.12);
+  &-slots {
+    flex: 1;
+    margin: 0.5rem 0 1rem 1rem;
+    color: black;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.12);
 
-        @at-root [dir='rtl'] & {
-            margin: 0.5rem 1rem 1rem 0;
-        }
+    @at-root [dir="rtl"] & {
+      margin: 0.5rem 1rem 1rem 0;
     }
+  }
 }
 
 .qm-reschedule-time-select {
-    &__content {
-        display: flex;
-    }
+  &__content {
+    display: flex;
+  }
 
-    &-slots {
-        flex: 1;
-       
-    }
+  &-slots {
+    flex: 1;
+  }
 }
 
 .qm-time-header {
-    background: $secondary-color;
-    font-size: rem(21px);
-    text-align: center;
-    padding: 0.5rem;
-    font-weight: $font-weight-medium;
-    color: $white;
-    height: 3rem;
+  background: $secondary-color;
+  font-size: rem(21px);
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: $font-weight-medium;
+  color: $white;
+  height: 3rem;
 }
 
 .qm-calendar-container {
-    margin: 0.5rem 1rem 1rem 0;
-    flex: 1;
-    @at-root [dir='rtl'] & {
-        margin: 0.5rem 0 1rem 1rem;
-    }
+  margin: 0.5rem 1rem 1rem 0;
+  flex: 1;
+  @at-root [dir="rtl"] & {
+    margin: 0.5rem 0 1rem 1rem;
+  }
 }
 
 .qm-calendar-placeholder {
-    background-color: $calendar-background;
-    border: 1px solid rgba(0,0,0,0.12);
+  background-color: $calendar-background;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .qm-reschedule-time-select-slots {
-    margin: 0.5rem 3rem 1rem 1rem;
-    flex: 1;
+  margin: 0.5rem 3rem 1rem 1rem;
+  flex: 1;
 }
 
 .qm-reschedule-button {
-    display: flex;
-    text-transform: uppercase;
-    font-size: rem(16px);
-    letter-spacing: 2px;
-    background-color: rgb(189, 189, 189);
-    justify-content: center;
-    line-height: 2.8rem;
-    width: 100%;
-    outline: none;
-    border: none;
-    margin-top: 0.5rem;
+  display: flex;
+  text-transform: uppercase;
+  font-size: rem(16px);
+  letter-spacing: 2px;
+  background-color: rgb(189, 189, 189);
+  justify-content: center;
+  line-height: 2.8rem;
+  width: 100%;
+  outline: none;
+  border: none;
+  margin-top: 0.5rem;
 
-    &--active {
-        background-color: $app-theme;
-        color: $white;
-    }
+  &--active {
+    background-color: $app-theme;
+    color: $white;
+  }
 }
 
 .qm-delete-button {
-    display: flex;
-    width: 100%;
-    font-size: rem(16px);
-    justify-content: center;
-    outline: none;
-    border: none;
-    background-color: $calendar-background;
-    line-height: 2.8rem;
-    margin-top: 0.5rem;
-    letter-spacing: 2px;
+  display: flex;
+  width: 100%;
+  font-size: rem(16px);
+  justify-content: center;
+  outline: none;
+  border: none;
+  background-color: $calendar-background;
+  line-height: 2.8rem;
+  margin-top: 0.5rem;
+  letter-spacing: 2px;
 }

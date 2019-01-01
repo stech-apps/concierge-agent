@@ -1380,6 +1380,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   openAppointmentInfoModal() {
     this.isShowAppointmentInfo = !this.isShowAppointmentInfo;
+    if(this.expandedAppointment) {
+      this.expandedAppointment.showInfo  = false;
+    }
   }
 
   showTimeFilter() {

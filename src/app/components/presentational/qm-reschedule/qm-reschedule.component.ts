@@ -64,6 +64,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isDeleteEnabledInUtt: boolean = true;
   isOriginalAppointmentTimeChanged = false;
   isDateSelected: boolean = false;
+  isShowExpandedAppointment: boolean = false;
   
   timeConvention: string = "24";
   userDirection$: Observable<string>;
@@ -337,6 +338,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     }
 
     return appointmentInfo;
+  }
+
+  expandAppointment() {
+    this.isShowExpandedAppointment = !this.isShowExpandedAppointment;
   }
 
   getSelectedAppointmentInfoDate(timeFormat = "DD/MM/YYYY") {

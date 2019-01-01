@@ -129,8 +129,8 @@ export class AppointmentEffects {
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS)
     .pipe(
       switchMap((action: AppointmentActions.RescheduleAppointmentSuccess) => {
-        return this.translateService.get(['label.notifyoptions.smsandemail', 'label.notifyoptions.email', 
-        'label.notifyoptions.sms']).pipe(
+        return this.translateService.get(['label.notifyoptions.smsandemail', 
+        'label.notifyoptions.email', 'label.notifyoptions.sms']).pipe(
           switchMap((messages) => {
             let timeFormat: string = 'HH:mm';
 
@@ -194,13 +194,16 @@ export class AppointmentEffects {
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
       switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-        return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
+        //return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
+        return this.translateService.get(['label.appointment.reschedule.fail']).pipe(
           switchMap((messages) => {
             var errorMessage = {
-              firstLineName: messages['appointment_reschedule_fail'],
+              firstLineName: messages['label.appointment.reschedule.fail'],
               icon: "error"
             };
-
+           
+            this.toastService.errorToast(messages['label.appointment.reschedule.fail']);
+          /* 
             if (action.payload["errorCode"] === 'E461') {
               this.toastService.errorToast(messages['appointment_already_used']);
             }
@@ -209,6 +212,7 @@ export class AppointmentEffects {
                 this.toastService.errorToast(action.payload["errorMsg"]);
               }
             }
+            */
 
             return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
           })

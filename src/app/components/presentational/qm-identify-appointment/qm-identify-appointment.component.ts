@@ -1370,8 +1370,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   getSortIcons(sortColumn) {
     let sortConfig = {
-      "icon-caret-down": this.sortState[sortColumn] < 0,
-      "icon-caret-up": this.sortState[sortColumn] > 0
+      "icon-caret-down": this.sortColumn === sortColumn && this.isDescending,
+      "icon-caret-up": ((this.sortColumn === sortColumn && !this.isDescending) || (this.sortColumn !== sortColumn)) ? true : false,
+      "active-sort-column" : this.sortColumn === sortColumn
     };
 
     return sortConfig;
@@ -1443,9 +1444,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   sortAppointments(sortColumn: string) {
-    this.sortState[sortColumn] =
+    /*this.sortState[sortColumn] =
       this.sortState[sortColumn] === 0 ? -1 : this.sortState[sortColumn] * -1;
-
+      
     var index = this.sortColumnPriorities.indexOf(sortColumn);
     if (index > -1) {
       this.sortColumnPriorities.splice(index, 1);
@@ -1457,6 +1458,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (!this.useCalendarEndpoint && sortColumn === SortColumns.startTimeDate) {
       return;
     }
+
+    */
 
     if (this.sortColumn === sortColumn) {
       this.isDescending = !this.isDescending;

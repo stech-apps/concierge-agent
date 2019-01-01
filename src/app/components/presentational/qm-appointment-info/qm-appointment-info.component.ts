@@ -33,7 +33,6 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
-    console.log(this.appointmentInfo);
   }
 
   ngAfterViewInit() {
@@ -54,6 +53,5 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnDestroy() {
-
   }
 }

@@ -1,4 +1,5 @@
 @import "../../../../styles/base/_component-manifest.scss";
+
 .qm-flow-sub-header {
   height: 2.8rem;
   display: flex;
@@ -299,6 +300,15 @@
   &__appointment-table {
     display: flex;
     flex-wrap: wrap;
+
+    i.icon-caret-up {
+      color: #ccc;
+    }
+    
+    i.icon-caret-up.active-sort-column {
+      color: black;
+      font-size: 18px;
+    }
 
     // TABLE HEADER AREA
     &__header {

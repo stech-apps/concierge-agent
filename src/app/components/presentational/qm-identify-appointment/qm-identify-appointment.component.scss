@@ -245,7 +245,7 @@
   }
   &__pannel-bottom-bar {
     margin-top: 0;
-    border-top: 3px solid $pale-aquamarine;
+    border-top: 2px solid $pale-aquamarine;
   }
 
   &__pannel-header {
@@ -403,7 +403,7 @@
   // position:absolute;
   text-align: center;
   // margin-top: -20px;
-  margin-top: 138px;
+  margin-top: 136px;
   cursor: pointer;
 }
 
@@ -614,7 +614,7 @@
             width: 170px;
           }
           &__header-date {
-            width: 120px;
+            width: 140px;
           }
 
           &__header-time {
@@ -636,7 +636,7 @@
             width: 170px;
           }
           &__cell-date {
-            width: 120px;
+            width: 140px;
           }
 
           &__cell-time {
@@ -833,10 +833,14 @@
 
     @include qm-sm {
       width: map-get($qm-device-breakpoints, sm-width);
+      padding-right: 24px;
+      padding-left: 24px;
     }
 
     @include qm-xs {
       width: map-get($qm-device-breakpoints, xs-width);
+      padding-right: 24px;
+      padding-left: 24px;
     }
   }
 }

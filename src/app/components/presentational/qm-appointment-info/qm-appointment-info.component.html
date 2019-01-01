@@ -4,7 +4,7 @@
     <div class="qm-appointment-info__customer"> {{ appointmentInfo?.custName }}</div>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__birthdate" >
-      <span class="qm-appointment-info-item__icon icon-calendar"></span>
+      <span class="qm-appointment-info-item__icon icon-cake"></span>
       <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
               {{ (appointmentInfo?.customers[0].dateOfBirth || null) | amDateFormat : 'YYYY-MM-DD' }}
       </span>

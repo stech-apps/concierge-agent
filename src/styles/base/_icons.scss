@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-info-solid:before {
+  content: "\e972";
+}
 .icon-emailsms:before {
   content: "\e96e";
 }
@@ -108,6 +111,9 @@
 }
 .icon-subtract-smaller:before {
   content: "\e912";
+}
+.icon-cake:before {
+  content: "\e973";
 }
 .icon-calendar-light:before {
   content: "\e971";
@@ -366,7 +372,4 @@
 }
 .icon-walk-in:before {
   content: "\e95a";
-}
-.icon-info-solid:before {
-  content: "\e972";
 }

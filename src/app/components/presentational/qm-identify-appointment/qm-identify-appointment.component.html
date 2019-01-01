@@ -16,15 +16,12 @@
     </div>
     <!-- SELECTED APPOINTMENT INFO -->
     <ng-container *ngIf="selectedAppointment">
-
       <div class="qm-selected-label__container">
           <div class="qm-identify-appointment__selected--text qm-text-overflow-fix">
               {{'label.identify.appointment.selected' | translate }} 
           </div>
          <qm-appointment-info [useCalendarEndpoint]="useCalendarEndpoint" (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="selectedAppointment" *ngIf="isShowAppointmentInfo"></qm-appointment-info>
       </div>
-     
-
       <div class="qm-identify-appointment__selected" [ngClass]="{'qm-appointment-info-shown': isShowAppointmentInfo}">
         <div class="qm-identify-appointment__selected--details">
           <span class="qm-text-overflow-fix">{{getSelectedAppointmentInfoTime()}}</span>
@@ -35,10 +32,6 @@
         <span class="qm-identify-appointment__selected--icon"  (click)="openAppointmentInfoModal()"><i [ngClass]="{'icon-info-solid': isShowAppointmentInfo, 'icon-info' : !isShowAppointmentInfo 
         }"></i></span>
       </div>
-
-
-
-
     </ng-container>
     <br>
     <div class="qm-identify-appointment">

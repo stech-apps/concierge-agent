@@ -24,10 +24,10 @@
   <div class="qm-appointment-info-item qm-appointment-info__email">
       <span class="qm-appointment-info-item__icon icon-mail">
       </span>
-      <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
+      <span class="qm-appointment-info-item__text qm-text-overflow-fix" *ngIf="useCalendarEndpoint">
           {{ appointmentInfo?.customers[0].email }}
       </span>
-      <span class="qm-appointment-info-item__text" *ngIf="!useCalendarEndpoint">
+      <span class="qm-appointment-info-item__text qm-text-overflow-fix" *ngIf="!useCalendarEndpoint">
         {{ appointmentInfo?.customers[0].properties?.email }}
     </span>
   </div>

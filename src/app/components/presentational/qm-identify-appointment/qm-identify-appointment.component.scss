@@ -27,9 +27,6 @@ qm-identify-appointment{
 }
 
 .qm-identify-appointment {
-
-
-
   &__table-body {
     width: auto;
     height: calc(100vh - 394px);
@@ -269,6 +266,7 @@ qm-identify-appointment{
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     padding-bottom: $standard-padding/2;
     position: relative;
+    z-index: 1000;
   }
   &__time-container {
     padding: 0px 10px;

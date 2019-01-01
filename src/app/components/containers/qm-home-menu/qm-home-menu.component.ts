@@ -39,6 +39,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isEditAppointment = false;
   isCreateAppointment = false;
   userDirection$: Observable<string>;
+  isNative:boolean;
+  
 
   isEditFlowDisabled = false;
   isEditVisitFlowDisabled = false;
@@ -58,8 +60,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   constructor(private accountSelectors: AccountSelectors, private servicePointSelectors: ServicePointSelectors, private router: Router,
     private userSelectors: UserSelectors, private calendarBranchDispatcher: CalendarBranchDispatchers,
     private toastService: ToastService, private translateService: TranslateService,
-    private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, private calendarService: CalendarService, private systemInfoService: SystemInfoDataService, private branchSelector: BranchSelectors,
-    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors, private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors) {
+    private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, 
+    private calendarService: CalendarService, private systemInfoService: SystemInfoDataService, private branchSelector: BranchSelectors,
+    private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors,
+    private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors) {
 
   }
 
@@ -72,6 +76,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.checkUttPermissions();
     this.userDirection$ = this.userSelectors.userDirection$;
     
+    this.isNative = this.nativeApi.isNativeBrowser();
+
     if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
       this.calendarBranchDispatcher.fetchCalendarBranches();
     }

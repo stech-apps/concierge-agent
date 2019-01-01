@@ -50,6 +50,7 @@
     <div id="qm-visit-container" *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
 
       <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
+        <div>
         <div style="display:flex"  id="{{visit.visitId}}-expanded-visit-info"> 
         <div (click)="selectVisit(i,visit.visitId)" class="qm-visit-list-body-row" [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId}">
          <div class="qm-flex-grid  qm-row-text">
@@ -155,7 +156,7 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- second options -->
         <div class="qm-visit-list__options-2" *ngIf="visitClicked && selectedVisitId === visit.visitId && (visitOptionStatus === 'staff' || visitOptionStatus === 'cp' || visitOptionStatus === 'tq')">
           <!-- <div class="triangle-with-shadow"></div> -->
@@ -177,7 +178,6 @@
             <qm-trasfer-to-queue *ngIf ="this.visitOptionStatus === 'tq'"></qm-trasfer-to-queue>
           </div>
         </div>
-       
       </div>
     </div>
   </div>

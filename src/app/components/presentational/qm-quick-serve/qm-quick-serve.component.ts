@@ -35,6 +35,10 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   showToolTip: boolean;
 
 
+  isQuickServeEnable: boolean;
+  isShowQueueView: boolean;
+  editVisitEnable: boolean;
+
   constructor(
     private serviceSelectors: ServiceSelectors,
     private servicePointSelectors: ServicePointSelectors,
@@ -52,6 +56,17 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
 
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
+      params => {
+        if (params) {
+          this.isQuickServeEnable = params.quickServe;
+          this.isShowQueueView = params.queueView;
+          this.editVisitEnable = params.editVisit;
+        }
+      }
+    );
+    this.subscriptions.add(servicePointsSubscription);
+    
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
     this.subscriptions.add(branchSubscription);
 

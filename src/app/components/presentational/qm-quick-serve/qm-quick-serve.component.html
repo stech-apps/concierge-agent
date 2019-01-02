@@ -1,41 +1,39 @@
 <div *ngIf="services.length > 0" class="qm-quick-serve" dir="{{ userDirection$ | async }}">
     <div class="qm-quick-serve__content">
         <div class="qm-quick-serve__header" >{{ 'quick_serve' | translate }}
-        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
-            <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
-        </button>
+            <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
+                <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
+            </button>
 
-        <div class="quick-serve-tooltip" *ngIf="showToolTip">
-                    <div class="triangle"></div>
-                    <div class="quick-serve-tooltip__rec">
-                        {{'quick_serve_tooltip'|translate}}
-                    </div>
-        </div>        
-               
-      
-    </div>
-
-    <div class="qm-quick-serve-search" dir="{{ userDirection$ | async }}">
-        <div class="qm-quick-serve-search__search-container">
-          <input class="qm-quick-serve-search__input" type="search" placeholder="{{ 'search_service_name' | translate }}" id="visitSearch"
-            name="q" [ngModel]="searchText" (input)="handleInput($event)" #visitSearch autocomplete="off">
-          <div class="qm-action-btn--only-icon">
-            <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
-              aria-hidden="true"></i>
-          </div>
-          <div class="qm-action-btn--only-icon">
-            <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-          </div>
+            <div class="quick-serve-tooltip" *ngIf="showToolTip">
+                <div class="triangle"></div>
+                <div class="quick-serve-tooltip__rec">
+                    {{'quick_serve_tooltip'|translate}}
+                </div>
+            </div>              
         </div>
-      </div>
+
+        <div class="qm-quick-serve-search" dir="{{ userDirection$ | async }}">
+            <div class="qm-quick-serve-search__search-container">
+                <input class="qm-quick-serve-search__input" type="search" placeholder="{{ 'search_service_name' | translate }}" id="visitSearch"
+                name="q" [ngModel]="searchText" (input)="handleInput($event)" #visitSearch autocomplete="off">
+                <div class="qm-action-btn--only-icon">
+                    <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
+                    aria-hidden="true"></i>
+                </div>
+                <div class="qm-action-btn--only-icon">
+                    <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+                </div>
+            </div>
+        </div>
 
 
         <div [style.visibility]="isTopBarVisible ? 'visible' : 'hidden'">
             <div class="qm-quick-serve__list-shadow-top"></div>
         </div>
-        <div #configServiceList class="qm-quick-serve__list-container" (scroll)="onScroll($event.target)">
+        <div #configServiceList class="qm-quick-serve__list-container" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
             <div class="qm-quick-serve__item" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText">
-                <span class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
+                <span  tabindex="5" class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
                 <div *ngIf="selectedService !== null && selectedService.id === service.id">
                     <i class="qm-action-btn__icon icon-checkbox-checked qm-quick-serve__icon" aria-hidden="true"></i>
                 </div>

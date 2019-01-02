@@ -60,12 +60,19 @@
           {{ appointmentInfo?.branchDisplayLabel }}
       </span>
   </div>
-  <div class="qm-appointment-info-item qm-appointment-info__notes" *ngIf="appointmentInfo?.notes">
+  <div class="qm-appointment-info-item qm-appointment-info__notes" *ngIf="useCalendarEndpoint && appointmentInfo?.notes">
       <span class="qm-appointment-info-item__icon icon-edit"></span>
       <span class="qm-appointment-info-item__text">
           {{ appointmentInfo?.notes}}
       </span>
   </div>
+
+  <div class="qm-appointment-info-item qm-appointment-info__notes" *ngIf="!useCalendarEndpoint && appointmentInfo?.properties?.notes">
+    <span class="qm-appointment-info-item__icon icon-edit"></span>
+    <span class="qm-appointment-info-item__text">
+        {{ appointmentInfo?.properties?.notes }}
+    </span>
+</div>
 </div>
 
 <div class="qm-appointment-info__modal" *ngIf="!useWideCard" (click)="onModalClick()"></div>

@@ -41,9 +41,6 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
     if (infoCardElement) {
       infoCardElement.scrollIntoView();
     }
-    console.log(this.useCalendarEndpoint);
-
-    console.log(this.appointmentInfo);
   }
 
   onModalClick() {

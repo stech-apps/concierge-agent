@@ -25,6 +25,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   private subscriptions: Subscription = new Subscription();
   @Input() FlowName: string;  
   @Output() headerClicked = new EventEmitter<QmFlowPanelComponent>();
+  @Output() onFlowExitInvoked = new EventEmitter();
   mltyBrnch:boolean;
 
   constructor(
@@ -116,6 +117,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
           this.exitFlow = true;
           this.recycleService.clearCache();
           this.queueService.setQueuePoll();
+          this.onFlowExitInvoked.emit();
           setTimeout(() => {
             this.AccountDispatchers.setMenuItemStatus(false);
             if(this.router.url!="/profile"){

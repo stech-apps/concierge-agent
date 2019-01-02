@@ -4,7 +4,7 @@
     <div class="qm-fishes-container">
     <div  *ngFor="let headerItem of flowPanels.toArray(); let i=index" [ngClass]="{'qm-fishes': i!=0, 'qm-fishes-first':i==0,'qm-fishes-active':activeHeader == i}" (click)="headerItemClicked(i); panelHeaderClick(headerItem)" [ngStyle]="{'z-index':200-i}" > <div [ngClass]="{'qm-fishes-text':activeHeader != i,'qm-active-text':activeHeader == i,'qm-text-underline':activeHeader>i,'qm-fishes-first-element-text':i==0} "> {{headerItem.title|translate}}</div></div>
     </div>
-    <div class="qm-flow-close" (click)="onFlowExit()"> {{'cancel'|translate}}</div>
+    <div class="qm-flow-close" (click)="onFlowExit();"> {{'cancel'|translate}}</div>
  
 </div>
 

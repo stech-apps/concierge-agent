@@ -312,17 +312,18 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
             rescheduleAppointment.end = `${endTime.format(
               "YYYY-MM-DD"
             )}T${endTime.format("HH:mm")}`;
+
             this.appointmentDispatchers.rescheduleAppointment(
               rescheduleAppointment
             );
 
-            this.appointmentSelectors.rescheduleProgress$.subscribe(progress => {
-              if (progress !== null) {
-                if(progress === true) {
+            this.appointmentSelectors.rescheduleProgress$.subscribe(
+              progress => {
+                if (progress !== null && progress === true) {
                   this.onFlowExit.next(true);
                 }
               }
-            });            
+            );
           }
         },
         () => {}

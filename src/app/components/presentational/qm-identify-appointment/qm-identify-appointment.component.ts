@@ -165,6 +165,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter<any>();
 
+
+
   @Input()
   useCalendarEndpoint: boolean = false;
 
@@ -1204,7 +1206,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.onFlowNext.emit();
     this.appointmentSelected.emit(appointment);
     this.selectedCustomer = appointment.customers[0];
-    this.expandedAppointment.showInfo = false;
+    if(this.expandedAppointment) {
+      this.expandedAppointment.showInfo = false;
+    }
   }
 
   getSelectedAppointmentInfo() {
@@ -1505,7 +1509,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if(this.expandedAppointment && this.expandedAppointment.id != app.id) {
       this.expandedAppointment.showInfo = false;
     }
-    app.showInfo = !app.showInfo;
+
+    if(app) {
+      app.showInfo = !app.showInfo;
+    }    
     this.expandedAppointment = app;
+  }
+
+  flowExitInvoked(){
+    if(this.expandAppointment) {
+      this.expandedAppointment.showInfo = false;
+    }
   }
 }

@@ -5,6 +5,7 @@ export interface IAppointmentState {
     appointments: IAppointment[];
     calendarAppointments: IAppointment[];
     selectedAppointment: IAppointment;
+    rescheduleSuccess?: boolean;
     loading: boolean;
     loaded: boolean;
     error: Object;
@@ -14,6 +15,7 @@ export const initialState: IAppointmentState = {
     appointments: [],
     calendarAppointments: [],
     selectedAppointment: null,
+    rescheduleSuccess: null,
     loading: false,
     loaded: false,
     error: null
@@ -101,7 +103,33 @@ export function reducer(
               ...state,
               error: null
             };
-          }
+        }
+
+        case AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS: {
+            return {
+              ...state,
+              loaded: true,
+              error: null,
+              rescheduleSuccess: true
+            };
+        }
+
+        case AppointmentActions.RESCHEDULE_APPOINTMENT: {
+            return {
+              ...state,
+              loaded: false,
+              error: null,
+              rescheduleSuccess: null
+            };
+        }
+        case AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL: {
+            return {
+              ...state,
+              loaded: true,
+              error: action.payload,
+              rescheduleSuccess: false
+            };
+        }
         default: {
             return state;
         }

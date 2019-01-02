@@ -123,7 +123,6 @@ export class AppointmentEffects {
       )
     );
 
-
   @Effect()
   rescheduleAppointmentSuccess$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS)

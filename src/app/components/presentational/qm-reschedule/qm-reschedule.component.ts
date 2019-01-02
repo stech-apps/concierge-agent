@@ -26,7 +26,10 @@ import {
   Output,
   ViewChild
 } from "@angular/core";
-import { CalendarDate, QmCalendarComponent } from "src/app/components/containers/qm-calendar/qm-calendar.component";
+import {
+  CalendarDate,
+  QmCalendarComponent
+} from "src/app/components/containers/qm-calendar/qm-calendar.component";
 import * as moment from "moment";
 import { IBookingInformation } from "src/models/IBookingInformation";
 import {
@@ -65,10 +68,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isOriginalAppointmentTimeChanged = false;
   isDateSelected: boolean = false;
   isShowExpandedAppointment: boolean = false;
-  
+
   timeConvention: string = "24";
   userDirection$: Observable<string>;
-  @ViewChild('qmcalendar') qmCalendar: QmCalendarComponent;
+  @ViewChild("qmcalendar") qmCalendar: QmCalendarComponent;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -92,17 +95,17 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private calendarBranchSelectors: CalendarBranchSelectors,
     private servicePointSelectors: ServicePointSelectors,
     private systemInfoSelectors: SystemInfoSelectors,
-    private translationService: TranslateService
+    private translationService: TranslateService,
+    private appointmentSelectors: AppointmentSelectors
   ) {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.userDirection$ = this.userSelectors.userDirection$;
-    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["editAppointment"] && this.editAppointment) {
-      console.log('edit appointment changed');
+      console.log("edit appointment changed");
       this.enableReschedule = false;
       window["moment"] = moment;
       const calculatedAppointmentTime = moment(this.editAppointment.start).tz(
@@ -115,7 +118,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.isDateSelected = false;
       this.timeSlotDispatchers.deselectTimeslot();
       this.fetchReservableDates();
-
     }
   }
 
@@ -313,7 +315,14 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
             this.appointmentDispatchers.rescheduleAppointment(
               rescheduleAppointment
             );
-            this.onFlowExit.next(true);
+
+            this.appointmentSelectors.rescheduleProgress$.subscribe(progress => {
+              if (progress !== null) {
+                if(progress === true) {
+                  this.onFlowExit.next(true);
+                }
+              }
+            });            
           }
         },
         () => {}
@@ -362,17 +371,17 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   getSelectedDate(timeFormat = "DD/MM/YYYY") {
     let selectedDate = "";
 
-      if (this.editAppointment && this.currentlyActiveDate) {
-        selectedDate = this.currentlyActiveDate.mDate
-          .tz(
-            this.editAppointment.branch.fullTimeZone ||
-              this.selectedCalendarBranch.fullTimeZone
-          )
-          .format(timeFormat);
-      } else {
-        selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
-      }
-    
+    if (this.editAppointment && this.currentlyActiveDate) {
+      selectedDate = this.currentlyActiveDate.mDate
+        .tz(
+          this.editAppointment.branch.fullTimeZone ||
+            this.selectedCalendarBranch.fullTimeZone
+        )
+        .format(timeFormat);
+    } else {
+      selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
+    }
+
     return selectedDate;
   }
 

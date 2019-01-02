@@ -37,6 +37,11 @@ const getAppointmentsError = createSelector(
   (state: IAppointmentState) => state.error
 );
 
+const getRescheduleProgress = createSelector(
+  getAppointmentState,
+  (state: IAppointmentState) => state.rescheduleSuccess
+);
+
 @Injectable()
 export class AppointmentSelectors {
   constructor(private store: Store<IAppState>) {}
@@ -47,4 +52,5 @@ export class AppointmentSelectors {
   appointmentsLoading$ = this.store.select(getAppointmentsLoading);
   appointmentsLoaded$ = this.store.select(getAppointmentsLoaded);
   appointmentsError$ = this.store.select(getAppointmentsError);
+  rescheduleProgress$ = this.store.select(getRescheduleProgress);
 }

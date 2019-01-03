@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter, ɵConsole } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { CREATE_VISIT, CREATE_APPOINTMENT, ARRIVE_APPOINTMENT } from "./../../../../constants/utt-parameters";
@@ -598,7 +598,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateAppointment() {
-    this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr,
+    debugger;
+    console.log(Math.round(moment.duration(moment().utc().seconds(0).diff(moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone))).asMinutes()));
+
+    if(Math.round(moment.duration(moment().utc().seconds(0).diff(moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone))).asMinutes()) >  0) { 
+      this.translateService.get('toast.appointment.create.timepassed').subscribe(msg=> {
+        this.toastService.errorToast(msg);
+      });
+    }
+     else {    
+      this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr,
       this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType())
       .subscribe(result => {
         if (result) {
@@ -622,6 +631,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.handleTimeoutError(err, 'appointment_create_fail');
         }
       });
+
+     }
   }
 
   setCreateVisit() {

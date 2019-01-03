@@ -1516,8 +1516,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.expandedAppointment = app;
   }
 
-  flowExitInvoked(){
-    if(this.expandAppointment) {
+  flowExitInvoked() {
+    if(this.expandedAppointment) {
       this.expandedAppointment.showInfo = false;
     }
   }

@@ -371,7 +371,7 @@ qm-identify-appointment{
       &-parent {
         position: relative;
 
-        .icon-info {
+        .icon-info, .icon-info-solid {
           font-size: 28px;
           cursor: pointer;
           color: $dark-transparent62;
@@ -614,7 +614,7 @@ qm-identify-appointment{
         }
 
         @include qm-xs {
-          .icon-info {
+          .icon-info, .icon-info-solid {
             line-height: $sm-xs-row-height;
           }
         }
@@ -754,7 +754,7 @@ qm-identify-appointment{
         }
 
         @include qm-xs {
-          .icon-info {
+          .icon-info, .icon-info-solid {
             line-height: $sm-xs-row-height;
           }
 

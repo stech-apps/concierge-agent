@@ -50,6 +50,12 @@
         padding-right: 0;
       }
     }
+
+    &__text {
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
+    }
   }
 
   &__id {

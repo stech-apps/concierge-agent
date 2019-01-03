@@ -8,7 +8,7 @@ import { FLOW_TYPE } from './flow-state';
 
 export enum STORAGE_KEY {
     SETTINGS = "SETTINGS",
-    STORE = "STORE"
+    STORE = "STORE",
 }
 
 export enum STORAGE_SUB_KEY {
@@ -79,10 +79,12 @@ export class LocalStorage {
         var store = this.getSettings();
         store[STORAGE_SUB_KEY.USER_ID] = this.currentUser.id;
         store[STORAGE_SUB_KEY.ACTIVE_BRANCH] = this.currentBranch.id;
-        store[STORAGE_SUB_KEY.ACTIVE_WORKSTATION] = this.currentServicePoint.id;
-        store[STORAGE_SUB_KEY.REMEMBER_LOGIN] = this.isUseDefault;
-       
+        store[STORAGE_SUB_KEY.ACTIVE_WORKSTATION] = this.currentServicePoint.id;      
         this.setValue(STORAGE_KEY.SETTINGS, store);
+    }
+
+    setInitialStoreValues() {
+        this.setUserStoreObjectValue(STORAGE_SUB_KEY.REMEMBER_LOGIN, STORAGE_SUB_KEY.REMEMBER_LOGIN, this.isUseDefault);
     }
 
     getSettingForKey(key: STORAGE_SUB_KEY){
@@ -119,6 +121,42 @@ export class LocalStorage {
         this.setValue(STORAGE_KEY.STORE, store);
     }
 
+    setUserStoreObjectValue(key: STORAGE_SUB_KEY, objectProperty: any,  value: any){
+        var store = this.getStore();
+        var userArray = [];
+        if(store[key] === undefined){
+            store[key] = userArray;
+        }
+        else{
+            userArray = store[key].filter(val => {
+                return val.user !== this.currentUser.id;
+            });
+        }
+        let userObj: any = { user: this.currentUser.id };
+        userObj[objectProperty] = value;
+
+        userArray.push(userObj);
+        store[key] = userArray;
+        this.setValue(STORAGE_KEY.STORE, store);
+    }
+
+    getUserStoreObjectValue( userId: number, key: STORAGE_SUB_KEY, objectProperty: any, defaultValue = null){
+        let store = this.getStore();
+        let storeSub = store[key];
+        if(storeSub){
+            let userStore = storeSub.filter(val => {
+                return val.user === userId;
+            }); 
+
+            if(userStore && userStore.length > 0) {
+                return userStore[0][objectProperty];
+            }
+            else {
+                return defaultValue;
+            }           
+        }
+    }
+
     getStore(){
         return this.getValue(STORAGE_KEY.STORE);
     }
@@ -133,7 +171,7 @@ export class LocalStorage {
             if(userStore.length > 0){
                 return userStore[0].services;
             }
-            else{
+            else {
                 return [];
             }
         }

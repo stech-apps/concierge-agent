@@ -71,16 +71,21 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private recycleService: Recycle
   ) {
     const userSubscription = this.userSelectors.user$.subscribe(
-      user => (this.user = user)
+      user =>  {
+        this.user = user;
+        this.isEnableUseDefault = this.localStorage.getUserStoreObjectValue(
+          user.id,
+          STORAGE_SUB_KEY.REMEMBER_LOGIN,
+          STORAGE_SUB_KEY.REMEMBER_LOGIN,
+          false
+        );
+    
+        console.log('EnableUseDefault' + this.isEnableUseDefault);
+      }
     );
     this.subscriptions.add(userSubscription);
 
-    this.isEnableUseDefault = this.localStorage.getSettingForKey(
-      STORAGE_SUB_KEY.REMEMBER_LOGIN
-    );
-    // console.log(this.isEnableUseDefault);
-
-    const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe(
+      const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe(
       spo => {
         this.navServicePoint = spo;
       }
@@ -160,6 +165,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.nativeApiService.showNativeLoader(false);
+
+
   }
 
   onBranchSelect(selectedBranch: IBranch) {

@@ -462,6 +462,7 @@ export class QmSelectServiceComponent implements OnInit {
 
     this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, currentList);
   }
+  
   clickedshowToolTip(){  
     if(this.showToolTip){
       this.showToolTip = false;

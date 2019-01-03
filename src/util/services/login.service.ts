@@ -126,6 +126,7 @@ export class LoginService {
               
                 this.servicePointDispatchers.setPreviousServicePoint(this.selectedServicePoint);
                 this.localStorage.setInitialSettings();
+                this.localStorage.setInitialStoreValues();
                 this.router.navigate(['home']);
                 //Logging the selected Service Point
                 console.log("Service Point –   \n" + JSON.stringify(this.selectedServicePoint));

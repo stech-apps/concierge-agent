@@ -44,6 +44,7 @@ export class QmSelectServiceComponent implements OnInit {
   searchFieldServiceCount = 10;
 
   isInitialServiceLoaded = false;
+  showToolTip:boolean;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -64,7 +65,8 @@ export class QmSelectServiceComponent implements OnInit {
   ) { 
     this.selectedServiceList = [];
     this.filteredServiceList = [];
-    this.userDirection$ = this.userSelectors.userDirection$
+    this.userDirection$ = this.userSelectors.userDirection$;
+    this.showToolTip = false;
   }
 
   onResultChange:  EventEmitter<any> = new EventEmitter();
@@ -459,5 +461,13 @@ export class QmSelectServiceComponent implements OnInit {
     })
 
     this.localStorage.setStoreValue(STORAGE_SUB_KEY.MOST_FRQUENT_SERVICES, currentList);
+  }
+  clickedshowToolTip(){  
+    if(this.showToolTip){
+      this.showToolTip = false;
+    }else{
+      this.showToolTip = true;
+    }
+  
   }
 }

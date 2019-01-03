@@ -398,7 +398,8 @@ export class QmInputboxComponent implements OnInit {
    }
   }
   ScrollToBottom(){
-    var searchBox = document.getElementById("inputbox").scrollHeight;
+    var searchBox = document.getElementById("birthday_select");
+    searchBox.scrollIntoView();
     
   }
   

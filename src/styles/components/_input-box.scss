@@ -28,8 +28,14 @@ input:focus{
   &__input {
     height: 3em;
     width: 100%;
-    padding: 0 1em;
+   
     border: 1px solid rgba(0, 0, 0, 0.12);
+    @at-root [dir="ltr"] & {
+      padding: 0 2.5em 0 1em;
+    }
+    @at-root [dir="rtl"] & {
+      padding: 0 1em 0 2.5em;
+    }
 
   }
 

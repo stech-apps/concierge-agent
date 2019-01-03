@@ -44,9 +44,17 @@
             <div class="qm-checkbox__selector-icon-text">{{ 'multi_service' | translate }}</div>
           </div>
         </label>
-        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
+        <button (click)="clickedshowToolTip()" type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
           <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>          
         </button>
+
+        <div class="quick-serve-tooltip" *ngIf="showToolTip">
+          <div class="triangle"></div>
+          <div class="quick-serve-tooltip__rec">
+              {{'quick_serve_tooltip'|translate}}
+          </div>
+      </div>       
+      
       </div>
     </div>
 

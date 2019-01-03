@@ -2,7 +2,7 @@
     color: $tooltip-color;
     display: flex;
     align-items: center;
-
+    z-index: 400;
     .icon-help {
         font-size: 2rem;
     }

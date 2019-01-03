@@ -18,7 +18,7 @@ export class GlobalNotifyDispatchers {
     this.store.dispatch(new GlobalNotifyActions.GlobalWarning(warning));
   }
 
-  showCriticalCommunicationError(warning: IGlobalNotification) {
+  showCriticalCommunicationError() {
     this.store.dispatch(new GlobalNotifyActions.GlobalCriticalCommunicationError());
   }
 

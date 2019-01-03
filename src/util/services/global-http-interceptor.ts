@@ -116,6 +116,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                     else {
                         this.translateService.get('label.critical_com_error').subscribe((t) => {
                             this.toastService.stickyToast(t);
+                            this.globalNotifyDispatchers.showCriticalCommunicationError();
                             setTimeout(() => {
                                 this.globalNotifyDispatchers.hideNotifications();
                             }, 2000);
@@ -168,6 +169,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                     } else {
                                         if (!this.nativeApiService.isNativeBrowser()) {
                                             if (this.serviceState.getCurrentTry() === this.numberOfTries) {
+                                                this.globalNotifyDispatchers.showCriticalCommunicationError();
                                                 this.translateService.get('label.critical_com_error').subscribe((t) => {
                                                     this.toastService.stickyToast(t);
                                                     this.globalNotifyDispatchers.hideNotifications();

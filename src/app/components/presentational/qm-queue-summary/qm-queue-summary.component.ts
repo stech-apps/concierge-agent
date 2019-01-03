@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
 import { Visit } from '../../../../models/IVisit';
 import { NativeApiService } from '../../../../util/services/native-api.service';
+import { GlobalNotifySelectors } from 'src/store/services/global-notify';
 
 @Component({
   selector: 'qm-queue-summary',
@@ -65,17 +66,15 @@ export class QmQueueSummaryComponent implements OnInit {
     public nativeApi: NativeApiService,
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
-    private servicePointSelectors: ServicePointSelectors
+    private servicePointSelectors: ServicePointSelectors,
+    private globalNotifySelectors: GlobalNotifySelectors
   
   ) {
 
     const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
       this.userDirections = direction;
     });
-    this.subscriptions.add(userDirectionSubscription);
-    
-
-    
+    this.subscriptions.add(userDirectionSubscription);    
     
     const VisitSearchLoadedSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((s)=>{
       this.queueVisitIDloaded = s;
@@ -217,6 +216,14 @@ export class QmQueueSummaryComponent implements OnInit {
 
     });
     this.subscriptions.add(queueFetchSub);
+
+    const globalNotifyError = this.globalNotifySelectors.criticalError$.subscribe(cerr => {
+      if(cerr !== null) {
+        this.queueVisitIDloading = false;
+      }
+    });
+
+    this.subscriptions.add(globalNotifyError)
   }
 
   ngOnInit() {

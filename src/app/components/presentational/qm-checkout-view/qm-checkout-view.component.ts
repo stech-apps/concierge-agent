@@ -598,9 +598,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateAppointment() {
-    debugger;
-    console.log(Math.round(moment.duration(moment().utc().seconds(0).diff(moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone))).asMinutes()));
-
     if(Math.round(moment.duration(moment().utc().seconds(0).diff(moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone))).asMinutes()) >  0) { 
       this.translateService.get('toast.appointment.create.timepassed').subscribe(msg=> {
         this.toastService.errorToast(msg);
@@ -787,7 +784,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR) {
         if (err.errorMsg.length > 0) {
-          this.toastService.infoToast(err.errorMsg);
+          this.toastService.errorToast(err.errorMsg);
         }
         else {
           this.showErrorToastMessage('request_fail');

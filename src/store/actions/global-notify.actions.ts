@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 export const GLOBAL_NOTIFY_ERROR = '[Global] GLOBAL_ERROR_CRITICAL';
 export const GLOBAL_NOTIFY_WARNING = '[Global] GLOBAL_NOTIFY_WARNING';
 export const GLOBAL_NOTIFY_HIDE = '[Global] GLOBAL_NOTIFY_HIDE';
-export const GLOBAL_NOTIFY_COMMUNICATION_ERROR = '[Global] GLOBAL_NOTIFY_COMMUNICATION_ERROR';
+export const GLOBAL_NOTIFY_CRITICAL_ERROR = '[Global] GLOBAL_NOTIFY_CRITICAL_ERROR';
 
 
 export class GlobalError implements Action {
@@ -22,7 +22,7 @@ export class GlobalNotifiyHide implements Action {
 }
 
 export class GlobalCriticalCommunicationError implements Action {
-  readonly type = GLOBAL_NOTIFY_COMMUNICATION_ERROR;
+  readonly type = GLOBAL_NOTIFY_CRITICAL_ERROR;
   constructor() {}
 }
 

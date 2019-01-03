@@ -17,10 +17,16 @@ const getWarning = createSelector(
   (state: IGlobalNotifyState) => state.warning
 );
 
+const getCriticalError = createSelector(
+  getGlobalNotifyState,
+  (state: IGlobalNotifyState) => state.criticalError
+);
+
 @Injectable()
 export class GlobalNotifySelectors {
   constructor(private store: Store<IAppState>) {}
   // selectors$
   error$ = this.store.select(getError);
   warning$ = this.store.select(getWarning);
+  criticalError$ = this.store.select(getCriticalError);
 }

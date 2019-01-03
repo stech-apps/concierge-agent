@@ -5,11 +5,13 @@ import * as GlobalNotifyActions from '../actions';
 export interface IGlobalNotifyState {
   error: any;
   warning: any;
+  criticalError?: boolean;
 }
 
 const initialState = {
   error: null,
-  warning: null
+  warning: null,
+  criticalError: null
 };
 
 export function reducer(
@@ -33,7 +35,17 @@ export function reducer(
       return {
         ...state,
         warning: null,
-        error: null
+        error: null,
+        criticalError: null
+      };
+    }
+
+    case GlobalNotifyActions.GLOBAL_NOTIFY_CRITICAL_ERROR: {
+      return {
+        ...state,
+        warning: null,
+        error: null,
+        criticalError: true
       };
     }
     default: {

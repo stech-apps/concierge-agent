@@ -309,7 +309,8 @@
           }
         }
         .label {
-          font-size: 0.85em;
+          font-size: rem(18px);
+          color: $dark-transparent82;
         }
       }
     }

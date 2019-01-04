@@ -36,6 +36,10 @@ qm-time-filter-items {
       font-size: 16px;
       height: 2rem;
       position: relative;
+
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
     }
     &-text {
       height: 56px;

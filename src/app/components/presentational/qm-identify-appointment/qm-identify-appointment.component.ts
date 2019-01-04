@@ -1401,11 +1401,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   showTimeFilter() {
     this.translateService
-      .get(["heading.timefilter", "subheading.timefilter"])
+      .get(["heading.timefilter", "subheading.timefilter", "heading.date.timefilter"])
       .subscribe(messages => {
         this.modalService
           .openTimeFilter(
-            messages["heading.timefilter"],
+            this.useCalendarEndpoint? messages["heading.date.timefilter"]: messages["heading.timefilter"],
             messages["subheading.timefilter"],
             false,
             this.useCalendarEndpoint,

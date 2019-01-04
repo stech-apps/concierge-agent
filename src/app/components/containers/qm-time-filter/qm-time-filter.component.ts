@@ -93,7 +93,7 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
   }
 
   showCalendar() {
-    this.isCalendarOpen = true;
+    this.isCalendarOpen = !this.isCalendarOpen;
   }
 
   onSelectDate(selectedDate: CalendarDate) {

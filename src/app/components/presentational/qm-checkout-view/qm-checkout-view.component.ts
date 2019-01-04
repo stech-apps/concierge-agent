@@ -622,7 +622,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           }, error => {
             this.saveFrequentService();
             this.showErrorMessage(error);
-            this.onFlowExit.emit();
+            //this.onFlowExit.emit();
           })
         } else if (err.errorCode === '0') {
           this.handleTimeoutError(err, 'appointment_create_fail');

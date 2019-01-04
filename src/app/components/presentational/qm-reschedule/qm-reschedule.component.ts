@@ -186,24 +186,25 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   onSelectDate(date: CalendarDate) {
     this.isDateSelected = true;
     this.originalAppointmentTime = null;
+    const selectedDate = {...date , mDate : date.mDate.clone()};
 
     if (
       this.editAppointment &&
       this.editAppointment.services &&
       this.editAppointment.services.length > 0
     ) {
-      this.currentlyActiveDate = date;
-      this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
+      this.currentlyActiveDate = selectedDate;
+      this.timeSlotDispatchers.selectTimeslotDate(selectedDate.mDate);
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
-      if (moment(this.editAppointment.start).date() !== date.mDate.date()) {
+      if (moment(this.editAppointment.start).date() !== selectedDate.mDate.date()) {
         this.originalAppointmentTime = null;
       }
       this.enableReschedule = false;
     }
 
-    this.timeSlotDispatchers.deselectTimeslot();
+    this.timeSlotDispatchers.deselectTimeslot();    
   }
 
   onTimeSlotSelect(time: { title: string }) {

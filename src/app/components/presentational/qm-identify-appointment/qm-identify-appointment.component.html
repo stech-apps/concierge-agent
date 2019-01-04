@@ -56,17 +56,38 @@
       <!--###### APPOINTMENT LIST AREA ###### -->
       <ng-container *ngIf="showSearchResultsArea">
           <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
-            <div class="qm-identify-appointment__pannel-header"> {{ (useCalendarEndpoint ? 'label.identifyappointment.upcoming' : 'label.identifyappointment.appointments.today') | translate }}
-              <ng-container *ngIf="timeConvention === 'AMPM'">
-                <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
-                  <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
-                  &nbsp;
-                  <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
-                    date:'hh:mm a'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
-                </div>
+            <div class="qm-identify-appointment__pannel-header"> 
+              <ng-container *ngIf="showTimeLabel">
+                {{ (useCalendarEndpoint ? 'label.identifyappointment.upcoming' : 'label.identifyappointment.appointments.today') | translate }}
               </ng-container>
+              <ng-container *ngIf="!showTimeLabel">
+                  {{ 'label.identifyappointment.initialFetchDisabled' | translate }}
+              </ng-container>
+              
+              
+                <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
+
+                  <ng-container *ngIf="showTimeLabel">
+                      <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
+                      &nbsp;
+                      <ng-container *ngIf="timeConvention === 'AMPM'">
+                        <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
+                          date:'hh:mm a'}}
+                        </span> 
+                      </ng-container>
+                      <ng-container *ngIf="timeConvention === '24'">
+                          <span>{{selectedFromTime | date: 'HH:mm'}}</span>
+                          <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
+                            date:'HH:mm'}}</span>
+                      </ng-container>
+                  </ng-container>
+                  
+
+                  <i class="icon-edit qm-action-btn__icon "></i>
+                </div>
+        
   
-              <ng-container *ngIf="timeConvention === '24'">
+              <!-- <ng-container *ngIf="timeConvention === '24'">
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
                     <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
                     &nbsp;
@@ -74,7 +95,7 @@
                   <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |
                     date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
                 </div>
-              </ng-container>
+              </ng-container> -->
               <span *ngIf="enableAppointmentLoad" class="qm-identify-appointment__refresh-button" [ngClass]="{'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled}" (click)="refreshAppointments()"> {{
                 'label.identifyappointment.refresh' | translate }} <i class="icon-refresh qm-action-btn__icon "></i></span>
             </div>

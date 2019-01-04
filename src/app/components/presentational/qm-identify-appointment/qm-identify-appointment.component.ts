@@ -1,7 +1,6 @@
 import { SortColumns } from "./sort-columns.enum";
 import { IAppointment } from "./../../../../models/IAppointment";
 import { ToastService } from "./../../../../util/services/toast.service";
-import { SelectAppointment } from "./../../../../store/actions/arrive-appointment.actions";
 import { IBranch } from "src/models/IBranch";
 import { Subscription, Observable } from "rxjs";
 import { OnDestroy, Input, ViewChild } from "@angular/core";
@@ -109,6 +108,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   selectedCalendarBranch: ICalendarBranch;
   sortColumn: string = SortColumns.startTime;
   isDescending: boolean = false;
+  showTimeLabel: boolean = false;
   selectedDates: CalendarDate[] = [
     {
       mDate: moment(),
@@ -378,7 +378,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       params => {
         this.readAppointmentFetchTimePeriodFromUtt(params);
-        this.searchAppointments();
+
+        if(params.fetchAppointment) {
+          this.enableAppointmentLoad = true;
+          this.searchAppointments();
+        }
+        else {
+          this.enableAppointmentLoad = false;
+          this.showTimeLabel = false;
+          this.appointments = [];
+        }
       }
     );
 
@@ -389,7 +398,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         if (
           isLoaded &&
           this.currentSearchState === this.SEARCH_STATES.INITIAL &&
-          this.appointments.length === 0
+          this.appointments.length === 0 && (this.enableAppointmentLoad || this.showTimeLabel)
         ) {
           this.translateService
             .get("no_appointments")
@@ -1038,6 +1047,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   searchAppointments() {
+    this.showTimeLabel = true;
     let searchQuery: any = {
       branchId: this.useCalendarEndpoint
         ? this.selectedCalendarBranch.id

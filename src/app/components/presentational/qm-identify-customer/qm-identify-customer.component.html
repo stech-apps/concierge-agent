@@ -14,7 +14,7 @@
 >
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
-      <div class="qm-flow-sub-header__left">
+      <div class="qm-flow-sub-header__left" style="flex:5">
         <h1 *ngIf="!currentCustomer || (currentCustomer && !editMode)">
           {{ "select_customer_header" | translate }}
         </h1>
@@ -39,6 +39,9 @@
           </div>
         </div>
       </div>
+      <div></div></div> 
+          <div >
+              <div class="qm-flow-sub-header">
       <div
         class="qm-flow-sub-header__right"
         *ngIf="flowType != 'CREATE_APPOINTMENT'"

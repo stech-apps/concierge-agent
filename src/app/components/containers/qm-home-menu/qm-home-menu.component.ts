@@ -200,6 +200,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
             }
           }, error => {
             if (error.status === 401) {
+              this.queueService.stopQueuePoll();
               this.router.navigate(['home/central-login'], { queryParams : {route} });
             } else {
               this.translateService.get('no_central_access').subscribe(v => {

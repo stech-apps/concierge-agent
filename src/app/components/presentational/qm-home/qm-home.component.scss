@@ -14,15 +14,14 @@ $standard-home-margin : 1.5rem;
         width: 100%;
         min-height: 100%;
         // margin-left: $standard-home-margin;
-        background-color: #FAFAFA;
-        
-        
+        background-color: #FAFAFA;       
         @at-root [dir="ltr"] & {
-            margin-left: auto;
+            // margin-left: auto;
+            margin: auto;
         }        
 
         @at-root [dir="rtl"] & {
-            margin-right: auto;
+            margin: auto;
         }        
     }
     &__msg-box{
@@ -30,11 +29,6 @@ $standard-home-margin : 1.5rem;
     }   
 }
 
-
-
-.qm-quick-serve-container{
-    // width: 100%;
-}
 
 .qm-summary-card{
     width:100%;

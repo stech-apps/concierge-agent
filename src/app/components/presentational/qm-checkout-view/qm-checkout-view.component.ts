@@ -29,6 +29,7 @@ import * as moment from 'moment-timezone';
 import { ICalendarService } from "../../../../models/ICalendarService";
 import { ERROR_CODE_TIMEOUT } from "../../../shared/error-codes";
 import { Router } from "@angular/router";
+import { QueueService } from "../../../../util/services/queue.service";
 
 @Component({
   selector: "qm-checkout-view",
@@ -131,7 +132,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private CalendarBranchSelectors: CalendarBranchSelectors,
     private calendarServiceSelectors: CalendarServiceSelectors,
     private router: Router,
-    private systemInfoSelectors: SystemInfoSelectors
+    private systemInfoSelectors: SystemInfoSelectors,
+    private queueService: QueueService
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -611,6 +613,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.saveFrequentService();
           this.showSuccessMessage(result);
           this.onFlowExit.emit();
+          this.queueService.fetechQueueInfo();
         }
       }, error => {
         const err = new DataServiceError(error, null);
@@ -619,6 +622,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
             this.saveFrequentService();
             this.showSuccessMessage(result);
             this.onFlowExit.emit();
+            this.queueService.fetechQueueInfo();
           }, error => {
             this.saveFrequentService();
             this.showErrorMessage(error);
@@ -639,6 +643,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.showSuccessMessage(result);
       this.saveFrequentService();
       this.onFlowExit.emit();
+      this.queueService.fetechQueueInfo();
     }, error => {
       const err = new DataServiceError(error, null);
       if (err.errorCode === '0') {
@@ -663,6 +668,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.showSuccessMessage(result);
       this.saveFrequentService();
       this.onFlowExit.emit();
+      this.queueService.fetechQueueInfo();
     }, error => {
       const err = new DataServiceError(error, null);
       if (err.errorCode === '0') {
@@ -673,6 +679,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.saveFrequentService();
       }
       this.onFlowExit.emit();
+      this.queueService.fetechQueueInfo();
     })
   }
 
@@ -988,6 +995,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
       });
       this.onFlowExit.emit();
+      this.queueService.fetechQueueInfo();
     }
   }
 

@@ -44,7 +44,7 @@ export class QmQueueSummaryComponent implements OnInit {
   queueVisitIDloading: boolean;
   queueVisitIDloaded: boolean;
   userDirections: string;
-
+  isShowQueueView:boolean;
   canTransferSP: boolean;
   canTransferQ: boolean;
   canTransferStaff: boolean;
@@ -54,6 +54,8 @@ export class QmQueueSummaryComponent implements OnInit {
   canDelete: boolean;
   cancherypick: boolean;
   inputText: string;
+
+  
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -98,7 +100,10 @@ export class QmQueueSummaryComponent implements OnInit {
         this.canTransferQLast = uttpParams.btnTransferLast;
         this.canTransferQWait = uttpParams.btnTransferSort;
         this.canDelete = uttpParams.delVisit;
-        this.cancherypick = uttpParams.cherryPick;       
+        this.cancherypick = uttpParams.cherryPick;  
+        this.isQuickServeEnable = uttpParams.quickServe;
+        this.isShowQueueView = uttpParams.queueView;
+        this.editVisitEnable = uttpParams.editVisit;     
        }
     })
     this.subscriptions.add(uttpSubscriptions);

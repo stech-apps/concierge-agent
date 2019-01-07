@@ -23,7 +23,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   private selectedBranch: IBranch;
   sortAscending = true;
   showEstWaitTime: boolean;
-
+  isQuickServeEnable:boolean;
   canTransferSP: boolean;
   canTransferQ: boolean;
   canTransferStaff: boolean;
@@ -73,6 +73,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
         this.canDelete = uttpParams.delVisit;
         this.cancherypick = uttpParams.cherryPick;
         this.editVisitEnable = uttpParams.editVisit;
+        this.isQuickServeEnable = uttpParams.quickServe
       }
     })
     this.subscriptions.add(uttpSubscriptions);

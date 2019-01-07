@@ -8,6 +8,7 @@ import { IAccount } from '../../../../models/IAccount';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
 import { HttpHeaders } from '@angular/common/http';
+import { QueueService } from '../../../../util/services/queue.service';
 
 @Component({
   selector: 'qm-central-login',
@@ -32,6 +33,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       private systemInfoDispatcher: SystemInfoDispatchers,
       private calendarBranchSelector: CalendarBranchSelectors,
       private route: ActivatedRoute,
+      private queueService: QueueService
     ) {
       
     const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
@@ -69,6 +71,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
 
   onCancel(){
     this.router.navigate(['home'])
+    this.queueService.fetechQueueInfo();
   }
 
   onLogin(){

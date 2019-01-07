@@ -22,21 +22,21 @@
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
-        <div *ngIf="sortingIndicator==='VISITID'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true }"></i></div>
+        <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true,'selected-sort-icon':sortingIndicator==='VISITID'  }"></i></div>
       </div>
       <div class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
         <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
-        <div *ngIf="sortingIndicator==='CUSTOMER'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true }"></i></div>
+        <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true,'selected-sort-icon':sortingIndicator==='CUSTOMER'  }"></i></div>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-4 qm-service-col  qm-flex-grid" (click)="sortByService()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
-        <div *ngIf="sortingIndicator==='SERVICE'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true }"></i></div>
+        <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true,'selected-sort-icon':sortingIndicator==='SERVICE'  }"></i></div>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-3 qm-app-time-col qm-flex-grid" (click)="sortByAppTime()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
-        <div *ngIf="sortingIndicator==='APPTIME'"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true }"></i></div>
+        <div><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true,'selected-sort-icon':sortingIndicator==='APPTIME'  }"></i></div>
       </div>
 
 

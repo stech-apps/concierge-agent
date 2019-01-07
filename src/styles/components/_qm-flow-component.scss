@@ -43,8 +43,15 @@
         left: 10vw;
        }
     }
+    &__done-button:active{
+      background-color: black;
+    }
 
-  
+    &__done-button:hover{
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
   }
 
 .qm-pannel-container{

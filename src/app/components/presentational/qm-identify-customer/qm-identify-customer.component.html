@@ -14,34 +14,14 @@
 >
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
-      <div class="qm-flow-sub-header__left" style="flex:5">
-        <h1 *ngIf="!currentCustomer || (currentCustomer && !editMode)">
+      <div class="qm-flow-sub-header__left">
+        <h1 *ngIf="!currentCustomer || (currentCustomer && !editMode)" style="width:auto">
           {{ "select_customer_header" | translate }}
         </h1>
-        <h1 *ngIf="currentCustomer && editMode">
+        <h1 *ngIf="currentCustomer && editMode" style="width:auto">
           {{ "edit_customer" | translate }}
-        </h1>
-
-        <!-- Selected Cutomer box -->
-        <div class="qm-selected-box" *ngIf="currentCustomer && !editMode">
-          <div class="qm-selected-box__heading">
-            {{ "label.selected.customer" | translate }}
-          </div>
-          <div class="qm-selected-box__content">
-            <div class="qm-selected-box__text">
-              {{ currentCustomer.firstName + " " + currentCustomer.lastName }}
-            </div>
-            <i
-              aria-hidden="true"
-              class="icon-delete"
-              (click)="clearCustomer()"
-            ></i>
-          </div>
-        </div>
+        </h1>     
       </div>
-      <div></div></div> 
-          <div >
-              <div class="qm-flow-sub-header">
       <div
         class="qm-flow-sub-header__right"
         *ngIf="flowType != 'CREATE_APPOINTMENT'"
@@ -70,6 +50,27 @@
           </button>
         </div>
       </div>
+      <div></div></div> 
+          <div >
+              <div class="qm-flow-sub-header">
+                <div class="qm-flow-sub-header__left" style="flex:5">
+                   <!-- Selected Cutomer box -->
+        <div class="qm-selected-box" *ngIf="currentCustomer && !editMode">
+          <div class="qm-selected-box__heading">
+            {{ "label.selected.customer" | translate }}
+          </div>
+          <div class="qm-selected-box__content">
+            <div class="qm-selected-box__text">
+              {{ currentCustomer.firstName + " " + currentCustomer.lastName }}
+            </div>
+            <i
+              aria-hidden="true"
+              class="icon-delete"
+              (click)="clearCustomer()"
+            ></i>
+          </div>
+        </div>
+    </div>
     </div>
 
     <div

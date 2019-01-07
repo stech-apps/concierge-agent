@@ -233,6 +233,18 @@ hr{
  
 }
 
+.summary-without-quickserve{
+  @include qm-xs-lower  {
+      margin-top: 80px;
+
+  }
+
+  @include qm-xs  {
+    margin-top: 80px;
+  }
+}
+
+
 
 
 @include qm-xs-lower  {

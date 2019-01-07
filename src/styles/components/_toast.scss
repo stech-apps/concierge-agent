@@ -105,6 +105,12 @@
   &--info {
     background: $toast-success-background-color;
   }
+
+  // @include qm-xs{
+  //   .toast-container {
+  //     max-width: 90%;
+  //   }
+  // }
 }
 
 

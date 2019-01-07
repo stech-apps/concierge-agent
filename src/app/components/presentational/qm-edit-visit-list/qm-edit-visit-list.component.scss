@@ -26,10 +26,16 @@
     .sort-icon {
         margin-left: 0.4rem;
         cursor: pointer;
+        color: $dark-transparent12;
     }
     font-size: rem(14px);
     overflow: auto;
+    .selected-sort-icon{
+        color: $dark-transparent62;
+      }
 }
+
+
 
 .qm-visit-list {
     color: $dark-transparent62;
@@ -50,7 +56,7 @@
     &-header-item {
         display: flex;
         justify-content: left;
-        // align-items: center;
+        cursor: pointer;
         min-width: 0;
         &-label {
             @include add-text-ellipsis;

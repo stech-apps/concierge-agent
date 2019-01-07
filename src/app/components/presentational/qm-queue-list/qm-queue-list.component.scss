@@ -10,6 +10,9 @@
   .sort-icon {
     margin-left: 0.4rem;
     cursor: pointer;
+    color: $dark-transparent12;
+  }
+  .selected-sort-icon{
     color: $dark-transparent62;
   }
 
@@ -67,6 +70,7 @@
     color: $dark-transparent62;
     font-weight: 500;
     min-width: 0;
+    cursor: pointer;
 
     &-label {
       overflow: hidden;
@@ -150,6 +154,8 @@
   }
 }
 
+
+
 @media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
   .qm-queue-failed-count {
     top: auto;
@@ -225,5 +231,14 @@
     &__body {
       max-height: calc(100vh - 870px);
     }
+  }
+}
+
+.list-without-quickserve{
+  @include qm-xs  {
+    max-height: calc(100vh - 495px);
+  }
+  @include qm-xs-lower  {
+    max-height: calc(100vh - 495px);
   }
 }

@@ -44,9 +44,11 @@
   }
   &__icon {
     color: $pale-aquamarine;
+    padding-top: 15px;
   }
   &__uncheck-icon {
     color: $dark-transparent12;
+    padding-top: 15px;
   }
   &__item {
     color: black;
@@ -216,6 +218,9 @@
     }
 }
 
+button:focus{
+  font-weight: 500;
+}
 .tool-tip-back-drop{
   width: 100vw;
   height: 100vh;  
@@ -228,8 +233,13 @@
   // background: rgba(0, 0, 0, 0.5);
 } 
 
-span:focus {
-  border: 1px solid blue;
+.qm-quick-serve-item{
+  display: flex;
+  width: 100%;
+}
+
+.qm-quick-serve-item:focus {
+  background: rgba(0,0,0,0.04);
 }
 
 @media screen and (orientation:portrait) { 
@@ -329,6 +339,8 @@ span:focus {
 @include qm-lg { 
   .qm-quick-serve {
     width: calc(100vw - 1136px);
+    margin-left: auto;
+    margin-right: auto;
   &__content {
     width: 520px;
   }
@@ -340,6 +352,9 @@ span:focus {
 }
 
 }
+
+
+
 
 @media screen and (orientation:portrait) {
   .qm-quick-serve {

@@ -165,7 +165,7 @@
     font-weight: 500;
   }  
   .qm-flow-close{
-    right: 15px;
+    
     text-decoration: underline;
     cursor: pointer;
     margin-top: 25px;
@@ -173,7 +173,9 @@
    
     color:$light-transparent75;
     font-family: $font-family;
-
+    @at-root [dir="ltr"] & {
+    right: 15px;
+    }
     @at-root [dir="rtl"] & {
       left: 15px;
      }

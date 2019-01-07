@@ -38,6 +38,7 @@ import {
   SystemInfoSelectors
 } from "src/store/services";
 import { TranslateService } from "@ngx-translate/core";
+import { QueueService } from "../../../../util/services/queue.service";
 
 enum RescheduleState {
   Default = 1,
@@ -96,7 +97,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private systemInfoSelectors: SystemInfoSelectors,
     private translationService: TranslateService,
-    private appointmentSelectors: AppointmentSelectors
+    private appointmentSelectors: AppointmentSelectors,
+    private queueService: QueueService
   ) {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -257,10 +259,12 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
             () => {}
           );
           this.onFlowExit.next(true);
+          this.queueService.fetechQueueInfo();
         }
       },
       () => {
         this.onFlowExit.next(true);
+        this.queueService.fetechQueueInfo();
       },
       {
         date: this.getSelectedAppointmentInfoDate("DD MMM YYYY")
@@ -322,6 +326,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
               progress => {
                 if (progress !== null && progress === true) {
                   this.onFlowExit.next(true);
+                  this.queueService.fetechQueueInfo();
                 }
               }
             );

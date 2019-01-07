@@ -87,15 +87,16 @@ This document describes the new features, bug corrections, known issues and reco
 | **162701580** | **Appointment info in Appointment list - resizing** UI and SCSS changes |
 | **162701181** | **Appointment list - resizing** UI and SCSS changes |
 | **162806695** | **Sort tables** UI and SCSS changes |
-
-<h3>Known issues</h3>
-| **Id/Jira** | **Description** |
-| --- | --- |
 | **162631283** | **Remain in Flow if BOOK command fail** Fix the bug |
 | **162605282** | **Robustness message hang after reconnect - Search Visit in Queue** Fix the bug |
 | **162505025** | **Profile page > Use as default** |
 | **162605599** | **IOS: Message A severe communication error... does not disappear after reconnect** |
 | **161871807** | **Parameter Fetch Appointments on branch level not used** |
+
+<h3>Known issues</h3>
+| **Id/Jira** | **Description** |
+| --- | --- |
+
 
 <h3>Upgrade instructions</h3> 
 -->

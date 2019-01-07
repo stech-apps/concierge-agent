@@ -81,6 +81,11 @@ This document describes the new features, bug corrections, known issues and reco
 | **162701580** | **Appointment info in Appointment list - resizing** UI and SCSS changes |
 | **162701181** | **Appointment list - resizing** UI and SCSS changes |
 | **162806695** | **Sort tables** UI and SCSS changes |
+| **161313573** | **Hide Powered by Qmatic in tablet** UI and SCSS changes |
+| **162572055** | **Queue View - Resizing** UI and SCSS changes |
+| **162571899** | **Expanded Queue - Press Info button for Visit - Resizing** UI and SCSS changes |
+| **162411633** | **Move utt settings to Operation Profile Level** utt file change |
+
 
 <h3>Bug fixes</h3>
 
@@ -91,6 +96,10 @@ This document describes the new features, bug corrections, known issues and reco
 | **162505025** | **Profile page > Use as default** |
 | **162605599** | **IOS: Message A severe communication error... does not disappear after reconnect** |
 | **161871807** | **Parameter Fetch Appointments on branch level not used** |
+| **162505035** | **Fetch queue restcall should stop when user in a flow and start again when user reach main page.** |
+| **161644691** | **Click in Month field shall move page up.** |
+| **161049497** | **Edit Visit Flow > Wrong msg in already served/deleted visit.** Fix the bug |
+| **161503301** | **Create appointment flow > Service banner > Tool tip for "?" icon is not implemented..**|
 
 <h3>Known issues</h3>
 | **Id/Jira** | **Description** |

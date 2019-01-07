@@ -76,17 +76,16 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | --- | --- |
-| **xxx** | **Story header** Solution text |
-
-<h3>Bug fixes</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
 | **162475801** | **Make sure the Qmatic icon is used in Chrome browser** Icon changed in assets folder |
 | **162701729** | **Appointment info selected appointment - Resizing** UI and SCSS changes |
 | **162701580** | **Appointment info in Appointment list - resizing** UI and SCSS changes |
 | **162701181** | **Appointment list - resizing** UI and SCSS changes |
 | **162806695** | **Sort tables** UI and SCSS changes |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
 | **162631283** | **Remain in Flow if BOOK command fail** Fix the bug |
 | **162605282** | **Robustness message hang after reconnect - Search Visit in Queue** Fix the bug |
 | **162505025** | **Profile page > Use as default** |
@@ -99,7 +98,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 
 <h3>Upgrade instructions</h3> 
--->
+
 
 ----------
 

@@ -1,5 +1,5 @@
 <qm-flow>
-<div class="qm-central-login__content">
+<div class="qm-central-login__content" [dir]="userDirection$ | async">
   <div class="qm-central-login__form-content">
       <form [formGroup]="formLogin" class="qm-central-login__form">
           <div class="qm-central-login__form-field">

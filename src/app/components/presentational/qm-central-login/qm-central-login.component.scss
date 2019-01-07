@@ -39,6 +39,9 @@
     color: #FFF;
     margin-bottom: 0.125rem;
     letter-spacing: 1px;
+    @at-root [dir="rtl"] & {
+      text-align: right;
+  }
   }
 
   &__input {

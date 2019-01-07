@@ -95,7 +95,9 @@
                                                   bindValue="value"
                                                   placeholder="{{ 'field.createCustomerForm.month' | translate }}"
                                                   formControlName="month"
-                                                  dropdownPosition="bottom">
+                                                  dropdownPosition="bottom"
+                                                  id="birthday_select"
+                                                  (click)="ScrollToBottom()">
                           </ng-select>
                       </div>
                       <!-- Day -->

@@ -273,4 +273,9 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     $event.target.value = $event.target.value.replace(/[^0-9\+\s]/g, '');
     this.customerCreateForm.patchValue({ phone: $event.target.value})
    }
+   ScrollToBottom(){
+    var searchBox = document.getElementById("birthday_select");
+    searchBox.scrollIntoView();
+    
+  }
 }

@@ -56,6 +56,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     const servicePointSubscription = this.servicePointSelectors.openServicePoint$.subscribe((servicePoint) => this.selectedServicePoint = servicePoint);
     this.subscriptions.add(servicePointSubscription);
 
+
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       params => {
         if (params) {
@@ -229,5 +230,6 @@ filterQueues(newFilter: string) {
     this.showToolTip = !this.showToolTip;
   }
 
+  
   
 }

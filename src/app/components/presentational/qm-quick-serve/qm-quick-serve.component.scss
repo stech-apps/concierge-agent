@@ -28,6 +28,9 @@
     padding-bottom: 10px;
     font-weight: 300;
     display: flex;
+    @at-root [dir='rtl'] {
+      text-align: right;
+    }
   }
   svg {
     fill: $primary-text-color;

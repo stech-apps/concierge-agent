@@ -1,32 +1,48 @@
-import { ReserveSelectors } from './../../../../store/services/reserve/reserve.selectors';
-import { IService } from './../../../../models/IService';
-import { ICalendarBranch } from './../../../../models/ICalendarBranch';
-import { IBookingInformation } from './../../../../models/IBookingInformation';
-import { TimeslotSelectors } from './../../../../store/services/timeslot/timeslot.selectors';
-import { CalendarDate } from './../../containers/qm-calendar/qm-calendar.component';
-import { IBranch } from 'src/models/IBranch';
-import { Subscription, Observable } from 'rxjs';
+import { ReserveSelectors } from "./../../../../store/services/reserve/reserve.selectors";
+import { IService } from "./../../../../models/IService";
+import { ICalendarBranch } from "./../../../../models/ICalendarBranch";
+import { IBookingInformation } from "./../../../../models/IBookingInformation";
+import { TimeslotSelectors } from "./../../../../store/services/timeslot/timeslot.selectors";
+import { CalendarDate } from "./../../containers/qm-calendar/qm-calendar.component";
+import { IBranch } from "src/models/IBranch";
+import { Subscription, Observable } from "rxjs";
 import {
-  BranchSelectors, TimeslotDispatchers, CalendarBranchSelectors, ServiceSelectors, CalendarServiceSelectors,
-  ReserveDispatchers, ReservationExpiryTimerDispatchers, CalendarSettingsSelectors, ReservationExpiryTimerSelectors, 
-  CalendarSettingsDispatchers,UserSelectors, SystemInfoSelectors
-} from 'src/store';
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
-import { BookingHelperService } from 'src/util/services/booking-helper.service';
-import { ICalendarService } from 'src/models/ICalendarService';
-import * as moment from 'moment';
-import { concat } from 'rxjs/internal/operators/concat';
-import { ITimeSlot } from 'src/models/ITimeSlot';
-import { IAppointment } from 'src/models/IAppointment';
-import { Moment } from 'moment';
+  BranchSelectors,
+  TimeslotDispatchers,
+  CalendarBranchSelectors,
+  ServiceSelectors,
+  CalendarServiceSelectors,
+  ReserveDispatchers,
+  ReservationExpiryTimerDispatchers,
+  CalendarSettingsSelectors,
+  ReservationExpiryTimerSelectors,
+  CalendarSettingsDispatchers,
+  UserSelectors,
+  SystemInfoSelectors
+} from "src/store";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  Input
+} from "@angular/core";
+import { BookingHelperService } from "src/util/services/booking-helper.service";
+import { ICalendarService } from "src/models/ICalendarService";
+import * as moment from "moment";
+import { concat } from "rxjs/internal/operators/concat";
+import { ITimeSlot } from "src/models/ITimeSlot";
+import { IAppointment } from "src/models/IAppointment";
+import { Moment } from "moment";
+import { DEFAULT_LOCALE } from "src/constants/config";
 
 @Component({
-  selector: 'qm-appointment-time-select',
-  templateUrl: './qm-appointment-time-select.component.html',
-  styleUrls: ['./qm-appointment-time-select.component.scss']
+  selector: "qm-appointment-time-select",
+  templateUrl: "./qm-appointment-time-select.component.html",
+  styleUrls: ["./qm-appointment-time-select.component.scss"]
 })
 export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
-
   noOfCustomers: number = 1;
   private subscriptions: Subscription = new Subscription();
   selectedBranch: ICalendarBranch = new ICalendarBranch();
@@ -38,11 +54,11 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private settingReservationExpiryTime: number;
   public showExpiryReservationTime$: Observable<Boolean>;
   public preselectedTimeSlot: string = null;
-  selectedTimeHeading: string = '';
-    public reservableDates: moment.Moment[] = [];
+  selectedTimeHeading: string = "";
+  public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
   selectedTime$: Observable<Moment>;
-  showTimer:Boolean
+  showTimer: Boolean;
 
   selectedServices: ICalendarService[] = [];
   selectedDates: CalendarDate[];
@@ -53,80 +69,102 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
   reloadTimeSlots: EventEmitter<any> = new EventEmitter();
-  private readonly HOUR_24FORMAT = '24';
-  private readonly HOUR_12FORMAT = 'AMPM';
+  private readonly HOUR_24FORMAT = "24";
+  private readonly HOUR_12FORMAT = "AMPM";
   timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
+  userLocale: string = DEFAULT_LOCALE;
 
-  constructor(private branchSelectors: BranchSelectors, private timeSlotSelectors: TimeslotSelectors, private timeSlotDispatchers: TimeslotDispatchers,
-    private bookingHelperService: BookingHelperService, private calendarBranchSelectors: CalendarBranchSelectors,
-    private calendarServiceSelectors: CalendarServiceSelectors, private reserveDispatchers: ReserveDispatchers,
-    private calendarSettingsSelectors: CalendarSettingsSelectors, private reserveSelectors: ReserveSelectors,
-    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers, private calendarSettingsDispatchers: CalendarSettingsDispatchers,
-    private userSelectors: UserSelectors, private systemInfoSelectors: SystemInfoSelectors,
-  private resevationTimeSelectors:ReservationExpiryTimerSelectors) {
-
+  constructor(
+    private branchSelectors: BranchSelectors,
+    private timeSlotSelectors: TimeslotSelectors,
+    private timeSlotDispatchers: TimeslotDispatchers,
+    private bookingHelperService: BookingHelperService,
+    private calendarBranchSelectors: CalendarBranchSelectors,
+    private calendarServiceSelectors: CalendarServiceSelectors,
+    private reserveDispatchers: ReserveDispatchers,
+    private calendarSettingsSelectors: CalendarSettingsSelectors,
+    private reserveSelectors: ReserveSelectors,
+    private reservationExpiryTimerDispatchers: ReservationExpiryTimerDispatchers,
+    private calendarSettingsDispatchers: CalendarSettingsDispatchers,
+    private userSelectors: UserSelectors,
+    private systemInfoSelectors: SystemInfoSelectors,
+    private resevationTimeSelectors: ReservationExpiryTimerSelectors
+  ) {
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.reservedAppointment$ = this.reserveSelectors.reservedAppointment$;
     this.getExpiryReservationTime$ = this.calendarSettingsSelectors.getReservationExpiryTime$;
     this.userDirection$ = this.userSelectors.userDirection$;
 
-
-
-    const branchSubscription = this.branchSubscription$.subscribe((cb) => {
+    const branchSubscription = this.branchSubscription$.subscribe(cb => {
       this.selectedBranch = cb;
     });
 
-
-    const serviceSubscription = this.serviceSubscription$.subscribe((s) => {
+    const serviceSubscription = this.serviceSubscription$.subscribe(s => {
       this.selectedServices = s;
     });
 
-    const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe((dates: moment.Moment[])=> {
+    const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe(
+      (dates: moment.Moment[]) => {
         this.reservableDates = dates;
-        this.selectedDates =  [{
-          mDate: this.reservableDates[0],
-          selected: true
-        }];
-    });
-
-    const serviceSelectionSubscription = this.calendarServiceSelectors.isCalendarServiceSelected$.subscribe((val) => {
-      if (val && this.selectedServices.length > 0 && this.selectedBranch && this.selectedBranch.id) {
-        this.fetchReservableDates();
+        this.selectedDates = [
+          {
+            mDate: this.reservableDates[0],
+            selected: true
+          }
+        ];
       }
-    });
+    );
 
-    
-   const reloadTimeSlotSub =  this.reloadTimeSlots.subscribe(() => {
+    const serviceSelectionSubscription = this.calendarServiceSelectors.isCalendarServiceSelected$.subscribe(
+      val => {
+        if (
+          val &&
+          this.selectedServices.length > 0 &&
+          this.selectedBranch &&
+          this.selectedBranch.id
+        ) {
+          this.fetchReservableDates();
+        }
+      }
+    );
+
+    const reloadTimeSlotSub = this.reloadTimeSlots.subscribe(() => {
       this.preselectedTimeSlot = this.selectedTime;
       this.getTimeSlots();
     });
-   
+
+    const userLocaleSubscription = this.userSelectors.userLocale$.subscribe((ul) => this.userLocale = ul)
+
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(serviceSubscription);
     this.subscriptions.add(reservableDatesSub);
     this.subscriptions.add(serviceSelectionSubscription);
     this.subscriptions.add(reloadTimeSlotSub);
+    this.subscriptions.add(userLocaleSubscription);
   }
 
   ngOnInit() {
-    const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
-      this.timeFormat = tf;
-    });
+    const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe(
+      tf => {
+        this.timeFormat = tf;
+      }
+    );
 
     const expiryReservationCalendarSettingSubscription = this.getExpiryReservationTime$.subscribe(
       (time: number) => {
         this.settingReservationExpiryTime = time;
       }
     );
-    const showTimerSubscription = this.resevationTimeSelectors.showReservationExpiryTime$.subscribe((hide)=>{
-      this.showTimer = hide;
-    })
+    const showTimerSubscription = this.resevationTimeSelectors.showReservationExpiryTime$.subscribe(
+      hide => {
+        this.showTimer = hide;
+      }
+    );
 
     const appointmentSubscription = this.reservedAppointment$.subscribe(
       (app: IAppointment) => {
         if (app) {
-
           this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
           this.calendarSettingsDispatchers.fetchCalendarSettingsInfo();
           this.reservationExpiryTimerDispatchers.showReservationExpiryTimer();
@@ -139,44 +177,52 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       }
     );
 
-
-    const timeSlotSubscription = this.timeSlotSelectors.selectedTime$.subscribe((st: string)=> {
-      this.selectedTime = st;
-    });
-   
-
+    const timeSlotSubscription = this.timeSlotSelectors.selectedTime$.subscribe(
+      (st: string) => {
+        this.selectedTime = st;
+      }
+    );
 
     this.subscriptions.add(appointmentSubscription);
-    
+
     this.subscriptions.add(timeSlotSubscription);
     this.timeSlotDispatchers.selectTimeslotDate(this.selectedDates[0].mDate);
-    const timeSlotsSubscription = this.timeSlotSelectors.times$.subscribe((ts)=> {
-      if(ts.length){
-        console.log(ts[0]);
+    const timeSlotsSubscription = this.timeSlotSelectors.times$.subscribe(
+      ts => {
+        if (ts.length) {
+          console.log(ts[0]);
+        }
       }
-      
-    }); 
+    );
     this.subscriptions.add(timeSlotsSubscription);
     this.subscriptions.add(timeConventionSubscriptioon);
-    this.reserveSelectors.reservedAppointment$.subscribe((alreadyReserved)=> {
 
-      if(alreadyReserved) {
-        let timeFormat: string = 'HH:mm';
+    const reservedSub = this.reserveSelectors.reservedAppointment$.subscribe(
+      alreadyReserved => {
+        if (alreadyReserved) {
+          let timeFormat: string = "HH:mm";
 
-        this.selectedTimeHeading = this.currentlyActiveDate.mDate.format('dddd DD MMMM, ');
-        if(this.timeFormat != this.HOUR_24FORMAT) {
-          timeFormat = 'hh:mm A'
-        }
+          this.selectedTimeHeading = this.currentlyActiveDate.mDate.locale(this.userLocale).format(
+            "dddd DD MMMM, "
+          );
+          if (this.timeFormat != this.HOUR_24FORMAT) {
+            timeFormat = "hh:mm A";
+          }
 
-        this.selectedTimeHeading += `${moment(alreadyReserved.start)
-          .tz(alreadyReserved.branch.fullTimeZone).format(timeFormat)} - `;
+          this.selectedTimeHeading += `${moment(alreadyReserved.start)
+            .tz(alreadyReserved.branch.fullTimeZone)
+            .format(timeFormat)} - `;
 
           this.selectedTimeHeading += `${moment(alreadyReserved.end)
-            .tz(alreadyReserved.branch.fullTimeZone).format(timeFormat)}`;
+            .tz(alreadyReserved.branch.fullTimeZone)
+            .format(timeFormat)}`;
 
-        this.onFlowNext.emit();
+          this.onFlowNext.emit();
+        }
       }
-    });
+    );
+
+    this.subscriptions.add(reservedSub);
   }
 
   fetchReservableDates() {
@@ -194,14 +240,14 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
-    if(this.selectedServices && this.selectedServices.length > 0){
+    if (this.selectedServices && this.selectedServices.length > 0) {
       this.preselectedTimeSlot = null;
       this.currentlyActiveDate = date;
       this.timeSlotDispatchers.selectTimeslotDate(date.mDate);
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
-      this.selectedTimeHeading = date.mDate.format('dddd DD MMMM');
+      this.selectedTimeHeading = date.mDate.locale(this.userLocale).format("dddd DD MMMM");
     }
   }
 
@@ -215,22 +261,25 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
+      date: this.currentlyActiveDate.mDate.locale(DEFAULT_LOCALE).format("YYYY-MM-DD"),
       time: timeSlot.title
     };
 
     const appointment: IAppointment = {
       services: this.selectedServices
-    };    
-    if(this.preselectedTimeSlot==timeSlot.title){
-        this.onFlowNext.emit();
+    };
+    if (this.preselectedTimeSlot == timeSlot.title) {
+      this.onFlowNext.emit();
     }
-    if(this.preselectedTimeSlot!=timeSlot.title){
-      if(this.showTimer){
+    if (this.preselectedTimeSlot != timeSlot.title) {
+      if (this.showTimer) {
         this.timeSlotDispatchers.deselectTimeslot();
       }
       this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
-      this.reserveDispatchers.reserveAppointment(bookingInformation, appointment);
+      this.reserveDispatchers.reserveAppointment(
+        bookingInformation,
+        appointment
+      );
     }
   }
 
@@ -239,24 +288,25 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
+      date: this.currentlyActiveDate.mDate.format("YYYY-MM-DD"),
       time: this.selectedTime
     };
 
     this.timeSlotDispatchers.getTimeslots(bookingInformation);
   }
 
-
-
   getServicesQueryString(): string {
-    return this.selectedServices.reduce((queryString, service: ICalendarService) => {
-      return queryString + `;servicePublicId=${service.publicId}`;
-    }, '');
+    return this.selectedServices.reduce(
+      (queryString, service: ICalendarService) => {
+        return queryString + `;servicePublicId=${service.publicId}`;
+      },
+      ""
+    );
   }
 
   changeCustomerCount(step) {
     this.timeSlotDispatchers.deselectTimeslot();
-    if ((this.noOfCustomers + step) == 0) {
+    if (this.noOfCustomers + step == 0) {
       return;
     }
     this.preselectedTimeSlot = null;

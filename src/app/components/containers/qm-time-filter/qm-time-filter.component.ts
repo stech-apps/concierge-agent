@@ -5,20 +5,22 @@ import {
   ViewChild,
   TemplateRef,
   AfterViewInit,
-  ElementRef
+  ElementRef,
+  OnDestroy
 } from "@angular/core";
 import { UserSelectors } from "src/store";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { CalendarDate } from "../qm-calendar/qm-calendar.component";
+import { DEFAULT_LOCALE } from "src/constants/config";
 
 @Component({
   selector: "qm-qm-time-filter",
   templateUrl: "./qm-time-filter.component.html",
   styleUrls: ["./qm-time-filter.component.scss"]
 })
-export class QmTimeFilterComponent implements OnInit, AfterViewInit {
+export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private userSelectors: UserSelectors,
     public activeModal: NgbActiveModal,
@@ -27,9 +29,11 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
     this.isCalendarOpen = false;
   }
 
+  private subscriptions: Subscription = new Subscription();
   public header: string;
   public subheader: string;
   userDirection$: Observable<string> = new Observable<string>();
+  userLocale: string = DEFAULT_LOCALE
   validationFailed: boolean;
   @Input()
   public selectedStartTime: moment.Moment;
@@ -44,6 +48,11 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    const userLocaleSubscription = this.userSelectors.userLocale$.subscribe((ul)=> {
+      this.userLocale = ul;
+    });
+    
+    this.subscriptions.add(userLocaleSubscription);
   }
 
   ngAfterViewInit() {
@@ -99,5 +108,9 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit {
   onSelectDate(selectedDate: CalendarDate) {
     this.selectedDate = selectedDate;
     this.isCalendarOpen = false;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

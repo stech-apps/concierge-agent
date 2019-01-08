@@ -39,6 +39,7 @@ import {
 } from "src/store/services";
 import { TranslateService } from "@ngx-translate/core";
 import { QueueService } from "../../../../util/services/queue.service";
+import { DEFAULT_LOCALE } from "src/constants/config";
 
 enum RescheduleState {
   Default = 1,
@@ -73,6 +74,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   timeConvention: string = "24";
   userDirection$: Observable<string>;
   @ViewChild("qmcalendar") qmCalendar: QmCalendarComponent;
+  userLocale: string = DEFAULT_LOCALE;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -163,12 +165,15 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       }
     );
 
+    const userLocaleSub = this.userSelectors.userLocale$.subscribe(ul => this.userLocale = ul);
+
     this.subscriptions.add(calendarBranchsSub);
     this.subscriptions.add(timeConventionSub);
     this.subscriptions.add(uttSubscription);
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(reservableDatesSub);
     this.subscriptions.add(serviceSubscription);
+    this.subscriptions.add(userLocaleSub);
   }
 
   ngOnDestroy() {
@@ -301,7 +306,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           if (result) {
             let rescheduleAppointment = this.editAppointment;
             const originalAppointmentStartTime = this.editAppointment.start;
-            rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.format(
+            rescheduleAppointment.start = `${this.currentlyActiveDate.mDate.locale(DEFAULT_LOCALE).format(
               "YYYY-MM-DD"
             )}T${this.rescheduleTime}`;
 
@@ -314,9 +319,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
               timeDiff.asMinutes(),
               "minutes"
             );
-            rescheduleAppointment.end = `${endTime.format(
+            rescheduleAppointment.end = `${endTime.locale(DEFAULT_LOCALE).format(
               "YYYY-MM-DD"
-            )}T${endTime.format("HH:mm")}`;
+            )}T${endTime.locale(DEFAULT_LOCALE).format("HH:mm")}`;
 
             this.appointmentDispatchers.rescheduleAppointment(
               rescheduleAppointment
@@ -370,6 +375,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
           this.editAppointment.branch.fullTimeZone ||
             this.selectedCalendarBranch.fullTimeZone
         )
+        .locale(timeFormat.indexOf('MMMM') > 0 ?  this.userLocale : DEFAULT_LOCALE)
         .format(timeFormat);
     }
     return appointmentInfo;
@@ -383,7 +389,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         .tz(
           this.editAppointment.branch.fullTimeZone ||
             this.selectedCalendarBranch.fullTimeZone
-        )
+        ).locale(this.userLocale || DEFAULT_LOCALE)
         .format(timeFormat);
     } else {
       selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);

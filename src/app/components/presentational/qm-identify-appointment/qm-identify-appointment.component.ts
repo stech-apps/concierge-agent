@@ -42,6 +42,7 @@ import { start } from "repl";
 import { timingSafeEqual } from "crypto";
 import { Router } from "@angular/router";
 import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directive";
+import { DEFAULT_LOCALE } from "src/constants/config";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -132,6 +133,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   requestDelayed: boolean = false;
   requestDelayHandle: any;
   showSearchResultsArea = true;
+  userLocale = DEFAULT_LOCALE;
 
   // Qr code related variables
   isQRReaderOpen = false;
@@ -222,6 +224,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.isSearchedCustomerLoaded = value;
       }
     );
+
+    const userLocaleSubscription = this.userSelectors.userLocale$.subscribe((ul)=>{
+      this.userLocale = ul || DEFAULT_LOCALE;
+    });
+
+    this.subscriptions.add(userLocaleSubscription);
 
     const customerSearchLoadingSubscription = this.customerSelectors.customerLoading$.subscribe(
       value => {

@@ -68,7 +68,7 @@
                 <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">
 
                   <ng-container *ngIf="showTimeLabel">
-                      <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amDateFormat : 'DD MMMM, '}}</span>
+                      <span *ngIf="useCalendarEndpoint">{{selectedDate.mDate | amLocale: userLocale | amDateFormat : 'DD MMMM, '}}</span>
                       &nbsp;
                       <ng-container *ngIf="timeConvention === 'AMPM'">
                         <span>{{selectedFromTime | date: 'hh:mm a'}}</span> <span>&nbsp;-&nbsp;</span> <span>{{selectedToTime |

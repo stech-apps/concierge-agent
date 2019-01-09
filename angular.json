@@ -23,6 +23,7 @@
               "src/assets",
               "src/WEB-INF/",
               "src/META-INF/",
+              "src/images",
               "src/config.properties"
             ],
             "styles": [

@@ -137,7 +137,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private router: Router,
     private systemInfoSelectors: SystemInfoSelectors,
     private queueService: QueueService,
-    private reserveDispatchers: ReserveDispatchers
+    private reserveDispatchers: ReserveDispatchers,
+ 
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -605,9 +606,18 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setCreateAppointment() {
+    const bookingInformation: IBookingInformation = {
+      branchPublicId: this.selectedAppointment.branch.publicId,
+      serviceQuery: this.getServicesQueryString(),
+      numberOfCustomers: this.selectedAppointment.customers.length
+    };
+
     if(Math.round(moment.duration(moment().utc().seconds(0).diff(moment(this.selectedAppointment.start).tz(this.selectedAppointment.branch.fullTimeZone))).asMinutes()) >  0) { 
       this.translateService.get('toast.appointment.create.timepassed').subscribe(msg=> {
         this.toastService.errorToast(msg);
+        this.reserveDispatchers.fetchReservableDates(
+              bookingInformation
+        );
       });
     }
      else {    
@@ -632,11 +642,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
             this.saveFrequentService();
             this.showErrorMessage(error);
 
-            const bookingInformation: IBookingInformation = {
-              branchPublicId: this.selectedAppointment.branch.publicId,
-              serviceQuery: this.getServicesQueryString(),
-              numberOfCustomers: this.selectedAppointment.customers.length
-            };
+
 
             this.reserveDispatchers.fetchReservableDates(
               bookingInformation

@@ -5,7 +5,7 @@ import { CREATE_VISIT, CREATE_APPOINTMENT, ARRIVE_APPOINTMENT } from "./../../..
 import {
   ServicePointSelectors, CustomerSelector, ReserveSelectors, DataServiceError, TimeslotSelectors, BranchSelectors,
   ServiceSelectors, InfoMsgDispatchers, CustomerDispatchers, NoteSelectors, NoteDispatchers, CalendarBranchDispatchers,
-  CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors, CalendarBranchSelectors, CalendarServiceSelectors, SystemInfoSelectors
+  CalendarServiceDispatchers, ArriveAppointmentSelectors, UserSelectors, CalendarBranchSelectors, CalendarServiceSelectors, SystemInfoSelectors, ReserveDispatchers
 } from "../../../../store";
 import { IBranch } from './../../../../models/IBranch';
 import { IUTTParameter } from "../../../../models/IUTTParameter";
@@ -30,6 +30,7 @@ import { ICalendarService } from "../../../../models/ICalendarService";
 import { ERROR_CODE_TIMEOUT } from "../../../shared/error-codes";
 import { Router } from "@angular/router";
 import { QueueService } from "../../../../util/services/queue.service";
+import { IBookingInformation } from "src/models/IBookingInformation";
 
 @Component({
   selector: "qm-checkout-view",
@@ -133,7 +134,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private calendarServiceSelectors: CalendarServiceSelectors,
     private router: Router,
     private systemInfoSelectors: SystemInfoSelectors,
-    private queueService: QueueService
+    private queueService: QueueService,
+    private reserveDispatchers: ReserveDispatchers
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -626,6 +628,16 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           }, error => {
             this.saveFrequentService();
             this.showErrorMessage(error);
+
+            const bookingInformation: IBookingInformation = {
+              branchPublicId: this.selectedAppointment.branch.publicId,
+              serviceQuery: this.getServicesQueryString(),
+              numberOfCustomers: this.selectedAppointment.customers.length
+            };
+
+            this.reserveDispatchers.fetchReservableDates(
+              bookingInformation
+            );
             //this.onFlowExit.emit();
           })
         } else if (err.errorCode === '0') {
@@ -634,6 +646,15 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       });
 
      }
+  }
+
+  getServicesQueryString(): string {
+    return this.selectedServices.reduce(
+      (queryString, service: ICalendarService) => {
+        return queryString + `;servicePublicId=${service.publicId}`;
+      },
+      ""
+    );
   }
 
   setCreateVisit() {

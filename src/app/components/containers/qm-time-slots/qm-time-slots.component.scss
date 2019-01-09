@@ -178,12 +178,28 @@ top: 88px;
 }
 
 .qm-time-split__empty {
-  height: 56px;
-  width: 384px;
+  min-height: 56px;
   color: $dark-transparent82;
   font-size: 18px;
   font-weight: 300;
-  line-height: 56px;
   padding-left: 25px;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+
+  &--text {
+    padding-right: 1rem;
+    @at-root [dir='rtl'] & {
+      padding-left: 1rem;
+    }
+  }
+
+  &--time { 
+    width: 200px;
+    @at-root [dir='rtl'] & {
+      text-align: right;
+    }
+  }
 }
 

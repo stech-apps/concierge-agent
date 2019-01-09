@@ -21,7 +21,8 @@
       <div class="qm-time-slot-list__scrollable">
         <div class="qm-time-split" *ngFor="let tc of timeSlotCategories">
           <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="!isTimeSlotLoading && timeFormat === HOUR_24FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
-            {{ ('label.nobookable.slots' | translate) + ' ' + tc.startTime + ':00' + ' - ' + tc.endTime + ':00'}}
+            <div class="qm-time-split__empty--text">{{ ('label.nobookable.slots' | translate) }}</div>
+            <div class="qm-time-split__empty--time">{{ ' ' + tc.startTime + ':00' + ' - ' + tc.endTime + ':00' }}</div>
           </div>
           <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="!isTimeSlotLoading && timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
             {{ ('label.nobookable.slots.ampm' | translate) + ' ' + tc.title}}

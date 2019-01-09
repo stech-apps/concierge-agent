@@ -202,7 +202,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         if (alreadyReserved) {
           let timeFormat: string = "HH:mm";
 
-          this.selectedTimeHeading = this.currentlyActiveDate.mDate.locale(this.userLocale).format(
+          this.selectedTimeHeading = this.currentlyActiveDate.mDate.clone().locale(this.userLocale).format(
             "dddd DD MMMM, "
           );
           if (this.timeFormat != this.HOUR_24FORMAT) {
@@ -223,6 +223,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(reservedSub);
+    this.subscriptions.add(expiryReservationCalendarSettingSubscription);
+    this.subscriptions.add(showTimerSubscription);
   }
 
   fetchReservableDates() {
@@ -247,7 +249,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
-      this.selectedTimeHeading = date.mDate.locale(this.userLocale).format("dddd DD MMMM");
+      this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format("dddd DD MMMM");
     }
   }
 

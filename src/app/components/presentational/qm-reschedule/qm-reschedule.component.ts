@@ -191,6 +191,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
+    console.log('selected date');
+    console.log(date);
+    
     this.isDateSelected = true;
     this.originalAppointmentTime = null;
     const selectedDate = {...date , mDate : date.mDate.clone()};
@@ -201,7 +204,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.editAppointment.services.length > 0
     ) {
       this.currentlyActiveDate = selectedDate;
-      this.timeSlotDispatchers.selectTimeslotDate(selectedDate.mDate);
+      this.timeSlotDispatchers.selectTimeslotDate(selectedDate.mDate.clone());
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
@@ -385,15 +388,15 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     let selectedDate = "";
 
     if (this.editAppointment && this.currentlyActiveDate) {
-      selectedDate = this.currentlyActiveDate.mDate
-        .tz(
-          this.editAppointment.branch.fullTimeZone ||
-            this.selectedCalendarBranch.fullTimeZone
-        ).locale(this.userLocale || DEFAULT_LOCALE)
+      
+      selectedDate = this.currentlyActiveDate.mDate.clone()
+        .locale(this.userLocale || DEFAULT_LOCALE)
         .format(timeFormat);
     } else {
       selectedDate = this.getSelectedAppointmentInfoDate(timeFormat);
     }
+
+    console.log(selectedDate);
 
     return selectedDate;
   }

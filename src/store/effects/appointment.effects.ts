@@ -7,12 +7,13 @@ import { Observable, of } from 'rxjs';
 import { switchMap, tap, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 
 import * as AppointmentActions from './../actions';
-import { AppointmentDataService, SystemInfoSelectors } from '../services';
+import { AppointmentDataService, SystemInfoSelectors, UserSelectors } from '../services';
 import { IAppState, DataServiceError } from 'src/store';
 import * as moment from 'moment';
 import { IAppointmentState } from 'src/store/reducers/appointment.reducer';
 import { ToastService } from 'src/util/services/toast.service';
 import { ERROR_CODE_APPOINTMENT_NOT_FOUND } from 'src/app/shared/error-codes';
+import { DEFAULT_LOCALE } from 'src/constants/config';
 
 const toAction = AppointmentActions.toAction();
 
@@ -26,7 +27,8 @@ export class AppointmentEffects {
     private translateService: TranslateService,
     private toastService: ToastService,
     private appointmentDataService: AppointmentDataService,
-    private systemInfoSelectors: SystemInfoSelectors
+    private systemInfoSelectors: SystemInfoSelectors,
+    private userSelectors: UserSelectors
   ) { 
 
 
@@ -132,10 +134,13 @@ export class AppointmentEffects {
         'label.notifyoptions.email', 'label.notifyoptions.sms']).pipe(
           switchMap((messages) => {
             let timeFormat: string = 'HH:mm';
+            let userLocale: string = DEFAULT_LOCALE;
 
             this.systemInfoSelectors.timeConvention$.subscribe((tc)=> {
               timeFormat = tc === 'AMPM' ? 'hh:mm A' : 'HH:mm';
             }).unsubscribe();
+
+            this.userSelectors.userLocale$.subscribe(ul=> userLocale = ul).unsubscribe();
 
             let confirmText = '';
             const customer = (action.payload.customers[0]);
@@ -159,6 +164,7 @@ export class AppointmentEffects {
                   icon: "calendar-light",
                   label: moment(action.payload.start)
                     .tz(action.payload.branch.fullTimeZone)
+                    .locale(userLocale)
                     .format("dddd DD MMMM")
                 },
                 {

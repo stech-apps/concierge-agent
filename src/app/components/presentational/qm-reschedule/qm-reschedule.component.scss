@@ -22,6 +22,7 @@
     font-size: 0.7rem;
     @at-root [dir="rtl"] & {
       margin-left: rem($standard-margin / 2);
+      text-align: right;
     }
   }
   &__numeric {

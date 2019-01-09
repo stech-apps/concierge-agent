@@ -31,6 +31,7 @@ import { ERROR_CODE_TIMEOUT } from "../../../shared/error-codes";
 import { Router } from "@angular/router";
 import { QueueService } from "../../../../util/services/queue.service";
 import { IBookingInformation } from "src/models/IBookingInformation";
+import { DEFAULT_LOCALE } from "src/constants/config";
 
 @Component({
   selector: "qm-checkout-view",
@@ -84,6 +85,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   smsColor: string = this.whiteColor;
   emailColor: string = this.whiteColor;
   ticketlessColor: string = this.whiteColor;
+  userLocale: string = DEFAULT_LOCALE;
 
 
   noteText$: Observable<string>;
@@ -153,7 +155,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
-          console.log(uttParameters);
           
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
@@ -217,6 +218,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
     });
 
+    const userLocaleSubscription = this.userSelectors.userLocale$.subscribe(ul=> this.userLocale = ul);
+    this.subscriptions.add(userLocaleSubscription);
     this.subscriptions.add(selectedAppointmentSubscription);
     this.subscriptions.add(timeConventionSub);
   }
@@ -722,7 +725,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
           const fieldList = [{
             icon: 'calendar-light',
-            label: moment(this.selectedAppointment.start)
+            label: moment(this.selectedAppointment.start).locale(this.userLocale)
               .tz(this.selectedAppointment.branch.fullTimeZone).format('dddd DD MMMM')
           },
           {
@@ -969,6 +972,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       }
     })
     return tempList;
+  }
+
+  getSelectedAppointmentSummaryTime(format = 'dddd DD MMMM') {
+    if(this.selectedAppointment && (this.selectedAppointment.start || this.selectedAppointment.startTime)) {
+      return moment((this.selectedAppointment).start || (this.selectedAppointment).startTime)
+            .locale(this.userLocale)
+            .format(format);
+    }
   }
 
   removeDuplicates(myArr, prop) {

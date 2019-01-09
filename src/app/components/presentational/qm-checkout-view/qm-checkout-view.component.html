@@ -18,7 +18,7 @@
     <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-calendar-light"></span>
-        <span class="qm-summary-item__text" >{{(selectedAppointment?.start || selectedAppointment?.startTime) | date: 'EEEE dd MMMM' }}</span>
+        <span class="qm-summary-item__text" >{{ getSelectedAppointmentSummaryTime() }}</span>
       </div>
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-clock"></span>

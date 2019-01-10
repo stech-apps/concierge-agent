@@ -121,7 +121,7 @@
                 <div class="qm-button qm-secondary-button-defult" (click)="discard()"  *ngIf="!editMode && currentCustomer">
                     {{'button.discard.changes'|translate}}
                   </div> 
-                <div class="qm-button qm-secondary-button-defult" (click)="customerCreateForm.reset()" *ngIf="(!editMode && !currentCustomer)&& customerCreateForm.dirty">
+                <div class="qm-button qm-secondary-button-defult" (click)="clearCustomerForm()" *ngIf="(!editMode && !currentCustomer)&& customerCreateForm.dirty">
                     {{'cancel'|translate}}
                 </div>
 

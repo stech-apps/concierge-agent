@@ -78,6 +78,13 @@ export class QmInputboxComponent implements OnInit {
    }
 
   ngOnInit() {
+    // get country code
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
+      if(params){
+      this.countrycode = params.countryCode;
+    }
+    });
+    this.subscriptions.add(servicePointsSubscription);
 
     // patch values if current customer available
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
@@ -105,10 +112,11 @@ export class QmInputboxComponent implements OnInit {
           }
         })
       }else if((this.customerCreateForm!==undefined) && !this.currentCustomer  ){
+        
         this.customerCreateForm.patchValue({
           firstName: '',
           lastName:'',
-          phone:'',
+          phone:this.countrycode,
           email:'',
           dateOfBirth: {
             month: null,
@@ -120,19 +128,14 @@ export class QmInputboxComponent implements OnInit {
     });
     this.subscriptions.add(CurrentcustomerSubscription);
 
+    
+
     const editModeSubscription = this.customerSelectors.editCustomerMode$.subscribe((status)=>{
       this.editMode = status;
     })
     this.subscriptions.add(editModeSubscription);
 
-    // get country code
-    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
-      if(params){
-      this.countrycode = params.countryCode;
-    }
-    });
-    this.subscriptions.add(servicePointsSubscription);
-
+    
     // Validators
     const phoneValidators = this.util.phoneNoValidator();    
     const emailValidators = this.util.emailValidator();
@@ -204,6 +207,22 @@ export class QmInputboxComponent implements OnInit {
         })
       }
    
+  }
+  
+  clearCustomerForm(){
+    if(this.customerCreateForm!==undefined){ 
+      this.customerCreateForm.patchValue({
+        firstName: '',
+        lastName:'',
+        phone:this.countrycode,
+        email:'',
+        dateOfBirth: {
+          month: null,
+          day: '',
+          year: ''
+        }
+      })
+    }
   }
 
   public accept() {

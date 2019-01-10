@@ -55,6 +55,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   showBranch = false;
   showSPointName:boolean = false;
   sPName:string;
+  userDirections: string;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -65,6 +66,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   @Input() isPreventHeaderNavigations = false;
 
   constructor(
+    
+   
     private userSelectors: UserSelectors,
     public route: ActivatedRoute,
     public autoCloseService: AutoClose,
@@ -89,6 +92,13 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     
     console.log(this.userDirection$);
+
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
+      this.userDirections = direction;
+      console.log(this.userDirections);
+      
+    });
+    this.headerSubscriptions.add(userDirectionSubscription);    
     
     const licenseSubscription = this.isValidLicense$.subscribe(
       (licenseIsValid: boolean) => {

@@ -101,7 +101,7 @@
    
     overflow-y: auto;
     color: $dark-transparent62;
-    font-size: 1.4em;
+    font-size: 18px;
   }
 }
 
@@ -230,6 +230,7 @@
     }
     &__body {
       max-height: calc(100vh - 870px);
+      font-size: 18px
     }
   }
 }

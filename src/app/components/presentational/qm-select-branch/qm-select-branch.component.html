@@ -16,7 +16,7 @@
     <div class="qm-search qm-search--large">
       <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
       <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
-        id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}">
+        id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()">
 
       <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
         <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

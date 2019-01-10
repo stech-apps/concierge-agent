@@ -285,11 +285,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   //   this.accountDispatchers.setUseDefaultStatus(this.isEnableUseDefault);
   // }
 
-  // Temp function
-  goToCustomer() {
-    this.router.navigate(["customers"]);
-    // console.log(this.branches)
-  }
 
   closeDropDown(dd1, dd2) {
     dd1.isExpanded = false;

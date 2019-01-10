@@ -15,12 +15,17 @@ import { IAppointment } from '../../../models/IAppointment';
 import { Queue } from '../../../models/IQueue';
 import { Visit } from '../../../models/IVisit';
 import { IUser } from '../../../models/IUser';
+import { ToastService } from '../toast.service';
+import { empty } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
 export class SPService implements OnDestroy {
 
-  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler, private util: Util) {
+  constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler,
+    private toastService:ToastService, private util: Util,
+    private translateService:TranslateService) {
 
   }
 
@@ -77,8 +82,18 @@ export class SPService implements OnDestroy {
     return this.http
       .post(`${servicePoint}/branches/${branch.id}/servicePoints/${openServicePoint.id}/visits/createAndEnd`, requestBody)
       .pipe(
-        catchError(this.errorHandler.handleError())
-      );
+        catchError(
+          err => {
+            const error = new DataServiceError(err, null);
+            if(error.errorCode ==='8042'){
+              this.translateService.get('queue_full').subscribe(v => {
+                 this.toastService.errorToast(v); 
+              })
+            }
+            this.errorHandler.handleError()
+            return  empty();
+          
+        }));
   }
 
   queueTransfer(branch: IBranch, openServicePoint: IServicePoint, ToQueue: Queue, visit: Visit, sortPolicy: string) {

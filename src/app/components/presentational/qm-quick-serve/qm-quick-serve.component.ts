@@ -141,7 +141,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   onServe() {
     this.showToolTip = false;
     this.spService.quickServe(this.selectedBranch, this.selectedServicePoint, this.selectedService).subscribe((status: any) => {
-      if(status){
+      if(status){       
         this.translateService.get('quick_serve_toast').subscribe(v => {
           this.toastService.infoToast(this.selectedService.internalName + ' ' + v);
           this.selectedService = null;
@@ -149,8 +149,12 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
           searchBox.value="";
           this.filterText = '';
         });
+      } else{
+        this.toastService.infoToast("error");
       }
-    });
+    }
+  );
+
   }
 
   onScroll(eliment){
@@ -225,8 +229,7 @@ filterQueues(newFilter: string) {
   }
 
   showHideToolTip(){
-    console.log("hello");
-    
+       
     this.showToolTip = !this.showToolTip;
   }
 

@@ -342,7 +342,13 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   handleInput($event) {
+    console.log($event);
     this.inputChanged.next($event.target.value);
+  
+    if ($event.keyCode == 13){
+  
+      
+    } 
   }
 
   filterServices(newFilter: string) {    

@@ -198,10 +198,10 @@ div:focus{
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
     .qm-fishes-text, .qm-active-text{
-      // white-space: nowrap;
-      // text-overflow: ellipsis;
-      // display: list-item;
-      // margin: auto;
-      // padding: 18px 24px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: list-item;
+      margin: auto;
+      padding: 18px 24px;
     }
 }

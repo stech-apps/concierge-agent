@@ -1,7 +1,19 @@
 @import "../../../../styles/base/_component-manifest.scss";
 
+$xs-timebox-width: 476px;
+
 .qm-pannel-container {
   height: 100%;
+}
+
+.qm-flow-sub-header {
+  &__left {
+    @include qm-xs {
+      h1 {
+        margin:0;
+      }
+    }
+  }  
 }
 
 .qm-reschedule-root-container {
@@ -14,6 +26,14 @@
     right: 15%;
     left: auto;
   }
+
+  @include qm-md {
+    background-image: $workflow-blue-background;
+  }
+
+  @include qm-lg {
+    background-image: $workflow-blue-background;
+  } 
 }
 
 .qm-number-of-customers {
@@ -55,14 +75,63 @@
   }
 }
 
-.qm-reschedule {
-  &__selected-branch {
-    color: $dark-transparent42;
-    font-weight: $font-weight-medium;
-    width: 50%;
+.qm-flow-sub-header__left {
 
+  @include qm-md {
+    display: flex;
+    align-items: center;
+  }
+
+  @include qm-lg {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.qm-reschedule {
+  &__back-icon {
+    display: none;
+    visibility: hidden;
+    color: $dark-transparent82;
+
+    @include qm-lg {
+      display: inline-block;
+      visibility: visible;
+    }
+
+    @include qm-md {
+      display: inline-block;
+      visibility: visible;
+    }
+  }
+
+  &__selected-branch {
+    color: $dark-transparent62;
+    font-weight: $font-weight-medium;
+    flex: 1 0 100%;
     @at-root [dir="rtl"] & {
       text-align: right;
+    }
+
+    @include qm-sm {
+    }
+
+    @include qm-xs {
+      width: $xs-timebox-width;
+    }
+  }
+
+  &__line-header {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid $dark-transparent12; 
+   line-height: 0.1em;
+   margin: 2.5rem 0 20px;
+   font-size: 1.13rem;
+    
+    span {
+      background:#fafafa;
+      color: $dark-transparent42;
     }
   }
 
@@ -72,19 +141,28 @@
     font-size: 18px;
     align-items: center;
     width: 100%;
+    flex-wrap: wrap;
 
     &-cancel-button {
       width: 280px;
       display: inline-block;
       text-align: center;
+      width: 14.2rem;
     }
 
     &--text {
-      max-width: 35%;
+      max-width: 100%;
       padding: 1rem 1rem 1rem 0;
+      color: $dark-transparent42;
+      font-weight: $font-weight-medium;
+      flex: 1 0 100%;
 
       @at-root [dir="rtl"] & {
         padding: 1rem 0 1rem 1rem;
+      }
+
+      @include qm-xs {
+        padding-bottom: 0.3rem;
       }
     }
 
@@ -96,12 +174,16 @@
       height: 56px;
       line-height: 56px;
       font-size: 18px;
-      margin-left: 1rem;
+      margin-left: 0;
       margin-right: 1rem;
-      padding-left: 1rem;
+      padding-left: 0;
       padding-right: 1rem;
       display: flex;
       justify-content: space-between;
+
+      @include qm-xs {
+        width: 428px;
+      }
 
       span {
         display: inline-block;
@@ -125,12 +207,22 @@
         cursor: pointer;
       }
     }
+
+    @include qm-xs {
+      flex-wrap: wrap;
+    }
   }
 }
 
 .qm-reschedule-select {
   &__content {
     display: flex;
+    flex-wrap: wrap;
+
+    @include qm-xs {
+      flex-direction: column;
+      align-items: center;
+    }    
   }
 
   &-slots {
@@ -142,6 +234,12 @@
 
     @at-root [dir="rtl"] & {
       margin: 0.5rem 1rem 1rem 0;
+    }
+
+    @include qm-xs {
+      height: 25rem;
+      width: $xs-timebox-width;
+      margin: 1.56rem 0 0;
     }
   }
 }
@@ -172,11 +270,18 @@
   @at-root [dir="rtl"] & {
     margin: 0.5rem 0 1rem 1rem;
   }
+  @include qm-xs{
+    margin: 0;
+  }
 }
 
 .qm-calendar-placeholder {
   background-color: $calendar-background;
   border: 1px solid rgba(0, 0, 0, 0.12);
+
+  @include qm-xs {
+    width: $xs-timebox-width;
+  }
 }
 
 .qm-reschedule-time-select-slots {
@@ -214,4 +319,31 @@
   line-height: 2.8rem;
   margin-top: 0.5rem;
   letter-spacing: 2px;
+}
+
+.qm-pannel-inner-container {
+
+  @include qm-sm  {
+    margin: auto;
+    width: $reschedule-container-width-sm;
+  }
+
+  @include qm-md {
+    margin: auto;
+    width: $reschedule-container-width-md;
+    padding-right: 9.38rem;
+    padding-left: 9.38rem;
+    background-color: $background-default;
+  }
+
+  @include qm-lg {
+    margin: auto;
+    width: $reschedule-container-width-md;
+    background-color: $background-default;
+  }
+
+  @include qm-xs {
+    width: 100%;
+    padding: 1.5rem;
+  }
 }

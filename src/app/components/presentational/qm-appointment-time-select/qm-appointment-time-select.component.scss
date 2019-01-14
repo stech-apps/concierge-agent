@@ -57,6 +57,8 @@
     &-slots {
         flex: 1;
     }
+
+
 }
 
 .qm-time-header {
@@ -113,11 +115,75 @@
     margin: 47px 0rem 0rem 0rem;
     border: 1px solid rgba(0, 0, 0, 0.12);
     position: relative;
+
+    ::ng-deep .qm-time-slot-list {
+        @include qm-xs {
+            position: static;
+            height: 25rem; 
+        }
+
+        &__scrollable {
+            @include qm-xs {
+               margin-left: 56px; 
+            }
+        }
+    }
+
+
 }
+
+::ng-deep .qm-calendar-placeholder {
+    width: 478px;
+}
+
+::ng-deep .qm-calendar-container {
+    width: 480px;
+}
+
 
 .qm-time-container {
     display: flex;
     overflow: hidden;
     // height: calc(100vh - 330px);
     position: relative;
+
+    @include qm-xs {
+        flex-direction: column;
+    }
 }
+
+.qm-pannel-inner-container {
+    background-color: $background-default;
+    @include qm-xs {
+        width: 480px;
+    }
+
+    @include qm-sm {
+        width: 976px;
+        height: 100%;
+    }
+
+    @include qm-md {
+        width: 1288px;
+        height: 100%;
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+
+    @include qm-lg {
+        height: 100%;
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}
+
+.qm-pannel-container {
+    @include qm-md {
+        background-image: $workflow-blue-background;
+    }
+
+    @include qm-lg {
+        background-image: $workflow-blue-background;
+    }
+}
+

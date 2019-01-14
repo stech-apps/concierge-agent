@@ -50,15 +50,35 @@
 }
 
 .qm-appointment-time-select {
-    &__content {
-  
+    &__back-icon {
+        display: flex;
+        align-items: center;
+        font-size: 1.3rem;
+
+        @include qm-sm {
+            visibility: hidden;
+            display: none;
+        }
+
+        @include qm-xs {
+            visibility: hidden;
+            display: none;
+        }
     }
 
     &-slots {
-        flex: 1;
+        @include qm-md {
+            flex: 1;
+        }
+
+        @include qm-lg {
+            flex: 1;
+        }
+
+        @include qm-sm {
+            flex: 1;
+        }
     }
-
-
 }
 
 .qm-time-header {
@@ -88,7 +108,6 @@
 }
 
 .qm-calendar-container {
-    flex: 1;
     margin: 48px 1.5rem 0rem 0rem;
     background-color: $white;
     border: 1px solid rgba(0, 0, 0, 0.12);

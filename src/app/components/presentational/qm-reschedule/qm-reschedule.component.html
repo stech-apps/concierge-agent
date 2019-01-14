@@ -5,7 +5,7 @@
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
       <div class="qm-flow-sub-header__left">
-        <i class="icon-caret-left qm-reschedule__back-icon"></i>
+        <i class="icon-caret-left qm-reschedule__back-icon" [ngClass]="{'icon-caret-right': ( userDirection$ | async) === 'rtl'}"></i>
         <h1>{{ "edit_checkIn" | translate }}</h1>
       </div>
     </div>

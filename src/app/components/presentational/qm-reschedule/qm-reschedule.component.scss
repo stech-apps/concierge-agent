@@ -97,11 +97,13 @@ $xs-timebox-width: 476px;
     @include qm-lg {
       display: inline-block;
       visibility: visible;
+      font-size: 1.2rem;
     }
 
     @include qm-md {
       display: inline-block;
       visibility: visible;
+      font-size: 1.2rem;
     }
   }
 
@@ -159,6 +161,7 @@ $xs-timebox-width: 476px;
 
       @at-root [dir="rtl"] & {
         padding: 1rem 0 1rem 1rem;
+        text-align: right;
       }
 
       @include qm-xs {
@@ -180,6 +183,11 @@ $xs-timebox-width: 476px;
       padding-right: 1rem;
       display: flex;
       justify-content: space-between;
+
+      @at-root [dir='rtl'] & {
+        margin-left: 1rem;
+        margin-right: 0;
+      }
 
       @include qm-xs {
         width: 428px;
@@ -339,6 +347,8 @@ $xs-timebox-width: 476px;
   @include qm-lg {
     margin: auto;
     width: $reschedule-container-width-md;
+    padding-right: 9.38rem;
+    padding-left: 9.38rem;
     background-color: $background-default;
   }
 

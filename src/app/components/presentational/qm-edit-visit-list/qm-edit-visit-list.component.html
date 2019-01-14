@@ -88,10 +88,10 @@
      
         <!-- Edit visit options -->
         <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
-                class="qm-visit-list__options" id="{{visit.visitId}}-visitOptionContainer">
-          <div class="triangle-with-shadow"></div>
-          <div class="qm-visit-list__options__rec">
-            <div class="qm-visit-list__options__heading">
+                class="qm-visit-list__options-2" id="{{visit.visitId}}-visitOptionContainer">
+          <!-- <div class="triangle-with-shadow"></div> -->
+          <div class="qm-visit-list__options-2__rec">
+            <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> {{'visit_options'|translate}}
               </div>
@@ -165,6 +165,7 @@
               <div class="qm-title">
                 <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'tq'">{{'queue_transfer'|translate}} </span>

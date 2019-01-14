@@ -11,7 +11,7 @@ $standard-home-margin : 1.5rem;
         display: flex;
         flex: 1;
         flex-direction: column; 
-        width: 100%;
+        // width: 100%;
         min-height: 100%;
         // margin-left: $standard-home-margin;
         background-color: #FAFAFA;       
@@ -51,21 +51,21 @@ $standard-home-margin : 1.5rem;
   
 @include qm-sm{
     .qm-home-summary-area {
-        max-width:608px;
+      width:608px;
     }
   } 
   
   
 @include qm-md {
     .qm-home-summary-area {
-        max-width: 852px;
+        width: 852px;
     }
   } 
   
 
 @include qm-lg {
     .qm-home-summary-area {
-        max-width: 1136px;
+        width: 1136px;
     }
   
   }

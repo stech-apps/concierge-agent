@@ -139,7 +139,7 @@
 
 .qm-visit-list__options {
     margin: rem($standard-margin*0.5);
-    width: 450px;
+    width: 504x;
     z-index: 1000;
     position: absolute;
     margin-left: 12px;
@@ -179,6 +179,7 @@
     &__rec{
         box-shadow: 0 0 8px 0 rgba(0,0,0,0.34);
         background: white;
+      
     }
 
     
@@ -289,11 +290,12 @@
 
 .qm-visit-list__options-2 {
     margin: rem($standard-margin*0.5);
-    width: 450px;
+    width: 852px;
     z-index: 1000;
     position: fixed;
-    top: 20%;
-    right: 10%;
+    top: 50%;
+    height: 478px;
+    transform: translateY(-63%);
 
     @at-root [dir="rtl"] & {
         margin-right: 12px;
@@ -327,6 +329,10 @@
     &__rec{
         box-shadow: 0 0 8px 0 rgba(0,0,0,0.34);
         background: white;
+        height: 100%;
+        width: 504px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     
@@ -557,6 +563,7 @@
 .qm-row-text{
  margin: auto 0;
  height: 100%;
+ align-items: center;
 }
 .qm-selected-visit-font{
     font-size: 21px;
@@ -608,7 +615,7 @@
         display: none;
     }
     .qm-visit-list__options-2 {
-        right: 20%
+        
     }   
 }
 
@@ -633,7 +640,7 @@
         height: 10px;
     }
     .qm-visit-list__options-2 {
-        right: 6%;
+       
     }
 }
 
@@ -660,7 +667,10 @@
         min-height: calc(100vh - 485px);
         height: 10px;
     }
-
+    .qm-visit-list__options-2 {
+        margin-left: -29px;
+        max-width: 852px;
+    }   
  
 }
 
@@ -686,7 +696,7 @@
         height: 10px;
     }
     .qm-visit-list__options-2 {
-        right: 12%;
+       
     }   
 }
 

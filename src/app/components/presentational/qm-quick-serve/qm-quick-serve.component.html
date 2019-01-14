@@ -16,7 +16,7 @@
         <div class="qm-quick-serve-search" dir="{{ userDirection$ | async }}">
             <div class="qm-quick-serve-search__search-container">
                 <input class="qm-quick-serve-search__input" type="search" placeholder="{{ 'search_service_name' | translate }}" id="visitSearch"
-                name="q" [ngModel]="searchText" (input)="handleInput($event)" #visitSearch autocomplete="off">
+                name="q" [ngModel]="searchText" (input)="handleInput($event)" (keydown.enter)="visitSearch.blur()" #visitSearch autocomplete="off">
                 <div class="qm-action-btn--only-icon">
                     <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
                     aria-hidden="true"></i>

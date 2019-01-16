@@ -73,8 +73,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     const userSubscription = this.userSelectors.user$.subscribe(
       user =>  {
         this.user = user;
-        console.log(user.id);
-        
+
         this.isEnableUseDefault = this.localStorage.getUserStoreObjectValue(
           user.id,
           STORAGE_SUB_KEY.REMEMBER_LOGIN,
@@ -234,6 +233,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     ) {
       this.branchDispatchers.selectBranch(this.previousBranch);
       this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
+      this.localStorage.setInitialStoreValues();
       this.router.navigate(["home"]);
     } else {
       this.recycleService.removeAppCache();

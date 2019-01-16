@@ -318,7 +318,7 @@ qm-identify-appointment{
       color: #ccc;
     }
     
-    i.icon-caret-up.active-sort-column {
+    i.icon-caret-up.active-sort-column, i.icon-caret-down.active-sort-column {
       color: black;
       font-size: 18px;
     }
@@ -378,6 +378,7 @@ qm-identify-appointment{
           cursor: pointer;
           color: $dark-transparent62;
           line-height: $lg-md-row-height;
+          margin-left: 1rem;
 
           @include qm-sm {
             line-height: $sm-xs-row-height;
@@ -386,6 +387,7 @@ qm-identify-appointment{
           @at-root [dir="rtl"] & {
             left: -2.5rem;
             right: auto;
+            margin-left: auto;
           }
         }
       }
@@ -413,7 +415,7 @@ qm-identify-appointment{
 
 .icon-scan-qr {
   // color: $primary-pink;
-  font-size: 2rem;
+  font-size: 1.8rem;
   padding: 0px 5px;
 }
 
@@ -421,13 +423,16 @@ qm-identify-appointment{
   font-size: rem(14px);
 }
 .scan-qr-container {
-  padding: 10px 15px;
   background-color: white;
   // position:absolute;
   text-align: center;
-  // margin-top: -20px;
-  margin-top: 136px;
   cursor: pointer;
+  margin-left: 2rem;
+
+  @at-root [dir='rtl'] & {
+    margin-right: 2rem;
+    margin-left: auto;
+  }
 }
 
 // qr-code-modal related css
@@ -516,101 +521,53 @@ qm-identify-appointment{
       //table column sizes
       .qm-table {
         @include qm-lg {
-          &__header-id {
+          &__header-id, &__cell-id {
             width: 80px;
           }
 
-          &__header-customer {
-            width: 295px;
+          &__header-customer, &__cell-customer  {
+            width: 200px;
           }
 
-          &__header-service {
-            width: 295px;
+          &__header-service, &__cell-service {
+            width: 220px;
           }
 
-          &__header-branch {
-            width: 228px;
+          &__header-branch, &__cell-branch {
+            width: 200px;
           }
 
-          &__header-date {
+          &__header-date, &__cell-date {
             width: 170px;
           }
 
-          &__header-time {
-            width: 174px;
-          }
-
-          &__cell-id {
-            width: 80px;
-          }
-
-          &__cell-customer {
-            width: 295px;
-          }
-
-          &__cell-service {
-            width: 295px;
-          }
-
-          &__cell-branch {
-            width: 228px;
-          }
-
-          &__cell-date {
-            width: 170px;
-          }
-
-          &__cell-time {
+          &__header-time, &__cell-time {
             width: 174px;
           }
         }
 
         @include qm-md {
-          &__header-id {
+          &__header-id, &__cell-id {
             width: 80px;
           }
 
-          &__header-customer {
-            width: 270px;
+          &__header-customer, &__cell-customer  {
+            width: 200px;
           }
 
-          &__header-service {
-            width: 270px;
-          }
-
-          &__header-branch {
+          &__header-service, &__cell-service {
             width: 220px;
           }
 
-          &__header-date {
+          &__header-branch, &__cell-branch {
+            width: 200px;
+          }
+
+          &__header-date, &__cell-date {
             width: 170px;
           }
 
-          &__header-time {
-            width: 174px;
-          }
-
-          &__cell-id {
-            width: 80px;
-          }
-
-          &__cell-customer {
-            width: 270px;
-          }
-
-          &__cell-service {
-            width: 270px;
-          }
-
-          &__cell-branch {
-            width: 220px;
-          }
-
-          &__cell-date {
-            width: 170px;
-          }
-
-          &__cell-time {
+          &__header-time, &__cell-time {
             width: 174px;
           }
         }
@@ -673,84 +630,45 @@ qm-identify-appointment{
       //table column sizes
       .qm-table {
         @include qm-lg {
-          &__header-id {
+          &__header-id, &__cell-id {
             width: 100px;
           }
 
-          &__header-customer {
-            width: 340px;
+          &__header-customer, &__cell-customer  {
+            width: 300px;
           }
 
-          &__header-service {
-            width: 330px;
+          &__header-service, &__cell-service {
+            width: 300px;
           }
 
-          &__header-date {
-            width: 210px;
+          &__header-date,&__cell-date {
+            width: 200px;
           }
 
-          &__header-time {
-            width: 260px;
-          }
-
-          &__cell-id {
-            width: 100px;
-          }
-
-          &__cell-customer {
-            width: 340px;
-          }
-
-          &__cell-service {
-            width: 330px;
-          }
-
-          &__cell-date {
-            width: 210px;
-          }
-
-          &__cell-time {
-            width: 260px;
+          &__header-time, &__cell-time {
+            width: 200px;
           }
         }
 
         @include qm-md {
-          &__header-id {
+          &__header-id, &__cell-id {
             width: 100px;
           }
 
-          &__header-customer {
-            width: 340px;
+          &__header-customer, &__cell-customer  {
+            width: 260px;
           }
 
-          &__header-service {
-            width: 340px;
+          &__header-service, &__cell-service {
+            width: 260px;
           }
 
-          &__header-date {
+          &__header-date, &__cell-date {
             width: 210px;
           }
 
-          &__header-time {
-            width: 200px;
-          }
-          &__cell-id {
-            width: 100px;
-          }
-
-          &__cell-customer {
-            width: 340px;
-          }
-
-          &__cell-service {
-            width: 340px;
-          }
-
-          &__cell-date {
-            width: 210px;
-          }
-
-          &__cell-time {
+          &__header-time,  &__cell-time {
             width: 200px;
           }
         }
@@ -850,8 +768,16 @@ qm-identify-appointment{
     padding-left: 50px;
     background-color: $white;
 
+    @include qm-lg {
+      width: 1293px;
+      padding-right: 96px;
+      padding-left: 96px;
+    }
+
     @include qm-md {
       width: 1293px;
+      padding-right: 96px;
+      padding-left: 96px;
     }
 
     @include qm-sm {

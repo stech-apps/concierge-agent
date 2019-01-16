@@ -7,10 +7,7 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
       <div class="qm-flow-sub-header__right">
-        <div (click)="onSearchButtonClick('qr')" *ngIf="qrButtonVisible" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
-          <i class="qm-action-btn__icon icon-scan-qr"></i>
-          <div class="qm-scan-text"> {{'scan_qr'|translate}}</div>
-        </div>
+
 
       </div>
     </div>
@@ -45,6 +42,12 @@
         <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('customer')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'customer' }">
           <span> <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i></span>
           {{'tab.identifyappointment.customer' | translate }}</div>
+
+          <div (click)="onSearchButtonClick('qr')" *ngIf="qrButtonVisible" class="scan-qr-container" [ngStyle]="{'color':  !isQRReaderOpen  ? '#E50046' : 'rgba(0, 0, 0, 0.82)'}" >
+              <i class="qm-action-btn__icon icon-scan-qr"></i>
+              <div class="qm-scan-text"> {{'scan_qr'|translate}}</div>
+            </div>
+          
       </div>
       <hr class="qm-identify-appointment__pannel-bottom-bar">
 

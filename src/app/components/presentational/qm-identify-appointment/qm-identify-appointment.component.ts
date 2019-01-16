@@ -1392,8 +1392,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   getSortIcons(sortColumn) {
     let sortConfig = {
-      "icon-caret-down": this.sortColumn === sortColumn && this.isDescending,
-      "icon-caret-up": ((this.sortColumn === sortColumn && !this.isDescending) || (this.sortColumn !== sortColumn)) ? true : false,
+      "icon-caret-up": this.sortColumn === sortColumn && this.isDescending,
+      "icon-caret-down": ((this.sortColumn === sortColumn && !this.isDescending) || (this.sortColumn !== sortColumn)) ? true : false,
       "active-sort-column" : this.sortColumn === sortColumn
     };
 

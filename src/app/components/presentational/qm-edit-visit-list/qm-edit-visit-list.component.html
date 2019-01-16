@@ -39,7 +39,7 @@
     </div>
 
 
-    <div id="qm-visit-container" *ngIf="visits && visits.length && visitLoaded" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
+    <div id="qm-visit-container" *ngIf="visits && visits.length && visitLoaded" class="qm-visit-list__body"  [ngClass]="{'visit-list-body-collapesed':  isCollapesed==='true','visit-list-body-without-quick-serve':  !isQuickServeEnable}" dir="{{userDirection$ | async}}">
 
       <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
         <div>

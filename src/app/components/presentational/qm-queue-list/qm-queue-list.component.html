@@ -18,7 +18,7 @@
     <div  *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'ql_est_wait_time' | translate}} </div>
   </div>  
 
-  <div class="qm-queue-list__body" [ngClass]="{'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable}" >
+  <div class="qm-queue-list__body" [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable }" >
     <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
     (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" (click)="selectQueue(q)" >
         <div class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&

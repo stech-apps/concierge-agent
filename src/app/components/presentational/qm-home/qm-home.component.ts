@@ -36,6 +36,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   selelctedQueue: Queue;
   selectedVisit : Visit;
   editVisitEnable: boolean;
+  isCollapse:boolean;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -61,6 +62,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     );
     this.subscriptions.add(servicePointsSubscription);
     this.util.setSelectedApplicationTheme();
+
+    this.isCollapse = false;
 
     const queueSubscription = this.queueSelectors.selectedQueue$.subscribe(q=>{
       this.selelctedQueue = q;
@@ -120,5 +123,11 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   }
   resetValue() {
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
+  }
+  
+  collapseBtnClicked(){
+    this.isCollapse = !this.isCollapse
+    
+        
   }
 }

@@ -243,3 +243,12 @@
     max-height: calc(100vh - 495px);
   }
 }
+
+.queue-list__body-collapsed{
+  @include qm-xs  {
+  max-height: calc(100vh - 575px);
+  }
+  @include qm-xs-lower {
+    max-height: calc(100vh - 575px);
+    }
+}

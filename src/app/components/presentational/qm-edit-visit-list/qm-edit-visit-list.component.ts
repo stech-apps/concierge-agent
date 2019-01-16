@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { UserSelectors, QueueVisitsDispatchers, BranchSelectors, QueueVisitsSelectors, QueueDispatchers, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, NativeApiSelectors, NativeApiDispatchers, SystemInfoSelectors } from '../../../../store';
 import { Subscription, Observable } from 'rxjs';
 import { Visit } from '../../../../models/IVisit';
@@ -52,6 +52,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
   @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
   @Output() PreviousFlow: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isCollapesed: string;
 
   //utt parameters
   canTransferSP: boolean = false;
@@ -61,6 +62,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canTransferQLast: boolean = false;
   canTransferQWait: boolean = false;
   canDelete: boolean = false;
+  isQuickServeEnable:boolean;
   canCherryPick: boolean = false;
   private timeoutHandle = null;
 
@@ -89,6 +91,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private nativeApi: NativeApiService,
     private queueDispatcher: QueueDispatchers,
     private systemInfoSelectors: SystemInfoSelectors,
+    
     
   ) {
 
@@ -177,6 +180,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.canTransferQWait = uttParameters.btnTransferSort;
           this.canDelete = uttParameters.delVisit;
           this.canCherryPick = uttParameters.cherryPick;
+          this.isQuickServeEnable = uttParameters.quickServe;
 
           if (this.canTransferQ == true && (this.canTransferQFirst == true || this.canTransferQLast == true || this.canTransferQWait == true)) {
             this.canTransferQ = true;

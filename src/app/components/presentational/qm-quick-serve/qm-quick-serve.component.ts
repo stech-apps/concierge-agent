@@ -1,7 +1,7 @@
 import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
 import { Subscription, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { SPService } from 'src/util/services/rest/sp.service';
@@ -12,6 +12,7 @@ import { IServiceConfiguration } from '../../../../models/IServiceConfiguration'
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 
+
 @Component({
   selector: 'qm-quick-serve',
   templateUrl: './qm-quick-serve.component.html',
@@ -20,6 +21,7 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 export class QmQuickServeComponent implements OnInit, OnDestroy {
 
   @ViewChild('configServiceList') configServiceList: any;
+
 
   private subscriptions: Subscription = new Subscription();
   services: IServiceConfiguration[] = new Array<IServiceConfiguration>();

@@ -76,6 +76,7 @@
         border: 1px solid #D5D5D5;
         box-shadow: 0 0 4px 0 $dark-transparent12;
         width: 100%;
+        height: 100%;
         &-caret-view {
             display: flex;        
         }
@@ -698,5 +699,25 @@
     }   
 }
 
+.visit-list-body-collapesed{
+    @include qm-xs {
+    max-height: calc(100vh - 165px);
+    min-height: calc(100vh - 562px);
+    }
+    @include qm-xs-lower {
+        max-height: calc(100vh - 165px);
+        min-height: calc(100vh - 562px);
+        }
+}
 
+.visit-list-body-without-quick-serve{
+    @include qm-xs {
+    max-height: calc(100vh - 165px);
+    min-height: calc(100vh - 459px);
+    }
+    @include qm-xs-lower {
+        max-height: calc(100vh - 165px);
+    min-height: calc(100vh - 459px);
+}
+}
 

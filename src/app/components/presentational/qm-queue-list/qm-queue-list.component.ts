@@ -1,7 +1,7 @@
 import { QueueIndicator } from './../../../../util/services/queue-indication.helper';
 import { Subscription, Observable } from 'rxjs';
 import { Queue } from './../../../../models/IQueue';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { QueueSelectors, QueueDispatchers, BranchSelectors, ServicePointSelectors, UserSelectors } from 'src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueService } from '../../../../util/services/queue.service';
@@ -38,6 +38,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   editVisitEnable:boolean;
   isFirstTime: boolean;
 
+  @Input() isCollapesed: string;
+
   constructor(
     private queueSelectors: QueueSelectors,
     private queueDispatchers: QueueDispatchers,
@@ -51,6 +53,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private userSelectors: UserSelectors,
     private queueDispatcher: QueueDispatchers
   ) {
+
     this.sortedBy = "Queue"
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
       if (branch) {

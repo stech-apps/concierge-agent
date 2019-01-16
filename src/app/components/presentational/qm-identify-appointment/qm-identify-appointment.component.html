@@ -33,7 +33,7 @@
     <br>
     <div class="qm-identify-appointment">
       <div class="qm-identify-appointment__button-container">
-        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') }">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') || (currentSearchState === 'refresh') }">
           {{'tab.identifyappointment.appointmentlist' | translate }}</div>
         <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
           [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'id' }"> <span> <i

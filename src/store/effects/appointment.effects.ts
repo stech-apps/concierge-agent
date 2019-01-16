@@ -163,7 +163,6 @@ export class AppointmentEffects {
                 {
                   icon: "calendar-light",
                   label: moment(action.payload.start)
-                    .tz(action.payload.branch.fullTimeZone)
                     .locale(userLocale)
                     .format("dddd DD MMMM")
                 },
@@ -171,13 +170,12 @@ export class AppointmentEffects {
                   icon: "clock",
                   label: `<span>${
                               moment(action.payload.start)
-                              .tz(action.payload.branch.fullTimeZone)
                               .format(timeFormat)}
                             </span>
                             <span>&nbsp;-&nbsp;</span><span>${
                                 moment(
                                 action.payload.end
-                                ).tz(action.payload.branch.fullTimeZone).format(timeFormat)}
+                                ).format(timeFormat)}
                             </span>`
                 },
                 {

@@ -348,7 +348,8 @@ $xs-timebox-width: 476px;
 }
 
 .qm-pannel-inner-container {
-  height: 100%;
+  height: auto;
+  min-height: 100%;
 
   @include qm-sm  {
     margin: auto;
@@ -361,6 +362,8 @@ $xs-timebox-width: 476px;
     padding-right: 9.38rem;
     padding-left: 9.38rem;
     background-color: $background-default;
+    height: auto;
+    min-height: 100%;
   }
 
   @include qm-lg {
@@ -369,6 +372,8 @@ $xs-timebox-width: 476px;
     padding-right: 9.38rem;
     padding-left: 9.38rem;
     background-color: $background-default;
+    height: auto;
+    min-height: 100%;  
   }
 
   @include qm-xs {

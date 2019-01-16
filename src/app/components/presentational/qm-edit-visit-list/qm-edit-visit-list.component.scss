@@ -376,8 +376,8 @@
         border: 1px solid $primary-pink;
         border-radius: 5px;
         width: 73%;
-        margin: auto;
-        margin-bottom: 15px;
+        margin: 33px auto;
+   
       
         .content {
             padding: 0 10px;
@@ -412,8 +412,8 @@
         display: flex;
         flex-direction: column;
         width: 73%;
-        margin: auto;
-        margin-bottom: 15px;
+        margin: 23px auto;
+   
       
         .content {
             padding: 0 10px;
@@ -554,7 +554,7 @@
 
 .qm-row-text{
  margin: auto 0;
- height: 100%;
+height: 100%;
  align-items: center;
 }
 .qm-selected-visit-font{
@@ -574,7 +574,9 @@
         min-height: calc(100vh - 892px);
         height: 10px;
     }
-    
+    .qm-row-text{
+        min-height: 56px;
+    }
     
     
 }
@@ -608,6 +610,15 @@
     }
     .qm-visit-list__options-2 {
         
+    } 
+    .qm-row-text{
+        min-height: 56px;
+    }  
+    .qm-visit-list__options-2 {
+        width: 100%;
+        margin-left:-38px;
+        margin-right:-38px;
+
     }   
 }
 
@@ -637,6 +648,9 @@
         margin-right:-24px;
         
     }
+    .qm-row-text{
+        min-height: 56px;
+    }
 }
 
 
@@ -650,6 +664,9 @@
             margin: 2px 0px;
             
         }
+    }
+    .qm-row-text{
+        min-height: 48px;
     }
     .qm-details-icon{
         display: none;
@@ -679,6 +696,9 @@
             margin: 2px 0px;
             
         }
+    }
+    .qm-row-text{
+        min-height: 48px;
     }
     .qm-details-icon{
         display: none;
@@ -716,7 +736,7 @@
     min-height: calc(100vh - 459px);
     }
     @include qm-xs-lower {
-        max-height: calc(100vh - 165px);
+    max-height: calc(100vh - 165px);
     min-height: calc(100vh - 459px);
 }
 }

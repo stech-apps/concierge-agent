@@ -2,7 +2,7 @@
 :host {
   background-color: $white;
   @include vendorPrefix(animation-duration, 0.5s, webkit moz ms);
-  z-index: 3;
+  z-index: 50;
   box-shadow: 1px -4px 20px $medium-gray;
   font-size: 16px !important;
   font-family: $font-family !important;

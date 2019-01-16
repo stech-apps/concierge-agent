@@ -9,13 +9,13 @@
   display: flex;
   position: fixed;
   top: 0;
-  z-index: 11;
+  z-index: 50;
   width: 100%;
   height: $global-header-height;
   justify-content: space-between;
   background: $header-background-color;
   padding: rem(0 24px);
-  z-index: map-get($z-index, "header");
+
 
   &__left {
     display: flex;

@@ -24,7 +24,8 @@ export enum STORAGE_SUB_KEY {
     REMEMBER_LOGIN = "remember_login",
     ACTIVE_WORKSTATION = "active_workstation",
     ACTIVE_BRANCH = "active_branch",
-    SERVICES = "services"
+    SERVICES = "services",
+    COLLAPSE = "collapse"
 }
 
 export interface IUserService {

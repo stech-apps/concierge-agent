@@ -17,6 +17,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { QmModalService } from "../qm-modal/qm-modal.service";
 import { Queue } from "../../../../models/IQueue";
 import { Visit } from "../../../../models/IVisit";
+import { LocalStorage,STORAGE_SUB_KEY } from "../../../../util/local-storage";
 
 @Component({
   selector: "qm-qm-home",
@@ -48,7 +49,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private branchSelectors: BranchSelectors,
     private qmModalService: QmModalService,
     private translationService: TranslateService,
-    private queueSelectors:QueueSelectors
+    private queueSelectors:QueueSelectors,
+    private localStorage: LocalStorage,
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -63,7 +65,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     this.subscriptions.add(servicePointsSubscription);
     this.util.setSelectedApplicationTheme();
 
-    this.isCollapse = false;
+    this.isCollapse = localStorage.getSettingForKey(STORAGE_SUB_KEY.COLLAPSE);
 
     const queueSubscription = this.queueSelectors.selectedQueue$.subscribe(q=>{
       this.selelctedQueue = q;
@@ -127,7 +129,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   
   collapseBtnClicked(){
     this.isCollapse = !this.isCollapse
-    
+    this.localStorage.setSettings(STORAGE_SUB_KEY.COLLAPSE,this.isCollapse);
         
   }
 }

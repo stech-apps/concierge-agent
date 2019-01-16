@@ -48,8 +48,12 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
   }
 
   cardClick() {
-    this.onCardClick.emit(this.appointmentInfo);
+    //this.onCardClick.emit(this.appointmentInfo);
     
+  }
+  
+  onCustomerNameClick() {
+    this.onCardClick.emit(this.appointmentInfo);
   }
 
   ngOnDestroy() {

@@ -124,11 +124,11 @@
 
     @at-root & .qm-appointment-info__customer {
       color: $primary-pink;
-    }
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-      cursor: pointer;
+      &:hover {
+        cursor: pointer;
+        color: $dark-transparent82
+      }
     }
   }
 }

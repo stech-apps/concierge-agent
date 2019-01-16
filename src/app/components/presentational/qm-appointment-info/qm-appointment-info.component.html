@@ -1,7 +1,7 @@
 <div class="qm-appointment-info" (click)="cardClick()" [ngClass]="{'qm-appointment-info--wide-card': useWideCard }" [dir]="userDirection$ | async" cdkTrapFocus>
   <div class="qm-appointment-info__header">
     <div class="qm-appointment-info__id"> {{ useCalendarEndpoint ? appointmentInfo.qpId : appointmentInfo.id }}</div>
-    <div class="qm-appointment-info__customer"> {{ appointmentInfo?.custName }}</div>
+    <div class="qm-appointment-info__customer" (click)="onCustomerNameClick()"> {{ appointmentInfo?.custName }}</div>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__birthdate" >
       <span class="qm-appointment-info-item__icon icon-cake"></span>

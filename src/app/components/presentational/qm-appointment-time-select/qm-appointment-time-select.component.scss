@@ -144,6 +144,11 @@
         &__scrollable {
             @include qm-xs {
                margin-left: 56px; 
+
+               @at-root [dir='rtl'] & {
+                   margin-right: 56px;
+                   margin-left: auto;
+               }
             }
         }
     }

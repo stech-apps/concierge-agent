@@ -24,7 +24,7 @@
           </div>
           <div class="qm-week-date enabled"
                *ngIf="isSelectedMonth(day.mDate)"
-               (click)="selectDate(day)"
+               (click)="selectDate(day, true)"
                [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}">
             <div class="qm-date-text">{{ day.mDate.date() }}</div>
           </div>

@@ -25,7 +25,7 @@
         <qm-calendar [enabledDates]="reservableDates" [selectedDates]="selectedDates" (onSelectDate)="onSelectDate($event)"></qm-calendar>
       </div>
     </div>
-    <div class="qm-appointment-time-select-slots">
+    <div class="qm-appointment-time-select-slots" #timeSlotContainer>
       <div class="qm-time-slot-header qm-time-header qm-text-overflow-fix">{{ selectedTimeHeading.length > 0 ? selectedTimeHeading :  ('time_slots' | translate)}}</div>
       <div class="qm-time-slot-placeholder">
         <qm-time-slots [preselectedTimeSlot]="preselectedTimeSlot" 

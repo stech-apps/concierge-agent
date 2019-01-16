@@ -24,7 +24,8 @@ import {
   SimpleChanges,
   EventEmitter,
   Output,
-  ViewChild
+  ViewChild,
+  ElementRef
 } from "@angular/core";
 import {
   CalendarDate,
@@ -84,6 +85,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   @Output()
   onFlowExit: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('timeSlotsContainer') timeSlotContainer: ElementRef;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -210,6 +213,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
         this.originalAppointmentTime = null;
       }
       this.enableReschedule = false;
+    }
+
+    if(this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
+      this.timeSlotContainer.nativeElement.scrollIntoView();
     }
 
     this.timeSlotDispatchers.deselectTimeslot();    

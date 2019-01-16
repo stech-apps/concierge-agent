@@ -27,6 +27,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   sortedDates: CalendarDate[] = [];
   userDirection$: Observable<string>;
   locale: string;
+  isUserDateSelected: boolean = false;
 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
@@ -88,7 +89,8 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     return moment(date).isSame(this.currentDate, 'month');
   }
 
-  selectDate(date: CalendarDate): void {
+  selectDate(date: CalendarDate, userClicked = false): void {
+    this.isUserDateSelected = userClicked;
     if (date.disabled) {
       return;
     }

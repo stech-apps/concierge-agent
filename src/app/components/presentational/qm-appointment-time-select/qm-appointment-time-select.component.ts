@@ -3,7 +3,7 @@ import { IService } from "./../../../../models/IService";
 import { ICalendarBranch } from "./../../../../models/ICalendarBranch";
 import { IBookingInformation } from "./../../../../models/IBookingInformation";
 import { TimeslotSelectors } from "./../../../../store/services/timeslot/timeslot.selectors";
-import { CalendarDate } from "./../../containers/qm-calendar/qm-calendar.component";
+import { CalendarDate, QmCalendarComponent } from "./../../containers/qm-calendar/qm-calendar.component";
 import { IBranch } from "src/models/IBranch";
 import { Subscription, Observable } from "rxjs";
 import {
@@ -26,7 +26,9 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
-  Input
+  Input,
+  ViewChild,
+  ElementRef
 } from "@angular/core";
 import { BookingHelperService } from "src/util/services/booking-helper.service";
 import { ICalendarService } from "src/models/ICalendarService";
@@ -73,6 +75,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private readonly HOUR_12FORMAT = "AMPM";
   timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
   userLocale: string = DEFAULT_LOCALE;
+
+  @ViewChild('timeSlotContainer') timeSlotContainer: ElementRef;
+  @ViewChild(QmCalendarComponent) calendarRef: QmCalendarComponent;
 
   constructor(
     private branchSelectors: BranchSelectors,
@@ -250,6 +255,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
       this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format("dddd DD MMMM");
+      if(this.calendarRef && this.calendarRef.isUserDateSelected && this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
+        this.timeSlotContainer.nativeElement.scrollIntoView();
+      }
     }
   }
 

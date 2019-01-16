@@ -36,7 +36,7 @@ export class LoginService {
         private router: Router,
         private userStatusDispatcher: UserStatusDispatchers,
         private confirmBox: QmModalService,
-        private localStorage: LocalStorage,
+        private localStorage: LocalStorage
         
     ) {
        
@@ -69,12 +69,17 @@ export class LoginService {
                     this.hijack();
                 }else
                 {
-                    let currentObj = this;
-                    this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'cancel', function(val: boolean){
-                        if(val){
-                            currentObj.hijack();
-                        }
-                    }, function(){});
+                    if(this.nativeApi.isNativeBrowser()) {
+                        let currentObj = this;
+                        this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'cancel', function(val: boolean){
+                            if(val){
+                                currentObj.hijack();
+                            }
+                        }, function(){});
+                    }
+                    else {
+                        this.hijack();
+                    }
                 }
             }
         })

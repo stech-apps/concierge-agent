@@ -32,6 +32,14 @@
   vertical-align: middle;
   font-size: 1.2em;
   cursor: pointer;
+  padding: 0 8px;
+  @at-root [dir="ltr"] & {
+    margin-left: -12px;
+  }
+  @at-root [dir="rtl"] & {
+    margin-right: -12px;
+}
+
 }
 
 .qm-search-visit-container{

@@ -36,6 +36,23 @@ $standard-home-margin : 1.5rem;
     // overflow: auto;
 }
 
+
+.slide-icon{
+    font-size: 3em;
+   
+    margin-top: -20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    @at-root [dir="ltr"] & {
+        text-align: right;
+        margin-right: 20px;
+    }        
+
+    @at-root [dir="rtl"] & {
+        text-align: left;
+        margin-left: 20px;
+    }        
+}
 @media screen and (max-width: 1023px) {
     .qm-home-content {
         flex-direction: column;
@@ -53,6 +70,9 @@ $standard-home-margin : 1.5rem;
     .qm-home-summary-area {
       width:608px;
     }
+    .slide-up-icon{
+        display: none;
+    }
   } 
   
   
@@ -60,13 +80,19 @@ $standard-home-margin : 1.5rem;
     .qm-home-summary-area {
         width: 852px;
     }
+    .slide-up-icon{
+        display: none;
+    }
   } 
   
 
 @include qm-lg {
     .qm-home-summary-area {
-        width: 1136px;
-    }
+        width: 1136px
+    };
   
+    .slide-up-icon{
+        display: none;
+    }
   }
   

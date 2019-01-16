@@ -70,6 +70,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   timeConvention$: Observable<string> = new Observable<string>();
   timeConvention: string = "24";
   queueSummary:any
+  visitLoaded:boolean;
+  visitLoading:boolean;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -136,6 +138,16 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(selectedQueueSub);
+
+    const VisitLoadedSubs = this.queueVisitsSelectors.queueVisitLoaded$.subscribe(state=>{
+      this.visitLoaded = state;
+    })
+    this.subscriptions.add(VisitLoadedSubs);
+
+    const VisitLoadingSubs = this.queueVisitsSelectors.queueVisitLoading$.subscribe(state=>{
+      this.visitLoading = state;
+    })
+    this.subscriptions.add(VisitLoadingSubs);
 
     // get visit list
     const queueVisitsSub = this.queueVisitsSelectors.queueVisits$.subscribe(visitList => {

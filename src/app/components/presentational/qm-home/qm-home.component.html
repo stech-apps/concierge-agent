@@ -5,6 +5,7 @@
     <div *ngIf="isQuickServeEnable && !MessageBoxInfo" class="qm-quick-serve-container" [ngStyle]="{'width':'100vw' }">
       <qm-quick-serve ></qm-quick-serve>
     </div>
+    <i class="action-btn slide-icon icon-button-up"> <span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
     <div class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary></qm-queue-summary>

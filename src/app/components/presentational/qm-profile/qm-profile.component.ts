@@ -73,29 +73,30 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     const userSubscription = this.userSelectors.user$.subscribe(
       user =>  {
         this.user = user;
+        console.log(user.id);
+        
         this.isEnableUseDefault = this.localStorage.getUserStoreObjectValue(
           user.id,
           STORAGE_SUB_KEY.REMEMBER_LOGIN,
           STORAGE_SUB_KEY.REMEMBER_LOGIN,
           false
         );
-    
-        console.log('EnableUseDefault' + this.isEnableUseDefault);
+       console.log('EnableUseDefault ' + this.isEnableUseDefault);
       }
     );
     this.subscriptions.add(userSubscription);
 
-      const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe(
+    // For comming through edit button
+    const navServiceSubscription = this.servicePointSelectors.previousServicePoint$.subscribe(
       spo => {
         this.navServicePoint = spo;
       }
     );
     this.subscriptions.add(navServiceSubscription);
 
+
     this.servicePointDispatchers.setOpenServicePoint(null);
-
     this.setDefaultServicePoint();
-
     this.selectedBranch = {
       name: 'label.profile.select.branch',
       id: -1
@@ -106,7 +107,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.previousBranch = branch;
       }
     );
-
     this.subscriptions.add(previousBranchSubscription);
 
     const branchSubscription = this.branchSelectors.branches$.subscribe(bs => {

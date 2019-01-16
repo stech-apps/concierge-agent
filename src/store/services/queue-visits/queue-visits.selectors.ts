@@ -15,9 +15,22 @@ const getQueueVisitse = createSelector(
     (state: IQueueVisitsState) => state.queueVisitsList
 );
 
+const getQueueVisitLoaded = createSelector(
+    getQueueVisitsState,
+    (state: IQueueVisitsState) => state.loaded
+);
+
+const getQueueVisitLoading = createSelector(
+    getQueueVisitsState,
+    (state: IQueueVisitsState) => state.loading
+);
+
+
 @Injectable()
 export class QueueVisitsSelectors {
     constructor(private store: Store<IAppState>) { }
     // selectors$
     queueVisits$ = this.store.select(getQueueVisitse);
+    queueVisitLoaded$ = this.store.select(getQueueVisitLoaded);
+    queueVisitLoading$ = this.store.select(getQueueVisitLoading);
 }

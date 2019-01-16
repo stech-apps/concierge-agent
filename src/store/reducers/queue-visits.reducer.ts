@@ -27,14 +27,15 @@ export function reducer(
         ...state,
         queueVisitsList: action.payload,
         loading: false,
-        error: null
+        error: null,
+        loaded:true
       };
     }
     case QueueVisitsActions.FETCH_QUEUE_VISITS_FAIL: {
       return {
         ...state,
         loading: false,
-        loaded: false,
+        loaded: true,
         error: {
           ...action.payload
         }
@@ -44,6 +45,7 @@ export function reducer(
       return {
         ...state,
         loading: true,
+        loaded:false,
         error: null
       };
     }

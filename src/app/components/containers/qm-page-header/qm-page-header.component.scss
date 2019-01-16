@@ -104,13 +104,13 @@
   }
 
   &__brand-logo {
-    width: 75px;
+    width: 95px;
   }
 
   &__application-name {
     flex: 1 1 auto;
     align-self: center;
-    font-size: rem(18px);
+    font-size: rem(21px);
     line-height: rem(27px);
     color: $white;
     margin-left: rem($standard-margin);
@@ -166,6 +166,10 @@
     font-size: rem(16px);
   }
 
+  &__edit-link:hover {
+    color: $white;
+    cursor: pointer;
+  }
   // Right side
   &-help-btn {
     margin: rem($standard-margin / 2);
@@ -175,7 +179,7 @@
     flex: 1 1 auto;
     color: $light-transparent75;
     margin: rem(0 $standard-margin / 2);
-    font-size: rem(14px);
+    font-size: 16px;
     @include add-text-ellipsis;
   }
 

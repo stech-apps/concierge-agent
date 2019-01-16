@@ -48,7 +48,7 @@
   </ng-container>
 </div>
 
-<div class="qm-queue-list-title" *ngIf="selectedQueue || selectedVisit">
+<div class="qm-queue-list-title" *ngIf="selectedQueue || selectedVisit" dir="{{ userDirection$ | async }}" >
   <span (click)="resetQueue()" class="qm-back-icon">
     <i *ngIf="userDirections === 'ltr'" class="icon-caret-left"></i>
     <i *ngIf="userDirections === 'rtl'" class="icon-caret-right"></i>

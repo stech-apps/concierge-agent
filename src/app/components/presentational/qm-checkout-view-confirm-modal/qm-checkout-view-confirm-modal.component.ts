@@ -90,10 +90,21 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     // Customer creation form
     const emailValidators = this.util.emailValidator();
 
-    this.confirmModalForm = new FormGroup({
-      phone: new FormControl('',Validators.pattern(this.regexvalue())),
-      email:new FormControl('',emailValidators)   
-    })
+    if(this.isSmsEnabled && this.isEmailEnabled){
+      this.confirmModalForm = new FormGroup({
+        phone: new FormControl('',Validators.pattern(this.regexvalue())),
+        email:new FormControl('',emailValidators)   
+      });
+    } else if(this.isSmsEnabled){
+      this.confirmModalForm = new FormGroup({
+        phone: new FormControl('',Validators.pattern(this.regexvalue()))
+      });
+    } else if(this.isEmailEnabled){
+      this.confirmModalForm = new FormGroup({
+        email:new FormControl('',emailValidators) 
+      });
+    }
+   
 
     const themeSubscription = this.servicePointSelectors.openServicePoint$.subscribe((openSp) => {
       this.util.setApplicationTheme(openSp);
@@ -188,9 +199,22 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   public accept() {
-    console.log({ 'email' : (this.confirmModalForm.value.email).trim() , 'phone': (this.confirmModalForm.value.phone).trim()});
+    let email:string;
+    let phone:string;
+    if(this.confirmModalForm.value.email){
+      email = (this.confirmModalForm.value.email).trim();
+    }else{
+      email = "";
+    }
+
+    if(this.confirmModalForm.value.phone){
+      phone = (this.confirmModalForm.value.phone).trim();
+    }else{
+      phone = "";
+    }
+    console.log({ 'email' :  email, 'phone':phone});
     
-      this.activeModal.close({ 'email' : (this.confirmModalForm.value.email).trim() , 'phone': (this.confirmModalForm.value.phone).trim()});    
+      this.activeModal.close({ 'email' : email, 'phone': phone});    
   }
 
   public dismiss() {
@@ -221,8 +245,12 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
 
   firstValue(){
     let a = '^(?!\\\+?';
-    let b = '94$)([0-9\\\+\\\s]+)';   
-    return  a + b; 
+    let c = this.countryCodeNumber
+    let b = '$)([0-9\\\+\\\s]+)';   
+    console.log(a+c+b);
+    
+    return  a + c +b;
+
   }
   restrictNumbers($event) {
     const pattern = /[0-9\+\s]/;

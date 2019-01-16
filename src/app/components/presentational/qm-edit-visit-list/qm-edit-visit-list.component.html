@@ -1,24 +1,5 @@
-<div *ngIf=" visits && !visits.length" class="inner-box" dir="{{userDirection$ | async}}">
-
-  <div class="no-visits-message" *ngIf="selectedQueueName">
-    <p>
-      <span>{{ 'no_visits_msg_line_one_left_text' | translate}}</span>&nbsp;<strong>{{selectedQueueName}}</strong>&nbsp;<span>
-        {{ 'no_visits_msg_line_one_right_text' | translate}}</span>
-    </p>
-    <p>
-      <span>{{ 'no_visits_msg_line_two_left_text' | translate}}</span>&nbsp;<span class="text-deco" (click)="goBackToQueueSection()">{{
-        'no_visits_msg_line_two_right_text' | translate}}</span>
-    </p>
-
-  </div>
-
-  
-</div>
-
-
-
-<div *ngIf="visits" dir="{{userDirection$ | async}}">
-  <div class="qm-visit-list" *ngIf="visits.length>0">
+<div dir="{{userDirection$ | async}}">
+  <div class="qm-visit-list" >
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
@@ -46,8 +27,19 @@
       <div class="info-icon-container"></div>
     </div>
     
+    <div id="qm-visit-container" *ngIf=" visits && !visits.length && visitLoaded" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
+      <div class="qm-visit-list-body-row-container" >
+        <div>
+        <div class="no-visit-message"> 
+          {{'empty'|translate}}
+          </div>
+          </div>
+          </div>
 
-    <div id="qm-visit-container" *ngIf="visits.length" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
+    </div>
+
+
+    <div id="qm-visit-container" *ngIf="visits && visits.length && visitLoaded" class="qm-visit-list__body" dir="{{userDirection$ | async}}">
 
       <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
         <div>

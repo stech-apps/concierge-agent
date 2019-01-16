@@ -25,6 +25,35 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-button-down .path1:before {
+  content: "\e974";
+  color: rgb(0, 0, 0);
+}
+.icon-button-down .path2:before {
+  content: "\e975";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-button-down .path3:before {
+  content: "\e976";
+  margin-left: -1em;
+  color: rgb(229, 0, 70);
+}
+.icon-button-up .path1:before {
+  content: "\e977";
+  color: rgb(0, 0, 0);
+}
+.icon-button-up .path2:before {
+  content: "\e978";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-button-up .path3:before {
+  content: "\e979";
+  margin-left: -1em;
+  color: rgb(229, 0, 70);
+}
+
 .icon-info-solid:before {
   content: "\e972";
 }
@@ -373,3 +402,4 @@
 .icon-walk-in:before {
   content: "\e95a";
 }
+

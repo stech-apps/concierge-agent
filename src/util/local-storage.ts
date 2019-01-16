@@ -142,11 +142,17 @@ export class LocalStorage {
 
     getUserStoreObjectValue( userId: number, key: STORAGE_SUB_KEY, objectProperty: any, defaultValue = null){
         let store = this.getStore();
+        console.log(store);
+        
         let storeSub = store[key];
         if(storeSub){
+                       
             let userStore = storeSub.filter(val => {
                 return val.user === userId;
             }); 
+
+            console.log('userStore');
+            console.log(userStore);
 
             if(userStore && userStore.length > 0) {
                 return userStore[0][objectProperty];

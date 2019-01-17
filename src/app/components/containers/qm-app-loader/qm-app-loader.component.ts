@@ -28,7 +28,15 @@ export class QmAppLoaderComponent implements OnInit, OnDestroy {
     this.branchSelectors.branches$;
     this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
       if (loadedState) {
-       this.handleRefreshEvent();
+        if (window.performance) {
+          if (performance.navigation.type == 1) {
+            this.handleRefreshEvent();
+          } else {
+            this.router.navigate([this.PROFILE_ROUTE]);
+          }
+        } else {
+          this.router.navigate([this.PROFILE_ROUTE]);
+        }
       }
     });
   }

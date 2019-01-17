@@ -337,9 +337,12 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
             this.appointmentSelectors.rescheduleProgress$.subscribe(
               progress => {
-                if (progress !== null && progress === true) {
+                if (progress === true) {
                   this.onFlowExit.next(true);
                   this.queueService.fetechQueueInfo();
+                }
+                else if(progress === false) {
+                  this.getTimeSlots();
                 }
               }
             );

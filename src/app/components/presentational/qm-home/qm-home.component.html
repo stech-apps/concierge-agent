@@ -5,7 +5,7 @@
     <div [ngClass]="{ 'quick-serve-collapesed': isCollapse}" *ngIf="isQuickServeEnable && !MessageBoxInfo" class="qm-quick-serve-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
       <qm-quick-serve></qm-quick-serve>
     </div>
-    <i class="action-btn slide-icon"  (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> <span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+    <i class="action-btn slide-icon" *ngIf="isShowQueueView||editVisitEnable" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> <span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
     <div class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary ></qm-queue-summary>

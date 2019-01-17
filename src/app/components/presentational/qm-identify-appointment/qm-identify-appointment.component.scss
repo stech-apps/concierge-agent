@@ -51,9 +51,7 @@ qm-identify-appointment{
     }
 
     .qm-pannel-container__identify--arrive & {
-      @include qm-xs {
-        width: auto;
-      }
+      width :100%;
     }
   }
 
@@ -718,41 +716,23 @@ qm-identify-appointment{
         }
 
         @include qm-sm {
-          &__header-id {
+          &__header-id, &__cell-id {
             width: 70px;
           }
+          
+          &__header-customer,  &__cell-customer  {
+            width: 268px;
+          }
 
-          &__header-customer {
+          &__header-service, &__cell-service {
             width: 280px;
           }
 
-          &__header-service {
-            width: 280px;
-          }
-          &__header-date {
+          &__header-date ,&__cell-date {
             width: 180px;
           }
 
-          &__header-time {
-            width: 124px;
-          }
-
-          &__cell-id {
-            width: 70px;
-          }
-
-          &__cell-customer {
-            width: 280px;
-          }
-
-          &__cell-service {
-            width: 280px;
-          }
-          &__cell-date {
-            width: 180px;
-          }
-
-          &__cell-time {
+          &__header-time, &__cell-time {
             width: 124px;
           }
         }

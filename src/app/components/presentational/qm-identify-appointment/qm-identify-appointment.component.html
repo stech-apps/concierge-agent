@@ -7,8 +7,6 @@
         <h1>{{ 'identify_appointment' | translate}}</h1>
       </div>
       <div class="qm-flow-sub-header__right">
-
-
       </div>
     </div>
     <!-- SELECTED APPOINTMENT INFO -->
@@ -33,7 +31,7 @@
     <br>
     <div class="qm-identify-appointment">
       <div class="qm-identify-appointment__button-container">
-        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') || (currentSearchState === 'refresh') }">
+        <div class="qm-identify-appointment__pannel-button" (click)="onSearchButtonClick('initial')" [ngClass]="{'qm-identify-appointment__pannel-button-selected': (currentSearchState === 'initial') || (currentSearchState === 'refresh') || (currentSearchState === 'duration')}">
           {{'tab.identifyappointment.appointmentlist' | translate }}</div>
         <div class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button" (click)="onSearchButtonClick('id')"
           [ngClass]="{'qm-identify-appointment__pannel-button-selected': currentSearchState === 'id' }"> <span> <i

@@ -31,7 +31,9 @@ $standard-home-margin : 1.5rem;
     }   
 }
 
-
+.icon-ie{
+    display: none;
+}
 .qm-summary-card{
     width:100%;
     height: 100%;
@@ -131,3 +133,17 @@ $standard-home-margin : 1.5rem;
     }
   }
   
+
+//   IE Specific fix
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+   .icon-general{
+       display: none;
+   }
+   .icon-ie{
+       display: block;
+       @at-root [dir="rtl"] & {
+        
+        margin-left: 62px;
+    }       
+   }
+}

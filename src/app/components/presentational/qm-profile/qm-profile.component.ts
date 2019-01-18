@@ -227,9 +227,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = v;
       });
     } else if (
-      this.selectedServicePoint.id === -1 &&
-      !this.isEnableUseDefault
-    ) {
+      this.selectedServicePoint.id === -1 ) {
       this.translateService.get("no_workstation_set").subscribe(v => {
         //this.toastService.infoToast(v);
         this.errorMessage = v;

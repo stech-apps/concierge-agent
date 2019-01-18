@@ -39,6 +39,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   editVisitEnable: boolean;
   isCollapse:boolean;
   slideUpSrc = "assets/images/button-up.svg";
+  userDirection: string;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -66,6 +67,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     this.subscriptions.add(servicePointsSubscription);
     this.util.setSelectedApplicationTheme();
 
+   
+  
     this.isCollapse = localStorage.getSettingForKey(STORAGE_SUB_KEY.COLLAPSE);
 
     const queueSubscription = this.queueSelectors.selectedQueue$.subscribe(q=>{
@@ -81,6 +84,12 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
+      this.userDirection = direction;
+    });
+    this.subscriptions.add(userDirectionSubscription);
+  
     const MsgBoxSubscription = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$.subscribe(
       info => {
 

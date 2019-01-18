@@ -6,10 +6,22 @@
       <qm-quick-serve></qm-quick-serve>
     </div>
     
-    <i class="action-btn slide-icon" *ngIf="isShowQueueView||editVisitEnable" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
+    <i class="action-btn slide-icon icon-general" *ngIf="(isShowQueueView||editVisitEnable)" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
       <span class="path1"></span>
       <span class="path2"></span>
       <span class="path3"></span>
+    </i>
+
+    <i class="action-btn slide-icon icon-ie" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'rtl'" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
+        <span class="path3"></span> 
+        <span class="path2"></span> 
+        <!-- <span class="path1"></span>       -->
+    </i>
+      
+    <i class="action-btn slide-icon icon-ie" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'ltr'" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
+        <span class="path1"></span>
+        <span class="path2"></span>
+        <span class="path3"></span>   
     </i>
     
     

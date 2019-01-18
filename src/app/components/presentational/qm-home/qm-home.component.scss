@@ -42,7 +42,7 @@ $standard-home-margin : 1.5rem;
 
 .slide-icon{
     font-size: 3em;
-   
+    z-index: 50;
     margin-top: -66px;
     margin-bottom: 20px;
     cursor: pointer;
@@ -94,6 +94,7 @@ $standard-home-margin : 1.5rem;
 @include qm-sm{
     .slide-icon{
         display: none;
+   
     }
     .qm-home-summary-area {
       width:608px;

@@ -152,7 +152,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         (this.selectedServicePoint.id==-1))  ){
           this.isEnableUseDefault =false;
         }
-    }, 100 );
+    }, 1000 );
 
    
   }

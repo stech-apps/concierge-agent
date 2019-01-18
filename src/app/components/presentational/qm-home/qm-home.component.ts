@@ -38,6 +38,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   selectedVisit : Visit;
   editVisitEnable: boolean;
   isCollapse:boolean;
+  slideUpSrc = "assets/images/button-up.svg";
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,

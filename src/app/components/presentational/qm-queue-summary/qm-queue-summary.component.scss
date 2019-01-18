@@ -11,12 +11,14 @@
   &__label-text-captial{
     text-transform: uppercase;
     cursor: pointer;
+    margin:0 8px;
   }
   &__label-text-2{
     font-size: 1.2em;
   }
   span{
     vertical-align: middle;
+   
   }
 }
 

@@ -38,9 +38,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   searchText: string;
   visits: Visit[] = [];
   sortByVisitIdAsc = true;
-  sortByCustomerAsc = false;
-  sortByServiceAsc = false;
-  sortByAppTimeAsc = false;
+  sortByCustomerAsc = true;
+  sortByServiceAsc = true;
+  sortByAppTimeAsc = true;
   sortingIndicator: string = SortBy.VISITID;
   selectedVisitId: number;
   visitClicked: boolean = false;

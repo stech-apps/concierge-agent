@@ -35,7 +35,7 @@ qm-identify-appointment{
     overflow-y: auto;
     overflow-x: hidden;
     margin-right: -3.5rem;
-    min-width: 50%;
+    min-width: 100%;
     
     @at-root [dir="rtl"] & {
       margin-left: -3.5rem;

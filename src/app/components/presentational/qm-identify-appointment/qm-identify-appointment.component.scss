@@ -26,6 +26,25 @@ qm-identify-appointment{
       left: auto;
     }
   }
+
+  ::ng-deep  .qm-appointment-info {
+
+    @include qm-xs {
+      width: 566px;
+    }
+
+    @include qm-sm {
+      width: 577px;
+    }
+
+    @include qm-md {
+      width: 577px;
+    }
+
+    @include qm-lg {
+      width: 577px;
+    }
+  }
 }
 
 .qm-identify-appointment {

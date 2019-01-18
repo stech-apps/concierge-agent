@@ -18,8 +18,8 @@ $xs-timebox-width: 476px;
 
 .qm-reschedule-root-container {
   ::ng-deep .qm-appointment-info {
-    top: 10rem;
-    left: 15%;
+    top: 60px;
+    left: 0;
 
     @include qm-sm {
       top: 60px;

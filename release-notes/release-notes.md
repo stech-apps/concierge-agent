@@ -112,6 +112,41 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 
 
+<h2>Update 3</h2>
+
+**Date:2019-01-19**
+ 
+**Build number:3**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **162572091** | **Expand Queue** Resizing |
+| **163023320** | **Start Page Resizing** Resizing |
+| **162572385** | **collapse quickserve section in xs screens** Layout adjuestment |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **161503314** | **GO button in the device keyboard** Fixed the bug |
+| **163020495** | **Add customer fish > Create customer section > Country code doesn't persist** Fixed the bug |
+| **163046442** | **Quick Serve > no message when try to serve to a already filled queue.** Fixed the bug |
+| **163014719** | **User Profile Page > settings shall reset if a new user login.** Fixed the bug |
+| **163014720** | **User profile > when 'Use as default' is checked, No validation for service point at the second login** Fixed the bug |
+
+<h3>Known issues</h3>
+| **Id/Jira** | **Description** |
+| --- | --- |
+| **xxx** | **Bug header** Bug text |
+
+<h3>Upgrade instructions</h3> 
+--
+
+
+
+
 <h3>Copyright notice</h3>
 
 The information in this document is subject to change without prior notice and does not represent a commitment on the part of Q-MATIC AB. All efforts have been made to ensure the accuracy of this manual, but Q-MATIC AB cannot assume any responsibility for any errors and their consequences.<br>

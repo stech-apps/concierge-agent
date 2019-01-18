@@ -545,7 +545,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.translateService
       .get("appointment_not_found_qr")
       .subscribe((noappointments: string) => {
-        this.toastService.infoToast(noappointments);
+        this.toastService.errorToast(noappointments);
       })
       .unsubscribe();
       this.currentSearchState = this.previousSearchState;

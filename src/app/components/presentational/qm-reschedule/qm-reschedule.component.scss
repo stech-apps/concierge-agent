@@ -20,10 +20,20 @@ $xs-timebox-width: 476px;
   ::ng-deep .qm-appointment-info {
     top: 10rem;
     left: 15%;
+
+    @include qm-sm {
+      top: 60px;
+      left: 0;
+    }
+
+    @include qm-md {
+    }
+    @include qm-lg {
+    }
   }
 
   &[dir="rtl"] ::ng-deep .qm-appointment-info {
-    right: 15%;
+    right: 0;
     left: auto;
   }
 
@@ -147,6 +157,7 @@ $xs-timebox-width: 476px;
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
+    position: relative;
 
     &-cancel-button {
       width: 280px;

@@ -41,6 +41,14 @@
         (click)="onCancelAppointment()">
         {{ "label.cancel.appointment" | translate }}
       </div>
+
+      <qm-appointment-info
+    [useCalendarEndpoint]="true"
+    (onCardClick)="onAppointmentSelect($event)"
+    [useWideCard]="false"
+    (onClose)="expandAppointment()"
+    [appointmentInfo]="editAppointment"
+    *ngIf="isShowExpandedAppointment"></qm-appointment-info>
     </div>
 
     <h2 class="qm-reschedule__line-header"><span>{{'label.reschedule.appointment' | translate}}</span></h2>
@@ -81,15 +89,6 @@
       </div>
     </div>
   </div>
-
-  <qm-appointment-info
-    [useCalendarEndpoint]="true"
-    (onCardClick)="onAppointmentSelect($event)"
-    [useWideCard]="false"
-    (onClose)="expandAppointment()"
-    [appointmentInfo]="editAppointment"
-    *ngIf="isShowExpandedAppointment"
-  ></qm-appointment-info>
 </div>
 
 <div

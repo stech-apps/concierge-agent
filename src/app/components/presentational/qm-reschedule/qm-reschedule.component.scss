@@ -372,6 +372,8 @@ $xs-timebox-width: 476px;
   @include qm-sm  {
     margin: auto;
     width: $reschedule-container-width-sm;
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
 
   @include qm-md {
@@ -382,6 +384,8 @@ $xs-timebox-width: 476px;
     background-color: $background-default;
     height: auto;
     min-height: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
 
   @include qm-lg {
@@ -391,11 +395,13 @@ $xs-timebox-width: 476px;
     padding-left: 9.38rem;
     background-color: $background-default;
     height: auto;
-    min-height: 100%;  
+    min-height: 100%; 
+    padding-top: 18px;
+    padding-bottom: 18px; 
   }
 
   @include qm-xs {
     width: 100%;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 6rem 1.5rem;
   }
 }

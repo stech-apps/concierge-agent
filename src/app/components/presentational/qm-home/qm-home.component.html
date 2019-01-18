@@ -28,6 +28,9 @@
     <div class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary ></qm-queue-summary>
+      <br>
+      <hr  [ngClass]="{ 'hr-queue': (!selelctedQueue && !selectedVisit),'hr-visit': (selelctedQueue || selectedVisit)}">
+
       <qm-queue-list isCollapesed="{{isCollapse}}" *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>
       <qm-edit-visit-list isCollapesed="{{isCollapse}}" *ngIf="selelctedQueue || selectedVisit"></qm-edit-visit-list>
       </div>

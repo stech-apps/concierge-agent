@@ -236,7 +236,7 @@ input {
 
 
 hr{
-  width: 90%;
+  // width: 90%;
   color: $dark-transparent42;
   border: 0;
   border-top: 1px solid $dark-transparent12;
@@ -309,6 +309,10 @@ hr{
     height: 44px;
     padding: 0em 1em;
 }
+hr{
+  width: calc(100vw - 92px);
+
+}
 }
 
 
@@ -334,6 +338,10 @@ hr{
       height: 44px;
       padding: 0em 1em;
   }
+  hr{
+    width: calc(608px - 71px);
+    margin-left: 32px;
+  }
 } 
 
 
@@ -358,6 +366,10 @@ hr{
     .qm-search-button{
       height: 48px;
       padding: 0em 1em;
+  }
+  hr{
+    width: calc(852px - 92px);
+    margin-left: 39px;
   }
  
 } 
@@ -386,6 +398,10 @@ hr{
   .qm-search-button{
       height: 48px;
       padding: 0em 1em;
+  }
+  hr{
+    width: calc(1136px - 92px);
+    margin-left: 39px;
   }
 }
 

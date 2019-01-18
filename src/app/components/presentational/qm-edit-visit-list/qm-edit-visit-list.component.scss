@@ -57,6 +57,7 @@
         display: flex;
         justify-content: left;
         cursor: pointer;
+        font-weight: 500;
         min-width: 0;
         &-label {
             @include add-text-ellipsis;
@@ -165,6 +166,7 @@
             flex:10;
             display: flex;
             align-items: center;
+            font-weight: 500;
         }
         .qm-icon{
             flex: 1;
@@ -315,6 +317,7 @@
             flex:10;
             display: flex;
             align-items: center;
+            font-weight: 500
         }
         .qm-icon{
             flex: 1;
@@ -472,6 +475,7 @@
 
 .qm-first-element-header{
     margin-left: 15px;
+    font-weight: 500;
     @at-root [dir="rtl"] & {
         margin-right: 15px;
     }

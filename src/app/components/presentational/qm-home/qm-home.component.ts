@@ -85,6 +85,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
 
         if(info && info.heading) {
             this.showDoneModal(info);
+            this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
         }
         /* else {
           this.MessageBoxInfo = info; ********** we no longer use message box *************

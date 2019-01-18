@@ -21,14 +21,21 @@ $xs-timebox-width: 476px;
     top: 60px;
     left: 0;
 
+    @include qm-xs {
+      top: 48px;
+    }
+
     @include qm-sm {
       top: 60px;
       left: 0;
+      width: 582px;
     }
 
     @include qm-md {
+      width: 550px;
     }
     @include qm-lg {
+      width: 550px;
     }
   }
 

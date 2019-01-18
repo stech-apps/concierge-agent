@@ -125,6 +125,11 @@ This document describes the new features, bug corrections, known issues and reco
 | **162572091** | **Expand Queue** Resizing |
 | **163023320** | **Start Page Resizing** Resizing |
 | **162572385** | **collapse quickserve section in xs screens** Layout adjuestment |
+| **160084603** | **new icon on HOME page for Concierge** New concierge icon added to the Orchestra home page |
+| **161641618** | **WCAG Manual Test** Manually test WCAG and document changes |
+| **163055833** | **Resizing date & time/reschedule** Responsive and other improvements in date and time reschedule screens |
+| **163052379** | **Layout adjustment appointment list** Layout and responsive change adjustments in appointment list pages  |
+
 
 <h3>Bug fixes</h3>
 
@@ -135,6 +140,17 @@ This document describes the new features, bug corrections, known issues and reco
 | **163046442** | **Quick Serve > no message when try to serve to a already filled queue.** Fixed the bug |
 | **163014719** | **User Profile Page > settings shall reset if a new user login.** Fixed the bug |
 | **163014720** | **User profile > when 'Use as default' is checked, No validation for service point at the second login** Fixed the bug |
+| **161109030** | **Desktop Robustness : multiple messages when network fails.** |
+| **163084328** | **You are already logged in message if user press HOME and then go back to Concierge** |
+| **163116572** | **Edit appointment - Incorrect time appear in confirm msg when reschedule an appointment place for different branch than logged in.** |
+| **162009082** | **Edit/Arrive appointments > Tab selection shall NOT be cleared after press "Refresh"** |
+| **161503318** | **Create Appointment > Date & Time > calendar and timeslot sections are not fully visible** |
+| **163014722** | **Hover over issue , timeslot list** |
+| **161710197** | **Create Appointment > Date & time > 'Day' and 'Month' values are not translated** |
+| **161176134** | **Edit appointment Flow > wrong time showing in the list if user go back and select passed appointment.** |
+| **163014721** | **Edit appointment - Duplicate date appear in calendar when try to reschedule an appointment place in a branch which is in different time zone** |
+| **163116573** | **Edit Appointment - Try to Reschedule after selecting a time which is in the past - No restcall to fetch the timeslots.** |
+| **162631162** | **Time reserved but confirm done after reservation timed out and time is in the passed** |
 
 <h3>Known issues</h3>
 | **Id/Jira** | **Description** |

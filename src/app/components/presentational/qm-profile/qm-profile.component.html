@@ -50,7 +50,7 @@
             class="qm-checkbox qm-tab"
             type="checkbox"
             [(ngModel)]="isEnableUseDefault"
-          />
+            [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1"/>
           <div class="qm-checkbox__selector">
             <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
             <div class="qm-checkbox__selector-icon-text">

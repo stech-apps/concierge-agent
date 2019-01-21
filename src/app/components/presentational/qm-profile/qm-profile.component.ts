@@ -267,6 +267,11 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   checkPreviousSelection(key: STORAGE_SUB_KEY) {
     var previousSelection = this.localStorage.getSettings();
+    console.log(previousSelection);
+    if(previousSelection.user_id!=this.user.id){
+      this.setDefaultServicePoint();
+    }
+    
     if (previousSelection.length === 0) {
       return;
     }

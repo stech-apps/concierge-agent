@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const gulpsync = require('gulp-sync')(gulp);
 const zip = require('gulp-zip');
-var fs = require('file-system');
+var fs = require('fs');
 const del = require('del');
 var sftp = require('gulp-sftp');
 var ncmd = require('node-cmd');
@@ -142,11 +142,11 @@ function getVersionInfo() {
   return null;
 }
 
-function writeFile(path, contents, cb) {
+function writeFile(path, contents, cb = ()=>{}) {
   mkdirp(getDirName(path), function (err) {
     if (err) return cb(err);
 
-    fs.writeFile(path, contents, cb);
+    fs.writeFile(path, contents, cb );
   });
 }
 

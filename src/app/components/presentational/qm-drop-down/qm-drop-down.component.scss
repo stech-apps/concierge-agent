@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+.qm-dropdown[dir='rtl'] .qm-dd-search  {
+    .qm-search__btn {
+        right: auto;
+    }
+}
+
 .qm-dropdown {
     width: 100%;
     margin: 0.5rem 0;
@@ -19,7 +25,7 @@
         }       
     }
 
-    .qm-dd-search {
+   .qm-dd-search {
         padding: 1rem;
         ::ng-deep .qm-search__btn {
             right: 1.5rem;

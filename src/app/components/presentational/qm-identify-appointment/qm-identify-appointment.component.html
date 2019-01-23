@@ -201,6 +201,8 @@
           <button (click)="onEnterPressed()" [disabled]="(searchText || '').trim().length === 0" class="qm-btn qm-btn--primary">
             {{'label.identify.appointment.fetch' | translate}}
           </button>
+
+          <div style="color: black;"> {{ tempText}}</div>
         </div>
 
         <div class="qm-identify-appointment__search-area-warning" *ngIf="!showLoading() && !isShowAppointmentNotFound || (searchText || '').trim().length === 0">

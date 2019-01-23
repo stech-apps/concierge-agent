@@ -1462,23 +1462,32 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   restrictNumbers($event) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode($event.keyCode);
     if (this.isShowAppointmentNotFound) {
       this.isShowAppointmentNotFound = false;
     }
 
     if ($event.keyCode === 13 && this.searchText) {
-      this.searchText = $event.target.value.replace(/[^0-9]/g, "");
+      this.searchText = this.removeNonNumeric(this.searchText);
       this.onEnterPressed();
     }
 
-    if (!pattern.test(inputChar)) {
-      $event.target.value = $event.target.value.replace(/[^0-9]/g, "");
-      this.searchText = $event.target.value;
+    this.searchText = this.removeNonNumeric($event.target.value);
+    this.clearInputDirective.update(this.searchText);
+  }
+
+  removeNonNumeric(input: String = '') {
+    if(!input) {
+      return '';
     }
 
-    this.clearInputDirective.update(this.searchText);
+    let targetString = '';
+    for (var i = 0; i < input.length; i++) {
+        if( "0123456789".indexOf(input.charAt(i)) !== -1 ) {
+          targetString += input.charAt(i);
+        }
+    }
+
+    return targetString;
   }
 
   sortAppointments(sortColumn: string) {

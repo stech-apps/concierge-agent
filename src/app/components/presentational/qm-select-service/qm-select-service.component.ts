@@ -95,6 +95,7 @@ export class QmSelectServiceComponent implements OnInit {
     if(this.flowType === FLOW_TYPE.CREATE_VISIT || this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
       this.multiServiceEnabled = true;
       const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
+        this.resetShowInfoFlags(services);
         this.serviceList = <Array<IServiceViewModel>>services;
         this.filteredServiceList = <Array<IServiceViewModel>>services;
         this.checkMostFrequentService();
@@ -199,6 +200,15 @@ export class QmSelectServiceComponent implements OnInit {
     this.inputChanged
     .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
     .subscribe(text => this.filterServices(text));
+  }
+
+  resetShowInfoFlags(services: Array<any>) {
+    if(services && services.length > 0) {
+      for (let index = 0; index < services.length; index++) {
+        services[index].showInfo = false;
+        services[index].showInfoInMostFrequent = false;
+      }
+    }
   }
 
   checkMultiServiceSettings() {

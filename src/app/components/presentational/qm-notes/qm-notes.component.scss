@@ -22,7 +22,7 @@
     align-self: flex-end;
     padding-top: rem($standard-padding / 2);
     bottom: 3em;
-    height: calc(100vh - 524px);
+   
     overflow: hidden;
     display: table-cell;
     vertical-align: bottom;
@@ -119,4 +119,24 @@
       color: $dark-transparent82;
     }
   }
+}
+@include qm-lg { 
+  .qm-notes{
+    height: calc(100vh - 739px);
+  }
+  
+}
+@include qm-md { 
+  .qm-notes{
+    height: calc(100vh - 611px);
+    
+  }
+  
+}
+@include qm-sm { 
+  .qm-notes{
+    height: calc(100vh - 611px);
+    
+  }
+  
 }

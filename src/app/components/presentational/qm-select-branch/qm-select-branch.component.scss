@@ -47,3 +47,71 @@
         position: relative;
     }
 }
+
+.quick-serve-tooltip{
+    width: 350px;
+      z-index: 30;
+      position: absolute;
+      margin-left: 12px;
+      // margin-top: -87px;
+      margin-bottom: 10px;
+  
+  
+      @at-root [dir="rtl"] & {
+          margin-right: 12px;
+          text-align: right;
+      }
+  
+      &__rec{
+        background: $dark-transparent82;
+        color: $white;
+        font-size: 16px;
+        padding: 10px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: -22px;
+  
+      }
+  }
+  
+  .tool-tip-back-drop{
+    width: 100vw;
+    height: 100vh;  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    // background: rgba(0, 0, 0, 0.5);
+  } 
+  
+  
+  .triangle {
+    width: 43px;
+    height: 77px;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    top:-22px;
+   
+    @at-root [dir='ltr'] & {
+      left: 11%;
+    }
+    @at-root [dir='rtl'] & {
+      right: 11%;
+  }
+  }
+  .triangle:after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 50px;
+    background: $dark-transparent82;
+    transform: rotate(45deg); /* Prefixes... */
+    top: 75px;
+    
+    // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+  }
+  

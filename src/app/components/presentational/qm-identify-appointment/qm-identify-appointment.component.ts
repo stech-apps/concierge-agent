@@ -465,6 +465,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           if(this.previousSearchState){
             this.currentSearchState = this.previousSearchState;
             this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;  
+            if(this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState === this.SEARCH_STATES.DURATION) {
+              this.onSearchButtonClick(this.currentSearchState);
+            }
           }
           
           if (!this.nativeApi.isNativeBrowser()) {
@@ -1018,7 +1021,17 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.showCustomerResults = false;
     this.searchedCustomers = [];
     this.appointmentDeselected.emit();
-    this.appointments = this.defaultAppointmentCollection;
+    if(this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState === this.SEARCH_STATES.DURATION) {
+
+      this.servicePointSelectors.uttParameters$.subscribe((params)=> {
+        this.readAppointmentFetchTimePeriodFromUtt(params);
+      });
+      this.searchAppointments();
+    }
+    else {
+       this.appointments = this.defaultAppointmentCollection;
+    }
+
     this.selectedCustomer = null;
     //this.arriveAppointmentDispatchers.deselectAppointment();
   }

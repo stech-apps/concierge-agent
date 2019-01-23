@@ -111,7 +111,7 @@
             <div class="qm-list__item--label" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfo">
-                {{service.externalDescription || ('label.noinformation.avaialble' | translate) }}
+                {{service.internalDescription || ('label.noinformation.avaialble' | translate) }}
               </div>
           </div>
   

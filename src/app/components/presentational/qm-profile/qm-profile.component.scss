@@ -113,7 +113,9 @@
 .qm-profile-button-container {
   display: flex;
   width: 100%;
-  justify-content: flex-end;
+  @at-root [dir='ltr'] & {
+    justify-content: flex-end;
+  }
 }
 
 .qm-profile-ok , .qm-profile-cancel  {

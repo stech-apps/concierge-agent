@@ -88,8 +88,14 @@ export class SPService implements OnDestroy {
             if(error.errorCode ==='8042'){
               this.translateService.get('queue_full').subscribe(v => {
                  this.toastService.errorToast(v); 
-              })
+              });
             }
+            else if(error.errorCode == '0') {
+              this.translateService.get('generic.error.notification').subscribe(v => {
+                this.toastService.errorToast(v); 
+             });
+            }
+            
             this.errorHandler.handleError()
             return  empty();
           

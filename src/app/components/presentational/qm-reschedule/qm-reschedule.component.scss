@@ -352,6 +352,16 @@ $xs-timebox-width: 476px;
   }
 }
 
+.qm-flow-done-bar {
+  &__done-button {
+    width: auto;
+    letter-spacing: 0.04px;
+    &:hover {
+      letter-spacing: 0;
+    }
+  }
+}
+
 .qm-delete-button {
   display: flex;
   width: 100%;

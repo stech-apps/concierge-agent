@@ -1,6 +1,7 @@
 @import "../../../../styles/base/_component-manifest.scss";
 .qm-checkout-view {
   width: 100%;
+  // height: 100vh;
   display: flex;
   justify-content: center;
   color: #000000;
@@ -132,7 +133,7 @@
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
     &__summary-create-visit {
-      height: 0px;
+      height: 100%;
     }
   }
 

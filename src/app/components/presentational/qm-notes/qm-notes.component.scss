@@ -140,3 +140,9 @@
   }
   
 }
+
+.qm-notes-edit-visit-flow{
+  @include qm-lg { 
+    height: calc(100vh - 585px);
+  }
+}

@@ -6,6 +6,9 @@
     align-items: center;
     margin-top: 1.5rem;
 }
+.qm-branch-search-area {
+    display: flex;
+  }
 
 .qm-select-branch {
     .qm-flow-sub-header__right {
@@ -21,6 +24,8 @@
     .qm-checkbox-label {
         padding-right: 1rem;
     }
+
+  
 
     .qm-checkbox__selector-icon-text {
         margin-left: 0.5rem;
@@ -55,9 +60,13 @@
       margin-left: 12px;
       // margin-top: -87px;
       margin-bottom: 10px;
-  
-  
+
+      @at-root [dir="ltr"] & {
+        left: -82px;
+    }
+    
       @at-root [dir="rtl"] & {
+        right: -82px;
           margin-right: 12px;
           text-align: right;
       }
@@ -97,10 +106,10 @@
     top:-22px;
    
     @at-root [dir='ltr'] & {
-      left: 11%;
+      left: 14%;
     }
     @at-root [dir='rtl'] & {
-      right: 11%;
+      right: 13%;
   }
   }
   .triangle:after {
@@ -115,3 +124,18 @@
     // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
   }
   
+
+  
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  
+    .quick-serve-tooltip{
+//       @at-root [dir="ltr"] & {
+//       margin-left:-234px;
+//       }
+      @at-root [dir="rtl"] & {
+    //    right: -18%;
+      }
+    }
+  
+    
+  }

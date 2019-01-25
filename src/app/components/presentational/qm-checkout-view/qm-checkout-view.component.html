@@ -100,7 +100,8 @@
           <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
         </div>
       </div>
-      <qm-notes *ngIf="isNoteEnabled" (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
+      <qm-notes [flow]="flowType" [isCustomerSelected]="(selectedCustomer && selectedCustomer.firstName)? ture : false" *ngIf="isNoteEnabled" (onNotesChanged)="onNotesChanged($event)" [notes]="noteTextStr"></qm-notes>
+      
     </div>
     </div>
 

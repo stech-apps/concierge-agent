@@ -24,12 +24,19 @@ export class QmNotesComponent implements OnInit, OnDestroy {
   private notesInputOpened = false;
   private buttonPlaceholderText: string;
   notesEnabled: boolean;
-
+  
+  
   @Output()
   onNotesChanged: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
-  notes: string = ''; 
+  notes: string = '';
+
+  @Input()
+  flow: string = '';
+
+  @Input()
+  isCustomerSelected: boolean; 
 
   constructor(
     private userSelectors: UserSelectors,
@@ -38,12 +45,16 @@ export class QmNotesComponent implements OnInit, OnDestroy {
     private modalService: QmModalService,
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
+
   }
 
   ngOnInit() {
     const notesInputSubscription = this.notesInput$.subscribe(
       (note: string) => this.setNote(note)
     );
+
+    console.log(this.isCustomerSelected);
+    
 
     const notesEnabledSettingSubscription = this.servicePointSelectors.uttParameters$.subscribe(uttParameters => {
       if (uttParameters) {

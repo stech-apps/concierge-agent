@@ -378,6 +378,8 @@ export class AppModule {
       this.nativeApiService.getPlatform()
     );
 
+    this.nativeApiService.blockNativeAjaxRequests();
+
     this.servicePointSelectors.openServicePoint$.subscribe(openSp => {
       this.util.setApplicationTheme(openSp);
     });

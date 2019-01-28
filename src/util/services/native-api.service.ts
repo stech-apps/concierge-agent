@@ -1,20 +1,19 @@
-import { IPlatform } from './../../models/IPlatform';
-import { Injectable, ApplicationRef } from '@angular/core';
-import { LOGOUT_URL } from '../url-helper';
-import { Util } from '../util';
-import { NativeApiSupportService } from './native-api-support.service';
-import { NativeApiDispatchers, ServicePointSelectors } from '../../store';
+import { IPlatform } from "./../../models/IPlatform";
+import { Injectable, ApplicationRef } from "@angular/core";
+import { LOGOUT_URL } from "../url-helper";
+import { Util } from "../util";
+import { NativeApiSupportService } from "./native-api-support.service";
+import { NativeApiDispatchers, ServicePointSelectors } from "../../store";
+import * as $ from 'jquery';
 declare var Android: any;
 declare var webkit: any;
 
 var nativeApiService: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
-
 export class NativeApiService {
-
   constructor(
     private util: Util,
     private nativeApiSupport: NativeApiSupportService,
@@ -34,15 +33,21 @@ export class NativeApiService {
       try {
         webkit.messageHandlers.removeNativeLoader.postMessage(true);
       } catch (err) {
-        console.log('The native context does not exist yet', { class: "nativeApi", func: "removeNativeLoader", exception: err });
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "removeNativeLoader",
+          exception: err
+        });
       }
-    }
-    else if (navigator.userAgent.match(/Android/i)) {
+    } else if (navigator.userAgent.match(/Android/i)) {
       try {
         Android.showWebLoader(state);
-      }
-      catch (err) {
-        console.log('The native context does not exist yet', { class: "nativeApi", func: "removeNativeLoader", exception: err });
+      } catch (err) {
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "removeNativeLoader",
+          exception: err
+        });
       }
     }
   }
@@ -50,8 +55,7 @@ export class NativeApiService {
   isNativeBrowser(): boolean {
     if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -73,7 +77,7 @@ export class NativeApiService {
       try {
         webkit.messageHandlers.showPrivacy.postMessage(privacyUrl);
       } catch (err) {
-        console.log('The native context does not exist yet', {
+        console.log("The native context does not exist yet", {
           class: "nativeApi",
           func: "showPrivacy",
           exception: err
@@ -82,19 +86,16 @@ export class NativeApiService {
     } else if (navigator.userAgent.match(/Android/i)) {
       try {
         Android.showPrivacy(privacyUrl);
-      }
-      catch (err) {
-        console.log('The native context does not exist yet', {
+      } catch (err) {
+        console.log("The native context does not exist yet", {
           class: "nativeApi",
           func: "showPrivacy",
           exception: err
         });
       }
-    }
-    else {
+    } else {
       window.open(privacyUrl);
     }
-
   }
 
   logOut() {
@@ -103,46 +104,47 @@ export class NativeApiService {
       try {
         webkit.messageHandlers.userLogout.postMessage(true);
       } catch (err) {
-        console.log("The native context does not exist yet", { class: "nativeApi", func: "logout", exception: err });
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "logout",
+          exception: err
+        });
       }
-    }
-    else if (navigator.userAgent.match(/Android/i)) {
+    } else if (navigator.userAgent.match(/Android/i)) {
       var nativeAndroidVersion = "1.0.0.1";
       var nativeAppVersion = "0.0.0.0";
       try {
         nativeAppVersion = Android.getNativeAppVersion();
-      }
-      catch (err) {
+      } catch (err) {
         nativeAppVersion = "0.0.0.0";
       }
 
       var status = 0;
       try {
-        status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
-      }
-      catch (err) {
+        status = this.util.compareVersions(
+          nativeAndroidVersion,
+          nativeAppVersion
+        );
+      } catch (err) {
         status = 0;
       }
 
       if (status <= 0) {
         try {
           Android.logout();
-        }
-        catch (err) {
+        } catch (err) {
           window.location.href = LOGOUT_URL;
-          console.log('The native context does not exist yet', {
+          console.log("The native context does not exist yet", {
             class: "nativeApi",
             func: "showErrorMessage",
             exception: err
           });
         }
-      }
-      else {
+      } else {
         window.location.href = LOGOUT_URL;
       }
     }
   }
-
 
   setLogMessage(msg) {
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
@@ -151,7 +153,11 @@ export class NativeApiService {
       try {
         webkit.messageHandlers.setLogMessage.postMessage(fullMsg);
       } catch (err) {
-        console.log("The native context does not exist yet", { class: "nativeApi", func: "setLogMessage", exception: err });
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "setLogMessage",
+          exception: err
+        });
       }
     }
   }
@@ -162,23 +168,49 @@ export class NativeApiService {
       try {
         webkit.messageHandlers.qrCodeReader.postMessage(true);
       } catch (err) {
-        console.log("The native context does not exist yet", { class: "nativeApi", func: "openQRScanner", exception: err });
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "openQRScanner",
+          exception: err
+        });
       }
-    }
-    else if (navigator.userAgent.match(/Android/i)) {
+    } else if (navigator.userAgent.match(/Android/i)) {
       try {
         Android.openQRScanner();
-      }
-      catch (err) {
-        console.log("The native context does not exist yet", { class: "nativeApi", func: "opernQRScanner", exception: err });
+      } catch (err) {
+        console.log("The native context does not exist yet", {
+          class: "nativeApi",
+          func: "opernQRScanner",
+          exception: err
+        });
       }
     }
   }
 
+  blockNativeAjaxRequests() {
+    const xhr = window['XMLHttpRequest'] || window['ActiveXObject'];
+    var nativeSend = xhr.prototype.send;
+    window['ajaxEnabled'] = true;
+
+    $.ajaxSetup({
+      beforeSend: function () {
+          return window['ajaxEnabled'];
+      }
+    });
+
+
+    xhr.prototype.send = function() {
+      if (window['ajaxEnabled']) {
+        nativeSend.apply(this, arguments);
+      }
+      console.log
+    };
+  }
+
   startPing(period, times) {
-    let pingExpireTime = undefined;  //utt.getEntity().pingExpire; //TODO :
-    this.servicePointSelectors
-      .uttParameters$.subscribe((uttParams) => {
+    let pingExpireTime = undefined; //utt.getEntity().pingExpire; //TODO :
+    this.servicePointSelectors.uttParameters$
+      .subscribe(uttParams => {
         if (uttParams) {
           pingExpireTime = uttParams.pingExpire;
         }
@@ -191,11 +223,19 @@ export class NativeApiService {
           //support iOS 8 and above version
           try {
             //disable all communications
-            window['ajaxEnabled'] = false;
-            var message = { "period": period, "times": times, "pingExpire": pingExpireTime };
+            window["ajaxEnabled"] = false;
+            var message = {
+              period: period,
+              times: times,
+              pingExpire: pingExpireTime
+            };
             webkit.messageHandlers.startPing.postMessage(message);
           } catch (err) {
-            console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
+            console.log("The native context does not exist yet", {
+              class: "nativeApi",
+              func: "startPing",
+              exception: err
+            });
           }
         } else {
           var nativeAndroidVersion = "1.0.0.2";
@@ -203,54 +243,61 @@ export class NativeApiService {
           var nativeAppVersion = 0;
           try {
             nativeAppVersion = Android.getNativeAppVersion();
-
-          }
-          catch (err) {
-          }
+          } catch (err) {}
           if (navigator.userAgent.match(/Android/i)) {
-            status = this.util.compareVersions(nativeAndroidVersion, nativeAppVersion);
+            status = this.util.compareVersions(
+              nativeAndroidVersion,
+              nativeAppVersion
+            );
           }
 
           if (status < 0) {
             try {
               //disable all communications
-              window['ajaxEnabled'] = false;
+              window["ajaxEnabled"] = false;
               /**
                * To work consistently over backward compatibility and fine tuning on paramters
                * function will accept object for ping
                * @param pingObj
                */
-              var pingObj = { "pingDelay": period, "pingCounter": times, "pingDuration": pingExpireTime };
+              var pingObj = {
+                pingDelay: period,
+                pingCounter: times,
+                pingDuration: pingExpireTime
+              };
               Android.startPing(JSON.stringify(pingObj));
+            } catch (err) {
+              console.log("The native context does not exist yet", {
+                class: "nativeApi",
+                func: "startPing",
+                exception: err
+              });
             }
-            catch (err) {
-              console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
-            }
-          }
-          else {
+          } else {
             try {
               //disable all communications
-              window['ajaxEnabled'] = false;
+              window["ajaxEnabled"] = false;
               Android.startPing(period, times);
-            }
-            catch (err) {
-              console.log('The native context does not exist yet', { class: "nativeApi", func: "startPing", exception: err });
+            } catch (err) {
+              console.log("The native context does not exist yet", {
+                class: "nativeApi",
+                func: "startPing",
+                exception: err
+              });
             }
           }
         }
-      }).unsubscribe();
+      })
+      .unsubscribe();
   }
 }
 
-window['searchQRCode'] = (qrCode) => {
+window["searchQRCode"] = qrCode => {
   nativeApiService.nativeApiSupport.updateQRCode(qrCode);
-}
+};
 
-window['closeQRReadings'] = () => {
+window["closeQRReadings"] = () => {
   nativeApiService.nativeApiSupport.closeQRCodeScanner();
-}
+};
 
-window['updateAppFromBackgroundFromNative'] = () => {
-
-}
-
+window["updateAppFromBackgroundFromNative"] = () => {};

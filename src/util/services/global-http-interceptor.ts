@@ -27,9 +27,9 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     private timeToWaitBeforeStartPing = 3000;
     private localTimeoutBeforeStartPing;
-    private native_ping_period = 1000;
+    private native_ping_period = 5000;
     private http_timeout = 5000;
-    private native_max_ping_count_for_message = 2;
+    private native_max_ping_count_for_message = 1;
     private lastRequestAction = 'NONE';
     // Retry all get requests this many times before starting ping.
     private numberOfTries = 4;
@@ -386,6 +386,7 @@ window["removeWebModels"] = () => {
 
 window["onPingSuccess"] = () => {
     const interceptor = window["qmGlobalHttpInterceptor"];
+    window['ajaxEnabled'] = true;
     interceptor.notifyNativePingStatus(false);
     interceptor.retryFailedGetRequests();
 };

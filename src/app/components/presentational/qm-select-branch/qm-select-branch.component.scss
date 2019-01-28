@@ -126,16 +126,3 @@
   
 
   
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  
-    .quick-serve-tooltip{
-//       @at-root [dir="ltr"] & {
-//       margin-left:-234px;
-//       }
-      @at-root [dir="rtl"] & {
-    //    right: -18%;
-      }
-    }
-  
-    
-  }

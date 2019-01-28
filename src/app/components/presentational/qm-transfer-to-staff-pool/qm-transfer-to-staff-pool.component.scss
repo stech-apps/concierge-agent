@@ -4,14 +4,23 @@
     margin: auto;
 
     &__input{
-        padding: 15px;
+        padding: 0 15px;
+        height: 44px;
         width: 100%;
+        font-weight: 100;
         margin: auto;
+        font-size: 18px;
         border: 1px solid $dark-transparent12;
         margin-bottom: 5px;
+        color: $dark-transparent82;
     }
     &__input:focus{
         border: 1px solid $dark-transparent42;
+    }
+    &__input::placeholder{
+        font-size: 18px;
+        font-weight: 200;
+        color: $dark-transparent62;
     }
     &__search-container{
             display: flex;
@@ -44,9 +53,10 @@
     &__headers {
         justify-content: left;
         text-align: left;
-        // height: 3rem;
+        height: 3rem;
         margin-right: 2rem;
         margin-left: 2rem;
+   
    
         i {
             font-size: 1.2rem;
@@ -64,11 +74,13 @@
         min-width: 0;
        color:$dark-transparent62;
        font-weight: 500;
-
+       width:inherit;
         &-label {
-          @include add-text-ellipsis;
-          width:inherit;
+          font-size: 12px;
       }
+      @at-root [dir="rtl"] & {
+        text-align: right;
+    }
     }
 
 
@@ -76,12 +88,14 @@
     &-body-row {
         background-color: white;
         color:black;
-        margin-right: 2rem;
-        // margin-left: 2rem;
+        // padding:0 5px;
         align-items: center;
         text-align: left;
-        height: 3rem;
-        padding: 5px 0px;
+        height: 56px;
+        padding: 6px 8px;
+        margin-right: 1.5rem;
+        margin-left: 1.5rem;
+
 
         @at-root [dir="rtl"] & {
             text-align: right;
@@ -104,8 +118,16 @@
 }
 
 .qm-service-point-list-body-row-first-label{
-    padding-left: 2rem;
+    padding-left: 0.5rem;
     color: $dark-transparent82;
+    font-size: 18px;
+    font-weight: normal;
+    @at-root [dir="rtl"] & {
+        padding-right: 0.5rem;
+        color: $dark-transparent82;
+        padding-left: 0;
+    }
+  
 }
 .qm-service-point-list-body-row-second-label{
     margin-left: -2rem;
@@ -122,7 +144,7 @@
     //     }
     //    }
     margin-left: -35px;
-    margin-top: 14px;
+    margin-top: 10px;
     color: $dark-transparent42;
     @at-root [dir="rtl"] & {
       margin-right: -35px;
@@ -141,7 +163,7 @@
 
 .qm-search__icon{
     margin-left: -35px;
-    margin-top: 13px;
+    margin-top: 10px;
     color: $dark-transparent42;
     @at-root [dir="rtl"] & {
       margin-right: -35px;

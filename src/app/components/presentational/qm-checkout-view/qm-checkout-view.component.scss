@@ -469,14 +469,14 @@
 @include qm-lg { 
   .visit-details-card{
     width: 520px;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 270px);
     padding: 42px;
   } 
 }
 @include qm-md { 
   .visit-details-card{
     width: 450px;
-    max-height: calc(100vh - 200px);
+    height: calc(100vh - 300px);
     padding: 22px;
   }
 }
@@ -484,12 +484,28 @@
 @include qm-sm { 
   .visit-details-card{
     width: 392px;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 350px);
     padding: 22px;
   }
 }
 
 @include qm-xs { 
+  .qm-checkout-view{
+    flex-direction: column;
+  }
+  .visit-details-card{
+    width: 720px;
+    height: 36vh;
+    margin-bottom: 20px;
+    padding: 22px;
+  }
+  .qm-checkout-view__notifications{
+    padding: 24px 0 48px 0;
+    height: auto;
+  }
+}
+
+@include qm-xs-lower { 
   .qm-checkout-view{
     flex-direction: column;
   }
@@ -503,4 +519,23 @@
     padding: 24px 0 48px 0;
     height: auto;
   }
+}
+// IE Specific fixes
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  
+  .qm-checkout-view {
+
+    &__summary {
+    height: 100%;
+    }
+  }
+  @include qm-xs{
+    .qm-checkout-view {
+    display: block;
+    }
+  }
+
+
+  
 }

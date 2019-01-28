@@ -4,14 +4,25 @@
     margin: auto;
 
     &__input{
-       padding: 15px;
+        // font-size: 18px;
+       padding: 0 15px;
+        height: 44px;
         width: 100%;
+        font-weight: 100;
         margin: auto;
+        font-size: 18px;
         border: 1px solid $dark-transparent12;
         margin-bottom: 5px;
+        color: $dark-transparent82;
     }
     &__input:focus{
         border: 1px solid $dark-transparent42;
+    }
+    &__input::placeholder{
+        font-size: 18px;
+        font-weight: 200;
+        color: $dark-transparent62;
+
     }
     &__search-container{
         display: flex;
@@ -49,7 +60,7 @@
         margin-right: 2rem;
         margin-left: 2rem;
         i {
-            font-size: 1.2rem;
+            font-size: 21px;
             padding-right: rem(8px);
             @at-root [dir="rtl"] & {
                 margin-left: 0.2rem;
@@ -78,20 +89,25 @@
     &-body-row {
         background-color: white;
         color:black;
-       
+        // padding:0 5px;
         align-items: center;
         text-align: left;
-        height: 3rem;
-        padding: 5px 0px;
-        margin-right: 2rem;
-        margin-left: 2rem;
+        height: 56px;
+        padding: 6px 8px;
+        margin-right: 1.5rem;
+        margin-left: 1.5rem;
 
 
         &-label {
           @include add-text-ellipsis;
           width:inherit;
+          font-size: 18px;
+          font-weight: normal;
           
       }
+    }
+    &-body-row:hover{
+        background-color: rgba(0,0,0,0.04);
     }
 
 }
@@ -138,7 +154,7 @@
 
 .qm-search__icon{
     margin-left: -35px;
-    margin-top: 13px;
+    margin-top: 10px;
     color: $dark-transparent42;
     @at-root [dir="rtl"] & {
       margin-right: -35px;
@@ -159,7 +175,12 @@
     }
 
     .icon-queue-first, .icon-queue-last, .icon-clock{
-    font-size: 2.2em;
+    font-size: 2.4em;
     color: $primary-pink;
     cursor: pointer;    
     }
+    .icon-queue-first:hover, .icon-queue-last:hover, .icon-clock:hover{
+        
+        color: $dark-transparent82;
+            
+        }

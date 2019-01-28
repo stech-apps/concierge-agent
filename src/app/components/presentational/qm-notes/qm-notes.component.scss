@@ -120,29 +120,79 @@
     }
   }
 }
-@include qm-lg { 
+
   .qm-notes{
-    height: calc(100vh - 739px);
-  }
-  
-}
-@include qm-md { 
-  .qm-notes{
-    height: calc(100vh - 611px);
-    
-  }
-  
-}
-@include qm-sm { 
-  .qm-notes{
-    height: calc(100vh - 611px);
-    
-  }
-  
+    @include qm-lg { 
+    height: calc(100vh - 713px);
+      }
+    @include qm-md { 
+      height: calc(100vh - 698px);  
+      }
+    @include qm-sm { 
+      height: calc(100vh - 756px);
+    }
+    @include qm-xs { 
+      height: calc(100vh - 1042px);
+    }
+    @include qm-xs-lower { 
+      height: calc(100vh - 1042px);
+    }
 }
 
-.qm-notes-edit-visit-flow{
+
+.qm-edit-visit-not-customer{
   @include qm-lg { 
-    height: calc(100vh - 585px);
+    height: calc(100vh - 567px);
   }
+
+  @include qm-md { 
+    height: calc(100vh - 578px);
+  }
+
+  @include qm-sm { 
+    height: calc(100vh - 596px);
+  }
+  @include qm-xs {
+    height: calc( 36vh - 260px );
+  } 
+  @include qm-xs-lower {
+    height: calc( 36vh - 260px );
+  } 
+}
+
+.qm-edit-visit-customer{
+  @include qm-lg { 
+    height: calc(100vh - 680px);
+  }
+  @include qm-md { 
+    height: calc(100vh - 678px);
+  }
+
+  @include qm-sm { 
+    height: calc(100vh - 727px);
+  }
+  @include qm-xs {
+    height: calc( 36vh - 365px);
+  } 
+  @include qm-xs-lower {
+    height: calc( 36vh - 365px);
+  } 
+}
+
+.qm-edit-visit-without-feild{
+  @include qm-lg { 
+    height: calc(100vh - 625px);
+  }
+  @include qm-md { 
+    height: calc(100vh - 650px);
+  }
+  @include qm-sm { 
+    height: calc(100vh - 675px);
+  }
+  @include qm-xs {
+    height: calc( 36vh - 320px);
+  } 
+  @include qm-xs-lower {
+    height: calc( 36vh - 320px);
+  } 
 }

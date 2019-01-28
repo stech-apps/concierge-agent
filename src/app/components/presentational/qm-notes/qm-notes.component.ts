@@ -6,6 +6,7 @@ import { OnDestroy } from '@angular/core';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ICustomer } from 'src/models/ICustomer';
 
 @Component({
   selector: 'qm-notes',
@@ -36,7 +37,7 @@ export class QmNotesComponent implements OnInit, OnDestroy {
   flow: string = '';
 
   @Input()
-  isCustomerSelected: boolean; 
+  isCustomerSelected: ICustomer; 
 
   constructor(
     private userSelectors: UserSelectors,
@@ -53,7 +54,9 @@ export class QmNotesComponent implements OnInit, OnDestroy {
       (note: string) => this.setNote(note)
     );
 
-    console.log(this.isCustomerSelected);
+   
+
+ 
     
 
     const notesEnabledSettingSubscription = this.servicePointSelectors.uttParameters$.subscribe(uttParameters => {
@@ -131,6 +134,10 @@ export class QmNotesComponent implements OnInit, OnDestroy {
         this.onNotesChanged.emit(value);
       }
     });
+  }
+
+  test(){
+    console.log(this.isCustomerSelected);
   }
 
 }

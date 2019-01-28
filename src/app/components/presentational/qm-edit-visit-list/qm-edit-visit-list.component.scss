@@ -158,8 +158,9 @@
     &__heading{
         font-weight: 500;
         padding: 20px;
-        font-size: 1.4em;
+        font-size: 21px;
         color: #929596;
+        border-radius: 4px;
         background-color: white;
         display: flex;
         .qm-title{
@@ -307,9 +308,10 @@
     
 
     &__heading{
+        border-radius: 4px;
         font-weight: 500;
         padding: 20px;
-        font-size: 1.4em;
+        font-size: 21px;
         color: #929596;
         background-color: white;
         display: flex;
@@ -337,6 +339,7 @@
         width: 504px;
         margin-left: auto;
         margin-right: auto;
+        border-radius: 4px;
     }
 
     

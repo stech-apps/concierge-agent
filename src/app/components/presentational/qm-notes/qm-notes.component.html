@@ -1,4 +1,4 @@
-<div class="qm-notes" *ngIf="notesEnabled" [ngClass]="{ 'qm-notes-edit-visit-flow': flow=='CREATE_VISIT' && !isCustomerSelected}" dir="{{ userDirection$ | async }}">
+<div class="qm-notes" *ngIf="notesEnabled" [ngClass]="{ 'qm-edit-visit-not-customer': flow=='CREATE_VISIT' && isCustomerSelected==null,'qm-edit-visit-customer': (flow=='CREATE_VISIT' && isCustomerSelected && isCustomerSelected.properties.email && isCustomerSelected.properties.phoneNumber),'qm-edit-visit-without-feild': (flow=='CREATE_VISIT' && isCustomerSelected && ((isCustomerSelected.properties.email && !isCustomerSelected.properties.phoneNumber)||(!isCustomerSelected.properties.email && isCustomerSelected.properties.phoneNumber)))}" dir="{{ userDirection$ | async }}">
   <div class="qm-notes__edit-container">
     <div class="qm-notes-layout">
       <div class="qm-notes__nr-of-character-container" >
@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <p>{{isCustomerSelected}}</p>
+    <!-- <p (click)="test()">{{isCustomerSelected|json}}</p> -->
 
     <div class="qm-notes__textarea" (click)="toggleNotesInput()">
         {{notes}}

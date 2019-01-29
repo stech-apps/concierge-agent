@@ -22,14 +22,35 @@
         color: #FFFFFF;
         border: none;
         margin: 1rem;
+        cursor: pointer;
+      }
+      button:hover{
+        font-weight: 500;
+      }
+      button:active{
+        font-weight: 500;
+        background: black;
       }
 
       .btn-plain {
+        background: $white;
         border: 1px solid $primary-pink;
         background-color: $white;
         font-size: 18px;
         font-weight: $font-weight-light;
         color: $primary-pink;
+        cursor: pointer;
+      }
+      .btn-plain:active{
+        border: 1px solid $black;
+        color: black;
+        font-weight: 500;
+        background: none;
+      }
+      .btn-plain:hover{
+        // border: 1px solid $black;
+        // color: black;
+        font-weight: 500;
       }
   }
 

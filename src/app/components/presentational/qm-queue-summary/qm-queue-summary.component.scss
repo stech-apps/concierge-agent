@@ -47,9 +47,23 @@
 .qm-search-visit-container{
   
   input{
-    padding: 13px;
+    height: 48px;
     width: 18vw;
+    padding: 0 15px;
+    font-weight: 100;
+    font-size: 18px;
+    border: 1px solid $dark-transparent12;
+      color: $dark-transparent82;
   }
+  input::placeholder{
+    font-size: 18px;
+    font-weight: 200;
+    color: $dark-transparent62;
+
+}
+input:focus{
+  border: 1px solid $dark-transparent42;
+}
 }
 
 .qm-close__icon{
@@ -58,7 +72,7 @@
   z-index: 20;
   position: relative;
   font-size: 1.5em;
-  margin-top: 15px;
+  margin-top: 12px;
   @at-root [dir="ltr"] & {
       right: 1.4em;
   }
@@ -69,7 +83,7 @@
 
 .qm-search__icon{
   
-  margin-top: 13px;
+  margin-top: 10px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
@@ -125,6 +139,9 @@ input {
   text-align: center;
   margin: 0px 24px;
   cursor: pointer;
+}
+.scan-qr-container:hover{
+  font-weight: 500;
 }
 
 // qr-code-modal related css
@@ -243,7 +260,7 @@ hr{
  
 }
 .qm-button{
-  margin: 0px 16px;
+  margin: 2px 16px;
 }
 
 .summary-without-quickserve{
@@ -302,13 +319,10 @@ hr{
     padding: 0px 32px;
     input{
       width: 50vw;
-      height: 44px;
+      height: 48px;
     }
   }
-  .qm-search-button{
-    height: 44px;
-    padding: 0em 1em;
-}
+
 hr{
   width: calc(100vw - 92px);
 
@@ -331,13 +345,10 @@ hr{
     .qm-search-visit-container{
       padding: 0px 24px;
       input{
-        height: 44px;
+        height: 48px;
       }
     }
-    .qm-search-button{
-      height: 44px;
-      padding: 0em 1em;
-  }
+ 
   hr{
     width: calc(608px - 71px);
     margin-left: 32px;
@@ -363,10 +374,7 @@ hr{
         height: 48px;
       }
     }
-    .qm-search-button{
-      height: 48px;
-      padding: 0em 1em;
-  }
+ 
   hr{
     width: calc(852px - 92px);
     margin-left: 39px;
@@ -395,10 +403,7 @@ hr{
       height: 48px;
     }
   }
-  .qm-search-button{
-      height: 48px;
-      padding: 0em 1em;
-  }
+
   hr{
     width: calc(1136px - 92px);
     margin-left: 39px;

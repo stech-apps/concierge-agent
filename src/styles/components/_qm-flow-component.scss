@@ -30,17 +30,20 @@
       background-color: $primary-pink;
       border-radius: 4px;
       color: $white;
-      //width:200px;
+      width:150px;
       text-align: center;
       position: absolute;
       bottom: 2vh;
-      padding: 15px 50px;
+      padding: 9px 40px;
+      height: 44px;
+      font-weight: normal;
+      font-size: 18px;
       cursor: pointer;
       @at-root [dir="ltr"] & {
-        right: 10vw;
+        right: 4vw;
        }
        @at-root [dir="rtl"] & {
-        left: 10vw;
+        left: 4vw;
        }
     }
     &__done-button:active{

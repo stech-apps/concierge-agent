@@ -291,15 +291,18 @@ input:focus{
 }
 
 .qm-button{
-  padding: 1em 1em;
+  padding: 8px 1em;
   border-radius: 4px;
   color: $white;
   margin: 0px 6px;
-  width: 155px;
+  min-width: 150px;
+  height: 44px;
   text-align: center;
   white-space: nowrap;
    overflow: hidden;
+   font-size: 18px;
   text-overflow: ellipsis;
+  
   // background: black;
 }
 
@@ -307,7 +310,7 @@ input:focus{
 .qm-primary-button-disabled{
   background: $dark-transparent42; 
   border: 1px $dark-transparent42;
-  font-weight: 300;
+  font-weight: normal;
 }
 
 .qm-primary-button-active{
@@ -324,7 +327,7 @@ input:focus{
 .qm-primary-button-default{
   background: $primary-pink;
   border: 1px $primary-pink;
-  font-weight: 300;
+  font-weight: normal;
 }
 .qm-primary-button-default:hover{
   font-weight: 500;
@@ -332,24 +335,35 @@ input:focus{
 }
 
 .qm-secondary-button-disabled{
+  background: $white;
   color: $dark-transparent42;
   border: 1px $dark-transparent42 solid;
-  font-weight: 300;
+  font-weight: normal;
 }
 .qm-secondary-button-active{
+  background: $white;
   color: $dark-transparent82;
   border: 1px $dark-transparent82 solid;
   font-weight: 500;
 }
 .qm-secondary-button-defult{
+  background: $white;
   color: $primary-pink;
   border: 1px $primary-pink solid;
-  font-weight: 300;
+  font-weight: normal;
 }
 .qm-secondary-button-defult:hover{
+  background: $white;
   font-weight: 500;
   cursor: pointer;
 }
+.qm-secondary-button-defult:active{
+  background: $white;
+  color: black;
+  border: 1px solid black;
+  font-weight: 500;
+}
+
 
 
 mark {

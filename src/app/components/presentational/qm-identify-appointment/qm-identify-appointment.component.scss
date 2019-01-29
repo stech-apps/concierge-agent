@@ -83,7 +83,7 @@ qm-identify-appointment{
     }
 
     .qm-btn--primary {
-      width: 10rem;
+      // width: 10rem;
       margin-left: 1rem;
       align-items: center;
 
@@ -437,7 +437,10 @@ qm-identify-appointment{
 }
 
 .qm-scan-text {
-  font-size: rem(14px);
+  font-size: 16px;
+}
+.qm-scan-text:hover{
+  font-weight: 500;
 }
 .scan-qr-container {
   background-color: white;

@@ -128,15 +128,27 @@
   margin-bottom: 20px;
 
   &__input{
-     padding: 15px;
+      padding: 0 15px;
+      height: 48px;
       width: 100%;
+      font-weight: 100;
       margin: auto;
+      font-size: 18px;
       border: 1px solid $dark-transparent12;
       margin-bottom: 5px;
+      color: $dark-transparent82;
   }
   &__input:focus{
       border: 1px solid $dark-transparent42;
   }
+
+  &__input::placeholder{
+    font-size: 18px;
+    font-weight: 200;
+    color: $dark-transparent62;
+
+}
+  
   &__search-container{
       display: flex;
   }
@@ -145,7 +157,7 @@
 
 .qm-search__icon{
 
-  margin-top: 13px;
+  margin-top: 10px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -38px;
@@ -156,7 +168,7 @@
 }
 .qm-clear-search{ 
   
-  margin-top: 14px;
+  margin-top: 12px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
@@ -241,17 +253,17 @@ button:focus{
   background: rgba(0,0,0,0.04);
 }
 
-@media screen and (orientation:portrait) { 
-  .qm-quick-serve {
-  &__content {
-    width: 476px;
-  }
-  &__header {
-    font-size: 28px;
-    margin: 0px 32px;
-  }
-  }
-}
+// @media screen and (orientation:portrait) { 
+//   .qm-quick-serve {
+//   &__content {
+//     // width: 476px;
+//   }
+//   &__header {
+//     font-size: 28px;
+//     margin: 0px 32px;
+//   }
+//   }
+// }
 
 
 @media only screen and (max-width: 768px) {
@@ -301,11 +313,12 @@ button:focus{
 @include qm-sm { 
  
   .qm-quick-serve {
-    width: calc(100vw - 608px);
+    // width: calc(100vw - 608px);
+    width: 100%;
     margin-left: auto;
       margin-right: auto;
   &__content {
-    width: 368px;
+    width: 80%
    
   }
   &__header {
@@ -318,12 +331,13 @@ button:focus{
 
 @include qm-md { 
   .qm-quick-serve {
-    width: calc(100vw - 852px);
+    // width: calc(100vw - 852px);
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 
   &__content {
-    width: 476px;
+    width: 80%
   }
   &__header {
     font-size: 28px;
@@ -337,11 +351,12 @@ button:focus{
 /* Extra large devices (L display size - 1920px and up) */
 @include qm-lg { 
   .qm-quick-serve {
-    width: calc(100vw - 1136px);
+    // width: calc(100vw - 1136px);
+    width:100%;
     margin-left: auto;
     margin-right: auto;
   &__content {
-    width: 520px;
+    width: 80%
   }
   &__header {
     font-size: 28px;
@@ -355,13 +370,13 @@ button:focus{
 
 
 
-@media screen and (orientation:portrait) {
-  .qm-quick-serve {
-  width: 467px;
-  margin-left: auto;
-  margin-right: auto;
-  }
-}
+// @media screen and (orientation:portrait) {
+//   .qm-quick-serve {
+//   width: 467px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   }
+// }
 
 // IE specific fix for tooltip
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

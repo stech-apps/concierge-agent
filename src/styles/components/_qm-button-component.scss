@@ -11,12 +11,12 @@ $qm-btn-mod: (
       disabled-color: $white,
       disabled-border-color: $button-disabled-border-color),
     secondary: (
-      background: $secondary-button-background,
+      background: $white,
       text-color: $secondary-button-text-color,
       border-color: $secondary-button-border-color,
       active-background: transparent,
       active-color: $secondary-button-active-color,
-      active-border-color: $secondary-button-border-color,
+      active-border-color: $black,
       disabled-background: $button-disabled-color,
       disabled-color: $white,
       disabled-border-color: $button-disabled-color)
@@ -32,10 +32,11 @@ $qm-btn-mod: (
   padding: rem($standard-padding / 2 $standard-padding * 2);
   border-radius: rem($standard-border-radius);
   justify-content: center;
-  height: auto;
+  height: 44px;
+  min-width: 150px;
   cursor: pointer;
-  font-size: rem($button-font-size);
-  font-weight: $font-weight-light;
+  font-size: 18px;
+  font-weight: normal;
 
   &__icon {
     font-size: rem(32px);
@@ -128,4 +129,9 @@ $qm-btn-mod: (
   &--extend-width-md {
     min-width: rem(182px);
   }
+}
+
+.qm-btn:active{
+  
+  opacity: 1;
 }

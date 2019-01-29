@@ -87,7 +87,7 @@
   }
 
   &-body-row {
-    // padding: 0.6em 0;
+    padding: 0 10px;
 
     &-label {
       @include add-text-ellipsis;
@@ -98,10 +98,14 @@
   }
 
   &__body {
-   
+ 
     overflow-y: auto;
     color: $dark-transparent62;
     font-size: 18px;
+  }
+  &-body-row:hover{
+    background: #FFFFFF;
+    box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.12);
   }
 }
 
@@ -191,6 +195,7 @@
     }
     &__body {
       max-height: calc(100vh - 495px);
+  
     }
   }
 }
@@ -204,6 +209,7 @@
     }
     &__body {
       max-height: calc(100vh - 460px);
+      font-size: 16px;
     }
   }
 }

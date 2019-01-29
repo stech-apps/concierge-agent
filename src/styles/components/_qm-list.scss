@@ -11,6 +11,7 @@
     &--info {
       font-size: 18px;
       color: $dark-transparent42;
+      white-space: pre-wrap;
       @at-root [dir='rtl'] & {
         text-align: right;
       }

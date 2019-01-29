@@ -92,9 +92,7 @@
         <div class="qm-list__item--label">
           {{( service.name && service.name.length > 0 ? service.name : service.internalName)}}
             </div>
-              <div class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent">
-              {{service.internalDescription || ('label.noinformation.avaialble' | translate) }}
-            </div>
+              <div class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
         </div>
         <i *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" [ngClass]="{ 'icon-info--active' : service.showInfoInMostFrequent}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
       </div>
@@ -117,9 +115,7 @@
           <div class="qm-service-list__item--text qm-list__item--text" (click)="onServiceSelect(service, true)">
             <div class="qm-list__item--label" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
             </div>
-              <div class="qm-list__item--info" *ngIf="service.showInfo">
-                {{service.internalDescription || ('label.noinformation.avaialble' | translate) }}
-              </div>
+              <div class="qm-list__item--info" *ngIf="service.showInfo">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
           </div>
   
           <i *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfo = !service.showInfo" [ngClass]="{ 'icon-info--active' : service.showInfo}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>

@@ -192,7 +192,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
                 this.handleUttRequirements(route);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
           }, error => {
@@ -201,7 +201,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
               this.router.navigate(['home/central-login'], { queryParams : {route} });
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
             }
           }

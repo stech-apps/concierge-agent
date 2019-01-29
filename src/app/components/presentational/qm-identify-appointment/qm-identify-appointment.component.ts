@@ -1093,6 +1093,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         toDate: this.getformattedTimeForDurationSearch(false)
       };
     } else if (this.currentSearchState === this.SEARCH_STATES.ID) {
+      if(this.isTooLargeNumber()) {
+        this.translateService.get('error.toolarge.appointmentId').subscribe((x)=> {
+          this.toastService.errorToast(x);
+        }).unsubscribe();
+        return;
+      }
       searchQuery = {
         ...searchQuery,
         id: (this.searchText || "").trim()
@@ -1170,6 +1176,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   onSelectDate(selectedDate: CalendarDate) {
     this.selectedDate = selectedDate;
+  }
+
+  isTooLargeNumber() {
+    let isTooLarge = false;
+
+    if(parseInt((this.searchText || '').trim(), 10) > 999999999) {
+      isTooLarge = true;
+    }
+
+    return isTooLarge;
   }
 
   onEnterPressed() {

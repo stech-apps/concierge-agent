@@ -36,11 +36,11 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngAfterViewInit() {
-    let infoCardElement = this.elementRef.nativeElement;
+    /* let infoCardElement = this.elementRef.nativeElement;
 
     if (infoCardElement) {
       infoCardElement.scrollIntoView();
-    }
+    } */
   }
 
   onModalClick() {

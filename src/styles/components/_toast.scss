@@ -2,6 +2,13 @@
   margin: 0 auto;
   max-width: 70%;
   font-size: 18px;
+  @include qm-xs {
+    max-width: 100%;
+  }
+
+  @include qm-sm {
+    max-width: 100%;
+  }
 }
 
 
@@ -50,6 +57,14 @@
   width: 100%;
   z-index: 3;
   margin: 0 auto;
+
+  @include qm-xs {
+    max-width: none;
+  }
+
+  @include qm-sm {
+    max-width: none;
+  };
 
   @at-root [dir='rtl'] & {
     padding: rem($standard-padding $standard-padding * 1.5 $standard-padding $standard-padding / 2);

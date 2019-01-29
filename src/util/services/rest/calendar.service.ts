@@ -7,7 +7,7 @@ import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
 import * as moment from 'moment-timezone';
 import { ICalendarBranchCentralResponse } from '../../../models/ICalendarBranchCentralResponse';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SystemInfoSelectors } from '../../../store';
 import { NativeApiService } from '../native-api.service';
@@ -143,6 +143,6 @@ private buildTime(appointment: IAppointment){
     getCalendarSettingsSystemInfo() {
         return this.http
           .get<ISystemInfo>(`${this.hostAddress}${calendarEndpoint}/settings/systemInformation`, {headers : this.authorizationHeader })
-          .pipe(catchError(this.errorHandler.handleError(true)));
+          .pipe(timeout(6000), catchError(this.errorHandler.handleError(true)));
       }
 }

@@ -11,9 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
-import { ICalendarBranch } from '../../../../models/ICalendarBranch';
-import { ICalendarBranchCentralResponse } from '../../../../models/ICalendarBranchCentralResponse';
-import { ActiveToast } from 'ngx-toastr';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { ISystemInfo } from '../../../../models/ISystemInfo';
 

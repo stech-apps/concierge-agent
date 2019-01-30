@@ -9,10 +9,10 @@
     -webkit-appearance: none;
     padding: rem(10px 48px 10px 12px);
     color: $dark-transparent82;
-    font-size: rem(18px);
+    font-size: 18px;
     line-height: rem(24px);
     font-weight: $font-weight-light;
-    height: rem(46px);
+    height: 48px;
     @at-root [dir='rtl'] & {
       padding: rem(10px 12px 10px 48px);
     }
@@ -21,7 +21,7 @@
   &--large {
     .qm-search {
       &__input {
-        height: rem($large-search-input-height);
+        height: 48px;
       }
     }
   }

@@ -36,14 +36,22 @@
 
     &--text {
       box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.04);
-      border: 1px solid rgba(0, 0, 0, 0.12);
+     
       width: 100%;
-      min-height: $standard-item-height;
+      min-height: 48px;
       font-size: rem(20px);
       color: rgba(0, 0, 0, 0.82);
       font-weight: 300;
-      padding: 1rem;
+      padding: 8px 1rem;
    
+      @include qm-xs{
+        padding: 12px 1rem;
+        min-height: 56px;
+      }
+      @include qm-sm{
+        padding: 10px 1rem;
+        min-height: 56px;
+      }
       // display: flex;
       flex-wrap: wrap;
       // align-items: center; 
@@ -60,7 +68,7 @@
       background-color: $dark-transparent04;
     }
 
-    .icon-info {
+    .icon-info , .icon-info-solid{
       color: $icon-color-default;
       position: absolute;
       right: -45px;
@@ -79,3 +87,10 @@
   }
 }
 
+.qm-highlight-text{
+  font-weight: 400 !important;
+}
+
+.qm-outline{
+  border: 1px solid rgba(0,0,0,0.12);
+}

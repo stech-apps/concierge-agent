@@ -70,15 +70,19 @@
       text-align: right;
     }
     &__label {
-      width: 88%;
+      width: 100%;
       padding: 1em 0em;
       // line-height: 2.5em;
-      font-size: 16px;
+      font-size: 18px;
       text-align: left;
-      margin: 0 15px;
+      // margin: 0 15px;
       @at-root [dir='rtl'] & {
         text-align: right;
       }
+      @include qm-sm{
+        font-size: 16px;
+      }
+
     }
     
   
@@ -246,7 +250,8 @@ button:focus{
 
 .qm-quick-serve-item{
   display: flex;
-  width: 97%;
+  width: 100%;
+  padding: 0px 8px;
 }
 
 .qm-quick-serve-item:focus {

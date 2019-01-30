@@ -73,14 +73,15 @@
     <div *ngFor="let b of calendarBranches | filterBranch : filterText;" class="qm-branch-list__item qm-list__item" 
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 
       'qm-list__item--info-active' : b.showInfo}">
-      <div class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)">
-        <div class="qm-list__item--label" [innerHtml]="b.name | qmhighlight: searchText">
+      <div class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)" [ngClass]="{'qm-outline':b.showInfo}">
+        <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text':b.showInfo}" [innerHtml]="b.name | qmhighlight: searchText">
         </div>
         <div class="qm-list__item--info" *ngIf="b.showInfo">
           {{b.externalDescription || ('label.noinformation.avaialble' | translate) }}
         </div>      
       </div>
-      <i (click)="b.showInfo = !b.showInfo" [ngClass]="{ 'icon-info--active' : b.showInfo}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+      <i (click)="b.showInfo = !b.showInfo" *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+      <i (click)="b.showInfo = !b.showInfo" *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
     </div>
   </div>
 </div>

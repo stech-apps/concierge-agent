@@ -87,14 +87,16 @@
     <div class="qm-list">
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
          [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
-        <div (click)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent">
+        <div (click)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent" [ngClass]="{'qm-outline':service.showInfoInMostFrequent}">
         
-        <div class="qm-list__item--label">
+        <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfoInMostFrequent}">
           {{( service.name && service.name.length > 0 ? service.name : service.internalName)}}
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
         </div>
-        <i *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" [ngClass]="{ 'icon-info--active' : service.showInfoInMostFrequent}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfoInMostFrequent" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+      
       </div>
     </div>
 
@@ -112,13 +114,15 @@
       <ng-container *ngFor="let service of filteredServiceList | filterService : [filterText, flowType]">
         <div class="qm-service-list__item qm-list__item"  [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false, 'qm-list__item--info-active' : service.showInfo}">
 
-          <div class="qm-service-list__item--text qm-list__item--text" (click)="onServiceSelect(service, true)">
-            <div class="qm-list__item--label" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
+          <div class="qm-service-list__item--text qm-list__item--text" (click)="onServiceSelect(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
+            <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfo}" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfo">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
           </div>
   
-          <i *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfo = !service.showInfo" [ngClass]="{ 'icon-info--active' : service.showInfo}" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfo" (click)="service.showInfo = !service.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfo" (click)="service.showInfo = !service.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+          
         </div>
       </ng-container>
     </div>

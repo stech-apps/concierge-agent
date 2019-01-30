@@ -15,6 +15,14 @@
 //    margin: auto
 
 }
+.icon-info{
+    @at-root [dir="ltr"] & {
+        margin-right: 5px;
+    }
+    @at-root [dir="rtl"] & {
+        margin-left: 5px;
+    }
+}
 
 .qm-clear{   
   display: flex;

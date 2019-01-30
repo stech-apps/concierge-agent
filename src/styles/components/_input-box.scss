@@ -27,6 +27,7 @@ input:focus{
 
   &__input {
     height: 3em;
+    font-size: 18px;
     width: 100%;
     font-weight: 300;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -72,7 +73,7 @@ input:focus{
   &__inputbox-name {
     display: block;
     color: $dark-transparent62;
-    font-size: rem(15px);
+    font-size: 16px;
     // margin-right: rem(8px);
     @at-root [dir="rtl"] & {
       text-align: left;
@@ -132,10 +133,10 @@ input:focus{
   }
   &__left-side{
     @at-root [dir="ltr"] & {
-      padding-right: 10px;
+      padding-right: 20px;
     }
     @at-root [dir="rtl"] & {
-      padding-left: 10px;
+      padding-left: 20px;
     }
   
   }
@@ -162,6 +163,7 @@ input:focus{
     width: 90% !important
   }
   &__label-required{
+    font-size: 14px !important;
     @at-root [dir="ltr"] & {
       float: right;;
     }
@@ -230,6 +232,7 @@ input:focus{
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
   font-weight: $font-weight-light;
   color: $dark-transparent62;
+  font-size: 18px;
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
@@ -288,6 +291,7 @@ input:focus{
 .ng-option{
   border: 1px solid $dark-transparent12;
   margin: 5px;   
+  font-size: 18px !important;
 }
 
 .qm-button{
@@ -372,3 +376,8 @@ mark {
 }
 
 button:focus {outline:0;}
+
+input {
+  -webkit-appearance: none !important;
+  border-radius: 0 !important;
+}

@@ -32,10 +32,10 @@
 }
 .qm-close__icon{
     @at-root [dir="ltr"] & {
-        right: 1.4em;
+        right: 1.6em;
     }
     @at-root [dir="rtl"] & {
-        left: 1.4em;
+        left: 1.6em;
     }
     color:  $dark-transparent42;
     z-index: 1000;

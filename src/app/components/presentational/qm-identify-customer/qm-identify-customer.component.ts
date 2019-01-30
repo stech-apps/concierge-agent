@@ -31,6 +31,7 @@ export class QmIdentifyCustomerComponent implements OnInit {
   ) { 
     this.isFlowSkip = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
     this.currentCustomer$ = this.customerSelectors.currentCustomer$;
+
   }
 
   @Input() flowType: FLOW_TYPE;
@@ -39,7 +40,7 @@ export class QmIdentifyCustomerComponent implements OnInit {
   onFlowNext:  EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
-
+      this.userDirection$ = this.userSelectors.userDirection$;
     const customerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;     
       if(this.currentCustomer && !this.editMode){

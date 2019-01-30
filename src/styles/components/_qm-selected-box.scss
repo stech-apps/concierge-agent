@@ -12,6 +12,7 @@
     text-overflow: ellipsis;
     color: $black;
     line-height: rem(57px);
+    margin: 0 5px;
   }
 
   .qm-flex-wrapper {
@@ -67,11 +68,13 @@
       background-color: $hover-background-main;
     }
 
-    .icon-delete {
-      font-size: $standard-icon-size;
-      color: $primary-pink;
-      transform: translateY(25%);
+   .remove-icon {
+      font-size: 20px;
+      color: #E50046;
+      -webkit-transform: translateY(10%);
+      transform: translateY(10%);
       cursor: pointer;
+      margin: 8px;
     }
   }
 }

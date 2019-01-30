@@ -21,10 +21,10 @@
       <div class="qm-time-filter__date-label">
         {{ "label.timefilter.date" | translate }}
       </div>
-      <div class="qm-time-filter__date-text">
+      <div class="qm-time-filter__date-text" (click)="showCalendar()">
         <span class="qm-time-filter__date-text--label">
           {{ selectedDate.mDate  | amLocale: userLocale | amDateFormat: "DD MMMM YYYY" }}</span>
-        <span (click)="showCalendar()" class="qm-time-filter__date-icon">
+        <span  class="qm-time-filter__date-icon">
           <i class="icon-calendar-light"></i>
         </span>
       </div>

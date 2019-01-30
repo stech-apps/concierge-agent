@@ -11,7 +11,7 @@
         ? 'calc(100% - 12vh)'
         : '100%'
   }"
->
+  dir="{{ userDirection$ | async }}" >
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
       <div class="qm-flow-sub-header__left">
@@ -65,7 +65,7 @@
             </div>
             <i
               aria-hidden="true"
-              class="icon-delete"
+              class="icon-close remove-icon"
               (click)="clearCustomer()"
             ></i>
           </div>

@@ -4,9 +4,9 @@
        
       <td style="width: 1%" (click)="selectCustomer(customer)" ></td>
       <td style="width: 23%"  (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.firstName +' ' + customer.lastName  | qmhighlight: searchText"> </div> </td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"><div class="search-list-text" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer)"> <div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer)"><div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer)"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text qm-sub-row" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
       <td style="width: 7%" *ngIf="isCustomerEditable" (click)="selectCustomer(customer)"> 
           <div class="svg-container" (click)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>

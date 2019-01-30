@@ -383,10 +383,13 @@ qm-identify-appointment{
       background-color: #ffffff;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
       border: 1px solid $listitem-border-color;
-      font-size: 16px;
+      font-size: 18px;
       color: $dark-transparent82;
       position: relative;
 
+      @include qm-sm{
+        font-size: 16px;
+      }
       &-parent {
         position: relative;
 
@@ -768,7 +771,7 @@ qm-identify-appointment{
     height: 100%;
     padding-right: 50px;
     padding-left: 50px;
-    background-color: $white;
+    background-color: #fafafa;
 
     @include qm-lg {
       width: 1293px;

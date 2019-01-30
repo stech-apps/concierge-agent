@@ -27,10 +27,7 @@
 
   
 
-    .qm-checkbox__selector-icon-text {
-        margin-left: 0.5rem;
-    }
-
+  
     &__search-heading {
         width: 100%;
         padding-top: 1rem;
@@ -106,7 +103,7 @@
     top:-22px;
    
     @at-root [dir='ltr'] & {
-      left: 14%;
+      left: 16%;
     }
     @at-root [dir='rtl'] & {
       right: 13%;
@@ -126,3 +123,9 @@
   
 
   
+  .qm-checkbox__selector-icon-text {
+    margin-left: 0.5rem;
+    // margin-right: 2rem;
+    font-size: 18px;
+    color:rgba(0,0,0,0.82) !important;
+}

@@ -15,7 +15,7 @@
             <div class="qm-selected-box__text">
               {{ service.name && service.name.length > 0 ? service.name : service.internalName }}
             </div>
-            <i aria-hidden="true" class="icon-delete" *ngIf="!service.isBind" (click)="onServiceRemove(service)"></i>
+            <i aria-hidden="true" class="icon-close remove-icon" *ngIf="!service.isBind" (click)="onServiceRemove(service)"></i>
           </div>
         </div>
       </ng-container>

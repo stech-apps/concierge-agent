@@ -42,6 +42,7 @@ qm-time-filter-items {
       }
     }
     &-text {
+      cursor: pointer;
       height: 56px;
       width: 100%;
       border: 1px solid #d5d5d5;
@@ -65,6 +66,7 @@ qm-time-filter-items {
 
       &--date-icon {
         flex: 1
+        
       }
 
       .icon-calendar-light {
@@ -76,6 +78,10 @@ qm-time-filter-items {
           color: $dark-transparent82;
         }
       }
+    }
+    &-text:hover{
+      background-color: rgba(0,0,0,0.04);
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
     }
   }
   &__header {
@@ -163,5 +169,14 @@ qm-time-filter-items {
     background-color: rgba(0, 0, 0, 0.42);
     color: $white;
     border: none;
+  }
+}
+
+.qm-time-filter__date-icon{
+  @at-root [dir="ltr"] & {
+    margin-right: 8px;
+  }
+  @at-root [dir="rtl"] & {
+    margin-left: 8px;
   }
 }

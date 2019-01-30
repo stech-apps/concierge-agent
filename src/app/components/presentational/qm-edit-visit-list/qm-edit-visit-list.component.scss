@@ -89,7 +89,7 @@
     &-body-row:hover{
         background-color:rgba(0,0,0,0.04);
         box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
-        border: 1px solid rgba(0,0,0,0.12);
+        // border: 1px solid rgba(0,0,0,0.12);
         cursor: pointer;
         
     }
@@ -680,7 +680,7 @@ height: 100%;
     .qm-row-text{
         min-height: 56px;
         font-size: 16px;
-        border: 1px solid #D5D5D5;
+        // border: 1px solid #D5D5D5;
     }
 }
 
@@ -772,5 +772,9 @@ height: 100%;
     max-height: calc(100vh - 165px);
     min-height: calc(100vh - 459px);
 }
+}
+
+.info-selected{
+    border: 1px solid rgba(0,0,0,0.12);
 }
 

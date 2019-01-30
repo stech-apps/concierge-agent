@@ -113,13 +113,18 @@
     border: 2px solid #03996C;
     border-radius: 4px;
     background-color: rgba(3,153,108,0.04);
+    color:#03996C;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);     
     outline: none;
+  }
+  &:active{
+    background-color: $secondary-color;
+    color: $white;
   }
 
   &--active {
     background-color: $secondary-color;
-    color: $white;
+    color: $white !important;
     &:hover {
       background-color: $secondary-color;
     }

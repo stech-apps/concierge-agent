@@ -175,6 +175,7 @@ import { QmDropDownFilterPipe } from './components/presentational/qm-drop-down/q
 import { QmTabberComponent } from './components/containers/qm-tabber/qm-tabber.component';
 import { FilterQuickServeServicePipe } from './components/presentational/qm-quick-serve/filter-quick-serve-service.pipe';
 import { QmAppointmentInfoComponent } from './components/presentational/qm-appointment-info/qm-appointment-info.component';
+import { QmKeyCaptureDirective } from './directives/qm-key-capture.directive';
 
 
 // Global options for Toastr
@@ -277,7 +278,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmDropDownFilterPipe,
     FilterQuickServeServicePipe,
     QmTabberComponent,
-    QmAppointmentInfoComponent
+    QmAppointmentInfoComponent,
+    QmKeyCaptureDirective
   ],
   entryComponents: [
     QmCustomToastComponent,

@@ -64,6 +64,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     service?: string;
   };
 
+  activeTab: number = 0;
   showModalBackDrop: boolean;
   searchedCustomers: ICustomer[] = [];
   defaultAppointmentCollection: IAppointment[];
@@ -151,6 +152,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     ID: "id",
     QR: "qr"
   };
+
+  tabberMap = ['initial', 'id', 'customer'];
 
   sortState = {};
 
@@ -957,12 +960,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.isSearchInputOpen = !this.isSearchInputOpen;
     this.showAppointmentCollection = true;
 
-    if (searchButton == this.SEARCH_STATES.ID) {
-
+    if(searchButton == this.SEARCH_STATES.INITIAL) {
+      this.activeTab = 0;
+    }
+    else if (searchButton == this.SEARCH_STATES.ID) {
       this.searchPlaceHolderKey = "please_enter_id_and_press_enter";
+      this.activeTab = 1;
     } else if (searchButton === this.SEARCH_STATES.CUSTOMER) {
       this.searchPlaceHolderKey = "please_enter_customer_attributes";
       this.showSearchResultsArea = false;
+      this.activeTab = 2;
     } else if (searchButton === this.SEARCH_STATES.DURATION) {
       this.setDefaultDuration();
       if (this.enableSearchByDay) {
@@ -1475,6 +1482,39 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   getSelectedAppointmentDetails(): string {
     return "";
+  }
+
+  onKeypressForTabComponent($event: KeyboardEvent) {
+
+    switch ($event.keyCode) {
+     
+      case 39: //move next
+
+       let nextTab = 0 ;
+        if(this.activeTab < 2) {
+          nextTab = this.activeTab + 1;
+        }
+
+        let tabLabel = this.tabberMap[nextTab];
+        this.onSearchButtonClick(tabLabel);
+        
+        break;
+
+      case 37: //move previous
+
+      let previousTab = 2 ;
+        if(this.activeTab > 0) {
+          previousTab = this.activeTab - 1;
+        }
+
+        let previousTabLabel = this.tabberMap[previousTab];
+        this.onSearchButtonClick(previousTabLabel);
+        
+        break;
+    
+      default:
+        break;
+    }
   }
 
   restrictNumbers($event) {

@@ -63,7 +63,8 @@
     </ng-container>
     <br />
     <div class="qm-identify-appointment">
-      <div
+      <div qmKeyCapture
+      (qmKeyCapture)="onKeypressForTabComponent($event)"
         class="qm-identify-appointment__button-container"
         role="tablist"
         attr.aria-label="{{ 'aria.label.identify.appointment' | translate }}">
@@ -71,6 +72,7 @@
           class="qm-identify-appointment__pannel-button"
           id="appointment-list"
           role="tab"
+          aria-controls="appointment-list-tabpanel"
           attr.tabindex="{{
             (currentSearchState === 'initial' ||
               currentSearchState === 'refresh' ||
@@ -96,6 +98,7 @@
           class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button"
           attr.aria-selected="{{ currentSearchState === 'id' }}"
           role="tab"
+          aria-controls="bookingid-tabpanel"
           id="bookingid"
           (click)="onSearchButtonClick('id')"
           [ngClass]="{
@@ -116,6 +119,7 @@
           class="qm-identify-appointment__pannel-button"
           role="tab"
           id="customer"
+          aria-controls="customer-tabpanel"
           
           attr.tabindex="{{
             (currentSearchState === 'customer') ? 0 : -1 
@@ -165,8 +169,147 @@
       ></ng-container>
 
       <!--###### APPOINTMENT LIST AREA ###### -->
-      <ng-container *ngIf="showSearchResultsArea">
-        <div role="tabpanel" aria-labelledby="appointment-list">
+      <ng-container *ngIf="showSearchResultsArea && (currentSearchState === 'initial' ||
+      currentSearchState === 'refresh' ||
+      currentSearchState === 'duration' )">
+        <div id="appointment-list-tabpanel" tabindex="0" role="tabpanel" aria-labelledby="appointment-list">
+          <ng-container *ngTemplateOutlet="appointmentsTable"></ng-container>
+        </div>
+      </ng-container>
+
+      <!--####################### Id template ###############-->
+      <ng-template #idsearchArea>
+        <div role="tabpanel" id="bookingid-tabpanel" tabindex="0" aria-labelledby="bookingid">
+          <div class="qm-identify-appointment__search-area">
+            <div class="qm-search qm-search--large">
+              <input
+                [(ngModel)]="searchText"
+                #clearInputDirective="qmClearInputRef"
+                qmClearInput
+                class="qm-search__input"
+                name="serviceSearchInput"
+                (keyup)="restrictNumbers($event)"
+                type="tel"
+                placeholder="{{
+                  'label.identify.appointment.searchbookingid' | translate
+                }}"
+                [formControl]="searchInputController"
+                id="searchAppointmentField"
+              />
+
+              <button
+                *ngIf="(searchText || '').trim().length === 0"
+                class="qm-action-btn qm-action-btn--only-icon qm-search__btn"
+              >
+                <i
+                  aria-hidden="true"
+                  class="qm-action-btn__icon icon-search qm-search__icon"
+                ></i>
+                <span class="sr-only">Search</span>
+              </button>
+            </div>
+
+            <button
+              (click)="onEnterPressed()"
+              [disabled]="(searchText || '').trim().length === 0"
+              class="qm-btn qm-btn--primary"
+            >
+              {{ "label.identify.appointment.fetch" | translate }}
+            </button>
+
+            <div style="color: black;">{{ tempText }}</div>
+          </div>
+
+          <div
+            class="qm-identify-appointment__search-area-warning"
+            *ngIf="
+              (!showLoading() && !isShowAppointmentNotFound) ||
+              (searchText || '').trim().length === 0
+            "
+          >
+            <i class="icon-info qm-action-btn__icon "></i>
+            {{ "label.identify.bookingid.warning" | translate }}
+          </div>
+
+          <div
+            class="qm-identify-appointment__search-area-not-found"
+            *ngIf="
+              !showLoading() &&
+              isShowAppointmentNotFound &&
+              (searchText || '').trim().length > 0
+            "
+          >
+            {{ "label.identify.appointment.notfound" | translate }}
+          </div>
+
+          <div
+            class="qm-identify-appointment__search-area-loading"
+            *ngIf="showLoading()"
+          >
+            <span class="qm-spinner"></span>
+            {{ "label.identify.appointment.loading" | translate }}
+          </div>
+        </div>
+      </ng-template>
+
+      <!--####################### Customer template ###############-->
+      <ng-template #customerSearchArea>
+        <div role="tabpanel" id="customer-tabpanel" tabindex="0" aria-labelledby="customer">
+          <div
+            class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area"
+          >
+            <div class="qm-search qm-search--large">
+              <!-- <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
+                  name="customerSearchInput" type="search" placeholder="{{'label.identify.appointment.customerplaceholder' | translate}}"
+                  [formControl]="searchInputController" id="searchCustomer">
+    
+                <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+                  <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+                  <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
+                </button> -->
+              <qm-customer-search-bar
+                [isInArriveFlow]="!useCalendarEndpoint"
+              ></qm-customer-search-bar>
+              <!-- customer search results -->
+              <qm-customer-search
+                [isCustomerEditable]="false"
+                [isInArriveFlow]="!useCalendarEndpoint"
+                noCustomerFeedback="label.identify.appointment.customernotfound"
+              ></qm-customer-search>
+            </div>
+          </div>
+
+          <div
+            class="qm-identify-appointment__search-area-warning"
+            *ngIf="
+              (!showLoading() && !isShowAppointmentNotFound) ||
+              (searchText || '').trim().length === 0
+            "
+          >
+            <i class="icon-info qm-action-btn__icon "></i>
+            {{ "label.identify.appointment.customerwarning" | translate }}
+          </div>
+
+          <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
+              {{'label.identify.appointment.customernotfound' | translate}}
+            </div-->
+
+          <div
+            class="qm-identify-appointment__search-area-loading"
+            *ngIf="showLoading()"
+          >
+            <span class="qm-spinner"></span>
+            {{ "label.identify.appointment.loading" | translate }}
+          </div>
+          <ng-container *ngIf="showSearchResultsArea">
+            <ng-container *ngTemplateOutlet="appointmentsTable">
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-template>
+
+      <!--###################### Appointment table template #####################-->
+      <ng-template #appointmentsTable>
           <div
             class="qm-identify-appointment__pannel-container"
             *ngIf="currentSearchState !== 'customer'"
@@ -448,134 +591,7 @@
                   </div> -->
             </div>
           </div>
-        </div>
-      </ng-container>
 
-      <!--####################### Id template ###############-->
-      <ng-template #idsearchArea>
-        <div role="tabpanel" aria-labelledby="bookingid">
-          <div class="qm-identify-appointment__search-area">
-            <div class="qm-search qm-search--large">
-              <input
-                [(ngModel)]="searchText"
-                #clearInputDirective="qmClearInputRef"
-                qmClearInput
-                class="qm-search__input"
-                name="serviceSearchInput"
-                (keyup)="restrictNumbers($event)"
-                type="tel"
-                placeholder="{{
-                  'label.identify.appointment.searchbookingid' | translate
-                }}"
-                [formControl]="searchInputController"
-                id="searchAppointmentField"
-              />
-
-              <button
-                *ngIf="(searchText || '').trim().length === 0"
-                class="qm-action-btn qm-action-btn--only-icon qm-search__btn"
-              >
-                <i
-                  aria-hidden="true"
-                  class="qm-action-btn__icon icon-search qm-search__icon"
-                ></i>
-                <span class="sr-only">Search</span>
-              </button>
-            </div>
-
-            <button
-              (click)="onEnterPressed()"
-              [disabled]="(searchText || '').trim().length === 0"
-              class="qm-btn qm-btn--primary"
-            >
-              {{ "label.identify.appointment.fetch" | translate }}
-            </button>
-
-            <div style="color: black;">{{ tempText }}</div>
-          </div>
-
-          <div
-            class="qm-identify-appointment__search-area-warning"
-            *ngIf="
-              (!showLoading() && !isShowAppointmentNotFound) ||
-              (searchText || '').trim().length === 0
-            "
-          >
-            <i class="icon-info qm-action-btn__icon "></i>
-            {{ "label.identify.bookingid.warning" | translate }}
-          </div>
-
-          <div
-            class="qm-identify-appointment__search-area-not-found"
-            *ngIf="
-              !showLoading() &&
-              isShowAppointmentNotFound &&
-              (searchText || '').trim().length > 0
-            "
-          >
-            {{ "label.identify.appointment.notfound" | translate }}
-          </div>
-
-          <div
-            class="qm-identify-appointment__search-area-loading"
-            *ngIf="showLoading()"
-          >
-            <span class="qm-spinner"></span>
-            {{ "label.identify.appointment.loading" | translate }}
-          </div>
-        </div>
-      </ng-template>
-
-      <!--####################### Customer template ###############-->
-      <ng-template #customerSearchArea>
-        <div role="tabpanel" aria-labelledby="customer">
-          <div
-            class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area"
-          >
-            <div class="qm-search qm-search--large">
-              <!-- <input [(ngModel)]="searchText" (keypress.enter)="onEnterPressed()" qmClearInput class="qm-search__input"
-                  name="customerSearchInput" type="search" placeholder="{{'label.identify.appointment.customerplaceholder' | translate}}"
-                  [formControl]="searchInputController" id="searchCustomer">
-    
-                <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
-                  <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-                  <span class="sr-only">{{'label.identify.appointment.customerplaceholder' | translate}}</span>
-                </button> -->
-              <qm-customer-search-bar
-                [isInArriveFlow]="!useCalendarEndpoint"
-              ></qm-customer-search-bar>
-              <!-- customer search results -->
-              <qm-customer-search
-                [isCustomerEditable]="false"
-                [isInArriveFlow]="!useCalendarEndpoint"
-                noCustomerFeedback="label.identify.appointment.customernotfound"
-              ></qm-customer-search>
-            </div>
-          </div>
-
-          <div
-            class="qm-identify-appointment__search-area-warning"
-            *ngIf="
-              (!showLoading() && !isShowAppointmentNotFound) ||
-              (searchText || '').trim().length === 0
-            "
-          >
-            <i class="icon-info qm-action-btn__icon "></i>
-            {{ "label.identify.appointment.customerwarning" | translate }}
-          </div>
-
-          <!--div class="qm-identify-appointment__search-area-not-found" *ngIf="!showLoading() && isShowAppointmentNotFound && (searchText || '').trim().length > 0">
-              {{'label.identify.appointment.customernotfound' | translate}}
-            </div-->
-
-          <div
-            class="qm-identify-appointment__search-area-loading"
-            *ngIf="showLoading()"
-          >
-            <span class="qm-spinner"></span>
-            {{ "label.identify.appointment.loading" | translate }}
-          </div>
-        </div>
       </ng-template>
     </div>
   </div>

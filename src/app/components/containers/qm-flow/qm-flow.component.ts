@@ -122,7 +122,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
           
           setTimeout(() => {
             this.AccountDispatchers.setMenuItemStatus(false);
-            if(this.router.url!="/profile"){
+            if(this.router.url!=="/profile"){
             this.router.navigate(['home']);
             }
           }, 1000);

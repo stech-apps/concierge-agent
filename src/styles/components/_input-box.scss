@@ -26,7 +26,7 @@ input:focus{
 
 
   &__input {
-    height: 3em;
+    height: 48px;
     font-size: 18px;
     width: 100%;
     font-weight: 300;
@@ -217,7 +217,7 @@ input:focus{
 }
 
 .ng-select.ng-select-single .ng-select-container {
-  height: rem(50px);
+  height: 48px;
   border-color: $standard-border-color;
 }
 

@@ -382,7 +382,7 @@ qm-identify-appointment{
       width: 100%;
       background-color: #ffffff;
       box-shadow: 2px 4px 4px 0 $dark-transparent04;
-      border: 1px solid $listitem-border-color;
+      // border: 1px solid $listitem-border-color;
       font-size: 18px;
       color: $dark-transparent82;
       position: relative;
@@ -446,7 +446,7 @@ qm-identify-appointment{
   font-weight: 500;
 }
 .scan-qr-container {
-  background-color: white;
+  background-color: #fafafa;
   // position:absolute;
   text-align: center;
   cursor: pointer;
@@ -528,10 +528,10 @@ qm-identify-appointment{
     text-align: center;
   }
   input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: -400vw;
+    // position: absolute;
+    // width: 0;
+    // height: 0;
+    // left: -400vw;
   }
 }
 

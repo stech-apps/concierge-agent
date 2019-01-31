@@ -220,7 +220,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.useCalendarEndpoint) {
       this.selectedDate = { mDate: moment() };
     }
-
     this.initializeSortState();
     const customerSearchLoadedSubscription = this.customerSelectors.customerLoaded$.subscribe(
       value => {
@@ -440,10 +439,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe(
       value => {
         if (value != null) {
+          // if  qr value not null
           this.qrCodeContent = value;
           this.isQrCodeLoaded = true;
           if (!this.nativeApi.isNativeBrowser()) {
+            // not native-> remove the modal
             this.removeDesktopQRReader();
+            // console.log(value);
+            
           }
         }
       
@@ -451,10 +454,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.add(qrCodeSubscription);
 
-    // Qr Code Scanner subscription
+    // Qr Code Scanner subscription 
     const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe(
       value => {
         if (value === true) {
+          // Set previous background screen state to point if cancelled.
           this.previousSearchState = this.currentSearchState;
           this.isQrCodeLoaded = false;
           this.qrCodeContent = null;
@@ -475,7 +479,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           
           if (!this.nativeApi.isNativeBrowser()) {
             this.removeQRCodeListner();
-
           }
           this.isQRReaderClose = true;
         }
@@ -928,13 +931,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     return validationConfig;
   }
 
+  // loop when the qr scanner is turned on on desktop browsers
   checkDesktopQRReaderValue() {
     var count = 0;
     this.desktopQRCodeListnerTimer = setInterval(() => {
       if (this.searchText && this.searchText.length > 0) {
         count = count + 1;
         try {
-          JSON.parse(this.searchText);
+          // get info related to the QR code 
           this.nativeApiDispatcher.fetchQRCodeInfo(this.searchText);
           this.searchText = "";
           this.clearInput();
@@ -949,6 +953,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  // remove the loop for desktop scanner
   removeDesktopQRReader() {
     if (this.desktopQRCodeListnerTimer) {
       clearInterval(this.desktopQRCodeListnerTimer);

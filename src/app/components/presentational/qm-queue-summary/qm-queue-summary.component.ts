@@ -8,6 +8,7 @@ import { ToastService } from '../../../../util/services/toast.service';
 import { Visit } from '../../../../models/IVisit';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { GlobalNotifySelectors } from 'src/store/services/global-notify';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qm-queue-summary',
@@ -69,7 +70,8 @@ export class QmQueueSummaryComponent implements OnInit {
     private nativeApiSelector: NativeApiSelectors,
     private nativeApiDispatcher: NativeApiDispatchers,
     private servicePointSelectors: ServicePointSelectors,
-    private globalNotifySelectors: GlobalNotifySelectors
+    private globalNotifySelectors: GlobalNotifySelectors,
+    private router:Router
   
   ) {
 
@@ -127,7 +129,7 @@ export class QmQueueSummaryComponent implements OnInit {
     const QueueVisitErrorSubscription = this.queueSelectors.isFetchVisiitError$.subscribe((error)=>{
       if(error){
         this.isSelectedVisitFail = true;
-        if(this.isRequestFromQR){
+        if(this.isRequestFromQR && this.router.url=="/home"){
         this.translateService.get('visit_not_found').subscribe(
           (label: string) => {
             this.toastService.errorToast(label);

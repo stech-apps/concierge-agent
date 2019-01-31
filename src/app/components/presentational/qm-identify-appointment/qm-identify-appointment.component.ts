@@ -1495,9 +1495,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           nextTab = this.activeTab + 1;
         }
 
+        
+
         let tabLabel = this.tabberMap[nextTab];
         this.onSearchButtonClick(tabLabel);
-        
+        this.moveTabFocus(nextTab);
         break;
 
       case 37: //move previous
@@ -1509,11 +1511,20 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
         let previousTabLabel = this.tabberMap[previousTab];
         this.onSearchButtonClick(previousTabLabel);
-        
+        this.moveTabFocus(previousTab);
         break;
     
       default:
         break;
+    }
+  }
+
+  moveTabFocus(indexToFocus: number) {
+   let tabObjects: any = document.querySelectorAll('[role="tab"]');
+    if(tabObjects && tabObjects[indexToFocus]) {
+     setTimeout(()=> {
+       tabObjects[indexToFocus].focus();
+     });  
     }
   }
 

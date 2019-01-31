@@ -144,9 +144,6 @@
           (click)="onSearchButtonClick('qr')"
           role="tab"
           id="qr"
-          attr.tabindex="{{
-            (currentSearchState === 'qr') ? 0 : -1 
-          }}"
           attr.aria-selected="{{ currentSearchState === 'qr' }}"
           *ngIf="qrButtonVisible"
           class="scan-qr-container"
@@ -315,14 +312,14 @@
             *ngIf="currentSearchState !== 'customer'"
           >
             <div class="qm-identify-appointment__pannel-header">
-              <ng-container *ngIf="showTimeLabel">
+              <span *ngIf="showTimeLabel" tabindex="0">
                 {{
                   (useCalendarEndpoint
                     ? "label.identifyappointment.upcoming"
                     : "label.identifyappointment.appointments.today")
                     | translate
                 }}
-              </ng-container>
+              </span>
               <ng-container *ngIf="!showTimeLabel">
                 {{
                   "label.identifyappointment.initialFetchDisabled" | translate
@@ -330,8 +327,9 @@
               </ng-container>
 
               <div
+              tabindex="0"
                 class="qm-identify-appointment__time-container"
-                (click)="showTimeFilter()"
+                (click)="showTimeFilter()" (keydown.enter)="showTimeFilter()"
               >
                 <ng-container *ngIf="showTimeLabel">
                   <span *ngIf="useCalendarEndpoint">{{
@@ -367,10 +365,12 @@
               <span
                 *ngIf="enableAppointmentLoad"
                 class="qm-identify-appointment__refresh-button"
+                tabindex="0"
                 [ngClass]="{
                   'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled
                 }"
                 (click)="refreshAppointments()"
+                (keydown.enter)="refreshAppointments()"
               >
                 {{ "label.identifyappointment.refresh" | translate }}
                 <i class="icon-refresh qm-action-btn__icon "></i

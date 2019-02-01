@@ -175,6 +175,8 @@ This document describes the new features, bug corrections, known issues and reco
 | **163352866** | **WCAG : Implement WCAG for tab components in Concierge** WCAG |
 | **163223586** | **Internal Description Text** |
 | **163357850** | **replace property file** | updated property file
+| **163356529** | **Add text for ? at branch page in Create Appointment flow** | layout change
+| **163119994** | **Confirm page resizing** |g layout change
 
 
 <h3>Bug fixes</h3>
@@ -193,6 +195,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **162600878** | **Concierge against distributed agent, full packet loss on central no robustness message** Fixed the bug |
 | **160953264** | **Distributed environment > no branch is set, but user allows to go concierge home page.** Fixed the bug |
 | **163283312** | **UX > Text length issues** Fixed the bug |
+| **163289539** | **Scan QR Code in edit/arrive appointment flow gives "Visit not found" message** Fixed the bug |
 
 <h3>Known issues</h3>
 | **Id/Jira** | **Description** |

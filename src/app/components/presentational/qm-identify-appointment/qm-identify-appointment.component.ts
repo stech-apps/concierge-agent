@@ -468,7 +468,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         } else {
           if(this.previousSearchState){
             this.currentSearchState = this.previousSearchState;
-            this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;  
+            this.showSearchResultsArea = ((this.previousSearchState === this.SEARCH_STATES.INITIAL)||(this.currentSearchState === this.SEARCH_STATES.DURATION));  
             if(this.currentSearchState === this.SEARCH_STATES.INITIAL || this.currentSearchState === this.SEARCH_STATES.DURATION) {
               this.onSearchButtonClick(this.currentSearchState);
             }
@@ -560,7 +560,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       })
       .unsubscribe();
       this.currentSearchState = this.previousSearchState;
-      this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
+      this.showSearchResultsArea = (this.currentSearchState === this.SEARCH_STATES.INITIAL)||(this.currentSearchState === this.SEARCH_STATES.DURATION);
   }
 
   showAppointmentNotFoundError() {
@@ -757,7 +757,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         })
         .unsubscribe();
         this.currentSearchState = this.previousSearchState;
-        this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
+        this.showSearchResultsArea = (this.currentSearchState === this.SEARCH_STATES.INITIAL)||(this.currentSearchState === this.SEARCH_STATES.DURATION);
     }
   }
 
@@ -963,7 +963,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onSearchButtonClick(searchButton) {
-    this.showSearchResultsArea = searchButton === this.SEARCH_STATES.INITIAL;
+    this.showSearchResultsArea = (searchButton === this.SEARCH_STATES.INITIAL)||(searchButton === this.SEARCH_STATES.DURATION);
     this.isSearchInputOpen = !this.isSearchInputOpen;
     this.showAppointmentCollection = true;
 

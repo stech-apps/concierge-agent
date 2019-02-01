@@ -158,9 +158,49 @@ This document describes the new features, bug corrections, known issues and reco
 | **xxx** | **Bug header** Bug text |
 
 <h3>Upgrade instructions</h3> 
---
+
+----------
 
 
+<h2>Update 4</h2>
+
+**Date:2019-02-01**
+ 
+**Build number:4**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163352866** | **WCAG : Implement WCAG for tab components in Concierge** WCAG |
+| **163223586** | **Internal Description Text** |
+| **163357850** | **replace property file** | updated property file
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **161109031** | **Robustness : Arrive appointment flow > robustness msg should not appear when user search wrong id** Fixed the bug |
+| **163116571** | **Profile settings page UX issue > RTL user in iOS device > cannot type in search fields** Fixed the bug |
+| **163016595** | **reset search time value** Fixed the bug |
+| **163283037** | **Remote upgrade of Orchestra (on HUB) see "old" Concierge until clear cache in Browser** Fixed the bug |
+| **161911378** | **Arrive appointment - Search by Booking ID - wrong msg display when user search characters other than numbers** Fixed the bug |
+| **162542515** | **RESCHEDULE button appearance if translated text is longer** Fixed the bug |
+| **161012832** | **Robustness - No message if trying to do Quickserve and no connection** Fixed the bug |
+| **163055861** | **Robustness > auto reconnect before pressing "Reconnect" button.** Fixed the bug |
+| **161049499** | **Robustness: If Network Connection lost stop ping & Reconnect** Fixed the bug |
+| **162600878** | **Concierge against distributed agent, full packet loss on central no robustness message** Fixed the bug |
+| **160953264** | **Distributed environment > no branch is set, but user allows to go concierge home page.** Fixed the bug |
+| **163283312** | **UX > Text length issues** Fixed the bug |
+
+<h3>Known issues</h3>
+| **Id/Jira** | **Description** |
+| --- | --- |
+| **163223586** | **Internal Description Text** We cannot show internal description in the create appointment flow as we do not have that information available for create appointment flow services |
+
+<h3>Upgrade instructions</h3> 
+----------
 
 
 <h3>Copyright notice</h3>

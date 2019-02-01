@@ -475,7 +475,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           }
           
           if (!this.nativeApi.isNativeBrowser()) {
-            this.removeQRCodeListner();
+
+            setTimeout(() => {
+              this.removeQRCodeListner();  
+            }, 1000);
+
+            
           }
           this.isQRReaderClose = true;
         }

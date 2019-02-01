@@ -29,7 +29,7 @@ $qm-btn-mod: (
 .qm-btn {
   display: flex;
   border: 1px solid transparent;
-  padding: rem($standard-padding / 2 $standard-padding * 2);
+  padding: 12px rem($standard-padding * 2);
   border-radius: rem($standard-border-radius);
   justify-content: center;
   height: 44px;

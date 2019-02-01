@@ -230,7 +230,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     const userLocaleSubscription = this.userSelectors.userLocale$.subscribe((ul)=>{
       this.userLocale = ul || DEFAULT_LOCALE;
     });
-
     this.subscriptions.add(userLocaleSubscription);
 
     const customerSearchLoadingSubscription = this.customerSelectors.customerLoading$.subscribe(
@@ -266,7 +265,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       return this.getTimeSelectionValidity(this.fromTime, control.value);
     });
     this.height = "calc(100vh - 230px)";
-
     this.inputChanged.subscribe(text => this.searchAppointments());
 
     this.customerInputChanged
@@ -435,7 +433,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       ? SortColumns.start
       : SortColumns.startTime;
 
-      // QR code subscription
+      // QR code subscription 
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe(
       value => {
         if (value != null) {
@@ -443,20 +441,19 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.qrCodeContent = value;
           this.isQrCodeLoaded = true;
           if (!this.nativeApi.isNativeBrowser()) {
-            // not native-> remove the modal
+            // not native-> remove the checking loop || native will auto remove the qr modal
             this.removeDesktopQRReader();
-            // console.log(value);
-            
+            // console.log(value); 
           }
         }
-      
       }
     );
     this.subscriptions.add(qrCodeSubscription);
 
-    // Qr Code Scanner subscription 
+    // Qr Code Scanner modal subscription 
     const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe(
       value => {
+        // if the scanner value is true show the qr modal otherwise remove the qr modal
         if (value === true) {
           // Set previous background screen state to point if cancelled.
           this.previousSearchState = this.currentSearchState;
@@ -1592,19 +1589,20 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     searchBox.focus();
   }
 
-  onSearchChange(searchValue: string) {
-    this.qrCodeValue = searchValue;
-  }
+  // not sure whether this is needed
+  // onSearchChange(searchValue: string) {
+  //   this.qrCodeValue = searchValue;
+  // }
 
-  // close qr view
+  // close qr view - when user pressed close button on QR modal 
   closeqr() {
     this.qrCodeValue = '';
     this.isQRReaderOpen = false;
     this.removeQRCodeListner();
     this.nativeApiDispatcher.closeQRCodeScanner();
-    // this.currentSearchState = this.previousSearchState;
-    // this.showSearchResultsArea = this.currentSearchState === this.SEARCH_STATES.INITIAL;
+    this.removeDesktopQRReader();
   }
+
   keydown($event) {
     const inputChar = String.fromCharCode($event.keyCode);
     console.log($event.key);

@@ -55,22 +55,21 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   selectedDate: CalendarDate;
 
   // temp customer object creation 
-  tempCustomer: {
-    time?: string;
-    date?: string;
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    service?: string;
-  };
+  // tempCustomer: {
+  //   time?: string;
+  //   date?: string;
+  //   id?: string;
+  //   firstName?: string;
+  //   lastName?: string;
+  //   service?: string;
+  // };
 
   activeTab: number = 0;
   showModalBackDrop: boolean;
   searchedCustomers: ICustomer[] = [];
   defaultAppointmentCollection: IAppointment[];
-  tempCustomers: any;
+  // tempCustomers: any;
   selectedSearchIcon: string;
-  searchPlaceHolderKey: string;
   showSearchInput: boolean;
   searchText: string;
   inputAnimationState: string;
@@ -971,10 +970,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.activeTab = 0;
     }
     else if (searchButton == this.SEARCH_STATES.ID) {
-      this.searchPlaceHolderKey = "please_enter_id_and_press_enter";
       this.activeTab = 1;
     } else if (searchButton === this.SEARCH_STATES.CUSTOMER) {
-      this.searchPlaceHolderKey = "please_enter_customer_attributes";
       this.showSearchResultsArea = false;
       this.activeTab = 2;
     } else if (searchButton === this.SEARCH_STATES.DURATION) {

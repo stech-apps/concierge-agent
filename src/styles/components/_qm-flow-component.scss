@@ -26,6 +26,7 @@
     box-shadow: 1px -1px 14px 0px #888888;
 
     &__done-button{
+      border: 0;
       font-family: $font-family !important;
       background-color: $primary-pink;
       border-radius: 4px;

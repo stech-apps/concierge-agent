@@ -15,7 +15,9 @@
             <div class="qm-selected-box__text">
               {{ service.name && service.name.length > 0 ? service.name : service.internalName }}
             </div>
+            <button class="qm-transparent-btn remove-icon">
             <i aria-hidden="true" class="icon-close remove-icon" *ngIf="!service.isBind" (click)="onServiceRemove(service)"></i>
+            </button>
           </div>
         </div>
       </ng-container>
@@ -58,10 +60,6 @@
       
       </div>
     </div>
-
-    
-
-
   </div>
   <div class="qm-select-service__search-heading" *ngIf="(searchText || '').trim().length > 0">
       <span>{{'label.search.result.header' | translate}} &nbsp;</span>
@@ -87,7 +85,7 @@
     <div class="qm-list">
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
          [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
-        <div (click)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent" [ngClass]="{'qm-outline':service.showInfoInMostFrequent}">
+        <div tabindex="0" (click)="onServiceSelect(service, true)" (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent" [ngClass]="{'qm-outline':service.showInfoInMostFrequent}">
         
         <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfoInMostFrequent}">
           {{( service.name && service.name.length > 0 ? service.name : service.internalName)}}

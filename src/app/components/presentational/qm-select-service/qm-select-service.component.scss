@@ -171,6 +171,12 @@
       margin-right:-234px;
     }
   }
+}
 
-  
+button:focus{
+  border:  solid #007bff 1px;
+}
+
+.qm-service-list__item--text:focus{
+  border:  solid #007bff 1px;
 }

@@ -129,3 +129,14 @@
     font-size: 18px;
     color:rgba(0,0,0,0.82) !important;
 }
+
+button:focus{
+    border:  solid #007bff 1px;
+  }
+  
+  input:focus{
+    border:  solid #007bff 1px;
+  }
+  .qm-branch-list__item--text:focus{
+    border:  solid #007bff 1px; 
+}

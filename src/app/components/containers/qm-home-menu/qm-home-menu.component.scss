@@ -24,6 +24,8 @@
     // position: absolute 
   }
   &__item {
+    border:none;
+    background: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,7 +46,7 @@
     // }
    
   }
-  &__item:hover {
+  &__item:hover, &__item:focus {
     font-weight: 500;
   
   }
@@ -78,3 +80,6 @@
   -webkit-line-clamp: 2;
 }
 
+button:focus{
+  border:  solid #007bff 1px;
+}

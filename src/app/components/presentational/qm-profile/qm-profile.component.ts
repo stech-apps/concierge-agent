@@ -70,10 +70,11 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private accountDispatchers: AccountDispatchers,
     private recycleService: Recycle
   ) {
+
+    // Get the current User
     const userSubscription = this.userSelectors.user$.subscribe(
       user =>  {
         this.user = user;
-
         this.isEnableUseDefault = this.localStorage.getUserStoreObjectValue(
           user.id,
           STORAGE_SUB_KEY.REMEMBER_LOGIN,
@@ -92,15 +93,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
     this.subscriptions.add(navServiceSubscription);
-
-
-    this.servicePointDispatchers.setOpenServicePoint(null);
-    this.setDefaultServicePoint();
-    this.selectedBranch = {
-      name: 'label.profile.select.branch',
-      id: -1
-    };
-
     const previousBranchSubscription = this.branchSelectors.selectPreviousBranch$.subscribe(
       branch => {
         this.previousBranch = branch;
@@ -108,12 +100,23 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     this.subscriptions.add(previousBranchSubscription);
 
+
+    // set default service point and default branch  
+    this.servicePointDispatchers.setOpenServicePoint(null);
+    this.setDefaultServicePoint();
+    this.selectedBranch = {
+      name: 'label.profile.select.branch',
+      id: -1
+    };
+
+    // Check branch is selected
     const branchSubscription = this.branchSelectors.branches$.subscribe(bs => {
       this.branches = bs;
       this.setDefaultServicePoint();
       if (bs.length === 1) {
         this.onBranchSelect(bs[0]);
       } else {
+        // Check whether there is a previous selection
         this.checkPreviousSelection(STORAGE_SUB_KEY.ACTIVE_BRANCH);
       }
     });
@@ -152,7 +155,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         (this.selectedServicePoint.id==-1))  ){
           this.isEnableUseDefault =false;
         }
-    }, 1000 );
+    }, 100 );
 
    
   }
@@ -268,8 +271,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   checkPreviousSelection(key: STORAGE_SUB_KEY) {
     var previousSelection = this.localStorage.getSettings();
     console.log(previousSelection);
-    if(previousSelection.user_id!=this.user.id){
+    if((previousSelection.user_id!=this.user.id) && !this.previousBranch){
       this.setDefaultServicePoint();
+      return;
     }
     
     if (previousSelection.length === 0) {

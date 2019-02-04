@@ -15,9 +15,9 @@
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>
     <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon" [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-left':userDirections === 'rtl'}" ></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
-    <a>
-      <span class="qm-header__edit-link" *ngIf='showBranch' (click)="editClick()">{{'edit'|translate}}</span>
-    </a>
+    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()">
+      <span class="qm-header__edit-link" >{{'edit'|translate}}</span>
+    </button>
   </div>
 
   <div class="qm-header__right">

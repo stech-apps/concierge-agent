@@ -139,8 +139,10 @@ input {
   text-align: center;
   margin: 0px 24px;
   cursor: pointer;
+  background: none;
+  border: none;
 }
-.scan-qr-container:hover{
+.scan-qr-container:hover, .scan-qr-container:focus{
   font-weight: 500;
 }
 
@@ -261,6 +263,10 @@ hr{
 }
 .qm-button{
   margin: 2px 16px;
+}
+
+.qm-button:focus{
+  font-weight: 500 !important;
 }
 
 .summary-without-quickserve{
@@ -415,3 +421,7 @@ hr{
   max-height: calc(100vh - 577px);
 }
 
+
+button:focus{
+  border:  solid #007bff 1px;
+}

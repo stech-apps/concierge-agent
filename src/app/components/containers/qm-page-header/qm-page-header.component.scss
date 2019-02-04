@@ -162,7 +162,7 @@
 
   &__edit-link {
     flex: 1 1 auto;
-    color: $header-edit-link-color;
+    
     text-decoration: underline;
     font-size: rem(16px);
   }
@@ -193,3 +193,9 @@
   }
 }
 
+.qm-transparent-btn{
+  color: $header-edit-link-color;
+}
+a:focus, button:focus{
+  border:  solid #007bff 1px
+}

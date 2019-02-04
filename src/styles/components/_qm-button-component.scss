@@ -135,3 +135,13 @@ $qm-btn-mod: (
   
   opacity: 1;
 }
+
+.qm-transparent-btn{
+  background: none;
+  border: none;
+
+}
+.qm-transparent-btn:focus{
+  background: none;
+    color: #FFFFFF !important;
+}

@@ -30,10 +30,10 @@
           id="serviceSearchInput" name="serviceSearchInput" type="search" placeholder="{{'label.service.search' | translate}}"
           #serviceSearchInput (keydown.enter)="serviceSearchInput.blur()">
 
-        <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
+        <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
           <span class="sr-only">Search</span>
-        </button>
+        </div>
       </div>
     </div>
     <div class="qm-flow-sub-header__right">

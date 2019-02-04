@@ -373,15 +373,15 @@ button:focus{
 }
 
 
+button:focus{
+  i{
+  border:  solid #007bff 1px;
+}
+}
+.qm-button:focus{
+  border:  solid #007bff 1px;
+}
 
-
-// @media screen and (orientation:portrait) {
-//   .qm-quick-serve {
-//   width: 467px;
-//   margin-left: auto;
-//   margin-right: auto;
-//   }
-// }
 
 // IE specific fix for tooltip
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

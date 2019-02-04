@@ -231,8 +231,10 @@ filterQueues(newFilter: string) {
   }
 
   showHideToolTip(){
-       
     this.showToolTip = !this.showToolTip;
+  }
+  handleCheckBoxClick(){
+    
   }
 
   

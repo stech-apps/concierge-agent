@@ -174,7 +174,8 @@ div:focus{
     font-weight: 500;
   }  
   .qm-flow-close{
-    
+    background: none;
+    border: none;
     text-decoration: underline;
     cursor: pointer;
     margin-top: 25px;
@@ -189,7 +190,9 @@ div:focus{
       left: 15px;
      }
   }
-
+  .qm-flow-close:focus{
+    font-weight: 500;
+  }
   .qm-fishes-first-element-text{
     margin: 0 !important;
   }
@@ -204,4 +207,16 @@ div:focus{
       margin: auto;
       padding: 18px 24px;
     }
+}
+.qm-fishes-btn{
+  border: none;
+  background: none;
+}
+
+.qm-fishes-btn:focus{
+  font-weight: 500;
+}
+
+button:focus{
+  border:  solid #007bff 1px;
 }

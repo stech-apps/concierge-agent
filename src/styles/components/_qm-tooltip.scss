@@ -14,7 +14,13 @@
             left: 0;
             top: 0;
         }
-    }
+    }   
+}
+
+qm-tooltip-btn:focus{
+    .icon-help{
+    color: black !important;
+}
 }
 
 .qm-tooltip {

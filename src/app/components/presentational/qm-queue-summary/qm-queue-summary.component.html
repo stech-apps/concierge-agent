@@ -14,10 +14,10 @@
   <button class="qm-button qm-primary-button-default qm-search-button" (click)="searchVisit(visitSearch.value.trim().toUpperCase())">
     {{'search'|translate}}
   </button>
-  <div *ngIf="visitQR" (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
+  <button *ngIf="visitQR" (click)="SearchQRButtonClick()" class="scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
     <i class="qm-action-btn__icon icon-scan-qr"></i>
     <div>{{ "scan_qr" | translate }}</div>
-  </div>
+  </button>
 </div>
 <div class="qm-visit-loading" *ngIf="!queueVisitIDloaded && queueVisitIDloading">
   <div class="qm-loading-visits">

@@ -669,18 +669,18 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               })
               .unsubscribe();
           } else {
-            appointment.startTime = moment(appointment.start)
-              .tz(appointment.branch.fullTimeZone)
-              .format("YYYY-MM-DDTHH:mm");
-            appointment.endTime = moment(appointment.end)
-              .tz(appointment.branch.fullTimeZone)
-              .format("YYYY-MM-DDTHH:mm");
-            appointment.start = moment(appointment.start)
-              .tz(appointment.branch.fullTimeZone)
-              .format("YYYY-MM-DDTHH:mm");
-            appointment.end = moment(appointment.end)
-              .tz(appointment.branch.fullTimeZone)
-              .format("YYYY-MM-DDTHH:mm");
+            // appointment.startTime = moment(appointment.start)
+            //   .tz(appointment.branch.fullTimeZone)
+            //   .format("YYYY-MM-DDTHH:mm");
+            // appointment.endTime = moment(appointment.end)
+            //   .tz(appointment.branch.fullTimeZone)
+            //   .format("YYYY-MM-DDTHH:mm");
+            // appointment.start = moment(appointment.start)
+            //   .tz(appointment.branch.fullTimeZone)
+            //   .format("YYYY-MM-DDTHH:mm");
+            // appointment.end = moment(appointment.end)
+            //   .tz(appointment.branch.fullTimeZone)
+            //   .format("YYYY-MM-DDTHH:mm");
 
             this.selectedAppointment = appointment;
             this.inputAnimationState = this.INITIAL_ANIMATION_STATE;

@@ -8,13 +8,13 @@
   <div class="qm-number-of-customers">
     <div class="qm-number-of-customers__text qm-text-overflow-fix">{{ 'no_of_customers' | translate }}</div>
     <div class="qm-number-of-customers__numeric">
-      <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">
+      <button class="qm-transparent-btn qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">
         <i class="icon-subtract"></i>
-      </div>
+      </button>
       <div class="qm-number-of-customers__numeric-value">{{noOfCustomers}}</div>
-      <div class="qm-number-of-customers__numeric-button" (click)="changeCustomerCount(1)">
+      <button class="qm-transparent-btn qm-number-of-customers__numeric-button" (click)="changeCustomerCount(1)">
         <i class="icon-add"></i>
-      </div>
+      </button>
     </div>
   </div>
 

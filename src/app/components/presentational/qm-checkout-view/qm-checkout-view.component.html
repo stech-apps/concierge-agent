@@ -2,7 +2,7 @@
   <!-- summary card for create appointment-->
   <div class="qm-checkout-view__summary"  *ngIf="selectedAppointment">
     <div class="visit-details-card">
-    <div class="qm-checkout-view__summary-grouping" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
+    <div tabindex="0" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
       <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-phone"></span>
@@ -16,7 +16,7 @@
     </div>  
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
-    <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" *ngIf="selectedAppointment">
+    <div tabindex="0" class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" (keydown.enter)="goToPanel(2)" (keydown.space)="goToPanel(2)" *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-calendar-light"></span>
         <span class="qm-summary-item__text" >{{ getSelectedAppointmentSummaryTime() }}</span>
@@ -26,13 +26,13 @@
         <span class="qm-summary-item__text qm-summary-item__text--time-period"><span>{{getStartTime()}}</span><span>&nbsp;-&nbsp;</span><span>{{getEndTime()}}</span></span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)"  *ngIf="selectedAppointment">
+    <div tabindex="0" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-home"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment?.branch?.name || selectedBranch?.name}}</span>
       </div>
     </div>
-    <div class="qm-checkout-view__summary-grouping qm-services-grouping" (click)="goToPanel(1)"  *ngIf="selectedAppointment">
+    <div tabindex="0" class="qm-checkout-view__summary-grouping qm-services-grouping" (keydown.enter)="goToPanel(1)" (keydown.space)="goToPanel(1)" (click)="goToPanel(1)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-service"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>
@@ -57,7 +57,7 @@
       </div>
 
       <!-- 3 if selected customer and utt enabled  -->
-      <div class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
+      <div tabindex="0" class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
           <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
           <h2 ><span *ngIf="tempCustomer && tempCustomer.firstName"> {{tempCustomer.firstName + ' '}}</span> <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
                     
@@ -144,31 +144,31 @@
           <h5 class="qm-checkout-view__notifications-sub-heading">{{'label.appconfirm.notification.subheading' | translate}}</h5>
     </div>
   
-    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
+    <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
       <div class="qm-button-icon-container">
       <span class="icon-smartphone"></span>
       </div>
       <span>{{ 'send_sms' | translate}}</span>
     </button>
 
-    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
+    <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
       <div class="qm-button-icon-container">
         <span class="icon-ticket-small"></span>
       </div>
         <span>{{ 'print_ticket' | translate}}</span>
       </button>
 
-    <button class="qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketlessSelected}" *ngIf="ticketlessActionEnabled" (click)="onTicketlessSelected()">
+    <button class="button qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketlessSelected}" *ngIf="ticketlessActionEnabled" (click)="onTicketlessSelected()">
        
         <span>{{ 'ticketless' | translate}}</span>
     </button>
   
-    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
+    <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
       <div class="qm-button-icon-container">
       <span class="icon-mail"></span></div>
       <span>{{ 'email' | translate}}</span>
     </button>
-    <button class="qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
+    <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
       (click)="onEmailAndSmsSelected()">
       <div class="qm-button-icon-container">
       <span class="icon-emailsms"></span></div>
@@ -177,7 +177,7 @@
 
   </div>
   <div class="qm-flow-done-bar" *ngIf="buttonEnabled">
-    <div class="qm-flow-done-bar__done-button" (click)="onButtonPressed()"> {{ 'create_confirm' | translate }}</div>
+    <button class="qm-flow-done-bar__done-button" (click)="onButtonPressed()"> {{ 'create_confirm' | translate }}</button>
   </div>
 </div>
 </div>

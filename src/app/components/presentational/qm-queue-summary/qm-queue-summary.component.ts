@@ -165,6 +165,10 @@ export class QmQueueSummaryComponent implements OnInit {
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
       this.selectedQueue = queue;
       if (queue) {
+        setTimeout(() => {
+          document.getElementById("qm-back-to-queue-btn").focus();
+        }, 100);
+     
         this.selectedQueueId = queue.id;
         this.selectedQueueName = queue.name;
         if (this.selectedbranchId && this.selectedQueueId) {

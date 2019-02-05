@@ -1,0 +1,12 @@
+.qm-week-date{
+    padding: 0;
+    height: 100%;
+}
+
+.qm-week-date:active{
+    box-shadow: none;
+}
+
+li:focus{
+    border:  solid #007bff 1px;
+  }

@@ -141,3 +141,8 @@ $qm-btn-mod: (
   border: none;
 
 }
+
+
+button:focus{
+  border:  solid #007bff 1px;
+}

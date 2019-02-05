@@ -778,3 +778,9 @@ height: 100%;
     border: 1px solid rgba(0,0,0,0.12);
 }
 
+button:focus{
+    border:  solid #007bff 1px;
+}
+.qm-visit-list-body-row:focus{
+    border:  solid #007bff 1px;
+}

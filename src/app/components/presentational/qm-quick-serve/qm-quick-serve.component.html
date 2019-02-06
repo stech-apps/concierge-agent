@@ -35,8 +35,8 @@
             <div class="qm-quick-serve__item" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText">
                 <div   (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" >
                     <span class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
-                    <input type="radio"class="qm-standard-radio__input" [name]="name" [value]="value" [checked]="selectedService !== null && selectedService.id === service.id"
-                    (click)="handleCheckBoxClick(value)" #radioInput />
+                    <!-- <input type="radio"class="qm-standard-radio__input" [name]="name" [value]="value" [checked]="selectedService !== null && selectedService.id === service.id"
+                    (click)="handleCheckBoxClick(value)" #radioInput /> -->
                     <div *ngIf="selectedService !== null && selectedService.id === service.id">
                         <i class="qm-action-btn__icon icon-checkbox-checked qm-quick-serve__icon" aria-hidden="true"></i>
                     </div>

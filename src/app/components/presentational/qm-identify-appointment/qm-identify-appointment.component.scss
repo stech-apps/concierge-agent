@@ -255,6 +255,7 @@ qm-identify-appointment{
 
   &__button-container {
     display: flex;
+    font-size: 18px;
   }
 
   &__pannel-button {
@@ -264,6 +265,14 @@ qm-identify-appointment{
     padding: 15px 35px;
     border-radius: 4px 4px 0px 0px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+
+    &:hover, &:focus {
+      color: $pale-aquamarine;
+      border: 1px solid  $pale-aquamarine;
+    }
   }
 
   &__pannel-middle-button {
@@ -272,6 +281,11 @@ qm-identify-appointment{
   &__pannel-button-selected {
     background-color: $pale-aquamarine;
     color: $white;
+
+    &:hover, &:focus {
+      color: $white;
+      border: 1px solid $pale-aquamarine;
+    }
   }
   &__pannel-bottom-bar {
     margin-top: 0;

@@ -158,6 +158,7 @@ export class QmTransferToStaffPoolComponent implements OnInit {
           this.queueDispatchers.setectVisit(null);
           this.queueDispatchers.resetFetchVisitError();
           this.queueDispatchers.resetQueueInfo();
+          this.queueDispatchers.resetVisitIDLoaded();
             }
       }, () => {
       })

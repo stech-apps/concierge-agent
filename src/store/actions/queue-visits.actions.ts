@@ -6,6 +6,7 @@ export const FETCH_QUEUE_VISITS = '[QUEUE_VISITS] FETCH_QUEUE_VISITS';
 export const FETCH_QUEUE_VISITS_FAIL = '[QUEUE_VISITS] FETCH_QUEUE_VISITS_FAIL';
 export const FETCH_QUEUE_VISITS_SUCCESS =
   '[QUEUE_VISITS] FETCH_QUEUE_VISITS_SUCCESS';
+export const FETCH_QUEUE_VISITS_LOADED_RESET = '[QUEUE_VISITS] FETCH_QUEUE_VISITS_LOADED_RESET';
 
 
 export class FetchQueueVisits implements Action {
@@ -23,10 +24,15 @@ export class FetchQueueVisitsSuccess implements Action {
   constructor(public payload: Visit[]) { }
 }
 
+export class FetchQueueVisitsLoadedReset implements Action {
+  readonly type = FETCH_QUEUE_VISITS_LOADED_RESET;
+  constructor() { }
+}
 
 
 // Action types
 export type AllQueueVisitActions = FetchQueueVisits
   | FetchQueueVisitsSuccess
-  | FetchQueueVisitsFail;
+  | FetchQueueVisitsFail
+  | FetchQueueVisitsLoadedReset;
 

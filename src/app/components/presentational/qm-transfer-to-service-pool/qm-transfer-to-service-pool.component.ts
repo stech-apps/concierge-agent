@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, QueueDispatchers } from '../../../../store';
+import { UserSelectors, BranchSelectors, ServicePointPoolSelectors, QueueSelectors, ServicePointSelectors, InfoMsgDispatchers, DataServiceError, QueueDispatchers, QueueVisitsDispatchers } from '../../../../store';
 import { ServicePointPoolDispatchers } from '../../../../store';
 import { IBranch } from '../../../../models/IBranch';
 import { IServicePointPool } from '../../../../models/IServicePointPool';
@@ -176,6 +176,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
           this.queueDispatchers.setectVisit(null);
           this.queueDispatchers.resetFetchVisitError();
           this.queueDispatchers.resetQueueInfo();
+          this.queueDispatchers.resetVisitIDLoaded();
             }
       }, () => {
       })

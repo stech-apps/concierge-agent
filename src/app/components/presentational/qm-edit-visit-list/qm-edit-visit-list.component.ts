@@ -74,6 +74,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   queueSummary:any
   visitLoaded:boolean;
   visitLoading:boolean;
+  queueVisitIdLoaded:boolean;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -127,6 +128,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.queueSummary = qs;
     });
     this.subscriptions.add(queueSubscription);
+
+    const queueVisitIdSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((qidLoaded) => {
+      this.queueVisitIdLoaded = qidLoaded;
+    });
+    this.subscriptions.add(queueVisitIdSubscription);
+
 
     //get visits for selected queue 
     const selectedQueueSub = this.queueSelectors.selectedQueue$.subscribe(queue => {
@@ -462,6 +469,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           }
         );
         this.resetQueueView();
+        
       }
     },
       () => { }, { visitId: visitId })
@@ -471,6 +479,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   goBackToQueueSection() {
     this.PreviousFlow.emit();
     this.visitDispatchers.resetSelectedQueue();
+  
 
   }
 
@@ -506,6 +515,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.queueDispatcher.resetFetchVisitError();
     this.queueDispatcher.resetQueueInfo();
     this.queueDispatcher.setectVisit(null);
+    this.queueDispatcher.resetVisitIDLoaded();
   }
 
   backToQueueOptionsButton(){
@@ -550,4 +560,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.StopAutoCollapse();
     this.StartAutoCollapse();
   }
+
+
 }

@@ -50,5 +50,9 @@ export class QueueDispatchers {
   setectQueueName(QueueName:string){
     this.store.dispatch(new QueueActions.SelectQueueName(QueueName));
   }
+  resetVisitIDLoaded(){
+    this.store.dispatch(new QueueActions.ResetVisitIdLoaded());
+    
+  }
 
 }

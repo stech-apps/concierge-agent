@@ -49,6 +49,14 @@ export function reducer(
         error: null
       };
     }
+    case QueueVisitsActions.FETCH_QUEUE_VISITS_LOADED_RESET: {
+      return {
+        ...state,
+        loading: false,
+        loaded:false,
+        error: null
+      };
+    }
     default: {
       return state;
     }

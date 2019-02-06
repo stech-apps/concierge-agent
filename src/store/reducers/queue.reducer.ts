@@ -95,6 +95,15 @@ export function reducer(
       };
     }
 
+    case QueueActions.RESET_VISIT_ID_LOADED: {
+      return {
+        ...state,
+        queueVisitIDloading: false,
+        queueVisitIDloaded: false,
+      };
+    }
+
+
     case QueueActions.SELECT_QUEUE: {
       return {
         ...state,

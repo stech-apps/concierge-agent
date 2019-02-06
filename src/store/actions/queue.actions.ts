@@ -11,6 +11,7 @@ export const UPDATE_QUEUE_INFO = '[QUEUE] UPDATE_QUEUE_INFO';
 export const FETCH_SELECTED_VISIT_INFO = '[QUEUE] FETCH_SELECTED_VISIT_INFO';
 export const FETCH_SELECTED_VISIT_INFO_FAIL = '[QUEUE] FETCH_SELECTED_VISIT_INFO_FAIL';
 export const FETCH_SELECTED_VISIT_INFO_SUCCESS = '[QUEUE] FETCH_SELECTED_VISIT_INFO_SUCCESS';
+export const RESET_VISIT_ID_LOADED = '[QUEUE] RESET_VISIT_ID_LOADED';
 export const SELECT_QUEUE = '[QUEUE] SELECT_QUEUE';
 export const RESET_SELECTED_QUEUE = '[QUEUE] RESET_SELECTED_QUEUE';
 export const SELECT_VISIT = '[QUEUE] SELECT_VISIT';
@@ -92,6 +93,12 @@ export class ResetError implements Action {
   constructor() {}
 }
 
+export class ResetVisitIdLoaded implements Action {
+  readonly type = RESET_VISIT_ID_LOADED;
+  constructor() {}
+}
+
+
 export class ResetFetchVisitError implements Action {
   readonly type = RESET_FETCH_VISIT_ERROR;
   constructor() {}
@@ -114,4 +121,5 @@ export type AllQueueActions = FetchQueueInfoSuccess
   | ResetFetchVisitError
   | SelectQueueName
   | ResetQueueName
+  | ResetVisitIdLoaded;
 

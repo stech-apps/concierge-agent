@@ -5,11 +5,11 @@
   <div class="qm-header__left" tabindex="0">
     <a *ngIf="!isNative" href="/" (click)="homeClick($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
       <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
-      <!-- <span class="sr-only">{{ 'label.home' | translate }}</span> -->
+      <span class="sr-only">{{ 'label.home' | translate }}</span>
     </a>
     <a *ngIf="!isNative" href="/" class="qm-header__brand-logo-container" (click)="homeClick($event)">
       <img class="qm-header__brand-logo" [src]="brandLogoSrc" alt="" role="presentation" />
-      <!-- <span class="sr-only">{{ 'label.home' | translate }}</span> -->
+      <span class="sr-only">{{ 'label.home' | translate }}</span>
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>

@@ -247,6 +247,7 @@ export class QmQueueSummaryComponent implements OnInit {
   resetQueue(){
     this.queueDispatchers.resetSelectedQueue();   
     this.queueDispatchers.setectVisit(null);
+    this.queueDispatchers.resetVisitIDLoaded();
     var searchBox = document.getElementById("visitSearchVisit") as any;
     this.queueDispatchers.resetFetchVisitError();
     searchBox.value="";
@@ -312,6 +313,7 @@ export class QmQueueSummaryComponent implements OnInit {
     }
     this.isRequestFromQR = false;
     this.queueDispatchers.fetchSelectedVisit(this.selectedbranchId, visitSearchText);
+    // this.queueVisitsDispatchers.fetchQueueVisitsLoadedReset();
   }
 
   dismissKeyboard(event) {

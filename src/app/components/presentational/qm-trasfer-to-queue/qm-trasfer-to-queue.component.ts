@@ -3,7 +3,7 @@ import { Queue } from '../../../../models/IQueue';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { IBranch } from '../../../../models/IBranch';
 import { QueueSelectors, QueueDispatchers, BranchSelectors, UserSelectors, ServicePointSelectors,
-            InfoMsgDispatchers, DataServiceError } from '../../../../store';
+            InfoMsgDispatchers, DataServiceError, QueueVisitsDispatchers } from '../../../../store';
 import { QueueIndicator } from '../../../../util/services/queue-indication.helper';
 import { QueueService } from '../../../../util/services/queue.service';
 import { Visit } from '../../../../models/IVisit';
@@ -56,8 +56,7 @@ export class QmTrasferToQueueComponent implements OnInit {
     private translateService: TranslateService,
     private spService: SPService,
     private router: Router,
-    private toastService: ToastService,
-    private infoMsgBoxDispatcher: InfoMsgDispatchers,
+    private toastService: ToastService
   ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
     if (branch) {
       this.selectedBranch = branch;
@@ -206,6 +205,7 @@ OnTransferButtonClick(type){
           this.queueDispatchers.setectVisit(null);
           this.queueDispatchers.resetFetchVisitError();
           this.queueDispatchers.resetQueueInfo();
+          this.queueDispatchers.resetVisitIDLoaded();
 
           }
     }, () => {

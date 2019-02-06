@@ -14,6 +14,8 @@ export class QueueVisitsDispatchers {
   fetchQueueVisits(branchId: number,queueId:number) {
     this.store.dispatch(new QueueVisitsActions.FetchQueueVisits(branchId,queueId));
   }
-
+  fetchQueueVisitsLoadedReset() {
+    this.store.dispatch(new QueueVisitsActions.FetchQueueVisitsLoadedReset());
+  }
 
 }

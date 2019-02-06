@@ -107,9 +107,9 @@
 
   <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
-    <div style="width:380px">
+    <div style="width:480px">
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
-      <div class="vip-label">{{ 'vip_section_label' | translate }}</div>
+      <div class="vip-label" [style.flex]="('vip_section_label' | translate).length > 6 ? 1.5: 1">{{ 'vip_section_label' | translate }}</div>
           <div class="radio-container">
             <div *ngIf="isVipLvl1Enabled" class="level">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '2px solid #03996C' : '2px solid rgba(0,0,0,0.12)'}">

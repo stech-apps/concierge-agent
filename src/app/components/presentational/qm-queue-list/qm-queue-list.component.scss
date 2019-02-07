@@ -21,7 +21,8 @@
     .qm-queue-name {
       display: block;
       @include add-text-ellipsis;
-      width: 100%;
+      width: calc(50% - 250px);
+      position: absolute;
       flex: none;
     }
   }
@@ -153,27 +154,17 @@
   right: 50%;
   transform: translateX(50%);
   top: 68px;
+  width: 250px;
 
   @at-root [dir="rtl"] & { 
-    left: 10px;
+    left: 50%;
     right: auto;
+    transform: translateX(-50%);
   }
 }
 
 
 
-@media screen and (max-width: #{map-get($grid-breakpoints, 'md')}) {
-  .qm-queue-failed-count {
-    top: auto;
-    bottom: 195px;
-    right: calc(50% - 201px);
-
-    @at-root [dir="rtl"] & { 
-        left: calc(50% - 201px);
-        right: auto;
-      }
-  }
-}
 
 @include qm-lg { 
   .qm-queue-list {

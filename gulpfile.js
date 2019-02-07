@@ -100,7 +100,7 @@ gulp.task('create:artifactory:zip', function () {
       var version = appData.version;
       return gulp
         .src(['dist/**/*'])
-        .pipe(zip('connectconcierge-' + version + '.zip'))
+        .pipe(zip('Concierge-' + version + '.zip'))
         .pipe(gulp.dest('dist/'));
     }
   } catch (ex) {

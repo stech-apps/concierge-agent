@@ -86,7 +86,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **162571899** | **Expanded Queue - Press Info button for Visit - Resizing** UI and SCSS changes |
 | **162411633** | **Move utt settings to Operation Profile Level** utt file change |
 
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
@@ -105,12 +104,9 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id/Jira** | **Description** |
 | --- | --- |
 
-
 <h3>Upgrade instructions</h3> 
 
-
 ----------
-
 
 <h2>Update 3</h2>
 
@@ -129,7 +125,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **161641618** | **WCAG Manual Test** Manually test WCAG and document changes |
 | **163055833** | **Resizing date & time/reschedule** Responsive and other improvements in date and time reschedule screens |
 | **163052379** | **Layout adjustment appointment list** Layout and responsive change adjustments in appointment list pages  |
-
 
 <h3>Bug fixes</h3>
 
@@ -161,7 +156,6 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
-
 <h2>Update 4</h2>
 
 **Date:2019-02-01**
@@ -177,7 +171,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163357850** | **replace property file** | updated property file
 | **163356529** | **Add text for ? at branch page in Create Appointment flow** | layout change
 | **163119994** | **Confirm page resizing** |g layout change
-
 
 <h3>Bug fixes</h3>
 
@@ -203,6 +196,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **163223586** | **Internal Description Text** We cannot show internal description in the create appointment flow as we do not have that information available for create appointment flow services |
 
 <h3>Upgrade instructions</h3> 
+
 ----------
 
 

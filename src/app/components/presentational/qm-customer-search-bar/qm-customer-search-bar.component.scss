@@ -21,10 +21,10 @@
 
 .qm-search__icon{
     @at-root [dir="ltr"] & {
-        right: 1.2em;
+        right: 1.4em;
     }
     @at-root [dir="rtl"] & {
-        left: 1.2em;
+        left: 1.4em;
     }
     color:  $dark-transparent42;
     z-index: 1000;
@@ -45,11 +45,18 @@
 
 .qm-action-btn--only-icon{
     width: 0px;
-    margin-top: 14px;
+    margin-top: 10px !important;
 }
 
 .customer-search__parent {
     width:100%;
     margin:auto;
     display: flex;
+}
+
+.qm-search__icon{
+    margin-top: 0px;
+}
+.qm-close__icon{
+    margin-top: 3px;
 }

@@ -1364,6 +1364,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.appointments = this.defaultAppointmentCollection;
     this.appointmentDeselected.emit();
     this.currentSearchState = this.SEARCH_STATES.DURATION;
+    this.searchAppointments();
   }
 
   onCustomerSelect(customer: ICustomer) {

@@ -60,6 +60,15 @@ export class NativeApiService {
     }
   }
 
+  isAndroid(): boolean {
+    if (navigator.userAgent.match(/Android/i)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
   getUserAgent(): string {
     return navigator.userAgent;
   }
@@ -161,7 +170,7 @@ export class NativeApiService {
       }
     }
   }
-  openQRScanner() {
+  async openQRScanner() {
     this.nativeApiDispatcher.openQRCodeScanner();
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
       //support iOS 8 and above version

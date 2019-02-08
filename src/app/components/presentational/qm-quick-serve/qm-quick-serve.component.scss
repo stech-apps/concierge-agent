@@ -378,8 +378,9 @@ button:focus{
   border:  solid #72a2f7 1px;
 }
 }
-.qm-button:focus{
-  border:  solid #72a2f7 1px;
+.qm-tooltip-btn:focus{
+  border: none !important;
+  outline: none !important;
 }
 
 

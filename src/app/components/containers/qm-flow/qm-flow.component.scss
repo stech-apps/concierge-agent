@@ -217,10 +217,6 @@ div:focus{
   font-weight: 500;
 }
 
-button:focus{
-  // border:  solid #007bff 1px;
-}
-
 @include qm-xs{
   .qm-fishes-btn{
     font-size: 14px;

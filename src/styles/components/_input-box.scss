@@ -381,3 +381,7 @@ input {
   -webkit-appearance: none !important;
   border-radius: 0 !important;
 }
+
+input:focus{
+  border:  solid #72a2f7 1px !important;
+}

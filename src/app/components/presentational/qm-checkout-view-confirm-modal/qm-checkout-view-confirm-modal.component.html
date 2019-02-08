@@ -17,7 +17,7 @@
                 <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input"  type="tel" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
+                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input qm-popup-input"  type="tel" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
               </span>
           
               <span class="qm-standard-text-field__error-message">
@@ -35,7 +35,7 @@
                 <span class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace required class="qm-input-box__input" id="email" type="text" name='email' formControlName = "email" #email  >
+                <input required qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" id="email" type="text" name='email' formControlName = "email" #email  >
               </span>
               <span class="qm-standard-text-field__error-message">
                   <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">

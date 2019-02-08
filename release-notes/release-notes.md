@@ -199,6 +199,41 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
+<h2>Update 5</h2>
+
+**Date:2019-02-08**
+ 
+**Build number:5**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163517461** | **Change Browser tab text to "Concierge** Changed product name to 'Concierge' |
+| **163649359** | **Buttons/tabs adjustments** UX changes related to buttons and tabs |
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163553264** | **VIP text is not displayed if text is longer (added SV_ infront to simulate translation)** Fixed the bug |
+| **163553274** | **Change color of toast for "Central server connectivity failure..** Fixed the bug |
+| **163380879** | **queues and connectivity message misplaced** Fixed the bug |
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
 
 <h3>Copyright notice</h3>
 

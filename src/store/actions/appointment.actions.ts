@@ -15,6 +15,7 @@ export const RESCHEDULE_APPOINTMENT = '[Appointment] RESCHEDULE_APPOINTMENT';
 export const RESCHEDULE_APPOINTMENT_FAIL = '[Appointment] RESCHEDULE_APPOINTMENT_FAIL';
 export const RESCHEDULE_APPOINTMENT_SUCCESS = '[Appointment] RESCHEDULE_APPOINTMENT_SUCCESS';
 export const RESET_APPOINTMENT_ERROR = '[Appointment] RESET_APPOINTMENT_ERROR';
+export const RESET_APPOINTMENT_LOADING = '[Appointment] RESET_APPOINTMENT_LOADING';
 
 export class SearchAppointments implements Action {
   readonly type = SEARCH_APPOINTMENTS;
@@ -82,6 +83,12 @@ export class ResetAppointmentError implements Action {
   constructor() {}
 }
 
+
+export class ResetAppointmentLoading implements Action {
+  readonly type = RESET_APPOINTMENT_LOADING;
+  constructor() {}
+}
+
 // Action types
 export type AllAppointmentActions =
   | SearchAppointments
@@ -96,4 +103,5 @@ export type AllAppointmentActions =
   | RescheduleAppointmentFail 
   | RescheduleAppointmentSuccess 
   | SearchCalendarAppointmentsFail
-  | ResetAppointmentError;
+  | ResetAppointmentError
+  | ResetAppointmentLoading;

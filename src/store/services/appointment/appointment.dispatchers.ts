@@ -28,4 +28,8 @@ export class AppointmentDispatchers {
   resetError(){
     this.store.dispatch(new AppointmentActions.ResetAppointmentError());
   }
+
+  resetLoading(){
+    this.store.dispatch(new AppointmentActions.ResetAppointmentLoading());
+  }
 }

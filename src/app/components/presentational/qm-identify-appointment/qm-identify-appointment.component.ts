@@ -118,6 +118,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   requestDelayHandle: any;
   showSearchResultsArea = true;
   userLocale = DEFAULT_LOCALE;
+  lastSearchAttempt: string;
 
   // Qr code related variables
   isQRReaderOpen = false;
@@ -760,6 +761,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   }
 
   handleAppointmentResponse(apps: IAppointment[]) {
+    if(this.currentSearchState != this.lastSearchAttempt) {
+      return;
+    }
 
     if (this.requestDelayHandle) {
       clearTimeout(this.requestDelayHandle);
@@ -1035,6 +1039,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.searchAppointments();
     }
     else {
+       this.appointmentDispatchers.resetLoading();
        this.appointments = this.defaultAppointmentCollection;
     }
 
@@ -1075,6 +1080,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   searchAppointments() {
     this.showTimeLabel = true;
+    this.lastSearchAttempt = this.currentSearchState;
     let searchQuery: any = {
       branchId: this.useCalendarEndpoint
         ? this.selectedCalendarBranch.id
@@ -1374,6 +1380,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.showCustomerResults = false;
         this.showModalBackDrop = false;
         this.isSearchInputReadOnly = true;
+        this.lastSearchAttempt = this.currentSearchState;
     
         if (this.useCalendarEndpoint) {
           this.appointmentDispatchers.searchCalendarAppointments({

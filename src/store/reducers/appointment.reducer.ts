@@ -105,6 +105,15 @@ export function reducer(
             };
         }
 
+        case AppointmentActions.RESET_APPOINTMENT_LOADING: {
+            return {
+              ...state,
+              loading: false,
+              loaded: false,
+              error: null
+            };
+        }
+
         case AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS: {
             return {
               ...state,

@@ -211,6 +211,8 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **163517461** | **Change Browser tab text to "Concierge** Changed product name to 'Concierge' |
 | **163649359** | **Buttons/tabs adjustments** UX changes related to buttons and tabs |
+| **163649720** | **Searchbox adjustments** UI changes |
+
 
 
 <h3>Bug fixes</h3>
@@ -220,6 +222,12 @@ This document describes the new features, bug corrections, known issues and reco
 | **163553264** | **VIP text is not displayed if text is longer (added SV_ infront to simulate translation)** Fixed the bug |
 | **163553274** | **Change color of toast for "Central server connectivity failure..** Fixed the bug |
 | **163380879** | **queues and connectivity message misplaced** Fixed the bug |
+| **163318992** | **Edit/Arrive appointments > Multiple error msgs when scan a wrong QR code** Fixed the bug |
+| **163014719** | **User Profile Page > settings shall reset if a new user login.** Fixed the bug |
+| **163722726** | **Concierge home page > Visit search is not working.** Fixed the bug |
+| **163619605** | **Edit appointment flow > Wrong appointment time when scan a QR code of an appointment place for different branch than logged in.** Fixed the bug |
+| **163750353** | **Edit appointment > Find Appointment fish > Scan QR > default list is not loaded upon removal of selected appointment.** Fixed the bug |
+| **163816798** | **Text in topbar appear outside the fish (if translated)** Fixed the bug |
 
 ---
 <h3>Known issues</h3>

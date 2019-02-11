@@ -476,7 +476,7 @@
                 <div
                   (click)="
                     sortAppointments(
-                      useCalendarEndpoint ? 'startDate' : 'startTimeDate'
+                      useCalendarEndpoint ? 'start' : 'startTimeDate'
                     )
                   "
                   class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-date qm-table__cell--align-right"
@@ -489,7 +489,7 @@
                       class="qm-action-btn__icon"
                       [ngClass]="
                         useCalendarEndpoint
-                          ? getSortIcons('startDate')
+                          ? getSortIcons('start')
                           : getSortIcons('startTimeDate')
                       "
                     ></i

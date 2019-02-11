@@ -235,16 +235,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         //this.toastService.infoToast(v);
         this.errorMessage = v;
       });
-    } else if (
-      this.previousBranch &&
-      this.previousBranch.id == this.selectedBranch.id &&
-      (this.navServicePoint &&
-        this.selectedServicePoint.id == this.navServicePoint.id)
-    ) {
-      this.branchDispatchers.selectBranch(this.previousBranch);
-      this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
-      this.localStorage.setInitialStoreValues();
-      this.router.navigate(["home"]);
     } else {
       this.recycleService.removeAppCache();
       this.loginService.login(

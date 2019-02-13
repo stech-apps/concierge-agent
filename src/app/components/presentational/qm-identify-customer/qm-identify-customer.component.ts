@@ -22,6 +22,9 @@ export class QmIdentifyCustomerComponent implements OnInit {
   editMode : boolean;
   customers:ICustomer[];
 
+  SkipThisTimeFocused:boolean;
+  showToolTip:boolean;
+
   constructor(
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
@@ -31,6 +34,7 @@ export class QmIdentifyCustomerComponent implements OnInit {
   ) { 
     this.isFlowSkip = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
     this.currentCustomer$ = this.customerSelectors.currentCustomer$;
+    this.showToolTip=false;
 
   }
 

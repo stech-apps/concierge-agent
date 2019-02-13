@@ -140,20 +140,20 @@
           {{ "tab.identifyappointment.customer" | translate }}
         </div>
 
-        <div
+        <button
           (click)="onSearchButtonClick('qr')"
           role="tab"
           id="qr"
           attr.aria-selected="{{ currentSearchState === 'qr' }}"
           *ngIf="qrButtonVisible"
-          class="scan-qr-container"
+          class="scan-qr-container qm-transparent-btn"
           [ngStyle]="{
             color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)'
           }"
         >
           <i class="qm-action-btn__icon icon-scan-qr"></i>
           <div class="qm-scan-text">{{ "scan_qr" | translate }}</div>
-        </div>
+        </button>
       </div>
       <hr class="qm-identify-appointment__pannel-bottom-bar" />
 
@@ -330,6 +330,7 @@
               tabindex="0"
                 class="qm-identify-appointment__time-container"
                 (click)="showTimeFilter()" (keydown.enter)="showTimeFilter()"
+                (keydown.space)="showTimeFilter()"
               >
                 <ng-container *ngIf="showTimeLabel">
                   <span *ngIf="useCalendarEndpoint">{{

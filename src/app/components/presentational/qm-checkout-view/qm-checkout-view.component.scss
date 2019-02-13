@@ -553,3 +553,10 @@
 .checkbox:focus{
   border:  solid #007bff 1px;
 }
+
+.vipButtonFocused{
+  border:  solid #007bff 1px;
+}
+.vipButtonFocused:active,.vipButtonFocused:hover{
+  border:  none;
+}

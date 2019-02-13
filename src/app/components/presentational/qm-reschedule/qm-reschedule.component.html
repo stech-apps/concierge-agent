@@ -24,7 +24,7 @@
         <span class="qm-text-overflow-fix">{{
           getSelectedAppointmentInfoCustomer()
         }}</span>
-        <span class="qm-reschedule__selected--icon">
+        <button class="qm-reschedule__selected--icon qm-transparent-btn">
           <i
             class="icon-info"
             [ngClass]="{
@@ -33,14 +33,14 @@
             }"
             (click)="expandAppointment()"
           ></i
-        ></span>
+        ></button>
       </div>
-      <div
+      <button
         *ngIf="isDeleteEnabledInUtt"
         class="qm-btn qm-btn--primary qm-reschedule__selected-cancel-button qm-text-overflow-fix"
         (click)="onCancelAppointment()">
         {{ "label.cancel.appointment" | translate }}
-      </div>
+      </button>
 
       <qm-appointment-info
     [useCalendarEndpoint]="true"

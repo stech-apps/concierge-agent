@@ -24,10 +24,10 @@
 
     <div class="qm-queue-list__headers qm-flex-grid" *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
 
-      <div class="qm-queue-list-header-item qm-col-45 qm-flex-grid" (click)="onSortClickbyQueue()">
+      <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn" (click)="onSortClickbyQueue()">
         <div class="qm-queue-list-header-item">{{'queue_view_queue_label' | translate}}</div>
         <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
-      </div>
+      </button>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">
         <div class="qm-queue-list-header-item-label">{{'transfer_first'|translate}}</div>
@@ -49,16 +49,16 @@
 
         <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
           <div class="qm-col-45 qm-queue-list-body-row-label" [innerHtml]="q.name | qmhighlight: filterText"></div>
-          <div class="qm-col-15" *ngIf="btnTransferFirst">
-            <i class="icon-queue-first" (click)="OnTransferButtonClick('FIRST')"></i>
-          </div>
-          <div class="qm-col-15" *ngIf="btnTransferLast">
-            <i class="icon-queue-last" (click)="OnTransferButtonClick('LAST')"></i>
+          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferFirst" (click)="OnTransferButtonClick('FIRST')">
+            <i class="icon-queue-first" ></i>
+          </button>
+          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferLast" (click)="OnTransferButtonClick('LAST')">
+            <i class="icon-queue-last" ></i>
 
-          </div>
-          <div class="qm-col-15" *ngIf="btnTransferSort">
-            <i class="icon-clock" (click)="OnTransferButtonClick('SORTED')"></i>
-          </div>
+          </button>
+          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferSort" (click)="OnTransferButtonClick('SORTED')">
+            <i class="icon-clock" ></i>
+          </button>
         </div>
       </div>
 

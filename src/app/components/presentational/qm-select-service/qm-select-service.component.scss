@@ -173,10 +173,30 @@
   }
 }
 
-button:focus{
-  border:  solid #007bff 1px;
-}
+
 
 .qm-service-list__item--text:focus{
   border:  solid #007bff 1px;
+}
+.qm-checkbox-focused{
+  border:  solid #007bff 1px;
+}
+
+///Tempory: this can be removed after replacing the qm_list.scss file
+.icon-info , .icon-info-solid{
+      
+    position: relative;
+    right: 0; 
+    transform: translateY(0%);
+    top: 0%; 
+}
+.qm-list__item{
+display: flex;
+}
+
+.qm-service-list__item--text{
+  background-color: white;
+}
+.qm-list__item{
+ background: transparent; 
 }

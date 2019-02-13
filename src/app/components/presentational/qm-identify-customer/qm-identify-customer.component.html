@@ -34,8 +34,10 @@
               type="checkbox"
               (change)="onSwitchChange()"
               [(ngModel)]="isFlowSkip"
+              (focus)="SkipThisTimeFocused=true"
+              (focusout)="SkipThisTimeFocused=false"
             />
-            <div class="qm-checkbox__selector">
+            <div class="qm-checkbox__selector" [ngClass]="{'checkBoxFocused':SkipThisTimeFocused}">
               <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
               <div class="qm-checkbox__selector-icon-text">
                 {{ "label.skip.branch" | translate }}

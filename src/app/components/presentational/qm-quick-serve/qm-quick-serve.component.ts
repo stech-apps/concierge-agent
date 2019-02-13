@@ -11,6 +11,7 @@ import { ToastService } from 'src/util/services/toast.service';
 import { IServiceConfiguration } from '../../../../models/IServiceConfiguration';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { Server } from 'https';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   isQuickServeEnable: boolean;
   isShowQueueView: boolean;
   editVisitEnable: boolean;
+  focusQuickServeItem:string;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -237,6 +239,12 @@ filterQueues(newFilter: string) {
     
   }
 
+  focusQmCheckbox(service){
+   this.focusQuickServeItem = service.id;    
+  }
   
-  
+  focusOutQmCheckbox(){
+    this.focusQuickServeItem = null;    
+  }
+
 }

@@ -79,7 +79,8 @@
                                                     dropdownPosition="bottom"
                                                     (click)="ScrollToBottom()"
                                                     id="birthday_select"
-                                                    tabindex="0">
+                                                    tabindex="0"
+                                                    class="qm-birthday-select">
                             </ng-select>
                         </div>
                         <!-- Day -->
@@ -113,7 +114,7 @@
            
       <div class="qm-input-box__row">
           
-              <div class="qm-input-box__button-container">
+              <div class="qm-input-box__button-container">  
 
                 <!-- Cancel Button -->
                 <button class="qm-button qm-secondary-button-defult" (click)="cancel()" *ngIf="editMode">
@@ -129,16 +130,16 @@
                 <!-- Save Button -->
 
                 <!-- To add new a customer -->
-                <button  *ngIf="!currentCustomer" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
+                <button  *ngIf="!currentCustomer" [disabled]="!customerCreateForm.valid" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
                   <span> {{'button_save_and_add'|translate}} </span>
                 </button>
 
                 <!-- To select a customer -->
-                <button *ngIf="editMode && currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="next()">
+                <button  [disabled]="!customerCreateForm.valid" *ngIf="editMode && currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="next()">
                   <span> {{'button_add'|translate}} </span>
                 </button>
                 <!-- To update a custoemr -->
-                <button *ngIf="editMode && currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
+                <button  [disabled]="!customerCreateForm.valid" *ngIf="editMode && currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))" class="qm-button qm-primary-button-disabled" [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
                   <span > {{'button_save_and_add'|translate}} </span>
                 </button> 
 

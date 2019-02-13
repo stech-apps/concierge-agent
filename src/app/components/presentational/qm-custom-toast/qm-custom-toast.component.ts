@@ -59,5 +59,8 @@ export class QmCustomToastComponent extends Toast {
 
   ngOnInit() {
     this.iconSvg =  this.domSanitizer.bypassSecurityTrustHtml(this.iconSvg);
+    setTimeout(() => {
+      document.getElementById('toast-msg-close').focus();
+    }, 1000);
   } 
 }

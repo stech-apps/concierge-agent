@@ -57,8 +57,15 @@
         justify-content: left;
         text-align: left;
         // height: 3rem;
-        margin-right: 2rem;
-        margin-left: 2rem;
+        @at-root [dir="ltr"] & {
+            margin-right: 2.5rem;
+            margin-left: 1.4rem;
+        }
+        @at-root [dir="rtl"] & {
+            margin-right: 1.4rem;
+            margin-left: 2.5rem;
+        }
+       
         i {
             font-size: 21px;
             padding-right: rem(8px);

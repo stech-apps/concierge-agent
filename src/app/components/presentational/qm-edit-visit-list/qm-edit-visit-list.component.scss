@@ -291,7 +291,13 @@
     }
    
 }
-
+.visit-tray-option-bottom:focus{
+    border:  solid #007bff 1px;
+}
+.visit-tray-option-bottom:active,
+.visit-tray-option-bottom:hover{
+    border: none;
+}
 
 .qm-visit-list__options-2 {
     margin: rem($standard-margin*0.5);
@@ -529,6 +535,10 @@
     width: 50px;
 }
 
+.bottom-icon-container{
+    width: 100%;
+}
+
 .qm-details-icon{
     font-size: 2.2em;
     display: block;
@@ -537,7 +547,6 @@
     text-align: center;
     align-items: center;
     color: $dark-transparent42;
-    margin-top: 20px;
     cursor: pointer;
 }
 
@@ -781,5 +790,12 @@ button:focus{
     // border:  solid #007bff 1px;
 }
 .qm-visit-list-body-row:focus{
-    // border:  solid #007bff 1px;
+    border:  solid #007bff 1px;
+}
+.info-icon-container:focus{
+    outline: none;
+    i{
+        border:  solid #007bff 1px;
+    }
+    
 }

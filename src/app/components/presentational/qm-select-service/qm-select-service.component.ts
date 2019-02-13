@@ -38,6 +38,8 @@ export class QmSelectServiceComponent implements OnInit {
   multiServiceEnabled: boolean;
   searchText: string;
   userDirection$: Observable<string>; 
+
+  multiserviceButtonFocused:boolean;
   @ViewChild(QmClearInputDirective) clearInputDirective:QmClearInputDirective;
 
   mostFrequentServiceCount = 5;

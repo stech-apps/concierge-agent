@@ -22,6 +22,8 @@ export class QmIdentifyCustomerComponent implements OnInit {
   editMode : boolean;
   customers:ICustomer[];
 
+  SkipThisTimeFocused:boolean;
+
   constructor(
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,

@@ -41,8 +41,8 @@
     <div class="qm-flow-sub-header__right">
       <div class="qm-checkbox__container" *ngIf="multiServiceEnabled">
         <label for="qm-checkbox" class="qm-checkbox-label">
-          <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isMultiServiceOn">
-          <div class="qm-checkbox__selector">
+          <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isMultiServiceOn"  (focus)="multiserviceButtonFocused=true"  (focusout)="multiserviceButtonFocused=false">
+          <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
             <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
             <div class="qm-checkbox__selector-icon-text">{{ 'multi_service' | translate }}</div>
           </div>
@@ -92,9 +92,10 @@
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
         </div>
-        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfoInMostFrequent" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
-        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
-      
+        <button class="qm-transparent-btn" *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" >
+        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+        <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 
@@ -117,10 +118,10 @@
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfo">{{service.internalDescription || ('label.noinformation.avaialble' | translate)}}</div>
           </div>
-  
-          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfo" (click)="service.showInfo = !service.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
-          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfo" (click)="service.showInfo = !service.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
-          
+          <button class="qm-transparent-btn" *ngIf="flowType !== 'CREATE_APPOINTMENT'" (click)="service.showInfo = !service.showInfo">
+          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfo"  class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+          <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+          </button>
         </div>
       </ng-container>
     </div>
@@ -128,5 +129,5 @@
 </div>
 </div></div>
 <div class="qm-flow-done-bar" *ngIf="selectedServiceList && selectedServiceList.length > 0">
-  <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>
+  <button class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</button>
 </div>

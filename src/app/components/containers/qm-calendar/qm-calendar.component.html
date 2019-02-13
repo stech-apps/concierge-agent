@@ -26,7 +26,7 @@
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day, true)"
                [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}">
-            <div class="qm-date-text">{{ day.mDate.date() }}</div>
+            <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
           </div>
         </ng-container>
       </div>

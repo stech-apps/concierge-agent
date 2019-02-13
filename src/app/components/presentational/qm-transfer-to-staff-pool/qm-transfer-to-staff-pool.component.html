@@ -19,18 +19,18 @@
           {{'empty_user_pool'|translate}} 
         </div>
           <div  class="qm-service-point-list__headers qm-flex-grid" *ngIf="this.loaded && StaffPool.length!==0">
-            <div class="qm-service-point-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyLastName()">
+            <button class="qm-service-point-list-header-item qm-col qm-flex-grid qm-transparent-btn" (click)="onSortClickbyLastName()">
               <div class="qm-service-point-list-header-item-label">{{'name' | translate}}</div>
               <div><i  *ngIf="StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
-            </div>
+            </button>
           </div>
           <hr>
         
           <div class="qm-service-point-list__body">
             <div *ngFor="let s of StaffPool |filterStaffPool : filterText ">
-            <div  class="qm-flex-grid qm-service-point-list-body-row" (click)="selectPool(s.id)">
+            <button  class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn" (click)="selectPool(s.id)">
                 <div class="qm-col qm-service-point-list-body-row-first-label" [innerHtml]="s.firstName + ' ' + s.lastName | qmhighlight: filterText"></div>
-              </div>
+            </button>
           </div>
           </div>
         </div> 

@@ -375,7 +375,7 @@ mark {
   background: transparent !important;
 }
 
-button:focus {outline:0;}
+// button:focus {outline:0;}
 
 input {
   -webkit-appearance: none !important;
@@ -384,4 +384,8 @@ input {
 
 input:focus{
   border:  solid #72a2f7 1px !important;
+}
+
+.ng-select-container:focus{
+  border:  solid #007bff 1px;
 }

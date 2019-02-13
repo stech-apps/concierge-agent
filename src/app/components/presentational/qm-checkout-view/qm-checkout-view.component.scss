@@ -540,11 +540,16 @@
     .qm-checkout-view {
     display: block;
     }
-  }
-
-
-  
+  }  
 }
+
 .qm-checkout-view__summary-grouping:focus{
-  // border:  solid #007bff 1px;
+  border:  solid #007bff 1px;
+}
+
+.qm-button-plain:focus{
+  border:  solid #007bff 1px;
+}
+.checkbox:focus{
+  border:  solid #007bff 1px;
 }

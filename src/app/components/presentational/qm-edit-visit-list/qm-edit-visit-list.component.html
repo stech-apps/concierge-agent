@@ -72,68 +72,70 @@
 
         </div>
         
-        <div class="info-icon-container">
-          <i class="icon-info qm-details-icon" *ngIf="infoVisitId !== visit.visitId" (click)="selectedInfoButton(visit.visitId)"></i>
-          <i class="icon-info-solid qm-details-icon" *ngIf="infoVisitId === visit.visitId" (click)="selectedInfoButton(visit.visitId)"></i>
-        </div>
+        <button class="info-icon-container qm-transparent-btn" (click)="selectedInfoButton(visit.visitId)">
+          <i class="icon-info qm-details-icon" *ngIf="infoVisitId !== visit.visitId" ></i>
+          <i class="icon-info-solid qm-details-icon" *ngIf="infoVisitId === visit.visitId"></i>
+        </button>
         </div>
      
         <!-- Edit visit options -->
         <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
                 class="qm-visit-list__options-2" id="{{visit.visitId}}-visitOptionContainer">
           <!-- <div class="triangle-with-shadow"></div> -->
-          <div class="qm-visit-list__options-2__rec">
+          <div class="qm-visit-list__options-2__rec" id="visit-rec" tabindex="-1">
             <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> {{'visit_options'|translate}}
               </div>
-              <div class="qm-icon">
-                <i class="icon-close" (click)=" closeVisitOptions()"></i>
-              </div>
+              <button class="qm-icon qm-transparent-btn" id="qm-close-btn" (click)=" closeVisitOptions()">
+                <i class="icon-close" ></i>
+              </button>
 
             </div>
             <div class="qm-visit-list__options__container">
 
-              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn">
-                <span class="content" (click)="transferToQ(visit)">
+              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" (click)="transferToQ(visit)">
+                <button class="content qm-transparent-btn" >
                   <span class="icon">
                     <i class="icon-queue"></i>
                   </span>
                   <span class="label">
                     {{'transfer_visit_queue_header_simple' | translate}}
                   </span>
-                </span>
+                </button>
               </span>
               <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn">
 
-                <span class="content" (click)="transferToStaffPool(visit)">
+                <button class="content qm-transparent-btn" (click)="transferToStaffPool(visit)">
                   <span class="icon">
                     <i class="icon-customer-solid"></i>
                   </span>
                   <span class="label">
                     {{'transfer_visit_user_pool_header_simple' | translate}}
                   </span>
-                </span>
+                </button>
               </span>
               <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn">
-                <span class="content" (click)="transferToSPfPool(visit)">
+                <button class="content qm-transparent-btn" (click)="transferToSPfPool(visit)">
                   <span class="icon">
                     <i class="icon-screen"></i>
                   </span>
                   <span class="label">
                     {{'transfer_visit_sp_pool_header_simple' | translate}}
                   </span>
-                </span>
+                </button>
               </span>
 
               <div style="display:flex;width: 66%;margin: auto;">
-                <span *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn" (click)="deleteVisit(i,$event)">
+                <span tabindex="0" *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn" (click)="deleteVisit(i,$event)"
+                (keydown.space)="deleteVisit(i,$event)" (keydown.enter)="deleteVisit(i,$event)" >
                   <span class="bottom-icon-container">
                     <span class="icon"> <i class="icon-delete delete-icon"></i></span>
                     <span class="content">{{'remove' | translate}}</span>
                   </span>
                 </span>
-                <span *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn" (click)="cherryPickVisit(i,$event)" [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}">
+                <span tabindex="0" *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn" (click)="cherryPickVisit(i,$event)" 
+                [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}" (keydown.space)="cherryPickVisit(i,$event)" (keydown.enter)="cherryPickVisit(i,$event)">
                   <span class="bottom-icon-container">
                     <span class="icon" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> 
                       <i *ngIf="userDirection === 'ltr'" class="icon-check" ></i>
@@ -155,16 +157,18 @@
           <div class="qm-visit-list__options-2__rec">
             <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
+                <button class="qm-transparent-btn">
                 <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                </button>
                 <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
                 <span *ngIf ="visitOptionStatus === 'tq'">{{'queue_transfer'|translate}} </span>
               </div>
-              <div class="qm-icon">
-                <i class="icon-close" (click)="closeVisitOptions()"></i>
-              </div>
+              <button class="qm-icon qm-transparent-btn"  (click)="closeVisitOptions()">
+                <i class="icon-close"></i>
+              </button>
             </div>
             <qm-transfer-to-staff-pool *ngIf ="this.visitOptionStatus === 'staff'"></qm-transfer-to-staff-pool>
             <qm-transfer-to-service-pool *ngIf ="this.visitOptionStatus === 'cp'"></qm-transfer-to-service-pool>
@@ -174,4 +178,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>	

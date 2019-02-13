@@ -48,7 +48,9 @@
       <div class="qm-summary-item qm-checkout-view__section" style="max-width:100%">
           <div style="display:flex;width: 100%;position: relative;" *ngIf="( !tempCustomer && !selectedCustomer )" class="qm-checkout-view__unlinked-customer">
               <h3>{{ 'label.visit.details.heading' | translate }}</h3>
-              <i (click)="goToPanel(1)" *ngIf="!isCustomerFlowHidden" class="qm-action-btn__icon icon-customer-add" aria-hidden="true"></i>
+              <button class="qm-transparent-btn icon-customer-add" (click)="goToPanel(1)">
+              <i  *ngIf="!isCustomerFlowHidden" class="qm-action-btn__icon" aria-hidden="true"></i>
+            </button>
           </div>
       <!-- 2 No Add Customer utt disabled-->
           <!-- <div *ngIf="isCustomerFlowHidden">
@@ -57,7 +59,7 @@
       </div>
 
       <!-- 3 if selected customer and utt enabled  -->
-      <div tabindex="0" class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" >
+      <div tabindex="0"  *ngIf="selectedCustomer || tempCustomer" class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" (keydown.space)="goToPanel(1)" (keydown.enter)="goToPanel(1)" >
           <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
           <h2 ><span *ngIf="tempCustomer && tempCustomer.firstName"> {{tempCustomer.firstName + ' '}}</span> <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
                     
@@ -88,13 +90,13 @@
           </div>
       </div>
 
-      <div class="qm-checkout-view__summary-grouping-non-selective " *ngIf="selectedBranch">
+      <div class="qm-checkout-view__summary-grouping-non-selective" *ngIf="selectedBranch">
         <div class="qm-summary-item">
           <span class="qm-summary-item__icon icon-home non-selective" style="color:rgba(0,0,0,0.82);"></span>
           <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedBranch?.name}}</span>
         </div>
       </div>
-      <div class="qm-checkout-view__summary-grouping" (click)="goToPanel(0)"  *ngIf="appServices">
+      <div class="qm-checkout-view__summary-grouping" tabindex="0" (keydown.space)="goToPanel(0)" (keydown.enter)="goToPanel(0)" (click)="goToPanel(0)"  *ngIf="appServices">
         <div class="qm-summary-item">
           <span class="qm-summary-item__icon icon-service"></span>
           <span class="qm-summary-item__text qm-text-overflow-fix">{{appServices}}</span>

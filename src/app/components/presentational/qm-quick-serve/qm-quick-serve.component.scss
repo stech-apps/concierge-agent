@@ -382,7 +382,18 @@ button:focus{
   border: none !important;
   outline: none !important;
 }
+.qm-checkbox:focus{
+  border:  solid #007bff 1px;
+}
+.qm-quick-serve__item-focus{
+  border:  solid #007bff 1px;
+}
 
+button:active,button:hover{
+  i{
+  border:  none;
+}
+}
 
 // IE specific fix for tooltip
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

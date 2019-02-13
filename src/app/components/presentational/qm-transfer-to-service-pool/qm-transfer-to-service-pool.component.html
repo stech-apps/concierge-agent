@@ -22,16 +22,16 @@
       {{'empty_counter_pool'|translate}} 
     </div>
     <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="(this.loaded && this.servicePoints.length!==0)">
-      <div class="qm-service-point-list-header-item qm-flex-grid" (click)="onSortClickbyServicePoint()">
+      <button class="qm-service-point-list-header-item qm-flex-grid qm-transparent-btn" (click)="onSortClickbyServicePoint()">
         <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
         <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
-      </div>
+      </button>
 
     </div>
     <hr>
     <div class="qm-service-point-list__body">
       <div *ngFor="let s of servicePoints  | filterServicePoints : filterText">
-        <div class="qm-flex-grid qm-service-point-list-body-row" (click)="selectQueue(s)">
+        <button class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn" (click)="selectQueue(s)">
           <div class="qm-service-point-list-body-row-first-label" [innerHtml]="s.name | qmhighlight: filterText"></div>
           <span *ngIf="s.state == 'CLOSED'">
             <i class="icon-lock"></i>
@@ -41,7 +41,7 @@
           </div>
 
 
-        </div>
+        </button>
       </div>
 
     </div>

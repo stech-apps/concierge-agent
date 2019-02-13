@@ -275,6 +275,10 @@ qm-identify-appointment{
     }
   }
 
+  &__pannel-button:focus {
+       border:  solid #007bff 1px !important;
+  }
+
   &__pannel-middle-button {
     margin: 0px 12px;
   }
@@ -311,6 +315,10 @@ qm-identify-appointment{
       color: $dark-transparent82;
     }
   }
+  &__time-container:focus{
+    border:  solid #007bff 1px !important;
+  }
+
   &__refresh-button {
     right: 0;
     position: absolute;
@@ -464,10 +472,11 @@ qm-identify-appointment{
   // position:absolute;
   text-align: center;
   cursor: pointer;
-  margin-left: 2rem;
+  margin-left: 1.5rem;
+  margin-top: -0.8rem;
 
   @at-root [dir='rtl'] & {
-    margin-right: 2rem;
+    margin-right: 1.5rem;
     margin-left: auto;
   }
 }

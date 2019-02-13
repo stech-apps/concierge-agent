@@ -110,6 +110,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   appServices: string;
   timeFormat: string = 'HH:mm';
 
+  // focus related issues
+  VipButton1Focucsed:boolean;
+  VipButton2Focused:boolean;
+  VipButton3Focused:boolean;
+
   constructor(
     private servicePointSelectors: ServicePointSelectors,
     private customerSelector: CustomerSelector,

@@ -2,7 +2,7 @@
   <!-- summary card for create appointment-->
   <div class="qm-checkout-view__summary"  *ngIf="selectedAppointment">
     <div class="visit-details-card">
-    <div tabindex="0" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
+    <div  [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
       <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-phone"></span>
@@ -16,7 +16,7 @@
     </div>  
 
     <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
-    <div tabindex="0" class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" (keydown.enter)="goToPanel(2)" (keydown.space)="goToPanel(2)" *ngIf="selectedAppointment">
+    <div [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" (keydown.enter)="goToPanel(2)" (keydown.space)="goToPanel(2)" *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-calendar-light"></span>
         <span class="qm-summary-item__text" >{{ getSelectedAppointmentSummaryTime() }}</span>
@@ -26,7 +26,7 @@
         <span class="qm-summary-item__text qm-summary-item__text--time-period"><span>{{getStartTime()}}</span><span>&nbsp;-&nbsp;</span><span>{{getEndTime()}}</span></span>
       </div>
     </div>
-    <div tabindex="0" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)"  *ngIf="selectedAppointment">
+    <div [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(0)"  *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-home"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix">{{selectedAppointment?.branch?.name || selectedBranch?.name}}</span>
@@ -113,25 +113,25 @@
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
       <div class="vip-label" [style.flex]="('vip_section_label' | translate).length > 6 ? 1.5: 1">{{ 'vip_section_label' | translate }}</div>
           <div class="radio-container">
-            <div *ngIf="isVipLvl1Enabled" class="level">
+            <div *ngIf="isVipLvl1Enabled" class="level" [ngClass]="{'vipButtonFocused':VipButton1Focucsed==true}">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '3px solid #03996C' : '3px solid rgba(0,0,0,0.12)'}">
-                <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()">
+                <input class="checkbox" type="checkbox" id="vip_lvl_1" [ngModel]="vipLevel1Checked" (click)="onVip1Clicked()"  (focus)="VipButton1Focucsed=true"  (focusout)="VipButton1Focucsed=false">
                 <label class="label" for="vip_lvl_1" [ngStyle]="{'background': vipLevel1Checked ? '#03996C' : 'transparent'}"></label>
               </div>
               <span class="label">{{ 'vip_one_label' | translate }}</span>
             </div>
     
-            <div *ngIf="isVipLvl2Enabled" class="level">
+            <div *ngIf="isVipLvl2Enabled" class="level" [ngClass]="{'vipButtonFocused':VipButton2Focucsed}">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel2Checked ? '3px solid #03996C' : '3px solid rgba(0,0,0,0.12)'}">
-                <input class="checkbox" type="checkbox" id="vip_lvl_2" [ngModel]="vipLevel2Checked" (click)="onVip2Clicked()">
+                <input class="checkbox" type="checkbox" id="vip_lvl_2" [ngModel]="vipLevel2Checked" (click)="onVip2Clicked()" (focus)="VipButton2Focucsed=true"  (focusout)="VipButton2Focucsed=false">
                 <label class="label" for="vip_lvl_2" [ngStyle]="{'background': vipLevel2Checked ? '#03996C' : 'transparent'}"></label>
               </div>
               <span class="label">{{ 'vip_two_label' | translate }}</span>
             </div>
     
-            <div *ngIf="isVipLvl3Enabled" class="level">
+            <div *ngIf="isVipLvl3Enabled" class="level" [ngClass]="{'vipButtonFocused':VipButton3Focucsed}">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel3Checked ? '3px solid #03996C' : '3px solid rgba(0,0,0,0.12)'}">
-                <input class="checkbox" type="checkbox" id="vip_lvl_3" [ngModel]="vipLevel3Checked" (click)="onVip3Clicked()">
+                <input class="checkbox" type="checkbox" id="vip_lvl_3" [ngModel]="vipLevel3Checked" (click)="onVip3Clicked()" (focus)="VipButton3Focucsed=true"  (focusout)="VipButton3Focucsed=false">
                 <label class="label" for="vip_lvl_3" [ngStyle]="{'background': vipLevel3Checked ? '#03996C' : 'transparent'}"></label>
               </div>
               <span class="label">{{ 'vip_three_label' | translate }}</span>

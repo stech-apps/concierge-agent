@@ -30,6 +30,7 @@ import { servicePoint } from "../../../../store/services/data.service";
 import { ActivatedRoute } from "@angular/router";
 import { IAccount } from "../../../../models/IAccount";
 import { Recycle } from "../../../../util/services/recycle.service";
+import { QueueService } from "src/util/services/queue.service";
 
 @Component({
   selector: "qm-profile",
@@ -68,7 +69,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private platformSelectors: PlatformSelectors,
     private localStorage: LocalStorage,
     private accountDispatchers: AccountDispatchers,
-    private recycleService: Recycle
+    private recycleService: Recycle,
+    private queueService: QueueService
   ) {
 
     // Get the current User
@@ -147,17 +149,17 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     this.subscriptions.add(servicePointsSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
+
   }
 
   ngOnInit() {
+    this.queueService.stopQueuePoll();
     setTimeout(() => {
       if( this.isEnableUseDefault && ((this.selectedBranch.id == -1) &&
         (this.selectedServicePoint.id==-1))  ){
           this.isEnableUseDefault =false;
         }
-    }, 100 );
-
-   
+    }, 100 );   
   }
 
   setDefaultServicePoint() {
@@ -235,7 +237,8 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         //this.toastService.infoToast(v);
         this.errorMessage = v;
       });
-    } else {
+    }
+     else {
       this.recycleService.removeAppCache();
       this.loginService.login(
         this.selectedBranch,

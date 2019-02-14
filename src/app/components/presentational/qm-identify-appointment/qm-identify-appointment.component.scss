@@ -12,8 +12,6 @@
   }
 }
 
-
-
 .qm-selected-label__container {
   position: relative;
   max-width: 35%;
@@ -797,7 +795,12 @@ qm-identify-appointment{
   }
 }
 
-
+.qm-appointments-loading {
+    color: rgba(0, 0, 0, 0.82);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .qm-pannel-inner-container {
   &__identify {

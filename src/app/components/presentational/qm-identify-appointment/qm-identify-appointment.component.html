@@ -43,14 +43,14 @@
           <span class="qm-text-overflow-fix">{{
             getSelectedAppointmentInfoCustomer()
           }}</span>
-          <span
-            class="qm-identify-appointment__selected__close-btn"
+          <button
+            class="qm-identify-appointment__selected__close-btn qm-transparent-btn"
             (click)="deselectAppointment()"
             ><i class="icon-close qm-action-btn__icon "></i
-          ></span>
+          ></button>
         </div>
-        <span
-          class="qm-identify-appointment__selected--icon"
+        <button
+          class="qm-identify-appointment__selected--icon qm-transparent-btn"
           (click)="openAppointmentInfoModal()"
           ><i
             [ngClass]="{
@@ -58,7 +58,7 @@
               'icon-info': !isShowAppointmentInfo
             }"
           ></i
-        ></span>
+        ></button>
       </div>
     </ng-container>
     <br />
@@ -363,19 +363,20 @@
                         date:'HH:mm'}}</span> <i class="icon-edit qm-action-btn__icon "></i>
                     </div>
                   </ng-container> -->
-              <span
+              <button
                 *ngIf="enableAppointmentLoad"
-                class="qm-identify-appointment__refresh-button"
+                class="qm-identify-appointment__refresh-button qm-transparent-btn"
                 tabindex="0"
                 [ngClass]="{
                   'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled
                 }"
                 (click)="refreshAppointments()"
                 (keydown.enter)="refreshAppointments()"
+                (keydown.space)="refreshAppointments()"
               >
                 {{ "label.identifyappointment.refresh" | translate }}
                 <i class="icon-refresh qm-action-btn__icon "></i
-              ></span>
+              ></button>
             </div>
           </div>
 
@@ -384,11 +385,11 @@
               <div
                 class="qm-identify-appointment__appointment-table__header qm-table__row"
               >
-                <div
+                <button
                   (click)="
                     sortAppointments(useCalendarEndpoint ? 'qpId' : 'id')
                   "
-                  class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__header-id  qm-text-overflow-fix"
+                  class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__header-id  qm-text-overflow-fix qm-transparent-btn"
                 >
                   <span>{{
                     "list.identifyappointment.heading.id" | translate
@@ -403,11 +404,11 @@
                       "
                     ></i>
                   </span>
-                </div>
+                </button>
 
-                <div
+                <button
                   (click)="sortAppointments('custName')"
-                  class="qm-table__cell-35 qm-table__cell-xs-35  qm-table__header-customer qm-text-overflow-fix"
+                  class="qm-table__cell-35 qm-table__cell-xs-35  qm-table__header-customer qm-text-overflow-fix qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }"
                 >
                   <span>
@@ -419,10 +420,10 @@
                       [ngClass]="getSortIcons('custName')"
                     ></i
                   ></span>
-                </div>
-                <div
+                </button>
+                <button
                   (click)="sortAppointments('servicesDisplayLabel')"
-                  class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden"
+                  class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }"
                 >
                   <span>{{
@@ -434,12 +435,12 @@
                       [ngClass]="getSortIcons('servicesDisplayLabel')"
                     ></i>
                   </span>
-                </div>
+                </button>
 
-                <div
+                <button
                   *ngIf="useCalendarEndpoint"
                   (click)="sortAppointments('branchDisplayLabel')"
-                  class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden"
+                  class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }"
                 >
                   <span>{{
@@ -451,14 +452,14 @@
                       [ngClass]="getSortIcons('branchDisplayLabel')"
                     ></i>
                   </span>
-                </div>
-                <div
+                </button>
+                <button
                   (click)="
                     sortAppointments(
                       useCalendarEndpoint ? 'start' : 'startTime'
                     )
                   "
-                  class="qm-table__cell-15  qm-table__header-time qm-table__cell-xs-20 qm-table__cell--align-right"
+                  class="qm-table__cell-15  qm-table__header-time qm-table__cell-xs-20 qm-table__cell--align-right qm-transparent-btn"
                 >
                   <span>{{
                     "list.identifyappointment.heading.time" | translate
@@ -473,14 +474,14 @@
                       "
                     ></i>
                   </span>
-                </div>
-                <div
+                </button>
+                <button
                   (click)="
                     sortAppointments(
                       useCalendarEndpoint ? 'start' : 'startTimeDate'
                     )
                   "
-                  class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-date qm-table__cell--align-right"
+                  class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-date qm-table__cell--align-right qm-transparent-btn"
                 >
                   <span>{{
                     "list.identifyappointment.heading.date" | translate
@@ -495,7 +496,7 @@
                       "
                     ></i
                   ></span>
-                </div>
+                </button>
               </div>
               <div class="qm-identify-appointment__table-body">
                 <ng-container
@@ -521,6 +522,8 @@
                       class="qm-identify-appointment__appointment-table__list"
                       tabindex="0"
                       (click)="onAppointmentSelect(app)"
+                      (keydown.enter)="onAppointmentSelect(app)"
+                      (keydown.space)="onAppointmentSelect(app)"
                     >
                       <div
                         class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id"
@@ -576,6 +579,9 @@
                       *ngIf="app.showInfo"
                     ></qm-appointment-info>
                     <i
+                      tabindex="0"
+                      (keydown.enter)="expandAppointment(app)"
+                      (keydown.space)="expandAppointment(app)"
                       (click)="expandAppointment(app)"
                       [ngClass]="{
                         'icon-info--active icon-info-solid': app.showInfo,

@@ -43,6 +43,7 @@ import { timingSafeEqual } from "crypto";
 import { Router } from "@angular/router";
 import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directive";
 import { DEFAULT_LOCALE } from "src/constants/config";
+import { GlobalNotifySelectors } from "src/store/services/global-notify";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -188,8 +189,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private nativeApiDispatcher: NativeApiDispatchers,
     private modalService: QmModalService,
     private systemInfoSelectors: SystemInfoSelectors,
-    private router: Router
-  ) {
+    private globalNotifySelectors: GlobalNotifySelectors
+      ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
@@ -468,6 +469,16 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.add(customerSubscription);
+
+    const globalNotifySub = this.globalNotifySelectors.criticalError$.subscribe(()=> {
+      if(!this.nativeApi.isNativeBrowser()) {
+        this.isLoaded = true;
+        this.isLoading = false;
+        this.appointments = [];
+      }
+    });
+
+    this.subscriptions.add(globalNotifySub);
   }
 
   initializeSortState() {
@@ -1080,6 +1091,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   searchAppointments() {
     this.showTimeLabel = true;
+    this.appointments = [];
     this.lastSearchAttempt = this.currentSearchState;
     let searchQuery: any = {
       branchId: this.useCalendarEndpoint

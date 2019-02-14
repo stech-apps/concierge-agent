@@ -499,12 +499,17 @@
                 </button>
               </div>
               <div class="qm-identify-appointment__table-body">
+                <div class="qm-appointments-loading" *ngIf="showLoading()">
+                  <span class="qm-spinner"></span>
+                  <span>{{ "label.identify.appointment.loading" | translate }}</span>
+                </div>
+
+                <ng-container>
                 <ng-container
                   *ngFor="
                     let app of (appointments
                       | sortAppointments: sortColumn:isDescending)
-                  "
-                >
+                  ">
                   <div
                     class="qm-identify-appointment__appointment-table__list-parent qm-table__row"
                     *ngIf="
@@ -592,6 +597,8 @@
                     ></i>
                   </div>
                 </ng-container>
+                </ng-container>
+
               </div>
               <!--   <div class="qm-loader-container" *ngIf="showLoading()">
                     <qm-loader [color]="black"></qm-loader>

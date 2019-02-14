@@ -420,7 +420,7 @@ qm-identify-appointment{
           cursor: pointer;
           color: $dark-transparent62;
           line-height: $lg-md-row-height;
-          margin-left: 1rem;
+          padding-left: 1rem;
 
           @include qm-sm {
             line-height: $sm-xs-row-height;
@@ -446,9 +446,17 @@ qm-identify-appointment{
         padding-left: 1rem;
       }
     }
+    &__list:focus{
+      border:  solid #007bff 1px;
+    }
   }
 }
-
+.qm-action-btn__icon:focus{
+  border:  solid #007bff 1px;
+}
+.qm-info-icon-button{
+  height: 30px;
+}
 .qm-action-btn__icon {
   display: inline-block;
   vertical-align: middle;

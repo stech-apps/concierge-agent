@@ -25,7 +25,7 @@
     </i>
     
     
-    <div style="flex:3" class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable">
+    <div style="flex:3" class="qm-summary-card" *ngIf="isShowQueueView || editVisitEnable" >
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
       <qm-queue-summary ></qm-queue-summary>
       <hr  [ngClass]="{ 'hr-queue': (!selelctedQueue && !selectedVisit),'hr-visit': (selelctedQueue || selectedVisit)}">

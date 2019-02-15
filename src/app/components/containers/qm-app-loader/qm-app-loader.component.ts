@@ -6,6 +6,9 @@ import { LicenseInfoSelectors, BranchSelectors, ServicePointSelectors, BranchDis
 import { Subscription } from 'rxjs';
 import { STORAGE_SUB_KEY } from 'src/util/local-storage';
 import { Util } from 'src/util/util';
+import { SPService } from 'src/util/services/rest/sp.service';
+import { USER_STATE } from 'src/util/q-state';
+import { IUserStatus } from 'src/models/IUserStatus';
 
 @Component({
   selector: 'qm-app-loader',
@@ -17,20 +20,31 @@ export class QmAppLoaderComponent implements OnInit, OnDestroy {
   branches$: Subscription;
   servicePoints$: Subscription;
   readonly PROFILE_ROUTE = '/profile';
+  readonly HOME_ROUTE = 'home';
 
   constructor( private licenseSelector: LicenseInfoSelectors,
     private router: Router, private localStorage: LocalStorage,
     private branchDispatchers: BranchDispatchers, private branchSelectors: BranchSelectors,
     private servicePointSelectors: ServicePointSelectors, private servicePointDispatchers: ServicePointDispatchers,
-    private util: Util) {
+    private util: Util, private spService: SPService) {
 
     
     this.branchSelectors.branches$;
     this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
       if (loadedState) {
         if (window.performance) {
-          if (performance.navigation.type == 1) {
-            this.handleRefreshEvent();
+          if(performance.navigation.redirectCount == 1) {
+            this.spService.fetchUserStatus().subscribe((us: IUserStatus)=> {
+             if(us.userState === USER_STATE.NO_STARTED_USER_SESSION || us.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION) {
+              this.router.navigate([this.PROFILE_ROUTE]);
+             }
+             else {
+              this.handleHomeNavigate()
+             }
+            });
+          }
+          else if (performance.navigation.type == 1 ) {
+            this.handleHomeNavigate();
           } else {
             this.router.navigate([this.PROFILE_ROUTE]);
           }
@@ -41,7 +55,7 @@ export class QmAppLoaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleRefreshEvent() {
+  handleHomeNavigate() {
     var settingsCollection = this.localStorage.getSettings();
     
     let activeBranch = settingsCollection[STORAGE_SUB_KEY.ACTIVE_BRANCH];

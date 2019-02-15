@@ -252,10 +252,44 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | --- | --- |
+| **163933756** | **Create Visit flow > Add customer fish > Tool tip for "?" icon is not given.** |
+| **163937358** | **New icon for Concierge  on desktop and utt files** |
+
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163945367** | **IE11 expand queue issue** |
+| **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
+
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
+<h2>Update 7</h2>
+
+**Date:2019-02-15**
+ 
+**Build number:7**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
 | **163381450** | **Upgrade Concierge to Angular 7+** |
 | **163316967** | **Profile settings page** |
-| **163937358** | **New icon for Concierge  on desktop and utt files** |
-| **163933756** | **Create Visit flow > Add customer fish > Tool tip for "?" icon issue** |
 
 
 <h3>Bug fixes</h3>
@@ -263,10 +297,8 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **163619604** | **Edit appointment flow > Sort by Date is not working after search by customer** |
-| **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
 | **161052476** | **Robustness : Robustness is not handled in User profile page** |
 | **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
-| **163945367** | **IE11 expand queue issue** |
 
 ---
 <h3>Known issues</h3>

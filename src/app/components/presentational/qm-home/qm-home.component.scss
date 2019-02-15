@@ -152,6 +152,15 @@ $standard-home-margin : 1.5rem;
    }
 }
 
+// IE Specifc fix for xs screen
+.queue-view-ie-expanded{
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        @include qm-xs{
+            flex:6;
+        }
+    }  
+}
+
 .hr-queue{
     width: calc(100% - 95px);
     color: $dark-transparent42;

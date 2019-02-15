@@ -153,13 +153,20 @@ $standard-home-margin : 1.5rem;
 }
 
 // IE Specifc fix for xs screen
-.queue-view-ie-expanded{
+
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         @include qm-xs{
-            flex:6;
+            .normal-queue-ie{
+                flex:1 !important;
+                background:red;
+            }
+            .expanded-queue-ie{
+                flex:6 !important
+            }
+            
         }
     }  
-}
+
 
 .hr-queue{
     width: calc(100% - 95px);

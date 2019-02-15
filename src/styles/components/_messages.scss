@@ -10,11 +10,8 @@
     transform: translateX(-50%);
 
     @include qm-xs {
-      max-width: 90%;
+      // max-width: 90%;
     }
 
-    @include qm-sm {
-      max-width: 80%;
-    }
   }
   

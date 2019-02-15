@@ -161,9 +161,9 @@
           <div class="qm-visit-list__options-2__rec">
             <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
-                <button class="qm-transparent-btn">
-                <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
-                <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back" (click) = "backToQueueOptionsButton()"></i>
+                <button class="qm-transparent-btn" (click) = "backToQueueOptionsButton()">
+                <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" ></i>
+                <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back"></i>
                 </button>
                 <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>

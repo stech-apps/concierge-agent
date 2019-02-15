@@ -94,9 +94,9 @@
 <div
   class="qm-flow-done-bar"
   *ngIf="isRescheduleEnabledInUtt && enableReschedule"
-  (click)="onRescheduleAppointment()"
+  
 >
-  <div class="qm-flow-done-bar__done-button">
+  <button class="qm-flow-done-bar__done-button" (click)="onRescheduleAppointment()">
     {{ "reschedule" | translate }}
-  </div>
+  </button>
 </div>

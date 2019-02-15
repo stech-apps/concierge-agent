@@ -74,11 +74,13 @@
             <div class="qm-selected-box__text">
               {{ currentCustomer.firstName + " " + currentCustomer.lastName }}
             </div>
+            <button class="qm-transparent-btn" (click)="clearCustomer()">
             <i
               aria-hidden="true"
               class="icon-close remove-icon"
-              (click)="clearCustomer()"
+       
             ></i>
+          </button>
           </div>
         </div>
     </div>

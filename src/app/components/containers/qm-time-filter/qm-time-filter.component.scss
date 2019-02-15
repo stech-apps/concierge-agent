@@ -83,6 +83,9 @@ qm-time-filter-items {
       background-color: rgba(0,0,0,0.04);
       box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
     }
+    &-text:focus{
+      border:  solid #007bff 1px;
+    }
   }
   &__header {
     font-size: 21px;

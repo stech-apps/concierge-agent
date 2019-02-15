@@ -312,7 +312,7 @@
             *ngIf="currentSearchState !== 'customer'"
           >
             <div class="qm-identify-appointment__pannel-header">
-              <span *ngIf="showTimeLabel" tabindex="0">
+              <span *ngIf="showTimeLabel">
                 {{
                   (useCalendarEndpoint
                     ? "label.identifyappointment.upcoming"

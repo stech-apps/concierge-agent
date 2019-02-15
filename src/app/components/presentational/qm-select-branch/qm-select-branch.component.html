@@ -35,8 +35,8 @@
   <div class="qm-flow-sub-header__right">
     <div class="qm-checkbox__container">
       <label for="qm-checkbox" class="qm-checkbox-label">
-        <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
-        <div class="qm-checkbox__selector">
+        <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip" (focus)="skipBranchFocus=true"  (focusout)="skipBranchFocus=false">
+        <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
           <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
           <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
         </div>
@@ -83,9 +83,10 @@
         </div>      
       </div>
       <button class="qm-transparent-btn qm-action-btn__icon" type="button"  (click)="b.showInfo = !b.showInfo">
-      <i *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+        <i *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
+        <i *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
       </button>
-      <i (click)="b.showInfo = !b.showInfo" *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+    
       
     </div>
   </div>

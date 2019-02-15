@@ -27,11 +27,11 @@
           <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="!isTimeSlotLoading && timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
             {{ ('label.nobookable.slots.ampm' | translate) + ' ' + tc.title}}
           </div>
-          <div class="qm-time-select-slot" *ngFor="let ts of timeSlots | filterTimeSlot : tc.category" [ngClass]="{'qm-time-select-slot--active': ts.isActive}"
+          <button class="qm-time-select-slot qm-transparent-btn" *ngFor="let ts of timeSlots | filterTimeSlot : tc.category" [ngClass]="{'qm-time-select-slot--active': ts.isActive}"
             (click)="timeSlotSelect(ts)">
             {{ getTimeDisplayValue(ts) }}
             <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}</span>
-          </div>
+          </button>
         </div>
       </div>
     </ng-container>

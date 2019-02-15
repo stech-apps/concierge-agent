@@ -26,6 +26,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   searchText: string = '';
   userDirection$: Observable<string>;
   showToolTip:boolean;
+  skipBranchFocus:boolean;
 
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 
@@ -56,6 +57,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   ) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
+    this.skipBranchFocus = false;
 
   
     if (this.isFlowSkip === undefined) {

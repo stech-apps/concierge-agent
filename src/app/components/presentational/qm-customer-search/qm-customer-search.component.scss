@@ -126,3 +126,10 @@ tbody{
 .qm-sub-row{
     font-size: 16px !important;
 }
+.customer-list:focus{
+    border:  solid #007bff 1px !important;
+}
+
+.svg-container:focus{
+    border:  solid #007bff 1px;
+}

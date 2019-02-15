@@ -22,12 +22,13 @@
           <div class="qm-week-date disabled"  *ngIf="!isSelectedMonth(day.mDate)">
             <div class="qm-date-text"></div>
           </div>
-          <div class="qm-week-date enabled"
+          <button class="qm-week-date enabled qm-transparent-btn"
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day, true)"
-               [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}">
+               [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}"
+               [attr.tabindex]="day.disabled ? '-1' : null">
             <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
-          </div>
+          </button>
         </ng-container>
       </div>
     </div>

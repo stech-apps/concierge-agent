@@ -10,18 +10,19 @@
       <span class="qm-time-filter__header-text qm-text-overflow-fix">{{
         header
       }}</span>
+      <button class="qm-transparent-btn" (click)="activeModal.close()">
       <i
         class="qm-action-btn__icon qm-time-filter__header-icon icon-close"
-        (click)="activeModal.close()"
         aria-hidden="true"
       ></i>
+      </button>
     </div>
 
     <div *ngIf="showDateFilter" class="qm-time-filter__date-container">
       <div class="qm-time-filter__date-label">
         {{ "label.timefilter.date" | translate }}
       </div>
-      <div class="qm-time-filter__date-text" (click)="showCalendar()">
+      <div class="qm-time-filter__date-text" (click)="showCalendar()" tabindex="0"  (keydown.enter)="showCalendar()" (keydown.space)="showCalendar()">
         <span class="qm-time-filter__date-text--label">
           {{ selectedDate.mDate  | amLocale: userLocale | amDateFormat: "DD MMMM YYYY" }}</span>
         <span  class="qm-time-filter__date-icon">

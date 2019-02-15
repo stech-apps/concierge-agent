@@ -777,6 +777,12 @@ height: 100%;
     border: 1px solid rgba(0,0,0,0.12);
 }
 
+.qm-loader-container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
 button:focus{
     // border:  solid #007bff 1px;
 }

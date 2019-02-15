@@ -79,6 +79,8 @@
         height: 100%;
         &-caret-view {
             display: flex;        
+           
+            // height: 100%;        
         }
         &-label {
             padding-left: 5px;
@@ -495,6 +497,7 @@
 .qm-first-element-header{
     margin-left: 15px;
     font-weight: 500;
+
     @at-root [dir="rtl"] & {
         margin-right: 15px;
     }
@@ -578,7 +581,7 @@
 
 .qm-row-text{
  margin: auto 0;
-height: 100%;
+ height: 100%;
  align-items: center;
 }
 .qm-selected-visit-font{
@@ -596,7 +599,7 @@ height: 100%;
     .qm-visit-list__body {
         max-height: calc(100vh - 165px);
         min-height: calc(100vh - 892px);
-        height: 10px;
+        // height: 10px;
     }
     .qm-row-text{
         min-height: 56px;
@@ -628,7 +631,7 @@ height: 100%;
     .qm-visit-list__body {
         max-height: calc(100vh - 165px);
         min-height: calc(100vh - 892px);
-        height: 10px;
+        // height: 10px;
     }
     .qm-service-col{
         display: none;
@@ -666,9 +669,9 @@ height: 100%;
         display: none;
     }
     .qm-visit-list__body {
-        max-height: calc(100vh - 165px);
-        min-height: calc(100vh - 460px);
-        height: 10px;
+        max-height: calc(100vh - 435px);
+        min-height: calc(100vh - 485px)
+        // height: 10px;
     }
     .qm-visit-list__options-2 {
         width:608px;
@@ -706,9 +709,9 @@ height: 100%;
         display: none;
     }
     .qm-visit-list__body {
-        max-height: calc(100vh - 165px);
+        max-height: calc(100vh - 451px);
         min-height: calc(100vh - 485px);
-        height: 10px;
+        // height: 10px;
     }
     .qm-visit-list__options-2 {
         margin-left:-32px;
@@ -739,9 +742,9 @@ height: 100%;
         display: none;
     }
     .qm-visit-list__body {
-        max-height: calc(100vh - 165px);
+        max-height: calc(100vh - 466px);
         min-height: calc(100vh - 520px);
-        height: 10px;
+        // height: 10px;
     }
     .qm-visit-list__options-2 {
         width: 1136px;
@@ -753,12 +756,12 @@ height: 100%;
 
 .visit-list-body-collapesed{
     @include qm-xs {
-    max-height: calc(100vh - 165px);
-    min-height: calc(100vh - 562px);
+        max-height: calc(100vh - 683px);
+        min-height: calc(100vh - 692px);
     }
     @include qm-xs-lower {
-        max-height: calc(100vh - 165px);
-        min-height: calc(100vh - 562px);
+        max-height: calc(100vh - 683px);
+        min-height: calc(100vh - 692px);
         }
 }
 

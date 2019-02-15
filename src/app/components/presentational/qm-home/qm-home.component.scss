@@ -141,10 +141,13 @@ $standard-home-margin : 1.5rem;
        display: none;
    }
    .icon-ie{
-       display: block;
-       @at-root [dir="rtl"] & {
-        
-        margin-left: 62px;
+       @include qm-xs{
+        display: block;
+        @at-root [dir="rtl"] & {
+         
+         margin-left: 62px;
+       }
+      
     }       
    }
 }

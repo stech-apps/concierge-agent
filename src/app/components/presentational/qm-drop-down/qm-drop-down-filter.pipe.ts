@@ -6,8 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class QmDropDownFilterPipe implements PipeTransform {
 
   transform(items: Array<any>, filterText?: any, labelProperty = 'text'): any {
-    console.log(labelProperty);
-    console.log(filterText)
     filterText =  (filterText || '').trim();
     if(!items || !filterText) {
       return items;

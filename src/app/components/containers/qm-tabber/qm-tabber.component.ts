@@ -39,8 +39,6 @@ export class QmTabberComponent implements OnInit, OnDestroy {
         elem = this.getNextTabbaleElement();
       }
 
-      console.log(elem);
-
       if ($(elem).hasClass("qm-tab-click")) {
         $(elem).trigger("click");
 
@@ -48,7 +46,6 @@ export class QmTabberComponent implements OnInit, OnDestroy {
       } else {
         if ($(this.previouslyTabbedElement).hasClass("qm-tab-click-active")) {
           $(this.previouslyTabbedElement).click();
-          console.log('clicked previously tabbed element');
         }
         $(elem).focus();
       }

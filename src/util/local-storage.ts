@@ -151,9 +151,6 @@ export class LocalStorage {
                 return val.user === userId;
             }); 
 
-            console.log('userStore');
-            console.log(userStore);
-
             if(userStore && userStore.length > 0) {
                 return userStore[0][objectProperty];
             }

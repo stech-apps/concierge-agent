@@ -787,7 +787,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           }
           else if (this.ticketSelected) {
             subheadingText = v['label.notifyoptions.ticket'];
-            console.log(subheadingText);
 
           }
           else if (this.smsSelected) {

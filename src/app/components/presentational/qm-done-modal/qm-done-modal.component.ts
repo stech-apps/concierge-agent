@@ -38,6 +38,6 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
   test(){
-    console.log(this.visitID);
+  
   }
 }

@@ -212,7 +212,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     }else{
       phone = "";
     }
-    console.log({ 'email' :  email, 'phone':phone});
     
       this.activeModal.close({ 'email' : email, 'phone': phone});    
   }
@@ -247,7 +246,6 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
     let a = '^(?!\\\+?';
     let c = this.countryCodeNumber
     let b = '$)([0-9\\\+\\\s]+)';   
-    console.log(a+c+b);
     
     return  a + c +b;
 

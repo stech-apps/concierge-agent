@@ -177,7 +177,6 @@ OnTransferButtonClick(type){
             });
           }, error => {
             const err = new DataServiceError(error, null);
-            console.log(error);
             
             if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
               this.translateService.get('requested_visit_not_found').subscribe(v => {

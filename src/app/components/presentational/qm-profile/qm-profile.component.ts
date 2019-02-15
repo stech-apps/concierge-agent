@@ -81,7 +81,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
           STORAGE_SUB_KEY.REMEMBER_LOGIN,
           false
         );
-       console.log('EnableUseDefault ' + this.isEnableUseDefault);
       }
     );
     this.subscriptions.add(userSubscription);
@@ -270,7 +269,6 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   checkPreviousSelection(key: STORAGE_SUB_KEY) {
     var previousSelection = this.localStorage.getSettings();
-    console.log(previousSelection);
     if((previousSelection.user_id!=this.user.id) && !this.previousBranch){
       this.setDefaultServicePoint();
       return;

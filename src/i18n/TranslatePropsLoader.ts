@@ -26,7 +26,6 @@ export class TranslatePropsLoader implements TranslateLoader {
     return this.http
       .get(`${this.prefix}/${lang}${this.suffix}?_=${cacheBust}`, { responseType: 'text' })
       .pipe(map((contents: string) => this.parse(contents)), catchError(err => {
-        console.log(err);
         return of({});
       }));
   }

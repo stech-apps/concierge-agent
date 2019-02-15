@@ -291,7 +291,6 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
       var hours = parseInt(timeString.split(":")[0]);
       var minutes = parseInt(timeString.split(":")[1]);
     } catch (ex) {
-      console.log("timeString issue", { class: "CalendarDatePickerModel", func: "getMinutesFromTime", exception: ex });
     }
     return (hours * 60) + minutes;
   }

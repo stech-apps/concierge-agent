@@ -48,12 +48,6 @@ export class QEventsHelper {
   }
 
   checkServerStatus(msg){
-      if(msg.successful){
-          console.log("done")
-      }
-      else{
-          console.log("no");
-      }
   }
 
   receiveEvent(msg){

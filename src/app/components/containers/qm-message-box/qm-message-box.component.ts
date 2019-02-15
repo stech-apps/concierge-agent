@@ -39,7 +39,6 @@ export class QmMessageBoxComponent implements OnInit {
   resetValue(){
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     this.queueService.setQueuePoll();
-    //console.log(this.MessageBoxInfo)
   }
 
 

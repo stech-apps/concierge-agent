@@ -169,18 +169,22 @@
   }
 }
 
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (orientation: landscape) 
-  and (-webkit-min-device-pixel-ratio: 1) {
-
-.qm-profile {
+@include qm-sm {
+  .qm-profile {
     &-content {
-      width: 50%;
+      width: 40%;
     }
   }
 }
+
+@include qm-xs {
+  .qm-profile {
+    &-content {
+      width: 70%;
+    }
+  }
+}
+
 
 .qm-error-message {
   width: 100%;

@@ -242,6 +242,42 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
+<h2>Update 6</h2>
+
+**Date:2019-02-15**
+ 
+**Build number:6**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163933756** | **Create Visit flow > Add customer fish > Tool tip for "?" icon is not given.** |
+| **163937358** | **New icon for Concierge  on desktop and utt files** |
+
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163945367** | **IE11 expand queue issue** |
+| **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
+
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
 
 <h3>Copyright notice</h3>
 

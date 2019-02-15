@@ -242,6 +242,42 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
+<h2>Update 6</h2>
+
+**Date:2019-02-15**
+ 
+**Build number:6**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163381450** | **Upgrade Concierge to Angular 7+** |
+| **163316967** | **Profile settings page** |
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **163619604** | **Edit appointment flow > Sort by Date is not working after search by customer** |
+| **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
+| **161052476** | **Robustness : Robustness is not handled in User profile page** |
+| **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
 
 <h3>Copyright notice</h3>
 

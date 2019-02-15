@@ -399,7 +399,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
                 this.toastService.infoToast(label);
               });
             }, error => {
-              // console.log(error);
               const err = new DataServiceError(error, null);
               if (error.status == ERROR_STATUS.NOT_FOUND) {
                 this.translateService.get('requested_visit_not_found').subscribe(v => {

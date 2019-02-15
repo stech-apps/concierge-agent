@@ -195,7 +195,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const timeSlotsSubscription = this.timeSlotSelectors.times$.subscribe(
       ts => {
         if (ts.length) {
-          console.log(ts[0]);
+         
         }
       }
     );

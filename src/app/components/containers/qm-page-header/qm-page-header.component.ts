@@ -91,11 +91,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     
-    console.log(this.userDirection$);
-
     const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
       this.userDirections = direction;
-      console.log(this.userDirections);
       
     });
     this.headerSubscriptions.add(userDirectionSubscription);    

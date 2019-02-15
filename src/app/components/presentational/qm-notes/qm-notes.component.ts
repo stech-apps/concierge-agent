@@ -137,7 +137,7 @@ export class QmNotesComponent implements OnInit, OnDestroy {
   }
 
   test(){
-    console.log(this.isCustomerSelected);
+
   }
 
 }

@@ -1632,7 +1632,6 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
   keydown($event) {
     const inputChar = String.fromCharCode($event.keyCode);
-    console.log($event.key);
     $event.target.value.replace(/[^0-9]/g, "");
   }
 

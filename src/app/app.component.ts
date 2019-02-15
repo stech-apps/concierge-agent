@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.systemInfoSelectors.systemInfo$.subscribe(
       systemInfo => {
         if (systemInfo && systemInfo.productName) {
-          console.log("Orchestra System Information – \n" + JSON.stringify(systemInfo));
+          //console.log("Orchestra System Information – \n" + JSON.stringify(systemInfo));
         }
       }
     );
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSelectors.user$.subscribe(
       user => {
         if (user && user.id) {
-          console.log("User –  \n" + JSON.stringify(user));
+          //console.log("User –  \n" + JSON.stringify(user));
         }
       }
     );

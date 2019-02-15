@@ -184,7 +184,6 @@ export class QmSelectServiceComponent implements OnInit {
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
-        console.log(params.mltyService);
         if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
           this.multiServiceEnabled = params.mltyService;
         }
@@ -354,13 +353,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   handleInput($event) {
-    console.log($event);
     this.inputChanged.next($event.target.value);
-  
-    if ($event.keyCode == 13){
-  
-      
-    } 
   }
 
   filterServices(newFilter: string) {    

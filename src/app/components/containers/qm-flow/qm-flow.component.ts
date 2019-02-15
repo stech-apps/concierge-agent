@@ -167,7 +167,6 @@ headerItemClicked(n){
 }
 
 test(){
-  console.log(this.flowPanels.toArray()[0].index);
 }
 }
 

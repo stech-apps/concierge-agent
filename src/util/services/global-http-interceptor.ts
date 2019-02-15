@@ -94,7 +94,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                             //util.showMessage($injector.get('application').getTranslatedMessage(R.TRANSLATION_MESSAGE_KEYS.NULL_RESPONSE));
                         }
                         catch (e) {
-                            console.log(e, { class: "httpResponseErrorInterceptor", func: "response", exception: e });
                         }
                     }
                 }

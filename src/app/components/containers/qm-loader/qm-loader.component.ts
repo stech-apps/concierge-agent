@@ -19,7 +19,6 @@ export class QmLoaderComponent implements OnInit {
   
   }
   clickedbutton(){
-    console.log(this.color);
   }
 
 }

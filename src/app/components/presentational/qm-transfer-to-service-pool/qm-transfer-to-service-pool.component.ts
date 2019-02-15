@@ -149,7 +149,6 @@ export class QmTransferToServicePoolComponent implements OnInit {
               });
             }
             , error => {
-              console.log(error);
               const err = new DataServiceError(error, null);
               
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {

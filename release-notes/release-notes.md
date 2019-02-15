@@ -254,6 +254,8 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **163381450** | **Upgrade Concierge to Angular 7+** |
 | **163316967** | **Profile settings page** |
+| **163937358** | **New icon for Concierge  on desktop and utt files** |
+| **163933756** | **Create Visit flow > Add customer fish > Tool tip for "?" icon issue** |
 
 
 <h3>Bug fixes</h3>
@@ -264,6 +266,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
 | **161052476** | **Robustness : Robustness is not handled in User profile page** |
 | **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
+| **163945367** | **IE11 expand queue issue** |
 
 ---
 <h3>Known issues</h3>

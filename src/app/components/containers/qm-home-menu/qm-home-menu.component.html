@@ -1,5 +1,5 @@
 
-<div class='qm-home-menu' dir="{{ userDirection$ | async }}">
+<div class='qm-home-menu' dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
 
   <div *ngIf="menuItemEnable"  class="qm-menu-item-disable">
 

@@ -1,7 +1,7 @@
-<header class="qm-header">
+<header class="qm-header" *ngIf="!isFlowOpen">
   <span class="qm-header__title">{{'module_name' | translate}}</span>
 </header>
-<header class="qm-header" dir="{{ userDirection$ | async }}">
+<header class="qm-header" dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
   <div class="qm-header__left">
     <a *ngIf="!isNative" href="/" (click)="homeClick($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
       <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>

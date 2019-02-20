@@ -27,3 +27,4 @@ export * from './queue-visits';
 export * from './service-point-pool';
 export * from './staff-pool';
 export * from './native-api';
+export * from './flow-open';

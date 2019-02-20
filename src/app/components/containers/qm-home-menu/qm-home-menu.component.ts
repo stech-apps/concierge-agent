@@ -4,7 +4,7 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors, SystemInfoDataService } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors, SystemInfoDataService, FlowOpenDispatchers, FlowOpenSelectors } from 'src/store';
 
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,6 +45,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   hostAddressStr:string;
   menuItemEnable:boolean;
 
+  isFlowOpen:boolean;
+
   //putting menuItem Names to a 2D array by splitting the words in to half chunks
   menuItemWordArray=new Array();;
 
@@ -60,7 +62,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     private InfoMsgBoxDispatcher: InfoMsgDispatchers, private recycleService: Recycle, private queueService: QueueService, 
     private calendarService: CalendarService, private systemInfoService: SystemInfoDataService, private branchSelector: BranchSelectors,
     private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors,
-    private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors) {
+    private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors,
+    private flowOpenDispatcher:FlowOpenDispatchers, private flowOpenSeletctors:FlowOpenSelectors
+) {
 
   }
 
@@ -83,6 +87,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.menuItemEnable = status;
     });
     this.subscriptions.add(AccountSubscriptions);
+
+    const FlowOpenSubscription = this.flowOpenSeletctors.FlowOpen$.subscribe(status=>{
+        this.isFlowOpen  = status
+    })
+    this.subscriptions.add(FlowOpenSubscription);
 
     this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
     this.licenseIsValid$ = this.licenseInfoSelectors.isValidLicense$;
@@ -199,6 +208,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
             if (error.status === 401) {
               this.queueService.stopQueuePoll();
               this.router.navigate(['home/central-login'], { queryParams : {route} });
+              setTimeout(() => {
+                this.flowOpenDispatcher.flowOpen();  
+              }, 1000);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.errorToast(v);
@@ -236,6 +248,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.recycleService.clearCache();
       this.queueService.stopQueuePoll();
       this.router.navigate(['home/' + route]);
+      setTimeout(() => {
+        this.flowOpenDispatcher.flowOpen();  
+      }, 1000);
+      
     }
   }
   ngOnDestroy(): void {

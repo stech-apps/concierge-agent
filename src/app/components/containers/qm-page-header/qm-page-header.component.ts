@@ -20,7 +20,8 @@ import {
   BranchSelectors,
   AppointmentDispatchers,
   ReserveDispatchers,
-  QueueDispatchers
+  QueueDispatchers,
+  FlowOpenSelectors
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -56,6 +57,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   showSPointName:boolean = false;
   sPName:string;
   userDirections: string;
+  isFlowOpen:boolean;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -78,7 +80,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private branchSelectors: BranchSelectors,
     private servicePointSelectors: ServicePointSelectors,
     private reserveDispatchers:ReserveDispatchers,
-    private queueDispatchers: QueueDispatchers
+    private queueDispatchers: QueueDispatchers,
+    private flowOpenSelectors:FlowOpenSelectors
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -86,7 +89,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.servicePoint$ = this.servicePointSelectors.openServicePoint$;
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
-
+    this.isFlowOpen = false;
   }
 
   ngOnInit() {
@@ -119,6 +122,11 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       this.branchName = branch.name;
     });
     this.headerSubscriptions.add(branchSubscription);
+
+    const flowOpenSubscription = this.flowOpenSelectors.FlowOpen$.subscribe(status=>{
+      this.isFlowOpen = status;
+    });
+    this.headerSubscriptions.add(flowOpenSubscription);
   }
   ngOnDestroy() {
     this.headerSubscriptions.unsubscribe();

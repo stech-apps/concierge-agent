@@ -4,7 +4,8 @@ import {
   ServicePointSelectors,
   BranchDispatchers,
   BranchSelectors,
-  QueueSelectors
+  QueueSelectors,
+  FlowOpenSelectors
 } from "src/store/services";
 import { Subscription, Observable } from "rxjs";
 import { Util } from "src/util/util";
@@ -40,6 +41,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   isCollapse:boolean;
   slideUpSrc = "assets/images/button-up.svg";
   userDirection: string;
+  isFlowOpen:boolean
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -53,6 +55,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private translationService: TranslateService,
     private queueSelectors:QueueSelectors,
     private localStorage: LocalStorage,
+    private flowOpenSelectors:FlowOpenSelectors
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -75,6 +78,12 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
       this.selelctedQueue = q;
     })
     this.subscriptions.add(queueSubscription);
+
+    this.isFlowOpen = false;
+    const flowOpenSubscription = this.flowOpenSelectors.FlowOpen$.subscribe(status=>{
+      this.isFlowOpen=status;
+    });
+    this.subscriptions.add(flowOpenSubscription);
 
     const selectedVisitSubscription = this.queueSelectors.selectedVisit$.subscribe((selectedVisit)=>{
       this.selectedVisit = selectedVisit

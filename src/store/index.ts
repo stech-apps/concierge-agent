@@ -76,6 +76,8 @@ import {
   StaffPoolSelectors,
   NativeApiDispatchers,
   NativeApiSelectors,
+  FlowOpenDispatchers,
+  FlowOpenSelectors
 
 } from "./services";
 
@@ -151,5 +153,7 @@ export const storeServices = [
   StaffPoolDispatchers,
   StaffPoolSelectors,
   NativeApiDispatchers,
-  NativeApiSelectors
+  NativeApiSelectors,
+  FlowOpenDispatchers,
+  FlowOpenSelectors
 ];

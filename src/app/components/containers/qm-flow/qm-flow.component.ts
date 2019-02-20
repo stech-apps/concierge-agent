@@ -7,7 +7,7 @@ import { QueryList } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { Recycle } from '../../../../util/services/recycle.service';
 import { QueueService } from '../../../../util/services/queue.service';
-import { TimeslotDispatchers, AccountDispatchers, UserSelectors, ServicePointSelectors } from '../../../../store';
+import { TimeslotDispatchers, AccountDispatchers, UserSelectors, ServicePointSelectors, FlowOpenDispatchers } from '../../../../store';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { Observable, Subscription } from 'rxjs';
 
@@ -37,7 +37,8 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     private AccountDispatchers:AccountDispatchers,
     private localStorage: LocalStorage,
     private userSelectors: UserSelectors,
-    private servicePointSelectors:ServicePointSelectors
+    private servicePointSelectors:ServicePointSelectors,
+    private flowDispatchers:FlowOpenDispatchers
   ) {
 
     this.activeHeader = 0;
@@ -120,10 +121,15 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
           this.queueService.fetechQueueInfo();
           this.onFlowExitInvoked.emit();
           
+          if(this.router.url!=="/profile"){
+            this.flowDispatchers.flowClose();
+          }
+
           setTimeout(() => {
             this.AccountDispatchers.setMenuItemStatus(false);
             if(this.router.url!=="/profile"){
             this.router.navigate(['home']);
+           
             }
           }, 1000);
         }

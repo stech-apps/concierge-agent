@@ -1,6 +1,6 @@
 # Concierge
 
-This is an Angular 6 application. Read more about Angular here: `https://angular.io/docs`
+This is an Angular 7 application. Read more about Angular here: `https://angular.io/docs`
 
 This project uses ngrx/store to keep the application state. Read more here:
 `https://github.com/ngrx/platform`
@@ -27,7 +27,7 @@ Make sure you have installed
 
 ## Development
 
-1. Clone the projec
+1. Clone the project
 2. Make sure to switch to "v4.0.0" branch which is the current release branch and the most stable.
 3. Run the following command to install all dependencies
 
@@ -72,7 +72,7 @@ Release notes are located in **/release-notes**
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## Dependencies 
-* [Angular 6](https://angular.io/) - As a single page application (SPA) framework.
+* [Angular 7](https://angular.io/) - As a single page application (SPA) framework.
 * [Angular Moment](https://www.npmjs.com/package/angular2-moment) - For date, time formatting and calculations etc.
 * [Ngrx](https://github.com/ngrx) - Reactive Extensions for Angular which used to communicate between components etc. reactively.
 * [Ngrx Effects](https://github.com/ngrx/effects) - When using redux store this library is used for redux side effects management.

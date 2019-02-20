@@ -47,6 +47,28 @@
         text-align: left;
         cursor: pointer;
         position: relative;
+        .qm-list__item--info {
+          font-size: 18px;
+          color: $dark-transparent82;
+          letter-spacing: 0;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          &__icon {
+            margin-right: 0.5rem;
+            font-size: 2.5rem;
+            margin-left: -10px;
+            @at-root [dir='rtl'] & {
+              margin-left: 0.5rem;
+              margin-right: -10px;
+            }
+          }
+
+          &__text {
+            width: 100%;
+          }
+        }
     }
 }
 

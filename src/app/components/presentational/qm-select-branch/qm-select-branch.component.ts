@@ -9,6 +9,7 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } 
 import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors, TimeslotDispatchers, ReserveDispatchers, ServicePointSelectors } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { IBranch } from 'src/models/IBranch';
 
 @Component({
   selector: 'qm-select-branch',
@@ -154,12 +155,40 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   onSwitchChange() {
     this.localStorage.setSettings(STORAGE_SUB_KEY.BRANCH_SKIP, this.isFlowSkip);
   }
+
   clickedshowToolTip(){  
     if(this.showToolTip){
       this.showToolTip = false;
-    }else{
+    } else {
       this.showToolTip = true;
+    }  
+  }
+
+  getBranchAddressText(branch: IBranch) {
+    let completeAddress = '';
+    if (branch) {
+      const fieldsToLookFor = [
+        'addressLine1',
+        'addressLine2',
+        'addressZip',
+        'addressCity',
+        'addressCountry'
+      ];
+
+      fieldsToLookFor.forEach((curr) => {
+        if (curr in branch) {
+          const value = branch[curr];
+          if (value !== null && value.trim() !== '') {
+            if(completeAddress == '') {
+              completeAddress = value;
+            } else {
+              completeAddress += ', ' + value;
+            }
+          }
+        }
+      });
     }
-  
+
+    return completeAddress;
   }
 }

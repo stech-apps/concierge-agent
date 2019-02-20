@@ -8,7 +8,7 @@
           <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
           <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched "
-            id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}">
+            id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}" autocomplete="false">
     
           <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
             <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

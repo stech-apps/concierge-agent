@@ -205,3 +205,9 @@ $standard-home-margin : 1.5rem;
     //     width: calc(100vw - 46px);
     // }
   }
+
+  .slide-icon:focus{
+      .path3::before{
+    border:  solid #007bff 1px;
+}
+  }

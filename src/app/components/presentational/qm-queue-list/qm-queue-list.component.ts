@@ -8,6 +8,7 @@ import { QueueService } from '../../../../util/services/queue.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
+import { NativeApiService } from 'src/util/services/native-api.service';
 
 @Component({
   selector: 'qm-queue-list',
@@ -34,7 +35,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   cancherypick: boolean;
   userDirection$: Observable<string>;
   queueFetchFailed: boolean;
-
+  isNative:boolean;
   editVisitEnable:boolean;
   isFirstTime: boolean;
 
@@ -51,7 +52,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private toastService: ToastService,
     private userSelectors: UserSelectors,
-    private queueDispatcher: QueueDispatchers
+    private queueDispatcher: QueueDispatchers,
+    private nativeApi:NativeApiService
   ) {
 
     this.sortedBy = "Queue"
@@ -64,6 +66,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(branchSubscription);
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.isNative = this.nativeApi.isNativeBrowser();
     const uttpSubscriptions = this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) {
         this.showEstWaitTime = uttpParams.estWaitTime;

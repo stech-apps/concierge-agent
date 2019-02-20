@@ -6,8 +6,6 @@
 
 .qm-queue-list {
   margin-top: rem($standard-margin * 1.5);
-  
-
   .sort-icon {
     margin-left: 0.4rem;
     cursor: pointer;
@@ -16,7 +14,6 @@
   .selected-sort-icon{
     color: $dark-transparent62;
   }
-
   .qm-queuefetch-failed {
     .qm-queue-name {
       display: block;
@@ -28,8 +25,7 @@
   }
 
   .max-wait-time-container {
-    display: flex;
-      
+    display: flex;   
   }
   .qm-wait-icon-inside-container{
     margin-top: auto;
@@ -42,11 +38,9 @@
     &.gray-indicator {
       visibility: hidden;
     }
-
     &.red-indicator {
       color: $queue-indicator-red;
     }
-
     &.yellow-indicator {
       color: $queue-indicator-yellow;
     }
@@ -55,7 +49,6 @@
   &__headers {
     height: 3rem;
     font-size: 12px;
-   
     i {
       font-size: 1.2rem;
       padding-right: rem(8px);
@@ -67,8 +60,6 @@
 
   &-header-item {
     display: flex;
-    // justify-content: center;
-    // align-items: center;
     color: $dark-transparent62;
     font-weight: 500;
     min-width: 0;
@@ -90,17 +81,14 @@
 
   &-body-row {
     padding: 0 10px;
-
     &-label {
       @include add-text-ellipsis;
       width: inherit;
-
       font-weight: normal;
     }
   }
 
   &__body {
- 
     overflow-y: auto;
     color: $dark-transparent62;
     font-size: 18px;
@@ -174,7 +162,7 @@
       margin-bottom: 4px;
     }
     &__body {
-      max-height: calc(100vh - 495px);
+      max-height: calc(100vh - 460px);
     }
   }
 }
@@ -187,7 +175,7 @@
       margin-bottom: 4px;
     }
     &__body {
-      max-height: calc(100vh - 475px);
+      max-height: calc(100vh - 460px);
   
     }
   }
@@ -201,7 +189,7 @@
       margin-bottom: 8px;
     }
     &__body {
-      max-height: calc(100vh - 460px);
+      max-height: calc(100vh - 426px);
       font-size: 16px;
     }
   }
@@ -215,7 +203,7 @@
       margin-bottom: 8px;
     }
     &__body {
-      max-height: calc(100vh - 870px);
+      max-height: calc(100vh - 830px);
     }
   }
 }
@@ -228,7 +216,7 @@
       margin-bottom: 8px;
     }
     &__body {
-      max-height: calc(100vh - 870px);
+      max-height: calc(100vh - 830px);
       font-size: 18px
     }
   }
@@ -254,4 +242,20 @@
 
 .qm-queue-list-body-row:focus{
   border:  solid #007bff 1px;
+}
+
+
+.qm-queue-list {
+  &__body-native {
+      @include qm-lg{
+        max-height: calc(100vh - 440px);
+      }
+      @include qm-md{
+        max-height: calc(100vh - 440px);
+      }
+      @include qm-sm{
+        max-height: calc(100vh - 390px);
+      }
+      
+  }
 }

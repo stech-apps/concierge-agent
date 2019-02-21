@@ -79,7 +79,7 @@
         <div  class="qm-list__item--label" [ngClass]="{'qm-highlight-text':b.showInfo}" [innerHtml]="b.name | qmhighlight: searchText">
         </div>
         <div class="qm-list__item--info" *ngIf="b.showInfo">
-          <i class="qm-list__item--info__icon qm-action-btn__icon icon-location" aria-hidden="true"></i>
+          <i class="qm-list__item--info__icon qm-action-btn__icon  icon-location-light" aria-hidden="true"></i>
           <div class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</div>
         </div>      
       </div>

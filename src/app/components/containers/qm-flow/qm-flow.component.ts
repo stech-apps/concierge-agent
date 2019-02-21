@@ -10,6 +10,7 @@ import { QueueService } from '../../../../util/services/queue.service';
 import { TimeslotDispatchers, AccountDispatchers, UserSelectors, ServicePointSelectors, FlowOpenDispatchers } from '../../../../store';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { Observable, Subscription } from 'rxjs';
+import { PlatformLocation } from '@angular/common'
 
 
 @Component({
@@ -38,8 +39,13 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     private localStorage: LocalStorage,
     private userSelectors: UserSelectors,
     private servicePointSelectors:ServicePointSelectors,
-    private flowDispatchers:FlowOpenDispatchers
+    private flowDispatchers:FlowOpenDispatchers,
+    location: PlatformLocation
   ) {
+
+    location.onPopState(() => {
+      this.flowDispatchers.flowClose();
+    });
 
     this.activeHeader = 0;
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);

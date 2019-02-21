@@ -31,6 +31,7 @@ import { ActivatedRoute } from "@angular/router";
 import { IAccount } from "../../../../models/IAccount";
 import { Recycle } from "../../../../util/services/recycle.service";
 import { QueueService } from "src/util/services/queue.service";
+import { PlatformLocation } from "@angular/common";
 
 @Component({
   selector: "qm-profile",
@@ -70,8 +71,27 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     private localStorage: LocalStorage,
     private accountDispatchers: AccountDispatchers,
     private recycleService: Recycle,
-    private queueService: QueueService
+    private queueService: QueueService,
+    location: PlatformLocation
   ) {
+
+    // on Browser back button pressed
+    location.onPopState(() => {
+      if (this.previousBranch) {
+        // window.alert("back button pressed");
+        this.branchDispatchers.selectBranch(this.previousBranch);
+        this.servicePointDispatchers.setOpenServicePoint(this.navServicePoint);
+      //   this.router.navigate(["home"]);
+      // } else {
+      //   if (this.nativeApiService.isNativeBrowser()) {
+      //     this.nativeApiService.logOut();
+      //   } else {
+      //     window.location.href = APP_URL;
+      //   }
+      }
+      
+    });
+
 
     // Get the current User
     const userSubscription = this.userSelectors.user$.subscribe(

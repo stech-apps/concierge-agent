@@ -13,24 +13,21 @@ import * as moment from 'moment';
 export class GlobalErrorHandler {
 
     private readonly genericErrorKey: string = 'messages.error.generic.with.context';
-    constructor(private toastService: ToastService, private globalNotifyDispatchers: GlobalNotifyDispatchers, private translateService: TranslateService) { }
+    constructor(private toastService: ToastService, private globalNotifyDispatchers: GlobalNotifyDispatchers,
+                private translateService: TranslateService) { }
 
-    showError(contextualErrorKey: string, errorAction: any, interpolationParams: any = {}) {
+    showError(contextualErrorKey: string,  errorAction: any, interpolationParams: any = {}) {
         // switch (error.errorCode) {
         // default:
         const dsError = errorAction as DataServiceError<any>;
-
-        console.error(dsError);
-        /* this.translateService.get([contextualErrorKey, this.genericErrorKey], {
-             errorCode: dsError.errorCode,
-             ...interpolationParams
-         }).subscribe(
-             (errorMsgs: string[]) => {
-                 this.toastService.errorToast(`${errorMsgs[contextualErrorKey]}. ${errorMsgs[this.genericErrorKey]}`);
-             }
-             ).unsubscribe();
- 
-             */
+        this.translateService.get([contextualErrorKey, this.genericErrorKey], {
+            errorCode: dsError.errorCode,
+            ...interpolationParams
+        }).subscribe(
+            (errorMsgs: string[]) => {
+                this.toastService.errorToast(`${errorMsgs[contextualErrorKey]} ${errorMsgs[this.genericErrorKey]}`);
+            }
+            ).unsubscribe();
         // break;
         // }
     }

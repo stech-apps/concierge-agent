@@ -27,4 +27,8 @@ export class DataServiceError<T> {
       this.errorMsg = responseData.headers.get(ERROR_MESSAGE) || '';
     }
   }
+
+  toString() {
+    return `${this.errorCode} : ${this.errorMsg}`;
+  }
 }

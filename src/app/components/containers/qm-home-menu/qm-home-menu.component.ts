@@ -179,9 +179,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       let calendarBranchId: number;
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);
+
       const calendarBranchSub = this.calendarBranchSelector.branches$.subscribe((branches => {
-        if (branches && branches.length > 0){
-          var selectedBranch = branches.filter(res => {
+        if (branches && branches.length > 0) {
+          let selectedBranch = branches.filter(res => {
             return res.qpId === calendarBranchId;
           });
           if (selectedBranch) {
@@ -189,6 +190,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
           }
         }
       }));
+
       this.subscriptions.add(calendarBranchSub);
 
       if (calendarBranchId && calendarBranchId > 0) {
@@ -209,7 +211,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
               this.queueService.stopQueuePoll();
               this.router.navigate(['home/central-login'], { queryParams : {route} });
               setTimeout(() => {
-                this.flowOpenDispatcher.flowOpen();  
+                this.flowOpenDispatcher.flowOpen();
               }, 1000);
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
@@ -222,7 +224,6 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     } else {
       this.handleUttRequirements(route);
     }
-
   }
 
   handleUttRequirements(route) {

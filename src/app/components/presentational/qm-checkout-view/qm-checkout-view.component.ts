@@ -32,6 +32,7 @@ import { Router } from "@angular/router";
 import { QueueService } from "../../../../util/services/queue.service";
 import { IBookingInformation } from "src/models/IBookingInformation";
 import { DEFAULT_LOCALE } from "src/constants/config";
+import { GlobalErrorHandler } from "src/util/services/global-error-handler.service";
 
 @Component({
   selector: "qm-checkout-view",
@@ -143,6 +144,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     private queueService: QueueService,
     private reserveDispatchers: ReserveDispatchers,
+    private errorHandler: GlobalErrorHandler
  
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -693,7 +695,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }, error => {
       const err = new DataServiceError(error, null);
       if (err.errorCode === '0') {
-        this.handleTimeoutError(err, 'visit_create_fail')
+        this.handleTimeoutError(err, 'visit_create_fail');
       } else {
         this.loading = false;
         this.showErrorMessage(error);
@@ -833,45 +835,31 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   showErrorMessage(error: any) {
     const err = new DataServiceError(error, null);
+    let errorKey = 'request_fail';
+
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
-      if (error.status === ERROR_STATUS.INTERNAL_ERROR) {
-        if (err.errorMsg.length > 0) {
-          this.toastService.errorToast(err.errorMsg);
-        }
-        else {
-          this.showErrorToastMessage('request_fail');
-        }
+      if (error.status === ERROR_STATUS.BAD_REQUEST) {
+        errorKey = 'booking_appointment_error';
       }
-      else if (error.status === ERROR_STATUS.BAD_REQUEST) {
-        this.showErrorToastMessage('booking_appointment_error');
-      }
-      else {
-        this.showErrorToastMessage('request_fail');
-      }
+
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_VISIT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
+        errorKey = 'request_fail';
         if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
-          this.showErrorToastMessage('printer_error');
-        }
-        else if (err.errorMsg.length > 0) {
+          errorKey = 'printer_error';
+        } else if (err.errorMsg.length > 0) {
           if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
-            this.showErrorToastMessage('queue_full');
+            errorKey = 'queue_full';
           }
         }
-        else {
-          this.showErrorToastMessage('request_fail');
-        }
-      }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
-        this.showErrorToastMessage('paper_jam');
-      }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
-        this.showErrorToastMessage('out_of_paper');
-      }
-      else {
-        this.showErrorToastMessage('visit_timeout');
+      } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
+        errorKey = 'paper_jam';
+      } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
+        errorKey = 'out_of_paper';
+      } else {
+        errorKey = 'visit_timeout';
       }
 
       if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
@@ -888,38 +876,36 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
       if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
         if (err.errorCode === Q_ERROR_CODE.APPOINTMENT_USED_VISIT) {
-          this.showErrorToastMessage('appointment_already_used');
+          errorKey = 'appointment_already_used';
         } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
-          this.showErrorToastMessage('printer_error');
+          errorKey = 'printer_error';
         } else if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
-          this.showErrorToastMessage('queue_full');
+          errorKey = 'queue_full';
         } else {
-          this.showErrorToastMessage('request_fail');
+          errorKey = 'request_fail';
         }
-      }
-      else if (error.status === ERROR_STATUS.NOT_FOUND) {
-        this.showErrorToastMessage('appointment_not_found_detail');
-      }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
-        this.showErrorToastMessage('paper_jam');
-      }
-      else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
-        this.showErrorToastMessage('out_of_paper');
-      }
-      else {
-        this.showErrorToastMessage('visit_timeout');
+      } else if (error.status === ERROR_STATUS.NOT_FOUND) {
+        errorKey = 'appointment_not_found_detail';
+      } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
+        errorKey = 'paper_jam';
+      } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
+        errorKey = 'out_of_paper';
+      } else {
+        errorKey = 'visit_timeout';
       }
 
       if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
         this.translateService.get('arrive_appointment_fail').subscribe(v => {
-          var successMessage = {
+          let successMessage = {
             firstLineName: v,
             icon: "error"
-          }
+          };
+
           this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
         });
       }
     }
+    this.errorHandler.showError(errorKey, err);
   }
 
   showErrorToastMessage(msgKey: string,) {

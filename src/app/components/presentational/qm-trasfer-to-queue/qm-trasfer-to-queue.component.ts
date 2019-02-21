@@ -17,6 +17,7 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { ToastService } from './../../../../util/services/toast.service';
 import { ERROR_STATUS, Q_ERROR_CODE } from '../../../../util/q-error';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 @Component({
   selector: 'qm-trasfer-to-queue',
@@ -55,8 +56,8 @@ export class QmTrasferToQueueComponent implements OnInit {
     private qmModalService: QmModalService,
     private translateService: TranslateService,
     private spService: SPService,
-    private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private errorHandler: GlobalErrorHandler
   ) {    const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
     if (branch) {
       this.selectedBranch = branch;
@@ -177,29 +178,15 @@ OnTransferButtonClick(type){
             });
           }, error => {
             const err = new DataServiceError(error, null);
-            
-            if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
-              this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
+            let contextualErrorKey = 'request_fail';
+
+            if (error.errorCode == Q_ERROR_CODE.NO_VISIT || error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
+              contextualErrorKey = 'requested_visit_not_found';
             }
-            else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
-              this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
-            } else if (err.errorCode === '0') {
-              this.translateService.get('request_fail').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
-            }
-            else {
-              this.translateService.get('request_fail').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
-            }
+
+            this.errorHandler.showError(contextualErrorKey, err);
           }
         )
-          
           this.queueDispatchers.resetSelectedQueue();
           this.queueDispatchers.setectVisit(null);
           this.queueDispatchers.resetFetchVisitError();

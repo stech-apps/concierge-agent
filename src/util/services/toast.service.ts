@@ -68,7 +68,6 @@ export class ToastService {
     return this.toastrService.success(text, '', this.infoOptions);
   }
 
-
   errorToast(text: string) {
     this.toastrService.error(text, '', this.errorOptions);
   }

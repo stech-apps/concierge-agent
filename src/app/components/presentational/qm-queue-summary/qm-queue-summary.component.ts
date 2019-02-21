@@ -9,6 +9,7 @@ import { Visit } from '../../../../models/IVisit';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { GlobalNotifySelectors } from 'src/store/services/global-notify';
 import { Router } from '@angular/router';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 @Component({
   selector: 'qm-queue-summary',
@@ -56,8 +57,6 @@ export class QmQueueSummaryComponent implements OnInit {
   cancherypick: boolean;
   inputText: string;
 
- 
-
   constructor(
     private queueSelectors: QueueSelectors,
     private userSelectors: UserSelectors,
@@ -71,15 +70,15 @@ export class QmQueueSummaryComponent implements OnInit {
     private nativeApiDispatcher: NativeApiDispatchers,
     private servicePointSelectors: ServicePointSelectors,
     private globalNotifySelectors: GlobalNotifySelectors,
-    private router:Router
-  
+    private router: Router,
+    private errorHandler: GlobalErrorHandler
   ) {
 
     const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
       this.userDirections = direction;
     });
-    this.subscriptions.add(userDirectionSubscription);    
-    
+    this.subscriptions.add(userDirectionSubscription);
+
     const VisitSearchLoadedSubscription = this.queueSelectors.queueVisitIDloaded$.subscribe((s)=>{
       this.queueVisitIDloaded = s;
     })
@@ -102,10 +101,10 @@ export class QmQueueSummaryComponent implements OnInit {
         this.canTransferQLast = uttpParams.btnTransferLast;
         this.canTransferQWait = uttpParams.btnTransferSort;
         this.canDelete = uttpParams.delVisit;
-        this.cancherypick = uttpParams.cherryPick;  
+        this.cancherypick = uttpParams.cherryPick;
         this.isQuickServeEnable = uttpParams.quickServe;
         this.isShowQueueView = uttpParams.queueView;
-        this.editVisitEnable = uttpParams.editVisit;     
+        this.editVisitEnable = uttpParams.editVisit;
        }
     })
     this.subscriptions.add(uttpSubscriptions);
@@ -122,25 +121,23 @@ export class QmQueueSummaryComponent implements OnInit {
     });
     this.subscriptions.add(queueNameSubscription);
 
-
-   
-
     // check the visit error
     const QueueVisitErrorSubscription = this.queueSelectors.isFetchVisiitError$.subscribe((error)=>{
       if(error){
         this.isSelectedVisitFail = true;
-        if(this.isRequestFromQR && this.router.url=="/home"){
-        this.translateService.get('visit_not_found').subscribe(
+        if (this.isRequestFromQR && this.router.url=="/home"){
+        /*this.translateService.get('visit_not_found').subscribe(
           (label: string) => {
             this.toastService.errorToast(label);
           }
-        ).unsubscribe();
+        ).unsubscribe();*/
+
+        this.errorHandler.showError('visit_not_found', error);
         this.queueDispatchers.resetFetchVisitError();
         this.queueDispatchers.resetSelectedQueue();
       }
-      }else{
+      } else {
         this.isSelectedVisitFail = false;
-     
       }
     })
     this.subscriptions.add(QueueVisitErrorSubscription);

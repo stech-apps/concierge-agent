@@ -14,6 +14,7 @@ import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Subscription, Observable,Subject } from 'rxjs';
 import { ToastService } from './../../../../util/services/toast.service';
 import { Q_ERROR_CODE } from '../../../../util/q-error';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 @Component({
   selector: 'qm-transfer-to-service-pool',
@@ -36,43 +37,44 @@ export class QmTransferToServicePoolComponent implements OnInit {
   loading:boolean;
 
   constructor(  private userSelectors: UserSelectors,
-    private ServicePointPoolDispatchers:ServicePointPoolDispatchers,
-    private BranchSelectors:BranchSelectors,
-    private ServicePointPoolSelectors:ServicePointPoolSelectors,
-    private translateService:TranslateService,
-    private queueSelectors:QueueSelectors,
-    private qmModalService:QmModalService,
-    private spService:SPService,
-    private servicePointSelectors:ServicePointSelectors,
-    private infoMsgBoxDispatcher:InfoMsgDispatchers,
-    private router:Router,
-    private toastService:ToastService,
-    private queueDispatchers:QueueDispatchers
+    private ServicePointPoolDispatchers: ServicePointPoolDispatchers,
+    private BranchSelectors: BranchSelectors,
+    private ServicePointPoolSelectors: ServicePointPoolSelectors,
+    private translateService: TranslateService,
+    private queueSelectors: QueueSelectors,
+    private qmModalService: QmModalService,
+    private spService: SPService,
+    private servicePointSelectors: ServicePointSelectors,
+    private toastService: ToastService,
+    private queueDispatchers: QueueDispatchers,
+    private errorHandler: GlobalErrorHandler
   ) { 
-    this.userDirection$ = this.userSelectors.userDirection$;   
-  
+    this.userDirection$ = this.userSelectors.userDirection$;
+
     const branchSubscription = this.BranchSelectors.selectedBranch$.subscribe((branch)=>{
       this.currentBranch = branch;
-    })
+    });
+
     this.subscriptions.add(branchSubscription);
 
     const selectedServicePointSubscriptions = this.servicePointSelectors.openServicePoint$.subscribe((sp)=>{
       this.selectedServicePoint = sp;
-    })
-    
+    });
+
     this.subscriptions.add(selectedServicePointSubscriptions);
-    
+
 
     this.ServicePointPoolDispatchers.fetchServicePointPool(this.currentBranch.id);
-    
+
     const ServicePointPoolLoadingSubscription = this.ServicePointPoolSelectors.ServicePointPoolLoading$.subscribe((loading)=>{
-      this.loading = loading
-    })
+      this.loading = loading;
+    });
     this.subscriptions.add(ServicePointPoolLoadingSubscription)
 
     const ServicePointPoolLoadedSubscription = this.ServicePointPoolSelectors.ServicePointPoolLoaded$.subscribe((loaded)=>{
-      this.loaded = loaded
-    })
+      this.loaded = loaded;
+    });
+
     this.subscriptions.add(ServicePointPoolLoadedSubscription)
 
 
@@ -84,7 +86,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
         //     this.toastService.infoToast(noappointments);
         //   }
         // ).unsubscribe();
-      }else{
+      } else {
         this.sortQueueList();
       }
       
@@ -135,11 +137,9 @@ export class QmTransferToServicePoolComponent implements OnInit {
       }).subscribe(
         (label: string) => 
           this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
-            if(result){
-              
-            this.spService.servicePointTransfer(this.currentBranch,this.selectedServicePoint,s,this.selectedVisit).subscribe( result=>{
-             
-              this.translateService.get('visit_transferred').subscribe((label)=>{
+            if (result) {
+             this.spService.servicePointTransfer(this.currentBranch, this.selectedServicePoint, s, this.selectedVisit).subscribe( result=>{
+              this.translateService.get('visit_transferred').subscribe((label) =>{
                 // var successMessage = {
                 //   firstLineName: label,
                 //   firstLineText:this.selectedVisit.ticketId,
@@ -150,27 +150,17 @@ export class QmTransferToServicePoolComponent implements OnInit {
             }
             , error => {
               const err = new DataServiceError(error, null);
-              
+              let errorKey = 'request_fail';
+
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
-                this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
+                errorKey = 'requested_visit_not_found';
               }  else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
-                this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              } else if (err.errorCode === '0') {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
+                errorKey = 'requested_visit_not_found';
               }
-              else {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              }
+
+              this.errorHandler.showError(errorKey, err);
             }
-          )
+          );
           this.queueDispatchers.resetSelectedQueue();
           this.queueDispatchers.setectVisit(null);
           this.queueDispatchers.resetFetchVisitError();
@@ -179,10 +169,9 @@ export class QmTransferToServicePoolComponent implements OnInit {
             }
       }, () => {
       })
-      ).unsubscribe()
-      
+      ).unsubscribe();
     }}
-  
+
     onSortClickbyServicePoint(){
       this.sortAscending = !this.sortAscending;
       this.sortQueueList();

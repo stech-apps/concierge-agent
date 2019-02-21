@@ -5,7 +5,8 @@ import {
   BranchDispatchers,
   BranchSelectors,
   QueueSelectors,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  FlowOpenDispatchers
 } from "src/store/services";
 import { Subscription, Observable } from "rxjs";
 import { Util } from "src/util/util";
@@ -55,7 +56,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private translationService: TranslateService,
     private queueSelectors:QueueSelectors,
     private localStorage: LocalStorage,
-    private flowOpenSelectors:FlowOpenSelectors
+    private flowOpenSelectors:FlowOpenSelectors,
+    private flowOpenDispatchers:FlowOpenDispatchers
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -69,8 +71,6 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     );
     this.subscriptions.add(servicePointsSubscription);
     this.util.setSelectedApplicationTheme();
-
-   
   
     this.isCollapse = localStorage.getSettingForKey(STORAGE_SUB_KEY.COLLAPSE);
 
@@ -93,6 +93,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    
+    this.flowOpenDispatchers.flowClose();
     
     const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
       this.userDirection = direction;

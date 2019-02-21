@@ -24,7 +24,6 @@ These instructions will help you get started running this project on your local 
 
 Make sure you have installed 
 1. Node 10 or above. `https://nodejs.org/`
-2. gulp (after installing node `npm install gulp-cli`)
 
 ## Development
 

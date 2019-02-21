@@ -14,6 +14,7 @@ import { IAppointmentState } from 'src/store/reducers/appointment.reducer';
 import { ToastService } from 'src/util/services/toast.service';
 import { ERROR_CODE_APPOINTMENT_NOT_FOUND } from 'src/app/shared/error-codes';
 import { DEFAULT_LOCALE } from 'src/constants/config';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 const toAction = AppointmentActions.toAction();
 
@@ -28,7 +29,8 @@ export class AppointmentEffects {
     private toastService: ToastService,
     private appointmentDataService: AppointmentDataService,
     private systemInfoSelectors: SystemInfoSelectors,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private errorHandler: GlobalErrorHandler
   ) { 
 
 
@@ -99,13 +101,9 @@ export class AppointmentEffects {
             };
 
             if (action.payload["errorCode"] === ERROR_CODE_APPOINTMENT_NOT_FOUND) {
-              this.toastService.errorToast(messages['appointment_not_found_detail']);
-            }
-            else {
-              let errMsg: string = (((action.payload["responseData"] || "")["error"] || "")["msg"] || "");
-              if (errMsg.length) {
-                this.toastService.errorToast((((action.payload["responseData"] || "")["error"] || "")["msg"] || ""));
-              }
+              this.errorHandler.showError('appointment_not_found_detail', action.payload);
+            } else {
+              this.errorHandler.showError('appointment_deleted_fail', action.payload);
             }
 
             return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
@@ -190,34 +188,25 @@ export class AppointmentEffects {
       })
     );
 
-    
-
   @Effect()
   rescheduleAppointmentFailed$: Observable<Action> = this.actions$
     .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
       switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
-        //return this.translateService.get(['appointment_reschedule_fail', 'appointment_already_used']).pipe(
         return this.translateService.get(['label.appointment.reschedule.fail']).pipe(
           switchMap((messages) => {
-            var errorMessage = {
+            let errorMessage = {
               firstLineName: messages['label.appointment.reschedule.fail'],
               icon: "error"
             };
-           
-            this.toastService.errorToast(messages['label.appointment.reschedule.fail']);
-          /* 
-            if (action.payload["errorCode"] === 'E461') {
-              this.toastService.errorToast(messages['appointment_already_used']);
-            }
-            else {
-              if (action.payload["errorMsg"]) {
-                this.toastService.errorToast(action.payload["errorMsg"]);
-              }
-            }
-            */
 
-            return [new AppointmentActions.UpdateMessageInfo(errorMessage)]
+            if (action.payload["errorCode"] === 'E461') {
+              this.errorHandler.showError('appointment_already_used', action.payload);
+            }  else {
+              this.errorHandler.showError('label.appointment.reschedule.fail', action.payload);
+            }
+
+            return [new AppointmentActions.UpdateMessageInfo(errorMessage)];
           })
         );
       }));

@@ -75,7 +75,7 @@ export class ReserveEffects {
         return empty();
       }
     })
-    );
+  );
 
   @Effect()
   removerreserveAppointment$: Observable<Action> = this.actions$
@@ -102,12 +102,8 @@ export class ReserveEffects {
     .pipe(
     tap(
       (action: ReserveActions.ReserveAppointmentFail) => {
-        if (action.payload.status !== 0) {
-          this.translateService.get('time_slot_already_taken').subscribe(
-            (label: string) => {
-              this.toastService.errorToast(label);
-            }
-          ).unsubscribe();
+        if (action.payload['errorCode'] == "E440") {
+          this.errorHandler.showError('time_slot_already_taken', action.payload);
         } else {
           this.errorHandler.showError('error.reserve.appointment.failed', action.payload);
         }

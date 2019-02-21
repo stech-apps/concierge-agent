@@ -10,27 +10,29 @@ import { TranslateService } from "../../../../node_modules/@ngx-translate/core";
 
 @Injectable()
 export class CustomerDataService{
-    constructor(private http:HttpClient, private errorHandler:GlobalErrorHandler,private toastService:ToastService, private translateService:TranslateService){}
+    constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler,
+                private toastService: ToastService, private translateService: TranslateService){}
 
-    getCustomers(searchText:string):Observable<ICustomer[]>{
+    getCustomers(searchText: string): Observable<ICustomer[]>{
          return this.http
-        .get<ICustomer[]>(`${servicePoint}/customers/search?text=${encodeURIComponent(searchText)}`)        
+        .get<ICustomer[]>(`${servicePoint}/customers/search?text=${encodeURIComponent(searchText)}`)
         .pipe(catchError(
             err => {
          const errorKey =  'no_central_access';
                 const error = new DataServiceError(err, null);
                 if (error.errorCode === "3123") {
                   //  this.toastService.errorToast("There is no WebSocket connection for requested name [null]");
-                    this.translateService.get(["errorKey"],{}).subscribe(
+                    this.translateService.get([errorKey],{}).subscribe(
                         (msgs: string[]) => {
                             this.toastService.errorToast(msgs[errorKey]);
                         }
                         ).unsubscribe();
+
                     this.errorHandler.handleError();
                     return empty();
-                } else
-                this.errorHandler.handleError();
-                
+                } else {
+                    this.errorHandler.handleError();
+                }
             }
         ));
     }

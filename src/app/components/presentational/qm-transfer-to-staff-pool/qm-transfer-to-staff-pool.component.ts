@@ -13,6 +13,7 @@ import { ToastService } from './../../../../util/services/toast.service';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
 import { Q_ERROR_CODE } from '../../../../util/q-error';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 @Component({
   selector: 'qm-transfer-to-staff-pool',
@@ -47,6 +48,7 @@ export class QmTransferToStaffPoolComponent implements OnInit {
     private ServicePointSelectors:ServicePointSelectors,
     private toastService:ToastService,
     private queueDispatchers:QueueDispatchers,
+    private errorHandler: GlobalErrorHandler
   ) { 
 
     
@@ -100,19 +102,17 @@ export class QmTransferToStaffPoolComponent implements OnInit {
 
 
   selectPool(s){
-    
-    
-    if(this.selectedVisit){
+    if (this.selectedVisit){
       this.translateService.get('transfer_visit_to_staff_member_confirm_box',
       {
         visit: this.selectedVisit.ticketId,
       }).subscribe(
-        (label: string) => 
+        (label: string) =>
           this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
             if(result){
-              
+
             this.spService.staffPoolTransfer(this.currentBranch,this.selectedServicePoint,s,this.selectedVisit).subscribe( result=>{
-             
+
               this.translateService.get('visit_transferred').subscribe((label)=>{
                 // var successMessage = {
                 //   firstLineName: label,
@@ -120,37 +120,21 @@ export class QmTransferToStaffPoolComponent implements OnInit {
                 //   icon: "correct",
                 // }
                 this.toastService.infoToast(label);
-               
               });
             }
             , error => {
               const err = new DataServiceError(error, null);
-              
+              let errorKey = 'request_fail';
               if (error.errorCode == Q_ERROR_CODE.NO_VISIT) {
-                this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              }
-              else if (error.errorCode == Q_ERROR_CODE.STAFF_MEMBER_LOGOUT) {
-                this.translateService.get('empty_user_pool').subscribe(v => {
-                  this.toastService.errorToast(v);
-                  this.StaffPoolDispatchers.resetStaffPool;
-                  this.StaffPoolDispatchers.fetchStaffPool(this.currentBranch.id);  
-                });
+                  errorKey = 'requested_visit_not_found';
+              } else if (error.errorCode == Q_ERROR_CODE.STAFF_MEMBER_LOGOUT) {
+                errorKey =  'empty_user_pool';
+                this.StaffPoolDispatchers.fetchStaffPool(this.currentBranch.id);
               }  else if (error.errorCode == Q_ERROR_CODE.SERVED_VISIT) {
-                this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              }else if (err.errorCode === '0') {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
+                errorKey = 'requested_visit_not_found';
               }
-              else {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              }
+
+              this.errorHandler.showError(errorKey, err);
             }
           )
           this.queueDispatchers.resetSelectedQueue();
@@ -161,8 +145,7 @@ export class QmTransferToStaffPoolComponent implements OnInit {
             }
       }, () => {
       })
-      ).unsubscribe()
-      
+      ).unsubscribe();
     }
   }
 

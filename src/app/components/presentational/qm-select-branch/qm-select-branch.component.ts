@@ -6,7 +6,8 @@ import { Observable, Subject } from 'rxjs';
 import { ICalendarBranchViewModel } from './../../../../models/ICalendarBranchViewModel';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, EventEmitter, Output, OnDestroy, Input, ViewChild } from '@angular/core';
-import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors, TimeslotDispatchers, ReserveDispatchers, ServicePointSelectors } from 'src/store';
+import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, BranchSelectors,
+         TimeslotDispatchers, ReserveDispatchers, ServicePointSelectors } from 'src/store';
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { IBranch } from 'src/models/IBranch';
@@ -26,8 +27,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   isFlowSkip: boolean = true;
   searchText: string = '';
   userDirection$: Observable<string>;
-  showToolTip:boolean;
-  skipBranchFocus:boolean;
+  showToolTip: boolean;
+  skipBranchFocus: boolean;
 
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 
@@ -53,14 +54,11 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     private branchSelectors: BranchSelectors,
     private localStorage: LocalStorage,
     private timeSlotDispatchers: TimeslotDispatchers,
-    private reserveDispatcher: ReserveDispatchers,
-    private servicePointSelectors: ServicePointSelectors
-  ) {
+    private reserveDispatcher: ReserveDispatchers) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
     this.skipBranchFocus = false;
 
-  
     if (this.isFlowSkip === undefined) {
       this.isFlowSkip = true;
     }
@@ -69,7 +67,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
       this.calendarBranches = <Array<ICalendarBranchViewModel>>bs;
 
       this.branchSelectors.selectedBranch$.subscribe((spBranch) => {
-        //if flow is skipped then use the service point branch as current branch
+        // if flow is skipped then use the service point branch as current branch
         if (this.isFlowSkip) {
           this.calendarBranches.forEach((cb) => {
             if (spBranch.id === cb.qpId) {
@@ -77,10 +75,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
               this.calendarBranchDispatchers.selectCalendarBranch(cb);
             }
           });
-        }        
+        }
       });
-    });  
-
+    });
 
     this.subscriptions.add(calendarBranchSubscription);
 
@@ -110,7 +107,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   getBranchCount() {
-    
+
   }
 
   ngOnInit() {
@@ -118,7 +115,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   deselectBranch() {
-       this.calendarBranchDispatchers.selectCalendarBranch({} as ICalendarBranch);
+      this.calendarBranchDispatchers.selectCalendarBranch({} as ICalendarBranch);
       this.currentBranch = {} as ICalendarBranch;
   }
 

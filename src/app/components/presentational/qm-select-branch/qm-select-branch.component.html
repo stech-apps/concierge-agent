@@ -59,18 +59,15 @@
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
-
   <div class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
     <span>{{'label.search.result.header' | translate}} &nbsp;</span>
     <mark>{{ '"'+ searchText + '"' }}</mark>
     <span class="qm-select-branch__foundbox">{{ ' ' + 
         (calendarBranches | filterBranch : filterText)?.length + ' ' 
         + ((calendarBranches | filterBranch : filterText)?.length == '1' ? ('label.branch.found' | translate) :  ('label.branches.found' | translate))
-     
     }}
   </span>
   </div>
-
   <div class="qm-list">
     <div *ngFor="let b of calendarBranches | filterBranch : filterText;" class="qm-branch-list__item qm-list__item" 
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 

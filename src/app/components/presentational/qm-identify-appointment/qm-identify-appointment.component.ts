@@ -536,12 +536,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.toastService.errorToast(noappointments);
       })
       .unsubscribe();
-      if(this.currentSearchState === this.SEARCH_STATES.QR){
+      if (this.currentSearchState === this.SEARCH_STATES.QR){
         setTimeout(() => {
-          this.getPreviousSearchState();  
+          this.getPreviousSearchState();
         }, 1000);
-        
-        
       }
   }
 

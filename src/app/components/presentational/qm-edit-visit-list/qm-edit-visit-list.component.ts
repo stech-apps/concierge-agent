@@ -11,6 +11,7 @@ import { ToastService } from '../../../../util/services/toast.service';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { Util } from '../../../../util/util';
 import * as moment from 'moment-timezone';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 
 enum SortBy {
@@ -92,8 +93,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private nativeApi: NativeApiService,
     private queueDispatcher: QueueDispatchers,
     private systemInfoSelectors: SystemInfoSelectors,
-    
-    
+    private errorHandler: GlobalErrorHandler
   ) {
 
     // 24 hour time converstion
@@ -400,24 +400,14 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
               });
             }, error => {
               const err = new DataServiceError(error, null);
+              let errorKey  = 'request_fail';
+
               if (error.status == ERROR_STATUS.NOT_FOUND) {
-                this.translateService.get('requested_visit_not_found').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
+                  errorKey = 'requested_visit_not_found';
+              } else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
+                errorKey = 'visit_already_called';
               }
-              else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
-                this.translateService.get('visit_already_called').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              } else if (err.errorCode === '0') {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              } else {
-                this.translateService.get('request_fail').subscribe(v => {
-                  this.toastService.errorToast(v);
-                });
-              }
+              this.errorHandler.showError(errorKey, err);
             }
           );
           this.resetQueueView();

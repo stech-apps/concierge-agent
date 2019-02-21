@@ -240,6 +240,11 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.isVipLvl1Enabled = false;
         this.isVipLvl2Enabled = false;
         this.isVipLvl3Enabled = false;
+        if(this.emailActionEnabled && !this.smsActionEnabled){
+            this.onEmailSelected();
+        }else if(!this.emailActionEnabled && this.smsActionEnabled){
+          this.onSmsSelected();
+        }
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
         this.emailActionEnabled = false;
@@ -274,8 +279,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
     }
 
+    if(this.flowType === FLOW_TYPE.CREATE_VISIT){
+      this.ButtonSelectedByUtt();
+    }
+
     if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT && this.selectedAppointment) {
       this.genarateAppointmentData();
+      this.ButtonSelectedByUtt();
     }
 
     if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
@@ -323,6 +333,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.ticketlessColor = this.whiteColor;
     this.noteTextStr = '';
     this.buttonEnabled = false;
+    this.ButtonSelectedByUtt();
   }
 
   genarateAppointmentData() {
@@ -1054,5 +1065,31 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
     this.goToPanelByIndex.emit(ix);
   }
+
+  ButtonSelectedByUtt(){
+    switch (this.flowType) {
+      case FLOW_TYPE.CREATE_APPOINTMENT:
+        if(this.emailActionEnabled && !this.smsActionEnabled){
+            this.onEmailSelected();
+        }else if(!this.emailActionEnabled && this.smsActionEnabled){
+          this.onSmsSelected();
+        }
+        break;
+      case FLOW_TYPE.ARRIVE_APPOINTMENT:
+      case FLOW_TYPE.CREATE_VISIT:
+        if(this.ticketActionEnabled && !this.ticketlessActionEnabled && !this.smsActionEnabled){
+          this.onTicketSelected();
+        }else if(!this.ticketActionEnabled && this.ticketlessActionEnabled && !this.smsActionEnabled){
+          this.onTicketlessSelected();
+        }else if(!this.ticketActionEnabled && !this.ticketlessActionEnabled && this.smsActionEnabled){
+          this.onSmsSelected();
+        }
+        break;
+      default:
+        break;
+    }
+  
+  }
 }
+
 

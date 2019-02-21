@@ -104,6 +104,9 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
       this.exitFlow = true;
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
+      if(this.router.url!=="/profile"){
+        this.flowDispatchers.flowClose();
+      }
       setTimeout(() => {
         this.AccountDispatchers.setMenuItemStatus(false);
         if(this.router.url!="/profile"){

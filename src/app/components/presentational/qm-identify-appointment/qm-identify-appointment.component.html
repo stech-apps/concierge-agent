@@ -169,14 +169,14 @@
       <ng-container *ngIf="showSearchResultsArea && (currentSearchState === 'initial' ||
       currentSearchState === 'refresh' ||
       currentSearchState === 'duration' )">
-        <div id="appointment-list-tabpanel" tabindex="0" role="tabpanel" aria-labelledby="appointment-list">
+        <div id="appointment-list-tabpanel" role="tabpanel" aria-labelledby="appointment-list">
           <ng-container *ngTemplateOutlet="appointmentsTable"></ng-container>
         </div>
       </ng-container>
 
       <!--####################### Id template ###############-->
       <ng-template #idsearchArea>
-        <div role="tabpanel" id="bookingid-tabpanel" tabindex="0" aria-labelledby="bookingid">
+        <div role="tabpanel" id="bookingid-tabpanel"  aria-labelledby="bookingid">
           <div class="qm-identify-appointment__search-area">
             <div class="qm-search qm-search--large">
               <input
@@ -251,7 +251,7 @@
 
       <!--####################### Customer template ###############-->
       <ng-template #customerSearchArea>
-        <div role="tabpanel" id="customer-tabpanel" tabindex="0" aria-labelledby="customer">
+        <div role="tabpanel" id="customer-tabpanel" aria-labelledby="customer">
           <div
             class="qm-identify-appointment__search-area qm-identify-appointment__customer-search-area"
           >
@@ -512,7 +512,7 @@
                   ">
                   <div
                     class="qm-identify-appointment__appointment-table__list-parent qm-table__row"
-                    *ngIf="
+                    *ngIf="!showLoading() &&
                       (appointments &&
                         appointments.length > 0 &&
                         !selectedAppointment) ||

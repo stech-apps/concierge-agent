@@ -70,7 +70,8 @@ gulp.task('clean:war', function () {
     './dist/*',
     '!./dist/properties',
     '!./dist/webapp',
-    '!./dist/release-notes'
+    '!./dist/release-notes',
+    '!./dist/utt'
   ]);
 });
 
@@ -90,6 +91,30 @@ gulp.task('create:war', function () {
     .src(['./dist/**/*'])
     .pipe(zip('connectconcierge.war'))
     .pipe(gulp.dest('./dist/webapp/'));
+});
+
+// create Concierge utt files
+gulp.task('create:uttConcierge', function () {
+  return gulp
+    .src(['./utt/mobileconnect-concierge/*'])
+    .pipe(zip('ServicePoint_Concierge.utt'))
+    .pipe(gulp.dest('./dist/utt/'));
+});
+
+// create Concierge-tpbutton utt files
+gulp.task('create:uttTpButton', function () {
+  return gulp
+    .src(['./utt/mobileconnect-concierge-tpbutton/*'])
+    .pipe(zip('ServicePoint_ConciergeButton.utt'))
+    .pipe(gulp.dest('./dist/utt/'));
+});
+
+// create Concierge-tpTouch utt files
+gulp.task('create:uttTpTouch', function () {
+  return gulp
+    .src(['./utt/mobileconnect-concierge-tptouch/*'])
+    .pipe(zip('ServicePoint_ConciergeTouch.utt'))
+    .pipe(gulp.dest('./dist/utt/'));
 });
 
 // Create artifcatory zip
@@ -212,12 +237,22 @@ gulp.task('deploy:lang', function () {
 
 });
 
+
+/**
+ * Create Utt files build war
+ */
+gulp.task(
+  'create:utt',
+  gulpsync.sync(['create:uttConcierge','create:uttTpButton','create:uttTpTouch'])
+);
+
+
 /**
  * Create Dev/Prod build war
  */
 gulp.task(
   'build:war:properties',
-  gulpsync.sync(['create:war', 'create:properties', 'clean:war'])
+  gulpsync.sync(['create:war','create:utt', 'create:properties', 'clean:war'])
 );
 
 /**
@@ -240,6 +275,7 @@ gulp.task(
     'create:release-notes',
     'clean:war',
     'create:artifactory:zip',
+    'create:utt',
     'clean:artifactory'
   ])
 );

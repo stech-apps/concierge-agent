@@ -1,0 +1,1049 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+    
+    All modifications to this unit type must be added here.
+ 
+    The version number of the unit type template (utt) has the format X.Y.Z.n, for example 6.2.0.0, where:
+    -   X.Y stands for the Orchestra version, e.g. 6.2, 6.1 etc. First version of an utt for Orchestra 6.2
+        has version 6.2.0.0
+    -   Z stands for fix version, incremented for each update. First version of an utt that is 6.2.0.0 gets
+        version 6.2.1.0 when it is updated.
+    -   n is the serial number that should be updated as soon as the utt has been adapted/customised to better
+        suit your needs. Customising an utt that has version 6.2.1.0 receives version 6.2.1.1, then 6.2.1.2 etc.
+    -   When several versions of Orchestra are updated with the same utt, the lowest version number should be used. If,
+        for example, a new utt is added to version 6.0, 6.1 and 6.2 of Orchestra, it should have version number 6.0.0.0
+        in all Orchestra versions.
+ 
+    Below is a table with examples of how versions should be set:
+    | 6.0     | 6.1     | 6.2    | Fix                 |
+    |=========|=========|========|=====================|
+    | 2.3.0   | 2.3.0   | 2.3.0  | Starting point      |
+    |         |         | 6.2.0  | A (only 6.2)        |
+    |         | 6.1.0   | 6.2.1  | B (6.1 and 6.2)     |
+    |=========|=========|========|=====================|
+    | 2.3.0   | 2.3.0   | 2.3.0  | Starting point      |
+    |         | 6.1.0   | 6.1.0  | C (6.1 and 6.2)     |
+    |         |         | 6.2.0  | D (only 6.2)        |
+    |=========|=========|========|=====================|
+    | 2.3.0   | 2.3.0   | 2.3.0  | Starting point      |
+    | 6.0.0   | 6.0.0   | 6.0.0  | E (6.0, 6.1 and 6.2)|
+    |         | 6.1.0   | 6.1.0  | F (6.1 and 6.2)     |
+    |         |         | 6.2.0  | G (only 6.2)        |
+    | 6.0.1   | 6.1.1   | 6.2.1  | H (6.0, 6.1 and 6.2)|
+
+ 
+    Version history in descending order:
+    ====================================
+    Version    Date         Comments                                                     Signature
+    ==============================================================================================
+    7.0.4.0    2019-02-14   icon changed                                                 udaban 
+    ==============================================================================================
+    7.0.3.0    2019-01-29   Service Point Pool Transfer, User Pool Transfer,             nalhew
+                            Delete Visit, Delete Appointment has been renamed. 
+    ==============================================================================================
+    7.0.2.0    2018-11-27   Notes,  Appointment Fetch, start (min),Appointment Fetch,    udaban
+                            end (min), Fetch Appointments, Queue View moved from branch 
+                            level to operation profile level    	 
+    ==============================================================================================
+    7.0.1.0    2018-11-27   Old Concierge utt file MobileConnectConcierge_TPTouch        dimper
+                            will be replaced by Concierge_Touch  	 
+    ==============================================================================================
+-->
+
+<unit          name  = "Concierge_Touch"
+    frameworkVersion = "2"
+         unitVersion = "7.0.4.0"
+                type = "SERVICE_POINT"
+      defaultNoUnits = "1"
+          maxNoUnits = "1"
+         description = "Settings for Mobile Connect Concierge Touch">
+
+ <parameters>
+      <parameter name = "unitId"
+                 type = "UnitId"
+         defaultValue = "Concierge_Touch"
+                label = "Unit id"
+          description = "Unique id of the unit"
+            sortOrder = "1"
+           writeLevel = "profile"
+            readLevel = "branch"
+            privilege = "install:adminAdmin"/>
+      
+      <parameter name = "privacyPolicy"
+            sortOrder = "202"
+                label = "Privacy Policy"
+          description = "A link to a statement or a legal document that informs how customer/client data are gathered/handled"
+                 type = "String"
+           writeLevel = "global"
+               regexp = "(^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1})|^$|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3}\:[0-9]{1,5}$)"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "singleSession"
+            sortOrder = "19999"
+                 type = "Boolean"
+         defaultValue = "false"
+                label = "Single session"
+          description = "Defines if more than one user can be logged in at the same Mobile Connect Counter."
+            privilege = "install:adminAdmin"/>
+      <parameter name = "ticketsOnRoll"
+            sortOrder = "405"
+           writeLevel = "global"
+            readLevel = "profile"
+               regexp = "\b0*([1-9][0-9]{0,2}|[12][0-9]{3}|3000)\b"
+            privilege = "install:adminAdmin"
+          description = "Valid values between 1-3000"
+                label = "Tickets on roll"
+                 type = "Integer" defaultValue="2000"
+                 size = "4"/>
+      
+      <parameter name = "autoClose"
+            sortOrder = "200"
+                 type = "Integer"
+         defaultValue = "1800"
+                label = "Auto close"
+          description = "Automatically close the mobile connect concierge after configured time of inactivity (seconds). The value should be less (in seconds) than the shiro timeout value set on the server."
+           writeLevel = "profile"
+               regexp = "^\d+$"
+            privilege = "install:adminAdmin"
+                 size = "4" />
+      <parameter name = "createAppointment"
+            sortOrder = "300"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Create Appointment Flow"
+          description = "Gives access to the Create Appointemnt flow if user has correct access right."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "editAppointment"
+            sortOrder = "301"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Edit Appointment Flow"
+          description = "Gives access to the Edit Appointemnt flow if user has correct access right."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "arriveAppointment"
+            sortOrder = "302"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Arrive Appointment Flow"
+          description = "Gives access to the Arrive Appointemnt flow if user has correct access right."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "createVisit"
+            sortOrder = "303"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Create Visit Flow"
+          description = "Gives access to the Create Visit flow if user has correct access right."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "editVisit"
+            sortOrder = "304"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Edit Visit Flow"
+          description = "Gives access to the Edit Visit flow if user has correct access right."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "quickServe"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Quick Serve Flow"
+          description = "Gives access to Quick Serve flow if user has correct access right."
+            sortOrder = "305"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+     <parameter name = "queueView"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Queue View"
+          description = "Enable/disable the Queue View area"
+            sortOrder = "306"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "delVisit"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Remove Visit"
+          description = "Enable/disable Remove Visit functionality"
+            sortOrder = "360"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "delAppointment"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Remove Appointment"
+          description = "Enable/disable Remove Appointment functionality"
+            sortOrder = "361"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "reSheduleAppointment"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Re-schedule Appointment"
+          description = "Enable/disable Re-schedule Appointment functionality"
+            sortOrder = "362"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "gapFromTime"
+                 type = "Integer"
+         defaultValue = "60"
+                label = "Appointment Fetch, start (min)"
+          description = "Start time, in minutes, for interval, from which to fetch Appointments. Based on Server time."
+            sortOrder = "363"
+               regexp = "^\d+$"
+                 size = "2"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "gapToTime"
+                 type = "Integer"
+         defaultValue = "120"
+                label = "Appointment Fetch, End (min)"
+          description = "End time, in minutes, for interval, from which to end fetching Appointments. Based on Server time."
+            sortOrder = "366"
+               regexp = "^\d+$"
+                 size = "2"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "fetchAppointment"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Fetch appointments"
+          description = "Enable/disable initialy fetching appointments"
+            sortOrder = "367"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "trUserPool"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Staff Member Transfer"
+          description = "Enable/disable Staff Member Transfer"
+            sortOrder = "350"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "trServPool"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Counter Pool Transfer"
+          description = "Enable/disable Counter Pool Transfer"
+            sortOrder = "351"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "btnQueueTransfer"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Queue Transfer"
+          description = "Enable/disable Queue Transfer functionality"
+            sortOrder = "352"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "btnTransferFirst"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Transfer First"
+          description = "Transfer to the first position in the queue"
+            sortOrder = "353"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "btnTransferLast"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Transfer Last"
+          description = "Transfer to the last position in the queue"
+            sortOrder = "354"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "btnTransferSort"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Transfer Sorted"
+          description = "Transfer sorted according to enter time into the queue"
+            sortOrder = "355"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "webUrl"
+                 type = "String"
+                label = "Custom web page"
+          description = "Custom web page to be used for access to any customised web content wihthin the application."
+            sortOrder = "366"
+               regexp = "(^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1})|^$|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3}\:[0-9]{1,5}$)"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "sndSMS"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Send SMS"
+          description = "Enable/disable sms option"
+            sortOrder = "367"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "sndEmail"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Send EMAIL"
+          description = "Enable/disable email option"
+            sortOrder = "368"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "mdNotes"
+                 type = "Boolean"
+         defaultValue = "false"
+                label = "Notes"
+          description = "Edit/Add Notes to visit"
+            sortOrder = "369"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "appointmentQR"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Identify Appointment QR Code"
+          description = "Enable/disable QR code button in Arrive/Edit appointment flows"
+            sortOrder = "370"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "visitQR"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Identify Visit QR Code"
+          description = "Enable/disable QR code button in Edit Visit flow"
+            sortOrder = "371"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "pingExpire"
+            sortOrder = "372"
+                 type = "Integer"
+         defaultValue = "15"
+                label = "Reconnect timer"
+          description = "In case of weak network this timer indicates how long time the app will keep trying to reconnect."
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"
+               regexp = "^\d+$"
+                 size = "4" />
+      <parameter name = "countryCode"
+                 type = "String"
+                label = "Country Code"
+          description = "Country code to be used with customer phone number"
+            sortOrder = "373"
+               regexp = "(^(\+|00)[0-9]{1,5})$|[1-9]{1,5}$|^$"
+                 size = "4"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "vipLvl1"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "VIP 1"
+          description = "Enable/disable this VIP level in the application. Note that VIP levels can be used as a segmentation rule for Queues in Orchestra."
+            sortOrder = "374"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "vipLvl2"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "VIP 2"
+          description = "Enable/disable this VIP level in the application. Note that VIP levels can be used as a segmentation rule for Queues in Orchestra."
+            sortOrder = "375"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "vipLvl3"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "VIP 3"
+          description = "Enable/disable this VIP level in the application. Note that VIP levels can be used as a segmentation rule for Queues in Orchestra."
+            sortOrder = "376"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "mltyBrnch"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Multi Branch Support"
+          description = "Check this check box to enable Multi Branch support for the Create and Edit Appointment flows."
+            sortOrder = "377"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "mltyService"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Multi Service Support"
+          description = "Check this check box to enable Multi Service support for the Create Appointment flow."
+            sortOrder = "378"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "ticketLess"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Ticketless"
+          description = "Enable/disable Ticketless option."
+            sortOrder = "379"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "cherryPick"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Serve Customer"
+          description = "Enable/disable Serve Customer option. This option allows you to serve and end a Visit in the Edit Visit flow."
+            sortOrder = "380"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "estWaitTime"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Estimated Waiting time"
+          description = "Show estimated waiting time in the queue view"
+            sortOrder = "381"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "hideCustomer"
+                 type = "Boolean"
+         defaultValue = "false"
+                label = "Hide Customer banner"
+          description = "The Identify Customer banner in the Create Visit flow will be skipped. No customer data will be stored."
+            sortOrder = "382"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/>
+      <parameter name = "saveCustomerOption"
+          description = "If you choose store customer in database, in the Create Visit flow, you will have the possibility to search for customers and customer data will be saved to the Central customer database. Note: For this option, a connection to Central is required. If you choose store customer on visit, in the Create Visit flow, customer data will be stored on the visit object."
+            sortOrder = "383"
+                label = "Handle customer when Create Visit"
+                 type = "Options"
+         defaultValue = "db"
+           writeLevel = "profile"
+            mandatory = "true"
+            privilege = "install:adminAdmin"
+       multiSelection = "false">
+            <options>
+                <option label= "Store customer in database">db</option>
+                <option label="Store customer on visit">visit</option>
+            </options>
+        </parameter>
+            
+      <parameter name = "deviceController"
+            sortOrder = "999"
+                 type = "DeviceController"
+                label = "Device Controller"
+            mandatory = "true"
+           writeLevel = "profile"
+            readLevel = "branch"
+            privilege = "install:adminAdmin" />
+      <parameter name = "ipAddress"
+            sortOrder = "20"
+                label = "IP address"
+          description = "IP address for ticket printer"
+                 type = "String"
+           writeLevel = "branch"
+            mandatory = "true" />
+      <parameter name = "dateFormat"
+          description = "Date format"
+            sortOrder = "400"
+                label = "Date format on ticket"
+                 type = "Options"
+            mandatory = "true"
+         defaultValue = "yyyy-MM-dd"
+           writeLevel = "profile"
+            privilege = "branchAdmin"
+       multiSelection = "false">
+          <options>
+              <option label = "2012-09-28">yyyy-MM-dd</option>
+              <option label = "28-09-12">dd-MM-yy</option>
+              <option label = "09-28-12">MM-dd-yy</option>
+              <option label = "Friday, 28 September, 2012">EEEE, d MMMM, yyyy</option>
+          </options>
+      </parameter>
+      <parameter name = "timeFormat"
+          description = "Time format"
+            sortOrder = "401"
+                label = "Time format on ticket"
+                 type = "Options"
+            mandatory = "true"
+         defaultValue = "HH:mm"
+           writeLevel = "profile"
+            privilege = "branchAdmin"
+       multiSelection = "false">
+          <options>
+              <option label = "13:37">HH:mm</option>
+              <option label = "01:37 pm">hh:mm aaa</option>
+              <option label = "13:37:55">HH:mm:ss</option>
+              <option label = "13:37:55 CEST">HH:mm:ss z</option>
+          </options>
+      </parameter>
+      <parameter name = "customSurfaceParameters"
+          description = "Which custom parameters should be available on the ticket."
+            sortOrder = "403"
+                label = "Surface custom parameters"
+                 type = "Options"
+            mandatory = "false"
+           writeLevel = "profile"
+            privilege = "branchAdmin"
+       multiSelection = "true">
+          <options label = "Select custom parameters">
+              <option label = "Waiting customers">customersWaiting</option>
+              <option label = "Current waiting time">waitingTime</option>
+              <option label = "Branch name">branchName</option>
+              <option label = "Tickets left">ticketCount</option>
+          </options>
+      </parameter>
+      <parameter name = "buttonTimeDelay"
+            sortOrder = "404"
+          description = "The time (in seconds) to wait after a button has been pressed until a button can be pressed again."
+                label = "Button delay"
+                 type = "Integer"
+         defaultValue = "2"
+           writeLevel = "profile"
+               regexp = "^\d+$"
+                 size = "4"/>
+      <parameter name = "lowTicketAlarm"
+            sortOrder = "406"
+                label = "Low ticket alarm"
+                 type = "Integer" defaultValue="150"
+           writeLevel = "profile"
+               regexp = "[1-9]|[1-9][0-9]"
+                 size = "4"/>
+      <parameter name = "surfaceApplication" description="Defines what surface application that should be used"
+                label = "Touch Application"
+                 type = "SurfaceApplication"
+            sortOrder = "25"
+           writeLevel = "profile"
+            readLevel = "branch"
+            privilege = "branchAdmin">
+          <filters>
+              <filter field = "surfaceType.allowedDevice">62</filter>
+          </filters>
+      </parameter>  
+      
+      <parameter name = "unitName"
+                 type = "UnitName"
+                label = "Unit name"
+          description = "The way to generate unit names if this unit is more than one unit"
+         defaultValue = "${unit:name} ${unit:index}"/>
+      
+      <parameter name = "connectConciergeApp"
+            sortOrder = "19999"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Connect Concierge Application"
+          description = "Connect Concierge Application."
+            privilege = "install:adminAdmin"/>
+      <parameter name = "printerEnable"
+            sortOrder = "19999"
+                 type = "Boolean"
+         defaultValue = "true"
+                label = "Printer Status"
+          description = "Connect Concierge with printer."
+            privilege = "install:adminAdmin"/>
+      <parameter name = "serviceThreshold2ShowHideServiceCategories"
+         defaultValue = "5"
+                label = "Service threshold to show/hide service categories"
+            sortOrder = "2"
+                 type = "String"
+            mandatory = "true" />
+      <parameter name = "serviceThreshold2ShowHideSearchArea"
+         defaultValue = "10"
+                label = "Service threshold to show/hide search area"
+            sortOrder = "2"
+                 type = "String"
+            mandatory = "true" />
+  </parameters>
+
+  <devices>
+    <device id="1" name="TP" type="TP311X" controllerId="deviceController" resources="PRINTER,TP311X">
+      <parameters>
+        <parameter name="ticketsOnRoll" type="Integer">${ticketsOnRoll}</parameter>
+        <parameter name="lowTicketAlarm" type="Integer">${lowTicketAlarm}</parameter>
+        <parameter name="ipAddress" type="String">${ipAddress}</parameter>
+      </parameters>
+      <deviceEventHandlers>
+        <deviceEventHandler handlerType="GROOVY" name="STATUS">
+          <![CDATA[
+          
+            device.log("INFO","Device "+device.getName()
+                +" "+ event.getEventName()+ " Event{"
+                +"statusCode="+event.getParameter("statusCode")+", "
+                +"DeviceLogicId=" + device.getLogicId()+", "
+                +"UnitLogicId=" + device.getUnit().getLogicId()+", "
+                +"BranchId= " + device.getBranchId()+
+                "}")
+      
+          ]]>
+        </deviceEventHandler>
+        <deviceEventHandler handlerType="GROOVY" name="NEW_ROLL">
+          <![CDATA[
+          
+            device.log("INFO","Device "+device.getName()
+            +" "+ event.getEventName()+ " Event{"
+            +"tickets="+event.getParameter("tickets")+", "
+            +"DeviceLogicId=" + device.getLogicId()+", "
+            +"UnitLogicId=" + device.getUnit().getLogicId()+", "
+            +"BranchId= " + device.getBranchId()+
+            "}")
+      
+          ]]>
+        </deviceEventHandler>
+        <deviceEventHandler handlerType="GROOVY" name="LOW_TICKETS">
+          <![CDATA[
+          
+            device.log("INFO","Device "+device.getName()
+            +" "+ event.getEventName()+ " Event{"
+            +"tickets="+event.getParameter("tickets")+", "
+            +"DeviceLogicId=" + device.getLogicId()+", "
+            +"UnitLogicId=" + device.getUnit().getLogicId()+", "
+            +"BranchId= " + device.getBranchId()+
+            "}")
+      
+          ]]>
+        </deviceEventHandler>
+        <deviceEventHandler handlerType="GROOVY" name="OUT_OF_PAPER">
+          <![CDATA[
+          
+            device.log("INFO","Device "+device.getName()
+            +" "+ event.getEventName()+ " Event{"
+            +"DeviceLogicId=" + device.getLogicId()+", "
+            +"UnitLogicId=" + device.getUnit().getLogicId()+", "
+            +"BranchId= " + device.getBranchId()+
+            "}")
+      
+          ]]>
+        </deviceEventHandler>
+        <deviceEventHandler name="CARD_DATA" handlerType="GROOVY">
+            import com.qmatic.qp.api.event.EventType
+            import com.qmatic.qp.core.common.QPEvent
+            device.log("INFO","Device "+device.getName()
+            +" "+ event.getEventName()+ " Event{"
+            +"data="+ event.getParameter("data")+", "
+            +"DeviceLogicId=" + device.getLogicId()+", "
+            +"UnitLogicId=" + device.getUnit().getLogicId()+", "
+            +"BranchId= " + device.getBranchId()+
+            "}")
+        </deviceEventHandler>
+      </deviceEventHandlers>
+    </device>
+    
+    <device id="1" name="WebEntryPoint" type="SW_TP3115_TOUCH">
+        <parameters>
+            <parameter name="surfaceApplication" type="SurfaceApplication" description="The surface application to use in this WebEntryPoint">${surfaceApplication}</parameter>
+            <parameter name="refreshInterval" type="Integer" description="The amount of minutes between surface application update checks">30</parameter>
+            <parameter name="buttonTimeDelay" type="Integer">${buttonTimeDelay}</parameter>
+        </parameters>
+    </device>
+ 
+    <device id="1" name="MobileConnectConcierge" type="SW_CONNECT_CONCIERGE" resources="EVENT_SCHEDULER,SERVICE_POINT,CFM_INFO">
+        <parameters>
+            <parameter name="refreshInterval" type="Integer" description="The number of seconds between refreshes">30</parameter>
+        </parameters>
+    
+        <deviceEventHandlers>
+            <deviceEventHandler handlerType="GROOVY" name="SERVICEPOINT_AUTO_CLOSE"><![CDATA[
+            
+            import com.qmatic.qp.api.connectors.device.ServicePointDeviceResource
+            import com.qmatic.qp.api.device.DeviceEvent
+            import com.qmatic.qp.api.device.DeviceCommand
+            import com.qmatic.qp.api.device.DeviceUserEvent
+            
+            ServicePointDeviceResource resource = device.getResource("SERVICE_POINT")
+            branchId = device.getBranchId()
+            userName = event.getParameter("USER_NAME")
+            isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+            stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE"
+            if(isUserChanalEnable != null && isUserChanalEnable == true){
+                stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE_" + userName
+            }
+            else{
+                userName = device.getState("USERNAME")
+            }
+            
+            deviceId = device.getId()
+            timerServicepointAutoClose = device.getState(stateParam)
+            eventTimer = event.getParameter("TIMER_SERVICEPOINT_AUTO_CLOSE")
+            if(eventTimer == timerServicepointAutoClose){
+                try {
+                    resource.forceEndUserSession(branchId, userName)
+                } catch(e) {
+                    try{
+                        DeviceEvent endServicePointSessionEvent
+                        if(isUserChanalEnable == true){
+                            endServicePointSessionEvent = new DeviceUserEvent(userName)
+                        }
+                        else{
+                            endServicePointSessionEvent = new DeviceEvent()
+                        }
+                        endServicePointSessionEvent.setUnitId(device.getId())
+                        endServicePointSessionEvent.setEventName(event.getEventName())
+            
+                        device.sendEvent(endServicePointSessionEvent)
+            
+                        DeviceCommand servicepointAutoCloseTimerReset = new DeviceCommand(device.getId(), "SERVICEPOINT_AUTO_CLOSE_TIMER_RESET")
+                        if(isUserChanalEnable == true){
+                            servicepointAutoCloseTimerReset.setParameter("USER_NAME", userName)
+                        }
+                        device.executeCommand(servicepointAutoCloseTimerReset)
+            
+                    }
+                    catch(ex){
+                        device.log("ERROR", "Logout fail & Unable to send SERVICEPOINT_AUTO_CLOSE event to mobile connect, errorLogout: " + e.getMessage() + " , error: " + ex.getMessage())
+                    }
+                }
+            }
+            
+        ]]></deviceEventHandler>
+    </deviceEventHandlers>
+    <deviceCommandHandlers>
+        <deviceCommandHandler handlerType="GROOVY" name="SERVICEPOINT_AUTO_CLOSE_TIMER_RESET"><![CDATA[
+            
+            import com.qmatic.qp.api.device.DeviceEvent
+            
+            userName = command.getParameter("USER_NAME")
+            stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE"
+            isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+            if(isUserChanalEnable != null && isUserChanalEnable == true){
+                stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE_" + userName
+            }
+            timerServicepointAutoClose = device.getState(stateParam)
+            if(timerServicepointAutoClose) {
+                device.getResource("EVENT_SCHEDULER").remove(timerServicepointAutoClose)
+            }
+            DeviceEvent e = new DeviceEvent(device.getId(), "SERVICEPOINT_AUTO_CLOSE")
+            timerServicepointAutoClose = device.getResource("EVENT_SCHEDULER").scheduleEvent(device.getUnit().getConfiguration().get("autoClose"), e)
+            e.setParameter("TIMER_SERVICEPOINT_AUTO_CLOSE", timerServicepointAutoClose)
+            e.setParameter("USER_NAME", userName)
+            device.setState(stateParam, timerServicepointAutoClose)
+            
+        ]]></deviceCommandHandler>
+    </deviceCommandHandlers>
+    </device>
+  </devices>
+  
+  <unitEvents>
+      <unitEvent name="RESET">
+          <unitEventHandler type="GROOVY"><![CDATA[
+              import com.qmatic.qp.api.device.DeviceEvent
+              try {
+                WebEntryPoint = unit.getDevice("WebEntryPoint")
+                DeviceEvent resetEvent = new DeviceEvent(WebEntryPoint.getId(),"RESET")
+                resetEvent.setParameters(event.getParameters())
+                WebEntryPoint.sendEvent(resetEvent)
+              } catch(e) {
+                unit.log("DEBUG", "Unable to send reset event to touchscreen for unit " + unit.getUnitId())
+              }
+                  
+              ]]>
+          </unitEventHandler>
+      </unitEvent>
+      <unitEvent name="USER_SESSION_END">
+          <unitEventHandler type="GROOVY"><![CDATA[
+              import com.qmatic.qp.api.device.DeviceEvent
+              import com.qmatic.qp.api.device.DeviceUserEvent
+              import com.qmatic.qp.constants.QPConstants
+              
+              device = unit.getDevice("MobileConnectConcierge")
+              try {
+                userName = event.getParameter(QPConstants.PRM_USER_NAME)
+                stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE"
+                DeviceEvent endUserSessionEvent
+                isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+                if(isUserChanalEnable != null && isUserChanalEnable == true && userName != null){
+                    endUserSessionEvent = new DeviceUserEvent(userName)
+                    stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE_" + userName
+                }
+                else{
+                    endUserSessionEvent = new DeviceEvent()
+                }
+                endUserSessionEvent.setUnitId(device.getId())
+                endUserSessionEvent.setParameter("servicePointId", unit.getLogicId() )
+                device.sendEvent(endUserSessionEvent)
+              
+                timerServicepointAutoClose = device.getState(stateParam)
+                if(timerServicepointAutoClose) {
+                    device.getResource("EVENT_SCHEDULER").remove(timerServicepointAutoClose)
+                }
+              }  catch (Throwable t) {
+                device.log("ERROR", "Unable to send USER_SESSION_END event to web terminal, error:" + t.getMessage())
+              }
+              
+          ]]></unitEventHandler>
+      </unitEvent>
+      <unitEvent name="USER_SERVICE_POINT_SESSION_START">
+          <unitEventHandler type="GROOVY"><![CDATA[
+              import com.qmatic.qp.api.device.DeviceEvent
+              
+              device = unit.getDevice("MobileConnectConcierge")
+              
+              user = event.getParameters().get("user")
+              device.setState("USERNAME", user)
+              
+          ]]>
+          </unitEventHandler>
+      </unitEvent>
+      <unitEvent name="USER_SERVICE_POINT_SESSION_END">
+          <unitEventHandler type="GROOVY">
+              <![CDATA[
+                  
+                  import com.qmatic.qp.api.device.DeviceEvent
+                  import com.qmatic.qp.api.device.DeviceUserEvent
+                  import com.qmatic.qp.constants.QPConstants
+                  
+                  device = unit.getDevice("MobileConnectConcierge")
+                  
+                  try {
+                    userName = event.getParameter(QPConstants.PRM_USER_NAME)
+                    stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE"
+                    DeviceEvent endServicePointSessionEvent
+                    isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+                    if(isUserChanalEnable != null && isUserChanalEnable == true && userName != null){
+                        endServicePointSessionEvent = new DeviceUserEvent(userName)
+                        stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE_" + userName
+                    }
+                    else{
+                        endServicePointSessionEvent = new DeviceEvent()
+                    }
+                    endServicePointSessionEvent.setUnitId(device.getId())
+                    endServicePointSessionEvent.setEventName(event.getEventName())
+                    params = event.getParameters()
+                    parameters = ["user": event.getParameters().get("userId"), "servicePointId": unit.getLogicId()]
+                    endServicePointSessionEvent.setParameters(parameters)
+                    device.sendEvent(endServicePointSessionEvent)
+                  
+                    timerServicepointAutoClose = device.getState(stateParam)
+                    if(timerServicepointAutoClose) {
+                        device.getResource("EVENT_SCHEDULER").remove(timerServicepointAutoClose)
+                    }
+                  } catch (Throwable t) {
+                    device.log("ERROR", "Unable to send USER_SERVICE_POINT_SESSION_END event to mobile connect concierge, error:" + t.getMessage())
+                  }
+                  
+              ]]>
+          </unitEventHandler>
+      </unitEvent>
+      
+      <unitEvent name="SERVICE_POINT_CLOSE">
+          <unitEventHandler type="GROOVY"><![CDATA[
+              import com.qmatic.qp.api.device.DeviceEvent
+              import com.qmatic.qp.constants.QPConstants
+              
+              device = unit.getDevice("MobileConnectConcierge")
+              
+              userName = event.getParameter(QPConstants.PRM_USER_NAME)
+              stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE"
+              isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+              if(isUserChanalEnable != null && isUserChanalEnable == true){
+                stateParam = "TIMER_SERVICEPOINT_AUTO_CLOSE_" + userName
+              }
+              timerServicepointAutoClose = device.getState(stateParam)
+              if(timerServicepointAutoClose) {
+                device.getResource("EVENT_SCHEDULER").remove(timerServicepointAutoClose)
+              }
+              
+          ]]>
+          </unitEventHandler>
+      </unitEvent>
+      <unitEvent name="PUBLIC.VISIT_CREATE">
+          <unitEventHandler type="GROOVY"><![CDATA[
+              import com.qmatic.qp.api.device.DeviceEvent
+              import com.qmatic.qp.exception.QExceptionCode
+              import com.qmatic.qp.exception.QException
+              import com.qmatic.qp.api.device.DeviceUserEvent
+              import com.qmatic.qp.constants.QPConstants
+              
+              device = unit.getDevice("MobileConnectConcierge")
+              try {
+                DeviceEvent visitCreateEvent
+                userName = event.getParameter(QPConstants.PRM_USER_NAME)
+                isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+                if(isUserChanalEnable != null && isUserChanalEnable == true && userName != null){
+                    visitCreateEvent = new DeviceUserEvent(userName)
+                }
+                else{
+                    visitCreateEvent = new DeviceEvent()
+                }
+                visitCreateEvent.setUnitId(device.getId())
+                params = event.getParameters()
+                visitCreateEvent.setParameters(params)
+                visitCreateEvent.setEventName("VISIT_CREATE")
+                visitCreateEvent.setParameter("servicePointId", unit.getLogicId() )
+                device.sendEvent(visitCreateEvent)
+              } catch (QException qe) {
+                if (! QExceptionCode.E3125.equals(qe.getQExceptionCode())) {
+                    device.log("ERROR", "Unable to send VISIT_CREATE event to web terminal, error:" + qe.getMessage())
+                }
+              } catch (Throwable t) {
+                device.log("ERROR", "Unable to send VISIT_CREATE event to web terminal, error:" + t.getMessage())
+              }
+              
+          ]]></unitEventHandler>
+      </unitEvent>
+      <unitEvent name="PUBLIC.QUEUE_VISITS_UPDATED">
+            <unitEventHandler type="GROOVY"><![CDATA[
+                import com.qmatic.qp.api.device.DeviceEvent
+                import com.qmatic.qp.exception.QExceptionCode
+                import com.qmatic.qp.exception.QException
+                import com.qmatic.qp.api.device.DeviceUserEvent
+                import com.qmatic.qp.constants.QPConstants
+                import com.qmatic.qp.jiql.core.cfm.queue.QueueVisitsUpdatedEvent
+                import com.qmatic.qp.api.connectors.device.CFMInformationDeviceResource
+                import com.qmatic.qp.api.connectors.dto.Queue
+                
+                device = unit.getDevice("MobileConnectConcierge")
+
+                QueueVisitsUpdatedEvent queueVisitsUpdatedEvent = (QueueVisitsUpdatedEvent) event
+                CFMInformationDeviceResource cmfResource = device.getResource("CFM_INFO")
+
+                queueId = (int)(queueVisitsUpdatedEvent.getQueueId()/100000000000)
+                branchId = queueVisitsUpdatedEvent.getBranchId()
+                visitIds = queueVisitsUpdatedEvent.getVisitIds()
+                waitingTime = 0
+
+                if(visitIds.length > 0){
+                    fullVisit = cmfResource.getVisit(branchId, visitIds[0])
+                    waitingTime = fullVisit.getWaitingTime()
+                }
+
+                def queueObj = '{ \"id\" :' + queueId + ',' + 
+                                 '\"customersWaiting\" :' + visitIds.length + ',' +
+                                 '\"waitingTime\" :' + waitingTime + '}'
+
+
+                try {
+                    DeviceEvent queueUpdateEvent
+                    userName = event.getParameter(QPConstants.PRM_USER_NAME)
+                    isUserChanalEnable = device.getState("IS_USER_CHANNEL")
+                    if(isUserChanalEnable != null && isUserChanalEnable == true && userName != null){
+                        queueUpdateEvent = new DeviceUserEvent(userName)
+                    }
+                    else{
+                        queueUpdateEvent = new DeviceEvent()
+                    }
+                    queueUpdateEvent.setUnitId(device.getId())
+                    params = event.getParameters()
+                    queueUpdateEvent.setParameters(params)
+                    queueUpdateEvent.setEventName("QUEUE_VISITS_UPDATED")
+                    queueUpdateEvent.setParameter("servicePointId", unit.getLogicId())
+                    queueUpdateEvent.setParameter("queue", queueObj.toString())
+                    device.sendEvent(queueUpdateEvent)
+                }catch (QException qe) {
+                    if(!QExceptionCode.E3125.equals(qe.getQExceptionCode())) {
+                        device.log("ERROR", "Unable to send QUEUE_VISITS_UPDATED event to web terminal, error:" + qe.getMessage())
+                    }
+                }
+                catch (Throwable t) {
+                    device.log("ERROR", "Unable to send QUEUE_VISITS_UPDATED event to web terminal, error:" + t.getMessage())
+                }
+                
+            ]]></unitEventHandler>
+        </unitEvent>
+      <unitEvent name="RESET_AUTO_CLOSE">
+          <unitEventHandler type="GROOVY">
+              <![CDATA[
+                  
+                  import com.qmatic.qp.api.device.DeviceEvent
+                  import com.qmatic.qp.api.device.DeviceCommand
+                  import com.qmatic.qp.constants.QPConstants
+                  
+                  device = unit.getDevice("MobileConnectConcierge")
+                  
+                  if(unit.getConfiguration().get("autoClose") > 0) {
+                    userName = event.getParameter(QPConstants.PRM_USER_NAME)
+                    DeviceCommand servicepointAutoCloseTimerReset = new DeviceCommand(device.getId(), "SERVICEPOINT_AUTO_CLOSE_TIMER_RESET")
+                    servicepointAutoCloseTimerReset.setParameter("USER_NAME", userName)
+                    device.executeCommand(servicepointAutoCloseTimerReset)
+                  }
+                  
+              ]]>
+          </unitEventHandler>
+      </unitEvent>
+      <unitEvent name="SET_CHANNEL_STATUS">
+          <unitEventHandler type="GROOVY">
+              <![CDATA[
+                  
+                  import com.qmatic.qp.api.device.DeviceEvent
+                  
+                  device = unit.getDevice("MobileConnectConcierge")
+                  isUserChannel = event.getParameter("isUserChannel")
+                  device.setState("IS_USER_CHANNEL", isUserChannel)
+                  
+              ]]>
+          </unitEventHandler>
+      </unitEvent>
+  </unitEvents>
+  <unitCommands>
+      <unitCommand name="PRINT">
+          <unitCommandHandler type="GROOVY">
+              <![CDATA[
+                  
+                  import com.qmatic.qp.api.device.DeviceCommand
+                  import org.joda.time.format.DateTimeFormat
+                  import com.qmatic.qp.api.util.TimeUtilV3
+                  import com.qmatic.qp.api.connectors.device.PrinterDeviceResource
+                  import com.qmatic.qp.jiql.core.util.CommonUtil
+                  import com.qmatic.qp.api.device.DeviceEvent
+                  
+                  device = unit.getDevice("TP")
+                  deviceConcierge = unit.getDevice("MobileConnectConcierge")
+                  
+                  try{
+                    issueTicketParameter = command.getParameter("print").toInteger()
+                  }
+                  catch(e) {
+                    issueTicketParameter = -1
+                  }
+                  
+                  if(issueTicketParameter == 1 || issueTicketParameter == -1) {// ß check custom parameter if ticket should be issued or not
+                    DeviceCommand printCommand = new DeviceCommand()
+                    printCommand.setCommand("PRINT")
+                    printCommand.setDeviceId(device.getId())
+                  
+                    command.setParameter("date", TimeUtilV3.parseTimeStringToFormattedTimeAdjustForOldAmPmFormat(command.getParameter("eventTime"), unit.getConfiguration().get("dateFormat")));
+                    command.setParameter("time", TimeUtilV3.parseTimeStringToFormattedTimeAdjustForOldAmPmFormat(command.getParameter("eventTime"), unit.getConfiguration().get("timeFormat")));
+        
+                    printCommand.setParameter("type", "BMP")
+                  
+                    customSurfaceParameters = unit.getConfiguration().get("customSurfaceParameters").split(",")
+                    if("branchName" in customSurfaceParameters) {
+                        command.setParameter("branchName", unit.getBranch().getName())
+                    }
+                    
+                    if("ticketCount" in customSurfaceParameters) {
+                        DeviceCommand ticketCountCommand = new DeviceCommand()
+                        ticketCountCommand.setCommand("GET_TICKET_COUNTER")
+                        ticketCountCommand.setDeviceId(device.getId())
+                        def ticketCount = device.sendCommand(ticketCountCommand).getResult()
+                        command.setParameter("ticketCount", ticketCount.toString())
+                    }
+                  
+                    if("waitingTime" in customSurfaceParameters || "customersWaiting" in customSurfaceParameters) {
+                        PrinterDeviceResource resource = device.getResource("PRINTER")
+                        Long queueId = command.getParameter("queueId")
+                        Integer logicQueueId = CommonUtil.getUnitLogicId(queueId)
+                        queue = resource.getQueue(unit.getBranchId(), logicQueueId)
+                        if("waitingTime" in customSurfaceParameters) {
+                            Integer s = queue.getWaitingTime()
+                            Integer m = s/60
+                            Integer h = m/60
+                            Integer srest = s-(m*60)
+                            Integer mrest = m-(h*60)
+                            command.setParameter("waitingTimeS", s.toString())
+                            command.setParameter("waitingTimeM", m.toString())
+                            hp = (h > 0 ? String.format("%02d", h) + ":" : "")
+                            mp = String.format("%02d", mrest)
+                            sp = String.format("%02d", srest)
+                            command.setParameter("waitingTimeHMS", hp + mp + ":" + sp)
+                        }
+                        if("customersWaiting" in customSurfaceParameters) {
+                            command.setParameter("customersWaiting", (queue.getCustomersWaiting() - 1).toString())
+                        }
+                    }
+                  
+                    ticket = device.getResource("TP311X").renderTicket(command.getParameter("service"), command.getParameters() )
+                    // ticket is an array
+                    // in case of a double ticket layout, both tickets are in one single bitmap in first array position
+                    printCommand.setParameter("img", ticket[0])
+                  
+                    result = device.sendCommand(printCommand).getResult() // ß issue the ticket
+                  }
+                  else {
+                    result = true // ß do not issue any ticket, but result must be true to indicate that the PRINT command was successful (to avoid rolling back the transaction)
+                  }
+                  
+                  
+              ]]>
+          </unitCommandHandler>
+      </unitCommand>
+  </unitCommands>
+
+</unit>

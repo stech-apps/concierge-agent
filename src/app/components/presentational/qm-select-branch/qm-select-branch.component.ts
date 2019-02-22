@@ -97,8 +97,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
           this.goToNext();
         }
       }, () => { });
-    }
-    else if (!this.currentBranch.id) {
+    } else if (!this.currentBranch.id) {
       this.timeSlotDispatchers.deselectTimeslot();
       this.currentBranch = branch;
       this.calendarBranchDispatchers.selectCalendarBranch(branch);
@@ -167,7 +166,6 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
       const fieldsToLookFor = [
         'addressLine1',
         'addressLine2',
-        'addressZip',
         'addressCity',
         'addressCountry'
       ];

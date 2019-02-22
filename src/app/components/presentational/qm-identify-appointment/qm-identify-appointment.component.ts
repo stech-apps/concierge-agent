@@ -994,6 +994,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     else if (searchButton === this.SEARCH_STATES.QR) {
       this.previousSearchState = this.currentSearchState;
+      if(this.currentSearchState==this.SEARCH_STATES.REFRESH){
+        this.previousSearchState = this.SEARCH_STATES.DURATION;
+      }
       if (this.nativeApi.isNativeBrowser()) {
         this.nativeApi.openQRScanner();
 

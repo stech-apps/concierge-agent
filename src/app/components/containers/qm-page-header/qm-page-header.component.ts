@@ -21,7 +21,8 @@ import {
   AppointmentDispatchers,
   ReserveDispatchers,
   QueueDispatchers,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  ServicePointDispatchers
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -81,7 +82,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors,
     private reserveDispatchers:ReserveDispatchers,
     private queueDispatchers: QueueDispatchers,
-    private flowOpenSelectors:FlowOpenSelectors
+    private flowOpenSelectors:FlowOpenSelectors,
+    private servicePointDispatchers:ServicePointDispatchers
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -113,7 +115,9 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
           this.showBranch = true;
           this.showSPointName = true;
           this.sPName = servicePoint.name;
+          this.servicePointDispatchers.setPreviousServicePoint(servicePoint);
         }
+       
       }
     );
     this.headerSubscriptions.add(servicePointSubscription);
@@ -151,5 +155,6 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.queueDispatchers.resetSelectedQueue();
     this.queueDispatchers.setectVisit(null);
     this.queueDispatchers.resetFetchVisitError();
+    
   }
 }

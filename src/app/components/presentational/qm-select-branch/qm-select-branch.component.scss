@@ -170,6 +170,10 @@ button:focus{
   right: 0; 
   transform: translateY(0%);
   top: 0%; 
+
+  @at-root [dir='rtl'] & {
+    left: 0;
+  }
 }
 .qm-list__item{
 display: flex;

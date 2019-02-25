@@ -566,6 +566,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.buttonEnabled = true;
       this.smsSelected = false;
       this.emailSelected = false;
+    }else{
+      this.buttonEnabled = false;
     }
   }
 

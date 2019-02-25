@@ -181,6 +181,7 @@ display: flex;
 
 .qm-list__item--text{
 background-color: white;
+width: calc(100% - 41px); 
 }
 .qm-list__item{
 background: transparent; 

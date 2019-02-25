@@ -184,11 +184,13 @@
 
 ///Tempory: this can be removed after replacing the qm_list.scss file
 .icon-info , .icon-info-solid{
-      
     position: relative;
     right: 0; 
     transform: translateY(0%);
-    top: 0%; 
+    top: 0%;    
+    @at-root [dir='rtl'] & {
+      left: 0;
+    }
 }
 .qm-list__item{
 display: flex;

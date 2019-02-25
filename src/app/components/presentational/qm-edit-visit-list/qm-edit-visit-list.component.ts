@@ -208,8 +208,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         this.resetQRReader();
         this.spService.getSelectedVisitByVisitId(this.selectedbranchId, result.visitId).subscribe(visit => {
           this.visits.splice(0, this.visits.length, visit);
-          // this.visitOptionStatus = 'initial';
-          // this.visitClicked = true;
+          this.visitOptionStatus = 'initial';
+          this.visitClicked = true;
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
      

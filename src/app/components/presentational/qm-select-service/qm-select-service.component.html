@@ -102,7 +102,7 @@
   </div>
   <div class="qm-service-list__item-container">
 
-    <div class="qm-crossline-header-container">
+    <div class="qm-crossline-header-container" *ngIf="!(flowType === 'ARRIVE_APPOINTMENT' && filteredServiceList.length === 0)">
       <div class="qm-crossline-header"></div>
       <h2 class="qm-crossline-header-text">{{ 'label.service.allservices' | translate }}</h2>
     </div>

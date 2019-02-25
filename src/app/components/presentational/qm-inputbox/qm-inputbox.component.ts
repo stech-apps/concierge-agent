@@ -221,7 +221,10 @@ export class QmInputboxComponent implements OnInit {
           day: '',
           year: ''
         }
-      })
+      });
+      this.customerCreateForm.markAsPristine();
+      this.customerCreateForm.controls.dateOfBirth.markAsPristine();
+
     }
   }
 

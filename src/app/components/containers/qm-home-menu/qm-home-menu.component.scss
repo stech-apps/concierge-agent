@@ -50,6 +50,10 @@
     font-weight: 500;
   
   }
+  &__item:active {
+    color: $dark-transparent82;
+  
+  }
   &__icon{
     font-size: 3em;
   }

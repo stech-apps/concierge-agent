@@ -25,7 +25,12 @@ export class GlobalErrorHandler {
             ...interpolationParams
         }).subscribe(
             (errorMsgs: string[]) => {
-                this.toastService.errorToast(`${errorMsgs[contextualErrorKey]} ${errorMsgs[this.genericErrorKey]}`);
+
+                if (dsError && dsError.errorCode && dsError.errorCode != "0") {
+                    this.toastService.errorToast(`${errorMsgs[contextualErrorKey]} ${errorMsgs[this.genericErrorKey]}`);
+                } else {
+                    this.toastService.errorToast(`${errorMsgs[contextualErrorKey]}`);
+                }
             }
             ).unsubscribe();
         // break;

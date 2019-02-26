@@ -15,8 +15,8 @@ export class CalendarServiceDispatchers {
     this.store.dispatch(new ServiceActions.FetchCalendarServices(branch));
   }
 
-  fetchServiceGroups(services: ICalendarService[], branch: ICalendarBranch) {
-    this.store.dispatch(new ServiceActions.FetchServiceGroups(services, branch));
+  fetchServiceGroups(services: ICalendarService[], branch: ICalendarBranch, isMultiServiceEnabled = true) {
+    this.store.dispatch(new ServiceActions.FetchServiceGroups(services, branch, isMultiServiceEnabled));
   }
 
   setSelectedServices(services: ICalendarService[]) {

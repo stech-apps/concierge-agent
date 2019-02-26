@@ -39,7 +39,7 @@ export class FetchCalendarServices implements Action {
 
   export class FetchServiceGroups implements Action {
     readonly type = FETCH_SERVICE_GROUPS;
-    constructor(public payload: ICalendarService[], public branch: ICalendarBranch) {}
+    constructor(public payload: ICalendarService[], public branch: ICalendarBranch, public multiServiceDisabled = false) {}
   }
 
   export class FetchServiceGroupsFail implements Action {

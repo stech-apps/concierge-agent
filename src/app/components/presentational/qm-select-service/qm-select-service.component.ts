@@ -259,9 +259,16 @@ export class QmSelectServiceComponent implements OnInit {
       this.handleServiceList(selectedService, isRemove);
     }
     else if(!this.multiServiceEnabled){
+
+      /*
       this.translateService.get('limit_max_service').subscribe(v => {
         this.toastService.errorToast(v);
       });
+      */
+
+      this.selectedServiceList = [];
+
+      this.handleServiceList(selectedService, isRemove);
     }
     else if(this.selectedServiceList.length > 0 && !this.isMultiServiceOn){
       this.qmModalService.openForTransKeys('', 'enable_multi_serv_switch', 'yes', 'no', (v) => {
@@ -296,10 +303,9 @@ export class QmSelectServiceComponent implements OnInit {
       this.timeSlotDispatchers.deselectTimeslot();
       this.reserveDispatcher.resetReserveAppointment();
       this.calendarServiceDispatchers.setSelectedServices(this.selectedServiceList);
-      this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch);
+      this.calendarServiceDispatchers.fetchServiceGroups(this.selectedServiceList, this.selectedBranch as ICalendarBranch, this.multiServiceEnabled);
     }
-    else{
-   
+    else{   
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
       if(isRemove){
         this.filteredServiceList = this.filteredServiceList.filter(

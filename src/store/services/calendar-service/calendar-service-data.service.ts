@@ -34,11 +34,15 @@ export class CalendarServiceDataService {
       .pipe(catchError(this.errorHandler.handleError()));
   }
 
-  getServiceGroups(services: ICalendarService[], branch: ICalendarBranch): Observable<ICalendarServiceResponse> {
-    var serviceIds = ""
-    services.forEach(val => {
-      serviceIds = serviceIds + 'servicePublicId=' + val.publicId + ';';
-    })
+  getServiceGroups(services: ICalendarService[], branch: ICalendarBranch, isMultiServiceEnabled = true): Observable<ICalendarServiceResponse> {
+    let serviceIds = "";
+
+    if(isMultiServiceEnabled) {
+      services.forEach(val => {
+        serviceIds = serviceIds + 'servicePublicId=' + val.publicId + ';';
+      });
+    }
+    
     return this.http
       .get<ICalendarServiceResponse>(`${this.hostAddress}${calendarPublicEndpointV2}/branches/${branch.publicId}/services/groups;${serviceIds}`)
       .pipe(catchError(this.errorHandler.handleError()));

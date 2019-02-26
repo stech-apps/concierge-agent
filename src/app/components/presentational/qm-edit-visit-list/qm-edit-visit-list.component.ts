@@ -436,23 +436,15 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
             // console.log(error);
             const err = new DataServiceError(error, null);
             if (error.status == ERROR_STATUS.NOT_FOUND) {
-              this.translateService.get('requested_visit_not_found').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
-            }
-            else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
-              this.translateService.get('visit_already_called').subscribe(v => {
-                this.toastService.errorToast(v);
-              });
+                this.errorHandler.showError('requested_visit_not_found', err);
+            } else if (error.status == ERROR_STATUS.CONFLICT && err.errorCode == Q_ERROR_CODE.BLOCK_TRANSFER) {
+              this.errorHandler.showError('visit_already_called', err);
             } else if (err.errorCode === '0') {
+              this.errorHandler.showError('request_fail', err);
+              this.router.navigate(["/home"]);
+            } else {
               this.translateService.get('request_fail').subscribe(v => {
-                this.router.navigate(["/home"]);
-                this.toastService.errorToast(v);
-              });
-            }
-            else {
-              this.translateService.get('request_fail').subscribe(v => {
-                this.toastService.errorToast(v);
+                this.errorHandler.showError('request_fail', err);
               });
             }
           }

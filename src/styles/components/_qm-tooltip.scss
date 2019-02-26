@@ -17,9 +17,14 @@
     }   
 }
 
-qm-tooltip-btn:focus{
+
+.icon-help:focus{
+    color:  $dark-transparent62 !important;
+}
+
+qm-tooltip-btn:active{
     .icon-help{
-    color: black !important;
+        color:  $dark-transparent82 !important;
 }
 }
 

@@ -33,6 +33,14 @@
             color:  $primary-pink;
             background-color: $white;
         }
+        &-button:hover{
+            background: rgba(229,0,70,0.04);
+        }
+        &-button:active{
+            border: 1px solid rgba(0,0,0,0.82);
+            background-color: $white;
+            color: $dark-transparent82;
+        }
 
         &-value {
             width: 45px;

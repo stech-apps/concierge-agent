@@ -1231,12 +1231,12 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.inputChanged.next(trimmedSearchText);
 
       } else if (this.currentSearchState === this.SEARCH_STATES.ID) {
-        this.translateService
-          .get("please_enter_id_and_press_enter")
-          .subscribe(msg => {
-            this.toastService.infoToast(msg);
-          })
-          .unsubscribe();
+        // this.translateService
+        //   .get("please_enter_id_and_press_enter")
+        //   .subscribe(msg => {
+        //     this.toastService.infoToast(msg);
+        //   })
+        //   .unsubscribe();
       }
     }
   }

@@ -27,8 +27,9 @@ Make sure you have installed
 
 ## Development
 
-1. Clone the project
-2. Run the following command to install all dependencies
+1. Clone the projec
+2. Make sure to switch to "v4.0.0" branch which is the current release branch and the most stable.
+3. Run the following command to install all dependencies
 
 ```
 npm install

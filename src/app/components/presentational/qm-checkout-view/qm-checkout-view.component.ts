@@ -914,7 +914,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   getNotificationType(): NOTIFICATION_TYPE {
     var notificationType = NOTIFICATION_TYPE.none;
-    if (this.smsSelected && this.emailSelected) {
+    if ((this.smsSelected && this.emailSelected) || this.emailAndSmsSelected ) {
       notificationType = NOTIFICATION_TYPE.both;
     }
     else if (this.smsSelected) {

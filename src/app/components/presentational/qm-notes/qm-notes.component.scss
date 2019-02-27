@@ -31,6 +31,10 @@
   &__edit-container {
     width: 100%;
     display: block;
+
+    @at-root [dir='rtl'] & {
+      text-align: right;
+    }
   }
 
   &__presentation-container {

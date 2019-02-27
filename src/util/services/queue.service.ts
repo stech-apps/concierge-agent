@@ -19,7 +19,7 @@ export class QueueService {
     private servicePointSelectors: ServicePointSelectors
   ) {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => {
-        if (branch) {
+        if (branch && branch.id!=-1) {
           this.selectedBranch = branch;
           this.queueDispatchers.fetchQueueInfo(branch.id);
           this.setQueuePoll();

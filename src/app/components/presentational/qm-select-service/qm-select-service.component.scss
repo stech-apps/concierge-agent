@@ -202,3 +202,8 @@ display: flex;
 .qm-list__item{
  background: transparent; 
 }
+
+.qm-service-list-serached{
+  height: calc(100vh - 295px);
+  overflow: auto;
+}

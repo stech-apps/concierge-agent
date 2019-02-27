@@ -271,11 +271,11 @@ gulp.task(
   gulpsync.sync([
     'write:manifest',
     'create:war',
+    'create:utt',
     'create:properties',
     'create:release-notes',
     'clean:war',
     'create:artifactory:zip',
-    'create:utt',
     'clean:artifactory'
   ])
 );

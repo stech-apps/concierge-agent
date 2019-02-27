@@ -35,7 +35,7 @@ export class CalendarServiceEffects {
       .pipe(
         switchMap((action: AllActions.FetchServiceGroups) =>
           toAction(
-            this.serviceDataService.getServiceGroups(action.payload, action.branch),
+            this.serviceDataService.getServiceGroups(action.payload, action.branch, action.multiServiceEnabled),
             AllActions.FetchServiceGroupsSuccess,
             AllActions.FetchServiceGroupsFail
           )

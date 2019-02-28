@@ -33,11 +33,13 @@
         <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
           id="serviceSearchInput" name="serviceSearchInput" type="search" placeholder="{{'label.service.search' | translate}}"
           #serviceSearchInput (keydown.enter)="serviceSearchInput.blur()">
-
         <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
           <span class="sr-only">Search</span>
         </div>
+      </div>
+      <div class="qm-service-not-found-container" *ngIf="(filteredServiceList | filterService : [filterText, flowType])?.length===0">
+        {{'service_list_not_found'|translate}}
       </div>
     </div>
     <div class="qm-flow-sub-header__right">
@@ -63,7 +65,7 @@
       </div>
     </div>
   </div>
-  <div class="qm-select-service__search-heading" *ngIf="(searchText || '').trim().length > 0">
+  <div class="qm-select-service__search-heading" *ngIf="(searchText || '').trim().length > 0 && (filteredServiceList | filterService : [filterText, flowType])?.length!==0">
       <span>{{'label.search.result.header' | translate}} &nbsp;</span>
       <mark>{{ '"'+ searchText + '"' }}</mark>
       <span class="qm-select-service__foundbox">{{ ' ' + 
@@ -79,7 +81,7 @@
 
 <div class="qm-service-list__container" dir="{{ userDirection$ | async }}" [ngClass]="{'qm-service-list-serached':filterText && flowType === 'CREATE_VISIT' }">
 
-  <div class="qm-service-list__item-container" *ngIf="mostFrequentServiceList && mostFrequentServiceList.length > 0 && (mostFrequentServiceList | filterService: [filterText, flowType]).length > 0">
+  <div class="qm-service-list__item-container" *ngIf="!filterText && mostFrequentServiceList && mostFrequentServiceList.length > 0 && (mostFrequentServiceList | filterService: [filterText, flowType]).length > 0">
     <div class="qm-crossline-header-container">
       <div class="qm-crossline-header"></div>
       <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'most_freq_services' | translate }}</h2>
@@ -105,7 +107,7 @@
   </div>
   <div class="qm-service-list__item-container">
 
-    <div class="qm-crossline-header-container" *ngIf="!(flowType === 'ARRIVE_APPOINTMENT' && filteredServiceList.length === 0)">
+    <div class="qm-crossline-header-container" *ngIf="flowType !== 'ARRIVE_APPOINTMENT' && ((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
       <div class="qm-crossline-header"></div>
       <h2 class="qm-crossline-header-text">{{ 'label.service.allservices' | translate }}</h2>
     </div>

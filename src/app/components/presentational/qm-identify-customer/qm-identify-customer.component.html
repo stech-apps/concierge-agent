@@ -145,10 +145,10 @@
       currentCustomer &&
       !f.customerCreateForm.dirty &&
       !editMode) ||
-    flowType !== 'CREATE_APPOINTMENT'
+    flowType !== 'CREATE_APPOINTMENT' && f.customerCreateForm.pristine 
   "
 >
-  <button class="qm-flow-done-bar__done-button" (click)="doneButtonClick()">
+  <button  class="qm-flow-done-bar__done-button" (click)="doneButtonClick()">
     {{ "banner_done_label" | translate }}
   </button>
 </div>

@@ -211,6 +211,9 @@ export class QmInputboxComponent implements OnInit {
   
   clearCustomerForm(){
     if(this.customerCreateForm!==undefined){ 
+      this.customerCreateForm.markAsPristine();
+      this.customerCreateForm.controls.dateOfBirth.markAsPristine();
+      
       this.customerCreateForm.patchValue({
         firstName: '',
         lastName:'',
@@ -222,8 +225,7 @@ export class QmInputboxComponent implements OnInit {
           year: ''
         }
       });
-      this.customerCreateForm.markAsPristine();
-      this.customerCreateForm.controls.dateOfBirth.markAsPristine();
+     
 
     }
   }

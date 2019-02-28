@@ -340,7 +340,6 @@ export class QmSelectServiceComponent implements OnInit {
       this.checkMostFrequentService();
       this.filteredServiceList.push(selectedService);
       this.filteredServiceList = <Array<IServiceViewModel>>this.sortServices(this.filteredServiceList);
-      
       this.serviceDispatchers.setSelectedServices(this.selectedServiceList);
     }
   }

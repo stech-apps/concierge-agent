@@ -1,13 +1,13 @@
 <table class="customer-table" dir="{{ userDirection$ | async }}" >
   <tbody *ngIf="customers.length!=0" class="tbody">
-     <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0" (keydown.enter)="selectCustomer(customer)" (keydown.space)="selectCustomer(customer)">
+     <tr  class="customer-list" *ngFor="let customer of customers" tabindex="0" (keydown.enter)="selectCustomer(customer) ; f.customerCreateForm.markAsPristine()" (keydown.space)="selectCustomer(customer)">
        
-      <td style="width: 1%" (click)="selectCustomer(customer)" ></td>
-      <td style="width: 23%"  (click)="selectCustomer(customer)"> <div class="search-list-text" [innerHtml]="customer.firstName +' ' + customer.lastName  | qmhighlight: searchText"> </div> </td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"> <div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"><div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
-      <td style="width: 23%" (click)="selectCustomer(customer)"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text qm-sub-row" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
-      <td style="width: 7%" *ngIf="isCustomerEditable" (click)="selectCustomer(customer)"> 
+      <td style="width: 1%" (click)="selectCustomer(customer) ; f.customerCreateForm.markAsPristine()" ></td>
+      <td style="width: 23%"  (click)="selectCustomer(customer) ; f.customerCreateForm.markAsPristine()"> <div class="search-list-text" [innerHtml]="customer.firstName +' ' + customer.lastName  | qmhighlight: searchText"> </div> </td>
+      <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()" > <div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"><div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text qm-sub-row" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
+      <td style="width: 7%" *ngIf="isCustomerEditable" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> 
           <div tabindex="0"  class="svg-container" (click)="editCustomer(customer)" (keydown.enter)="editCustomer(customer)" (keydown.space)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>
           </div>

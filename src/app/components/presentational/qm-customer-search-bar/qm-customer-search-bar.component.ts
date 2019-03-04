@@ -30,7 +30,7 @@ export class QmCustomerSearchBarComponent implements OnInit {
   newcustomer:ICustomer;
 
   @Input() public isInArriveFlow: boolean;
-  
+
 
   private CHARACTER_THRESHOLD = 2;
   constructor(

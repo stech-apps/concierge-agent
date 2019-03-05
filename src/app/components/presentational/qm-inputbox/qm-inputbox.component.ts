@@ -427,4 +427,13 @@ export class QmInputboxComponent implements OnInit {
     
   }
   
+  clearDob(){
+    this.customerCreateForm.patchValue({
+      dateOfBirth: {
+        month: null,
+        day: '',
+        year: ''
+      }
+    })
+  }
 }

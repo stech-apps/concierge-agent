@@ -67,8 +67,13 @@
                       <label for="date_of_birth" class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label" >{{'date_of_birth'|translate }}</label>
                       <div class="qm-input-box__dob-container">
                         <!-- Month -->
-                        <div class="qm-input-box__month-element-container"> 
-                            <label for="month" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'month'|translate }}</label>
+                        <div> 
+                           <div class="qm-dob-container">
+                            <label for="month" class="qm-input-box__inputbox-name qm-input-box__month-element-container">{{'month'|translate }}</label>
+                            <label for="day" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container">{{'day'|translate }}</label>
+                            <label for="year" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container">{{'year'|translate }}</label>
+                            </div>
+                            <div class="qm-dob-container" [ngClass]="{'qm-dob-error':customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')}">
                             <ng-select #month       [items]="months"
                                                     [selectOnTab]="true"
                                                     [clearable]="false"
@@ -80,22 +85,18 @@
                                                     (click)="ScrollToBottom()"
                                                     id="birthday_select"
                                                     tabindex="0"
-                                                    class="qm-birthday-select">
+                                                    class="qm-birthday-select qm-input-box__month-element-container">
                             </ng-select>
+                            <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
+                            <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
+                          </div>
                         </div>
-                        <!-- Day -->
-                        <div class="qm-input-box__day-element-container qm-input-box__dob-element-container" > 
-                            <label for="day" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'day'|translate }}</label>
-                            <input class="qm-input-box__input" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
-                        </div>
-                        <!-- Year -->
-                        <div class="qm-input-box__year-element-container qm-input-box__dob-element-container"> 
-                            <label for="year" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'year'|translate }}</label>
-                            <input class="qm-input-box__input" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
-                        </div>
+                        <button (click)="clearDob()" class="qm-transparent-btn qm-input-box__dob-element-container">
+                          <i class="qm-action-btn__icon icon-close qm-close__icon qm-dob-close-icon"></i>
+                        </button>
                         <br>
                       </div>
-                    
+                     
                     </div>
               </div>
               <div>

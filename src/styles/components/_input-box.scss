@@ -75,8 +75,11 @@ input:focus{
     color: $dark-transparent62;
     font-size: 16px;
     // margin-right: rem(8px);
-    @at-root [dir="rtl"] & {
+    @at-root [dir="ltr"] & {
       text-align: left;
+    }
+    @at-root [dir="rtl"] & {
+      text-align: right;
     }
     white-space: nowrap; text-overflow:ellipsis; overflow: hidden; 
     
@@ -84,6 +87,7 @@ input:focus{
 
   &__month-element-container{
     width: 200px;
+    
   }
   &__day-element-container{
     width: 90px;

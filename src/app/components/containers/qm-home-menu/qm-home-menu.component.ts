@@ -238,7 +238,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     } else if (this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled) {
       this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.infoToast(v);
-      })
+      });
     }
     else if (route == 'edit-appointment' && this.isEditFlowDisabled) {
       this.translateService.get('no_actions_available').subscribe(v => {
@@ -250,9 +250,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.queueService.stopQueuePoll();
       this.router.navigate(['home/' + route]);
       setTimeout(() => {
-        this.flowOpenDispatcher.flowOpen();  
+        this.flowOpenDispatcher.flowOpen();
       }, 1000);
-      
     }
   }
   ngOnDestroy(): void {

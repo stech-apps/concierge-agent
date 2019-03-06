@@ -9,6 +9,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
 import { HttpHeaders } from '@angular/common/http';
 import { QueueService } from '../../../../util/services/queue.service';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
 
 @Component({
   selector: 'qm-central-login',
@@ -33,9 +34,10 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       private systemInfoDispatcher: SystemInfoDispatchers,
       private calendarBranchSelector: CalendarBranchSelectors,
       private route: ActivatedRoute,
-      private queueService: QueueService
+      private queueService: QueueService,
+      private errorHandler: GlobalErrorHandler
     ) {
-      
+
     const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
     this.subscriptions.add(userSubscription);
 
@@ -105,7 +107,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
             this.systemInfoDispatcher.resetAuthorizationHeader();
             if(error.status === 401){
               this.translateService.get('login_failed').subscribe(v => {
-                this.toastService.infoToast(v);
+                this.errorHandler.showError(v, null);
               });
             }
             else{

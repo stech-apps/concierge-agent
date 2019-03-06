@@ -125,7 +125,7 @@ notifyPrinterIssue(errorMsg: string){
         }
         if(msg.length > 0){
             this.translateService.get(msg).subscribe(v => {
-                this.toastService.infoToast(v);
+                this.toastService.errorToast(v);
               });
         }
 }

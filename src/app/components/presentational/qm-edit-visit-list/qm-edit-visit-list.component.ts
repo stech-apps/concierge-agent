@@ -221,7 +221,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           
         }, error => {
           this.translateService.get('request_fail').subscribe(v => {
-            this.toastService.infoToast(v);
+            this.toastService.errorToast(v);
           });
         })
       }

@@ -4,14 +4,8 @@
     top: 0;
     z-index: map-get($z-index, 'toastContainer');
     width: 100%;
-    max-width: 50%;
     left: 50%;
     top: 75px;
     transform: translateX(-50%);
-
-    @include qm-xs {
-      // max-width: 90%;
-    }
-
   }
   

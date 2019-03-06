@@ -1,14 +1,7 @@
 .toast-container {
   margin: 0 auto;
-  max-width: 70%;
+  width: 568px;
   font-size: 18px;
-  @include qm-xs {
-    max-width: 100%;
-  }
-
-  @include qm-sm {
-    max-width: 100%;
-  }
 }
 
 

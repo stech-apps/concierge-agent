@@ -154,7 +154,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
           this.filterText = '';
         });
       } else{
-        this.toastService.infoToast("error");
+        this.toastService.errorToast("error");
       }
     }
   );

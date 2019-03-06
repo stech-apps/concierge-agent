@@ -180,40 +180,45 @@
     }
 }
 
-.qm-pannel-inner-container {
-    height: auto;
-    min-height: 100%;
-    background-color: $background-default;
-    @include qm-xs {
-        width: 480px;
-    }
-
-    @include qm-sm {
-        width: 976px;
-    }
-
-    @include qm-md {
-        width: 1288px;
-        padding-left: 150px;
-        padding-right: 150px;
-    }
-
-    @include qm-lg {
-        padding-left: 150px;
-        padding-right: 150px;
-    }
+.qm-pannel-inner-container{
+    @include qm-sm{
+        padding: 30px 24px;
+      }
 }
+// .qm-pannel-inner-container {
+//     height: auto;
+//     min-height: 100%;
+//     background-color: $background-default;
+//     @include qm-xs {
+//         width: 480px;
+//     }
 
-.qm-pannel-container {
-    @include qm-md {
-        background-image: $workflow-blue-background;
-    }
+//     @include qm-sm {
+//         width: 976px;
+//     }
 
-    @include qm-lg {
-        background-image: $workflow-blue-background;
-    }
-}
+//     @include qm-md {
+//         width: 1288px;
+//         padding-left: 150px;
+//         padding-right: 150px;
+//     }
 
-button:focus{
-    // border:  solid #007bff 1px;
-  }
+//     @include qm-lg {
+//         padding-left: 150px;
+//         padding-right: 150px;
+//     }
+// }
+
+// .qm-pannel-container {
+//     @include qm-md {
+//         background-image: $workflow-blue-background;
+//     }
+
+//     @include qm-lg {
+//         background-image: $workflow-blue-background;
+//     }
+// }
+
+// button:focus{
+//     // border:  solid #007bff 1px;
+//   }

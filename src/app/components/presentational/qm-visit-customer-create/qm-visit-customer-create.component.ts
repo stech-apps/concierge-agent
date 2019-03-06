@@ -278,4 +278,14 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     searchBox.scrollIntoView();
     
   }
+
+  clearDob(){
+    this.customerCreateForm.patchValue({
+      dateOfBirth: {
+        month: null,
+        day: '',
+        year: ''
+      }
+    })
+  }
 }

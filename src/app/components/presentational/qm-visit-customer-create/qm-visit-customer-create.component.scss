@@ -35,6 +35,16 @@
     }
 }
 
+.qm-dob-close__icon{
+    margin: auto;
+    height: 100%;
+    padding-top: 27px;
+    right: auto !important;
+    left: auto !important;
+    cursor: pointer;
+}
+
+
 .qm-close__icon:hover{
     color: $dark-transparent62;
 }
@@ -57,7 +67,9 @@
         }
         }
 
-
+        .qm-dob-close-icon{
+            height: auto !important;
+        }
       
         .qm-action-btn--only-icon{
             
@@ -81,4 +93,12 @@ input[type=number]::-webkit-outer-spin-button {
     @at-root [dir="rtl"] & {
         text-align: right;
     }
+}
+
+.qm-dob-container{
+    display: flex;
+}
+
+.qm-dob-error{
+    outline: 2px solid #E50046;
 }

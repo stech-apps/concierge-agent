@@ -1,8 +1,12 @@
 <div class="qm-pannel-container" [ngStyle]="{'height':  (selectedTime)?.length > 0  ? 'calc(100% - 80px)' : '100%'}">
+    <div class="qm-pannel-full-inner-container" dir="{{ userDirection$ | async}}"> 
+        <div>     
+            <div class="qm-flow-header">{{ 'label.select.datetime' | translate}}</div>
+          </div>
   <div class="qm-pannel-inner-container"> 
-<div class="qm-flow-sub-header" dir="{{ userDirection$ | async}}">
-  <i class="icon-caret-left qm-appointment-time-select__back-icon" [ngClass]="{'icon-caret-right': ( userDirection$ | async) === 'rtl'}"></i>
-  <h1 class="qm-text-overflow-fix">{{ 'label.select.datetime' | translate}}</h1>
+<div class="qm-flow-sub-header" >
+  <!-- <i class="icon-caret-left qm-appointment-time-select__back-icon" [ngClass]="{'icon-caret-right': ( userDirection$ | async) === 'rtl'}"></i>
+  <h1 class="qm-text-overflow-fix">{{ 'label.select.datetime' | translate}}</h1> -->
 </div>
 <div class="qm-appointment-time-select__content" dir="{{ userDirection$ | async }}">
   <div class="qm-number-of-customers">
@@ -35,6 +39,7 @@
   </div>
   </div></div>
   <!--ngb-datepicker #dp [(ngModel)]="model" [outsideDays]="'hidden'" firstDayOfWeek="7" [displayMonths]="displayMonths" [navigation]="'arrows'"  (navigate)="date = $event.next"></ngb-datepicker-->
+</div>
 </div>
 <div class="qm-flow-done-bar" *ngIf="(selectedTime)?.length > 0">
   <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</div>

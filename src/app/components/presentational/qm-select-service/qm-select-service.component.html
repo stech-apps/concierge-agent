@@ -1,11 +1,15 @@
 
 
-<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
+    <div class="qm-pannel-full-inner-container"> 
+        <div>     
+            <div class="qm-flow-header">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</div>
+          </div>
   <div class="qm-pannel-inner-container"> 
     <div class="qm-select-service-header-section">
     <div class="qm-flow-sub-header">
   <!--   <div class="qm-flow-sub-header__left"> -->
-  <h1 class="qm-text-overflow-fix">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
+ 
   <div class="qm-selected-box" *ngIf="selectedServiceList && selectedServiceList.length > 0">
     <div class="qm-selected-box__heading">{{ 'label.selected.service' | translate }}</div>
 
@@ -87,6 +91,7 @@
       <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'most_freq_services' | translate }}</h2>
     </div>
 
+    <div class="qm-flow-list-container">
     <div class="qm-list">
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
          [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
@@ -103,6 +108,7 @@
         </button>
       </div>
     </div>
+    </div>
 
   </div>
   <div class="qm-service-list__item-container">
@@ -113,7 +119,7 @@
     </div>
 
     <div class="qm-service-list__header" *ngIf="selectedBranch && filteredServiceList.length === 0 && flowType === 'CREATE_APPOINTMENT'">{{ ('no_bookable_service' | translate) }}</div>
-
+    <div class="qm-flow-list-container">
     <div class="qm-list">
       <ng-container *ngFor="let service of filteredServiceList | filterService : [filterText, flowType]">
         <div class="qm-service-list__item qm-list__item"  [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false, 'qm-list__item--info-active' : service.showInfo}">
@@ -130,9 +136,10 @@
         </div>
       </ng-container>
     </div>
+    </div>
   </div>
 </div>
-</div></div>
+</div></div></div>
 <div class="qm-flow-done-bar" *ngIf="selectedServiceList && selectedServiceList.length > 0">
   <button class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</button>
 </div>

@@ -852,7 +852,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
           errorKey = 'printer_error';
         } else if (err.errorMsg.length > 0) {
-          if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
+          if (err.errorCode === Q_ERROR_CODE.QUEUE_FULL) {
             errorKey = 'queue_full';
           }
         }
@@ -881,9 +881,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           errorKey = 'appointment_already_used';
         } else if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
           errorKey = 'printer_error';
-        } else if (err.errorCode = Q_ERROR_CODE.QUEUE_FULL) {
+        } else if (err.errorCode === Q_ERROR_CODE.QUEUE_FULL) {
           errorKey = 'queue_full';
-        } else {
+        } else if (err.errorCode === Q_ERROR_CODE.SERVICE_DELETE) {
+          errorKey = '';
+        }
+         else {
           errorKey = 'request_fail';
         }
       } else if (error.status === ERROR_STATUS.NOT_FOUND) {

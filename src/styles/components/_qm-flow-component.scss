@@ -61,9 +61,57 @@
 .qm-pannel-container{
     margin: auto;
     overflow: auto;
+    background-image: $workflow-blue-background;
   }
 .qm-pannel-inner-container{
-  width: 70%;
+  max-width: 1288px;
   margin: auto;
-  padding: 30px 0px;
+
+  background: #ffffff;
+  @include qm-xs-lower{
+    padding: 30px 24px;
+  }
+  @include qm-xs{
+    padding: 30px 24px;
+  }
+  @include qm-sm{
+    padding: 30px 88px;
+  }
+  @include qm-md{
+    padding: 30px 150px;
+  }
+  @include qm-lg{
+    padding: 30px 150px;
+  }
+  // height: 100%;
+  // padding: au 150px;
+}
+.qm-pannel-full-inner-container{
+  height: 100%;
+  background: #ffffff;
+  max-width: 1288px;
+  margin: auto;
+}
+
+.qm-flow-header{
+  font-size: 28px;
+  color: $dark-transparent82;
+  padding: 40px 42px 0 42px;
+  font-weight: 300;
+  @include qm-sm{
+    padding: 40px 24px 0 24px;
+  }
+  @include qm-xs{
+    padding: 40px 24px 0 24px;
+  }
+  @include qm-xs-lower{
+    padding: 40px 24px 0 24px;
+  }
+  @at-root [dir="rtl"] & {
+    text-align: right;
+   }
+}
+.qm-flow-list-container{
+  background: $light-gray10;
+  width: calc( 100% + 48px);
 }

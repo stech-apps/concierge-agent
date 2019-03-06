@@ -1,4 +1,5 @@
-<div class="qm-pannel-container" [ngStyle]="{'height': !editMode  ? 'calc(100% - 12vh)' : '100%'}">
+<div class="qm-pannel-container" [ngStyle]="{'height': !editMode  ? 'calc(100% - 80px)' : '100%'}">
+    <div class="qm-pannel-full-inner-container"> 
   <div class="qm-pannel-inner-container" dir="{{ userDirection$ | async }}"> 
     
     <div class="qm-flow-sub-header">
@@ -86,8 +87,13 @@
                     <label for="date_of_birth" class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label" >{{'date_of_birth'|translate }}</label>
                     <div class="qm-input-box__dob-container">
                       <!-- Month -->
-                      <div class="qm-input-box__month-element-container"> 
-                          <label for="month" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'month'|translate }}</label>
+                      <div>
+                        <div class="qm-dob-container"> 
+                          <label for="month" class="qm-input-box__inputbox-name qm-input-box__month-element-container">{{'month'|translate }}</label>
+                          <label for="day" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container">{{'day'|translate }}</label>
+                          <label for="year" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container">{{'year'|translate }}</label>
+                        </div>
+                        <div class="qm-dob-container" [ngClass]="{'qm-dob-error':customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')}">    
                           <ng-select #month       [items]="months"
                                                   [selectOnTab]="true"
                                                   [clearable]="false"
@@ -97,19 +103,16 @@
                                                   formControlName="month"
                                                   dropdownPosition="bottom"
                                                   id="birthday_select"
-                                                  (click)="ScrollToBottom()">
+                                                  (click)="ScrollToBottom()"
+                                                  class="qm-birthday-select qm-input-box__month-element-container">
                           </ng-select>
+                          <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" > 
+                          <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" > 
+                        </div>
                       </div>
-                      <!-- Day -->
-                      <div class="qm-input-box__day-element-container qm-input-box__dob-element-container" > 
-                          <label for="day" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'day'|translate }}</label>
-                          <input class="qm-input-box__input" #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" > 
-                      </div>
-                      <!-- Year -->
-                      <div class="qm-input-box__year-element-container qm-input-box__dob-element-container"> 
-                          <label for="year" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'year'|translate }}</label>
-                          <input class="qm-input-box__input" #year formControlName="year"  type="text" maxlength="4" placeholder="YYYY" name="year" />
-                      </div>
+                      <button (click)="clearDob()" class="qm-transparent-btn qm-input-box__dob-element-container">
+                          <i class="qm-action-btn__icon icon-close qm-close__icon qm-dob-close-icon qm-dob-close__icon"></i>
+                        </button>
                       <br>
                     </div>
                   
@@ -128,6 +131,7 @@
   </div>
   </div>
   </div>
+</div>
 <div class="qm-flow-done-bar">
     <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
 </div>

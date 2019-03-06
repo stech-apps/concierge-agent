@@ -11,7 +11,8 @@ export enum Q_ERROR_CODE {
     NO_VISIT = "8011",
     STAFF_MEMBER_LOGOUT="8068",
     SERVED_VISIT = "8082",
-    QUEUE_FULL = "8042"
+    QUEUE_FULL = "8042",
+    SERVICE_DELETE = "8031"
 }
 
 export enum ERROR_STATUS {

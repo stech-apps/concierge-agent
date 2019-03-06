@@ -384,7 +384,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       isLoaded => {
         if (
           isLoaded &&
-          (this.currentSearchState === this.SEARCH_STATES.INITIAL||this.currentSearchState === this.SEARCH_STATES.DURATION) &&
+          (this.currentSearchState === this.SEARCH_STATES.INITIAL|| this.currentSearchState === this.SEARCH_STATES.DURATION) &&
           this.appointments.length === 0 && (this.enableAppointmentLoad || this.showTimeLabel)
         ) {
           this.translateService
@@ -656,7 +656,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
               this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
-            this.getPreviousSearchState();
+            setTimeout(() => {
+              this.getPreviousSearchState();
+            }, 1000);
           } else {
             // appointment.startTime = moment(appointment.start)
             //   .tz(appointment.branch.fullTimeZone)
@@ -685,7 +687,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               this.toastService.infoToast(noappointments);
             })
             .unsubscribe();
-            this.getPreviousSearchState();
+            setTimeout(() => {
+              this.getPreviousSearchState();
+            }, 1000);
         }
       } else {
         if (appointment.status === APPOINTMENT_STATUS.CREATED) {
@@ -733,7 +737,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               this.toastService.infoToast(noappointments);
             })
             .unsubscribe();
-            this.getPreviousSearchState();
+            setTimeout(() => {
+              this.getPreviousSearchState();
+            }, 1000);
         }
       }
     } else {
@@ -741,13 +747,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.translateService
         .get("appointment_not_found_qr")
         .subscribe((noappointments: string) => {
-          this.toastService.infoToast(noappointments);
+          this.toastService.errorToast(noappointments);
         })
         .unsubscribe();
-        this.getPreviousSearchState();
+        setTimeout(() => {
+          this.getPreviousSearchState();
+        }, 1000);
         
-    }
-    
+    }    
   }
 
   clearSelection() {
@@ -784,7 +791,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               : a.services[0].name;
         }
 
-        a.branchDisplayLabel = ''
+        a.branchDisplayLabel = '';
 
         if (this.useCalendarEndpoint) {
           a.branchDisplayLabel = a.branch.name;

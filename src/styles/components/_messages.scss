@@ -4,8 +4,7 @@
     top: 0;
     z-index: map-get($z-index, 'toastContainer');
     width: 100%;
-    left: 50%;
+    left: 0;
     top: 75px;
-    transform: translateX(-50%);
   }
   

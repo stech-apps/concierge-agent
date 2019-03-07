@@ -43,7 +43,10 @@ qm-identify-appointment{
       width: 577px;
     }
   }
+
+
 }
+
 
 .qm-identify-appointment {
   &__table-body {
@@ -72,12 +75,39 @@ qm-identify-appointment{
     }
   }
 
+  @mixin searchbox-dimensions {
+    height: 49px;
+
+    @include qm-xs {
+      width: 413px;
+    }
+  
+    @include qm-sm {
+      width: 417px;
+    }
+  
+    @include qm-md {
+      width: 549px;
+    }
+  
+    @include qm-lg {
+      width: 549px;
+    }
+    
+  }
+
   &__search-area {
     display: flex;
     position: relative;
+    align-items: center;
     .qm-search--large {
-      display: flex;
-      width: 50%;
+ 
+
+      @include searchbox-dimensions;
+
+      .qm-search__input {
+        height: 49px;
+      }
     }
 
     .qm-btn--primary {
@@ -141,18 +171,43 @@ qm-identify-appointment{
     .qm-search--large {
       width: 100%;
       margin: 0;
-      min-height: 54px;
     }
 
     qm-customer-search-bar {
       position: absolute;
       width: 100%;
 
+      @at-root [dir='rtl'] & {
+        right: 0;
+      }
+
       ::ng-deep .customer-search {
         > div {
-          width: 50%;
+          @include searchbox-dimensions;
           margin: 0;
         }
+
+        @at-root [dir='ltr'] & .qm-search__icon{
+          right: 44px;
+        }
+
+        @at-root [dir='rtl'] & .qm-search__icon{
+          right: 44px;
+        }
+
+                  // placeholder styles
+          ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            font-size: 18px;
+            font-weight: 100;
+          }
+          :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            font-size: 18px;
+            font-weight: 100;
+          }
+          ::-ms-input-placeholder { /* Microsoft Edge */
+            font-size: 18px;
+            font-weight: 100;
+          }
       }
 
       ::ng-deep .qm-action-btn--only-icon {

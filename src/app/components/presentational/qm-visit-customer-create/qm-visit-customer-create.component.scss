@@ -38,7 +38,7 @@
 .qm-dob-close__icon{
     margin: auto;
     height: 100%;
-    padding-top: 27px;
+    padding-top: 45px;
     right: auto !important;
     left: auto !important;
     cursor: pointer;
@@ -50,8 +50,7 @@
 }
 
 .qm-action-btn--only-icon{
-    width: 0px;
-
+    // width: 10px;
     vertical-align: middle
 }
 
@@ -66,14 +65,10 @@
             text-align: left;
         }
         }
-
-        .qm-dob-close-icon{
-            height: auto !important;
-        }
       
         .qm-action-btn--only-icon{
             
-            margin-top: -5.2em;
+            // margin-top: -5.2em;
         }
   }
 
@@ -102,3 +97,136 @@ input[type=number]::-webkit-outer-spin-button {
 .qm-dob-error{
     outline: 2px solid #E50046;
 }
+
+.qm-clear-dob{
+    height: 100px;
+}
+
+.quick-serve-tooltip{
+    width: 350px;
+      z-index: 30;
+      position: absolute;
+      margin-left: -60px;
+      margin-top: 6px;
+      margin-bottom: 10px;
+  
+  
+      @at-root [dir="rtl"] & {
+          margin-right: -65px;
+          text-align: right;
+      }
+  
+      &__rec{
+        background: $dark-transparent82;
+        color: $white;
+        font-size: 16px;
+        padding: 10px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: -22px;
+  
+      }
+  }
+  
+  .tool-tip-back-drop{
+    width: 100vw;
+    height: 100vh;  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    // background: rgba(0, 0, 0, 0.5);
+  } 
+  
+  
+  .triangle {
+    width: 43px;
+    height: 77px;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    top:-22px;
+   
+    @at-root [dir='ltr'] & {
+      left: 11%;
+    }
+    @at-root [dir='rtl'] & {
+      right: 11%;
+  }
+  }
+  .triangle:after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 50px;
+    background: $dark-transparent82;
+    transform: rotate(45deg); /* Prefixes... */
+    top: 75px;
+    
+    // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+  }
+  
+  @include qm-sm{
+    .quick-serve-tooltip{
+        @at-root [dir='ltr'] & {
+            margin-left: -104px;
+          }
+          @at-root [dir='rtl'] & {
+            margin-right: -104px;
+        }
+    }
+    .triangle{
+        @at-root [dir='ltr'] & {
+            left: 24%;
+          }
+          @at-root [dir='rtl'] & {
+            right: 24%;
+        }
+    }
+  }
+
+  @include qm-xs{
+    .quick-serve-tooltip{
+        @at-root [dir='ltr'] & {
+            margin-left: -160px;
+          }
+          @at-root [dir='rtl'] & {
+            margin-right: -160px;
+        }
+    }
+    .triangle{
+        @at-root [dir='ltr'] & {
+            left: 40%;
+          }
+          @at-root [dir='rtl'] & {
+            right: 40%;
+        }
+    }
+  }
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    .quick-serve-tooltip{
+      @at-root [dir='ltr'] & {
+        margin-left: -235px !important;
+        @include qm-sm{
+            margin-left: -280px !important;
+        }
+        @include qm-xs{
+            margin-left: -335px !important;
+        }
+      }
+      @at-root [dir='rtl'] & {
+        margin-right: -235px !important;
+        @include qm-sm{
+            margin-right: -280px !important;
+        }
+        @include qm-xs{
+            margin-right: -335px !important;
+        }
+    }
+    }
+  }

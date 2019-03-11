@@ -89,7 +89,8 @@
           margin-right: 12px;
           text-align: right;
       }
-  
+      
+      
       &__rec{
         background: $dark-transparent82;
         color: $white;
@@ -103,6 +104,50 @@
       }
   }
   
+  @include qm-xs{
+    .quick-serve-tooltip{
+      @at-root [dir="ltr"] & {
+        left: -168px;
+    }
+    
+      @at-root [dir="rtl"] & {
+        right: -168px;
+          margin-right: 12px;
+          text-align: right;
+      }
+      .triangle {
+        
+        @at-root [dir='ltr'] & {
+          left: 41%;
+        }
+        @at-root [dir='rtl'] & {
+          right: 41%;
+      }
+    }
+  }}
+
+  @include qm-sm{
+    .quick-serve-tooltip{
+      @at-root [dir="ltr"] & {
+        left: -100px;
+    }
+    
+      @at-root [dir="rtl"] & {
+        right: -100px;
+          margin-right: 12px;
+          text-align: right;
+      }
+      .triangle {
+        
+        @at-root [dir='ltr'] & {
+          left: 21%;
+        }
+        @at-root [dir='rtl'] & {
+          right: 21%;
+      }
+    }
+  }}
+
   .tool-tip-back-drop{
     width: 100vw;
     height: 100vh;  
@@ -143,6 +188,7 @@
     // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
   }
   
+
 
   
   .qm-checkbox__selector-icon-text {
@@ -193,4 +239,14 @@ background: transparent;
 
 .qm-checkbox-focused{
   border:  solid #007bff 1px;
+}
+
+.qm-list__item--label{
+  white-space: normal;
+}
+
+.qm-crossline-header {
+  &-text {
+    background: linear-gradient(to bottom, #ffffff 50%, #FAFAFB 62%);
+    }
 }

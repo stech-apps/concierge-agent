@@ -47,15 +47,21 @@ qm-identify-appointment{
 
 }
 
+.qm-list-backdrop{
+  background: #fafafa;
+}
 
 .qm-identify-appointment {
   &__table-body {
     width: auto;
-    height: calc(100vh - 394px);
+    max-height: calc(100vh - 394px);
     overflow-y: auto;
     overflow-x: hidden;
     margin-right: -3.5rem;
     min-width: 100%;
+   
+    padding: 24px;
+    margin-left: -24px;
     
     @at-root [dir="rtl"] & {
       margin-left: -3.5rem;
@@ -529,7 +535,7 @@ qm-identify-appointment{
   font-weight: 500;
 }
 .scan-qr-container {
-  background-color: #fafafa;
+
   // position:absolute;
   text-align: center;
   cursor: pointer;
@@ -862,28 +868,28 @@ qm-identify-appointment{
     height: 100%;
     padding-right: 50px;
     padding-left: 50px;
-    background-color: #fafafa;
+   
 
     @include qm-lg {
-      width: 1293px;
+    
       padding-right: 96px;
       padding-left: 96px;
     }
 
     @include qm-md {
-      width: 1293px;
+    
       padding-right: 96px;
       padding-left: 96px;
     }
 
     @include qm-sm {
-      width: map-get($qm-device-breakpoints, sm-width);
+    
       padding-right: 24px;
       padding-left: 24px;
     }
 
     @include qm-xs {
-      width: map-get($qm-device-breakpoints, xs-width);
+   
       padding-right: 24px;
       padding-left: 24px;
     }

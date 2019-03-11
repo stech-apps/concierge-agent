@@ -1,12 +1,16 @@
 <div
-  class="qm-pannel-container qm-reschedule-root-container"
+  class="qm-pannel-container"
   dir="{{ userDirection$ | async }}"
 >
+<div class="qm-pannel-full-inner-container"> 
+  <div>     
+      <div class="qm-flow-header">{{ "edit_checkIn" | translate }}</div>
+  </div>
+
   <div class="qm-pannel-inner-container">
     <div class="qm-flow-sub-header">
       <div class="qm-flow-sub-header__left">
-        <i class="icon-caret-left qm-reschedule__back-icon" [ngClass]="{'icon-caret-right': ( userDirection$ | async) === 'rtl'}"></i>
-        <h1>{{ "edit_checkIn" | translate }}</h1>
+        
       </div>
     </div>
 
@@ -54,13 +58,16 @@
     <h2 class="qm-reschedule__line-header"><span>{{'label.reschedule.appointment' | translate}}</span></h2>
 
     <div class="qm-reschedule-select__content" *ngIf="isRescheduleEnabledInUtt">
-      <div
-        class="qm-reschedule__selected-branch qm-text-overflow-fix"
-        *ngIf="isRescheduleEnabledInUtt"
-      >
-        {{ this.editAppointment?.branch?.name }}
-      </div>
+     
+      <div class="qm-select-time-container"  dir="{{ userDirection$ | async }}">
+        
       <div class="qm-calendar-container">
+          <div
+          class="qm-reschedule__selected-branch qm-text-overflow-fix"
+          *ngIf="isRescheduleEnabledInUtt"
+        >
+          {{ this.editAppointment?.branch?.name }}
+        </div>
         <div class="qm-calendar-placeholder">
           <qm-calendar
             [selectedDates]="selectedDates"
@@ -79,6 +86,7 @@
             {{ getSelectedDate("ddd DD MMMM") | translate }}</ng-container
           >
         </div>
+
         <div class="qm-time-slot-placeholder">
           <qm-time-slots
             [isShowTimeSlots]="isDateSelected"
@@ -86,11 +94,12 @@
             (onTimeSlotSelect)="onTimeSlotSelect($event)"
           ></qm-time-slots>
         </div>
+              </div>
       </div>
     </div>
   </div>
 </div>
-
+</div>
 <div
   class="qm-flow-done-bar"
   *ngIf="isRescheduleEnabledInUtt && enableReschedule"

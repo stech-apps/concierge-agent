@@ -6,14 +6,12 @@
     'qm-done-bar--shown': selectedAppointment
   }"
   dir="{{ userDirection$ | async }}"
->
-  <div class="qm-pannel-inner-container qm-pannel-inner-container__identify">
-    <div class="qm-flow-sub-header">
-      <div class="qm-flow-sub-header__left">
-        <h1>{{ "identify_appointment" | translate }}</h1>
-      </div>
-      <div class="qm-flow-sub-header__right"></div>
+><div class="qm-pannel-full-inner-container"> 
+  <div>     
+      <div class="qm-flow-header">{{ "identify_appointment" | translate }}</div>
     </div>
+  <div class="qm-pannel-inner-container qm-pannel-inner-container__identify">
+ 
     <!-- SELECTED APPOINTMENT INFO -->
     <ng-container *ngIf="selectedAppointment">
       <div class="qm-selected-label__container">
@@ -497,7 +495,10 @@
                   ></span>
                 </button>
               </div>
-              <div class="qm-identify-appointment__table-body">
+              <div class="qm-identify-appointment__table-body" [ngClass]="{'qm-list-backdrop':!showLoading() &&
+              (appointments &&
+                appointments.length > 0 &&
+                !selectedAppointment)}">
                 <div class="qm-appointments-loading" *ngIf="showLoading()">
                   <span class="qm-spinner"></span>
                   <span>{{ "label.identify.appointment.list.loading" | translate }}</span>
@@ -509,6 +510,7 @@
                     let app of (appointments
                       | sortAppointments: sortColumn:isDescending)
                   ">
+                
                   <div
                     class="qm-identify-appointment__appointment-table__list-parent qm-table__row"
                     *ngIf="!showLoading() &&
@@ -595,6 +597,7 @@
                       aria-hidden="true"
                     ></i>
                   </div>
+             
                 </ng-container>
                 </ng-container>
 
@@ -648,6 +651,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <div class="qm-flow-done-bar" *ngIf="selectedAppointment">

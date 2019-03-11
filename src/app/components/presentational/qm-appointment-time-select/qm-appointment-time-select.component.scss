@@ -75,17 +75,16 @@
     }
 
     &-slots {
-        @include qm-md {
-            flex: 1;
-        }
+        width: 480px;
+        margin:auto;
+    }
+}
 
-        @include qm-lg {
-            flex: 1;
-        }
-
-        @include qm-sm {
-            flex: 1;
-        }
+.qm-date-time-container{
+    margin: auto;
+    display: flex;
+    @include qm-xs{
+        flex-direction: column;
     }
 }
 
@@ -105,9 +104,7 @@
     font-weight: 500;
     max-width: 90%;
     text-align: left;
-    background-color: $background-default;
     position: absolute;
-    left: 0;
     top: 20px;
     @at-root [dir='rtl'] & {
         right: 0;
@@ -122,6 +119,9 @@
     @at-root [dir="rtl"] & {
         margin-right: 0;
         margin-left: 1.5rem;
+    }
+    @include qm-xs{
+        margin: 48px auto 0 auto;
     }  
 }
 
@@ -157,11 +157,16 @@
         }
     }
 
+    @include qm-xs{
+        margin: 47px auto 0rem auto;
+    }
+
 
 }
 
 ::ng-deep .qm-calendar-placeholder {
-    width: 478px;
+    width: 440px;
+    margin: auto;
 }
 
 ::ng-deep .qm-calendar-container {
@@ -185,40 +190,5 @@
         padding: 30px 24px;
       }
 }
-// .qm-pannel-inner-container {
-//     height: auto;
-//     min-height: 100%;
-//     background-color: $background-default;
-//     @include qm-xs {
-//         width: 480px;
-//     }
 
-//     @include qm-sm {
-//         width: 976px;
-//     }
 
-//     @include qm-md {
-//         width: 1288px;
-//         padding-left: 150px;
-//         padding-right: 150px;
-//     }
-
-//     @include qm-lg {
-//         padding-left: 150px;
-//         padding-right: 150px;
-//     }
-// }
-
-// .qm-pannel-container {
-//     @include qm-md {
-//         background-image: $workflow-blue-background;
-//     }
-
-//     @include qm-lg {
-//         background-image: $workflow-blue-background;
-//     }
-// }
-
-// button:focus{
-//     // border:  solid #007bff 1px;
-//   }

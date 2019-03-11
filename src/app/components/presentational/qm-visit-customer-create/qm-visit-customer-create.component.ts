@@ -26,6 +26,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   countryCode: string = '';
   userDirection$: Observable<string>;
   editMode:boolean;
+  showToolTip:boolean;
 
   date = {
     day: '',

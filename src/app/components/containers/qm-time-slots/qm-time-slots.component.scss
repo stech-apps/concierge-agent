@@ -50,6 +50,7 @@
   &--active {
     background-color: $secondary-color;
     color: $primary-text-color;
+    font-weight: 500;
     .qm-time-select-slot--meridian {
       color: $white;
     }
@@ -154,7 +155,7 @@ top: 88px;
 
 .qm-time-select-slot--meridian {
   color: rgba(0, 0, 0, 0.42);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   display: inline-block;
   margin-left: 0.20rem;
@@ -172,6 +173,11 @@ top: 88px;
   height: 2rem;
   color: $dark-transparent62;
 }
+.qm-time-slot-category--title:hover{
+  font-weight: 500;
+  color: $dark-transparent82;
+}
+
 
 .qm-time-split {
   display: flex;

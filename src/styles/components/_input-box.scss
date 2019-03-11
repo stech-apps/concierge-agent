@@ -266,6 +266,8 @@ input:focus{
   @at-root [dir='rtl'] & {
     left: 0;
   }
+  display: inline-block;
+  position: relative !important;
 }
 
 .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {

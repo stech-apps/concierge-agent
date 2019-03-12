@@ -111,7 +111,7 @@
     </div>
 
   </div>
-  <div class="qm-service-list__item-container " *ngIf="flowType !== 'ARRIVE_APPOINTMENT' && ((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
+  <div class="qm-service-list__item-container " *ngIf="((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
 
     <div class="qm-crossline-header-container" *ngIf="flowType !== 'ARRIVE_APPOINTMENT' && ((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
       <div class="qm-crossline-header"></div>
@@ -124,7 +124,8 @@
       <ng-container *ngFor="let service of filteredServiceList | filterService : [filterText, flowType]">
         <div class="qm-service-list__item qm-list__item"  [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false, 'qm-list__item--info-active' : service.showInfo}">
 
-          <div tabindex="0" class="qm-service-list__item--text qm-list__item--text"  (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)" (click)="onServiceSelect(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
+          <div tabindex="0" class="qm-service-list__item--text qm-list__item--text"  (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)"
+          (click)="onServiceSelect(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
             <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfo}" [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
             </div>
               <div class="qm-list__item--info" *ngIf="service.showInfo || filterText" [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate))| qmhighlight: searchText"></div>

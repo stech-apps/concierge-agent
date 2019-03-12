@@ -10,6 +10,10 @@
     display: flex;
   }
 
+.qm-checkbox-label{
+  z-index: 400;
+}
+
 .qm-select-branch {
     .qm-flow-sub-header__right {
         align-items: flex-end;
@@ -23,6 +27,7 @@
 
     .qm-checkbox-label {
         padding-right: 1rem;
+        z-index: 400;
     }
 
   

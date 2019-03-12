@@ -53,7 +53,7 @@ qm-identify-appointment{
 
 .qm-identify-appointment {
   &__table-body {
-    width: auto;
+    width: calc( 100% + 48px );
     max-height: calc(100vh - 394px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -72,9 +72,7 @@ qm-identify-appointment{
       height: calc(100vh - 538px);
     }
 
-    @include qm-xs {
-      width: 100%;
-    }
+
 
     .qm-pannel-container__identify--arrive & {
       width :100%;
@@ -427,6 +425,7 @@ qm-identify-appointment{
       color: $dark-transparent62;
       font-weight: $font-weight-medium;
       font-size: 14px;
+      width: 100%;
 
       & > div {
         &:first-child {
@@ -635,53 +634,49 @@ qm-identify-appointment{
       .qm-table {
         @include qm-lg {
           &__header-id, &__cell-id {
-            width: 80px;
+            flex: 1;
           }
-
           &__header-customer, &__cell-customer  {
-            width: 200px;
+            flex: 3;
           }
-
           &__header-service, &__cell-service {
-            width: 220px;
+            flex:3;
           }
-
           &__header-branch, &__cell-branch {
-            width: 200px;
+            flex: 3;
           }
-
           &__header-date, &__cell-date {
-            width: 170px;
+            flex: 2;
           }
-
           &__header-time, &__cell-time {
-            width: 174px;
+            flex: 2;
+          }
+          &__header-icon, &__cell-icon {
+            width: 43px;
           }
         }
 
         @include qm-md {
           &__header-id, &__cell-id {
-            width: 80px;
+            flex: 1;
           }
-
           &__header-customer, &__cell-customer  {
-            width: 200px;
+            flex: 3;
           }
-
           &__header-service, &__cell-service {
-            width: 220px;
+            flex:3;
           }
-
           &__header-branch, &__cell-branch {
-            width: 200px;
+            flex: 3;
           }
-
           &__header-date, &__cell-date {
-            width: 170px;
+            flex: 2;
           }
-
           &__header-time, &__cell-time {
-            width: 174px;
+            flex: 2;
+          }
+          &__header-icon, &__cell-icon {
+            width: 43px;
           }
         }
 
@@ -691,50 +686,33 @@ qm-identify-appointment{
           }
         }
 
-        @include qm-sm {
-          &__header-id {
-            width: 64px;
-          }
+      
+        &__header-id, &__cell-id {
+          flex: 1;
+        }
 
-          &__header-customer {
-            width: 220px;
-          }
+        &__header-customer, &__cell-customer  {
+          flex: 3;
+        }
 
-          &__header-service {
-            width: 220px;
-          }
-          &__header-branch {
-            width: 170px;
-          }
-          &__header-date {
-            width: 140px;
-          }
+        &__header-service, &__cell-service {
+          flex:3;
+        }
 
-          &__header-time {
-            width: 124px;
-          }
+        &__header-branch, &__cell-branch {
+          flex: 3;
+        }
 
-          &__cell-id {
-            width: 64px;
-          }
+        &__header-date, &__cell-date {
+          flex: 2;
+        }
 
-          &__cell-customer {
-            width: 220px;
-          }
-
-          &__cell-service {
-            width: 220px;
-          }
-          &__cell-branch {
-            width: 170px;
-          }
-          &__cell-date {
-            width: 140px;
-          }
-
-          &__cell-time {
-            width: 124px;
-          }
+        &__header-time, &__cell-time {
+          flex: 2;
+        }
+        &__header-icon, &__cell-icon {
+          width: 43px;
+        
         }
       }
     }

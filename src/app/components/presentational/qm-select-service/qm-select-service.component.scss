@@ -15,6 +15,7 @@
 
   .qm-checkbox-label {
     padding-right: 1rem;
+    z-index: 400;
   }
 
   .qm-list{
@@ -164,6 +165,17 @@
     color: rgba(0, 0, 0, 0.42);
   }
 }
+
+
+@include qm-sm{
+  .quick-serve-tooltip{
+    margin-left: -27px;
+  }
+  .triangle{
+    left: 23%;
+  }
+}
+
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   

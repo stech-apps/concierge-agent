@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="qm-calendar-weeks">
-      <div *ngFor="let week of weeks" class="qm-calendar-week">
+      <div *ngFor="let week of weeks; last as isLast" class="qm-calendar-week" [ngClass]="{'qm-calendar-week--last': isLast}">
         <ng-container *ngFor="let day of week">
           <div class="qm-week-date disabled"  *ngIf="!isSelectedMonth(day.mDate)">
             <div class="qm-date-text"></div>

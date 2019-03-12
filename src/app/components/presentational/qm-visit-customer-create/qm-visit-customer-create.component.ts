@@ -288,5 +288,6 @@ export class QmVisitCustomerCreateComponent implements OnInit {
         year: ''
       }
     })
+    this.customerCreateForm.markAsDirty();
   }
 }

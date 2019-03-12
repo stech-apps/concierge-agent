@@ -435,5 +435,13 @@ export class QmInputboxComponent implements OnInit {
         year: ''
       }
     })
+    this.customerCreateForm.markAsDirty();
+  }
+
+
+  test(){
+    console.log(this.date.year);
+    
   }
 }
+

@@ -1,3 +1,4 @@
+$calendar-border :  1px solid rgba(0,0,0,0.12);
 .qm-calendar {
 
   padding-right: 0.5rem;
@@ -55,14 +56,35 @@
     justify-content: space-around;
     &:nth-child(5) {
       .qm-date-text:not(:empty) { 
-        border-bottom: 1px solid rgba(0,0,0,0.12);
+        border-bottom: $calendar-border ;
+        border-left: none;
         &:last-child {
-          border-right: 1px solid rgba(0,0,0,0.12);
+          border-right:$calendar-border ;
+        }
+
+        &:first-child {
+          border-left:$calendar-border ;
         }
       }
+
       .qm-date-text:empty { 
         border-right: none;
-        border-top: 1px solid rgba(0,0,0,0.12);
+        border-top:$calendar-border ;
+      }
+    }
+
+    &--last {
+      .qm-date-text:not(:empty) { 
+        border-bottom:$calendar-border ;
+        &:last-child {
+          border-right:$calendar-border ;
+        }
+      }
+
+      .qm-date-text:empty { 
+        border-right: none;
+        border-top: none;
+        border-bottom: none;
       }
     }
 
@@ -108,7 +130,7 @@
   }
   .qm-date-text {
     width: 100%;
-    border: 1px solid rgba(0,0,0,0.12);
+    border:$calendar-border ;
     border-bottom: none;
     border-right: none;
     font-size: 18px;

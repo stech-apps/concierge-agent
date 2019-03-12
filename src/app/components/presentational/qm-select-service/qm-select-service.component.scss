@@ -125,12 +125,12 @@
   margin: auto;
   top:-22px;
  
-  @at-root [dir='ltr'] & {
-    left: 11%;
-  }
-  @at-root [dir='rtl'] & {
-    right: 11%;
-}
+//   @at-root [dir='ltr'] & {
+//     left: 11%;
+//   }
+//   @at-root [dir='rtl'] & {
+//     right: 11%;
+// }
 }
 .triangle:after {
   content: "";
@@ -167,26 +167,115 @@
 }
 
 
+@include qm-lg{
+
+    @at-root [dir='ltr'] {
+      .triangle{
+      left: 11%;
+      }}
+  @at-root [dir='rtl']  {
+    .triangle{
+    right: 11%;
+      }
+    }
+}
+
+@include qm-md{ 
+  @at-root [dir='ltr'] {
+    .triangle{
+    left: 11%;
+    }}
+@at-root [dir='rtl']  {
+  .triangle{
+  right: 11%;
+    }
+  }
+  }
+
 @include qm-sm{
+  @at-root [dir='ltr']  {
   .quick-serve-tooltip{
     margin-left: -27px;
   }
   .triangle{
-    left: 23%;
+    left: 22%;
   }
+  }
+  @at-root [dir='rtl']  {
+    .quick-serve-tooltip{
+      margin-right: -27px;
+    }
+    .triangle{
+      right: 22%;
+    }
+    }
+}
+
+@include qm-xs{
+  @at-root [dir='ltr']  {
+  .quick-serve-tooltip{
+    margin-left: -97px;
+  }
+  .triangle{
+    left: 42%;
+  }
+  }
+  @at-root [dir='rtl']  {
+    .quick-serve-tooltip{
+      margin-right: -97px;
+    }
+    .triangle{
+      right: 42%;
+    }
+    }
 }
 
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  
+  @include qm-lg{
   .quick-serve-tooltip{
     @at-root [dir="ltr"] & {
+
     margin-left:-234px;
     }
     @at-root [dir="rtl"] & {
       margin-right:-234px;
     }
   }
+  }
+  @include qm-md{
+    .quick-serve-tooltip{
+      @at-root [dir="ltr"] & {
+  
+      margin-left:-234px;
+      }
+      @at-root [dir="rtl"] & {
+        margin-right:-234px;
+      }
+    }
+    }
+    @include qm-sm{
+      .quick-serve-tooltip{
+        @at-root [dir="ltr"] & {
+    
+        margin-left:-274px;
+        }
+        @at-root [dir="rtl"] & {
+          margin-right:-274px;
+        }
+      }
+      }
+    @include qm-xs{
+        .quick-serve-tooltip{
+          @at-root [dir="ltr"] & {
+      
+          margin-left:-341px;
+          }
+          @at-root [dir="rtl"] & {
+            margin-right:-341px;
+          }
+        }
+        }
 }
 
 

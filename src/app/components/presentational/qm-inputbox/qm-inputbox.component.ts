@@ -412,8 +412,9 @@ export class QmInputboxComponent implements OnInit {
   }
 
   clearInputFeild(name){
-    
+    this.customerCreateForm.markAsDirty();
    switch(name){
+     
      case "firstName": this.customerCreateForm.patchValue({ firstName: ''});break;
      case "lastName": this.customerCreateForm.patchValue({ lastName: ''});break;
      case "phone": this.customerCreateForm.patchValue({ phone: ''});break;

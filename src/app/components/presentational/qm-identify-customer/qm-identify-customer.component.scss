@@ -158,17 +158,72 @@
     
     // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
   }
-  
+
+
+  @include qm-sm{
+    .quick-serve-tooltip{
+        @at-root [dir='ltr'] & {
+            margin-left: -104px;
+          }
+          @at-root [dir='rtl'] & {
+            margin-right: -104px;
+        }
+    }
+    .triangle{
+        @at-root [dir='ltr'] & {
+            left: 24%;
+          }
+          @at-root [dir='rtl'] & {
+            right: 24%;
+        }
+    }
+  }
+
+  @include qm-xs{
+    .quick-serve-tooltip{
+        @at-root [dir='ltr'] & {
+            margin-left: -160px;
+          }
+          @at-root [dir='rtl'] & {
+            margin-right: -160px;
+        }
+    }
+    .triangle{
+        @at-root [dir='ltr'] & {
+            left: 40%;
+          }
+          @at-root [dir='rtl'] & {
+            right: 40%;
+        }
+    }
+  }
+
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
     .quick-serve-tooltip{
       @at-root [dir='ltr'] & {
         margin-left: -235px !important;
+        @include qm-sm{
+            margin-left: -280px !important;
+        }
+        @include qm-xs{
+            margin-left: -335px !important;
+        }
       }
       @at-root [dir='rtl'] & {
         margin-right: -235px !important;
+        @include qm-sm{
+            margin-right: -280px !important;
+        }
+        @include qm-xs{
+            margin-right: -335px !important;
+        }
     }
     }
+  }
+
+  .qm-checkbox-label{
+      z-index: 400;
   }
 
   .remove-icon{

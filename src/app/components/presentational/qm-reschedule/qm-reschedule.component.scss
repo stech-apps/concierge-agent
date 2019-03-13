@@ -219,19 +219,13 @@
     margin: 30px 0 0 0;
     color: black;
     position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-
-    @at-root [dir="rtl"] & {
-      margin: 0 1rem 1rem 0;
-    }
-
+    border: 1px solid rgba(0, 0, 0, 0.12);   
     @include qm-xs {
       height: 25rem;
       flex-basis: auto;
       flex-grow: 0;
       flex-shrink: 1;
-
-      @at-root [dir="rtl"] & { 
+    @at-root [dir="rtl"] & { 
         margin: 1.56rem 0 0;
       }
     }

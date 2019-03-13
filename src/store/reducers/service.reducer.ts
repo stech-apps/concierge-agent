@@ -89,7 +89,8 @@ export function reducer (
       return {
         ...state,
         services: [],
-        servicesConfiguration: []
+        servicesConfiguration: [],
+        serviceLoaded: false
       };
     }
     default: {

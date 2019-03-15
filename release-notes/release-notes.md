@@ -311,6 +311,56 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h3>Upgrade instructions</h3> 
 
+
+----------
+
+<h2>Update 8</h2>
+
+**Date:2019-03-15**
+ 
+**Build number:8**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **164132706** | **Rename connect-concierge in GitHub to concierge-agent** |
+| **163649671** | **Toaster adjustment** |
+| **164299242** | **Profile page - Do not focus on search box** |
+| **163658809** | **Clear date of birth selection** |
+| **163650948** | **Calendar & time slot adjustments** |
+| **163658809** | **Create Visit Flow - Add Customer Fish - DONE button** |
+| **163059854** | **Search ID/ Customer resizing** |
+| **163647917** | **Background in workflows for bigger screens** |
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **164162261** | **Create Appointment Flow- 'Branch' Fish > UX issue in portrait mode.** |
+| **163553270** | **Multi Branch disabled - Edit flow shall not show appointments on other branches** |
+| **164242438** | **Arrive appointment flow > Wrong error message shows when the appointment arrival fails** |
+| **164493465** | **IE11: Edit Appointment, page look odd when a new date is pressed** |
+| **164488921** | **Create Visit flow > Remove a value from any field should enable "Save changes" button.** |
+| **164489053** | **Calendar UX issue > when no of rows in the calendar exceed 5, lines around the dates in the last row are not fully visible.** |
+| **164488656** | **Create Visit flow > Store customer on visit > cannot set DOB** |
+| **164593118** | **Timeslot list in Edit app flow to far to the left (RTL mode small screen)** |
+| **164493466** | **"i" button next to cancel appointment gives no text** |
+| **163110257** | **Robustness: full packetloss and user press Create app flow, no Network Error message** |
+| **164488655** | **iOS > Create Visit Flow > Service list not loaded (Random issue)** |
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
 ----------
 
 

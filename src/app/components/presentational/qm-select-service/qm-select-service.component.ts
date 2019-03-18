@@ -125,7 +125,7 @@ export class QmSelectServiceComponent implements OnInit {
       const calendarBranchSubscription = this.calendarBranchSelectors.selectedBranch$.subscribe((branch) => {
         this.selectedBranch = branch;
         this.selectedServiceList = [];
-        if(branch.id !== -1 && (((this.selectedBranch as ICalendarBranch).qpId !== this.loginBranch.id)) || !this.isInitialServiceLoaded){
+        if(branch.id !== -1 && (((this.selectedBranch as ICalendarBranch).qpId !== this.loginBranch.id) || !this.isInitialServiceLoaded)){
           this.calendarServiceDispatchers.fetchServices(branch as ICalendarBranch);
         }
         else if((this.selectedBranch as ICalendarBranch).qpId === this.loginBranch.id){

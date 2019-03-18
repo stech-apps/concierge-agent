@@ -873,3 +873,37 @@ qm-identify-appointment{
     }
   }
 }
+
+.qm-crossline-header-text{
+  background: #fafafa;
+}
+.qm-flow-list-container{
+  background: none;
+}
+.qm-pannel-inner-container{
+  background: #fafafa;
+  height: calc(100% - 90px);
+  padding: 30px 24px;
+}
+
+@include qm-lg{
+  .qm-pannel-inner-container{
+    margin: 0 69px;
+  }
+
+}
+@include qm-md{
+  .qm-pannel-inner-container{
+    margin: 0 69px;
+  }
+}
+@include qm-sm{
+  .qm-pannel-inner-container{
+    margin: 0;
+  }
+}
+@include qm-xs{
+  .qm-pannel-inner-container{
+    margin: 0;
+  }
+}

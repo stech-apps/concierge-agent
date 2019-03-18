@@ -3,6 +3,9 @@
     <form class="qm-modal__box-container">
       <div class="qm-modal__header">
         <span class="qm-modal__headline">{{ title }}</span>
+        <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="dismiss()">
+          <i aria-hidden="true" class="icon-close"></i>
+        </button>
       </div>
       <div class="qm-modal__message-container" *ngIf="message && message.length > 0">
         <div>

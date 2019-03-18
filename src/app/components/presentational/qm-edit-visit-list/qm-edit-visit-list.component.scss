@@ -255,13 +255,13 @@
         .label{
             flex: 8;
             text-align: left; 
-            @include add-text-ellipsis ;
+            @include add-text-ellipsis;
+            max-width: 260px;
             margin-top: 8px;
 
             @at-root [dir="rtl"] & {
                 text-align: right;
-            }            
-
+            }
         }
     }
  

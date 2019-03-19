@@ -234,6 +234,11 @@
         width: 73%;
         margin: auto;
         margin-bottom: 15px;
+
+        button {
+            display: flex;
+            align-items: center;
+        }
       
         .content {
             padding: 0 10px;
@@ -257,7 +262,6 @@
             text-align: left; 
             @include add-text-ellipsis;
             max-width: 260px;
-            margin-top: 8px;
 
             @at-root [dir="rtl"] & {
                 text-align: right;
@@ -422,7 +426,11 @@
         margin: 33px auto;
         justify-content: center;
    
-      
+        button {
+            display: flex;
+            align-items: center;
+        }
+        
         .content {
             padding: 0 10px;
             color: $primary-pink;
@@ -445,7 +453,7 @@
         .label{
             text-align: left; 
             @include add-text-ellipsis ;
-            margin-top: 8px;
+            max-width: 260px;
 
             @at-root [dir="rtl"] & {
                 text-align: right;

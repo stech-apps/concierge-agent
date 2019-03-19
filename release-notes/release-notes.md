@@ -363,6 +363,36 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
+<h2>Update 9</h2>
+
+**Date:2019-03-18**
+ 
+**Build number:9**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **164692814** | **Concierge doesn't work on tablet Android with Android 4.4.4** |
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
 
 <h3>Copyright notice</h3>
 

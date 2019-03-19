@@ -834,6 +834,18 @@ qm-identify-appointment{
   }
 }
 
+
+.qm-appointment-info{
+  display: none;
+}
+.qm-appointment-info:focus{
+display: initial;
+}
+button:focus{
+  outline: none;
+  border: 1px solid #72a2f7; 
+}
+
 .qm-appointments-loading {
     color: rgba(0, 0, 0, 0.82);
     display: flex;

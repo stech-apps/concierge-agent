@@ -8,8 +8,8 @@
   </ng-container>
 
   <ng-container  *ngIf="timeConvention === '24'">
-    <div class="qm-time-filter__item" [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}" (click)="timeSelected(t)" *ngFor="let t of timeCollection" >
+    <button class="qm-time-filter__item" [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}" (click)="timeSelected(t)" *ngFor="let t of timeCollection" >
         <span class="qm-time-filter__item--time"> {{ t | amDateFormat: 'HH:mm' }}</span>
-      </div>
+      </button>
   </ng-container>
 </div>

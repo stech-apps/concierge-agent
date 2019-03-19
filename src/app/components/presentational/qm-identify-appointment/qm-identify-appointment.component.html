@@ -61,22 +61,15 @@
     </ng-container>
     <br />
     <div class="qm-identify-appointment">
-      <div qmKeyCapture
-      (qmKeyCapture)="onKeypressForTabComponent($event)"
+      <div 
         class="qm-identify-appointment__button-container"
         role="tablist"
         attr.aria-label="{{ 'aria.label.identify.appointment' | translate }}">
-        <div
+        <button
           class="qm-identify-appointment__pannel-button"
           id="appointment-list"
           role="tab"
           aria-controls="appointment-list-tabpanel"
-          attr.tabindex="{{
-            (currentSearchState === 'initial' ||
-              currentSearchState === 'refresh' ||
-              currentSearchState === 'duration' ) ? 0 : -1 
-          }}"
-
           attr.aria-selected="{{
             currentSearchState === 'initial' ||
               currentSearchState === 'refresh' ||
@@ -91,8 +84,8 @@
           }"
         >
           {{ "tab.identifyappointment.appointmentlist" | translate }}
-        </div>
-        <div
+        </button>
+        <button
           class="qm-identify-appointment__pannel-button qm-identify-appointment__pannel-middle-button"
           attr.aria-selected="{{ currentSearchState === 'id' }}"
           role="tab"
@@ -103,25 +96,19 @@
             'qm-identify-appointment__pannel-button-selected':
               currentSearchState === 'id'
           }" 
-          attr.tabindex="{{
-            (currentSearchState === 'id') ? 0 : -1 
-          }}">
+         >
           <span>
             <i
               aria-hidden="true"
               class="qm-action-btn__icon icon-search qm-search__icon"
             ></i></span
           >{{ "tab.identifyappointment.bookingid" | translate }}
-        </div>
-        <div
+        </button>
+        <button
           class="qm-identify-appointment__pannel-button"
           role="tab"
           id="customer"
           aria-controls="customer-tabpanel"
-          
-          attr.tabindex="{{
-            (currentSearchState === 'customer') ? 0 : -1 
-          }}"
           attr.aria-selected="{{ currentSearchState === 'customer' }}"
           (click)="onSearchButtonClick('customer')"
           [ngClass]="{
@@ -136,7 +123,7 @@
             ></i
           ></span>
           {{ "tab.identifyappointment.customer" | translate }}
-        </div>
+        </button>
 
         <button
           (click)="onSearchButtonClick('qr')"

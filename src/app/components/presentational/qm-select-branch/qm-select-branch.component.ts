@@ -186,4 +186,6 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
     return completeAddress;
   }
+
+ 
 }

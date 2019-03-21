@@ -6,7 +6,7 @@
       <td style="width: 23%"  (click)="selectCustomer(customer) ; f.customerCreateForm.markAsPristine()"> <div class="search-list-text" [innerHtml]="customer.firstName +' ' + customer.lastName  | qmhighlight: searchText"> </div> </td>
       <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()" > <div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.email  | qmhighlight: searchText"> </div></td>
       <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"><div class="search-list-text qm-sub-row" [innerHtml]="customer.properties.phoneNumber  | qmhighlight: searchText"> </div></td>
-      <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text qm-sub-row" [innerHtml]="customer.properties.dateOfBirth  | qmhighlight: searchText"> </div></td>
+      <td style="width: 23%" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> <div *ngIf="customer.properties.dateOfBirth" class="search-list-text qm-sub-row" [innerHtml]="prepareDOB(customer.properties.dateOfBirth)  | qmhighlight: searchText"> </div></td>
       <td style="width: 7%" *ngIf="isCustomerEditable" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> 
           <div tabindex="0"  class="svg-container" (click)="editCustomer(customer)" (keydown.enter)="editCustomer(customer)" (keydown.space)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>

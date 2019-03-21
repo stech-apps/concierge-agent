@@ -22,13 +22,13 @@
       <div class="qm-time-filter__date-label">
         {{ "label.timefilter.date" | translate }}
       </div>
-      <div class="qm-time-filter__date-text" (click)="showCalendar()" tabindex="0"  (keydown.enter)="showCalendar()" (keydown.space)="showCalendar()">
+      <button class="qm-time-filter__date-text qm-transparent-btn" (click)="showCalendar()">
         <span class="qm-time-filter__date-text--label">
           {{ selectedDate.mDate  | amLocale: userLocale | amDateFormat: "DD MMMM YYYY" }}</span>
         <span  class="qm-time-filter__date-icon">
           <i class="icon-calendar-light"></i>
         </span>
-      </div>
+      </button>
 
       <div class="qm-time-filter__calendar-placeholder" *ngIf="isCalendarOpen">
         <qm-calendar

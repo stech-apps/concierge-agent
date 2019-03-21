@@ -264,9 +264,14 @@ background: transparent;
 }
 .qm-pannel-inner-container{
   background: #fafafa;
-  height: calc(100% - 90px);
+  min-height: calc(100vh - 162px);
   padding: 30px 24px;
 }
+
+.qm-white-container{
+  background: #ffffff;
+}
+
 
 @include qm-lg{
   .qm-pannel-inner-container{

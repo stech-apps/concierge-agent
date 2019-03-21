@@ -41,6 +41,7 @@ import {
 import { TranslateService } from "@ngx-translate/core";
 import { QueueService } from "../../../../util/services/queue.service";
 import { DEFAULT_LOCALE } from "src/constants/config";
+import { ISystemInfo } from "src/models/ISystemInfo";
 
 enum RescheduleState {
   Default = 1,
@@ -88,6 +89,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
 
   @ViewChild('timeSlotsContainer') timeSlotContainer: ElementRef;
 
+  
+  // date format related variables
+  systemInformation:ISystemInfo;
+
   constructor(
     private userSelectors: UserSelectors,
     private branchSelectors: BranchSelectors,
@@ -103,7 +108,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     private translationService: TranslateService,
     private appointmentSelectors: AppointmentSelectors,
-    private queueService: QueueService
+    private queueService: QueueService,
+    private SystemInfoSelectors : SystemInfoSelectors
   ) {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -133,6 +139,12 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.selectedBranch = cb;
     });
 
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo=>{
+      this.systemInformation = systemInfo;
+    });
+
+    this.subscriptions.add(systemInfoSubscription)
+    
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe(
       (dates: moment.Moment[]) => {
         this.reservableDates = dates;
@@ -376,7 +388,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     this.isShowExpandedAppointment = !this.isShowExpandedAppointment;
   }
 
-  getSelectedAppointmentInfoDate(timeFormat = "DD/MM/YYYY") {
+  getSelectedAppointmentInfoDate(timeFormat = this.systemInformation.dateConvention) {
     let appointmentInfo = "";
 
     if (this.editAppointment) {

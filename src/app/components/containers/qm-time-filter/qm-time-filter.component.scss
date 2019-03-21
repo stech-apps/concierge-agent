@@ -37,6 +37,9 @@ qm-time-filter-items {
       height: 2rem;
       position: relative;
 
+      @at-root [dir='ltr'] & {
+        text-align: left;
+      }
       @at-root [dir='rtl'] & {
         text-align: right;
       }
@@ -51,6 +54,15 @@ qm-time-filter-items {
       margin-bottom: 1rem;
       display: flex;
 
+      
+      @at-root [dir='ltr'] & {
+        text-align: left;
+      }
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
+      
+     
       &--label {
         flex: 10;
         color: $dark-transparent82;
@@ -83,9 +95,7 @@ qm-time-filter-items {
       background-color: rgba(0,0,0,0.04);
       box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
     }
-    &-text:focus{
-      border:  solid #007bff 1px;
-    }
+  
   }
   &__header {
     font-size: 21px;

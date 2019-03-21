@@ -440,9 +440,6 @@ export class QmInputboxComponent implements OnInit {
   }
 
 
-  test(){
-    console.log(this.date.year);
-    
-  }
+  
 }
 

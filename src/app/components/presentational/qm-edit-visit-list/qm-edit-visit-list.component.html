@@ -131,16 +131,15 @@
               </span>
 
               <div style="display:flex;width: 66%;margin: auto;">
-                <span tabindex="0" *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn" (click)="deleteVisit(i,$event)"
-                (keydown.space)="deleteVisit(i,$event)" (keydown.enter)="deleteVisit(i,$event)" >
-                  <span class="bottom-icon-container">
+                <span *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn"  >
+                  <button class="qm-transparent-btn bottom-icon-container" (click)="deleteVisit(i,$event)">
                     <span class="icon"> <i class="icon-delete delete-icon"></i></span>
                     <span class="content">{{'remove' | translate}}</span>
-                  </span>
+                  </button>
                 </span>
-                <span tabindex="0" *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn" (click)="cherryPickVisit(i,$event)" 
-                [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}" (keydown.space)="cherryPickVisit(i,$event)" (keydown.enter)="cherryPickVisit(i,$event)">
-                  <span class="bottom-icon-container">
+                <span *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn"
+                [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}" >
+                  <button class="bottom-icon-container qm-transparent-btn"  (click)="cherryPickVisit(i,$event)">
                     <span class="icon" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> 
                       <i *ngIf="userDirection === 'ltr'" class="icon-check" ></i>
                       <i *ngIf="userDirection === 'rtl'" class="icon-check-rtl" ></i>
@@ -148,7 +147,7 @@
                     <span class="content" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> {{'serve'|
                       translate}}
                     </span>
-                  </span>
+                  </button>
                 </span>
               </div>
             </div>

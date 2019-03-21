@@ -44,6 +44,7 @@ import { Router } from "@angular/router";
 import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directive";
 import { DEFAULT_LOCALE } from "src/constants/config";
 import { GlobalNotifySelectors } from "src/store/services/global-notify";
+import { ISystemInfo } from "src/models/ISystemInfo";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -172,6 +173,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   height: string;
   expandedAppointment: any;
 
+
+  // date format related variables
+  systemInformation:ISystemInfo;
+  
   constructor(
     private appointmentDispatchers: AppointmentDispatchers,
     private branchSelectors: BranchSelectors,
@@ -189,7 +194,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private nativeApiDispatcher: NativeApiDispatchers,
     private modalService: QmModalService,
     private systemInfoSelectors: SystemInfoSelectors,
-    private globalNotifySelectors: GlobalNotifySelectors
+    private globalNotifySelectors: GlobalNotifySelectors,
+    private SystemInfoSelectors : SystemInfoSelectors
       ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -233,6 +239,14 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.add(loadingSubscription);
     this.subscriptions.add(loadedSubscription);
+
+
+    
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo=>{
+      this.systemInformation = systemInfo;
+    });
+
+    this.subscriptions.add(systemInfoSubscription)
 
     this.inputAnimationState = this.INITIAL_ANIMATION_STATE;
     this.setDefaultDuration();
@@ -915,9 +929,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (fullTimeZone) {
       return moment(timeString)
         .tz(fullTimeZone)
-        .format("DD/MM/YYYY");
+        .format(this.systemInformation.dateConvention);
     } else {
-      return moment(timeString).format("DD/MM/YYYY");
+      return moment(timeString).format(this.systemInformation.dateConvention);
     }
   }
 
@@ -1349,10 +1363,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
             this.selectedAppointment.branch.fullTimeZone ||
             this.selectedCalendarBranch.fullTimeZone
           )
-          .format('DD/MM/YYYY');
+          .format(this.systemInformation.dateConvention);
       } else {
         appointmentInfo += moment(this.selectedAppointment.startTime)
-          .format('DD/MM/YYYY');
+          .format(this.systemInformation.dateConvention);
       }
 
     }

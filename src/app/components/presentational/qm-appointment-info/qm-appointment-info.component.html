@@ -6,10 +6,10 @@
   <div class="qm-appointment-info-item qm-appointment-info__birthdate" >
       <span class="qm-appointment-info-item__icon icon-cake"></span>
       <span class="qm-appointment-info-item__text" *ngIf="useCalendarEndpoint">
-              {{ (appointmentInfo?.customers[0].dateOfBirth || null) | amDateFormat : 'YYYY-MM-DD' }}
+              {{ (appointmentInfo?.customers[0].dateOfBirth || null) | amDateFormat : systemInformation.dateConvention }}
       </span>
       <span class="qm-appointment-info-item__text" *ngIf="!useCalendarEndpoint">
-        {{ (appointmentInfo?.customers[0].properties?.dateOfBirth || null ) | amDateFormat : 'YYYY-MM-DD' }}
+        {{ (appointmentInfo?.customers[0].properties?.dateOfBirth || null ) | amDateFormat : systemInformation.dateConvention }}
       </span>
   </div>
   <div class="qm-appointment-info-item qm-appointment-info__telephone">
@@ -36,7 +36,7 @@
         <span class="qm-appointment-info-item__icon icon-calendar">
         </span>
         <span class="qm-appointment-info-item__text">
-            {{ (appointmentInfo.startTime || appointmentInfo.start ) | amDateFormat : 'DD/MM/YYYY' }}
+            {{ (appointmentInfo.startTime || appointmentInfo.start ) | amDateFormat : systemInformation.dateConvention}}
         </span>
     </div>
     <div class="qm-appointment-info-item qm-appointment-info__time">

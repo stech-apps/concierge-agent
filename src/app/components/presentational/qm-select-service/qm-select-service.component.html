@@ -5,6 +5,7 @@
         <div>     
             <div class="qm-flow-header">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</div>
           </div>
+  <div class="qm-white-container">
   <div class="qm-pannel-inner-container"> 
     <div class="qm-select-service-header-section">
     <div class="qm-flow-sub-header">
@@ -140,7 +141,7 @@
     </div>
   </div>
 </div>
-</div></div></div>
+</div></div></div></div>
 <div class="qm-flow-done-bar" *ngIf="selectedServiceList && selectedServiceList.length > 0">
   <button class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'banner_done_label' | translate }}</button>
 </div>

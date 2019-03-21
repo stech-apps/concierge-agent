@@ -3,7 +3,8 @@
   [ngClass]="{
     'qm-pannel-container__identify--arrive': !useCalendarEndpoint,
     'qm-pannel-container__identify--edit': useCalendarEndpoint,
-    'qm-done-bar--shown': selectedAppointment
+    'qm-done-bar--shown': selectedAppointment,
+    'qm-pannel-container-arrive':!useCalendarEndpoint
   }"
   dir="{{ userDirection$ | async }}"
 ><div class="qm-pannel-full-inner-container"> 
@@ -310,13 +311,13 @@
                 }}
               </ng-container>
 
-              <div
-              tabindex="0"
-                class="qm-identify-appointment__time-container"
-                (click)="showTimeFilter()" (keydown.enter)="showTimeFilter()"
-                (keydown.space)="showTimeFilter()"
+              <button
+           
+                class="qm-identify-appointment__time-container qm-transparent-btn"
+                (click)="showTimeFilter()" 
               >
                 <ng-container *ngIf="showTimeLabel">
+                  <div class="qm-date-time-selector">
                   <span *ngIf="useCalendarEndpoint">{{
                     selectedDate.mDate
                       | amLocale: userLocale
@@ -333,10 +334,11 @@
                     <span>&nbsp;-&nbsp;</span>
                     <span>{{ selectedToTime | date: "HH:mm" }}</span>
                   </ng-container>
+                  </div>
                 </ng-container>
 
                 <i class="icon-edit qm-action-btn__icon "></i>
-              </div>
+              </button>
 
               <!-- <ng-container *ngIf="timeConvention === '24'">
                     <div class="qm-identify-appointment__time-container" (click)="showTimeFilter()">

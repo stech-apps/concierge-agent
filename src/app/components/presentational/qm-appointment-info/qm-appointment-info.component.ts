@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter,
   HostBinding, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { SystemInfoSelectors, UserSelectors } from 'src/store';
 import { Subscription, Observable } from 'rxjs';
+import { ISystemInfo } from 'src/models/ISystemInfo';
 
 @Component({
   selector: 'qm-appointment-info',
@@ -9,6 +10,9 @@ import { Subscription, Observable } from 'rxjs';
   styleUrls: ['./qm-appointment-info.component.scss']
 })
 export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    // date format related variables
+    systemInformation:ISystemInfo;
 
   @Input()
   appointmentInfo: any = {};
@@ -29,11 +33,20 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   subscriptions: Subscription = new Subscription();
 
-  constructor(private elementRef: ElementRef, public userSelectors: UserSelectors) { }
+  constructor(private elementRef: ElementRef, 
+    public userSelectors: UserSelectors,
+    public systemInfoSelectors:SystemInfoSelectors) { }
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo=>{
+      this.systemInformation = systemInfo;
+    });
+
+    this.subscriptions.add(systemInfoSubscription)
   }
+  
 
   ngAfterViewInit() {
     /* let infoCardElement = this.elementRef.nativeElement;

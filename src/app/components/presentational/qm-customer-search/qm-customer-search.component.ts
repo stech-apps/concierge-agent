@@ -1,7 +1,8 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Subscription, Observable } from 'rxjs';
-import { CustomerDispatchers, CustomerSelector, UserSelectors, } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, UserSelectors, SystemInfoSelectors, } from '../../../../store';
+import { ISystemInfo } from 'src/models/ISystemInfo';
 
 @Component({
   selector: 'qm-customer-search',
@@ -21,6 +22,17 @@ export class QmCustomerSearchComponent implements OnInit {
   private subscriptions : Subscription = new Subscription();
   userDirection$: Observable<string>; 
   searchText:string;
+  
+
+  // date format related variables
+  systemInformation:ISystemInfo;
+  dateType:string;
+  separator:string;
+  firstDateString:string;
+  secondDateString:string;
+  thirdDateString:string;
+
+
 
   @Input() public noCustomerFeedback: string = null;
   @Input() public isInArriveFlow: boolean = false;
@@ -31,6 +43,7 @@ constructor(
     private CustomerDispatchers: CustomerDispatchers,
     private CustomerSelectors:CustomerSelector,
     private userSelectors:UserSelectors,
+    private systemInfoSelectors:SystemInfoSelectors
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
@@ -56,11 +69,28 @@ constructor(
       const customerSubscription = this.CustomerSelectors.appointmentSearchCustomers$.subscribe((customer) => this.customers = customer);
       this.subscriptions.add(customerSubscription);
     } else {
-      const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) => this.customers = customer);
+      const customerSubscription = this.CustomerSelectors.customer$.subscribe((customer) =>{ 
+        this.customers = customer
+      });
       this.subscriptions.add(customerSubscription);
     }
 
     this.customers$ = this.CustomerSelectors.customer$;
+
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo=>{
+      this.systemInformation = systemInfo;
+    });
+
+    this.subscriptions.add(systemInfoSubscription)
+
+
+    this.dateType = this.systemInformation.dateConvention;
+    this.separator = this.dateType.substring(2,3);
+    this.firstDateString = this.dateType.substring(0,1);
+    this.secondDateString = this.dateType.substring(3,4);
+    this.thirdDateString = this.dateType.substring(6,7);
+    console.log(this.firstDateString + ' ' + this.secondDateString + ' ' + this.thirdDateString);
+    
 
 
     const customerLoadedSubscription = this.customerLoaded$.subscribe(
@@ -98,4 +128,31 @@ constructor(
     this.CustomerDispatchers.resetCustomers();
   }
   
+  prepareDOB(dob:string){
+
+
+    var year = dob.substring(2,4);
+    var month = dob.substring(5,7);
+    var day = dob.substring(8,10);
+    
+    if(this.firstDateString=="Y"){
+      if(this.secondDateString=="M"){
+        return year + this.separator + month + this.separator  + day
+      }else{
+        return year + this.separator + day + this.separator  + month
+      }
+    } else if(this.firstDateString == "M"){
+      if(this.secondDateString == "D"){
+        return month + this.separator + day + this.separator  + year
+      }else{
+        return month + this.separator + year + this.separator  + day
+      }
+    } else{
+      if(this.secondDateString == "M"){
+        return day + this.separator + month + this.separator  + year
+      } else{
+        return day + this.separator + year + this.separator  + month
+      }
+    }
+  }
 }

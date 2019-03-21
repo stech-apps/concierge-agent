@@ -509,6 +509,10 @@ qm-identify-appointment{
     }
   }
 }
+
+.qm-date-time-selector{
+  margin-top: 3px;
+}
 .qm-action-btn__icon:focus{
   border:  solid #007bff 1px;
 }
@@ -718,49 +722,52 @@ qm-identify-appointment{
     }
 
     &--arrive {
-      //table column sizes
       .qm-table {
         @include qm-lg {
           &__header-id, &__cell-id {
-            width: 100px;
+            flex: 1;
           }
-
           &__header-customer, &__cell-customer  {
-            width: 300px;
+            flex: 3;
           }
-
           &__header-service, &__cell-service {
-            width: 300px;
+            flex:3;
           }
-
-          &__header-date,&__cell-date {
-            width: 200px;
+          &__header-branch, &__cell-branch {
+            flex: 3;
           }
-
+          &__header-date, &__cell-date {
+            flex: 2;
+          }
           &__header-time, &__cell-time {
-            width: 200px;
+            flex: 2;
+          }
+          &__header-icon, &__cell-icon {
+            width: 43px;
           }
         }
 
         @include qm-md {
           &__header-id, &__cell-id {
-            width: 100px;
+            flex: 1;
           }
-
           &__header-customer, &__cell-customer  {
-            width: 260px;
+            flex: 3;
           }
-
           &__header-service, &__cell-service {
-            width: 260px;
+            flex:3;
           }
-
+          &__header-branch, &__cell-branch {
+            flex: 3;
+          }
           &__header-date, &__cell-date {
-            width: 210px;
+            flex: 2;
           }
-
-          &__header-time,  &__cell-time {
-            width: 200px;
+          &__header-time, &__cell-time {
+            flex: 2;
+          }
+          &__header-icon, &__cell-icon {
+            width: 43px;
           }
         }
 
@@ -768,66 +775,35 @@ qm-identify-appointment{
           .icon-info, .icon-info-solid {
             line-height: $sm-xs-row-height;
           }
-
-          &__header-id {
-            width: 70px;
-          }
-
-          &__header-customer {
-            width: 280px;
-          }
-
-          &__header-service {
-            width: 280px;
-          }
-          &__header-date {
-            width: 180px;
-          }
-
-          &__header-time {
-            width: 124px;
-          }
-
-          &__cell-id {
-            width: 70px;
-          }
-
-          &__cell-customer {
-            width: 280px;
-          }
-
-          &__cell-service {
-            width: 280px;
-          }
-          &__cell-date {
-            width: 180px;
-          }
-
-          &__cell-time {
-            width: 124px;
-          }
         }
 
-        @include qm-sm {
-          &__header-id, &__cell-id {
-            width: 70px;
-          }
-          
-          &__header-customer,  &__cell-customer  {
-            width: 268px;
-          }
+      
+        &__header-id, &__cell-id {
+          flex: 1;
+        }
 
-          &__header-service, &__cell-service {
-            width: 280px;
-          }
+        &__header-customer, &__cell-customer  {
+          flex: 3;
+        }
 
-          &__header-date ,&__cell-date {
-            width: 180px;
-          }
+        &__header-service, &__cell-service {
+          flex:3;
+        }
 
-          &__header-time, &__cell-time {
-            width: 124px;
-          }
+        &__header-branch, &__cell-branch {
+          flex: 3;
+        }
+
+        &__header-date, &__cell-date {
+          flex: 2;
+        }
+
+        &__header-time, &__cell-time {
+          flex: 2;
+        }
+        &__header-icon, &__cell-icon {
+          width: 43px;
+        
         }
       }
     }
@@ -897,6 +873,14 @@ button:focus{
   height: calc(100% - 90px);
   padding: 30px 24px;
 }
+
+// IE specific fix
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+   .qm-pannel-container-arrive{
+       margin-top: -40px;
+   }
+}
+
 
 @include qm-lg{
   .qm-pannel-inner-container{

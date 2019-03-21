@@ -321,6 +321,11 @@ display: flex;
   padding: 1rem;
 }
 
+
+.qm-white-container{
+  background: #ffffff;
+}
+
 .qm-crossline-header-text{
   background: #fafafa;
 }
@@ -329,7 +334,7 @@ display: flex;
 }
 .qm-pannel-inner-container{
   background: #fafafa;
-  height: calc(100% - 90px);
+  min-height: calc(100vh - 162px);
   padding: 30px 24px;
 }
 

@@ -5,6 +5,9 @@
         <span class="sr-only">{{ 'label.modal.close' | translate }}</span>
       </button>
       <span class="qm-modal__headline">{{ ('label.addNotes.heading') | translate }}</span>
+      <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="dismiss()">
+        <i aria-hidden="true" class="icon-close"></i>
+      </button>
     </div>
     <div class="qm-modal__body">
       <div class="qm-modal-row">

@@ -131,4 +131,19 @@
       }
     }
   }
+
+  .qm-modal-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .qm-modal-close {
+    @at-root [dir='rtl'] & {
+      left: 1rem;
+      right: auto;
+    }
+  }
 }

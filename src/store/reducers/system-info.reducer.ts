@@ -18,6 +18,7 @@ const initialState = {
     productVersion: '',
     licenseCompanyName: '',
     defaultLanguage: '',
+    dateConvention:'',
     protocol: '',
     host: '',
     port: '',

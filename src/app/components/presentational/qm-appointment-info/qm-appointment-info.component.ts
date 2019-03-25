@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter,
 import { SystemInfoSelectors, UserSelectors } from 'src/store';
 import { Subscription, Observable } from 'rxjs';
 import { ISystemInfo } from 'src/models/ISystemInfo';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'qm-appointment-info',

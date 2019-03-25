@@ -37,4 +37,8 @@ export class QmModalComponent implements OnInit {
   public dismiss() {
     this.activeModal.dismiss();
   }
+
+  public closeX() {
+    this.activeModal.close(false);
+  }
 }

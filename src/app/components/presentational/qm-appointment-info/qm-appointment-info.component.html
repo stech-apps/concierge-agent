@@ -3,7 +3,7 @@
     <div class="qm-appointment-info__id"> {{ useCalendarEndpoint ? appointmentInfo.qpId : appointmentInfo.id }}</div>
     <div class="qm-appointment-info__customer" (click)="onCustomerNameClick()"> {{ appointmentInfo?.custName }}</div>
   </div>
-  <button *ngIf="!useWideCard" class="qm-transparent-btn qm-action-btn qm-modal-close">
+  <button *ngIf="!useWideCard" class="qm-transparent-btn qm-action-btn qm-modal-close" (click)="onModalClick()">
     <i aria-hidden="true" class="icon-close"></i>
   </button> 
   <div class="qm-appointment-info-item qm-appointment-info__birthdate" >

@@ -12,7 +12,7 @@
     <div class="qm-modal__body">
       <div class="qm-modal-row">
         <div class="qm-notes-text-area__container">
-          <div class="qm-note__counter">{{ (notes.length || '0' ) + '/255'}}</div>
+          <div class="qm-note__counter">{{ (notes?.length || '0' ) + '/255'}}</div>
           <textarea class="qm-note__textarea" name="qmNotes" qmAutofocus [(ngModel)]="notes" id="addnotesText" maxlength="255">
           </textarea>
           <i aria-hidden="true" *ngIf="notes && notes.length > 0" (click)="clearNotes()" class="qm-action-btn__icon icon-close qm-search__icon qm-note__textarea--clear"></i>

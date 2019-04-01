@@ -38,7 +38,7 @@ export class AccountEffects {
       tap((action: AccountActions.FetchAccountInfoSuccess) => {
         this.translate.use(
           'connectConciergeMessages' +
-            (action.payload.data.locale === 'en'
+            ((action.payload.data.locale === 'en' || !action.payload.data.locale)
               ? ''
               : `_${action.payload.data.locale}`)
         );

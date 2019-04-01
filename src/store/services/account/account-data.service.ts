@@ -23,11 +23,9 @@ export class AccountDataService {
       .pipe(map((res: IAccount) => {
 
         let userRole = UserRole.None;
-        userRole = userRoleFactory({modules: res.modules})
-
+        userRole = userRoleFactory({modules: res.modules});
         // Remove boolean value(rtl or not) from the local
-        res.locale = res.locale && res.locale.split(':')[0];
-
+        res.locale = (res.locale && res.locale.split(':')[0]) || 'en';
         return { data: res, userRole };
       }))
       .pipe(catchError(this.errorHandler.handleError()));

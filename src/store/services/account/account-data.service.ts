@@ -26,6 +26,7 @@ export class AccountDataService {
         userRole = userRoleFactory({modules: res.modules});
         // Remove boolean value(rtl or not) from the local
         res.locale = (res.locale && res.locale.split(':')[0]) || 'en';
+        res.direction =  res.direction || 'ltr';
         return { data: res, userRole };
       }))
       .pipe(catchError(this.errorHandler.handleError()));

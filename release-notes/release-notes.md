@@ -388,6 +388,31 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 
 ---
+<h2>Update 10</h2>
+
+**Date:2019-04-04**
+ 
+**Build number:10**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **165016712** | **Desktop browser look odd with LDAP users (lang issue?)** |
+
+---
+<h3>Known issues</h3>
+**Orchestra**
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+
+---
 
 <h3>Upgrade instructions</h3> 
 

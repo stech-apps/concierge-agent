@@ -116,7 +116,7 @@ this.subscriptions.add(uttSubscription);
 
 resetQRReader(){
   var searchBox = document.getElementById("visitSearchQueue") as any;
-  this.translateService.get('visit_search_placeholder').subscribe(v => {
+  this.translateService.get('label.visit_search_placeholder').subscribe(v => {
     searchBox.placeholder = v
   });
   this.searchText = "";

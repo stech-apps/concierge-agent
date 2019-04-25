@@ -1,8 +1,8 @@
-<qm-flow #f [FlowName] ="'create_appointment'">
+<qm-flow #f [FlowName] ="'label.create_appointment'">
   <qm-flow-panel #pb *ngIf="multiBranchEnabled" [headerVisibilityOverridden]="true" [isContentVisible]="!isFlowSkip"
-    [isActive]="!isFlowSkip" [title]="'select_branch_header'">
+    [isActive]="!isFlowSkip" [title]="'label.select_branch_header'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit();">
-      <qm-flow-panel-title>{{ 'select_branch_header' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.select_branch_header' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="currentBranch && currentBranch.id">{{currentBranch?.name}}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
@@ -10,10 +10,10 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #ps [isHeaderVisible]="isFlowSkip" [isActive]="isFlowSkip" [isContentVisible]="isFlowSkip" [isShowExitFlow]="!multiBranchEnabled" 
-  [title]="'specify_service'">
+<qm-flow-panel #ps [isHeaderVisible]="isFlowSkip" [isActive]="isFlowSkip" [isContentVisible]="isFlowSkip" [isShowExitFlow]="!multiBranchEnabled" 
+  [title]="'label.specify_service'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
-      <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{ selectedServices[0].name }}</qm-flow-panel-result>
       <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
@@ -21,10 +21,10 @@
       <qm-select-service [isVisible]="ps.isContentVisible" (onFlowNext)="f.onFlowNext(pa); " [flowType]="flowType"></qm-select-service>
     </qm-flow-panel-content>
   </qm-flow-panel>
-
-  <qm-flow-panel #pa   [title]="'date_and_time'">
+  
+  <qm-flow-panel #pa   [title]="'label.date_and_time'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pa); ats.reloadTimeSlots.next();" (onFlowExit)="f.onFlowExit()">
-      <qm-flow-panel-title>{{ 'date_and_time' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.date_and_time' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="(selectedTimeSlot$ | async)?.length > 0">{{ (selectedDate$ | async).format('YYYY-MM-DD') + ' ' + (selectedTimeSlot$ | async) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
@@ -42,14 +42,14 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
   
-  <qm-flow-panel #px  [title]="'create_confirm'" class="qm-checkout-view-flowpanel">
+  <qm-flow-panel #px  [title]="'label.confirm'" class="qm-checkout-view-flowpanel">
     <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
-      <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-checkout-view [flowType]="flowType" (goToPanelByIndex)="f.goToPanelByIndex($event)" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
     </qm-flow-panel-content>
-  </qm-flow-panel>
+  </qm-flow-panel> 
 </qm-flow>
 <div class="qm-reservation-expiry-timer" ngDraggable *ngIf="showExpiryReservationTime$ | async">
   <qm-reservation-timer></qm-reservation-timer>

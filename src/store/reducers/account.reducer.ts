@@ -9,7 +9,7 @@ export interface IAccountState {
   loaded: boolean;
   error: Object;
   useDefaultStatus: boolean;
-  menuItemDeselect:boolean;
+  menuItemDeselect: boolean;
 }
 
 const initialState = {
@@ -23,14 +23,13 @@ const initialState = {
     status: '',
     fullName: '',
     modules: [],
-    
   },
   userRole: UserRole.None,
   loading: false,
   loaded: false,
   error: null,
   useDefaultStatus: false,
-  menuItemDeselect:false
+  menuItemDeselect: false
 };
 
 export function reducer(

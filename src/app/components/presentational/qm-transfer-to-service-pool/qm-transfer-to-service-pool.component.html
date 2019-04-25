@@ -1,7 +1,7 @@
 <div class="qm-flow-sub-header">
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}" *ngIf="(this.loaded && this.servicePoints.length!==0)">
     <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_spPool' | translate }}" id="spSearch"
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_spPool' | translate }}" id="spSearch"
         name="q" [ngModel]="searchText" (input)="handleInput($event)" #spSearch autocomplete="off">
       <div class="qm-action-btn--only-icon">
         <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
@@ -23,7 +23,7 @@
     </div>
     <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="(this.loaded && this.servicePoints.length!==0)">
       <button class="qm-service-point-list-header-item qm-flex-grid qm-transparent-btn" (click)="onSortClickbyServicePoint()">
-        <div class="qm-service-point-list-header-item-label">{{'service_point' | translate}}</div>
+        <div class="qm-service-point-list-header-item-label">{{'label.service_point' | translate}}</div>
         <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
       </button>
 

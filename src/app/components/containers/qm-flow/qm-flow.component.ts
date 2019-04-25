@@ -69,7 +69,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     this.userDirection$ = this.userSelectors.userDirection$;   
   }
   ngAfterContentInit(){
-    if(this.FlowName=='create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){
+    if(this.FlowName=='label.create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){
       this.activeHeader = 1;
     }    
   }
@@ -121,7 +121,7 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
       }, 1000);
     }
     else {
-      this.qmModalService.openForTransKeys('', 'msg_cancel_task', 'yes', 'no', (result) => {
+      this.qmModalService.openForTransKeys('', 'label.msg_cancel_task', 'label.yes', 'label.no', (result) => {
         if (result) {
           this.timeSlotDispatchers.deselectTimeslot();
           this.exitFlow = true;

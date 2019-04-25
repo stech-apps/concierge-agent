@@ -136,7 +136,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
         visit: this.selectedVisit.ticketId,
       }).subscribe(
         (label: string) => 
-          this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
+          this.qmModalService.openForTransKeys('', `${label}`, 'label.yes', 'label.no', (result) => {
             if (result) {
              this.spService.servicePointTransfer(this.currentBranch, this.selectedServicePoint, s, this.selectedVisit).subscribe( result=>{
               this.translateService.get('visit_transferred').subscribe((label) =>{

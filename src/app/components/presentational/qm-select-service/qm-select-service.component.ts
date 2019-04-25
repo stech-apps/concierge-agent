@@ -271,7 +271,7 @@ export class QmSelectServiceComponent implements OnInit {
       this.handleServiceList(selectedService, isRemove);
     }
     else if(this.selectedServiceList.length > 0 && !this.isMultiServiceOn){
-      this.qmModalService.openForTransKeys('', 'enable_multi_serv_switch', 'yes', 'no', (v) => {
+      this.qmModalService.openForTransKeys('', 'enable_multi_serv_switch', 'label.yes', 'label.no', (v) => {
         if(v) {
           this.isMultiServiceOn = true;
           this.onSwitchChange();

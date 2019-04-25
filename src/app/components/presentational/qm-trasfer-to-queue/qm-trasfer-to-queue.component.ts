@@ -163,7 +163,7 @@ OnTransferButtonClick(type){
       visit: this.selectedVisit.ticketId,
     }).subscribe(
       (label: string) => 
-        this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
+        this.qmModalService.openForTransKeys('', `${label}`, 'label.yes', 'label.no', (result) => {
           if (result){
           this.spService.queueTransfer(this.selectedBranch, this.selectedServicePoint, 
               this.DropDownselectedQueue, this.selectedVisit, type).subscribe( result => {

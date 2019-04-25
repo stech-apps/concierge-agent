@@ -1,21 +1,21 @@
 <div class="qm-queue-list" dir="{{userDirection$ | async}}">
   <div class="qm-queue-list__headers qm-flex-grid">
     <div class="qm-queue-list-header-item qm-col-45 qm-flex-grid" (click)="onSortClickbyQueue()">
-      <div class="qm-queue-list-header-item">{{'ql_queue' | translate}}</div>
+      <div class="qm-queue-list-header-item">{{'label.ql_queue' | translate}}</div>
       <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true,'selected-sort-icon':sortedBy =='Queue' }"></i></button>    
     </div>
   
     <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid"  (click)="onSortClickbyWaitingCustomers()">
-      <div class="qm-queue-list-header-item-label">{{'ql_customer' | translate}}</div>
+      <div class="qm-queue-list-header-item-label">{{'label.ql_customer' | translate}}</div>
       <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='WaitingCustomers' }"></i></button>
     </div>
 
     <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid"  (click)=" onSortClickbyMaxWaitTime()">
-    <div class="qm-queue-list-header-item-label"> {{ 'ql_max_wait_time' | translate}} </div>
+    <div class="qm-queue-list-header-item-label"> {{ 'label.wait_time' | translate}} </div>
     <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='MaxWaitTime' }"></i></button>
     </div>
     
-    <div  *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'ql_est_wait_time' | translate}} </div>
+    <div  *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'label.est_wait_time' | translate}} </div>
   </div>  
 
   <div class="qm-queue-list__body" [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable, 'qm-queue-list__body-native':isNative }" >

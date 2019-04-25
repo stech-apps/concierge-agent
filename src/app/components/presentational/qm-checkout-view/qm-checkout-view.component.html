@@ -111,7 +111,7 @@
   <div class="qm-checkout-view__notifications">
     <div style="width:480px">
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
-      <div class="vip-label" [style.flex]="('vip_section_label' | translate).length > 6 ? 1.5: 1">{{ 'vip_section_label' | translate }}</div>
+      <div class="vip-label" [style.flex]="('label.vip_section' | translate).length > 6 ? 1.5: 1">{{ 'label.vip_section' | translate }}</div>
           <div class="radio-container">
             <div *ngIf="isVipLvl1Enabled" class="level" [ngClass]="{'vipButtonFocused':VipButton1Focucsed==true}">
               <div class="checkbox-container" [ngStyle]="{'border': vipLevel1Checked ? '3px solid #03996C' : '3px solid rgba(0,0,0,0.12)'}">
@@ -162,13 +162,13 @@
 
     <button class="button qm-button-plain" [ngClass]="{'qm-button-plain--active' : ticketlessSelected}" *ngIf="ticketlessActionEnabled" (click)="onTicketlessSelected()">
        
-        <span>{{ 'ticketless' | translate}}</span>
+        <span>{{ 'label.ticketless' | translate}}</span>
     </button>
   
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
       <div class="qm-button-icon-container">
       <span class="icon-mail"></span></div>
-      <span>{{ 'email' | translate}}</span>
+      <span>{{ 'label.email' | translate}}</span>
     </button>
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
       (click)="onEmailAndSmsSelected()">
@@ -179,7 +179,7 @@
 
   </div>
   <div class="qm-flow-done-bar" *ngIf="buttonEnabled">
-    <button class="qm-flow-done-bar__done-button" (click)="onButtonPressed()"> {{ 'create_confirm' | translate }}</button>
+    <button class="qm-flow-done-bar__done-button" (click)="onButtonPressed()"> {{ 'label.confirm' | translate }}</button>
   </div>
 </div>
 </div>

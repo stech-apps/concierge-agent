@@ -43,7 +43,7 @@
               <div class="qm-input-box__col-50">
                 <div class="qm-input-box__left-side">
                     <div>
-                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'first_name'|translate }}</label>
+                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.first_name'|translate }}</label>
                     </div>
                      <br>
                       <input #firstName class="qm-input-box__input" type="text" name='firstName' formControlName = "firstName"
@@ -56,7 +56,7 @@
               </div>
               <div class="qm-input-box__col-50">
                   <div>
-                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>           
+                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.last_name'|translate }}</label>           
                   </div> 
                     <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
                     <div *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
@@ -79,7 +79,7 @@
             <div class="qm-input-box__row">
                 <div class="qm-input-box__col-50">
                     <div class="qm-input-box__left-side">
-                      <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'phone'|translate }}</label>
+                      <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.phone'|translate }}</label>
                       <input  class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" #phone>
                       <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
@@ -141,5 +141,5 @@
   </div>
 </div>
 <div class="qm-flow-done-bar">
-    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'banner_done_label' | translate }}</div>
+    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'label.banner_done' | translate }}</div>
 </div>

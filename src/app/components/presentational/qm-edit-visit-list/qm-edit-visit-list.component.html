@@ -6,12 +6,12 @@
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true,'selected-sort-icon':sortingIndicator==='VISITID'  }"></i></button>
       </div>
       <div class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
-        <div class="qm-visit-list-header-item-label">{{'visit_customer_label' | translate}}</div>
+        <div class="qm-visit-list-header-item-label">{{'label.name' | translate}}</div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true,'selected-sort-icon':sortingIndicator==='CUSTOMER'  }"></i></button>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-4 qm-service-col  qm-flex-grid" (click)="sortByService()">
-        <div class="qm-visit-list-header-item-label"> {{ 'visit_service_label' | translate}} </div>
+        <div class="qm-visit-list-header-item-label"> {{ 'label.service' | translate}} </div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true,'selected-sort-icon':sortingIndicator==='SERVICE'  }"></i></button>
       </div>
 
@@ -22,7 +22,7 @@
 
 
       <div class="qm-visit-list-header-item qm-col-2 qm-wait-time-col qm-flex-grid">
-        <div class="qm-visit-list-header-item-label"> {{ 'visit_wait_time_label' | translate}} </div>
+        <div class="qm-visit-list-header-item-label"> {{ 'label.visit_wait_time' | translate}} </div>
       </div>
       <div class="info-icon-container"></div>
     </div>
@@ -125,7 +125,7 @@
                     <i class="icon-screen"></i>
                   </span>
                   <span class="label">
-                    {{'transfer_visit_sp_pool_header_simple' | translate}}
+                    {{'label.transfer.counter_pool' | translate}}
                   </span>
                 </button>
               </span>

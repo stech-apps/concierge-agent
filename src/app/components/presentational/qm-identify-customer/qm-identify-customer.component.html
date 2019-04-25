@@ -18,7 +18,7 @@
                   {{ "select_customer_header" | translate }} <span *ngIf="flowType !== 'CREATE_APPOINTMENT'">({{'optional'|translate}})</span>
               </span>
                 <span *ngIf="currentCustomer && editMode" style="width:auto">
-                  {{ "edit_customer" | translate }}
+                  {{ "label.edit_customer" | translate }}
                 </span>     
           </div>
         </div>
@@ -155,6 +155,6 @@
   "
 >
   <button  class="qm-flow-done-bar__done-button" (click)="doneButtonClick()">
-    {{ "banner_done_label" | translate }}
+    {{ "label.banner_done" | translate }}
   </button>
 </div>

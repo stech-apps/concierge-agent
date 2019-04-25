@@ -89,7 +89,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
     if (this.currentBranch.id && this.currentBranch.id != branch.id) {
-      this.qmModalService.openForTransKeys('', 'msg_confirm_branch_selection', 'yes', 'no', (v) => {
+      this.qmModalService.openForTransKeys('', 'label.msg_confirm_branch_selection', 'label.label.yes', 'no', (v) => {
         if (v) {
           this.calendarBranchDispatchers.selectCalendarBranch(branch);
           this.timeSlotDispatchers.deselectTimeslot();

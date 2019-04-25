@@ -71,7 +71,7 @@ export class LoginService {
                 {
                     if(this.nativeApi.isNativeBrowser()) {
                         let currentObj = this;
-                        this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'cancel', function(val: boolean){
+                        this.confirmBox.openForTransKeys('', 'ongoing_session', 'ok', 'label.cancel', function(val: boolean){
                             if(val){
                                 currentObj.hijack();
                             }
@@ -95,7 +95,7 @@ export class LoginService {
                     let currentObj = this;
                     this.spService.getWorkstationUsers(this.selectedBranch, this.selectedServicePoint).subscribe((status: IAccount[]) => {
                         if(status && status.length > 0 && status[0].id !== this.user.id){
-                            this.confirmBox.openForTransKeys('', 'message_hijack', 'ok', 'cancel', function(val: boolean){
+                            this.confirmBox.openForTransKeys('', 'label.message_hijack', 'ok', 'label.cancel', function(val: boolean){
                                 if(val){
                                     currentObj.confirm();
                                 }

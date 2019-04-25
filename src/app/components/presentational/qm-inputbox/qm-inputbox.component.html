@@ -8,7 +8,7 @@
               <div class="qm-input-box__col-50">
                 <div class="qm-input-box__left-side">
                     <div>
-                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'first_name'|translate }}</label>
+                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.first_name'|translate }}</label>
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div>
                      <br>
@@ -26,7 +26,7 @@
 
               <div class="qm-input-box__col-50">
                     <div>
-                      <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'last_name'|translate }}</label>
+                      <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.last_name'|translate }}</label>
                       <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div> 
                       <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
@@ -39,7 +39,7 @@
 
             <!-- Email Section -->
             <div class="qm-input-box__row">
-                  <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'email'|translate }}</label>
+                  <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.email'|translate }}</label>
                   <input class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
                   <div *ngIf="email.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                       <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('email')"></i>
@@ -51,7 +51,7 @@
             <div class="qm-input-box__row">
                   <div class="qm-input-box__col-50">
                       <div class="qm-input-box__left-side">
-                        <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'phone'|translate }}</label>
+                        <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.phone'|translate }}</label>
                         <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
                         <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
                             <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
@@ -121,14 +121,14 @@
 
                 <!-- Cancel Button -->
                 <button class="qm-button qm-secondary-button-defult" (click)="cancel()" *ngIf="editMode">
-                  {{'cancel'|translate}}
+                  {{'label.cancel'|translate}}
                 </button> 
                 <button class="qm-button qm-secondary-button-defult" (click)="discard()"  *ngIf="!editMode && currentCustomer">
                   {{'button.discard.changes'|translate}}
                 </button> 
                 <button class="qm-button qm-secondary-button-defult" (click)="clearCustomerForm()" *ngIf="(!editMode && !currentCustomer) && (customerCreateForm.dirty && (customerCreateForm.controls.dateOfBirth.pristine || customerCreateForm.controls.dateOfBirth.controls.day.value 
                 || customerCreateForm.controls.dateOfBirth.controls.month.value || customerCreateForm.controls.dateOfBirth.controls.year.value))">
-                  {{'cancel'|translate}}
+                  {{'label.cancel'|translate}}
                 </button>
 
                 <!-- Save Button -->

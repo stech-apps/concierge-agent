@@ -272,8 +272,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     this.qmModalService.openForTransKeys(
       "",
       "modal.cancel.appointment.message",
-      "yes",
-      "no",
+      "label.yes",
+      "label.no",
       result => {
         if (result) {
           this.appointmentDispatchers.deleteAppointment(
@@ -320,8 +320,8 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.qmModalService.openForTransKeys(
         "",
         "modal.reschedule.appointment.message",
-        "yes",
-        "no",
+        "label.yes",
+        "label.no",
         result => {
           if (result) {
             let rescheduleAppointment = this.editAppointment;

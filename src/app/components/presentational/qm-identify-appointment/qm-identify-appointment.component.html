@@ -9,7 +9,7 @@
   dir="{{ userDirection$ | async }}"
 ><div class="qm-pannel-full-inner-container"> 
   <div>     
-      <div class="qm-flow-header">{{ "identify_appointment" | translate }}</div>
+      <div class="qm-flow-header">{{ "label.identify_appointment" | translate }}</div>
     </div>
   <div class="qm-pannel-inner-container qm-pannel-inner-container__identify">
  
@@ -647,6 +647,6 @@
 
 <div class="qm-flow-done-bar" *ngIf="selectedAppointment">
   <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()">
-    {{ "banner_done_label" | translate }}
+    {{ "label.banner_done" | translate }}
   </div>
 </div>

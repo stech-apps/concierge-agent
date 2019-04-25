@@ -1,7 +1,7 @@
 <div class="qm-flow-sub-header">
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}" *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
     <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_queue' | translate }}" id="visitSearch"
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_queue' | translate }}" id="visitSearch"
         name="q" [ngModel]="searchText" (input)="handleInput($event)" #visitSearch autocomplete="off">
       <div class="qm-action-btn--only-icon">
         <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
@@ -19,26 +19,26 @@
   <div class="qm-queue-list">
 
       <div style="padding-bottom:20px;text-align:center" *ngIf="(this.queueCollection && this.queueCollection.length === 0)">
-          {{'empty_queues'|translate}} 
+          {{'label.empty_queues'|translate}} 
         </div>
 
     <div class="qm-queue-list__headers qm-flex-grid" *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
 
       <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn" (click)="onSortClickbyQueue()">
-        <div class="qm-queue-list-header-item">{{'queue_view_queue_label' | translate}}</div>
+        <div class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</div>
         <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
       </button>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">
-        <div class="qm-queue-list-header-item-label">{{'transfer_first'|translate}}</div>
+        <div class="qm-queue-list-header-item-label">{{'label.transfer_first'|translate}}</div>
       </div>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast">
-        <div class="qm-queue-list-header-item-label">{{'transfer_last'|translate}} </div>
+        <div class="qm-queue-list-header-item-label">{{'label.transfer_last'|translate}} </div>
       </div>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort">
-        <div class="qm-queue-list-header-item-label"> {{'transfer_sort'|translate}} </div>
+        <div class="qm-queue-list-header-item-label"> {{'label.transfer_sort'|translate}} </div>
       </div>
 
     </div>

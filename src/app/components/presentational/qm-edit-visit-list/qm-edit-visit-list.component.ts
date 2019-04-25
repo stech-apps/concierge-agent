@@ -384,7 +384,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     if (this.dsOrOutcomeExists && this.canCherryPick) {
       return;
     } else if (!this.dsOrOutcomeExists && this.canCherryPick) {
-      this.qmModalService.openForTransKeys('', 'cherry_pick_visit_in_modal', 'yes', 'no', (result) => {
+      this.qmModalService.openForTransKeys('', 'cherry_pick_visit_in_modal', 'label.yes', 'label.no', (result) => {
         if (result) {
           this.spService.cherryPickVisit(this.selectedbranchId, this.selectedSpId, this.selectedVisitId).subscribe(
             result => {
@@ -420,11 +420,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   deleteVisit(index: number, event: Event) {
     event.stopPropagation();
     let visitId = this.visits[index].ticketId;
-    this.qmModalService.openForTransKeys('', 'delete_visit_in_modal', 'yes', 'no', (result) => {
+    this.qmModalService.openForTransKeys('', 'delete_visit_in_modal', 'label.yes', 'label.no', (result) => {
       if (result) { 
         this.spService.deleteVisit(this.selectedbranchId, this.selectedSpId, this.selectedVisitId).subscribe(
           result => {
-            this.translateService.get('visit_deleted').subscribe((label) => {
+            this.translateService.get('label.visit_removed').subscribe((label) => {
               // var successMessage = {
               //   firstLineName: label,
               //   firstLineText: visitId,

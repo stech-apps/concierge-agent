@@ -1,7 +1,7 @@
 <qm-flow #f [FlowName] ="'create_visit_single_line'">
-  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true" [title]="'specify_service'">
+  <qm-flow-panel #ps [isActive]="true" [isContentVisible]="true" [isHeaderVisible]="true" [title]="'label.specify_service'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
-      <qm-flow-panel-title>{{ 'specify_service' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{  selectedServices[0].internalName }}</qm-flow-panel-result>
       <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
@@ -21,9 +21,9 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true" [title]="'create_confirm'" class="qm-checkout-view-flowpanel">
+  <qm-flow-panel #px [isHeaderVisible]="!!(isCustomerFlowHidden || (isFlowSkip && pc && pc.isHeaderVisible && !pc.isContentVisible))" [headerVisibilityOverridden]="true" [title]="'label.confirm'" class="qm-checkout-view-flowpanel">
     <qm-flow-panel-header  (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()" >
-      <qm-flow-panel-title>{{ 'create_confirm' | translate}}</qm-flow-panel-title>
+      <qm-flow-panel-title>{{ 'label.confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-checkout-view [flowType]="flowType" (goToPanelByIndex)="f.goToPanelByIndex($event)" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>

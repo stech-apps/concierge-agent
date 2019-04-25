@@ -1,7 +1,7 @@
 <qm-flow #fa [FlowName] ="'change_visit_single_line'">
-      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="queueFlowActive " [isContentVisible]="queueFlowActive" [title]="'queues_section_header_label'"> 
+      <qm-flow-panel #qu [isHeaderVisible]="true" [isActive]="queueFlowActive " [isContentVisible]="queueFlowActive" [title]="'label.queues_section_header'"> 
           <qm-flow-panel-header (click)="fa.panelHeaderClick(qu); queueHeaderClick();" (onFlowExit)="fa.onFlowExit()">
-          <qm-flow-panel-title>{{ 'queues_section_header_label' | translate}}</qm-flow-panel-title>
+          <qm-flow-panel-title>{{ 'label.queues_section_header' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="selectedQueue">{{selectedQueue?.queue}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>
@@ -10,9 +10,9 @@
       </qm-flow-panel>
 
  
-      <qm-flow-panel #iv  [isHeaderVisible]="visitFlowActive" [isActive]="visitFlowActive" [isContentVisible]="visitFlowActive"  [title]="'identify_visit'">
+      <qm-flow-panel #iv  [isHeaderVisible]="visitFlowActive" [isActive]="visitFlowActive" [isContentVisible]="visitFlowActive"  [title]="'label.identify_visit'">
         <qm-flow-panel-header  (click)="fa.panelHeaderClick(iv); visitHeaderClick(); " (onFlowExit)="fa.onFlowExit()">
-          <qm-flow-panel-title>{{ 'identify_visit' | translate}}</qm-flow-panel-title>
+          <qm-flow-panel-title>{{ 'label.identify_visit' | translate}}</qm-flow-panel-title>
           <qm-flow-panel-result *ngIf="HeaderSelectedVisit">{{HeaderSelectedVisit.ticketId}}</qm-flow-panel-result>
         </qm-flow-panel-header>
         <qm-flow-panel-content>

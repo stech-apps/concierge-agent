@@ -1,7 +1,7 @@
 <div class="qm-flow-sub-header" *ngIf="this.loaded && StaffPool.length!==0">
     <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
       <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
+      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
       <div class="qm-action-btn--only-icon">
       <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
       </div>
@@ -16,7 +16,7 @@
    <div class="qm-service-point-list__container" dir="{{ userDirection$ | async }}">
       <div class="qm-service-point-list">
         <div style="padding-bottom:20px;text-align:center" *ngIf="(this.loaded && this.StaffPool.length===0)">
-          {{'empty_user_pool'|translate}} 
+          {{'label.empty_user_pool'|translate}} 
         </div>
           <div  class="qm-service-point-list__headers qm-flex-grid" *ngIf="this.loaded && StaffPool.length!==0">
             <button class="qm-service-point-list-header-item qm-col qm-flex-grid qm-transparent-btn" (click)="onSortClickbyLastName()">

@@ -1,7 +1,7 @@
 
 <div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
 (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeEnable }">
-  <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'visit_search_placeholder' | translate }}" id="visitSearchVisit"
+  <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.visit_search_placeholder' | translate }}" id="visitSearchVisit"
   name="q" #visitSearch (input)="handleInput($event)" [(ngModel)]="inputText" (keydown.enter)="
       keyDownFunction($event, visitSearch.value.trim().toUpperCase())
     " autocomplete="off" />

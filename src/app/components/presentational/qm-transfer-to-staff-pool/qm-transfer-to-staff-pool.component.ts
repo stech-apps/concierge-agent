@@ -108,7 +108,7 @@ export class QmTransferToStaffPoolComponent implements OnInit {
         visit: this.selectedVisit.ticketId,
       }).subscribe(
         (label: string) =>
-          this.qmModalService.openForTransKeys('', `${label}`, 'yes', 'no', (result) => {
+          this.qmModalService.openForTransKeys('', `${label}`, 'label.yes', 'label.no', (result) => {
             if(result){
 
             this.spService.staffPoolTransfer(this.currentBranch,this.selectedServicePoint,s,this.selectedVisit).subscribe( result=>{

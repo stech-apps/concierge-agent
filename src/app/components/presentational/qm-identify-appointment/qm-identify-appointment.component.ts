@@ -546,7 +546,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showQRCodeError() {
     this.clearInput();
     this.translateService
-      .get("appointment_not_found_qr")
+      .get("label.appointment_not_found_qr")
       .subscribe((noappointments: string) => {
         this.toastService.errorToast(noappointments);
       })
@@ -575,13 +575,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if (this.SEARCH_STATES.QR === this.currentSearchState) {
       this.clearInput();
       if (this.useCalendarEndpoint) {
-          this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
+          this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
 
       } else {
         if (this.qrCodeContent.branch_id !== String(this.selectedBranch.id)) {
           this.translateService
-          this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
+          this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
         } else {
           var appDate = new Date(this.qrCodeContent.appointment_date).setHours(0, 0, 0, 0);
@@ -668,7 +668,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           ) {
             this.clearSelection();
 
-              this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
+              this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
             setTimeout(() => {
               this.getPreviousSearchState();
@@ -716,7 +716,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               branchName = branch[0].name;
             }
             this.clearSelection();
-            this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.appointments[0].branch.name})
+            this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.appointments[0].branch.name})
             .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
               this.getPreviousSearchState();
           } else {
@@ -759,7 +759,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     } else {
       this.clearInput();
       this.translateService
-        .get("appointment_not_found_qr")
+        .get("label.appointment_not_found_qr")
         .subscribe((noappointments: string) => {
           this.toastService.errorToast(noappointments);
         })
@@ -828,7 +828,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
       if(this.appointments.length === 1 &&  this.appointments[0].status === this.CREATED_APPOINTMENT_STATE_ID
       &&  this.appointments[0].branch.id !== this.selectedBranch.id && !this.isMultiBranchEnable) {
-        this.translateService.get('appointment_in_another_branch', { appointmentBranch : this.appointments[0].branch.name})
+        this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.appointments[0].branch.name})
         .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
       }
       else if (this.appointments.length === 1) {

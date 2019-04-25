@@ -387,7 +387,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   onNoteClicked() {
     this.qmNotesModalService.openForTransKeys(this.noteTextStr,
-      this.themeColor, 'save', 'cancel',
+      this.themeColor, 'save', 'label.cancel',
       (result: boolean) => {
         if (result) {
           this.noteText$ = this.noteSelectors.getNote$;
@@ -405,7 +405,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   deleteNote() {
-    this.qmModalService.openForTransKeys('', 'delete_current_note', 'yes', 'no', (result) => {
+    this.qmModalService.openForTransKeys('', 'delete_current_note', 'label.yes', 'label.no', (result) => {
       if (result) {
         this.noteDispatchers.saveNote(
           {
@@ -442,7 +442,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation',
           this.emailSelected || this.emailAndSmsSelected,
           this.smsSelected || this.emailAndSmsSelected,
-          this.themeColor, 'ok', 'cancel',
+          this.themeColor, 'ok', 'label.cancel',
           (result: any) => {
             if (result) {
               if (result.phone) {
@@ -475,7 +475,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation',
           this.emailSelected || this.emailAndSmsSelected,
           this.smsSelected || this.emailAndSmsSelected,
-          this.themeColor, 'ok', 'cancel',
+          this.themeColor, 'ok', 'label.cancel',
           (result: any) => {
             if (result) {
               if (result.email) {
@@ -814,7 +814,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         });
     }
     else if (this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT) {
-      this.translateService.get(['visit_id_label',
+      this.translateService.get(['label.visit_id',
       'label.arrive.success.subheadingsms', 'label.arrive.success.subheadingticket', 'label.arrive.success.heading', 'label.arrive.success.subheadingticketandsms']).subscribe(v => {
 
         let subheadingText = '';

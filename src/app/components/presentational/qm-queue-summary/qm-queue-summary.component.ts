@@ -132,7 +132,7 @@ export class QmQueueSummaryComponent implements OnInit {
           }
         ).unsubscribe();*/
 
-        this.errorHandler.showError('visit_not_found', error);
+        this.errorHandler.showError('label.visit_not_found', error);
         this.queueDispatchers.resetFetchVisitError();
         this.queueDispatchers.resetSelectedQueue();
       }

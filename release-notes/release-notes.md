@@ -319,7 +319,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **163289539** | **Scan QR Code in edit/arrive appointment flow gives "Visit not found" message** Fixed the bug |
 
 <h3>Known issues</h3>
----
+
 | **Id/Jira** | **Description** |
 | --- | --- |
 | **163223586** | **Internal Description Text** We cannot show internal description in the create appointment flow as we do not have that information available for create appointment flow services |
@@ -411,16 +411,17 @@ This document describes the new features, bug corrections, known issues and reco
 | **161503301** | **Create appointment flow > Service banner > Tool tip for "?" icon is not implemented..**|
 
 <h3>Known issues</h3>
----
+
 | **Id/Jira** | **Description** |
 | --- | --- |
+---
 
 <h3>Upgrade instructions</h3> 
 
 ----------
 
 <h2>Original release</h2>
----
+
 **Date:2018-12-21**
  
 **Build number:1** 
@@ -442,7 +443,8 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h3>Known issues</h3>
 **Orchestra**
----
+
+
 | **Id/Jira** | **Description** |
 | --- | --- |
 | **xxx** | **Bug header** Bug text |

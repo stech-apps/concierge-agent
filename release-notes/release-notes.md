@@ -55,18 +55,18 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **165115173** | **Updated phrases (upper to lowercase) not handled in upgraded systems** |
 
----
+
 <h3>Known issues</h3>
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
-
----
-
-<h3>Upgrade instructions</h3> 
+<h3>Upgrade instructions</h3>
+----------
 
 ----------
+
+
 
 
 <h2>Version 10</h2>
@@ -86,14 +86,13 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **165016712** | **Desktop browser look odd with LDAP users (lang issue?)** |
 
----
 <h3>Known issues</h3>
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
----
+
 
 <h3>Upgrade instructions</h3> 
 
@@ -116,7 +115,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **164692814** | **Concierge doesn't work on tablet Android with Android 4.4.4** |
 
----
+
 <h3>Known issues</h3>
 **Orchestra**
 
@@ -161,14 +160,11 @@ This document describes the new features, bug corrections, known issues and reco
 | **163110257** | **Robustness: full packetloss and user press Create app flow, no Network Error message** |
 | **164488655** | **iOS > Create Visit Flow > Service list not loaded (Random issue)** |
 
----
 <h3>Known issues</h3>
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
-
----
 
 <h3>Upgrade instructions</h3> 
 
@@ -196,14 +192,13 @@ This document describes the new features, bug corrections, known issues and reco
 | **161052476** | **Robustness : Robustness is not handled in User profile page** |
 | **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
 
----
+
 <h3>Known issues</h3>
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
----
 
 <h3>Upgrade instructions</h3> 
 
@@ -234,14 +229,13 @@ This document describes the new features, bug corrections, known issues and reco
 | **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
 
 
----
 <h3>Known issues</h3>
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
----
+
 
 <h3>Upgrade instructions</h3> 
 
@@ -277,14 +271,15 @@ This document describes the new features, bug corrections, known issues and reco
 | **163750353** | **Edit appointment > Find Appointment fish > Scan QR > default list is not loaded upon removal of selected appointment.** Fixed the bug |
 | **163816798** | **Text in topbar appear outside the fish (if translated)** Fixed the bug |
 
----
+
 <h3>Known issues</h3>
+
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
----
+
 
 <h3>Upgrade instructions</h3> 
 
@@ -324,6 +319,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **163289539** | **Scan QR Code in edit/arrive appointment flow gives "Visit not found" message** Fixed the bug |
 
 <h3>Known issues</h3>
+---
 | **Id/Jira** | **Description** |
 | --- | --- |
 | **163223586** | **Internal Description Text** We cannot show internal description in the create appointment flow as we do not have that information available for create appointment flow services |
@@ -372,6 +368,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **162631162** | **Time reserved but confirm done after reservation timed out and time is in the passed** |
 
 <h3>Known issues</h3>
+
 | **Id/Jira** | **Description** |
 | --- | --- |
 | **xxx** | **Bug header** Bug text |
@@ -414,6 +411,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **161503301** | **Create appointment flow > Service banner > Tool tip for "?" icon is not implemented..**|
 
 <h3>Known issues</h3>
+---
 | **Id/Jira** | **Description** |
 | --- | --- |
 
@@ -429,21 +427,22 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h3>Stories</h3>
 
+
 | **Id** | **Release notes** |
 | --- | --- |
 | **xxxxxxxxx** | **New Concierge rewritten with latest Angular version** New Concierge consists of new layouts, desktop support and new utt files that overrides the old Concierge utt files |
 
----
+
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **xxx** | **Bug header** Solution text |
 
----
+
 <h3>Known issues</h3>
 **Orchestra**
-
+---
 | **Id/Jira** | **Description** |
 | --- | --- |
 | **xxx** | **Bug header** Bug text |

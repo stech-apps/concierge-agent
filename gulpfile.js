@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const gulpsync = require('gulp-sync')(gulp);
 const zip = require('gulp-zip');
 var fs = require('fs');
 const del = require('del');
@@ -137,7 +136,7 @@ gulp.task('create:artifactory:zip', function () {
 });
 
 // Write to manifest file
-gulp.task('write:manifest', function () {
+gulp.task('write:manifest', done => {
   try {
     var versionInfo = getVersionInfo();
     if (versionInfo) {
@@ -145,14 +144,15 @@ gulp.task('write:manifest', function () {
       fileContent += 'Product-Name: Connect Concierge' + '\r\n';
       fileContent += 'Build-Version: ' + versionInfo.version + '\r\n';
       writeFile('./src/META-INF/MANIFEST.MF', fileContent);
-      return true;
+      //return true;
     }
   } catch (ex) {
     console.log(
       'There was an exception when trying to read the package.json! - ' + ex
     );
-    return false;
+    //return false;
   }
+  done();
 });
 
 function getVersionInfo() {
@@ -167,11 +167,11 @@ function getVersionInfo() {
   return null;
 }
 
-function writeFile(path, contents, cb = ()=>{}) {
+function writeFile(path, contents, cb = () => { }) {
   mkdirp(getDirName(path), function (err) {
     if (err) return cb(err);
 
-    fs.writeFile(path, contents, cb );
+    fs.writeFile(path, contents, cb);
   });
 }
 
@@ -243,7 +243,7 @@ gulp.task('deploy:lang', function () {
  */
 gulp.task(
   'create:utt',
-  gulpsync.sync(['create:uttConcierge','create:uttTpButton','create:uttTpTouch'])
+  gulp.series('create:uttConcierge', 'create:uttTpButton', 'create:uttTpTouch')
 );
 
 
@@ -252,7 +252,7 @@ gulp.task(
  */
 gulp.task(
   'build:war:properties',
-  gulpsync.sync(['create:war','create:utt', 'create:properties', 'clean:war'])
+  gulp.series('create:war', 'create:utt', 'create:properties', 'clean:war')
 );
 
 /**
@@ -260,7 +260,7 @@ gulp.task(
  */
 gulp.task(
   'build:war:deploy',
-  gulpsync.sync(['build:war:properties', 'deploy:war', 'deploy:lang'])
+  gulp.series('build:war:properties', 'deploy:war', 'deploy:lang')
 );
 
 /**
@@ -268,16 +268,14 @@ gulp.task(
  */
 gulp.task(
   'build:artifactory',
-  gulpsync.sync([
-    'write:manifest',
+  gulp.series('write:manifest',
     'create:war',
     'create:utt',
     'create:properties',
     'create:release-notes',
     'clean:war',
     'create:artifactory:zip',
-    'clean:artifactory'
-  ])
+    'clean:artifactory')
 );
 
 /**
@@ -285,5 +283,5 @@ gulp.task(
  */
 gulp.task(
   'build:artifactory:deploy',
-  gulpsync.sync(['build:artifactory', 'deploy:war:artifactory'])
+  gulp.series('build:artifactory', 'deploy:war:artifactory')
 );

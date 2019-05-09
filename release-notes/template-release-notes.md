@@ -35,6 +35,8 @@ This document describes the new features, bug corrections, known issues and reco
 | **xxx** | **Bug header** Bug text |
 
 <h3>Upgrade instructions</h3> 
+
+----------
 -->
 
 <h2>Original release</h2>

@@ -35,8 +35,37 @@ This document describes the new features, bug corrections, known issues and reco
 | **xxx** | **Bug header** Bug text |
 
 <h3>Upgrade instructions</h3> 
+
+----------
 -->
 
+<h2>Version 12</h2>
+
+**Date: 08/05/2019**
+ 
+**Build number: 12**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **165784415** | **Concierge security vulnerability** node packages were updated and security vulnarabilities were fixed. |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **xxx** | **Bug header** Solution text |
+
+<h3>Known issues</h3>
+
+| **Id/Jira** | **Description** |
+| --- | --- |
+| **xxx** | **Bug header** Bug text |
+
+<h3>Upgrade instructions</h3> 
+
+----------
 
 <h2>Version 11</h2>
 
@@ -55,19 +84,13 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **165115173** | **Updated phrases (upper to lowercase) not handled in upgraded systems** |
 
-
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 <h3>Upgrade instructions</h3>
-----------
 
 ----------
-
-
-
 
 <h2>Version 10</h2>
 
@@ -87,12 +110,9 @@ This document describes the new features, bug corrections, known issues and reco
 | **165016712** | **Desktop browser look odd with LDAP users (lang issue?)** |
 
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
-
-
 
 <h3>Upgrade instructions</h3> 
 
@@ -115,14 +135,14 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **164692814** | **Concierge doesn't work on tablet Android with Android 4.4.4** |
 
-
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
----
+<h3>Upgrade instructions</h3> 
+
+----------
 
 <h2>Version 8</h2>
 
@@ -143,7 +163,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163059854** | **Search ID/ Customer resizing** |
 | **163647917** | **Background in workflows for bigger screens** |
 
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
@@ -161,7 +180,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **164488655** | **iOS > Create Visit Flow > Service list not loaded (Random issue)** |
 
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
@@ -183,7 +201,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163381450** | **Upgrade Concierge to Angular 7+** |
 | **163316967** | **Profile settings page** |
 
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
@@ -192,19 +209,14 @@ This document describes the new features, bug corrections, known issues and reco
 | **161052476** | **Robustness : Robustness is not handled in User profile page** |
 | **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
 
-
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
 
-
 <h3>Upgrade instructions</h3> 
 
-
 ----------
-
 
 <h2>Version 6</h2>
 
@@ -219,8 +231,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163933756** | **Create Visit flow > Add customer fish > Tool tip for "?" icon is not given.** |
 | **163937358** | **New icon for Concierge  on desktop and utt files** |
 
-
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
@@ -228,14 +238,10 @@ This document describes the new features, bug corrections, known issues and reco
 | **163945367** | **IE11 expand queue issue** |
 | **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
 
-
 <h3>Known issues</h3>
-**Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
-
-
 
 <h3>Upgrade instructions</h3> 
 
@@ -255,8 +261,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163649359** | **Buttons/tabs adjustments** UX changes related to buttons and tabs |
 | **163649720** | **Searchbox adjustments** UI changes |
 
-
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
@@ -271,15 +275,12 @@ This document describes the new features, bug corrections, known issues and reco
 | **163750353** | **Edit appointment > Find Appointment fish > Scan QR > default list is not loaded upon removal of selected appointment.** Fixed the bug |
 | **163816798** | **Text in topbar appear outside the fish (if translated)** Fixed the bug |
 
-
 <h3>Known issues</h3>
 
 **Orchestra**
 
 | **Id/Jira** | **Description** |
 | --- | --- |
-
-
 
 <h3>Upgrade instructions</h3> 
 
@@ -428,11 +429,9 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h3>Stories</h3>
 
-
 | **Id** | **Release notes** |
 | --- | --- |
 | **xxxxxxxxx** | **New Concierge rewritten with latest Angular version** New Concierge consists of new layouts, desktop support and new utt files that overrides the old Concierge utt files |
-
 
 <h3>Bug fixes</h3>
 
@@ -440,10 +439,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **xxx** | **Bug header** Solution text |
 
-
 <h3>Known issues</h3>
-**Orchestra**
-
 
 | **Id/Jira** | **Description** |
 | --- | --- |

@@ -57,7 +57,7 @@ export class ToastService {
   setToastContainer(toastContainer) {
     this.toastrService.overlayContainer = toastContainer;
     // following code added to bug fix route not appearing issue when routes changed in toast library
-    this.toastrService['overlay']['_paneElements'] = {};
+    // this.toastrService['overlay']['_paneElements'] = {};
   }
 
   successToast(text: string) {

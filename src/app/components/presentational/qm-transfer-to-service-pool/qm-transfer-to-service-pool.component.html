@@ -6,6 +6,7 @@
       <div class="qm-action-btn--only-icon">
         <i *ngIf="spSearch.value.trim()" (click)="spSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
           aria-hidden="true"></i>
+          <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
       </div>
       <div class="qm-action-btn--only-icon">
         <i *ngIf="!spSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
@@ -24,7 +25,9 @@
     <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="(this.loaded && this.servicePoints.length!==0)">
       <button class="qm-service-point-list-header-item qm-flex-grid qm-transparent-btn" (click)="onSortClickbyServicePoint()">
         <div class="qm-service-point-list-header-item-label">{{'label.service_point' | translate}}</div>
-        <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+        <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </div>
       </button>
 
     </div>

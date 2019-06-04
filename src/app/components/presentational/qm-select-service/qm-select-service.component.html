@@ -24,6 +24,7 @@
             </div>
             <button class="qm-transparent-btn remove-icon" *ngIf="!service.isBind"  (click)="onServiceRemove(service)">
             <i aria-hidden="true" class="icon-close remove-icon" *ngIf="!service.isBind"></i>
+            <span class="sr-only">{{ 'button.remove' | translate }}</span>
             </button>
           </div>
         </div>
@@ -57,7 +58,8 @@
           </div>
         </label>
         <button (click)="clickedshowToolTip()" type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
-          <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>          
+          <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i> 
+          <span class="sr-only">{{ 'button.info' | translate }}</span>         
         </button>
 
         <div class="quick-serve-tooltip" *ngIf="showToolTip">

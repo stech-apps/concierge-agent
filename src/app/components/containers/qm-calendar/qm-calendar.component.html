@@ -2,12 +2,15 @@
   <div class="qm-calendar-navs">
       <button (click)="prevMonth()">
         <i class="icon-caret-left"></i>
+        <span class="sr-only">{{ 'button.prvMonth' | translate }}</span>
       </button>
       <div>
           <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>  {{ currentDate.locale(this.locale).format('YYYY') }}</span>
       </div> 
         
-      <button (click)="nextMonth()"><i class="icon-caret-right"></i></button>
+      <button (click)="nextMonth()"><i class="icon-caret-right"></i>
+        <span class="sr-only">{{ 'button.nextMonth' | translate }}</span>
+      </button>
 
   </div>
   <div class="qm-calendar-month-grid">

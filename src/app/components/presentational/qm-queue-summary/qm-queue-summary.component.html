@@ -8,6 +8,7 @@
     " autocomplete="off" />
   <button *ngIf="visitSearch.value.trim()" class="qm-transparent-close-btn"  (click)="clearInput(); visitSearch.value = ''">
     <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+    <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
   </button>
 </span>
   <div class="qm-action-btn--only-icon">
@@ -58,6 +59,7 @@
   <button (click)="resetQueue()" class="qm-back-icon qm-transparent-btn" id="qm-back-to-queue-btn">
     <i *ngIf="userDirections === 'ltr'" class="icon-caret-left"></i>
     <i *ngIf="userDirections === 'rtl'" class="icon-caret-right"></i>
+    <span class="sr-only">{{ 'button.back' | translate }}</span>
   </button>
   <span (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue && !queueName">{{ selectedQueue.name
     }}
@@ -81,6 +83,7 @@
       </h1>
       <div class="qm-qr-code-modal__close-container">
         <i class="icon-close" (click)="closeqr()"></i>
+        <span class="sr-only">{{ 'button.close' | translate }}</span>
       </div>
     </div>
     <div class="qm-qr-code-modal__content">

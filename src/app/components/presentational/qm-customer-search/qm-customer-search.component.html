@@ -10,6 +10,7 @@
       <td style="width: 7%" *ngIf="isCustomerEditable" (click)="selectCustomer(customer); f.customerCreateForm.markAsPristine()"> 
           <div tabindex="0"  class="svg-container" (click)="editCustomer(customer)" (keydown.enter)="editCustomer(customer)" (keydown.space)="editCustomer(customer)">
             <i class="icon-edit edit-button"></i>
+            <span class="sr-only">{{ 'button.edit' | translate }}</span>
           </div>
       </td>
      

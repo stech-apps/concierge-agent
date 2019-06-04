@@ -1,14 +1,14 @@
 <div class="qm-notes-modal" dir="{{ userDirection$ | async }}">
 
   <div class="qm-notes-modal__header">
-    <div class="qm-notes-modal__header-text">
+    <div for="note" class="qm-notes-modal__header-text">
         {{  'remaining_word_count' | translate }}
     </div>
     <span class="qm-notes-modal__header-char-count"> {{charCount}} </span>
   </div>
   <form  [formGroup]="noteForm">
     <div class="qm-notes-modal__text-container">
-    <textarea class="textarea" type="text" maxlength="1000"  name='note'  formControlName="note" #note> </textarea>
+    <textarea id="note" class="textarea" type="text" maxlength="1000"  name='note'  formControlName="note" #note> </textarea>
   </div>
   </form>
   <div class="qm-notes-modal__button-container">

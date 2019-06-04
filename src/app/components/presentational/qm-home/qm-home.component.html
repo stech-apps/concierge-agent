@@ -11,20 +11,22 @@
       <span class="path1"></span>
       <span class="path2"></span>
       <span class="path3"></span>
+      <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span>
     </i>
     <!--custom icon for IE  -->
     <i tabindex="0" class="action-btn slide-icon icon-ie" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'rtl'" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
         <span class="path3"></span> 
         <span class="path2"></span> 
         <!-- <span class="path1"></span>       -->
+        <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span>
     </i>
       <!--custom icon for IE  -->
     <i tabindex="0" class="action-btn slide-icon icon-ie" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'ltr'" (click)="collapseBtnClicked()"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
         <span class="path1"></span>
         <span class="path2"></span>
-        <span class="path3"></span>   
+        <span class="path3"></span>  
+        <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span> 
     </i>
-    
     
     <div style="flex:3" class="qm-summary-card" *ngIf="(isShowQueueView || editVisitEnable) && !isFlowOpen" [ngClass]="{'normal-queue-ie':!isCollapse,'expanded-queue-ie':isCollapse}">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 

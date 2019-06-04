@@ -3,21 +3,29 @@
     <div class="qm-visit-list__headers qm-flex-grid">
       <div class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
-        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true,'selected-sort-icon':sortingIndicator==='VISITID'  }"></i></button>
+        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true,'selected-sort-icon':sortingIndicator==='VISITID'  }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </button>
       </div>
       <div class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
         <div class="qm-visit-list-header-item-label">{{'label.name' | translate}}</div>
-        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true,'selected-sort-icon':sortingIndicator==='CUSTOMER'  }"></i></button>
+        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true,'selected-sort-icon':sortingIndicator==='CUSTOMER'  }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </button>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-4 qm-service-col  qm-flex-grid" (click)="sortByService()">
         <div class="qm-visit-list-header-item-label"> {{ 'label.service' | translate}} </div>
-        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true,'selected-sort-icon':sortingIndicator==='SERVICE'  }"></i></button>
+        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true,'selected-sort-icon':sortingIndicator==='SERVICE'  }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </button>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-3 qm-app-time-col qm-flex-grid" (click)="sortByAppTime()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
-        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true,'selected-sort-icon':sortingIndicator==='APPTIME'  }"></i></button>
+        <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true,'selected-sort-icon':sortingIndicator==='APPTIME'  }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </button>
       </div>
 
 
@@ -93,6 +101,7 @@
               </div>
               <button class="qm-icon qm-transparent-btn" id="qm-close-btn" (click)=" closeVisitOptions()">
                 <i class="icon-close" ></i>
+                <span class="sr-only">{{ 'button.close' | translate }}</span>
               </button>
 
             </div>
@@ -163,6 +172,7 @@
                 <button class="qm-transparent-btn" (click) = "backToQueueOptionsButton()">
                 <i *ngIf="userDirection === 'ltr'" class="icon-caret-left qm-icon_back" ></i>
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back"></i>
+                <span class="sr-only">{{ 'button.back' | translate }}</span>
                 </button>
                 <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
                 <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
@@ -171,6 +181,7 @@
               </div>
               <button class="qm-icon qm-transparent-btn"  (click)="closeVisitOptions()">
                 <i class="icon-close"></i>
+                <span class="sr-only">{{ 'button.close' | translate }}</span>
               </button>
             </div>
             <qm-transfer-to-staff-pool *ngIf ="this.visitOptionStatus === 'staff'"></qm-transfer-to-staff-pool>

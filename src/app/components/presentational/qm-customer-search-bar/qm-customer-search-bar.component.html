@@ -6,6 +6,7 @@
       </div>
       <button *ngIf="customerSearch.value.trim()" class="qm-action-btn--only-icon" (click)="resetSearch()">
           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
+          <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
       </button>      
   </div>
 </div>

@@ -3,6 +3,7 @@
         <div class="qm-quick-serve__header" >{{ 'label.quick_serve' | translate }}
             <button id='quick_serve_tooltip' type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
                 <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
+                <span class="sr-only">{{ 'button.info' | translate }}</span>
             </button>
 
             <div class="quick-serve-tooltip" *ngIf="showToolTip">
@@ -20,6 +21,7 @@
                 <button (click)="visitSearch.value = '';clearSearchText()" *ngIf="visitSearch.value.trim()"  class="qm-action-btn--only-icon qm-transparent-close-btn">
                     <i  class=" qm-action-btn__icon icon-close qm-clear-search"
                     aria-hidden="true"></i>
+                    <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
                 </button>
                 <div class="qm-action-btn--only-icon">
                     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

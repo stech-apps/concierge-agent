@@ -46,7 +46,9 @@
             class="qm-identify-appointment__selected__close-btn qm-transparent-btn"
             (click)="deselectAppointment()"
             ><i class="icon-close qm-action-btn__icon "></i
-          ></button>
+          >
+          <span class="sr-only">{{ 'button.close' | translate }}</span>
+        </button>
         </div>
         <button
           class="qm-identify-appointment__selected--icon qm-transparent-btn"
@@ -338,6 +340,7 @@
                 </ng-container>
 
                 <i class="icon-edit qm-action-btn__icon "></i>
+                <span class="sr-only">{{ 'button.edit' | translate }}</span>
               </button>
 
               <!-- <ng-container *ngIf="timeConvention === '24'">
@@ -616,6 +619,7 @@
       </h1>
       <div class="qm-qr-code-modal__close-container">
         <i class="icon-close" (click)="closeqr()"></i>
+        <span class="sr-only">{{ 'button.close' | translate }}</span>
       </div>
     </div>
     <div class="qm-qr-code-modal__content">

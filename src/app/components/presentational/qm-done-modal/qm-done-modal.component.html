@@ -5,6 +5,7 @@
       <span class="qm-modal__headline">{{ (heading) | translate }}</span>
       <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="activeModal.dismiss()">
         <i aria-hidden="true" class="icon-close"></i>
+        <span class="sr-only">{{ 'button.close' | translate }}</span>
       </button>
     </div>
     <div class="qm-done-modal__subheader">

@@ -1,5 +1,7 @@
 <div  class="qm-customers animated slideInUp faster" dir="{{ userDirection$ | async }}">
-<i (click)="closeWidow()" class="qm-close-window icon-close" aria-hidden="true" ></i>
+<i (click)="closeWidow()" class="qm-close-window icon-close" aria-hidden="true" >
+  <span class="sr-only">{{ 'button.close' | translate }}</span>
+</i>
 <header class="qm-customer-header ">
 </header>
 <br>

@@ -4,7 +4,8 @@
       <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
       <div class="qm-action-btn--only-icon">
       <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
-      </div>
+      <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
+    </div>
       <div class="qm-action-btn--only-icon">
           <i *ngIf="!visitSearch.value.trim()"  aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
         </div>
@@ -21,7 +22,9 @@
           <div  class="qm-service-point-list__headers qm-flex-grid" *ngIf="this.loaded && StaffPool.length!==0">
             <button class="qm-service-point-list-header-item qm-col qm-flex-grid qm-transparent-btn" (click)="onSortClickbyLastName()">
               <div class="qm-service-point-list-header-item-label">{{'name' | translate}}</div>
-              <div><i  *ngIf="StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+              <div><i  *ngIf="StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+                <span class="sr-only">{{ 'button.sort' | translate }}</span>
+              </div>
             </button>
           </div>
           <hr>

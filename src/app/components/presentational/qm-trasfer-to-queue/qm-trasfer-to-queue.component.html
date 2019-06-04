@@ -6,6 +6,7 @@
       <div class="qm-action-btn--only-icon">
         <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
           aria-hidden="true"></i>
+        <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
       </div>
       <div class="qm-action-btn--only-icon">
         <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
@@ -26,7 +27,9 @@
 
       <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn" (click)="onSortClickbyQueue()">
         <div class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</div>
-        <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+        <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+        </div>
       </button>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">

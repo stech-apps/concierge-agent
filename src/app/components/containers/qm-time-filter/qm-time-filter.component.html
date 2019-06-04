@@ -15,6 +15,7 @@
         class="qm-action-btn__icon qm-time-filter__header-icon icon-close"
         aria-hidden="true"
       ></i>
+      <span class="sr-only">{{ 'button.close' | translate }}</span>
       </button>
     </div>
 
@@ -27,6 +28,7 @@
           {{ selectedDate.mDate  | amLocale: userLocale | amDateFormat: "DD MMMM YYYY" }}</span>
         <span  class="qm-time-filter__date-icon">
           <i class="icon-calendar-light"></i>
+          <span class="sr-only">{{ 'button.openCalendar' | translate }}</span>
         </span>
       </button>
 
@@ -45,12 +47,13 @@
       </div>
       <div class="qm-time-filter__selectors-parent">
         <div class="qm-time-filter__start">
-          <div class="qm-time-filter__start-heading qm-text-overflow-fix">
+          <div for="startTime" class="qm-time-filter__start-heading qm-text-overflow-fix">
             {{ "label.timefilter.starttime" | translate }}
           </div>
           <qm-timelist-sidebar (optionClicked)="fis.scrollToClosest($event)">
           </qm-timelist-sidebar>
           <qm-time-filter-items
+            id="startTime"
             #fis
             [selectedTime]="selectedStartTime"
             (onTimeSelect)="onTimeStartSelect($event)"
@@ -62,13 +65,14 @@
           class="qm-time-filter__end"
           [ngClass]="{ 'qm-time-filter__end--invalid': validationFailed }"
         >
-          <div class="qm-time-filter__end-heading qm-text-overflow-fix">
+          <div for="endTime" class="qm-time-filter__end-heading qm-text-overflow-fix">
             {{ "label.timefilter.endtime" | translate }}
           </div>
           <qm-timelist-sidebar (optionClicked)="fi.scrollToClosest($event)">
           </qm-timelist-sidebar>
           <qm-time-filter-items
             #fi
+            id="endTime"
             (onTimeSelect)="onTimeEndSelect($event)"
             [selectedTime]="selectedEndTime"
           ></qm-time-filter-items>

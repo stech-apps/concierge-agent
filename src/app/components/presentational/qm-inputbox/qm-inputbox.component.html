@@ -9,16 +9,17 @@
                 <div class="qm-input-box__left-side">
                     <div>
                       <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.first_name'|translate }}</label>
-                      <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div>
                      <br>
                      <div class="qm-input-box-group">
-                      <input #firstName class="qm-input-box__input"  
-                      type="text" name='firstName' formControlName = "firstName"
+                      <input #firstName  class="qm-input-box__input"  
+                      type="text" name='firstName' id="firstName" formControlName = "firstName"
                       maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
                      
                       <button *ngIf="firstName.value.trim()" class="qm-clear-btn">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('firstName')"></i>
+                          <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button  >      
                     </div>
                       <div class="qm-form-error-message" *ngIf="customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
@@ -28,12 +29,13 @@
               <div class="qm-input-box__col-50">
                     <div>
                       <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.last_name'|translate }}</label>
-                      <label for="required" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
+                      <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-required">{{'required'|translate}}</label>
                     </div> 
                     <div class="qm-input-box-group">
-                      <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                      <input class="qm-input-box__input" type="text" id='lastName' name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
                       <button *ngIf="lastName.value.trim()" class="qm-clear-btn">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('lastName')"></i>
+                          <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button> 
                     </div>
                       <div class="qm-form-error-message" *ngIf="customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
@@ -44,9 +46,10 @@
             <div class="qm-input-box__row">
                   <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.email'|translate }}</label>
                   <div class="qm-input-box-group">
-                  <input class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
+                  <input class="qm-input-box__input" type="text" id="email" name='email' formControlName = "email" #email  >
                   <button *ngIf="email.value.trim()" class="qm-clear-btn">
                       <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('email')"></i>
+                      <span class="sr-only">{{ 'button.clear' | translate }}</span>
                   </button> 
                   </div>
                   <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
@@ -59,9 +62,10 @@
                       <div class="qm-input-box__left-side">
                         <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.phone'|translate }}</label>
                         <div class="qm-input-box-group">
-                        <input class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
+                        <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
                         <button *ngIf="phone.value.trim()" class="qm-clear-btn">
                             <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
+                            <span class="sr-only">{{ 'button.clear' | translate }}</span>
                         </button> 
                       </div>
                         <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid'|translate}}</div>
@@ -76,8 +80,8 @@
                       <div class="qm-input-box__dob-container">
                         <!-- Month -->
                         <div> 
-                           <div class="qm-dob-container">
-                            <label for="month" class="qm-input-box__inputbox-name qm-input-box__month-element-container">{{'month'|translate }}</label>
+                           <div id="date_of_birth" class="qm-dob-container">
+                            <label for="birthday_select" class="qm-input-box__inputbox-name qm-input-box__month-element-container">{{'month'|translate }}</label>
                             <label for="day" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container">{{'day'|translate }}</label>
                             <label for="year" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container">{{'year'|translate }}</label>
                             </div>
@@ -98,13 +102,14 @@
                                                     tabindex="0"
                                                     class="qm-birthday-select qm-input-box__month-element-container">
                             </ng-select>
-                            <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" (input)="autoCloseService.refreshAutoClose()"> 
-                            <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" (input)="autoCloseService.refreshAutoClose()" />
+                            <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" #day (keypress)="restrictNumbers($event)" type="text" maxlength="2" placeholder="DD" name="day" id="day" (input)="autoCloseService.refreshAutoClose()"> 
+                            <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #year formControlName="year" (keypress)="restrictNumbers($event)" type="text" maxlength="4" placeholder="YYYY" name="year" id="year" (input)="autoCloseService.refreshAutoClose()" />
                           </div>
                         </div>
                         
                         <button (click)="clearDob()" *ngIf="day.value || year.value || customerCreateForm.value.dateOfBirth.month" class="qm-transparent-btn qm-input-box__dob-element-container qm-clear-dob">
                           <i class="qm-action-btn__icon icon-close qm-close__icon qm-dob-close-icon qm-dob-close__icon"></i>
+                          <span class="sr-only">{{ 'button.clear' | translate }}</span>
                         </button>
                         <br>
                       </div>

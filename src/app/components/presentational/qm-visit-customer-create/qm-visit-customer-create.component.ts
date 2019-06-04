@@ -27,6 +27,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   userDirection$: Observable<string>;
   editMode:boolean;
   showToolTip:boolean;
+  isExpanded = false;
 
   date = {
     day: '',
@@ -279,6 +280,9 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     var searchBox = document.getElementById("birthday_select");
     searchBox.scrollIntoView();
     
+  }
+  DropDownStatus(value: boolean) {
+    this.isExpanded = value;
   }
 
   clearDob(){

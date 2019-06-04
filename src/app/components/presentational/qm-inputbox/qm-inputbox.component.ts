@@ -31,7 +31,7 @@ export class QmInputboxComponent implements OnInit {
   controls: any;
   currentCustomer:ICustomer
   editMode:boolean;
-
+  isExpanded = false;
   
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
@@ -426,6 +426,9 @@ export class QmInputboxComponent implements OnInit {
     var searchBox = document.getElementById("birthday_select");
     searchBox.scrollIntoView();
     
+  }
+  DropDownStatus(value: boolean) {
+    this.isExpanded = value;
   }
   
   clearDob(){

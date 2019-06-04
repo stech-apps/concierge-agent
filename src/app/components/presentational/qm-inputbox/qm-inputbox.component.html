@@ -84,6 +84,9 @@
                                                     dropdownPosition="bottom"
                                                     (click)="ScrollToBottom()"
                                                     id="birthday_select"
+                                                    [attr.aria-expanded]="isExpanded"
+                                                    (open)="DropDownStatus(true)"
+                                                    (close)="DropDownStatus(false)"
                                                     tabindex="0"
                                                     class="qm-birthday-select qm-input-box__month-element-container">
                             </ng-select>

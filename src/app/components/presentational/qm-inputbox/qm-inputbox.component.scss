@@ -5,14 +5,17 @@
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 ::-ms-input-placeholder { /* Microsoft Edge */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 
 .qm-search__icon{
@@ -70,7 +73,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 .qm-dob-label{
-    color: $dark-transparent42;
+    color: $dark-transparent62;
     font-weight: 500;
 }
 .qm-form-error-message{

@@ -8,12 +8,15 @@
 // placeholder styles
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         font-size: 0.8em;
+        color: $dark-transparent62;
     }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
         font-size: 0.8em;
+        color: $dark-transparent62;
     }
 ::-ms-input-placeholder { /* Microsoft Edge */
         font-size: 0.8em;
+        color: $dark-transparent62;
     }
 
 

@@ -1,13 +1,15 @@
 
 <div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
 (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeEnable }">
+  <span class="qm-search-box-container">
   <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.visit_search_placeholder' | translate }}" id="visitSearchVisit"
   name="q" #visitSearch (input)="handleInput($event)" [(ngModel)]="inputText" (keydown.enter)="
       keyDownFunction($event, visitSearch.value.trim().toUpperCase())
     " autocomplete="off" />
-  <div *ngIf="visitSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInput(); visitSearch.value = ''"></i>
-  </div>
+  <button *ngIf="visitSearch.value.trim()" class="qm-transparent-close-btn"  (click)="clearInput(); visitSearch.value = ''">
+    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+  </button>
+</span>
   <div class="qm-action-btn--only-icon">
     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
   </div>

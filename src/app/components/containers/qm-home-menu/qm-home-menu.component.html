@@ -4,7 +4,7 @@
   <div *ngIf="menuItemEnable"  class="qm-menu-item-disable">
 
   </div>
-    <button class="qm-home-menu__item" *ngIf="isCreateAppointment" (click)="handleMenuItemClick('create-appointment')">
+    <button class="qm-home-menu__item" id="create_appointment" *ngIf="isCreateAppointment" (click)="handleMenuItemClick('create-appointment')">
     <i class="icon-createappointment qm-home-menu__icon"></i>
     <span class="qm-home-menu__item--text">{{menuItemWordArray[0][0]}}</span>
     <span class="qm-home-menu__item--text">{{menuItemWordArray[0][1]}}</span>

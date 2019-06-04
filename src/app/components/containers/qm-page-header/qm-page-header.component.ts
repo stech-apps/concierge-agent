@@ -59,6 +59,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   sPName:string;
   userDirections: string;
   isFlowOpen:boolean;
+  isQuickServeEnable:boolean;
+  isHome: boolean;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -83,7 +85,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private reserveDispatchers:ReserveDispatchers,
     private queueDispatchers: QueueDispatchers,
     private flowOpenSelectors:FlowOpenSelectors,
-    private servicePointDispatchers:ServicePointDispatchers
+    private servicePointDispatchers:ServicePointDispatchers,
+    
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -92,6 +95,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
     this.isFlowOpen = false;
+    
   }
 
   ngOnInit() {
@@ -108,6 +112,18 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       }
     );
     this.headerSubscriptions.add(licenseSubscription);
+
+    
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
+      params => {
+        if (params) {
+          this.isQuickServeEnable = params.quickServe;       
+        }
+      }
+    );
+    this.headerSubscriptions.add(servicePointsSubscription);
+
+
 
     const servicePointSubscription = this.servicePoint$.subscribe(
       (servicePoint: IServicePoint) => {
@@ -131,6 +147,15 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       this.isFlowOpen = status;
     });
     this.headerSubscriptions.add(flowOpenSubscription);
+    this.isHome = true;
+    this.router.events.subscribe((event) => {
+      if (this.router.url=="/home"){
+        this.isHome = true;
+      } else {
+        this.isHome = false;
+    }
+  });
+  
   }
   ngOnDestroy() {
     this.headerSubscriptions.unsubscribe();
@@ -156,5 +181,15 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.queueDispatchers.setectVisit(null);
     this.queueDispatchers.resetFetchVisitError();
     
+  }
+  QuickServeFocus() {
+    if(document.getElementById("quick_serve_tooltip")) {
+      document.getElementById("quick_serve_tooltip").focus();
+    }
+  }
+  MenuBarFocus() {
+    if(document.getElementById("create_appointment")) {
+      document.getElementById("create_appointment").focus();
+    }
   }
 }

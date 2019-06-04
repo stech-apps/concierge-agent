@@ -1,7 +1,7 @@
 <div *ngIf="services.length > 0" class="qm-quick-serve" dir="{{ userDirection$ | async }}">
     <div class="qm-quick-serve__content">
         <div class="qm-quick-serve__header" >{{ 'label.quick_serve' | translate }}
-            <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
+            <button id='quick_serve_tooltip' type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
                 <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
             </button>
 
@@ -17,10 +17,10 @@
             <div class="qm-quick-serve-search__search-container">
                 <input class="qm-quick-serve-search__input" type="search" placeholder="{{ 'search_service_name' | translate }}" id="visitSearch"
                 name="q" [ngModel]="searchText" (input)="handleInput($event)" (keydown.enter)="visitSearch.blur()" #visitSearch autocomplete="off">
-                <div class="qm-action-btn--only-icon">
-                    <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
+                <button (click)="visitSearch.value = '';clearSearchText()" *ngIf="visitSearch.value.trim()"  class="qm-action-btn--only-icon qm-transparent-close-btn">
+                    <i  class=" qm-action-btn__icon icon-close qm-clear-search"
                     aria-hidden="true"></i>
-                </div>
+                </button>
                 <div class="qm-action-btn--only-icon">
                     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                 </div>

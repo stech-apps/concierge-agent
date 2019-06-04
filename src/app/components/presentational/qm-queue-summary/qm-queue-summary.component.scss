@@ -70,9 +70,7 @@ input:focus{
     
   color:  $dark-transparent42;
   z-index: 20;
-  position: relative;
   font-size: 1.5em;
-  margin-top: 12px;
   @at-root [dir="ltr"] & {
       right: 1.4em;
   }
@@ -84,7 +82,7 @@ input:focus{
 color: $dark-transparent62;
 }
 .qm-search__icon{
-  
+  position: absolute;
   margin-top: 10px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
@@ -111,7 +109,8 @@ color: $dark-transparent62;
 
 .qm-action-btn--only-icon{
   width: 0px;
-  vertical-align: middle
+  vertical-align: middle;
+  position: relative;
 }
 
 input {
@@ -445,5 +444,16 @@ button:focus{
     outline: none;
 }
 
-
-
+.qm-search-box-container{
+  position: relative;
+}
+.qm-transparent-close-btn{
+  position: absolute;
+  right: 0;
+  margin: 10px 0;
+  background: transparent;
+  border: none;
+  @at-root [dir="rtl"] & {
+    left: 0;
+}
+}

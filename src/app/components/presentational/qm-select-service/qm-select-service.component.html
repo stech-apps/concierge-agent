@@ -112,12 +112,16 @@
     </div>
 
   </div>
+  <div class="qm-service-list__no-service" *ngIf="!filterText && ((filteredServiceList | filterService : [filterText, flowType])).length === 0">
+    {{ 'no_bookable_service' | translate}}
+  </div>
   <div class="qm-service-list__item-container " *ngIf="((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
 
     <div class="qm-crossline-header-container" *ngIf="flowType !== 'ARRIVE_APPOINTMENT' && ((filteredServiceList | filterService : [filterText, flowType])).length !== 0">
       <div class="qm-crossline-header"></div>
       <h2 class="qm-crossline-header-text">{{ 'label.service.allservices' | translate }}</h2>
     </div>
+
 
     <div class="qm-service-list__header" *ngIf="selectedBranch && filteredServiceList.length === 0 && flowType === 'CREATE_APPOINTMENT'">{{ ('no_bookable_service' | translate) }}</div>
     <div class="qm-flow-list-container">

@@ -3,6 +3,8 @@
 .qm-clear-input-button {
   position: absolute;
   color: $dark-transparent42;
+  background: transparent;
+  border: none;
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);

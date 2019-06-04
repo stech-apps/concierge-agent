@@ -1,32 +1,41 @@
+<div class="qm-content-links">
+  <a *ngIf="isHome && isQuickServeEnable" id="cardContentLink" class="qm-content-links__link" href="javascript:;"
+    (click)="QuickServeFocus()">Quick Serve</a>
+  <a *ngIf="isHome" id="actionPanelContentLink" href="javascript:;" class="qm-content-links__link"
+    (click)="MenuBarFocus()">Menu bar</a>
+</div>
 <header class="qm-header" *ngIf="!isFlowOpen">
   <span class="qm-header__title">{{'module_name' | translate}}</span>
 </header>
 <header class="qm-header" dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
   <div class="qm-header__left">
-    <a *ngIf="!isNative" href="/" (click)="homeClick($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
-      <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
-      <span class="sr-only">{{ 'label.home' | translate }}</span>
-    </a>
     <a *ngIf="!isNative" href="/" class="qm-header__brand-logo-container" (click)="homeClick($event)">
+      <span *ngIf="!isNative" href="/" (click)="homeClick($event)"
+        class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
+        <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
+        <span class="sr-only">{{ 'label.home' | translate }}</span>
+      </span>
       <img class="qm-header__brand-logo" [src]="brandLogoSrc" alt="" role="presentation" />
       <span class="sr-only">{{ 'label.home' | translate }}</span>
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>
-    <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon" [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-left':userDirections === 'rtl'}" ></i></span>
+    <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
+        [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-left':userDirections === 'rtl'}"></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
     <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()">
-      <span class="qm-header__edit-link" >{{'edit'|translate}}</span>
+      <span class="qm-header__edit-link">{{'edit'|translate}}</span>
     </button>
   </div>
 
   <div class="qm-header__right">
 
-    <a *ngIf="!isNative" href="/help" target="_blank" class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
+    <a *ngIf="!isNative" href="/help" target="_blank"
+      class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
       <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
       <!-- <span class="sr-only">{{ 'label.help' | translate }}</span> -->
     </a>
-    <span class="qm-header__user-name">{{userFullName$ | async}}</span> 
+    <span class="qm-header__user-name">{{userFullName$ | async}}</span>
     <a href="/logout.jsp" (click)="logout($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__logout-btn">
       <i class="qm-action-btn__icon icon-exit" aria-hidden="true"></i>
       <!-- <span class="sr-only">{{ 'label.logout' | translate }}</span> -->

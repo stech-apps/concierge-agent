@@ -4,8 +4,8 @@
       <div *ngIf="!customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
         <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
       </div>
-      <div *ngIf="customerSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="resetSearch()"></i>
-      </div>      
+      <button *ngIf="customerSearch.value.trim()" class="qm-action-btn--only-icon" (click)="resetSearch()">
+          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
+      </button>      
   </div>
 </div>

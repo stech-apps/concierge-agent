@@ -155,6 +155,7 @@
   
   &__search-container{
       display: flex;
+      position: relative;
   }
 
 }
@@ -173,6 +174,7 @@
 .qm-clear-search{ 
   
   margin-top: 12px;
+  margin-bottom: 15px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
@@ -403,4 +405,20 @@ button:active,button:hover{
   .quick-serve-tooltip{
     margin-left:-203px;
   }
+}
+
+.qm-transparent-close-btn{
+  border: none;
+  background: transparent;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  // display: contents;
+  @at-root [dir="rtl"] & {
+    left: 0;
+}
+}
+.qm-transparent-close-btn:focus{
+  border: none;
+  outline: none;
 }

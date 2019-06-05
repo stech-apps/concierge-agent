@@ -10,10 +10,9 @@
 <header class="qm-header" dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
   <div class="qm-header__left">
     <a *ngIf="!isNative" href="/" class="qm-header__brand-logo-container" (click)="homeClick($event)">
-      <span *ngIf="!isNative" href="/" (click)="homeClick($event)"
+      <span *ngIf="!isNative"
         class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
         <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
-        <span class="sr-only">{{ 'label.home' | translate }}</span>
       </span>
       <img class="qm-header__brand-logo" [src]="brandLogoSrc" alt="" role="presentation" />
       <span class="sr-only">{{ 'label.home' | translate }}</span>

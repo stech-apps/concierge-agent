@@ -108,6 +108,7 @@
         <button class="qm-transparent-btn" *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText" (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent" >
         <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
         <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+        <span class="sr-only">{{ service.showInfoInMostFrequent ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
         </button>
       </div>
     </div>
@@ -140,6 +141,7 @@
           <button class="qm-transparent-btn" *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText.trim()" (click)="service.showInfo = !service.showInfo">
           <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfo"  class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
           <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+          <span class="sr-only">{{ service.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
           </button>
         </div>
       </ng-container>

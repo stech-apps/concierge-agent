@@ -59,7 +59,9 @@
               'icon-info': !isShowAppointmentInfo
             }"
           ></i
-        ></button>
+        >
+        <span class="sr-only">{{ isShowAppointmentInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
+      </button>
       </div>
     </ng-container>
     <br />
@@ -392,6 +394,7 @@
                           : getSortIcons('id')
                       "
                     ></i>
+                    <span class="sr-only">{{ sortColumn !== (useCalendarEndpoint ? 'qpId' : 'id') ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
 
@@ -408,7 +411,9 @@
                       class="qm-action-btn__icon"
                       [ngClass]="getSortIcons('custName')"
                     ></i
-                  ></span>
+                  >
+                  <span class="sr-only">{{ sortColumn !== 'custName' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
+                </span>
                 </button>
                 <button
                   (click)="sortAppointments('servicesDisplayLabel')"
@@ -423,6 +428,7 @@
                       class="qm-action-btn__icon"
                       [ngClass]="getSortIcons('servicesDisplayLabel')"
                     ></i>
+                    <span class="sr-only">{{ sortColumn !== 'servicesDisplayLabel' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
 
@@ -440,6 +446,7 @@
                       class="qm-action-btn__icon"
                       [ngClass]="getSortIcons('branchDisplayLabel')"
                     ></i>
+                    <span class="sr-only">{{ sortColumn !== 'branchDisplayLabel' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
                 <button
@@ -462,6 +469,7 @@
                           : getSortIcons('startTime')
                       "
                     ></i>
+                    <span class="sr-only">{{ sortColumn !== (useCalendarEndpoint ? 'start' : 'startTime') ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
                 <button
@@ -484,7 +492,9 @@
                           : getSortIcons('startTimeDate')
                       "
                     ></i
-                  ></span>
+                  >
+                  <span class="sr-only">{{ sortColumn !== (useCalendarEndpoint ? 'start' : 'startTimeDate') ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
+                </span>
                 </button>
                 <div class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-icon qm-table__cell--align-right qm-transparent-btn">
                 </div>
@@ -589,7 +599,9 @@
                       }"
                       class="qm-action-btn__icon"
                       aria-hidden="true"
-                    ></i>
+                    >
+                    <span class="sr-only">{{ app.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
+                  </i>
                   </div>
              
                 </ng-container>

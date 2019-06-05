@@ -26,7 +26,7 @@
       <button class="qm-service-point-list-header-item qm-flex-grid qm-transparent-btn" (click)="onSortClickbyServicePoint()">
         <div class="qm-service-point-list-header-item-label">{{'label.service_point' | translate}}</div>
         <div><i *ngIf="servicePoints.length>1 " class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
-          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+          <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </div>
       </button>
 

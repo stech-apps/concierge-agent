@@ -91,6 +91,7 @@
       <button class="qm-transparent-btn qm-action-btn__icon" type="button"  (click)="b.showInfo = !b.showInfo">
         <i *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
         <i *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+        <span class="sr-only">{{ b.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
       </button>
     
       </div>

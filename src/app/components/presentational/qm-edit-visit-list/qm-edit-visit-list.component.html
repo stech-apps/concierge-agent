@@ -4,27 +4,27 @@
       <div class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByVisitIdAsc !== true, 'icon-caret-down': sortByVisitIdAsc ===  true,'selected-sort-icon':sortingIndicator==='VISITID'  }"></i>
-          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+          <span class="sr-only">{{ sortByVisitIdAsc ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </button>
       </div>
       <div class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
         <div class="qm-visit-list-header-item-label">{{'label.name' | translate}}</div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByCustomerAsc !== true, 'icon-caret-down': sortByCustomerAsc ===  true,'selected-sort-icon':sortingIndicator==='CUSTOMER'  }"></i>
-          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+          <span class="sr-only">{{ sortByCustomerAsc ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </button>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-4 qm-service-col  qm-flex-grid" (click)="sortByService()">
         <div class="qm-visit-list-header-item-label"> {{ 'label.service' | translate}} </div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByServiceAsc !== true, 'icon-caret-down': sortByServiceAsc ===  true,'selected-sort-icon':sortingIndicator==='SERVICE'  }"></i>
-          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+          <span class="sr-only">{{ sortByServiceAsc ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </button>
       </div>
 
       <div class="qm-visit-list-header-item qm-col-3 qm-app-time-col qm-flex-grid" (click)="sortByAppTime()">
         <div class="qm-visit-list-header-item-label"> {{ 'visit_appointment_time_label' | translate}} </div>
         <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortByAppTimeAsc !== true, 'icon-caret-down': sortByAppTimeAsc ===  true,'selected-sort-icon':sortingIndicator==='APPTIME'  }"></i>
-          <span class="sr-only">{{ 'button.sort' | translate }}</span>
+          <span class="sr-only">{{ sortByAppTimeAsc ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </button>
       </div>
 
@@ -87,6 +87,7 @@
         <button class="info-icon-container qm-transparent-btn" (click)="selectedInfoButton(visit.visitId)">
           <i class="icon-info qm-details-icon" *ngIf="infoVisitId !== visit.visitId" ></i>
           <i class="icon-info-solid qm-details-icon" *ngIf="infoVisitId === visit.visitId"></i>
+          <span class="sr-only">{{ infoVisitId === visit.visitId ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
         </button>
         </div>
      

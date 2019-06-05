@@ -37,7 +37,9 @@
             }"
             
           ></i
-        ></button>
+        >
+        <span class="sr-only">{{ isShowExpandedAppointment ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
+      </button>
       </div>
       <button
         *ngIf="isDeleteEnabledInUtt"

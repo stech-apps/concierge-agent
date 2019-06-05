@@ -216,8 +216,14 @@ button:active,button:hover{
 .qm-content-links   {
   position: absolute;
   top: 0;
-  left: .5rem;
+  // left: .5rem;
   z-index: 120;
+  @at-root [dir="rtl"] & { 
+    right: .5rem;
+  }
+ @at-root [dir="ltr"] & { 
+  left: .5rem;
+  }
   &__link{
     display: block;
     padding: 0;

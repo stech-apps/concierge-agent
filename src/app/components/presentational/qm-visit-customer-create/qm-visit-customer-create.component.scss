@@ -30,12 +30,6 @@
     z-index: 1000;
     position: relative;
     font-size: 1.5em;
-    @at-root [dir="ltr"] & {
-        right: 1.4em;
-    }
-    @at-root [dir="rtl"] & {
-        left: 1.4em;
-    }
 }
 
 .qm-dob-close__icon{
@@ -53,8 +47,15 @@
 }
 
 .qm-action-btn--only-icon{
-    width: 0px;
-    vertical-align: middle
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 14px;
+    @at-root [dir="ltr"] & {
+        right: 1.2em;
+    }
+    @at-root [dir="rtl"] & {
+        left: 1.2em;
+    }
 }
 
 
@@ -237,3 +238,13 @@ input[type=number]::-webkit-outer-spin-button {
   .qm-checkbox-label{
       z-index: 400;
   }
+  .qm-checkbox-focused{
+    border:  solid #007bff 1px;
+  }
+  
+  .qm-input-group{
+      position: relative;
+  }
+  .ng-select:focus{
+    border: 1px solid#72a2f7;
+    }

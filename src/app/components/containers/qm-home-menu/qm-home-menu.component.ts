@@ -20,9 +20,6 @@ import { ISystemInfo } from '../../../../models/ISystemInfo';
   styleUrls: ['./qm-home-menu.component.scss']
 })
 export class QmHomeMenuComponent implements OnInit, OnDestroy {
-
-
-
   //user permissions
   isVisitUser = false;
   isAppointmentUser = false;

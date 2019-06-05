@@ -51,6 +51,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   previousBranch: IBranch;
   user: IAccount;
   errorMessage: string;
+  skipBranchFocus:boolean = false;
 
   constructor(
     private branchSelectors: BranchSelectors,

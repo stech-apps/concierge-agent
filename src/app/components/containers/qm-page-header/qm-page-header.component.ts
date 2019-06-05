@@ -61,6 +61,10 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   isFlowOpen:boolean;
   isQuickServeEnable:boolean;
   isHome: boolean;
+  isCreateVisit = false;
+  isArriveAppointment = false;
+  isEditAppointment = false;
+  isCreateAppointment = false;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();

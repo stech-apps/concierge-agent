@@ -39,7 +39,7 @@
 
       <div class="qm-error-message" *ngIf="errorMessage"> {{ errorMessage }}</div>
 
-      <div class="qm-use-as-default">
+      <div class="qm-use-as-default" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
         <!--
           input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/
         -->
@@ -48,6 +48,8 @@
           <input
             id="qm-checkbox"
             class="qm-checkbox qm-tab"
+            (focus)="skipBranchFocus=true"
+            (focusout)="skipBranchFocus=false" 
             type="checkbox"
             [(ngModel)]="isEnableUseDefault"
             [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1"/>

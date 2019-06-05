@@ -8,8 +8,7 @@
 
 .toast-close-button {
   height: rem(28px);
-  width: rem(28px);
-  padding: 0;
+  padding: 0px 4px;
   display: flex;
   align-items: center;
   color: $toast-text-color;
@@ -122,3 +121,7 @@
 }
 
 
+
+#close-toast-btn:focus{
+  border:  solid #007bff 1px;
+}

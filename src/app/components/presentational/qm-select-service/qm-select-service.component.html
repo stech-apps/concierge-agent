@@ -37,7 +37,7 @@
       <div class="qm-search qm-search--large" *ngIf="serviceList && serviceList.length >= searchFieldServiceCount">
         <label class="sr-only" for="serviceSearchInput">{{'branch_search_placeholder' | translate}}</label>
         <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
-          id="serviceSearchInput" name="serviceSearchInput" type="search" placeholder="{{'label.service.search' | translate}}"
+          id="serviceSearchInput" name="serviceSearchInput" placeholder="{{'label.service.search' | translate}}"
           #serviceSearchInput (keydown.enter)="serviceSearchInput.blur()">
         <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

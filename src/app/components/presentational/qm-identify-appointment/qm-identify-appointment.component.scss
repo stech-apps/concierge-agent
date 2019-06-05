@@ -191,13 +191,13 @@ qm-identify-appointment{
           margin: 0;
         }
 
-        @at-root [dir='ltr'] & .qm-search__icon{
-          right: 44px;
-        }
+        // @at-root [dir='ltr'] & .qm-search__icon{
+        //   right: 44px;
+        // }
 
-        @at-root [dir='rtl'] & .qm-search__icon{
-          right: 44px;
-        }
+        // @at-root [dir='rtl'] & .qm-search__icon{
+        //   right: 44px;
+        // }
 
                   // placeholder styles
           ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

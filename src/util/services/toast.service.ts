@@ -65,6 +65,10 @@ export class ToastService {
   }
 
   infoToast(text: string) {
+    setTimeout(() => {
+     document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
+    document.getElementById("close-toast-btn").focus();      
+    },500);
     return this.toastrService.success(text, '', this.infoOptions);
   }
 
@@ -94,5 +98,8 @@ export class ToastService {
       .map(toast => this.toastrService.clear(toast.toastId));
   }
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService) { 
+   
+  }
+ 
 }

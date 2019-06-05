@@ -28,6 +28,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   editMode:boolean;
   showToolTip:boolean;
   isExpanded = false;
+  skipBranchFocus: boolean = false;
 
   date = {
     day: '',

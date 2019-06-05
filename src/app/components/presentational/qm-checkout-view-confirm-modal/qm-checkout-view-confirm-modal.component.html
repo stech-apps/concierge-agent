@@ -2,9 +2,9 @@
   <div class="qm-modal qm-add-notes-modal qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
     <form class="qm-modal__box-container" [formGroup]="confirmModalForm" #optionsForm="ngForm">
       <div class="qm-modal__header">
-        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-modal__close-btn" (click)="activeModal.close()">
+        <span type="button" class="qm-action-btn qm-action-btn--only-icon qm-modal__close-btn">
           <span class="sr-only">{{ optionsHeading }}</span>
-        </button>
+        </span>
         <span class="qm-modal__headline">{{ optionsHeading }}</span>
         <button  class="qm-transparent-btn qm-action-btn qm-modal-close" (click)="activeModal.close()">
     <i aria-hidden="true" class="icon-close"></i>
@@ -39,7 +39,7 @@
                 <span for="email" class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" id="email" type="text" name='email' formControlName = "email" #email  >
+                <input qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" id="email" type="text" name='email' formControlName = "email" #email  >
               </span>
               <span class="qm-standard-text-field__error-message">
                   <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">
@@ -58,7 +58,7 @@
               {{ 'button.label.cancel' | translate }}
             </span>
           </button>
-          <button [disabled]="!confirmModalForm.valid" class="qm-btn qm-btn--primary qm-btn-finish" (click)="accept()">
+          <button type="submit" [disabled]="!confirmModalForm.valid" class="qm-btn qm-btn--primary qm-btn-finish" (click)="accept()">
             <span class="qm-btn__text" title="{{ 'button.label.finish' | translate }}">
               {{ 'button.label.finish' | translate }}
             </span>
@@ -67,58 +67,4 @@
       </div>
     </form>
   </div>
-
-
-
-
-  <!-- <div class="qm-confirm-modal " dir="{{ userDirection$ | async }}" cdkTrapFocus>
-    <form class="qm-confirm-modal__box-container" [formGroup]="confirmModalForm" (keyup.enter)="accept()" autocomplete="off">
-      <div class="qm-confirm-modal__header">
-        <span class="qm-confirm-modal__header-text">{{ title }}</span>
-      </div>
-
-      <div class="qm-confirm-modal__inputs-container">
-
-        <div *ngIf="isEmailEnabled" class="email-container">
-          <div class="input-box-and-clear-button" [ngStyle]="{'background-color':  confirmModalForm.get('email').valid || email.value ===''  ? '#ffffff' : '#F5A9A9'}">
-            <input type="text" class="input-box" name='email' placeholder="{{'type_email'|translate }}" formControlName="email" #email
-            />
-            <i *ngIf="email.value!='' " class="clear-icon icon-close" (click)="clearEmail()"></i>
-          </div>4
-          <div class="validate-icon btn-light-active-action" :active>
-            <i [ngClass]="showEmailTick ? 'icon-check':'icon-refresh'" (click)="validateEmail()"></i>
-          </div>
-        </div>
-
-        <div *ngIf="isSmsEnabled" class="sms-container">
-          <div class="input-box-and-clear-button" [ngStyle]="{'background-color': phoneColor }">
-            <input type="text" class="input-box" name='phone' placeholder="{{'type_mobile_number'|translate }}" formControlName="phone"
-              #phone />
-            <i *ngIf="phone.value!='' " class="clear-icon icon-close" (click)="clearPhone()"></i>
-          </div>
-
-          <div *ngIf="customer!=null" class="validate-icon btn-light-active-action :active">
-            <i [ngClass]="showPhoneTick?'icon-check':'icon-refresh'" (click)="validatePhone()"></i>
-          </div>
-        </div>
-
-      </div>
-      <div class="qm-confirm-modal__button-container">
-
-        <button class="qm-confirm-modal__secondary-button btn-light-active-action :active" (click)="decline(); autoCloseService.refreshAutoClose()"
-          *ngIf="btnCancelText && btnCancelText.length > 0">
-          <span title="{{ btnCancelText }}">
-            {{ btnCancelText }}
-          </span>
-        </button>
-        <button type="button" class="qm-confirm-modal__primary-button btn-light-active-action :active" [ngStyle]=" {'background-color': confirmModalForm.valid  ? themeColor : '#8e8e8e'}"
-          (click)="accept(); autoCloseService.refreshAutoClose()" *ngIf="btnOkText && btnOkText.length > 0">
-          <span title="{{ btnOkText }}">
-            {{ btnOkText }}
-          </span>
-        </button>
-
-      </div>
-    </form>
-  </div> -->
 </qm-auto-close>

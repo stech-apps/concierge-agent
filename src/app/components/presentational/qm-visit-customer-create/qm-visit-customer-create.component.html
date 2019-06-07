@@ -9,6 +9,7 @@
               <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (focus)="skipBranchFocus=true"
                 (focusout)="skipBranchFocus=false" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
               <div class="qm-checkbox__selector">
+                  <div aria-hidden="true" class="qm-checkbox__border"></div>
                 <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
                 <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
               </div>

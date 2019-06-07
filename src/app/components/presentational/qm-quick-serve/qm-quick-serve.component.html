@@ -48,9 +48,11 @@
                         />
                       </label>
                     <div *ngIf="selectedService !== null && selectedService.id === service.id">
+                        <div aria-hidden="true" class="qm-checkbox__border"></div>
                         <i class="qm-action-btn__icon icon-checkbox-checked qm-quick-serve__icon" aria-hidden="true"></i>
                     </div>
                     <div *ngIf="selectedService === null || (selectedService !== null && selectedService.id !== service.id)">
+                        <div aria-hidden="true" class="qm-checkbox__border"></div>
                         <i class="qm-action-btn__icon icon-checkbox-unchecked qm-quick-serve__uncheck-icon" aria-hidden="true"></i>
                     </div>
                 </div>

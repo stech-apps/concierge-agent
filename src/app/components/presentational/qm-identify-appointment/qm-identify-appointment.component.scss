@@ -148,7 +148,7 @@ qm-identify-appointment{
 
       color: $dark-transparent62;
       i {
-        color: $dark-transparent82;
+        color: $dark-transparent62;
       }
       @at-root [dir="rtl"] & {
         text-align: right;
@@ -414,11 +414,15 @@ qm-identify-appointment{
     flex-wrap: wrap;
 
     i.icon-caret-up {
-      color: #ccc;
+      color: $dark-transparent42;
+    }
+
+    i.icon-caret-down {
+      color: $dark-transparent42;
     }
     
     i.icon-caret-up.active-sort-column, i.icon-caret-down.active-sort-column {
-      color: black;
+      color: $dark-transparent62;
       font-size: 18px;
     }
 

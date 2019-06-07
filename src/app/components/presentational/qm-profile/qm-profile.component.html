@@ -54,6 +54,7 @@
             [(ngModel)]="isEnableUseDefault"
             [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1"/>
           <div class="qm-checkbox__selector">
+            <div aria-hidden="true" class="qm-checkbox__border"></div>
             <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
             <div class="qm-checkbox__selector-icon-text">
               <span>{{ "label.skip_next_time" | translate }}</span>

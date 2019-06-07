@@ -163,7 +163,7 @@
 .qm-search__icon{
 
   margin-top: 10px;
-  color: $dark-transparent42;
+  color: $dark-transparent62;
   @at-root [dir="rtl"] & {
     margin-right: -38px;
   }
@@ -392,6 +392,19 @@ button:focus{
 }
 .qm-quick-serve__item-focus{
   border:  solid #007bff 1px;
+}
+
+.qm-checkbox__border {
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  border-radius: 6px;
+  width: 22px;
+  height: 21px;
+  position: absolute;
+  margin-left: 3px;
+  margin-top: 19px;
+  @at-root [dir="rtl"] & {
+    margin-right: 3px;
+  }
 }
 
 button:active,button:hover{

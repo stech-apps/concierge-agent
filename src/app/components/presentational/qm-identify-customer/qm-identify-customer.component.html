@@ -43,6 +43,7 @@
               (focusout)="SkipThisTimeFocused=false"
             />
             <div class="qm-checkbox__selector" [ngClass]="{'checkBoxFocused':SkipThisTimeFocused}">
+              <div aria-hidden="true" class="qm-checkbox__border"></div>
               <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
               <div class="qm-checkbox__selector-icon-text">
                 {{ "label.skip.branch" | translate }}

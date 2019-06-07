@@ -81,9 +81,9 @@ export class QmDropDownComponent implements OnInit {
     setTimeout(()=> this.searchText = '');
     this.qmClearInputRef.update(this.searchText);
     $event.stopPropagation();
-    // if(this.searchInput) {
-      // setTimeout(() => this.searchInput.nativeElement.focus());
-    // }
+            if(this.searchInput) {
+              setTimeout(() => this.searchInput.nativeElement.focus());
+            }
   }
 
   itemClick(item: IDropDownItem | any, $event) {

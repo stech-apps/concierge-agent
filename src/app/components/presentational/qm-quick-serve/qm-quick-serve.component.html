@@ -35,7 +35,7 @@
         </div>
         <div #configServiceList class="qm-quick-serve__list-container" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
             <div class="qm-quick-serve__item" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
-                <div   (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
+                <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
                     <span class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
                     <label for="qm-checkbox" class="qm-checkbox-label">
                         <input

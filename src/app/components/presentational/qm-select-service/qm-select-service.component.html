@@ -1,6 +1,6 @@
 
 
-<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
+<div id="main-container" class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
     <div class="qm-pannel-full-inner-container"> 
         <div>     
             <div class="qm-flow-header">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</div>

@@ -213,17 +213,14 @@ button:active,button:hover{
   border: none;
 }
 
-.qm-content-links   {
+.qm-content-links {
   position: absolute;
   top: 0;
+  // min-width: 100px;
   // left: .5rem;
+  right: 0.5rem;
   z-index: 120;
-  @at-root [dir="rtl"] & { 
-    right: .5rem;
-  }
- @at-root [dir="ltr"] & { 
-  left: .5rem;
-  }
+
   &__link{
     display: block;
     padding: 0;
@@ -245,4 +242,12 @@ button:active,button:hover{
     overflow: visible;
     clip: auto;
   }
+  @at-root [dir="ltr"] { 
+    left: .5rem;
+    right: auto;
+    }
+    @at-root [dir="rtl"] {
+  
+  }
+
 }

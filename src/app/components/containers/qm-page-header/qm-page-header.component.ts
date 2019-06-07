@@ -1,6 +1,8 @@
 import { Logout } from "./../../../../util/services/logout.service";
 import { AutoClose } from "./../../../../util/services/autoclose.service";
 import { IService } from "./../../../../models/IService";
+import { UserRole } from './../../../../models/UserPermissionsEnum';
+import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 
 import {
   Component,
@@ -22,7 +24,8 @@ import {
   ReserveDispatchers,
   QueueDispatchers,
   FlowOpenSelectors,
-  ServicePointDispatchers
+  ServicePointDispatchers,
+  AccountSelectors
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -59,12 +62,19 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   sPName:string;
   userDirections: string;
   isFlowOpen:boolean;
+
   isQuickServeEnable:boolean;
   isHome: boolean;
   isCreateVisit = false;
   isArriveAppointment = false;
   isEditAppointment = false;
   isCreateAppointment = false;
+
+   //user permissions
+   isVisitUser = false;
+   isAppointmentUser = false;
+   isAllOutputMethodsDisabled: boolean;
+   printerEnabled: boolean;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -74,9 +84,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
 
   @Input() isPreventHeaderNavigations = false;
 
-  constructor(
-    
-   
+  constructor(  
     private userSelectors: UserSelectors,
     public route: ActivatedRoute,
     public autoCloseService: AutoClose,
@@ -90,6 +98,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private queueDispatchers: QueueDispatchers,
     private flowOpenSelectors:FlowOpenSelectors,
     private servicePointDispatchers:ServicePointDispatchers,
+    private accountSelectors: AccountSelectors,
     
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
@@ -108,7 +117,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       this.userDirections = direction;
       
     });
-    this.headerSubscriptions.add(userDirectionSubscription);    
+    this.headerSubscriptions.add(userDirectionSubscription); 
+    this.checkUserPermissions();   
     
     const licenseSubscription = this.isValidLicense$.subscribe(
       (licenseIsValid: boolean) => {
@@ -119,9 +129,26 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
 
     
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
-      params => {
-        if (params) {
-          this.isQuickServeEnable = params.quickServe;       
+      uttpParams => {
+        if (uttpParams) {
+          this.isQuickServeEnable = uttpParams.quickServe;
+          if (this.isVisitUser && uttpParams) {
+            this.isCreateVisit = uttpParams[CREATE_VISIT];
+          }
+          else {
+            this.isCreateVisit = false;
+          }
+    
+          if (this.isAppointmentUser && uttpParams) {
+            this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
+            this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
+            this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+          }
+          else {
+            this.isCreateAppointment = false;
+            this.isEditAppointment = false;
+            this.isArriveAppointment = false;
+          }       
         }
       }
     );
@@ -187,13 +214,27 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     
   }
   QuickServeFocus() {
-    if(document.getElementById("quick_serve_tooltip")) {
-      document.getElementById("quick_serve_tooltip").focus();
+    if(document.getElementById("visitSearch")) {
+      document.getElementById("visitSearch").focus();
     }
   }
   MenuBarFocus() {
     if(document.getElementById("create_appointment")) {
       document.getElementById("create_appointment").focus();
     }
+  }
+  checkUserPermissions() {
+    this.accountSelectors.userRole$.subscribe((ur: UserRole) => {
+      if (ur && UserRole.All) {
+        this.isAppointmentUser = true;
+        this.isVisitUser = true;
+      }
+      else if (ur && UserRole.AppointmentUserRole) {
+        this.isAppointmentUser = true;
+      }
+      else if (ur & UserRole.VisitUserRole) {
+        this.isVisitUser = true;
+      }
+    });
   }
 }

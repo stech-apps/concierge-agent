@@ -66,7 +66,16 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   flowPanels = new QueryList<QmFlowPanelComponent>();
 
   ngOnInit() {
-    this.userDirection$ = this.userSelectors.userDirection$;   
+    this.userDirection$ = this.userSelectors.userDirection$;
+    this.router.events.subscribe((val) => {
+      setTimeout(() => {
+        var mainContainer = document.getElementById('main-container');
+        var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
+        firstElement.setAttribute("Name","firstElement");
+        document.getElementsByName("firstElement")[0].focus();
+   }, 500);   
+    });
+ 
   }
   ngAfterContentInit(){
     if(this.FlowName=='label.create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){

@@ -1,4 +1,4 @@
-<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
+<div id="main-container" class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
     <div class="qm-pannel-full-inner-container"> 
       <div>     
         <div class="qm-flow-header">{{ 'label.select_branch_header' | translate}}</div>

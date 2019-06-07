@@ -1,4 +1,4 @@
-<div id="main-container" class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
     <div class="qm-pannel-full-inner-container"> 
       <div>     
         <div class="qm-flow-header">{{ 'label.select_branch_header' | translate}}</div>
@@ -25,7 +25,7 @@
   </div>
  
 </div>
-<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}">
+<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}" id="main-container">
     <div class="qm-flow-sub-header__left">
     <div class="qm-search qm-search--large">
         <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>

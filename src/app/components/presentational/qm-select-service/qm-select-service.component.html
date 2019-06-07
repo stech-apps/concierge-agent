@@ -1,6 +1,6 @@
 
 
-<div id="main-container" class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
     <div class="qm-pannel-full-inner-container"> 
         <div>     
             <div class="qm-flow-header">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</div>
@@ -87,7 +87,7 @@
 </div>
   </div>
 
-<div class="qm-service-list__container" dir="{{ userDirection$ | async }}" [ngClass]="{'qm-service-list-serached':filterText && flowType === 'CREATE_VISIT' }">
+<div id="main-container" class="qm-service-list__container" dir="{{ userDirection$ | async }}" [ngClass]="{'qm-service-list-serached':filterText && flowType === 'CREATE_VISIT' }">
 
   <div class="qm-service-list__item-container" *ngIf="!filterText && mostFrequentServiceList && mostFrequentServiceList.length > 0 && (mostFrequentServiceList | filterService: [filterText, flowType]).length > 0">
     <div class="qm-crossline-header-container">
@@ -96,7 +96,7 @@
     </div>
 
     <div class="qm-flow-list-container">
-    <div class="qm-list">
+    <div class="qm-list"> 
       <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType]" class="qm-service-list__item qm-list__item"
          [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
         <div tabindex="0" (click)="onServiceSelect(service, true)" (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)" class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent" [ngClass]="{'qm-outline':service.showInfoInMostFrequent}">

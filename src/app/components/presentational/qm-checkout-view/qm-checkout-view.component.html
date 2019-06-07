@@ -1,6 +1,6 @@
 <div class="qm-checkout-view" [ngClass]="{'qm-checkout-view__summary--arive': flowType === 'ARRIVE_APPOINTMENT'}" dir="{{userDirection$ | async}}">
   <!-- summary card for create appointment-->
-  <div class="qm-checkout-view__summary"  *ngIf="selectedAppointment">
+  <div class="qm-checkout-view__summary" id="main-container" *ngIf="selectedAppointment">
     <div class="visit-details-card">
     <div  [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
       <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>

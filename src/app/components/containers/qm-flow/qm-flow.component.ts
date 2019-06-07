@@ -68,18 +68,18 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
     this.router.events.subscribe((val) => {
-      setTimeout(() => {
-        var mainContainer = document.getElementById('main-container');
-        var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
-        firstElement.setAttribute("Name","firstElement");
-        document.getElementsByName("firstElement")[0].focus();
-   }, 500);   
+  //     setTimeout(() => {
+  //       var mainContainer = document.getElementById('main-container');
+  //       var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
+  //       firstElement.setAttribute("Name","firstElement");
+  //       document.getElementsByName("firstElement")[0].focus();
+  //  }, 500);   
     });
  
   }
   ngAfterContentInit(){
     if(this.FlowName=='label.create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){
-      this.activeHeader = 1;
+      this.activeHeader = 1;      
     }    
   }
 
@@ -163,6 +163,13 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
+    setTimeout(() => {
+      var mainContainer = document.getElementById('main-container');
+      var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
+      firstElement.setAttribute("Name","firstElement");
+      document.getElementsByName("firstElement")[0].focus();         
+ }, 500); 
+ 
     let panelsCollection = this.flowPanels.toArray();
     let panelIndex = panelsCollection.indexOf(panel);
     this.activeHeader=panelIndex;

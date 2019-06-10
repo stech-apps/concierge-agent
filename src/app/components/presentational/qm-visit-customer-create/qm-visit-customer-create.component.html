@@ -103,7 +103,7 @@
                       class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.phone'|translate }}</label>
                     <div class="qm-input-group">
                       <input id="phone" class="qm-input-box__input" type="tel" inputmode="numeric" name='phone'
-                        formControlName="phone" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)"
+                        formControlName="phone"
                         #phone>
                       <button *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon" (click)="clearInputFeild('phone')">
                         <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
@@ -118,7 +118,7 @@
 
               <!-- DOB Section -->
               <div class="qm-input-box__row">
-                <div class="qm-input-box__left-side" formGroupName="dateOfBirth">
+                <div class="qm-input-box__left-side">
                   <label for="date_of_birth"
                     class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</label>
                   <div class="qm-input-box__dob-container">
@@ -132,8 +132,7 @@
                         <label for="year"
                           class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container">{{'year'|translate }}</label>
                       </div>
-                      <div class="qm-dob-container"
-                        [ngClass]="{'qm-dob-error':customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')}">
+                      <div class="qm-dob-container">
                         <ng-select #month [items]="months" [selectOnTab]="true" [clearable]="false"
                           notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value"
                           placeholder="{{ 'field.createCustomerForm.month' | translate }}" formControlName="month"

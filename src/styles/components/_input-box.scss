@@ -11,7 +11,7 @@ input:focus{
 }
 
 .qm-form-error-message{
-  color:$primary-pink;
+  color:$error-color;
   font-size: 0.8em;
 }
 
@@ -41,7 +41,7 @@ input:focus{
   }
 
   input.ng-invalid.ng-touched {
-    border:solid $primary-pink 1px;
+    border:solid $error-color 1px;
   }
 
 

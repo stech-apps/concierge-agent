@@ -294,6 +294,23 @@ export class QmInputboxComponent implements OnInit {
     let errors = null;
     if (control.value) {
       // invalid date check for leap year
+      if (control.value.year) {
+        const today = new Date();
+        if (control.value.year > today.getFullYear()) {
+          control.setErrors({
+            futureYear: true
+          });
+          errors = { ...errors, futureYear: true };
+        }
+      }
+      if (control.value.month) {
+        if (control.value.month > 31) {
+          control.setErrors({
+            invalidDay: true
+          });
+          errors = { ...errors, invalidDay: true };
+        }
+      }
       if (control.value.year && control.value.month && control.value.day) {
         const d = new Date(
           control.value.year,
@@ -306,6 +323,11 @@ export class QmInputboxComponent implements OnInit {
           });
           errors = { ...errors, invalidDay: true };
         }
+      } else if (control.value.year && control.value.month) {
+        control.setErrors({
+          invaliedMonth: true
+        });
+        errors = { ...errors, invaliedMonth: true };
       } else if (
         control.value.year ||
         control.value.month ||

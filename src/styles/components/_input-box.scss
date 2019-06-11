@@ -37,11 +37,22 @@ input:focus{
     @at-root [dir="rtl"] & {
       padding: 0 1em 0 2.5em;
     }
+    mark {
+      font-weight: bold;
+      background-color: transparent;
+      color: $error-color;
+    }
 
   }
 
   input.ng-invalid.ng-touched {
     border:solid $error-color 1px;
+    color: $error-color;
+  }
+
+  ng-select.ng-invalid .ng-select-container {
+    border:solid $error-color 1px;
+    color: $error-color;
   }
 
 

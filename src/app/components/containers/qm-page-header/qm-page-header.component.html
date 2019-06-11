@@ -8,7 +8,7 @@
   <span class="qm-header__title">{{'module_name' | translate}}</span>
 </header>
 <header class="qm-header" dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
-  <div class="qm-header__left">
+  <nav class="qm-header__left">
     <a *ngIf="!isNative" href="/" class="qm-header__brand-logo-container" (click)="homeClick($event)">
       <span *ngIf="!isNative"
         class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
@@ -22,22 +22,29 @@
     <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
         [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-left':userDirections === 'rtl'}"></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
-    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()">
+    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()" role="navigation">
       <span class="qm-header__edit-link">{{'edit'|translate}}</span>
     </button>
-  </div>
+  </nav>
 
-  <div class="qm-header__right">
-
+  <nav class="qm-header__right">
+    <ul class="qm-header-icon-list">
+      <li>
     <a *ngIf="!isNative" href="/help" target="_blank"
       class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
       <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
       <span class="sr-only">{{ 'label.help' | translate }}</span>
     </a>
+  </li>
+  <li>
     <span class="qm-header__user-name">{{userFullName$ | async}}</span>
+  </li>
+  <li>
     <a href="/logout.jsp" (click)="logout($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__logout-btn">
       <i class="qm-action-btn__icon icon-exit" aria-hidden="true"></i>
       <span class="sr-only">{{ 'label.logout' | translate }}</span>
     </a>
-  </div>
+  </li>
+  </ul>
+  </nav>
 </header>

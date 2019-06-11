@@ -182,7 +182,7 @@
   &__user-name {
     flex: 1 1 auto;
     color: $light-transparent75;
-    margin: rem(0 $standard-margin / 2);
+    // margin: rem(0 $standard-margin / 2);
     font-size: 16px;
     @include add-text-ellipsis;
   }
@@ -250,4 +250,14 @@ button:active,button:hover{
   
   }
 
+}
+
+.qm-header-icon-list{
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li{
+    margin: 0 5px;
+  }
 }

@@ -95,6 +95,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     private errorHandler: GlobalErrorHandler
   ) {
+  
 
     // 24 hour time converstion
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
@@ -164,6 +165,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.visits = visitList;
       this.visitClicked = false;
       this.selectedVisitId = -1;
+     
       //if only one visit in queue open visit options
       // if (this.visits.length === 1) {
       //   this.visitClicked = true;
@@ -213,6 +215,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
      
+          if (this.selectedVisitId) {
+            setTimeout(() => {
+              document.getElementById('edit-vist-modal-close').focus();
+            }, 100);
+          }
+
           // to apply name of the queue of selected visit  
           var selectedQ = this.queueSummary.queues.find(obj => {
             return obj.id === this.visits[0].queueId
@@ -242,6 +250,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.StartAutoCollapse();
+ 
   }
 
   resetQRReader() {

@@ -78,6 +78,10 @@
   &__no-service{
     margin-top: 10px;
     font-size: 14px;
+    color: #000000;
+    @at-root [dir='rtl'] & {
+      text-align: right;
+  }
   }
 }
 

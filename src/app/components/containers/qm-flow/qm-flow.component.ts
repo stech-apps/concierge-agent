@@ -67,14 +67,12 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
-    this.router.events.subscribe((val) => {
-  //     setTimeout(() => {
-  //       var mainContainer = document.getElementById('main-container');
-  //       var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
-  //       firstElement.setAttribute("Name","firstElement");
-  //       document.getElementsByName("firstElement")[0].focus();
-  //  }, 500);   
-    });
+    setTimeout(() => {
+      var mainContainer = document.getElementById('main-container');
+      var firstElement = mainContainer.querySelectorAll('button, input, h1, [tabindex="0"]')[0];
+      firstElement.setAttribute("Name","firstElement");
+      document.getElementsByName("firstElement")[0].focus();         
+ }, 500); 
  
   }
   ngAfterContentInit(){
@@ -84,6 +82,12 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
+    setTimeout(() => {
+      var mainContainer = document.getElementById('main-container');
+      var firstElement = mainContainer.querySelectorAll('button, input, [tabindex="0"]')[0];
+      firstElement.setAttribute("Name","firstElement");
+      document.getElementsByName("firstElement")[0].focus();         
+ }, 500); 
     this.headerClicked.emit(flowPanel);
     // let panelFound = false;
     // if (flowPanel.isContentVisible && flowPanel.hasResult()) {

@@ -177,7 +177,6 @@ import { FilterQuickServeServicePipe } from './components/presentational/qm-quic
 import { QmAppointmentInfoComponent } from './components/presentational/qm-appointment-info/qm-appointment-info.component';
 import { QmKeyCaptureDirective } from './directives/qm-key-capture.directive';
 
-
 // Global options for Toastr
 const toastrGlobalOptions = {
   maxOpened: 3,
@@ -279,7 +278,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     FilterQuickServeServicePipe,
     QmTabberComponent,
     QmAppointmentInfoComponent,
-    QmKeyCaptureDirective
+    QmKeyCaptureDirective,
   ],
   entryComponents: [
     QmCustomToastComponent,
@@ -320,6 +319,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     AngularDraggableModule
+    
   ],
   providers: [
     ...storeServices,

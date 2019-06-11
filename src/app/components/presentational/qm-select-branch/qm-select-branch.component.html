@@ -1,7 +1,7 @@
-<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}" id="main-container">
     <div class="qm-pannel-full-inner-container"> 
       <div>     
-        <div class="qm-flow-header">{{ 'label.select_branch_header' | translate}}</div>
+        <h1 class="qm-flow-header">{{ 'label.select_branch_header' | translate}}</h1>
       </div>
       <div class="qm-white-container">
   <div class="qm-pannel-inner-container"> 
@@ -25,12 +25,13 @@
   </div>
  
 </div>
-<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}" id="main-container">
+<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}" >
     <div class="qm-flow-sub-header__left">
     <div class="qm-search qm-search--large">
         <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
         <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
-          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()">
+          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()"
+          autocomplete="off">
   
         <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

@@ -92,15 +92,15 @@
         </div>
      
         <!-- Edit visit options -->
-        <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'" 
-                class="qm-visit-list__options-2" id="{{visit.visitId}}-visitOptionContainer">
+        <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'"  
+                class="qm-visit-list__options-2" id="{{visit.visitId}}-visitOptionContainer" cdkTrapFocus>
           <!-- <div class="triangle-with-shadow"></div> -->
           <div class="qm-visit-list__options-2__rec" id="visit-rec" tabindex="-1">
             <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> {{'visit_options'|translate}}
               </div>
-              <button class="qm-icon qm-transparent-btn" id="qm-close-btn" (click)=" closeVisitOptions()">
+              <button class="qm-icon qm-transparent-btn" id ="edit-vist-modal-close" (click)=" closeVisitOptions()">
                 <i class="icon-close" ></i>
                 <span class="sr-only">{{ 'button.close' | translate }}</span>
               </button>

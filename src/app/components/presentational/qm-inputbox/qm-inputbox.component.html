@@ -17,8 +17,8 @@
                       type="text" name='firstName' id="firstName" formControlName = "firstName"
                       maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
                      
-                      <button *ngIf="firstName.value.trim()" class="qm-clear-btn">
-                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('firstName')"></i>
+                      <button *ngIf="firstName.value.trim()" class="qm-clear-btn" (click)="clearInputFeild('firstName')">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
                           <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button  >      
                     </div>
@@ -33,8 +33,8 @@
                     </div> 
                     <div class="qm-input-box-group">
                       <input class="qm-input-box__input" type="text" id='lastName' name='lastName' formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                      <button *ngIf="lastName.value.trim()" class="qm-clear-btn">
-                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('lastName')"></i>
+                      <button *ngIf="lastName.value.trim()" class="qm-clear-btn"  (click)="clearInputFeild('lastName')">
+                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
                           <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button> 
                     </div>
@@ -47,8 +47,8 @@
                   <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('email').invalid }">{{'label.email'|translate }}</label>
                   <div class="qm-input-box-group">
                   <input class="qm-input-box__input" type="text" id="email" name='email' formControlName = "email" #email  >
-                  <button *ngIf="email.value.trim()" class="qm-clear-btn">
-                      <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('email')"></i>
+                  <button *ngIf="email.value.trim()" class="qm-clear-btn" (click)="clearInputFeild('email')">
+                      <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
                       <span class="sr-only">{{ 'button.clear' | translate }}</span>
                   </button> 
                   </div>
@@ -62,9 +62,9 @@
                       <div class="qm-input-box__left-side">
                         <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('phone').invalid }">{{'label.phone'|translate }}</label>
                         <div class="qm-input-box-group">
-                        <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone' formControlName = "phone" #phone>
-                        <button *ngIf="phone.value.trim()" class="qm-clear-btn">
-                            <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
+                        <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
+                        <button *ngIf="phone.value.trim()" class="qm-clear-btn" (click)="clearInputFeild('phone')">
+                            <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  ></i>
                             <span class="sr-only">{{ 'button.clear' | translate }}</span>
                         </button> 
                       </div>

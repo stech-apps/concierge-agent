@@ -167,7 +167,7 @@
         <!-- second options -->
         <div class="qm-visit-list__options-2" *ngIf="visitClicked && selectedVisitId === visit.visitId && (visitOptionStatus === 'staff' || visitOptionStatus === 'cp' || visitOptionStatus === 'tq')">
           <!-- <div class="triangle-with-shadow"></div> -->
-          <div class="qm-visit-list__options-2__rec">
+          <div class="qm-visit-list__options-2__rec" cdkTrapFocus>
             <div class="qm-visit-list__options-2__heading">
               <div class="qm-title">
                 <button class="qm-transparent-btn" (click) = "backToQueueOptionsButton()">
@@ -185,8 +185,8 @@
                 <span class="sr-only">{{ 'button.close' | translate }}</span>
               </button>
             </div>
-            <qm-transfer-to-staff-pool *ngIf ="this.visitOptionStatus === 'staff'"></qm-transfer-to-staff-pool>
-            <qm-transfer-to-service-pool *ngIf ="this.visitOptionStatus === 'cp'"></qm-transfer-to-service-pool>
+            <qm-transfer-to-staff-pool *ngIf ="this.visitOptionStatus === 'staff'" ></qm-transfer-to-staff-pool>
+            <qm-transfer-to-service-pool *ngIf ="this.visitOptionStatus === 'cp'" ></qm-transfer-to-service-pool>
             <qm-trasfer-to-queue *ngIf ="this.visitOptionStatus === 'tq'"></qm-trasfer-to-queue>
           </div>
         </div>

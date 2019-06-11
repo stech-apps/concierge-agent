@@ -4,6 +4,7 @@ $standard-home-margin : 1.5rem;
 .qm-home-content {
     flex: 1;
     display: flex;
+    position: relative;
  
     // justify-content: center;
 
@@ -48,15 +49,7 @@ $standard-home-margin : 1.5rem;
     margin-top: -66px;
     margin-bottom: 20px;
     cursor: pointer;
-    @at-root [dir="ltr"] & {
-        text-align: right;
-        margin-right: 20px;
-    }        
-
-    @at-root [dir="rtl"] & {
-        text-align: left;
-        margin-left: 20px;
-    }        
+    
 }
 
 .slide-collapesed{
@@ -210,4 +203,21 @@ $standard-home-margin : 1.5rem;
       .path3::before{
     border:  solid #007bff 1px;
 }
+  }
+  .qm-transparent-btn{
+      width: fit-content;
+    //   right: 0;
+    //   float: right;
+    margin-bottom: 20px;                
+      @at-root [dir="ltr"] & {
+        text-align: right;
+        margin-right: 20px;
+        float: right;
+    }        
+
+    @at-root [dir="rtl"] & {
+        text-align: left;
+        margin-left: 20px;
+        float: left;
+    }    
   }

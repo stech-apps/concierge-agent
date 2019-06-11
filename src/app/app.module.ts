@@ -176,6 +176,7 @@ import { QmTabberComponent } from './components/containers/qm-tabber/qm-tabber.c
 import { FilterQuickServeServicePipe } from './components/presentational/qm-quick-serve/filter-quick-serve-service.pipe';
 import { QmAppointmentInfoComponent } from './components/presentational/qm-appointment-info/qm-appointment-info.component';
 import { QmKeyCaptureDirective } from './directives/qm-key-capture.directive';
+import {A11yModule} from '@angular/cdk/a11y';
 
 // Global options for Toastr
 const toastrGlobalOptions = {
@@ -296,6 +297,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     MomentModule,
     FormsModule,
+    A11yModule,
     NgSelectModule,
     ReactiveFormsModule,
     EffectsModule.forRoot(effects),

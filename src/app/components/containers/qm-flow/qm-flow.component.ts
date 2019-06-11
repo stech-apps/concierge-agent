@@ -68,10 +68,10 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
     setTimeout(() => {
-      var mainContainer = document.getElementById('main-container');
-      var firstElement = mainContainer.querySelectorAll('button, input, h1, [tabindex="0"]')[0];
-      firstElement.setAttribute("Name","firstElement");
-      document.getElementsByName("firstElement")[0].focus();         
+      // var mainContainer = document.getElementById('main-container');
+      // var firstElement = mainContainer.querySelectorAll('button, input, h1, [tabindex="0"]')[0];
+      // firstElement.setAttribute("Name","firstElement");
+      // document.getElementsByName("firstElement")[0].focus();         
  }, 500); 
  
   }

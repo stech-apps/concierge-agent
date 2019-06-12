@@ -89,15 +89,16 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       
     // Customer creation form
     const emailValidators = this.util.emailValidator();
+    const smsValidators = [Validators.minLength(this.countryCode.length + 1), ...this.util.phoneNoValidator()];
 
     if(this.isSmsEnabled && this.isEmailEnabled){
       this.confirmModalForm = new FormGroup({
-        phone: new FormControl('',Validators.pattern(this.regexvalue())),
+        phone: new FormControl('',smsValidators),
         email:new FormControl('',emailValidators)   
       });
     } else if(this.isSmsEnabled){
       this.confirmModalForm = new FormGroup({
-        phone: new FormControl('',Validators.pattern(this.regexvalue()))
+        phone: new FormControl('',smsValidators)
       });
     } else if(this.isEmailEnabled){
       this.confirmModalForm = new FormGroup({

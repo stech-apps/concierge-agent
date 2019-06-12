@@ -37,12 +37,6 @@ input:focus{
     @at-root [dir="rtl"] & {
       padding: 0 1em 0 2.5em;
     }
-    mark {
-      font-weight: bold;
-      background-color: transparent;
-      color: $error-color;
-    }
-
   }
 
   input.ng-invalid.ng-touched {

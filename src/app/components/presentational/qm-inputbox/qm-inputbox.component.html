@@ -62,13 +62,13 @@
                       <div class="qm-input-box__left-side">
                         <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('phone').invalid }">{{'label.phone'|translate }}</label>
                         <div class="qm-input-box-group">
-                        <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone' formControlName = "phone" #phone (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)">
+                        <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone' formControlName = "phone" #phone>
                         <button *ngIf="phone.value.trim()" class="qm-clear-btn" (click)="clearInputFeild('phone')">
                             <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  ></i>
                             <span class="sr-only">{{ 'button.clear' | translate }}</span>
                         </button> 
                       </div>
-                        <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid'|translate}}</div>
+                        <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid.des'|translate}}</div>
                       </div>
                 </div>
             </div>

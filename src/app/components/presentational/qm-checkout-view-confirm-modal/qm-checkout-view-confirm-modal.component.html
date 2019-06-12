@@ -17,16 +17,16 @@
           <div class="qm-standard-text-field" *ngIf="isSmsEnabled">
             <label class="qm-standard-text-field__label">
               <span class="qm-standard-text-field__top-container">
-                <span for="phone" class="qm-standard-text-field__text">{{ 'field.notifyoptions.phone' | translate }}</span>
-                <span for="phone" class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
+                <span for="phone" class="qm-standard-text-field__text" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty }">{{ 'field.notifyoptions.phone' | translate }}</span>
+                <span for="phone" class="qm-standard-text-field__required" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty }">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input qm-popup-input"  type="tel" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" inputmode="numeric" id='phone' formControlName = "phone" #phone>
+                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input qm-popup-input" [ngClass]="{ 'qm-invalid-input' : confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty }"  type="tel" inputmode="numeric" id='phone' formControlName = "phone" #phone>
               </span>
           
               <span class="qm-standard-text-field__error-message">
                 <ng-container *ngIf="confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty">
-                      {{ 'field.optionsForm.phoneNumber.error.invalid' | translate }}
+                      {{ confirmModalForm.get('phone')?.hasError('pattern') ? ('error.form.phone.invalid.des' | translate) : (phone.value.length > 0 ? ('error.form.phone.invalid' | translate) : '') }}
                 </ng-container>
               </span>
             </label>
@@ -35,15 +35,15 @@
           <div class="qm-standard-text-field" *ngIf="isEmailEnabled">
             <label class="qm-standard-text-field__label">
               <span class="qm-standard-text-field__top-container">
-                <span for="email" class="qm-standard-text-field__text">{{ 'field.notifyoptions.email' | translate }}</span>
-                <span for="email" class="qm-standard-text-field__required">{{ 'label.options.required' | translate }}</span>
+                <span for="email" class="qm-standard-text-field__text" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty }">{{ 'field.notifyoptions.email' | translate }}</span>
+                <span for="email" class="qm-standard-text-field__required" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty }">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" id="email" type="text" name='email' formControlName = "email" #email  >
+                <input qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" [ngClass]="{ 'qm-invalid-input' : confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty }" id="email" type="text" name='email' formControlName = "email" #email  >
               </span>
               <span class="qm-standard-text-field__error-message">
                   <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">
-                      {{ 'field.optionsForm.email.error.invalid' | translate }}
+                    {{ email.value.includes('@') ? ('error.form.email.invalid' | translate) : (email.value.length > 0 ? ('error.form.email.invalid.des' | translate) : '') }}
                   </ng-container>
                  
                 </span>

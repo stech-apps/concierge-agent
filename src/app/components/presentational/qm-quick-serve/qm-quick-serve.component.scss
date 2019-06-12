@@ -211,6 +211,8 @@
   // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
 }
 
+
+
 .quick-serve-tooltip{
   width: 350px;
     z-index: 30;
@@ -237,6 +239,17 @@
 
     }
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .quick-serve-tooltip{
+  @at-root [dir="rtl"] & {
+    margin-right: -203px;
+}
+  }
+
+}
+
 
 button:focus{
   font-weight: 500;
@@ -429,6 +442,7 @@ button:active,button:hover{
   // display: contents;
   @at-root [dir="rtl"] & {
     left: 0;
+    right: auto;
 }
 }
 .qm-transparent-close-btn:focus{

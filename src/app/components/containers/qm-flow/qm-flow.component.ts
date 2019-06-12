@@ -67,9 +67,12 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
-    if (document.getElementById("panel-title")) {
-      document.getElementById("panel-title").focus();
-    }
+    setTimeout(() => {
+      if (document.getElementById("panel-title")) {
+        document.getElementById("panel-title").focus();
+      }
+      
+    }, 100);
 
   }
   ngAfterContentInit() {
@@ -83,6 +86,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       if (document.getElementById("panel-title")) {
         document.getElementById("panel-title").focus();
       }
+      
     }, 100);
 
     this.headerClicked.emit(flowPanel);
@@ -164,9 +168,12 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
-    if (document.getElementById("panel-title")) {
-      document.getElementById("panel-title").focus();
-    }
+    setTimeout(() => {
+      if (document.getElementById("panel-title")) {
+        document.getElementById("panel-title").focus();
+      }
+      
+    }, 100);
 
     let panelsCollection = this.flowPanels.toArray();
     let panelIndex = panelsCollection.indexOf(panel);

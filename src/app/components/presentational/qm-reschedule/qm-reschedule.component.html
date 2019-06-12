@@ -47,7 +47,7 @@
         (click)="onCancelAppointment()">
         {{ "label.cancel.appointment" | translate }}
       </button>
-
+      <span class=qm-appointment-info>
       <qm-appointment-info
     [useCalendarEndpoint]="true"
     (onCardClick)="onAppointmentSelect($event)"
@@ -55,6 +55,7 @@
     (onClose)="expandAppointment()"
     [appointmentInfo]="editAppointment"
     *ngIf="isShowExpandedAppointment"></qm-appointment-info>
+  </span>
     </div>
 
     <h2 class="qm-reschedule__line-header"><span>{{'label.reschedule.appointment' | translate}}</span></h2>

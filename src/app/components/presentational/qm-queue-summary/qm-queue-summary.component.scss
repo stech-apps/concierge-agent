@@ -455,5 +455,6 @@ button:focus{
   border: none;
   @at-root [dir="rtl"] & {
     left: 0;
+    right: auto;
 }
 }

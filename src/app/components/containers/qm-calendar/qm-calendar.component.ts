@@ -73,6 +73,32 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     this.generateCalendar();
   }
 
+  // arrow functions
+  KeyarrowUp(value : string) {
+    if(document.getElementById(parseInt(value) - 7 + '-enabled') ){
+      document.getElementById(parseInt(value) - 7 + '-enabled').focus();
+    }
+    
+  }
+  KeyarrowDown(value : string) {
+    if(document.getElementById(parseInt(value) + 7 + '-enabled') ){
+      document.getElementById(parseInt(value) + 7 + '-enabled').focus();
+    }
+    
+  }
+  KeyarrowLeft(value : string) {
+    if(document.getElementById(parseInt(value) - 1 + '-enabled') ){
+      document.getElementById(parseInt(value) - 1 + '-enabled').focus();
+    }
+    
+  }
+  KeyarrowRight(value : string) {
+    if(document.getElementById(parseInt(value) + 1 + '-enabled') ){
+      document.getElementById(parseInt(value) + 1 + '-enabled').focus();
+    }
+    
+  }
+
   // date checkers
 
   isToday(date: moment.Moment): boolean {

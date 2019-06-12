@@ -28,8 +28,13 @@
           <button class="qm-week-date enabled qm-transparent-btn"
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day, true)"
+               (keyup.arrowup) = "KeyarrowUp(day.mDate.date())"
+               (keyup.arrowleft) = "KeyarrowLeft(day.mDate.date())"
+               (keyup.arrowdown) = "KeyarrowDown(day.mDate.date())"
+               (keyup.arrowright) = "KeyarrowRight(day.mDate.date())"
                [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}"
-               [attr.tabindex]="day.disabled ? '-1' : null">
+               [attr.tabindex]="day.disabled ? '-1' : null"
+               [attr.id]="day.disabled ? day.mDate.date() + '-disabled' : day.mDate.date() + '-enabled'">
             <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
           </button>
         </ng-container>

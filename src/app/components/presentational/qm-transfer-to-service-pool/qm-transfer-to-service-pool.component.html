@@ -52,11 +52,11 @@
 
         </button>
       </div>
-
+      <div class="qm-no-results"
+      *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded  && filterText!=''">
+      {{'service_point_not_found' |translate}} </div>
+  
     </div>
   </div>
-  <div class="qm-no-results"
-    *ngIf="(servicePoints | filterServicePoints : filterText).length===0 && loaded  && filterText!=''">
-    {{'service_point_not_found' |translate}} </div>
 
 </div>

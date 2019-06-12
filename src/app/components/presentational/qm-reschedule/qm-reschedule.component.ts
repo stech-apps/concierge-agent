@@ -428,7 +428,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     return appointmentInfo;
   }
   onBlurMethod(){
-    this.isShowExpandedAppointment = false;
+    // this.isShowExpandedAppointment = false;
     
   }
 }

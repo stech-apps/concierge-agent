@@ -10,7 +10,7 @@
   }" dir="{{ userDirection$ | async }}">
   <div class="qm-pannel-full-inner-container" id="main-container">
     <div>
-      <div class="qm-flow-header">
+      <h1 class="qm-flow-header" id="panel-title" tabindex="-1">
         <span *ngIf="!currentCustomer || (currentCustomer && !editMode)" style="width:auto">
           {{ "select_customer_header" | translate }} <span
             *ngIf="flowType !== 'CREATE_APPOINTMENT'">({{'optional'|translate}})</span>
@@ -18,7 +18,7 @@
         <span *ngIf="currentCustomer && editMode" style="width:auto">
           {{ "label.edit_customer" | translate }}
         </span>
-      </div>
+      </h1>
     </div>
     <div class="qm-pannel-inner-container">
       <div class="qm-flow-sub-header">

@@ -110,11 +110,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() { 
-    setTimeout(() => {
-      document.getElementById("panel-title").focus();
-      console.log(document.getElementById("panel-title"));
-      
-    }, 100);
+  
   }
 
   deselectBranch() {

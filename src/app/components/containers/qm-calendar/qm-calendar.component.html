@@ -19,21 +19,26 @@
         {{ name | translate }}
       </div>
     </div>
-    <div class="qm-calendar-weeks">
+    <div class="qm-calendar-weeks" id="qm-calendar" tabindex="0" (focus)="focusFirstDate()">
       <div *ngFor="let week of weeks; last as isLast" class="qm-calendar-week" [ngClass]="{'qm-calendar-week--last': isLast}">
         <ng-container *ngFor="let day of week">
           <div class="qm-week-date disabled"  *ngIf="!isSelectedMonth(day.mDate)">
             <div class="qm-date-text"></div>
           </div>
-          <button class="qm-week-date enabled qm-transparent-btn"
+          <button class="qm-week-date enabled qm-transparent-btn qm-date"
+                role="button"
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day, true)"
+               (keyup.enter)="selectDate(day, true)"
+               (keyup.spacebar)="selectDate(day, true)"
                (keyup.arrowup) = "KeyarrowUp(day.mDate.date())"
                (keyup.arrowleft) = "KeyarrowLeft(day.mDate.date())"
                (keyup.arrowdown) = "KeyarrowDown(day.mDate.date())"
                (keyup.arrowright) = "KeyarrowRight(day.mDate.date())"
+               (keyup.tab) = "TabPressed()"
                [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}"
-               [attr.tabindex]="day.disabled ? '-1' : null"
+               [disabled]="day.disabled"
+               [attr.tabindex]="day.disabled ? null : '-1'"
                [attr.id]="day.disabled ? day.mDate.date() + '-disabled' : day.mDate.date() + '-enabled'">
             <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
           </button>

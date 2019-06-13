@@ -1,6 +1,6 @@
 <ng-container *ngIf="isShowTimeSlots">
 
-  <div class="time-category-container" dir="{{userDirection$ | async}}">
+  <div class="time-category-container" dir="{{userDirection$ | async}}" id="qm-timeslot-container">
     <h3 class="qm-available-slots-heading">{{ 'label.available.timeslots' | translate }}</h3>
   
     <!--div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 

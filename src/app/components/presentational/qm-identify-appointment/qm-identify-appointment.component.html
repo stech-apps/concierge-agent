@@ -127,8 +127,8 @@
           <div role="tabpanel" id="bookingid-tabpanel" aria-labelledby="bookingid">
             <div class="qm-identify-appointment__search-area">
               <div class="qm-search qm-search--large">
-                <input [(ngModel)]="searchText" #clearInputDirective="qmClearInputRef" qmClearInput
-                  class="qm-search__input" name="serviceSearchInput" (keyup)="restrictNumbers($event)" type="tel"
+                <input [(ngModel)]="searchText" pattern="searchFieldValidation" #clearInputDirective="qmClearInputRef" qmClearInput
+                  class="qm-search__input" name="serviceSearchInput" type="tel"
                   placeholder="{{
                   'label.identify.appointment.searchbookingid' | translate
                 }}" [formControl]="searchInputController" id="searchAppointmentField" />
@@ -141,7 +141,7 @@
               </div>
               </div>
 
-              <button (click)="onEnterPressed()" class="qm-btn qm-btn--primary">
+              <button (click)="onEnterPressed()" [disabled]="searchText.length === 0 || !searchFieldValidation()" class="qm-btn qm-btn--primary">
                 {{ "label.identify.appointment.fetch" | translate }}
               </button>
 

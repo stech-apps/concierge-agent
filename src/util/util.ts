@@ -89,6 +89,10 @@ export class Util {
         return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     }
 
+    numberRegEx() {
+        return /^[0-9]*$/;
+    }
+
     phoneNoValidator() {
         return [Validators.pattern(this.phoneNoRegEx())];
     }
@@ -98,7 +102,7 @@ export class Util {
     }
 
     numberValidator() {
-        return Validators.pattern(/^[0-9]*$/);
+        return Validators.pattern(this.numberValidator());
     }
   
     getLocaleDate(dateString: string) {

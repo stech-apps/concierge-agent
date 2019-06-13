@@ -45,6 +45,7 @@ import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directi
 import { DEFAULT_LOCALE } from "src/constants/config";
 import { GlobalNotifySelectors } from "src/store/services/global-notify";
 import { ISystemInfo } from "src/models/ISystemInfo";
+import { utils } from "protractor";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -1671,5 +1672,11 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     if(this.expandedAppointment) {
       this.expandedAppointment.showInfo = false;
     }
+  }
+
+  searchFieldValidation () {
+    const regex = this.util.numberRegEx();
+    const isValid = regex.test(this.searchText);
+    return isValid;
   }
 }

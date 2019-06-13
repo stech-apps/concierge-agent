@@ -1,6 +1,6 @@
 <qm-auto-close data-keyboard="false" data-backdrop="static"  *ngIf="customers.length==0||editMode" >
   <div class="qm-input-box" dir="{{ userDirection$ | async }}" >
-    <form class="qm-input-box__container" [formGroup]="customerCreateForm" autocomplete="off" >
+    <form class="qm-input-box__container"  [formGroup]="customerCreateForm" (keyup.enter)="Donothing($event)" autocomplete="off" >
       <div class="qm-input-box__input-section">  
         
         <!-- Name section -->

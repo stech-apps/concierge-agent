@@ -290,6 +290,9 @@ export class QmInputboxComponent implements OnInit {
     this.subscriptions.unsubscribe();
   }
   
+  Donothing(event) {
+    event.stopPropagation();
+  }
   // Date of Birth validation
   isValidDOBEntered(control: FormGroup) {
     if (control.value) {

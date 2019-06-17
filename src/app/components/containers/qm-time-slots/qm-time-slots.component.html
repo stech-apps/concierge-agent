@@ -2,47 +2,58 @@
 
   <div class="time-category-container" dir="{{userDirection$ | async}}" id="qm-timeslot-container">
     <h3 class="qm-available-slots-heading">{{ 'label.available.timeslots' | translate }}</h3>
-  
+
     <!--div *ngFor="let ti of timeSlotCategories" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" 
     [ngClass]="{'qm-time-category--active': ti.isActive}">
       {{ti.title}}
     </div-->
     <div class="qm-time-slot-list__category-parent">
       <ng-container *ngFor="let ti of timeSlotCategories">
-        <div *ngIf="ti.endTime != 24" (click)="timeSlotCategorySelect(ti)" class="qm-time-category" [ngClass]="{'qm-time-category--active': ti.isActive}">
-          <button class="qm-time-slot-category--title">{{ti.title }}</button>
+        <div *ngIf="ti.endTime != 24" (click)="timeSlotCategorySelect(ti)" class="qm-time-category"
+          [ngClass]="{'qm-time-category--active': ti.isActive}">
+          <button class="qm-time-slot-category--title" (keyup.tabkey) = "KeyTab()">{{ti.title }}</button>
         </div>
       </ng-container>
     </div>
   </div>
-  
+
   <div class="qm-time-slot-list" dir="{{userDirection$ | async}}">
     <ng-container *ngIf="!isTimeSlotLoading">
       <div class="qm-time-slot-list__scrollable">
-        <div class="qm-time-split" *ngFor="let tc of timeSlotCategories">
-          <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="!isTimeSlotLoading && timeFormat === HOUR_24FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
+        <div class="qm-time-split" *ngFor="let tc of timeSlotCategories; let j = index">
+          <div class="qm-time-split__empty" [ngClass]="['qm-time-split__empty' + tc.category]"
+            *ngIf="!isTimeSlotLoading && timeFormat === HOUR_24FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
             <div class="qm-time-split__empty--text">{{ ('label.nobookable.slots' | translate) }}</div>
             <div class="qm-time-split__empty--time">{{ ' ' + tc.startTime + ':00' + ' - ' + tc.endTime + ':00' }}</div>
           </div>
-          <div class="qm-time-split__empty"  [ngClass]="['qm-time-split__empty' + tc.category]" *ngIf="!isTimeSlotLoading && timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
+          <div class="qm-time-split__empty" [ngClass]="['qm-time-split__empty' + tc.category]"
+            *ngIf="!isTimeSlotLoading && timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
             {{ ('label.nobookable.slots.ampm' | translate) + ' ' + tc.title}}
           </div>
-          <button class="qm-time-select-slot qm-transparent-btn" *ngFor="let ts of timeSlots | filterTimeSlot : tc.category" [ngClass]="{'qm-time-select-slot--active': ts.isActive}"
-            (click)="timeSlotSelect(ts)">
+          <button class="qm-time-select-slot qm-transparent-btn"
+            *ngFor="let ts of timeSlots | filterTimeSlot : tc.category;let i = index"
+            id="{{getTimeSlotElementId(i,j)}}"
+            (keyup.arrowdown) = "KeyarrowDown(i,j)"
+            (keyup.arrowup) = "KeyarrowUp(i,j)"
+            (keyup.arrowleft) = "KeyarrowLeft(i,j)"
+
+            (keyup.arrowright) = "KeyarrowRight(i,j)"
+            [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
             {{ getTimeDisplayValue(ts) }}
             <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}</span>
           </button>
         </div>
       </div>
     </ng-container>
-  
+
     <div class="qm-loading-timeslots" *ngIf="isTimeSlotLoading">
-        <span class="qm-spinner"></span>
+      <span class="qm-spinner"></span>
       <div class="qm-loading-timeslots__content">
-          {{('label.timeslots.loading.text' | translate)}}
-      </div>    
+        {{('label.timeslots.loading.text' | translate)}}
+      </div>
     </div>
   </div>
 </ng-container>
 
-<div class="qm-timeslots-hidden-message" *ngIf="!isShowTimeSlots">{{ 'label.reschedule.initial.timeslotcontainer.message' | translate }}</div>
+<div class="qm-timeslots-hidden-message" *ngIf="!isShowTimeSlots">
+  {{ 'label.reschedule.initial.timeslotcontainer.message' | translate }}</div>

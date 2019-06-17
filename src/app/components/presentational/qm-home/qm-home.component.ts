@@ -66,6 +66,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
           this.isQuickServeEnable = params.quickServe;
           this.isShowQueueView = params.queueView;
           this.editVisitEnable = params.editVisit;
+          console.log(params);
+          
         }
       }
     );

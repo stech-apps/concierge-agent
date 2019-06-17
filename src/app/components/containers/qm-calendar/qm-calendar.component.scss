@@ -14,3 +14,6 @@ li:focus{
   .qm-date:focus {
     border:  solid #007bff 1px;  
   }
+  button[tabindex="-1"]:focus {
+    border:  solid #007bff 1px !important;  
+}

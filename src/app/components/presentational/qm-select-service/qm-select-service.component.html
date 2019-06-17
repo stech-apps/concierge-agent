@@ -3,7 +3,7 @@
 <div  id="main-container" class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  selectedServiceList && selectedServiceList.length > 0  ? 'calc(100% - 80px)' : '100%'}">
     <div class="qm-pannel-full-inner-container"> 
         <div>     
-            <h1 class="qm-flow-header" tabindex="-1" id="panel-title" aria-label="edit service">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
+            <h1 class="qm-flow-header" tabindex="-1" id="panel-title">{{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
           </div>
   <div class="qm-white-container">
   <div class="qm-pannel-inner-container"> 
@@ -35,7 +35,7 @@
   <div class="qm-service-search-area" >
     <div class="qm-flow-sub-header__left">
       <div class="qm-search qm-search--large" *ngIf="serviceList && serviceList.length >= searchFieldServiceCount">
-        <label class="sr-only" for="serviceSearchInput">{{'branch_search_placeholder' | translate}}</label>
+        <label class="sr-only" for="serviceSearchInput">{{'label_service_search' | translate}}</label>
         <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
           id="serviceSearchInput" name="serviceSearchInput" placeholder="{{'label.service.search' | translate}}"
           #serviceSearchInput (keydown.enter)="serviceSearchInput.blur()">

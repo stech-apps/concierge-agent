@@ -20,6 +20,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   private readonly HOUR_12FORMAT = 'AMPM';
   timeFormat: string = this.HOUR_24FORMAT; //todo read from orchestra setting
   public userDirection$: Observable<string>;
+  public firstElement: boolean = false;
   
   private readonly TIME_GAP = 4;
   private subscriptions: Subscription = new Subscription();
@@ -39,13 +40,15 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 
-
   ngOnInit() {
     const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
       this.timeFormat = tf;
       this.generateTimeSlotCategories();
       this.timeSlotCategories[0].isActive = true;
     });
+
+
+    
     
     const timeSlotSubscription = this.timeSlotSelectors.times$.subscribe((times) => {
       this.timeSlots = [];
@@ -114,6 +117,62 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
+
+  // Arrow function implementation
+  KeyarrowUp(i : number, j: number) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4);
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } else if (document.getElementById(`${j-1}-1-${col}`)) {
+      document.getElementById(`${j-1}-1-${col}`).focus();
+    }
+  }
+  KeyarrowDown(i : number, j: number) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4) + 2;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } else if (document.getElementById(`${j+1}-1-${col}`)) {
+      document.getElementById(`${j+1}-1-${col}`).focus();
+    }
+  }
+  KeyarrowLeft(i : number, j: number) {
+    let col = (i%4) ;
+    let row =  Math.floor(i/4) + 1;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } 
+    // else if (document.getElementById(`${j+1}-1-1`)) {
+    //   document.getElementById(`${j+1}-1-1`).focus();
+    // }
+  }
+  KeyarrowRight(i : number, j: number) {
+    let col = (i%4) + 2 ;
+    let row =  Math.floor(i/4) + 1;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } 
+    // else if (document.getElementById(`${j+1}-1-1`)) {
+    //   document.getElementById(`${j+1}-1-1`).focus();
+    // }
+  }
+
+  getTimeSlotElementId(i: number, j: string) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4) + 1;  
+    return j + '-' + row.toString() + '-' + col.toString();
+  }
+
+  KeyTab() {
+    let focusable = document.getElementsByClassName("qm-time-select-slot")[0];
+    focusable.setAttribute('Name',"firstTimeElement");
+    console.log(focusable);
+    
+    document.getElementsByName('firstTimeElement')[0].focus();
+  }
+
+
 
   generateTimeSlotCategories() {
 

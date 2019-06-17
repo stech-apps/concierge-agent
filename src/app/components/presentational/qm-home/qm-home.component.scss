@@ -5,9 +5,6 @@ $standard-home-margin : 1.5rem;
     flex: 1;
     display: flex;
     position: relative;
- 
-    // justify-content: center;
-
 
     .qm-home-summary-area {
         display: flex;
@@ -73,6 +70,10 @@ $standard-home-margin : 1.5rem;
     }
 }
 
+.icon-general{
+    display: none;
+}
+
 @media screen and (max-width: 1023px) {
     .qm-home-content {
         flex-direction: column;
@@ -84,6 +85,10 @@ $standard-home-margin : 1.5rem;
     .qm-home-summary-area {
         // max-width: 768px;
     }
+    .icon-general{
+        display: block;
+    }
+    
   }
   
 @include qm-sm{

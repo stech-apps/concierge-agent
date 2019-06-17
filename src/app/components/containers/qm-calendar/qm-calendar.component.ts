@@ -57,13 +57,11 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   focusFirstDate(){
-    console.log("foucsing");
-    // var focusable = document.getElementById("qm-calendar").querySelectorAll('span[tabindex="-1"]');
     var focusable = document.getElementById("qm-calendar").querySelectorAll('button:not([disabled])');
-    focusable[0].setAttribute("name","firstElement");
-    document.getElementsByName("firstElement")[0].focus();
-    console.log(document.getElementsByName("firstElement")[0]);
-    
+    if (focusable.length > 0) {
+      focusable[0].setAttribute("name","firstElement");
+      document.getElementsByName("firstElement")[0].focus();
+    }    
   }
   TabPressed() {
     document.getElementById('qm-timeslot-container').focus();

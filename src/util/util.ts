@@ -102,7 +102,7 @@ export class Util {
     }
 
     numberValidator() {
-        return Validators.pattern(this.numberValidator());
+        return Validators.pattern(this.numberRegEx());
     }
   
     getLocaleDate(dateString: string) {

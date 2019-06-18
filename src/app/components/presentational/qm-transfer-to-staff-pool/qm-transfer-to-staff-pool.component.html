@@ -44,9 +44,11 @@
             [innerHtml]="s.firstName + ' ' + s.lastName | qmhighlight: filterText"></div>
         </button>
       </div>
+      <div class="qm-no-results" *ngIf="(StaffPool | filterStaffPool : filterText).length===0 && loaded && filterText!=''">
+          {{'staff_pool_not_found' |translate}} </div>
     </div>
+
   </div>
-  <div class="qm-no-results" *ngIf="(StaffPool | filterStaffPool : filterText).length===0 && loaded && filterText!=''">
-    {{'staff_pool_not_found' |translate}} </div>
+
 
 </div>

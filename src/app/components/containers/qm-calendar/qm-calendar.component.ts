@@ -58,10 +58,12 @@ export class QmCalendarComponent implements OnInit, OnChanges {
 
   focusFirstDate(){
     var focusable = document.getElementById("qm-calendar").querySelectorAll('button:not([disabled])');
-    if (focusable.length > 0) {
-      focusable[0].setAttribute("name","firstElement");
-      document.getElementsByName("firstElement")[0].focus();
-    }    
+    setTimeout(() => {
+      if (focusable.length > 0) {
+        focusable[0].setAttribute("name","firstElement");
+        document.getElementsByName("firstElement")[0].focus();
+      }          
+    }, 100);
   }
   TabPressed() {
     document.getElementById('qm-timeslot-container').focus();
@@ -110,6 +112,13 @@ export class QmCalendarComponent implements OnInit, OnChanges {
       document.getElementById(parseInt(value) + 1 + '-enabled').focus();
     }
     
+  }
+  onKeydown(event) {
+    if(event.shiftKey && event.keyCode == 9) {
+        document.getElementById("qm-next-month").focus();
+        event.stopPropagation();
+        event.preventDefault();        
+    }    
   }
 
   // date checkers

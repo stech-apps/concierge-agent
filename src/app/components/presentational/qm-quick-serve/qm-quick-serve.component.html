@@ -37,11 +37,13 @@
             <div class="qm-quick-serve__item" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
                 <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
                     <span class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
-                    <label for="qm-checkbox" class="qm-checkbox-label">
+                    <label for="{{service.internalName}}" class="qm-checkbox-label">
                         <input
                           (focus)="focusQmCheckbox(service)"
                           class="qm-checkbox"
+                          id="{{service.internalName}}"
                           type="radio"
+                          name="services"
                           (keydown.enter)="onServiceSelect(service)"
                           (keydown.space)="onServiceSelect(service)"
                           (focusout)="focusOutQmCheckbox()"

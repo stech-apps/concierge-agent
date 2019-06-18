@@ -8,7 +8,7 @@
           <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>  {{ currentDate.locale(this.locale).format('YYYY') }}</span>
       </div> 
         
-      <button (click)="nextMonth()"><i class="icon-caret-right"></i>
+      <button (click)="nextMonth()" id="qm-next-month"><i class="icon-caret-right"></i>
         <span class="sr-only">{{ 'button.nextMonth' | translate }}</span>
       </button>
 
@@ -26,7 +26,8 @@
             <div class="qm-date-text"></div>
           </div>
           <button class="qm-week-date enabled qm-transparent-btn qm-date"
-                role="button"
+              role="button"
+              (keydown)="onKeydown($event)"
                *ngIf="isSelectedMonth(day.mDate)"
                (click)="selectDate(day, true)"
                (keyup.enter)="selectDate(day, true)"

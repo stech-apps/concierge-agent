@@ -7,11 +7,16 @@
     [ngClass]="{'qm-time-category--active': ti.isActive}">
       {{ti.title}}
     </div-->
-    <div class="qm-time-slot-list__category-parent">
-      <ng-container *ngFor="let ti of timeSlotCategories">
+    <div class="qm-time-slot-list__category-parent" tabindex="0" id="qm-time-slot-categories"
+      (focus)="focusFirstTimeSlotCategory()">
+      <ng-container *ngFor="let ti of timeSlotCategories;let n = index">
         <div *ngIf="ti.endTime != 24" (click)="timeSlotCategorySelect(ti)" class="qm-time-category"
           [ngClass]="{'qm-time-category--active': ti.isActive}">
-          <button class="qm-time-slot-category--title" (keyup.tabkey) = "KeyTab()">{{ti.title }}</button>
+          <button class="qm-time-slot-category--title" tabindex="-1" 
+          (keyup.arrowup)="TimeSlotCategoryArrowUp(n)"
+          (keyup.arrowdown)="TimeSlotCategoryArrowDown(n)"
+          (keydown)="onKeydownTimeCategory($event)"
+          id="{{n}}-timeSlotCategory" >{{ti.title }}</button>
         </div>
       </ng-container>
     </div>
@@ -19,7 +24,7 @@
 
   <div class="qm-time-slot-list" dir="{{userDirection$ | async}}">
     <ng-container *ngIf="!isTimeSlotLoading">
-      <div class="qm-time-slot-list__scrollable">
+      <div class="qm-time-slot-list__scrollable" tabindex="0" (focus)="focusFirstTimeSlot()" id="qm-time-slot-container">
         <div class="qm-time-split" *ngFor="let tc of timeSlotCategories; let j = index">
           <div class="qm-time-split__empty" [ngClass]="['qm-time-split__empty' + tc.category]"
             *ngIf="!isTimeSlotLoading && timeFormat === HOUR_24FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
@@ -29,18 +34,20 @@
           <div class="qm-time-split__empty" [ngClass]="['qm-time-split__empty' + tc.category]"
             *ngIf="!isTimeSlotLoading && timeFormat === HOUR_12FORMAT && !((timeSlots | filterTimeSlot : tc.category).length)">
             {{ ('label.nobookable.slots.ampm' | translate) + ' ' + tc.title}}
-          </div>
-          <button class="qm-time-select-slot qm-transparent-btn"
-            *ngFor="let ts of timeSlots | filterTimeSlot : tc.category;let i = index"
-            id="{{getTimeSlotElementId(i,j)}}"
-            (keyup.arrowdown) = "KeyarrowDown(i,j)"
-            (keyup.arrowup) = "KeyarrowUp(i,j)"
-            (keyup.arrowleft) = "KeyarrowLeft(i,j)"
 
-            (keyup.arrowright) = "KeyarrowRight(i,j)"
+          </div>
+
+          <button class="qm-time-select-slot qm-transparent-btn"
+            *ngFor="let ts of timeSlots | filterTimeSlot : tc.category;let i = index" id="{{getTimeSlotElementId(i,j)}}"
+            (keyup.arrowdown)="KeyarrowDown(i,j)" (keyup.arrowup)="KeyarrowUp(i,j, timeSlots,ts.category)"
+            (keyup.arrowleft)="KeyarrowLeft(i,j)" (keyup.arrowright)="KeyarrowRight(i,j)"
+            tabindex="-1"
+            (keydown)="onKeydownTimeSlot($event)"
             [ngClass]="{'qm-time-select-slot--active': ts.isActive}" (click)="timeSlotSelect(ts)">
             {{ getTimeDisplayValue(ts) }}
-            <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}</span>
+            <span *ngIf="timeFormat === 'AMPM'" class="qm-time-select-slot--meridian">{{getMeridian(ts.title)}}
+              {{((timeSlots | filterTimeSlot: tc.category).length/4)}}
+            </span>
           </button>
         </div>
       </div>

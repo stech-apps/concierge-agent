@@ -54,6 +54,7 @@
           </qm-timelist-sidebar>
           <qm-time-filter-items
             id="startTime"
+            [ComponentId] = "'startTime'"
             #fis
             [selectedTime]="selectedStartTime"
             (onTimeSelect)="onTimeStartSelect($event)"
@@ -73,6 +74,7 @@
           <qm-time-filter-items
             #fi
             id="endTime"
+            [ComponentId] = "'endTime'"
             (onTimeSelect)="onTimeEndSelect($event)"
             [selectedTime]="selectedEndTime"
           ></qm-time-filter-items>

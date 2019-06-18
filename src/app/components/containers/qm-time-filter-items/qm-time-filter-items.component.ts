@@ -25,6 +25,9 @@ export class QmTimeFilterItemsComponent implements OnInit {
   @Input() 
   public selectedTime: moment.Moment = moment();
 
+  @Input() 
+  public ComponentId: string = '';
+
   @Input()
   public skipFirst: boolean = false;
 
@@ -136,5 +139,16 @@ export class QmTimeFilterItemsComponent implements OnInit {
     );
 
     return timeToScrollTo;
+  }
+  // arrow key functions
+  KeyarrowUp(value : number, compId: string) { 
+    if(document.getElementById(`${(value - 1)}-${compId}-slot`) ){
+      document.getElementById(`${(value - 1)}-${compId}-slot`).focus();
+    }
+  }
+  KeyarrowDown(value : number, compId: string) {
+    if(document.getElementById(`${(value + 1)}-${compId}-slot`) ){
+      document.getElementById(`${(value + 1)}-${compId}-slot`).focus();
+    }
   }
 }

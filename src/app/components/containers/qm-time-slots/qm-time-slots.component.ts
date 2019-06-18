@@ -119,13 +119,20 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   }
 
   // Arrow function implementation
-  KeyarrowUp(i : number, j: number) {
+  KeyarrowUp(i : number, j: number, Count: ITimeSlot[], category : string) {
     let col = (i%4) + 1;
     let row =  Math.floor(i/4);
+    // Count.filter(ts => ts.category.toString() == category);
+    if(parseInt(category) > 1){
+      category = (parseInt(category) - 1).toString();
+    }
+    let upperElement = Math.ceil(Count.filter(ts => ts.category.toString() == category).length/4);   
     if(document.getElementById(`${j}-${row}-${col}`)) {
       document.getElementById(`${j}-${row}-${col}`).focus();
-    } else if (document.getElementById(`${j-1}-1-${col}`)) {
-      document.getElementById(`${j-1}-1-${col}`).focus();
+    } else if (document.getElementById(`${j-1}-${upperElement}-${col}`)) {
+      document.getElementById(`${j-1}-${upperElement}-${col}`).focus();
+    } else if (document.getElementById(`${j-1}-${upperElement - 1}-${col}`)) {     
+      document.getElementById(`${j-1}-${(upperElement - 1)}-${col}`).focus()
     }
   }
   KeyarrowDown(i : number, j: number) {
@@ -172,8 +179,51 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     document.getElementsByName('firstTimeElement')[0].focus();
   }
 
+  // Focus first element of time slot 
+  focusFirstTimeSlotCategory() {
+    let TimeSlots = document.getElementById("qm-time-slot-categories").getElementsByClassName("qm-time-slot-category--title");
+    if (TimeSlots.length) {
+      TimeSlots[0].setAttribute("name","firstTimeCategroy");
+      document.getElementsByName("firstTimeCategroy")[0].focus();
+    }
+  }
+  // TimeSlot Category focus arrow keys
+  TimeSlotCategoryArrowUp(n : number) {
+    if (document.getElementById(`${n-1}-timeSlotCategory`)) {
+      document.getElementById(`${n-1}-timeSlotCategory`).focus();
+    }
+  }
+  TimeSlotCategoryArrowDown(n : number) {
+    if (document.getElementById(`${n+1}-timeSlotCategory`)) {
+      document.getElementById(`${n+1}-timeSlotCategory`).focus();
+    }
+  }
 
+  focusFirstTimeSlot() {
+    var focusable = document.getElementById("qm-time-slot-container").querySelectorAll('button');
+    focusable[0].setAttribute("name","firstTimeSlot");
+    setTimeout(() => {
+      if (focusable.length > 0) {
+        document.getElementsByName("firstTimeSlot")[0].focus();
+      }          
+    }, 1);
+  }
+  onKeydownTimeCategory(event) {
+    if(event.shiftKey && event.keyCode == 9) {
+      document.getElementById("qm-calendar").focus();
+      // event.stopPropagation();
+      event.preventDefault();        
+  }    
+  }
+  onKeydownTimeSlot(event) {
+    if(event.shiftKey && event.keyCode == 9) {
+      document.getElementById("qm-time-slot-categories").focus();
+      // event.stopPropagation();
+      event.preventDefault();        
+  }    
+  }
 
+ 
   generateTimeSlotCategories() {
 
     if(this.timeFormat == this.HOUR_24FORMAT) {

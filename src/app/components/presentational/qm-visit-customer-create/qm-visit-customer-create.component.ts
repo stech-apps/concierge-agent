@@ -29,6 +29,10 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   showToolTip:boolean;
   isExpanded = false;
   skipBranchFocus: boolean = false;
+  dateError = {
+    days: '',
+    month: ''
+  };
 
   date = {
     day: '',
@@ -117,14 +121,12 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   }
 
   buildCustomerFrom(){
+    const today = new Date();
     const phoneValidators = this.util.phoneNoValidator();
     const emailValidators = this.util.emailValidator();
-    let dayValidators = [Validators.maxLength(2), Validators.max(31)];
-    let yearValidators = [Validators.maxLength(4), Validators.min(1)];
-    let monthValidators = [];
-    dayValidators = [...dayValidators];
-    yearValidators = [...yearValidators];
-    monthValidators = [...monthValidators];
+    const dayValidators = [Validators.maxLength(2), Validators.max(31), this.util.numberValidator()];
+    const yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), this.util.numberValidator()];
+    const monthValidators = [];
 
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl(''),
@@ -147,34 +149,26 @@ export class QmVisitCustomerCreateComponent implements OnInit {
    
   // Date of Birth validation
   isValidDOBEntered(control: FormGroup) {
-    let errors = null;
     if (control.value) {
-      // invalid date check for leap year
-      if (control.value.year && control.value.month && control.value.day) {
-        const d = new Date(
-          control.value.year,
-          parseInt(control.value.month, 10) - 1,
-          control.value.day
-        );
-        if (d && d.getMonth() + 1 !== parseInt(control.value.month, 10)) {
-          control.setErrors({
-            invalidDay: true
-          });
-          errors = { ...errors, invalidDay: true };
-        }
-      } else if (
-        control.value.year ||
-        control.value.month ||
-        control.value.day
-      ) {
-        control.setErrors({
-          incompleteDay: true
+      if (control.value.year && control.value.day && !control.value.month) {
+        control.controls['month'].setErrors({'incorrect': true});
+      } else {
+        control.controls['month'].setErrors(null);
+      }
+      if (control.value.year && control.value.month) {
+        const lastDay = new Date(control.value.year, control.value.month, 0).getDate();
+        const tempDayValidators = [Validators.maxLength(2), Validators.max(lastDay), this.util.numberValidator()];
+        control.controls['day'].setValidators(tempDayValidators);
+
+        const selectedMonth = this.months.find(function (item) {
+          return item.value === control.value.month;
         });
-        errors = { ...errors, incompleteDob: true };
+        this.dateError = {
+          days: lastDay.toString(),
+          month: selectedMonth.label
+        };
       }
     }
-
-    return errors;
   }
   
   trimCustomer(){

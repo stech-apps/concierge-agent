@@ -255,3 +255,7 @@ input[type=number]::-webkit-outer-spin-button {
           margin-top: -16px;
         }
       }
+        
+.qm-invalid-field__label{
+    color: $error-color;
+}

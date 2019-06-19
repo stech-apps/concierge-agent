@@ -151,4 +151,27 @@ export class QmTimeFilterItemsComponent implements OnInit {
       document.getElementById(`${(value + 1)}-${compId}-slot`).focus();
     }
   }
+  Tabbed(compId: string) {
+    if (compId == 'startTime') {
+      if(document.getElementById(`endTime-qm-time-sidebar`) ){
+         document.getElementById(`endTime-qm-time-sidebar`).focus();
+      }
+    }
+  }
+  focusFirstElement(ComponentId: string) {
+    var focusable = document.getElementById(`${ComponentId}-container`).querySelectorAll('button');
+    setTimeout(() => {
+      if (focusable.length > 0) {
+        focusable[0].setAttribute("name",`${ComponentId}-firstTimeSlotValue`);
+        document.getElementsByName(`${ComponentId}-firstTimeSlotValue`)[0].focus();
+      }          
+    }, 3);
+  }
+  onKeydown(event, ComponentId) {
+    if(event.shiftKey && event.keyCode == 9) {
+        document.getElementById(`${ComponentId}-qm-time-sidebar`).focus();
+        event.stopPropagation();
+        event.preventDefault();        
+  }
+}
 }

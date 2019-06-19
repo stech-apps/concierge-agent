@@ -23,7 +23,7 @@
       <div class="qm-time-filter__date-label">
         {{ "label.timefilter.date" | translate }}
       </div>
-      <button class="qm-time-filter__date-text qm-transparent-btn" (click)="showCalendar()">
+      <button class="qm-time-filter__date-text qm-transparent-btn" (click)="showCalendar()" id="qm-date-select-calander">
         <span class="qm-time-filter__date-text--label">
           {{ selectedDate.mDate  | amLocale: userLocale | amDateFormat: "DD MMMM YYYY" }}</span>
         <span  class="qm-time-filter__date-icon">
@@ -50,7 +50,7 @@
           <div for="startTime" class="qm-time-filter__start-heading qm-text-overflow-fix">
             {{ "label.timefilter.starttime" | translate }}
           </div>
-          <qm-timelist-sidebar (optionClicked)="fis.scrollToClosest($event)">
+          <qm-timelist-sidebar  [ComponentId] = "'startTime'" (optionClicked)="fis.scrollToClosest($event)">
           </qm-timelist-sidebar>
           <qm-time-filter-items
             id="startTime"
@@ -69,7 +69,7 @@
           <div for="endTime" class="qm-time-filter__end-heading qm-text-overflow-fix">
             {{ "label.timefilter.endtime" | translate }}
           </div>
-          <qm-timelist-sidebar (optionClicked)="fi.scrollToClosest($event)">
+          <qm-timelist-sidebar  [ComponentId] = "'endTime'" (optionClicked)="fi.scrollToClosest($event)">
           </qm-timelist-sidebar>
           <qm-time-filter-items
             #fi

@@ -48,8 +48,8 @@
       <div class="qm-summary-item qm-checkout-view__section" style="max-width:100%">
           <div style="display:flex;width: 100%;position: relative;" *ngIf="( !tempCustomer && !selectedCustomer )" class="qm-checkout-view__unlinked-customer">
               <h3>{{ 'label.visit.details.heading' | translate }}</h3>
-              <button class="qm-transparent-btn icon-customer-add" (click)="goToPanel(1)">
-              <i  *ngIf="!isCustomerFlowHidden" class="qm-action-btn__icon" aria-hidden="true"></i>
+              <button *ngIf="!isCustomerFlowHidden" class="qm-transparent-btn icon-customer-add" (click)="goToPanel(1)">
+              <i   class="qm-action-btn__icon" aria-hidden="true"></i>
             </button>
           </div>
       <!-- 2 No Add Customer utt disabled-->

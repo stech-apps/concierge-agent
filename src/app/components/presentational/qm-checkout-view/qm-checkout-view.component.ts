@@ -78,6 +78,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
   isArriveAppointment: boolean = false;
+  hideCustomer: boolean = false;
 
   themeColor: string = "#a9023a";
   whiteColor: string = "#ffffff";
@@ -163,7 +164,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
-          
+          this.hideCustomer = uttParameters.hideCustomer;
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
           this.isVipLvl2Enabled = uttParameters.vipLvl2;

@@ -29,6 +29,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   userDirection$: Observable<string>;
   showToolTip: boolean;
   skipBranchFocus: boolean;
+  skipButtonHover: boolean;
 
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 

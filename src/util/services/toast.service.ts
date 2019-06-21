@@ -61,6 +61,10 @@ export class ToastService {
   }
 
   successToast(text: string) {
+    setTimeout(() => {
+      document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
+     document.getElementById("close-toast-btn").focus();      
+     },500);
     return this.toastrService.success(text, '', this.successOptions);
   }
 
@@ -73,6 +77,10 @@ export class ToastService {
   }
 
   errorToast(text: string) {
+    setTimeout(() => {
+      document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
+     document.getElementById("close-toast-btn").focus();      
+     },500);
     this.toastrService.error(text, '', this.errorOptions);
   }
 

@@ -41,12 +41,14 @@
 </div>
   <div class="qm-flow-sub-header__right">
     <div class="qm-checkbox__container">
-      <label for="qm-checkbox" class="qm-checkbox-label">
-        <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip" (focus)="skipBranchFocus=true"  (focusout)="skipBranchFocus=false">
+      <label for="qm-checkbox" class="qm-checkbox-label">        
         <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
-          <div aria-hidden="true" class="qm-checkbox__border"></div>
-          <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-          <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
+          
+            <input id="qm-skip-branch" class="chc styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip"  
+            (focus)="skipButtonHover = true" (focusout)="skipButtonHover = false"> 
+          <label for="qm-skip-branch" (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false" 
+          class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</label>
+          <div *ngIf="skipButtonHover" class="qm-check-box-background"></div>
         </div>
       </label>
       <button  (click)="clickedshowToolTip()" type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">

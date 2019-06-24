@@ -1,12 +1,12 @@
 <div class="qm-timelist-sidebar" id="{{ComponentId}}-qm-time-sidebar" tabindex="0"
   (focus)="focusFirstElement(ComponentId)">
   <ng-container *ngIf="timeConvention === 'AMPM'">
-    <button tabindex="-1" id="sidebar-value-1" type="button" class="qm-timelist-sidebar__btn" title="AM"
-      (keyup.arrowup)="KeyarrowUp(1,ComponentId)" (keyup.arrowdown)="KeyarrowDown(1,ComponentId)"
-      (click)="handleClick('AM')">AM</button>
-    <button tabindex="-1" id="sidebar-value-2" type="button" class="qm-timelist-sidebar__btn" title="PM"
+    <button tabindex="-1"id="{{ComponentId}}-sidebar-value-1" type="button" class="qm-timelist-sidebar__btn" title="AM"
+      (keyup.arrowup)="KeyarrowUp(1,ComponentId)" (keydown.tab)="TabToTimeSlots(ComponentId)" (keyup.arrowdown)="KeyarrowDown(1,ComponentId)"
+      (click)="handleClick('AM')" (keydown)="onKeydown($event,ComponentId)">AM</button>
+    <button tabindex="-1" id="{{ComponentId}}-sidebar-value-2" type="button" class="qm-timelist-sidebar__btn" title="PM"
       (click)="handleClick('PM')" (keyup.arrowup)="KeyarrowUp(2,ComponentId)"
-      (keyup.arrowdown)="KeyarrowDown(2,ComponentId)">PM</button>
+      (keyup.arrowdown)="KeyarrowDown(2,ComponentId)" (keydown)="onKeydown($event,ComponentId)">PM</button>
   </ng-container>
   <ng-container *ngIf="timeConvention == '24'">
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-1" type="button" class="qm-timelist-sidebar__btn" title="08"

@@ -63,7 +63,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
         focusable[0].setAttribute("name","firstElement");
         setTimeout(() => {
           document.getElementsByName("firstElement")[0].focus();
-        }, 100);
+        }, 500);
       }          
     }, 10);
   }

@@ -350,6 +350,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
           objDiv.scrollIntoView();
+          objDiv.querySelectorAll('button')[0].focus();
+          // console.log(objDiv.);
+          
        
       }, 100); 
 

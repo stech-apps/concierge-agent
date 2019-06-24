@@ -5,10 +5,10 @@
   </button>
   <div class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
-          <label class="sr-only" for="{{searchPlaceHolder}}">{{ searchPlaceHolder | translate}}</label>
+          <label class="sr-only" for="dropDownSearch">{{ searchPlaceHolder | translate}}</label>
           <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched "
-            id="{{searchPlaceHolder}}" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}" autocomplete="off">
+            id="dropDownSearch" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}" autocomplete="off">
     
           <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
             <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>

@@ -44,7 +44,7 @@
           input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/
         -->
         <label for="qm-checkbox" class="qm-checkbox-label">
-            <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
+            <div class="qm-checkbox__selector">
               <input id="qm-skip-step" class="styled-checkbox qm-tab" type="checkbox"
                 [(ngModel)]="isEnableUseDefault" (focus)="skipButtonHover = true;skipBranchFocus=true"
                 (focusout)="skipButtonHover = false;skipBranchFocus=false"

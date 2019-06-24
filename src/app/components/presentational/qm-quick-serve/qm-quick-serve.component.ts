@@ -36,7 +36,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
   showToolTip: boolean;
-
+  hoveredService: string = '';
 
   isQuickServeEnable: boolean;
   isShowQueueView: boolean;
@@ -245,6 +245,13 @@ filterQueues(newFilter: string) {
   
   focusOutQmCheckbox(){
     this.focusQuickServeItem = null;    
+  }
+  
+  MouseEnteredCheckbox(service) {
+    this.hoveredService = service.id;
+  }
+  MouseLeaveCheckbox() {
+    this.hoveredService = '';
   }
 
 }

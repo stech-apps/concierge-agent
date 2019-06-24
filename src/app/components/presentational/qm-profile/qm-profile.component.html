@@ -43,24 +43,22 @@
         <!--
           input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/
         -->
-
         <label for="qm-checkbox" class="qm-checkbox-label">
-          <input
-            id="qm-checkbox"
-            class="qm-checkbox qm-tab"
-            (focus)="skipBranchFocus=true"
-            (focusout)="skipBranchFocus=false" 
-            type="checkbox"
-            [(ngModel)]="isEnableUseDefault"
-            [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1"/>
-          <div class="qm-checkbox__selector">
-            <div aria-hidden="true" class="qm-checkbox__border"></div>
-            <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-            <div class="qm-checkbox__selector-icon-text">
-              <span>{{ "label.skip_next_time" | translate }}</span>
+            <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
+              <input id="qm-skip-step" class="styled-checkbox qm-tab" type="checkbox"
+                [(ngModel)]="isEnableUseDefault" (focus)="skipButtonHover = true;skipBranchFocus=true"
+                (focusout)="skipButtonHover = false;skipBranchFocus=false"
+                [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1">
+              <label for="qm-skip-step" (mouseenter)="skipButtonHover = true"
+                (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
+                (mouseup)="mousePressed = false"
+                class="qm-checkbox__selector-icon-text">{{ 'label.skip_next_time' | translate }}</label>
+              <div aria-hidden="true" *ngIf="skipButtonHover || mousePressed"
+                [ngClass]="{ 'checkbox-backdrop-unchecked': !isEnableUseDefault}" class="qm-check-box-background">
+              </div>
             </div>
-          </div>
-        </label>
+          </label>
+
       </div>
 
       <div class="qm-profile-button-container">

@@ -210,3 +210,13 @@
     margin-top: -16px;
   }
 }
+.qm-checkbox-label{
+  position: relative;
+}
+.styled-checkbox + label:before {
+  margin-left: 2px;
+}
+.qm-check-box-background{
+  top: -9px;
+  left: 0px;
+}

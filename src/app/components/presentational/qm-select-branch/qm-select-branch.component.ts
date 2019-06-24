@@ -30,6 +30,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   showToolTip: boolean;
   skipBranchFocus: boolean;
   skipButtonHover: boolean;
+  mousePressed: boolean;
 
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 
@@ -188,5 +189,12 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     return completeAddress;
   }
 
+  mouseDown(){
+    console.log(this.skipButtonHover);
+    
+  }
+  mouseUp() {
+    console.log(this.skipButtonHover);  
+  }
  
 }

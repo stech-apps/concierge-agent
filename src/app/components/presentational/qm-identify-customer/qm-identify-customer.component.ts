@@ -24,6 +24,8 @@ export class QmIdentifyCustomerComponent implements OnInit {
 
   SkipThisTimeFocused:boolean;
   showToolTip:boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
 
   constructor(
     private customerDispatchers:CustomerDispatchers,

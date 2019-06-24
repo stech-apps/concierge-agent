@@ -61,9 +61,11 @@ export class QmCalendarComponent implements OnInit, OnChanges {
     setTimeout(() => {
       if (focusable.length > 0) {
         focusable[0].setAttribute("name","firstElement");
-        document.getElementsByName("firstElement")[0].focus();
+        setTimeout(() => {
+          document.getElementsByName("firstElement")[0].focus();
+        }, 100);
       }          
-    }, 100);
+    }, 10);
   }
   TabPressed() {
     document.getElementById('qm-timeslot-container').focus();

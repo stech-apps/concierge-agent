@@ -122,6 +122,9 @@
     }
     @include qm-xs{
         margin: 48px auto 0 auto;
+        @at-root [dir="rtl"] & {
+            margin: 48px auto 0 auto;
+        }
     }  
 }
 

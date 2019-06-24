@@ -426,12 +426,6 @@ button:active,button:hover{
 }
 }
 
-// IE specific fix for tooltip
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .quick-serve-tooltip{
-    margin-left:-203px;
-  }
-}
 
 .qm-transparent-close-btn{
   border: none;
@@ -448,4 +442,31 @@ button:active,button:hover{
 .qm-transparent-close-btn:focus{
   border: none;
   outline: none;
+}
+.styled-checkbox {
+  right: 30px;
+  left: auto;
+}
+
+.qm-check-box-background{
+  left: auto;
+  top: 8px;
+  right: 8px;
+  @at-root [dir="rtl"] & {
+    right: auto;
+    left: 8px;
+  }
+}
+
+// IE specific fix for tooltip
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .quick-serve-tooltip{
+    margin-left:-203px;
+  }
+  .qm-check-box-background{
+    right: 5px;
+    @at-root [dir="rtl"] & {
+      left: 5px;
+    }
+  }
 }

@@ -47,6 +47,8 @@ export class QmSelectServiceComponent implements OnInit {
 
   isInitialServiceLoaded = false;
   showToolTip:boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
 
   constructor(
     private serviceSelectors: ServiceSelectors,

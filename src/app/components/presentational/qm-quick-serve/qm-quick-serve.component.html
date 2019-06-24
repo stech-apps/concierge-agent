@@ -37,26 +37,22 @@
             <div class="qm-quick-serve__item" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
                 <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
                     <span class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></span>
-                    <label for="{{service.internalName}}" class="qm-checkbox-label">
-                        <input
-                          (focus)="focusQmCheckbox(service)"
-                          class="qm-checkbox"
-                          id="{{service.internalName}}"
-                          type="radio"
-                          name="services"
-                          (keydown.enter)="onServiceSelect(service)"
+                    <label for="qm-checkbox" class="qm-checkbox-label">
+                            <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
+                              <input  id="{{service.internalName}}" class="styled-checkbox" type="radio" name="services"
+                                [checked]="selectedService !== null && selectedService.id === service.id" (focus)="focusQmCheckbox(service)"
+                                (keydown.enter)="onServiceSelect(service)"
                           (keydown.space)="onServiceSelect(service)"
-                          (focusout)="focusOutQmCheckbox()"
-                        />
-                      </label>
-                    <div *ngIf="selectedService !== null && selectedService.id === service.id">
-                        <div aria-hidden="true" class="qm-checkbox__border"></div>
-                        <i class="qm-action-btn__icon icon-checkbox-checked qm-quick-serve__icon" aria-hidden="true"></i>
-                    </div>
-                    <div *ngIf="selectedService === null || (selectedService !== null && selectedService.id !== service.id)">
-                        <div aria-hidden="true" class="qm-checkbox__border"></div>
-                        <i class="qm-action-btn__icon icon-checkbox-unchecked qm-quick-serve__uncheck-icon" aria-hidden="true"></i>
-                    </div>
+                                (focusout)="focusOutQmCheckbox()">
+                              <label for="qm-multi-service" (mouseenter)="MouseEnteredCheckbox(service)"
+                                (mouseleave)="MouseLeaveCheckbox()" (mousedown)="mousePressed = true"
+                                (mouseup)="mousePressed = false"
+                                class="qm-checkbox__selector-icon-text"></label>
+                              <div aria-hidden="true" *ngIf="hoveredService ==service.id"
+                                [ngClass]="{ 'checkbox-backdrop-unchecked': !(selectedService !== null && selectedService.id === service.id)}" class="qm-check-box-background">
+                              </div>
+                            </div>
+                          </label>
                 </div>
             </div>
         </div>

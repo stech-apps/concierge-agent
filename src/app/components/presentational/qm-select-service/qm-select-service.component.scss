@@ -374,3 +374,9 @@ display: flex;
     margin-top: -16px;
   }
 }
+.qm-check-box-background {
+  top: -7px;
+  @at-root [dir="rtl"] & {
+    right: 17px;
+  }
+}

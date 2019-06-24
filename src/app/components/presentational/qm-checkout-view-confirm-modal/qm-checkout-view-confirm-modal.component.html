@@ -43,7 +43,7 @@
               </span>
               <span class="qm-standard-text-field__error-message">
                   <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">
-                    {{ email.value.includes('@') ? ('error.form.email.invalid' | translate) : (email.value.length > 0 ? ('error.form.email.invalid.des' | translate) : '') }}
+                    {{ 'error.form.email.invalid' | translate }}
                   </ng-container>
                  
                 </span>

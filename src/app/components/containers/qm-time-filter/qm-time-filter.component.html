@@ -7,9 +7,9 @@
 
   <form class="qm-modal__box-container">
     <div class="qm-modal__header qm-time-filter__header">
-      <span class="qm-time-filter__header-text qm-text-overflow-fix">{{
+      <h1 class="qm-time-filter__header qm-text-overflow-fix">{{
         header
-      }}</span>
+      }}</h1>
       <button class="qm-transparent-btn" (click)="activeModal.close()">
       <i
         class="qm-action-btn__icon qm-time-filter__header-icon icon-close"
@@ -42,9 +42,9 @@
       </div>
     </div>
     <div class="qm-modal__body">
-      <div class="qm-time-filter__subheader qm-text-overflow-fix">
+      <h2 class="qm-time-filter__subheader qm-text-overflow-fix">
         {{ subheader }}
-      </div>
+      </h2>
       <div class="qm-time-filter__selectors-parent">
         <div class="qm-time-filter__start">
           <div for="startTime" class="qm-time-filter__start-heading qm-text-overflow-fix">

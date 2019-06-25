@@ -1,6 +1,7 @@
 <div *ngIf="services.length > 0" class="qm-quick-serve" dir="{{ userDirection$ | async }}">
     <div class="qm-quick-serve__content">
-        <div class="qm-quick-serve__header" >{{ 'label.quick_serve' | translate }}
+        <div class="qm-quick-serve__header-container">
+            <h1 class="qm-quick-serve__header">{{ 'label.quick_serve' | translate }}</h1>
             <button id='quick_serve_tooltip' type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
                 <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
                 <span class="sr-only">{{ 'button.info' | translate }}</span>

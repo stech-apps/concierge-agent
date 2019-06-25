@@ -3,7 +3,7 @@
   <div class="qm-checkout-view__summary" id="main-container" *ngIf="selectedAppointment">
     <div class="visit-details-card">
     <div  [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (keydown.enter)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (keydown.space)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)" (click)="flowType !== 'ARRIVE_APPOINTMENT' && goToPanel(3)">
-      <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
+      <div class="custom_header_h2" *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</div>
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-phone"></span>
         <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
@@ -15,7 +15,7 @@
       </div>
     </div>  
 
-    <h3>{{ 'label.appconfirm.details.heading' | translate }}</h3>
+    <h1>{{ 'label.appconfirm.details.heading' | translate }}</h1>
     <div [attr.tabindex]="flowType !== 'ARRIVE_APPOINTMENT' ? '0' : null" class="qm-checkout-view__summary-grouping" (click)="goToPanel(2)" (keydown.enter)="goToPanel(2)" (keydown.space)="goToPanel(2)" *ngIf="selectedAppointment">
       <div class="qm-summary-item">
         <span class="qm-summary-item__icon icon-calendar-light"></span>
@@ -47,7 +47,7 @@
       <!-- 1 Unlinked Customer (No customer is selected) when utt is enabled-->
       <div class="qm-summary-item qm-checkout-view__section" style="max-width:100%">
           <div style="display:flex;width: 100%;position: relative;" *ngIf="( !tempCustomer && !selectedCustomer )" class="qm-checkout-view__unlinked-customer">
-              <h3>{{ 'label.visit.details.heading' | translate }}</h3>
+              <h1>{{ 'label.visit.details.heading' | translate }}</h1>
               <button *ngIf="!isCustomerFlowHidden" class="qm-transparent-btn icon-customer-add" (click)="goToPanel(1)">
               <i   class="qm-action-btn__icon" aria-hidden="true"></i>
             </button>
@@ -60,8 +60,8 @@
 
       <!-- 3 if selected customer and utt enabled  -->
       <div tabindex="0"  *ngIf="selectedCustomer || tempCustomer" class="qm-checkout-view__summary-grouping qm-checkout-view__section"  (click)="goToPanel(1)" (keydown.space)="goToPanel(1)" (keydown.enter)="goToPanel(1)" >
-          <h2 *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</h2>
-          <h2 ><span *ngIf="tempCustomer && tempCustomer.firstName"> {{tempCustomer.firstName + ' '}}</span> <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></h2>
+          <div class="custom_header_h2" *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</div>
+          <div class="custom_header_h2"><span *ngIf="tempCustomer && tempCustomer.firstName"> {{tempCustomer.firstName + ' '}}</span> <span *ngIf="tempCustomer && tempCustomer.lastName">{{tempCustomer.lastName}} </span></div>
                     
           <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.phoneNumber"> 
             <span class="qm-summary-item__icon icon-phone"></span>
@@ -86,7 +86,7 @@
       <!-- If customer flow is hidden -->
       <div class="qm-summary-item qm-checkout-view__section">
           <div *ngIf="!isCustomerFlowHidden && (tempCustomer || selectedCustomer)">
-            <h4>{{ 'label.visit.details.heading' | translate }}</h4>
+            <h2>{{ 'label.visit.details.heading' | translate }}</h2>
           </div>
       </div>
 
@@ -142,8 +142,8 @@
     </div>
 
     <div class="qm-checkout-view__notifications-heading" *ngIf="flowType=='CREATE_APPOINTMENT' || flowType=='ARRIVE_APPOINTMENT'||flowType=='CREATE_VISIT'">
-          {{'label.appconfirm.notification.heading' | translate}}
-          <h5 class="qm-checkout-view__notifications-sub-heading">{{'label.appconfirm.notification.subheading' | translate}}</h5>
+          <h1 class="qm-checkout-view__notifications-heading">{{'label.appconfirm.notification.heading' | translate}}</h1>
+          <h2 class="qm-checkout-view__notifications-sub-heading">{{'label.appconfirm.notification.subheading' | translate}}</h2>
     </div>
   
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">

@@ -24,6 +24,15 @@
   &__header {
     color: $dark-transparent82;
     line-height: 2em;
+    font-weight: 300;
+    display: flex;
+    @at-root [dir='rtl'] {
+      text-align: right;
+    }
+  }
+  &__header-container {
+    color: $dark-transparent82;
+    line-height: 2em;
     padding-top: 20px;
     padding-bottom: 10px;
     font-weight: 300;

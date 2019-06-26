@@ -101,6 +101,9 @@
     background-color: rgba(0,0,0,0.04);
     cursor: pointer;
   }
+  &__item-selected {
+    background-color: rgba(0,0,0,0.04);
+  }
   &__button-container {
  
     margin: 0 auto;

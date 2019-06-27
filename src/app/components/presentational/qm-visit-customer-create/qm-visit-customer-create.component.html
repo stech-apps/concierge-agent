@@ -5,13 +5,15 @@
       <div class="qm-flow-sub-header">
         <div class="qm-flow-sub-header__right">
           <div class="qm-checkbox__container" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
-            <label for="qm-checkbox" class="qm-checkbox-label">
-              <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (focus)="skipBranchFocus=true"
-                (focusout)="skipBranchFocus=false" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
-              <div class="qm-checkbox__selector">
-                  <div aria-hidden="true" class="qm-checkbox__border"></div>
-                <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-                <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
+            <label for="qm-checkbox" class="qm-checkbox-label">        
+              <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">      
+                  <input id="qm-skip-step" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip"  
+                  (focus)="skipButtonHover = true" (focusout)="skipButtonHover = false"> 
+                <label for="qm-skip-step" (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+                (mouseup) ="mousePressed = false" class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</label>
+                <div 
+                [ngClass]="{ 'checkbox-backdrop-unchecked': !isFlowSkip}"
+                 class="qm-check-box-background"></div>
               </div>
             </label>
             <button type="button" class="qm-action-btn qm-option__help-btn qm-tooltip-btn"

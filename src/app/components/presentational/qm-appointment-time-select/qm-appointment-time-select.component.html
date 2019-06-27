@@ -16,7 +16,7 @@
         <i class="icon-subtract"></i>
         <span class="sr-only">{{ 'button.decrease' | translate }}</span>
       </button>
-      <div class="qm-number-of-customers__numeric-value">{{noOfCustomers}}</div>
+      <div aria-live="polite" class="qm-number-of-customers__numeric-value">{{noOfCustomers}}</div>
       <button class="qm-transparent-btn qm-number-of-customers__numeric-button" (click)="changeCustomerCount(1)">
         <i class="icon-add"></i>
         <span class="sr-only">{{ 'button.increase' | translate }}</span>

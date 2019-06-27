@@ -3,13 +3,31 @@
       {{ title }}
     </div>
 
-    <span [innerHtml]="iconSvg" class="qm-toast-icon"></span> 
+    <!-- <span [innerHtml]="iconSvg" class="qm-toast-icon"></span>  -->
+    <div class="qm-toast-icon"> 
+      <i class="icon-complete"></i>
+    </div>
+
     <span *ngIf="message && options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
       [innerHTML]="message">
     </span>
     <div *ngIf="message && !options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
       [attr.aria-label]="message">
       {{ message }}
+    </div>
+    <div>
+      
+      <div class="checkbox">
+        <label for="qm-checkbox" class="qm-checkbox-label">        
+          <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">      
+              <input id="qm-skip-branch" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip"  
+              (focus)="skipButtonHover = true" (focusout)="skipButtonHover = false"> 
+            <label for="qm-skip-branch" (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+            (mouseup) ="mousePressed = false" class="qm-checkbox__selector-icon-text">{{ 'label.autoclose' | translate }}</label>
+          </div>
+        </label>
+      </div>
+      
     </div>
     <div class="qm-close-container">
       <!-- <a *ngIf="!options.closeButton" class="btn btn-pink btn-sm" (click)="action($event)">

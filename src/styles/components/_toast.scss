@@ -1,13 +1,14 @@
 .toast-container {
   margin: 0 auto;
-  width: 568px;
+  width: 800px;
   font-size: 18px;
 }
 
 
 
 .toast-close-button {
-  height: rem(28px);
+  margin: auto;
+  height: 100%;
   padding: 0px 4px;
   display: flex;
   align-items: center;
@@ -24,7 +25,7 @@
 
   &:before {
     content: "\00d7"; /* This will render the 'X' */
-    font-size: rem(28px);
+    font-size: rem(50 px);
   }
 
   &:hover,

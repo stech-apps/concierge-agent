@@ -1045,7 +1045,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onNotesChanged(value) {
-    this.noteTextStr = value;
+    if(value) {
+      this.noteTextStr = value;
+    }
+ 
   }
 
   // Go to previous panels

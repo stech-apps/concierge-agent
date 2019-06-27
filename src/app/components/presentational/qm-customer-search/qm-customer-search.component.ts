@@ -111,6 +111,9 @@ constructor(
   editCustomer(customer:ICustomer){
     this.CustomerDispatchers.editCustomerMode(true);
     this.CustomerDispatchers.selectCustomer(customer);
+    setTimeout(() => {
+      document.getElementById('panel-title').focus();
+    }, 500);
     // this.CustomerDispatchers.resetCustomers();
   }
 

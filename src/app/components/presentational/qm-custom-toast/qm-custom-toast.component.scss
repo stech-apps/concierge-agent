@@ -3,6 +3,7 @@
     display: block;
     width: 4rem;
     margin-right: 2rem;
+    font-size: 3em;
 }
 
 [class^="col"] {
@@ -22,4 +23,18 @@
 
 a:focus{
     border:  solid #007bff 1px;
+}
+.qm-toast__message{
+    margin: auto;
+    font-size: 14px;
+}
+.qm-close-container{
+    top:0;
+    height: 100%;
+}
+.qm-checkbox__selector-icon-text{
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0.25px;
+    color: #ebeaea
 }

@@ -70,7 +70,6 @@ export class QmIdentifyCustomerComponent implements OnInit {
 
   clearCustomer(){
     this.customerDispatchers.resetCurrentCustomer()
-
   }
 
   doneButtonClick() {

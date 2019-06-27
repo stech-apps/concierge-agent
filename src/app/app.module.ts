@@ -183,9 +183,10 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 const toastrGlobalOptions = {
   maxOpened: 3,
   preventDuplicates: true,
-  autoDismiss: true,
+  autoDismiss: false,
   iconClasses: {},
-  class: 'toast-msg'
+  class: 'toast-msg',
+  toastComponent: QmCustomToastComponent
 };
 
 export class MyHammerConfig extends HammerGestureConfig {

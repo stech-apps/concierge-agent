@@ -64,7 +64,7 @@
                         (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
                         (mouseup)="mousePressed = false"
                         class="qm-checkbox__selector-icon-text">{{ 'label.multi_service' | translate }}</label>
-                      <div aria-hidden="true" *ngIf="skipButtonHover || mousePressed"
+                      <div aria-hidden="true"
                         [ngClass]="{ 'checkbox-backdrop-unchecked': !isMultiServiceOn}" class="qm-check-box-background">
                       </div>
                     </div>

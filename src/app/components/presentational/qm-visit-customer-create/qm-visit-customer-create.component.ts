@@ -29,6 +29,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   showToolTip:boolean;
   isExpanded = false;
   skipBranchFocus: boolean = false;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
   dateError = {
     days: '',
     month: ''

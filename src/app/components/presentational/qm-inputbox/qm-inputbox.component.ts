@@ -435,7 +435,12 @@ export class QmInputboxComponent implements OnInit {
         year: ''
       }
     })
-    this.customerCreateForm.markAsDirty();
+    if(this.currentCustomer) {
+      this.customerCreateForm.get("dateOfBirth").markAsDirty();
+    } else {
+      this.customerCreateForm.get("dateOfBirth").markAsPristine();
+    }
+
   }
 }
 

@@ -259,3 +259,12 @@ input[type=number]::-webkit-outer-spin-button {
 .qm-invalid-field__label{
     color: $error-color;
 }
+.qm-check-box-background {
+    top: -8px;
+    left: 0px;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        top: -7px;
+        left: 0px;
+    }
+
+}

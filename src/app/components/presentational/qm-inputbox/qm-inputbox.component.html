@@ -8,37 +8,38 @@
               <div class="qm-input-box__col-50">
                 <div class="qm-input-box__left-side">
                     <div>
-                      <label for="firstName" id="firstName-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched &&   customerCreateForm.get('firstName').touched && firstName.value==''}" >{{'label.first_name'|translate }}</label>
-                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-required" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched &&   customerCreateForm.get('firstName').touched && firstName.value==''}">{{'required'|translate}}</label>
+                      <label for="firstName" id="firstName-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}" >{{'label.first_name'|translate }}</label>
+                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-required" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}">{{'required'|translate}}</label>
                     </div>
                      <br>
                      <div class="qm-input-box-group">
                       <input #firstName  class="qm-input-box__input"  
-                      type="text" name='firstName' id="firstName" [attr.aria-invalid]="customerCreateForm.get('firstName').invalid" formControlName = "firstName"
-                      maxlength="50" required [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
+                      type="text" name='firstName' id="firstName" [attr.aria-invalid]="customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid" formControlName = "firstName"
+                      maxlength="50" required [ngClass]="{'invalid': customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}"> 
                      
                       <button type="button" *ngIf="firstName.value.trim()" class="qm-clear-btn" (click)="clearInputFeild('firstName')">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
                           <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button  >      
                     </div>
-                      <div class="qm-form-error-message" aria-describedBy="firstName-label" role="alert" *ngIf="customerCreateForm.get('firstName').touched &&  customerCreateForm.get('firstName').touched && firstName.value==''"> {{'error.form.firstName.required' | translate }}</div>
+                      <div class="qm-form-error-message" aria-describedBy="firstName-label" role="alert" *ngIf="customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid"> {{'error.form.firstName.required' | translate }}</div>
                   </div>
               </div>
 
               <div class="qm-input-box__col-50">
                     <div>
-                      <label for="lastName" id="lastName-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && lastName.value==''}" >{{'label.last_name'|translate }}</label>
-                      <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-required" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && lastName.value==''}">{{'required'|translate}}</label>
+                      <label for="lastName" id="lastName-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}" >{{'label.last_name'|translate }}</label>
+                      <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-required" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}">{{'required'|translate}}</label>
                     </div> 
                     <div class="qm-input-box-group">
-                      <input class="qm-input-box__input" type="text" id='lastName' name='lastName' [attr.aria-invalid]="customerCreateForm.get('lastName').invalid" formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': !customerCreateForm.get('lastName').pristine && (invalidLastName && lastName.value=='')}">
+                      <input class="qm-input-box__input" type="text" id='lastName' name='lastName' [attr.aria-invalid]="customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid" 
+                      formControlName = "lastName"  #lastName  maxlength="50" required [ngClass]="{'invalid': customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}">
                       <button type="button" *ngIf="lastName.value.trim()" class="qm-clear-btn"  (click)="clearInputFeild('lastName')">
                           <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" ></i>
                           <span class="sr-only">{{ 'button.clear' | translate }}</span>
                       </button> 
                     </div>
-                      <div class="qm-form-error-message" aria-describedBy="lastName-label" role="alert" *ngIf="customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').touched && lastName.value==''"> {{'error.form.lastName.required' | translate }}</div>
+                      <div class="qm-form-error-message" aria-describedBy="lastName-label" role="alert" *ngIf="customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid"> {{'error.form.lastName.required' | translate }}</div>
               </div>
             </div>
 

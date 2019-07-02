@@ -155,8 +155,8 @@ export class QmInputboxComponent implements OnInit {
        
     // Customer creation form
     this.customerCreateForm = new FormGroup({
-      firstName: new FormControl('',Validators.required,whiteSpaceValidator),
-      lastName:new FormControl('',Validators.required,whiteSpaceValidator),
+      firstName: new FormControl('',Validators.required, whiteSpaceValidator),
+      lastName:new FormControl('',Validators.required, whiteSpaceValidator),
       phone:new FormControl(this.countrycode, phoneValidators),
       email:new FormControl('',emailValidators),
       dateOfBirth: this.fb.group(

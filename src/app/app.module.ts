@@ -183,7 +183,7 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 const toastrGlobalOptions = {
   maxOpened: 3,
   preventDuplicates: true,
-  autoDismiss: false,
+  autoDismiss: true,
   iconClasses: {},
   class: 'toast-msg',
   toastComponent: QmCustomToastComponent

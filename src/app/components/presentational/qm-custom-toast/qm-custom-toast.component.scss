@@ -1,7 +1,7 @@
 .qm-toast-icon {
     float: left;
     display: block;
-    width: 4rem;
+    width: 2rem;
     margin-right: 2rem;
     font-size: 3em;
 }
@@ -27,14 +27,39 @@ a:focus{
 .qm-toast__message{
     margin: auto;
     font-size: 14px;
+    width: 470px;
+    height: 100%;
 }
 .qm-close-container{
     top:0;
     height: 100%;
+    font-size: 2.5em;
+    width: 38px;
+   
 }
 .qm-checkbox__selector-icon-text{
     font-size: 14px;
     font-weight: normal;
     letter-spacing: 0.25px;
     color: #ebeaea
+}
+.checkbox{
+    margin: auto;height: 100%;
+    width: 155px;
+}
+.qm-checkbox-label {
+    margin: auto;
+    height: 100%;
+}
+.styled-checkbox + label:before{
+    border: 3px solid white;
+}
+.styled-checkbox:checked + label:after {
+    top: 11px;
+}
+.styled-checkbox:checked + label:before { 
+    background: transparent;
+}
+.qm-transparent-btn{
+    height: 100%;
 }

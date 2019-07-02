@@ -10,6 +10,7 @@ import {
   trigger
 } from '@angular/animations';
 import { INFO_SVG } from 'src/svgs/info-icon';
+import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 
 @Component({
   selector: 'qm-qm-custom-toast',
@@ -39,13 +40,13 @@ import { INFO_SVG } from 'src/svgs/info-icon';
 })
 export class QmCustomToastComponent extends Toast {
 
-  // constructor is only necessary when not using AoT
   iconSvg : any =  INFO_SVG;
-
+  isAutoClose: boolean;
   
   constructor(
     protected toastrService: ToastrService,
     public toastPackage: ToastPackage,
+    private localStorage: LocalStorage,
     public domSanitizer: DomSanitizer
   ) {
     super(toastrService, toastPackage);
@@ -59,8 +60,14 @@ export class QmCustomToastComponent extends Toast {
 
   ngOnInit() {
     this.iconSvg =  this.domSanitizer.bypassSecurityTrustHtml(this.iconSvg);
+    this.isAutoClose = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.TOAST_AUTOCLOSE);
     setTimeout(() => {
       document.getElementById('toast-msg-close').focus();
     }, 1000);
-  } 
+  }
+  
+  onSwitchChange(){
+    this.localStorage.setSettings(STORAGE_SUB_KEY.TOAST_AUTOCLOSE, this.isAutoClose);    
+  }
+
 }

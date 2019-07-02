@@ -1,17 +1,23 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { LocalStorage, STORAGE_SUB_KEY } from '../local-storage';
 
 @Injectable()
 export class ToastService {
   @Output() msgBoxOpen: EventEmitter<any> = new EventEmitter();
+  private localStorage: LocalStorage;
+  isAutoClose : boolean;
+  
 
   private toastrOptions: Object = {
     positionClass: 'centered',
     messageClass: 'qm-toast__message',
     easing: 'ease-in-out',
     closeButton: true,
+    autoDismiss: true,
     timeOut: 0,
     tapToDismiss: false,
+    disableTimeOut: true
   };
 
   private successOptions: Object = {
@@ -62,6 +68,8 @@ export class ToastService {
   }
 
   successToast(text: string) {
+    // console.log(this.isAutoClose);
+    // 
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
      document.getElementById("close-toast-btn").focus();      

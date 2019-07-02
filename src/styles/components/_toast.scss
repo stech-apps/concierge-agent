@@ -104,6 +104,13 @@
   // Modifiers
   &--success {
     background: $toast-success-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i{
+          content: "\e913";
+        }
+      }
+    }   
   }
 
   &--danger {

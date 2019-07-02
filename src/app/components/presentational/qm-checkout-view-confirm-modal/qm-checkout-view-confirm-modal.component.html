@@ -21,12 +21,12 @@
                 <span for="phone" class="qm-standard-text-field__required" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty }">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input qm-popup-input"
+                <input required qmAllWhiteSpace name="phone" class="qm-input-box__input qm-popup-input" attr.aria-describedby="phone-error"
                 [attr.aria-invalid]="confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty"
                 [ngClass]="{ 'qm-invalid-input' : confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty }"  type="tel" inputmode="numeric" id='phone' formControlName = "phone" #phone>
               </span>
           
-              <span class="qm-standard-text-field__error-message" aria-describedBy="phone-label" role="alert">
+              <span class="qm-standard-text-field__error-message" id="phone-error" role="alert">
                 <ng-container *ngIf="confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty">
                       {{ confirmModalForm.get('phone')?.hasError('pattern') ? ('error.form.phone.invalid.des' | translate) : (phone.value.length > 0 ? ('error.form.phone.invalid' | translate) : '') }}
                 </ng-container>
@@ -41,11 +41,11 @@
                 <span for="email" class="qm-standard-text-field__required" [ngClass]="{ 'qm-invalid-field__label' : confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty }">{{ 'label.options.required' | translate }}</span>
               </span>
               <span class="qm-standard-text-field__input-container">
-                <input qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" 
+                <input qmAllWhiteSpace required class="qm-input-box__input qm-popup-input" attr.aria-describedby="email-error"
                 [attr.aria-invalid]="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty"
                 [ngClass]="{ 'qm-invalid-input' : confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty }" id="email" type="text" name='email' formControlName = "email" #email  >
               </span>
-              <span class="qm-standard-text-field__error-message" aria-describedBy="email-label" role="alert">
+              <span class="qm-standard-text-field__error-message" id="email-error" role="alert">
                   <ng-container *ngIf="confirmModalForm.get('email')?.errors && confirmModalForm.get('email')?.dirty">
                     {{ 'error.form.email.invalid' | translate }}
                   </ng-container>

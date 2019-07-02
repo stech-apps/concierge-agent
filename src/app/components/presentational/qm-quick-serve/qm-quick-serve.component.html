@@ -49,9 +49,11 @@
                                 (mouseleave)="MouseLeaveCheckbox()" (mousedown)="mousePressed = true"
                                 (mouseup)="mousePressed = false"
                                 class="qm-checkbox__selector-icon-text"></label>
-                              <div aria-hidden="true" *ngIf="hoveredService ==service.id"
+                                <div class="checkbox-backdrop-container" *ngIf="hoveredService ==service.id">
+                              <div aria-hidden="true" 
                                 [ngClass]="{ 'checkbox-backdrop-unchecked': !(selectedService !== null && selectedService.id === service.id)}" class="qm-check-box-background">
                               </div>
+                            </div>
                             </div>
                           </label>
                 </div>

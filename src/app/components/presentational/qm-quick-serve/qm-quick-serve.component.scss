@@ -463,10 +463,13 @@ button:active,button:hover{
 .qm-check-box-background{
   left: auto;
   top: 8px;
-  right: 8px;
+  right: -12px;
+  top: calc(50% - 4px);
+    left: auto;
+    transform: translate(-50%,-50%);
   @at-root [dir="rtl"] & {
     right: auto;
-    left: 8px;
+    left: 28px;
   }
 }
 
@@ -476,9 +479,13 @@ button:active,button:hover{
     margin-left:-203px;
   }
   .qm-check-box-background{
-    right: 5px;
+    right: -15px;
     @at-root [dir="rtl"] & {
-      left: 5px;
+      left: 24px;
     }
   }
+}
+
+.checkbox-backdrop-container{
+  height: 100%;
 }

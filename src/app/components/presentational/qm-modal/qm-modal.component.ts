@@ -24,6 +24,11 @@ export class QmModalComponent implements OnInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    setTimeout(() => {
+      if (document.getElementById('qm-modal-message')) {
+        document.getElementById('qm-modal-message').focus();
+      }
+    }, 100);
   }
 
   public decline() {

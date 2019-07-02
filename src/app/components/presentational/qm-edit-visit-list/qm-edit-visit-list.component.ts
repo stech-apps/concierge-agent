@@ -217,7 +217,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
      
           if (this.selectedVisitId) {
             setTimeout(() => {
-              document.getElementById('edit-vist-modal-close').focus();
+              document.getElementById('qm-title').focus();
             }, 100);
           }
 
@@ -350,7 +350,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
           objDiv.scrollIntoView();
-          objDiv.querySelectorAll('button')[0].focus();
+          // objDiv.querySelectorAll('button')[0].focus();
+          document.getElementById('qm-title').focus();
           // console.log(objDiv.);
           
        
@@ -370,6 +371,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'tq';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
  
   }
 
@@ -378,6 +384,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'staff';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
   transferToSPfPool(visit) {
@@ -385,6 +396,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'cp';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
   cherryPickVisit(index: number, event: Event) {
@@ -513,6 +529,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   backToQueueOptionsButton(){
     this.visitOptionStatus = 'initial';
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
 

@@ -97,7 +97,7 @@
           <!-- <div class="triangle-with-shadow"></div> -->
           <div class="qm-visit-list__options-2__rec" id="visit-rec" tabindex="-1">
             <div class="qm-visit-list__options-2__heading">
-              <div class="qm-title">
+              <div class="qm-title" id="qm-title" tabindex="-1">
                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span>
                <h1 class="qm-title__header">{{'visit_options'|translate}}</h1>
               </div>
@@ -176,10 +176,12 @@
                 <i *ngIf="userDirection === 'rtl'" class="icon-caret-right qm-icon_back"></i>
                 <span class="sr-only">{{ 'button.back' | translate }}</span>
                 </button>
-                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
-                <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
-                <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
-                <span *ngIf ="visitOptionStatus === 'tq'">{{'queue_transfer'|translate}} </span>
+                <div id="qm-title" tabindex="-1">
+                  <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span> 
+                  <span *ngIf ="visitOptionStatus === 'staff'">{{'staff_member'|translate}} </span>
+                  <span *ngIf ="visitOptionStatus === 'cp'">{{'counter_pool'|translate}} </span>
+                  <span *ngIf ="visitOptionStatus === 'tq'">{{'queue_transfer'|translate}} </span>
+                </div>
               </div>
               <button class="qm-icon qm-transparent-btn"  (click)="closeVisitOptions()">
                 <i class="icon-close"></i>

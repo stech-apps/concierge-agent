@@ -5,7 +5,7 @@
         <span type="button" class="qm-action-btn qm-action-btn--only-icon qm-modal__close-btn">
           <span class="sr-only">{{ optionsHeading }}</span>
         </span>
-        <span class="qm-modal__headline">{{ optionsHeading }}</span>
+        <span class="qm-modal__headline" id="qm-modal-headline" tabindex="-1">{{ optionsHeading }}</span>
         <button  class="qm-transparent-btn qm-action-btn qm-modal-close" (click)="activeModal.close()">
     <i aria-hidden="true" class="icon-close"></i>
     <span class="sr-only">{{ 'button.close' | translate }}</span>

@@ -2,7 +2,7 @@
   <form class="qm-modal__box-container">
     <div class="qm-modal__header">
         <i class="qm-action-btn__icon qm-done-modal__header-icon" [ngClass]="{'icon-done-rtl': userDirection == 'rtl', 'icon-done-solid': userDirection != 'rtl'}" aria-hidden="true"></i>
-      <span class="qm-modal__headline">{{ (heading) | translate }}</span>
+      <span id="qm-modal__headline" tabindex="-1" class="qm-modal__headline">{{ (heading) | translate }}</span>
       <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="activeModal.dismiss()">
         <i aria-hidden="true" class="icon-close"></i>
         <span class="sr-only">{{ 'button.close' | translate }}</span>

@@ -86,6 +86,12 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    setTimeout(() => {
+      if (document.getElementById('qm-modal-headline')) {
+        document.getElementById('qm-modal-headline').focus();
+      }
+    }, 100);
       
     // Customer creation form
     const emailValidators = this.util.emailValidator();

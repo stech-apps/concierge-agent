@@ -141,11 +141,11 @@
                         </ng-select>
                         <input
                           class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container"
-                          #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" attr.aria-describedby="day-error"
+                          #day formControlName="day" #day type="text" maxlength="2" name="day" attr.aria-describedby="day-error"
                           id="day" [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay">
                         <input
                           class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container"
-                          #year formControlName="year" type="text" maxlength="4" placeholder="YYYY" name="year" attr.aria-describedby="year-error"
+                          #year formControlName="year" type="text" maxlength="4" name="year" attr.aria-describedby="year-error"
                           id="year" [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max')"/>
                       </div>
                     </div>

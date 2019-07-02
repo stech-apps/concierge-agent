@@ -109,10 +109,10 @@
                             </ng-select>
                             <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" attr.aria-describedby="day-error"
                             [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay"
-                            #day type="text" maxlength="2" placeholder="DD" name="day" id="day" (input)="autoCloseService.refreshAutoClose()"> 
+                            #day type="text" maxlength="2" name="day" id="day" (input)="autoCloseService.refreshAutoClose()"> 
                             <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #year formControlName="year" attr.aria-describedby="year-error"
                             [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max')"
-                            type="text" maxlength="4" placeholder="YYYY" name="year" id="year" (input)="autoCloseService.refreshAutoClose()" />
+                            type="text" maxlength="4" name="year" id="year" (input)="autoCloseService.refreshAutoClose()" />
                           </div>
                         </div>
                         

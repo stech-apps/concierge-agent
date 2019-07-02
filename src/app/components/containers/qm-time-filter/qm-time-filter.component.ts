@@ -53,6 +53,11 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     
     this.subscriptions.add(userLocaleSubscription);
+    setTimeout(() => {
+      if(document.getElementById('qm-time-filter-header')) {
+        document.getElementById('qm-time-filter-header').focus();
+      }
+    }, 100);
   }
 
   ngAfterViewInit() {

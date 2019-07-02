@@ -32,6 +32,11 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(userSubscription);
+    setTimeout(() => {
+      if (document.getElementById('qm-modal__headline')){
+        document.getElementById('qm-modal__headline').focus();
+      }
+    }, 100);
   }
 
   ngOnDestroy() {

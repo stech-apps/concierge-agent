@@ -22,6 +22,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   counterString: string;
   intervalRef = null;
   prevTimeStamp = undefined;
+  timerStringWCAG: string;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -62,6 +63,15 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       onGoingTime
     );
 
+    this.timerStringWCAG = this.counterString;
+    setInterval(() => {
+      if (onGoingTime >= 120) {
+        this.timerStringWCAG = this.counterString;
+      } else {
+        this.timerStringWCAG = undefined;
+      }
+    }, 60000);
+
     // Start timer!!
     this.intervalRef = setInterval(() => {
       // Decrement counter
@@ -78,7 +88,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
         this.prevTimeStamp = Math.floor(new Date().getTime()/1000);
         onGoingTime--;
       }
-      if(onGoingTime < 0){
+      if (onGoingTime < 0){
         onGoingTime = 0;
       }
 

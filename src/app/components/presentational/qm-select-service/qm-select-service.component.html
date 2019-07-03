@@ -48,7 +48,7 @@
                     <span class="sr-only">Search</span>
                   </div>
                 </div>
-                <div class="qm-service-not-found-container"
+                <div aria-live="polite" class="qm-service-not-found-container"
                   *ngIf=" (searchText || '').trim().length !== 0 && (filteredServiceList | filterService : [filterText, flowType])?.length===0">
                   {{'service_list_not_found'|translate}}
                 </div>
@@ -85,7 +85,7 @@
                 </div>
               </div>
             </div>
-            <div class="qm-select-service__search-heading"
+            <div aria-live="polite" class="qm-select-service__search-heading"
               *ngIf="(searchText || '').trim().length > 0 && (filteredServiceList | filterService : [filterText, flowType])?.length!==0">
               <span>{{'label.search.result.header' | translate}} &nbsp;</span>
               <mark>{{ '"'+ searchText + '"' }}</mark>

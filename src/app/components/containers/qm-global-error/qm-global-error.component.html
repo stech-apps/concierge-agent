@@ -1,4 +1,4 @@
-<div [ngClass]="{'qm-global-error': (globalError && globalError.message), 'qm-global-warning': (globalWarning && globalWarning.message)}"
+<div aria-live="polite" [ngClass]="{'qm-global-error': (globalError && globalError.message), 'qm-global-warning': (globalWarning && globalWarning.message)}"
      class="qm-network-message">
     {{globalError?.message || globalWarning?.message}}
 </div>

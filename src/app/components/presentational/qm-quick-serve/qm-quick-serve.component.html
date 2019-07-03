@@ -24,6 +24,8 @@
                     aria-hidden="true"></i>
                     <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
                 </button>
+                <div *ngIf="(services|filterQuickServeService:filterText).length === 0" aria-live="polite" class="sr-only">{{ 'service_list_not_found' | translate }}</div>
+                <div *ngIf="(services|filterQuickServeService:filterText).length > 0 && filterText.length > 0" aria-live="polite" class="sr-only">{{ (services|filterQuickServeService:filterText).length + ((services|filterQuickServeService:filterText).length === 1 ? ('label.service.found' | translate) : ('label.services.found' | translate)) }}</div>
                 <div class="qm-action-btn--only-icon">
                     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                 </div>

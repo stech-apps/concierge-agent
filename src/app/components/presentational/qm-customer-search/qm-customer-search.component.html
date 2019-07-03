@@ -24,6 +24,7 @@
     </tr>
   </tbody>
 </table>
+<div aria-live="polite" *ngIf="customers !== undefined" class="sr-only">{{ showNoResults() ? ((noCustomerFeedback || 'customer_not_found') | translate) : (customers.length === 0 ? "" : (customers.length + (customers.length === 1 ? ('label.customer.found' | translate) : ('label.customers.found' | translate)))) }}</div>
 <!-- loader component -->
 <!-- <div class="qm-loader-container" *ngIf="showLoading()" >
   <qm-loader [color]="black"></qm-loader>

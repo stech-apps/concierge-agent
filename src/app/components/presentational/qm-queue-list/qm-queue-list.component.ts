@@ -18,7 +18,8 @@ import { NativeApiService } from 'src/util/services/native-api.service';
 export class QmQueueListComponent implements OnInit, OnDestroy {
 
   queueCollection = new Array<Queue>();
-  sortedBy: string
+  prvQueueCollection = new Array<Queue>();
+  sortedBy: string;
 
   private subscriptions: Subscription = new Subscription();
   private selectedBranch: IBranch;
@@ -38,6 +39,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   isNative:boolean;
   editVisitEnable:boolean;
   isFirstTime: boolean;
+  updatedQueue: Queue;
 
   @Input() isCollapesed: string;
 
@@ -71,7 +73,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
       if (uttpParams) {
         this.showEstWaitTime = uttpParams.estWaitTime;
         this.canTransferSP = uttpParams.trServPool;
-        this.canTransferQ = uttpParams.btnQueueTransfer
+        this.canTransferQ = uttpParams.btnQueueTransfer;
         this.canTransferStaff = uttpParams.trUserPool;
         this.canTransferQFirst = uttpParams.btnTransferFirst;
         this.canTransferQLast = uttpParams.btnTransferLast;
@@ -79,7 +81,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
         this.canDelete = uttpParams.delVisit;
         this.cancherypick = uttpParams.cherryPick;
         this.editVisitEnable = uttpParams.editVisit;
-        this.isQuickServeEnable = uttpParams.quickServe
+        this.isQuickServeEnable = uttpParams.quickServe;
       }
     })
     this.subscriptions.add(uttpSubscriptions);
@@ -98,10 +100,24 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const queueListSubscription = this.queueSelectors.queueSummary$.subscribe((qs) => {
+      const prvList = this.queueCollection;
+      this.checkUpdatedQueue();
       this.queueCollection = qs.queues;
       this.sortQueueList("QUEUE");
     })
     this.subscriptions.add(queueListSubscription);
+  }
+
+  checkUpdatedQueue () {
+    if (this.prvQueueCollection !== undefined && this.prvQueueCollection.length > 0 ) {
+      for (let i = 0; i < this.queueCollection.length; i++) {
+        if (this.queueCollection[i].customersWaiting !== this.prvQueueCollection[i].customersWaiting) {
+          this.updatedQueue = this.queueCollection[i];
+          break;
+        }
+      }
+    }
+    this.prvQueueCollection = this.queueCollection;
   }
 
   ngOnDestroy() {

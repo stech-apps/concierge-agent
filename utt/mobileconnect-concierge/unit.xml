@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.5.0   2019-06-27    quickServeServices (Quick Serve Services paramter added     nalhew
+    =============================================================================================
     7.0.4.0   2019-02-14    Updated the utt icon                                        udaban
     =============================================================================================
     7.0.3.0   2019-01-29   Service Point Pool Transfer, User Pool Transfer,             nalhew
@@ -54,7 +56,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.4.0"
+         unitVersion = "7.0.5.0"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -406,6 +408,17 @@
                 <option label= "Store customer in database">db</option>
                 <option label="Store customer on visit">visit</option>
             </options>
+        </parameter>
+        <parameter name = "quickServeServices" 
+                   type = "Service" 
+                  label = "Quick Serve Included services"
+            description = "Services that shall appear in the Quick Serve list. Note that if no service is selected all services that do not hold delivered service or outcome will be listed."
+         multiSelection = "true"
+              sortOrder = "384" 
+             writeLevel = "profile" 
+              readLevel = "profile" 
+              privilege = "install:adminAdmin"
+              mandatory = "false">
         </parameter>
               
               

@@ -18,6 +18,7 @@
     color: $dark-transparent82;
     padding: 2rem;
     width: 30%;
+    position: relative;
     &__title {
       margin-bottom: 2rem;
       font-size: 28px;
@@ -219,4 +220,14 @@
 .qm-check-box-background{
   top: -9px;
   left: 0px;
+}
+.qm-modal-close{
+  position: absolute;
+  right: 20px;
+  font-size: 24px;
+  top: 22px;
+  @at-root [dir='rtl'] & { 
+    right: auto;
+    left: 20px;
+  }
 }

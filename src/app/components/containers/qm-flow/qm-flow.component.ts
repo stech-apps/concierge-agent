@@ -71,7 +71,6 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       if (document.getElementById("panel-title")) {
         document.getElementById("panel-title").focus();
       }
-      
     }, 100);
 
   }
@@ -79,6 +78,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     if (this.FlowName == 'label.create_appointment' && (this.isFlowSkip || this.isFlowSkip == undefined) && this.mltyBrnch) {
       this.activeHeader = 1;
     }
+ 
+    
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
@@ -171,6 +172,8 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
       if (document.getElementById("panel-title")) {
         document.getElementById("panel-title").focus();
+      } else if (document.getElementById("notification-heading")) {
+        document.getElementById("notification-heading").focus() 
       }
       
     }, 100);

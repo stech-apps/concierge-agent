@@ -183,6 +183,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
         this.selectedCustomer = customer;
+        
         if (customer) {
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
@@ -235,6 +236,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+   
 
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:

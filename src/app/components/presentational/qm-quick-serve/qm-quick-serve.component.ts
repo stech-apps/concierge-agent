@@ -75,7 +75,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
     this.subscriptions.add(branchSubscription);
 
-    const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => {
+    const serviceConfigSubscription = this.serviceSelectors.getQuickServices$.subscribe((services) => {
       this.services = services;
       this.sortQueueList();
       if(services.length > 0){

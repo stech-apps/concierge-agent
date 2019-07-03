@@ -38,6 +38,32 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 13</h2>
+
+**Date: 03/07/2019**
+ 
+**Build number: 13**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **166025007** | **Quick Serve  Update - Casual Caller** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **xxx** | **Bug header** Solution text |
+
+<h3>Known issues</h3>
+| **Id/Jira** | **Description** |
+| --- | --- |
+| **xxx** | **Bug header** Bug text |
+
+<h3>Upgrade instructions</h3> 
+
+----------
 
 <h2>Version 12</h2>
 

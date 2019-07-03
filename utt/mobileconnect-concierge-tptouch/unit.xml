@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                     Signature
     ==============================================================================================
+    7.0.5.0    2019-07-03    quickServeServices (Quick Serve Services paramter added     nalhew
+    =========================================================================================================
     7.0.4.0    2019-02-14   icon changed                                                 udaban 
     ==============================================================================================
     7.0.3.0    2019-01-29   Service Point Pool Transfer, User Pool Transfer,             nalhew
@@ -53,7 +55,7 @@
 
 <unit          name  = "Concierge_Touch"
     frameworkVersion = "2"
-         unitVersion = "7.0.4.0"
+         unitVersion = "7.0.5.0"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -415,7 +417,6 @@
                 <option label="Store customer on visit">visit</option>
             </options>
         </parameter>
-            
       <parameter name = "deviceController"
             sortOrder = "999"
                  type = "DeviceController"
@@ -497,6 +498,16 @@
            writeLevel = "profile"
                regexp = "[1-9]|[1-9][0-9]"
                  size = "4"/>
+      <parameter name = "quickServeServices" 
+                 type = "Service" 
+                label = "Quick Serve Included services"
+          description = "Services that shall appear in the Quick Serve list. Note that if no service is selected all services that do not hold delivered service or outcome will be listed."
+       multiSelection = "true"
+            sortOrder = "407" 
+           writeLevel = "profile" 
+            readLevel = "profile" 
+            privilege = "install:adminAdmin"
+            mandatory = "false"/>                 
       <parameter name = "surfaceApplication" description="Defines what surface application that should be used"
                 label = "Touch Application"
                  type = "SurfaceApplication"

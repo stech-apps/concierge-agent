@@ -47,4 +47,5 @@ export interface IUTTParameter {
     webUrl: string;
     hideCustomer: boolean;
     saveCustomerOption: string;
+    quickServeServices: string;
   }

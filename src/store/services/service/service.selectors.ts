@@ -49,7 +49,7 @@ const getQuickServices = createSelector(
   getServiceState,
   getUttParameters,
   (serviceState: IServiceState, uttParamState: IUTTParameter) => {
-    if (uttParamState.quickServeServices === '') {
+    if (uttParamState.quickServeServices == null || uttParamState.quickServeServices === '') {
       return serviceState.servicesConfiguration.filter(function (val) {
         return val.deliveredServices.length === 0 && val.outcomes.length === 0;
       });

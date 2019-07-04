@@ -61,6 +61,7 @@ const getQuickServices = createSelector(
           for (const value of uttService) {
             if (val.id === parseInt(value, 10)) {
               quickSeriveService = true;
+              break;
             }
           }
           return quickSeriveService;

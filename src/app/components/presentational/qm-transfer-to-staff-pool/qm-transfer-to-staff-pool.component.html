@@ -14,6 +14,8 @@
           <i *ngIf="!visitSearch.value.trim()" aria-hidden="true"
             class="qm-action-btn__icon icon-search qm-search__icon"></i>
         </span>
+        <div *ngIf="(StaffPool |filterStaffPool : filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'staff_member_list_not_found' | translate }}</div>
+        <div *ngIf="(StaffPool |filterStaffPool : filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (StaffPool |filterStaffPool : filterText).length + ((StaffPool |filterStaffPool : filterText).length === 1 ? ('label.staffmember.found' | translate) : ('label.staffmembers.found' | translate)) }}</div>
       </div>
     </div>
   </div>

@@ -48,7 +48,7 @@
                     <span class="sr-only">Search</span>
                   </div>
                 </div>
-                <div aria-live="polite" class="qm-service-not-found-container"
+                <div aria-live="polite" role="alert" class="qm-service-not-found-container"
                   *ngIf=" (searchText || '').trim().length !== 0 && (filteredServiceList | filterService : [filterText, flowType])?.length===0">
                   {{'service_list_not_found'|translate}}
                 </div>

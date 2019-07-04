@@ -17,6 +17,8 @@
             class="qm-action-btn__icon icon-search qm-search__icon"></i>
             <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
         </span>
+        <div *ngIf="(queueCollection | filterQueue : filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'queue_list_not_found' | translate }}</div>
+        <div *ngIf="(queueCollection | filterQueue : filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (queueCollection | filterQueue : filterText).length + ((queueCollection | filterQueue : filterText).length === 1 ? ('label.queue.found' | translate) : ('label.queues.found' | translate)) }}</div>
       </div>
     </div>
   </div>

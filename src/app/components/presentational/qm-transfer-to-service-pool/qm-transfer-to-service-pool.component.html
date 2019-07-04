@@ -14,6 +14,8 @@
         <span class="qm-action-btn--only-icon qm-clear-btn" *ngIf="!spSearch.value.trim()">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
         </span>
+        <div *ngIf="(servicePoints | filterServicePoints : filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'counter_list_not_found' | translate }}</div>
+        <div *ngIf="(servicePoints | filterServicePoints : filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (servicePoints | filterServicePoints : filterText).length + ((servicePoints | filterServicePoints : filterText).length === 1 ? ('label.counter.found' | translate) : ('label.counters.found' | translate)) }}</div>
       </div>
 
     </div>

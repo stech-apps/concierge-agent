@@ -39,7 +39,7 @@
 <div class="qm-visit-no-visit-found" *ngIf="queueVisitIDloaded && !isRequestFromQR && (isSelectedVisitFail || isInvalidVisitEntry)">
   <span *ngIf="isInvalidVisitEntry">{{ "visit_invalid_entry" | translate }}
   </span>
-  <span aria-live="polite" *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{ "no_visit_match" | translate }}
+  <span aria-live="assertive" role="alert" *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{ "no_visit_match" | translate }}
 </span>
 </div>
 

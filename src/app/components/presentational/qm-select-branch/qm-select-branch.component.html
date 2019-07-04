@@ -71,7 +71,7 @@
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
-  <div aria-live="polite" class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
+  <div aria-live="polite" role="alert" class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
     <span>{{'label.search.result.header' | translate}} &nbsp;</span>
     <mark>{{ '"'+ searchText + '"' }}</mark>
     <span class="qm-select-branch__foundbox">{{ ' ' + 

@@ -6,11 +6,11 @@
   >
     <qm-page-header></qm-page-header>
     <div class="qm-profile-content">
-        <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="onCancel()">
+        <button id="qm-close-button" tabindex="5" class="qm-tab qm-transparent-btn qm-action-btn qm-modal-close"  (click)="onCancel()">
             <i aria-hidden="true" class="icon-close"></i>
             <span class="sr-only">{{ 'button.close' | translate }}</span>
           </button>
-      <h1 class="qm-profile-content__title">
+      <h1 class="qm-profile-content__title" tabindex="-1" id='qm-profile-page-title'>
         {{ "label.select.profile.settings" | translate }}
       </h1>
       <div class="qm-dropdown-heading">

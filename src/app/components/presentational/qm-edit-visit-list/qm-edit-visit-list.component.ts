@@ -574,6 +574,17 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.StopAutoCollapse();
     this.StartAutoCollapse();
   }
+  // Arrow key functions
+  onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-visit`)) {
+      document.getElementById(`${i+1}-visit`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-visit`)) {
+      document.getElementById(`${i-1}-visit`).focus();
+    }
+  }
 
 
 }

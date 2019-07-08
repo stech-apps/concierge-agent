@@ -82,10 +82,17 @@
   </div>
   <div class="qm-flow-list-container">
   <div class="qm-list">
-    <div *ngFor="let b of calendarBranches | filterBranch : filterText;" class="qm-branch-list__item qm-list__item" 
+    <div *ngFor="let b of calendarBranches | filterBranch : filterText;let i = index" class="qm-branch-list__item qm-list__item" 
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 
       'qm-list__item--info-active' : b.showInfo}">
-      <div tabindex="0" class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)" (keydown.enter)="onToggleBranchSelection(b)" (keydown.space)="onToggleBranchSelection(b)" [ngClass]="{'qm-outline':b.showInfo}">
+      <div id="{{i}}-branch-btn" class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)" 
+      [attr.tabindex]=" i==0 ? 0 : -1"
+      (keydown.enter)="onToggleBranchSelection(b)" 
+      (keydown.arrowdown)="onDownButttonPressed(i)"
+      (keydown.arrowup)="onUpButttonPressed(i)"
+      (keydown.arrowright) = "onRightButttonPressed(i)"
+      (keydown.arrowleft) = "onLeftButttonPressed(i)"
+      (keydown.space)="onToggleBranchSelection(b)" [ngClass]="{'qm-outline':b.showInfo}">
         <div  class="qm-list__item--label" [ngClass]="{'qm-highlight-text':b.showInfo}" [innerHtml]="b.name | qmhighlight: searchText">
         </div>
         <div class="qm-list__item--info" *ngIf="b.showInfo">
@@ -93,7 +100,10 @@
           <div class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</div>
         </div>      
       </div>
-      <button class="qm-transparent-btn qm-action-btn__icon" type="button"  (click)="b.showInfo = !b.showInfo">
+      <button tabindex="-1" class="qm-transparent-btn qm-action-btn__icon" type="button" id="{{i}}-more-info"
+      (keydown.arrowright) = "onRightButttonPressedinInfo(i)"
+      (keydown.arrowleft) = "onLeftButttonPressedinInfo(i)"
+        (click)="b.showInfo = !b.showInfo">
         <i *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
         <i *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
         <span class="sr-only">{{ b.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>

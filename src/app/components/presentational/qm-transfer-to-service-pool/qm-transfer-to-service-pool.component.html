@@ -41,8 +41,13 @@
     </div>
     <hr>
     <div class="qm-service-point-list__body">
-      <div *ngFor="let s of servicePoints  | filterServicePoints : filterText">
-        <button class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn" (click)="selectQueue(s)">
+      <div *ngFor="let s of servicePoints  | filterServicePoints : filterText;let i = index">
+        <button [attr.tabindex]=" i==0 ? 0 : -1"
+        class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn" 
+        (keydown.arrowdown)="onDownButttonPressed(i)"
+        (keydown.arrowup)="onUpButttonPressed(i)"
+        id="{{i}}-service-point"
+        (click)="selectQueue(s)">
           <div class="qm-service-point-list-body-row-first-label" [innerHtml]="s.name | qmhighlight: filterText"></div>
           <span *ngIf="s.state == 'CLOSED'">
             <i class="icon-lock"></i>

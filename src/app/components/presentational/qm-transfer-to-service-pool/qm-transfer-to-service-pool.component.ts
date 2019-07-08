@@ -224,5 +224,16 @@ export class QmTransferToServicePoolComponent implements OnInit {
     clearSearchText(){
       this.filterText="";
     }
+    // Arrow key functions
+    onDownButttonPressed (i: number) {
+      if (document.getElementById(`${i+1}-service-point`)) {
+        document.getElementById(`${i+1}-service-point`).focus();
+      }
+    }
+    onUpButttonPressed (i: number) {
+      if (document.getElementById(`${i-1}-service-point`)) {
+        document.getElementById(`${i-1}-service-point`).focus();
+      }
+    }
     
   }

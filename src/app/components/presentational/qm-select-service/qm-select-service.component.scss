@@ -382,3 +382,6 @@ display: flex;
     right: 17px;
   }
 }
+[tabindex="-1"]:focus {
+  outline: solid #72a2f7 1px !important;
+}

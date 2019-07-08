@@ -22,6 +22,7 @@ export class QmCustomerSearchComponent implements OnInit {
   private subscriptions : Subscription = new Subscription();
   userDirection$: Observable<string>; 
   searchText:string;
+  userDirection: string;
   
 
   // date format related variables
@@ -46,6 +47,9 @@ constructor(
     private systemInfoSelectors:SystemInfoSelectors
   ) { 
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.userDirection$.subscribe((ud)=>{
+      this.userDirection = ud;
+    })
     this.customerLoading$ = this.CustomerSelectors.customerLoading$;
     this.customerLoaded$ = this.CustomerSelectors.customerLoaded$;
     this.currentCustomer$ = this.CustomerSelectors.currentCustomer$;
@@ -130,7 +134,47 @@ constructor(
     this.CustomerDispatchers.editCustomerMode(false);
     this.CustomerDispatchers.resetCustomers();
   }
-  
+
+   // Arrow key functions
+   onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-customer`)) {
+      document.getElementById(`${i+1}-customer`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-customer`)) {
+      document.getElementById(`${i-1}-customer`).focus();
+    }
+  }
+  onLeftButttonPressed(i: number) {
+    if(this.userDirection == 'rtl') {
+      if(document.getElementById(`${i}-edit-btn`)) {
+        document.getElementById(`${i}-edit-btn`).focus();
+      }
+    }
+  }
+  onRightButttonPressed(i: number) {
+    if(this.userDirection == 'ltr') {
+      if(document.getElementById(`${i}-edit-btn`)) {
+        document.getElementById(`${i}-edit-btn`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection == 'ltr') {
+      if(document.getElementById(`${i}-customer`)) {
+        document.getElementById(`${i}-customer`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection == 'rtl') {
+      if(document.getElementById(`${i}-customer`)) {
+        document.getElementById(`${i}-customer`).focus();
+      }
+    }
+  }
+
   prepareDOB(dob:string){
 
 

@@ -395,7 +395,7 @@
                 <ng-container>
                   <ng-container *ngFor="
                     let app of (appointments
-                      | sortAppointments: sortColumn:isDescending)
+                      | sortAppointments: sortColumn:isDescending);let j = index
                   ">
 
                     <div class="qm-identify-appointment__appointment-table__list-parent qm-table__row" *ngIf="!showLoading() &&
@@ -408,6 +408,12 @@
                     ">
                       <div *ngIf="!app.showInfo" (click)="onAppointmentSelect(app)"
                         class="qm-identify-appointment__appointment-table__list" tabindex="0"
+                        [attr.tabindex]=" j==0 ? 0 : -1"
+                        id="{{j}}-appointment"
+                        (keydown.arrowdown)="onDownButttonPressed(j)"
+                        (keydown.arrowup)="onUpButttonPressed(j)"
+                        (keydown.arrowright) = "onRightButttonPressed(j)"
+                        (keydown.arrowleft) = "onLeftButttonPressed(j)"
                         (click)="onAppointmentSelect(app)" (keydown.enter)="onAppointmentSelect(app)"
                         (keydown.space)="onAppointmentSelect(app)">
                         <div class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">
@@ -448,13 +454,16 @@
                         (onCardClick)="onAppointmentSelect($event)" [useWideCard]="true"
                         (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="app" *ngIf="app.showInfo">
                       </qm-appointment-info>
-                      <i tabindex="0" (keydown.enter)="expandAppointment(app)" (keydown.space)="expandAppointment(app)"
+                      <i tabindex="-1" (keydown.enter)="expandAppointment(app)" (keydown.space)="expandAppointment(app)"
                         (click)="expandAppointment(app)" [ngClass]="{
                         'icon-info--active icon-info-solid': app.showInfo,
                         'icon-info': !app.showInfo
                       }"
                       class="qm-action-btn__icon"
                       aria-hidden="true"
+                      id="{{j}}-more-info"
+                      (keydown.arrowright) = "onRightButttonPressedinInfo(j)"
+                      (keydown.arrowleft) = "onLeftButttonPressedinInfo(j)"
                     >
                     <span class="sr-only">{{ app.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
                   </i>

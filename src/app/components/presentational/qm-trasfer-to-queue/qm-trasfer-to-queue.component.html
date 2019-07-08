@@ -60,19 +60,35 @@
     <hr>
 
     <div class="qm-queue-list__body">
-      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending">
+      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending;let i = index">
 
         <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
           <div class="qm-col-45 qm-queue-list-body-row-label" [innerHtml]="q.name | qmhighlight: filterText"></div>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferFirst"
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferFirst" id="{{i}}-1-transferQueue"
+          (keydown.arrowdown)="onDownButttonPressed(i,1)"
+          (keydown.arrowup)="onUpButttonPressed(i,1)"
+          (keydown.arrowright) = "onRightButttonPressed(i,1)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,1)"
+          [attr.tabindex]="checkFirstElement(i)"
             (click)="OnTransferButtonClick('FIRST')">
             <i class="icon-queue-first"></i>
           </button>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferLast" (click)="OnTransferButtonClick('LAST')">
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferLast" (click)="OnTransferButtonClick('LAST')" 
+          (keydown.arrowdown)="onDownButttonPressed(i,2)"
+          (keydown.arrowup)="onUpButttonPressed(i,2)"
+          (keydown.arrowright) = "onRightButttonPressed(i,2)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,2)"
+          [attr.tabindex]="checkFirstElement(i)"
+          id="{{i}}-2-transferQueue">
             <i class="icon-queue-last"></i>
 
           </button>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferSort"
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferSort" id="{{i}}-3-transferQueue"
+          (keydown.arrowdown)="onDownButttonPressed(i,3)"
+          (keydown.arrowup)="onUpButttonPressed(i,3)"
+          [attr.tabindex]="checkFirstElement(i)"
+          (keydown.arrowright) = "onRightButttonPressed(i,3)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,3)"
             (click)="OnTransferButtonClick('SORTED')">
             <i class="icon-clock"></i>
           </button>

@@ -183,6 +183,17 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
     }
 
   }
+   // Arrow key functions
+   onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-queue-name`)) {
+      document.getElementById(`${i+1}-queue-name`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-queue-name`)) {
+      document.getElementById(`${i-1}-queue-name`).focus();
+    }
+  }
 
   selectQueue(q) {
     if(this.editVisitEnable){

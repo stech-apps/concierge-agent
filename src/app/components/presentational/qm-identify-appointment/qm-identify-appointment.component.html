@@ -156,7 +156,7 @@
               {{ "label.identify.bookingid.warning" | translate }}
             </div>
 
-            <div aria-live="polite" class="qm-identify-appointment__search-area-not-found" *ngIf="
+            <div aria-live="assertive" role="alert" class="qm-identify-appointment__search-area-not-found" *ngIf="
               !showLoading() &&
               isShowAppointmentNotFound &&
               (searchText || '').trim().length > 0

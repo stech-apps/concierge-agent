@@ -1,4 +1,4 @@
-  <div class="qm-toast-inner-container" cdkTrapFocus>
+  <div class="qm-toast-inner-container" cdkTrapFocus dir="{{userDirection$ | async}}">
     <div *ngIf="title" [class]="options.titleClass" [attr.aria-label]="title" class="custom-title">
       {{ title }}
     </div>
@@ -29,8 +29,9 @@
     </div>
     <div class="qm-close-container" >
       <button class="qm-transparent-btn" id='close-toast-btn' (click)="remove()"  >
-          <span *ngIf="options.closeButton" class="btn btn-sm toast-close-button" id="toast-msg-close">
+          <span *ngIf="options.closeButton" aria-hidden="true" class="btn btn-sm toast-close-button" id="toast-msg-close">
             </span>
+            <span class="sr-only">{{ 'button.clear' | translate }}</span>
       </button>
     
     </div>

@@ -60,6 +60,8 @@
         id="{{i}}-visit"
         (keydown.arrowdown)="onDownButttonPressed(i)"
         (keydown.arrowup)="onUpButttonPressed(i)"
+        (keydown.arrowright) = "onRightButttonPressed(i)"
+        (keydown.arrowleft) = "onLeftButttonPressed(i)"
         (keydown.enter)="selectVisit(i,visit.visitId)" 
         (keydown.space)="selectVisit(i,visit.visitId)" class="qm-visit-list-body-row" 
         [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId, 'info-selected':infoVisitId === visit.visitId}"
@@ -91,7 +93,9 @@
 
         </div>
         
-        <button class="info-icon-container qm-transparent-btn" (click)="selectedInfoButton(visit.visitId)">
+        <button class="info-icon-container qm-transparent-btn"  tabindex="-1" id="{{i}}-more-info"
+        (keydown.arrowright) = "onRightButttonPressedinInfo(i)"
+        (keydown.arrowleft) = "onLeftButttonPressedinInfo(i)" (click)="selectedInfoButton(visit.visitId)">
           <i class="icon-info qm-details-icon" *ngIf="infoVisitId !== visit.visitId" ></i>
           <i class="icon-info-solid qm-details-icon" *ngIf="infoVisitId === visit.visitId"></i>
           <span class="sr-only">{{ infoVisitId === visit.visitId ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>

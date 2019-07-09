@@ -1,9 +1,15 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
 .qm-toast-icon {
     float: left;
-    display: block;
+    display: flex;
     width: 2rem;
     margin-right: 2rem;
     font-size: 3em;
+    @at-root [dir="rtl"] & {
+        margin-right: 0;
+        margin-left: 2rem;
+    }
 }
 
 [class^="col"] {
@@ -18,7 +24,15 @@
 .qm-close-container {
     position: absolute;
     right: 0;
-    top: -0.8rem;
+    // top: -10px;
+    display: flex;
+    height: 100%;
+    font-size: 2.5em;
+    width: 38px;
+    @at-root [dir="rtl"] & {
+        right: auto;
+        left: 0;
+      }
 }
 
 a:focus{
@@ -27,16 +41,10 @@ a:focus{
 .qm-toast__message{
     margin: auto;
     font-size: 14px;
-    width: 470px;
+    width: 500px;
     height: 100%;
 }
-.qm-close-container{
-    top:0;
-    height: 100%;
-    font-size: 2.5em;
-    width: 38px;
-   
-}
+
 .qm-checkbox__selector-icon-text{
     font-size: 14px;
     font-weight: normal;
@@ -49,7 +57,7 @@ a:focus{
 }
 .qm-checkbox-label {
     margin: auto;
-    height: 100%;
+    height: 106%;
 }
 .styled-checkbox + label:before{
     border: 3px solid white;
@@ -62,4 +70,30 @@ a:focus{
 }
 .qm-transparent-btn{
     height: 100%;
+}
+
+.qm-toast--info + {
+    @at-root [dir="rtl"] {  
+     .qm-toast-icon
+        .icon-complete:before{
+                    content: "\e944";
+            }
+        }
+}
+
+
+.qm-toast--danger
+    .qm-toast-icon
+        .icon-complete:before{
+            content: "\e913" !important;
+          
+}
+
+@include qm-xs {
+    .qm-toast__message{
+        width: 340px;
+    }
+    .checkbox{
+        width: 135px;
+    }
 }

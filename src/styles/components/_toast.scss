@@ -2,6 +2,9 @@
   margin: 0 auto;
   width: 800px;
   font-size: 18px;
+  @include qm-xs {
+    width: 600px;
+  }
 }
 
 
@@ -43,26 +46,24 @@
 .qm-toast {
   display: flex;
   align-items: center;
-  padding: rem($standard-padding $standard-padding / 2 $standard-padding $standard-padding * 1.5);
+  padding: 10px 30px;
   color: $toast-text-color;
   background: $tertiary-color;
-  max-width: 50vw;
   width: 100%;
   z-index: 3;
   margin: 0 auto;
 
   @include qm-xs {
+    padding: 10px 18px;
     max-width: none;
   }
 
   @include qm-sm {
+    padding: 10px 18px;
     max-width: none;
   };
 
-  @at-root [dir='rtl'] & {
-    padding: rem($standard-padding $standard-padding * 1.5 $standard-padding $standard-padding / 2);
-  }
-
+  
   & + & {
     border-top: 1px solid $light-transparent42;
   }

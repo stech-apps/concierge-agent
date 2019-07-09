@@ -11,6 +11,9 @@ import {
 } from '@angular/animations';
 import { INFO_SVG } from 'src/svgs/info-icon';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { Observable, Subscription } from 'rxjs';
+import { UserSelectors } from 'src/store';
+import { ToastStatusDispatchers, ToastStatusSelectors } from 'src/store/services/toast-status';
 
 @Component({
   selector: 'qm-qm-custom-toast',
@@ -42,12 +45,19 @@ export class QmCustomToastComponent extends Toast {
 
   iconSvg : any =  INFO_SVG;
   isAutoClose: boolean;
+  AutoCloseTimer = null;
+  userDirection$: Observable<string>;
+  userDirection:string;
+  private subscriptions: Subscription = new Subscription();
   
   constructor(
     protected toastrService: ToastrService,
     public toastPackage: ToastPackage,
     private localStorage: LocalStorage,
-    public domSanitizer: DomSanitizer
+    public domSanitizer: DomSanitizer,
+    private userSelectors: UserSelectors,
+    private toastStatusDispatchers: ToastStatusDispatchers,
+    private toastStatusSelectors: ToastStatusSelectors
   ) {
     super(toastrService, toastPackage);
   }
@@ -59,15 +69,42 @@ export class QmCustomToastComponent extends Toast {
   }
 
   ngOnInit() {
+    this.userDirection$ = this.userSelectors.userDirection$;
     this.iconSvg =  this.domSanitizer.bypassSecurityTrustHtml(this.iconSvg);
     this.isAutoClose = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.TOAST_AUTOCLOSE);
+    this.toastStatusDispatchers.setToastStatus(this.isAutoClose);
+    const ToastStatusSubscription = this.toastStatusSelectors.ToastStatus$.subscribe(ts=> {
+      this.isAutoClose = ts;
+      this.SetAutoclose();
+      
+    })
+    this.subscriptions.add(ToastStatusSubscription);
+    // this.SetAutoclose()
     setTimeout(() => {
       document.getElementById('toast-msg-close').focus();
-    }, 1000);
+    }, 100);
   }
   
   onSwitchChange(){
+    this.toastStatusDispatchers.setToastStatus(this.isAutoClose);
     this.localStorage.setSettings(STORAGE_SUB_KEY.TOAST_AUTOCLOSE, this.isAutoClose);    
+    // this.SetAutoclose();
+  }
+  
+  SetAutoclose() {
+    if(this.isAutoClose) {
+      this.AutoCloseTimer = setTimeout(() => {
+        this.remove();
+      }, 5000);
+    } else {
+      clearTimeout(this.AutoCloseTimer);
+      console.log("clear");
+      
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

@@ -585,6 +585,33 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       document.getElementById(`${i-1}-visit`).focus();
     }
   }
-
+  onLeftButttonPressed(i: number) {
+    if(this.userDirection == 'rtl') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onRightButttonPressed(i: number) {
+    if(this.userDirection == 'ltr') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection == 'ltr') {
+      if(document.getElementById(`${i}-visit`)) {
+        document.getElementById(`${i}-visit`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection == 'rtl') {
+      if(document.getElementById(`${i}-visit`)) {
+        document.getElementById(`${i}-visit`).focus();
+      }
+    }
+  }
 
 }

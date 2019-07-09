@@ -77,7 +77,9 @@ import {
   NativeApiDispatchers,
   NativeApiSelectors,
   FlowOpenDispatchers,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  ToastStatusDispatchers,
+  ToastStatusSelectors
 
 } from "./services";
 
@@ -155,5 +157,7 @@ export const storeServices = [
   NativeApiDispatchers,
   NativeApiSelectors,
   FlowOpenDispatchers,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  ToastStatusDispatchers,
+  ToastStatusSelectors
 ];

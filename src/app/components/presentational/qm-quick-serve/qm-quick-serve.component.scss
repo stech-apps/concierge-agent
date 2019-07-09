@@ -336,6 +336,7 @@ button:focus{
     
   &__content {
     width: 476px;
+    z-index: 2;
   }
   &__header {
     font-size: 28px;

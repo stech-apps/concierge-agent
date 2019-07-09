@@ -27,6 +27,7 @@ import * as fromStaffPool from './staff-pool.reducer';
 import * as fromNativeApi from './native.api.reducer'
 import * as fromGlobalNotify from './global-notify.reducer'
 import * as fromFlowOpen from './flow-open.reducer'
+import * as fromToastState from './toast-status.reducer'
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -55,7 +56,8 @@ export interface IAppState {
   staffPool:fromStaffPool.IStaffPoolState,
   nativeApi:fromNativeApi.NativeApiState,
   globalNotify: fromGlobalNotify.IGlobalNotifyState,
-  flowOpen:fromFlowOpen.IFlowOpenState
+  flowOpen:fromFlowOpen.IFlowOpenState,
+  toastState:fromToastState.IToastStatus
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -85,5 +87,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   staffPool:fromStaffPool.reducer,
   nativeApi: fromNativeApi.reducer,
   globalNotify: fromGlobalNotify.reducer,
-  flowOpen: fromFlowOpen.reducer
+  flowOpen: fromFlowOpen.reducer,
+  toastState: fromToastState.reducer
 };

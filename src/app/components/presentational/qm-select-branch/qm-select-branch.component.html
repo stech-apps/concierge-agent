@@ -85,7 +85,7 @@
     <div *ngFor="let b of calendarBranches | filterBranch : filterText;let i = index" class="qm-branch-list__item qm-list__item" 
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 
       'qm-list__item--info-active' : b.showInfo}">
-      <div id="{{i}}-branch-btn" class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)" 
+      <button id="{{i}}-branch-btn" class="qm-branch-list__item--text qm-list__item--text qm-transparent-btn" (click)="onToggleBranchSelection(b)" 
       [attr.tabindex]=" i==0 ? 0 : -1"
       (keydown.enter)="onToggleBranchSelection(b)" 
       (keydown.arrowdown)="onDownButttonPressed(i)"
@@ -99,7 +99,7 @@
           <i class="qm-list__item--info__icon qm-action-btn__icon  icon-location-light" aria-hidden="true"></i>
           <div class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</div>
         </div>      
-      </div>
+      </button>
       <button tabindex="-1" class="qm-transparent-btn qm-action-btn__icon" type="button" id="{{i}}-more-info"
       (keydown.arrowright) = "onRightButttonPressedinInfo(i)"
       (keydown.arrowleft) = "onLeftButttonPressedinInfo(i)"

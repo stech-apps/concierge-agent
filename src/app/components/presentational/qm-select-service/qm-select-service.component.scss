@@ -385,3 +385,9 @@ display: flex;
 [tabindex="-1"]:focus {
   outline: solid #72a2f7 1px !important;
 }
+.qm-transparent-btn{
+  text-align: left;
+  @at-root [dir='rtl'] & {
+    text-align: right;
+  }
+}

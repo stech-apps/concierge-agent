@@ -253,5 +253,8 @@ filterQueues(newFilter: string) {
   MouseLeaveCheckbox() {
     this.hoveredService = '';
   }
+  serviceId(internalName: string) {
+    return internalName.replace(/\s/g, '');
+  }
 
 }

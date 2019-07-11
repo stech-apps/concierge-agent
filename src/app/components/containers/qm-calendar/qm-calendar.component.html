@@ -41,7 +41,7 @@
                [disabled]="day.disabled"
                [attr.tabindex]="day.disabled ? null : '-1'"
                [attr.id]="day.disabled ? day.mDate.date() + '-disabled' : day.mDate.date() + '-enabled'">
-            <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
+            <span class="qm-date-text">{{ day.mDate.date() }}</span>
           </button>
         </ng-container>
       </div>

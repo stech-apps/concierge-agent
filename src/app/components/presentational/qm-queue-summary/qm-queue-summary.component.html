@@ -15,12 +15,11 @@
     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
   </div>
   <button class="btn qm-button qm-primary-button-default qm-search-button" (click)="searchVisit(visitSearch.value.trim().toUpperCase())">
-    <span tabindex="-1" class="btn__content">
+
     {{'search'|translate}}
-    </span>
   </button>
   <button *ngIf="visitQR" (click)="SearchQRButtonClick()" class="btn scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
-    <div  tabindex="-1">
+    <div>
     <i class="qm-action-btn__icon icon-scan-qr"></i>
     <div>{{ "scan_qr" | translate }}</div>
     </div>
@@ -71,16 +70,16 @@
 
 <!-- Qr modal -->
 
-<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
+<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}" cdkTrapFocus>
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
       <h1 class="qm-qr-code-modal__heading-text">
         {{ "scan_qr_code" | translate }}
       </h1>
-      <div class="qm-qr-code-modal__close-container">
-        <i class="icon-close" (click)="closeqr()"></i>
+      <button tabindex="-1" class="qm-qr-code-modal__close-container qm-transparent-btn" (click)="closeqr()">
+        <i class="icon-close" ></i>
         <span class="sr-only">{{ 'button.close' | translate }}</span>
-      </div>
+      </button>
     </div>
     <div class="qm-qr-code-modal__content">
       <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>

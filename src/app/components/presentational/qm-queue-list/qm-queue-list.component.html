@@ -26,19 +26,19 @@
 
   <div aria-live="polite" *ngIf="updatedQueue !== undefined" class="sr-only">{{ updatedQueue.customersWaiting + ('people_waiting_label' | translate) + updatedQueue.name }}</div>
   <div class="qm-queue-list__body" [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable, 'qm-queue-list__body-native':isNative }" >
-    <div class="qm-flex-grid qm-queue-list-body-row" *ngFor="let q of queueCollection;let i = index" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+    <button class="qm-flex-grid qm-queue-list-body-row qm-transparent-btn qm-transparent-row-btn" *ngFor="let q of queueCollection;let i = index" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
     (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" 
     (click)="selectQueue(q)" (keydown.enter)="selectQueue(q)" (keydown.space)="selectQueue(q)" [attr.tabindex]=" i==0 ? 0 : -1" id="{{i}}-queue-name" (keydown.arrowdown)="onDownButttonPressed(i)"
     (keydown.arrowup)="onUpButttonPressed(i)">
-        <div class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
-        (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">{{q.name}}</div>
-        <div class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</div>
-        <div class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
-          <div class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></div>
-          <div> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></div>
-        </div>
-        <div  *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></div>
-    </div>  
+        <span class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">{{q.name}}</span>
+        <span class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</span>
+        <span class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
+          <span class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></span>
+          <span> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></span>
+        </span>
+        <span  *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></span>
+    </button>  
     
     <div *ngIf="queueFetchFailed" class="qm-queue-failed-count" aria-live="polite">
       <div><i class="qm-action-btn__icon icon-warn" aria-hidden="true"></i></div>

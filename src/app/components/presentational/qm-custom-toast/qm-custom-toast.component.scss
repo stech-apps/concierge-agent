@@ -19,6 +19,9 @@
 .qm-toast-inner-container {
     position: relative;
     padding-right: 1.8rem;
+    @at-root [dir="rtl"]  {
+        padding-right: 0;
+    }
 }
 
 .qm-close-container {
@@ -54,6 +57,19 @@ a:focus{
 .checkbox{
     margin: auto;height: 100%;
     width: 155px;
+    @at-root [dir="rtl"] & {
+        width: 171px;
+    }
+    @include qm-xs {
+        @at-root [dir="rtl"] & {
+            width: 160px;
+        } 
+    }
+    @include qm-sm {
+        @at-root [dir="rtl"] & {
+            width: 160px;
+        } 
+    }
 }
 .qm-checkbox-label {
     margin: auto;
@@ -82,7 +98,7 @@ a:focus{
 }
 
 
-.qm-toast--danger
+// .qm-toast--danger
     .qm-toast-icon
         .icon-complete:before{
             content: "\e913" !important;
@@ -96,4 +112,48 @@ a:focus{
     .checkbox{
         width: 135px;
     }
+}
+@include qm-sm {
+    .qm-toast__message{
+        width: 340px;
+    }
+    .checkbox{
+        width: 135px;
+    }
+}
+.qm-check-box-background {
+    left: auto;
+    right: auto;
+    top: 7px;
+    background: white;
+}
+.checkbox-backdrop-unchecked{
+    background: rgba(0, 0, 0, 0.82);
+}
+
+  /* IE10+ CSS styles go here */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .qm-check-box-background{
+        right: 144px;
+        @at-root [dir="rtl"] & {
+            right: auto;
+            left: 132px;
+        }
+        @include qm-xs {
+        right: 124px;
+        @at-root [dir="rtl"] & {
+            right: auto;
+            left: 120px;
+        }
+        }
+        @include qm-sm {
+            right: 124px;
+            @at-root [dir="rtl"] & {
+                right: auto;
+                left: 121px;
+            }
+            }
+           
+    }
+  
 }

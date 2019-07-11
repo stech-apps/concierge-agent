@@ -22,9 +22,6 @@ $qm-btn-mod: (
       disabled-border-color: $button-disabled-color)
 );
 
-:host {
-  display: inline-flex;
-}
 
 .qm-btn {
   display: flex;
@@ -152,4 +149,7 @@ button:active{
 }
 button:hover{
   outline:  none;
+}
+.qm-tranparent-link {
+  text-decoration: none;
 }

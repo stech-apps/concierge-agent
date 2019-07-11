@@ -38,10 +38,10 @@
 
       <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn"
         (click)="onSortClickbyQueue()">
-        <div class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</div>
-        <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+        <span class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</span>
+        <span><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
           <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
-        </div>
+        </span>
       </button>
 
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">

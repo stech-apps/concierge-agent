@@ -147,16 +147,16 @@
     </div>
   
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : smsSelected}" *ngIf="smsActionEnabled" (click)="onSmsSelected()">
-      <div class="qm-button-icon-container">
+      <span class="qm-button-icon-container">
       <span class="icon-smartphone"></span>
-      </div>
+      </span>
       <span>{{ 'send_sms' | translate}}</span>
     </button>
 
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : ticketSelected}" *ngIf="ticketActionEnabled" (click)="onTicketSelected()">
-      <div class="qm-button-icon-container">
+      <span class="qm-button-icon-container">
         <span class="icon-ticket-small"></span>
-      </div>
+      </span>
         <span>{{ 'print_ticket' | translate}}</span>
       </button>
 
@@ -166,14 +166,14 @@
     </button>
   
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailSelected }" *ngIf="emailActionEnabled" (click)="onEmailSelected()">
-      <div class="qm-button-icon-container">
-      <span class="icon-mail"></span></div>
+      <span class="qm-button-icon-container">
+      <span class="icon-mail"></span></span>
       <span>{{ 'label.email' | translate}}</span>
     </button>
     <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : emailAndSmsSelected }" *ngIf="smsActionEnabled && emailActionEnabled"
       (click)="onEmailAndSmsSelected()">
-      <div class="qm-button-icon-container">
-      <span class="icon-emailsms"></span></div>
+      <span class="qm-button-icon-container">
+      <span class="icon-emailsms"></span></span>
       <span>{{ 'send_sms_and_email' | translate}}</span>
     </button>
 

@@ -104,7 +104,7 @@
             color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)'
           }">
             <i class="qm-action-btn__icon icon-scan-qr"></i>
-            <div class="qm-scan-text">{{ "scan_qr" | translate }}</div>
+            <span class="qm-scan-text">{{ "scan_qr" | translate }}</span>
           </button>
         </div>
         <hr class="qm-identify-appointment__pannel-bottom-bar" />
@@ -234,7 +234,7 @@
 
               <button class="qm-identify-appointment__time-container qm-transparent-btn" (click)="showTimeFilter()">
                 <ng-container *ngIf="showTimeLabel">
-                  <div class="qm-date-time-selector">
+                  <span class="qm-date-time-selector">
                     <span *ngIf="useCalendarEndpoint">{{
                     selectedDate.mDate
                       | amLocale: userLocale
@@ -251,7 +251,7 @@
                       <span>&nbsp;-&nbsp;</span>
                       <span>{{ selectedToTime | date: "HH:mm" }}</span>
                     </ng-container>
-                  </div>
+                  </span>
                 </ng-container>
 
                 <i class="icon-edit qm-action-btn__icon "></i>
@@ -406,8 +406,8 @@
                         ? selectedAppointment.qpId != app.qpId
                         : selectedAppointment.id != app.id)
                     ">
-                      <div *ngIf="!app.showInfo" (click)="onAppointmentSelect(app)"
-                        class="qm-identify-appointment__appointment-table__list" tabindex="0"
+                      <button *ngIf="!app.showInfo" (click)="onAppointmentSelect(app)"
+                        class="qm-identify-appointment__appointment-table__list qm-transparent-btn" tabindex="0"
                         [attr.tabindex]=" j==0 ? 0 : -1"
                         id="{{j}}-appointment"
                         (keydown.arrowdown)="onDownButttonPressed(j)"
@@ -416,22 +416,22 @@
                         (keydown.arrowleft) = "onLeftButttonPressed(j)"
                         (click)="onAppointmentSelect(app)" (keydown.enter)="onAppointmentSelect(app)"
                         (keydown.space)="onAppointmentSelect(app)">
-                        <div class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">
+                        <span class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">
                           {{ useCalendarEndpoint ? app.qpId : app.id }}
-                        </div>
-                        <div class="qm-table__cell-35  qm-table__customer qm-table__cell-customer"
+                        </span>
+                        <span class="qm-table__cell-35  qm-table__customer qm-table__cell-customer"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.custName }}
-                        </div>
-                        <div class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
+                      </span>
+                        <span class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app.servicesDisplayLabel }}
-                        </div>
-                        <div class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
+                    </span>
+                        <span class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.branch?.name }}
-                        </div>
-                        <div
+                  </span>
+                        <span
                           class="qm-table__cell-15 qm-table__cell-xs-20 qm-table__cell--align-right qm-table__cell-time">
                           {{
                           app.startTime || app.start
@@ -439,8 +439,8 @@
                               : (app.branch && app.branch.fullTimeZone) || ""
                             | async
                         }}
-                        </div>
-                        <div
+                      </span>
+                        <span
                           class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__cell--align-right qm-table__cell-date">
                           {{
                           getDate(
@@ -448,8 +448,8 @@
                             (app.branch && app.branch.fullTimeZone) || ""
                           )
                         }}
-                        </div>
-                      </div>
+                      </span>
+                      </button>
                       <qm-appointment-info [useCalendarEndpoint]="useCalendarEndpoint"
                         (onCardClick)="onAppointmentSelect($event)" [useWideCard]="true"
                         (onClose)="onAppointmentInfoClose($event)" [appointmentInfo]="app" *ngIf="app.showInfo">
@@ -495,10 +495,10 @@
       <h1 class="qm-qr-code-modal__heading-text">
         {{ "scan_qr_code" | translate }}
       </h1>
-      <div class="qm-qr-code-modal__close-container">
-        <i class="icon-close" (click)="closeqr()"></i>
+      <button tabindex="-1" class="qm-qr-code-modal__close-container qm-transparent-btn" (click)="closeqr()">
+        <i class="icon-close"></i>
         <span class="sr-only">{{ 'button.close' | translate }}</span>
-      </div>
+      </button>
     </div>
       <div class="qm-qr-code-modal__content">
         <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>

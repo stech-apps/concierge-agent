@@ -55,20 +55,20 @@
               </div>
               <div class="qm-flow-sub-header__right">
                 <div class="qm-checkbox__container" *ngIf="multiServiceEnabled">
-                  <label for="qm-checkbox" class="qm-checkbox-label">
-                    <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
+                  <span for="qm-checkbox" class="qm-checkbox-label">
+                    <span class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                       <input id="qm-multi-service" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()"
                         [(ngModel)]="isMultiServiceOn" (focus)="skipButtonHover = true"
                         (focusout)="skipButtonHover = false">
                       <label for="qm-multi-service" (mouseenter)="skipButtonHover = true"
                         (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
-                        (mouseup)="mousePressed = false" 
+                        (mouseup)="mousePressed = false"
                         class="qm-checkbox__selector-icon-text">{{ 'label.multi_service' | translate }}</label>
-                      <div aria-hidden="true" *ngIf="skipButtonHover || mousePressed" 
+                      <span aria-hidden="true" *ngIf="skipButtonHover || mousePressed"
                         [ngClass]="{ 'checkbox-backdrop-unchecked': !isMultiServiceOn}" class="qm-check-box-background">
-                      </div>
-                    </div>
-                  </label>
+                      </span>
+                    </span>
+                  </span>
                   <button (click)="clickedshowToolTip()" type="button"
                     class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
                     <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
@@ -113,32 +113,33 @@
 
             <div class="qm-flow-list-container">
               <div class="qm-list">
-                <div *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType];let i = index"
+                <div
+                  *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType];let i = index"
                   class="qm-service-list__item qm-list__item"
                   [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
-                  <button (click)="onServiceSelect(service, true)"
-                    (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)"
-                    id="{{i}}-frq-serv-btn"
-                    [attr.tabindex]=" i==0 ? 0 : -1"
-                    (keydown.arrowdown)="onFreqServiceDownButttonPressed(i)"
+                  <button (click)="onServiceSelect(service, true)" (keydown.enter)="onServiceSelect(service, true)"
+                    (keydown.space)="onServiceSelect(service, true)" id="{{i}}-frq-serv-btn"
+                    [attr.tabindex]=" i==0 ? 0 : -1" (keydown.arrowdown)="onFreqServiceDownButttonPressed(i)"
                     (keydown.arrowup)="onFreqServiceUpButttonPressed(i)"
-                    (keydown.arrowright) = "onFreqServiceRightButttonPressed(i)"
-                    (keydown.arrowleft) = "onFreqServiceLeftButttonPressed(i)"
+                    (keydown.arrowright)="onFreqServiceRightButttonPressed(i)"
+                    (keydown.arrowleft)="onFreqServiceLeftButttonPressed(i)"
                     class="qm-service-list__item--text qm-list__item--text qm-list-item--frequent qm-transparent-btn"
                     [ngClass]="{'qm-outline':service.showInfoInMostFrequent}">
 
-                    <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfoInMostFrequent}"
+                    <span class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfoInMostFrequent}"
                       [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
 
-                    </div>
-                    <div class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText"
+                    </span>
+                    <br>
+                    <span class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText"
                       [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate)) | qmhighlight: searchText">
-                    </div>
+                    </span>
                   </button>
-                  <button tabindex="-1" id="{{i}}-freq-service-info" class="qm-transparent-btn" *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText"
+                  <button tabindex="-1" id="{{i}}-freq-service-info" class="qm-transparent-btn"
+                    *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText"
                     (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent"
-                    (keydown.arrowright) = "onFreqRightButttonPressedinInfo(i)"
-                    (keydown.arrowleft) = "onFreqLeftButttonPressedinInfo(i)">
+                    (keydown.arrowright)="onFreqRightButttonPressedinInfo(i)"
+                    (keydown.arrowleft)="onFreqLeftButttonPressedinInfo(i)">
                     <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfoInMostFrequent"
                       class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
                     <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent"
@@ -170,30 +171,31 @@
               {{ ('no_bookable_service' | translate) }}</div>
             <div class="qm-flow-list-container">
               <div class="qm-list">
-                <ng-container *ngFor="let service of filteredServiceList | filterService : [filterText, flowType];let j = index">
+                <ng-container
+                  *ngFor="let service of filteredServiceList | filterService : [filterText, flowType];let j = index">
                   <div class="qm-service-list__item qm-list__item"
                     [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false, 'qm-list__item--info-active' : service.showInfo}">
 
                     <button class="qm-service-list__item--text qm-list__item--text qm-transparent-btn"
-                      id="{{j}}-serv-btn"
-                      [attr.tabindex]=" j==0 ? 0 : -1"
+                      id="{{j}}-serv-btn" [attr.tabindex]=" j==0 ? 0 : -1"
                       (keydown.arrowdown)="onServiceDownButttonPressed(j)"
                       (keydown.arrowup)="onServiceUpButttonPressed(j)"
-                      (keydown.arrowright) = "onServiceRightButttonPressed(j)"
-                      (keydown.arrowleft) = "onServiceLeftButttonPressed(j)"
+                      (keydown.arrowright)="onServiceRightButttonPressed(j)"
+                      (keydown.arrowleft)="onServiceLeftButttonPressed(j)"
                       (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)"
                       (click)="onServiceSelect(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
-                      <div class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfo}"
+                      <span class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfo}"
                         [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
-                      </div>
-                      <div class="qm-list__item--info" *ngIf="service.showInfo || filterText"
+                      </span>
+                      <br>
+                      <span class="qm-list__item--info" *ngIf="service.showInfo || filterText"
                         [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate))| qmhighlight: searchText">
-                      </div>
+                      </span>
                     </button>
-                    <button tabindex="-1" id="{{j}}-service-info" class="qm-transparent-btn" 
-                    (keydown.arrowright) = "onRightButttonPressedinInfo(j)"
-                    (keydown.arrowleft) = "onLeftButttonPressedinInfo(j)"
-                    *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText.trim()"
+                    <button tabindex="-1" id="{{j}}-service-info" class="qm-transparent-btn"
+                      (keydown.arrowright)="onRightButttonPressedinInfo(j)"
+                      (keydown.arrowleft)="onLeftButttonPressedinInfo(j)"
+                      *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText.trim()"
                       (click)="service.showInfo = !service.showInfo">
                       <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && !service.showInfo"
                         class="qm-action-btn__icon icon-info" aria-hidden="true"></i>

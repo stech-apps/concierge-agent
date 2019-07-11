@@ -8,10 +8,6 @@
   &__section {
     padding: 0.5rem 0;
   }
-  &__summary-grouping-non-selective {
-    // padding: 0 0.75rem;
-  }
-
   .qm-button-plain {
     align-items: center;
   } 
@@ -176,9 +172,6 @@
       padding-bottom: 1.75rem;
     }
     color: rgba(0, 0, 0, 0.42);
-    > * {
-  
-    }
     &-heading {
       color: rgba(0, 0, 0, 0.82);
       font-size: 24px;
@@ -387,8 +380,6 @@
       .table {
         width: 100%;
         table-layout: fixed;
-        .tr {
-        }
         .label {
           text-align: left;
           font-size: 12px;

@@ -48,6 +48,9 @@ export class QmCustomToastComponent extends Toast {
   AutoCloseTimer = null;
   userDirection$: Observable<string>;
   userDirection:string;
+  skipBranchFocus: boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
   private subscriptions: Subscription = new Subscription();
   
   constructor(

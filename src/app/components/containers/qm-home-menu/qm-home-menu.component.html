@@ -32,7 +32,7 @@
   </nav>
 </div>
 
-<footer class="qm-footer" *ngIf="!isNative" role="footer">
+<footer class="qm-footer" *ngIf="!isNative">
   <div *ngIf="systemInformation$ | async as systemInformation" class="qm-footer__content">
     <p class="qm-footer__text">
       {{ 'poweredBy' | translate }} QMATIC

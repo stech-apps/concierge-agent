@@ -11,6 +11,13 @@
         margin-left: 2rem;
     }
 }
+.qm-toast--danger
+    .qm-toast-icon
+        .icon-complete:before{
+            content: "\e913" !important;
+          
+}
+
 
 [class^="col"] {
     padding: 5px;
@@ -88,6 +95,7 @@ a:focus{
     height: 100%;
 }
 
+
 .qm-toast--info + {
     @at-root [dir="rtl"] {  
      .qm-toast-icon
@@ -97,13 +105,6 @@ a:focus{
         }
 }
 
-
-// .qm-toast--danger
-    .qm-toast-icon
-        .icon-complete:before{
-            content: "\e913" !important;
-          
-}
 
 @include qm-xs {
     .qm-toast__message{

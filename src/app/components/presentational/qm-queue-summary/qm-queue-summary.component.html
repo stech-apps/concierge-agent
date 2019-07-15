@@ -19,10 +19,10 @@
     {{'search'|translate}}
   </button>
   <button *ngIf="visitQR" (click)="SearchQRButtonClick()" class="btn scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
-    <div>
+    <span>
     <i class="qm-action-btn__icon icon-scan-qr"></i>
-    <div>{{ "scan_qr" | translate }}</div>
-    </div>
+    <span>{{ "scan_qr" | translate }}</span>
+    </span>
   </button>
 </div>
 <div class="qm-visit-loading" *ngIf="!queueVisitIDloaded && queueVisitIDloading">

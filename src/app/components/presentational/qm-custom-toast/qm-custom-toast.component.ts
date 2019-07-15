@@ -101,7 +101,6 @@ export class QmCustomToastComponent extends Toast {
       }, 5000);
     } else {
       clearTimeout(this.AutoCloseTimer);
-      console.log("clear");
       
     }
   }

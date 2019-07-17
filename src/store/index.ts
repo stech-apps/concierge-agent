@@ -79,7 +79,10 @@ import {
   FlowOpenDispatchers,
   FlowOpenSelectors,
   ToastStatusDispatchers,
-  ToastStatusSelectors
+  ToastStatusSelectors,
+  JWTTokenDataService,
+  JWTTokenDispatchers,
+  JWTTokenSelectors
 
 } from "./services";
 
@@ -159,5 +162,8 @@ export const storeServices = [
   FlowOpenDispatchers,
   FlowOpenSelectors,
   ToastStatusDispatchers,
-  ToastStatusSelectors
+  ToastStatusSelectors,
+  JWTTokenDataService,
+  JWTTokenDispatchers,
+  JWTTokenSelectors
 ];

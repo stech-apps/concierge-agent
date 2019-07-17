@@ -27,7 +27,8 @@ import * as fromStaffPool from './staff-pool.reducer';
 import * as fromNativeApi from './native.api.reducer'
 import * as fromGlobalNotify from './global-notify.reducer'
 import * as fromFlowOpen from './flow-open.reducer'
-import * as fromToastState from './toast-status.reducer'
+import * as fromToastState from './toast-status.reducer';
+import * as fromJWTToken from './jwtToken.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -57,7 +58,8 @@ export interface IAppState {
   nativeApi:fromNativeApi.NativeApiState,
   globalNotify: fromGlobalNotify.IGlobalNotifyState,
   flowOpen:fromFlowOpen.IFlowOpenState,
-  toastState:fromToastState.IToastStatus
+  toastState:fromToastState.IToastStatus,
+  jwtToken: fromJWTToken.IJWTTokenState,
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -88,5 +90,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   nativeApi: fromNativeApi.reducer,
   globalNotify: fromGlobalNotify.reducer,
   flowOpen: fromFlowOpen.reducer,
-  toastState: fromToastState.reducer
+  toastState: fromToastState.reducer,
+  jwtToken: fromJWTToken.reducer
 };

@@ -11,12 +11,12 @@
         margin-left: 2rem;
     }
 }
-.qm-toast--danger
-    .qm-toast-icon
-        .icon-complete:before{
-            content: "\e913" !important;
+// .qm-toast--danger
+//     .qm-toast-icon
+//         .icon-complete:before{
+//             content: "\e913" !important;
           
-}
+// }
 
 
 [class^="col"] {
@@ -96,14 +96,14 @@ a:focus{
 }
 
 
-.qm-toast--info + {
-    @at-root [dir="rtl"] {  
-     .qm-toast-icon
-        .icon-complete:before{
-                    content: "\e944";
-            }
-        }
-}
+// .qm-toast--info + {
+//     @at-root [dir="rtl"] {  
+//      .qm-toast-icon
+//         .icon-complete:before{
+//                     content: "\e944";
+//             }
+//         }
+// }
 
 
 @include qm-xs {

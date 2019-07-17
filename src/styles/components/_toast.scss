@@ -110,19 +110,48 @@
     background: $toast-success-background-color;
     .qm-toast-inner-container{
       .qm-toast-icon{
-        i{
-          content: "\e913";
+        i:before{
+          content: "\e950";
         }
       }
-    }   
+      @at-root [dir="rtl"] {  
+        .qm-toast-icon{
+          i:before{
+            content: "\e944" !important;
+          }
+      }
+    }
+    }    
   }
 
   &--danger {
     background: $toast-error-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i:before{
+          content: "\e913" !important;
+        }
+      }
+      
+    }   
   }
 
   &--info {
     background: $toast-success-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i:before{
+          content: "\e950";
+        }
+      }
+      @at-root [dir="rtl"] {  
+        .qm-toast-icon{
+          i:before{
+            content: "\e944" !important;
+          }
+      }
+    }
+    }   
   }
 
   // @include qm-xs{

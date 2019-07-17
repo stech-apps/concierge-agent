@@ -20,7 +20,7 @@
   <!--  expand collapse button css-->
   <button class="qm-transparent-btn"  (click)="collapseBtnClicked()">
     <!--custom icon for IE  -->
-    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'rtl'"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
+    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& (userDirection === 'rtl' || userDirection === 'RTL')"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
         <span class="path3"></span> 
         <span class="path2"></span> 
         <!-- <span class="path1"></span>       -->
@@ -28,7 +28,7 @@
     </i>
 
       <!--custom icon for IE  -->
-    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& userDirection === 'ltr'"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
+    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& (userDirection === 'ltr' || userDirection === 'LTR')"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
         <span class="path1"></span>
         <span class="path2"></span>
         <span class="path3"></span>  

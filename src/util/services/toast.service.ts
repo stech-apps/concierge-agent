@@ -17,7 +17,8 @@ export class ToastService {
     autoDismiss: true,
     timeOut: 0,
     tapToDismiss: false,
-    disableTimeOut: true
+    disableTimeOut: true,
+    toastType: 'info'
   };
 
   private successOptions: Object = {
@@ -28,6 +29,7 @@ export class ToastService {
 
   private infoOptions: Object = {
     ...this.toastrOptions,
+    toastType: 'info',
     enableHtml: true,
     toastClass: 'toast qm-toast qm-toast--info'
   };
@@ -35,6 +37,7 @@ export class ToastService {
   private errorOptions: Object = {
     ...this.toastrOptions,
     enableHtml: true,
+    toastType: 'error',
 
     toastClass: 'toast qm-toast qm-toast--danger'
   };
@@ -44,7 +47,8 @@ export class ToastService {
     toastClass: 'toast qm-toast qm-toast--danger',
     closeButton: false,
     tapToDismiss: false,
-    disableTimeOut: true
+    disableTimeOut: true,
+    toastType: 'error'
   };
 
   private stickyToastOptions: Object = {
@@ -52,13 +56,16 @@ export class ToastService {
     toastClass: 'toast qm-toast qm-toast--danger',
     closeButton: true,
     tapToDismiss: false,
-    disableTimeOut: true
+    disableTimeOut: true,
+    toastType: 'error'
+
   };
 
   private htmlSuccessOptions: Object = {
     ...this.toastrOptions,
     toastClass: 'toast qm-toast qm-toast--success',
-    enableHtml: true
+    enableHtml: true,
+    toastType: 'info'
   };
 
   setToastContainer(toastContainer) {

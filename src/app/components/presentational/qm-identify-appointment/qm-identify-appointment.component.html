@@ -277,12 +277,13 @@
             </div>
           </div>
 
-          <div class="qm-identify-appointment__table-container">
-            <div class="qm-identify-appointment__appointment-table">
-              <div class="qm-identify-appointment__appointment-table__header qm-table__row">
+          <div class="qm-identify-appointment__table-container" role="table">
+              <caption class="sr-only">Appointment List</caption>
+            <div class="qm-identify-appointment__appointment-table" role="rowgroup">
+              <div  role="row" scope="col" class="qm-identify-appointment__appointment-table__header qm-table__row">
                 <button (click)="
                     sortAppointments(useCalendarEndpoint ? 'qpId' : 'id')
-                  "
+                  "  role="columnheader"
                   class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__header-id  qm-text-overflow-fix qm-transparent-btn">
                   <span>{{
                     "list.identifyappointment.heading.id" | translate
@@ -298,7 +299,7 @@
                   </span>
                 </button>
 
-                <button (click)="sortAppointments('custName')"
+                <button (click)="sortAppointments('custName')"  role="columnheader"
                   class="qm-table__cell-35 qm-table__cell-xs-35  qm-table__header-customer qm-text-overflow-fix qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                   <span>
@@ -313,7 +314,7 @@
                   <span class="sr-only">{{ sortColumn !== 'custName' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                 </span>
                 </button>
-                <button (click)="sortAppointments('servicesDisplayLabel')"
+                <button (click)="sortAppointments('servicesDisplayLabel')"  role="columnheader"
                   class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                   <span>{{
@@ -328,7 +329,7 @@
                   </span>
                 </button>
 
-                <button *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')"
+                <button *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')"  role="columnheader"
                   class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                   <span>{{
@@ -342,7 +343,7 @@
                     <span class="sr-only">{{ sortColumn !== 'branchDisplayLabel' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
-                <button (click)="
+                <button  role="columnheader" (click)="
                     sortAppointments(
                       useCalendarEndpoint ? 'start' : 'startTime'
                     )
@@ -364,7 +365,7 @@
                     sortAppointments(
                       useCalendarEndpoint ? 'start' : 'startTimeDate'
                     )
-                  "
+                  "  role="columnheader"
                   class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__header-date qm-table__cell--align-right qm-transparent-btn">
                   <span>{{
                     "list.identifyappointment.heading.date" | translate
@@ -386,7 +387,7 @@
               <div class="qm-identify-appointment__table-body" [ngClass]="{'qm-list-backdrop':!showLoading() &&
               (appointments &&
                 appointments.length > 0 &&
-                !selectedAppointment)}">
+                !selectedAppointment)}" role="rowgroup">
                 <div class="qm-appointments-loading" *ngIf="showLoading()">
                   <span class="qm-spinner"></span>
                   <span>{{ "label.identify.appointment.list.loading" | translate }}</span>
@@ -404,8 +405,8 @@
                         !selectedAppointment) ||
                       (useCalendarEndpoint
                         ? selectedAppointment.qpId != app.qpId
-                        : selectedAppointment.id != app.id)
-                    ">
+                        : selectedAppointment.id != app.id) 
+                    " role="row">
                       <button *ngIf="!app.showInfo" (click)="onAppointmentSelect(app)"
                         class="qm-identify-appointment__appointment-table__list qm-transparent-btn" tabindex="0"
                         [attr.tabindex]=" j==0 ? 0 : -1"
@@ -416,22 +417,22 @@
                         (keydown.arrowleft) = "onLeftButttonPressed(j)"
                         (click)="onAppointmentSelect(app)" (keydown.enter)="onAppointmentSelect(app)"
                         (keydown.space)="onAppointmentSelect(app)">
-                        <span class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">
+                        <span role="cell" class="qm-table__cell-10 qm-table__cell-xs-20 qm-table__cell-id">
                           {{ useCalendarEndpoint ? app.qpId : app.id }}
                         </span>
-                        <span class="qm-table__cell-35  qm-table__customer qm-table__cell-customer"
+                        <span role="cell" class="qm-table__cell-35  qm-table__customer qm-table__cell-customer"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.custName }}
                       </span>
-                        <span class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
+                        <span role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app.servicesDisplayLabel }}
                     </span>
-                        <span class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
+                        <span role="cell" class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.branch?.name }}
                   </span>
-                        <span
+                        <span role="cell"
                           class="qm-table__cell-15 qm-table__cell-xs-20 qm-table__cell--align-right qm-table__cell-time">
                           {{
                           app.startTime || app.start
@@ -440,7 +441,7 @@
                             | async
                         }}
                       </span>
-                        <span
+                        <span role="cell"
                           class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__cell--align-right qm-table__cell-date">
                           {{
                           getDate(

@@ -132,7 +132,7 @@
 }
 
 .qm-option__help-btn{
-  padding: 0 20px;
+  // padding: 0 20px;
   z-index: 40;
 }
 
@@ -229,13 +229,13 @@
   width: 350px;
     z-index: 30;
     position: absolute;
-    margin-left: 12px;
+    margin-left: 51px;
     // margin-top: -87px;
     margin-bottom: 10px;
 
 
     @at-root [dir="rtl"] & {
-        margin-right: 12px;
+        margin-right: 55px;
         text-align: right;
     }
 
@@ -362,6 +362,13 @@ button:focus{
     margin: 0px 20px;
   }
   }
+  .quick-serve-tooltip{
+    margin-left: 10px;
+    @at-root [dir="rtl"] & {
+      margin-right: 12px;
+      text-align: right;
+  }
+  }
 } 
 
 
@@ -477,7 +484,10 @@ button:active,button:hover{
 // IE specific fix for tooltip
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .quick-serve-tooltip{
-    margin-left:-203px;
+    margin-left:-187px;
+    @at-root [dir="rtl"] & {
+      margin-right:-187px !important;
+    }
   }
   .qm-check-box-background{
     right: -15px;

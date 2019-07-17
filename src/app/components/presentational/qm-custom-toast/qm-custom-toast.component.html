@@ -5,15 +5,16 @@
 
     <!-- <span [innerHtml]="iconSvg" class="qm-toast-icon"></span>  -->
     <div class="qm-toast-icon"> 
-      <i class="icon-complete"></i>
+      <i class="icon-complete" ></i>
+      <!-- <i class="icon-alert-star" *ngIf="options.toastType == 'error'"></i> -->
     </div>
 
     <span *ngIf="message && options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
-      [innerHTML]="message">
+      [innerHTML]="message"> 
     </span>
     <div *ngIf="message && !options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
       [attr.aria-label]="message">
-      {{ message }}
+      {{ message }} 
     </div>
     <div>
       

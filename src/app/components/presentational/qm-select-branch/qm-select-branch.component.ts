@@ -104,28 +104,28 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     }
   }
   onLeftButttonPressed(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-more-info`)) {
         document.getElementById(`${i}-more-info`).focus();
       }
     }
   }
   onRightButttonPressed(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-more-info`)) {
         document.getElementById(`${i}-more-info`).focus();
       }
     }
   }
   onLeftButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-branch-btn`)) {
         document.getElementById(`${i}-branch-btn`).focus();
       }
     }
   }
   onRightButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-branch-btn`)) {
         document.getElementById(`${i}-branch-btn`).focus();
       }

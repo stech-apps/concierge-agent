@@ -264,56 +264,56 @@ export class QmSelectServiceComponent implements OnInit {
     }
   }
   onServiceLeftButttonPressed(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-service-info`)) {
         document.getElementById(`${i}-service-info`).focus();
       }
     }
   }
   onServiceRightButttonPressed(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-service-info`)) {
         document.getElementById(`${i}-service-info`).focus();
       }
     }
   }
   onLeftButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-serv-btn`)) {
         document.getElementById(`${i}-serv-btn`).focus();
       }
     }
   }
   onRightButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-serv-btn`)) {
         document.getElementById(`${i}-serv-btn`).focus();
       }
     }
   }
   onFreqServiceLeftButttonPressed(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-freq-service-info`)) {
         document.getElementById(`${i}-freq-service-info`).focus();
       }
     }
   }
   onFreqServiceRightButttonPressed(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-freq-service-info`)) {
         document.getElementById(`${i}-freq-service-info`).focus();
       }
     }
   }
   onFreqLeftButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'ltr') {
+    if(this.userDirection.toLowerCase() == 'ltr') {
       if(document.getElementById(`${i}-frq-serv-btn`)) {
         document.getElementById(`${i}-frq-serv-btn`).focus();
       }
     }
   }
   onFreqRightButttonPressedinInfo(i: number) {
-    if(this.userDirection == 'rtl') {
+    if(this.userDirection.toLowerCase() == 'rtl') {
       if(document.getElementById(`${i}-frq-serv-btn`)) {
         document.getElementById(`${i}-frq-serv-btn`).focus();
       }

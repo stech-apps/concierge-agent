@@ -1,4 +1,5 @@
 <div role="table" class="qm-queue-list" dir="{{userDirection$ | async}}">
+    <caption class="sr-only">Queue details</caption>
   <div class="qm-queue-list__headers qm-flex-grid" role="rowgroup">
     <div role="row" style="display: flex;width:100%">
     <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-45 qm-flex-grid" (click)="onSortClickbyQueue()">
@@ -32,14 +33,14 @@
     (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" 
     (click)="selectQueue(q)" (keydown.enter)="selectQueue(q)" (keydown.space)="selectQueue(q)" [attr.tabindex]=" i==0 ? 0 : -1" id="{{i}}-queue-name" (keydown.arrowdown)="onDownButttonPressed(i)"
     (keydown.arrowup)="onUpButttonPressed(i)">
-        <span class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        <span role="cell" class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
         (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">{{q.name}}</span>
-        <span class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</span>
-        <span class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
+        <span role="cell" class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</span>
+        <span role="cell" class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
           <span class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></span>
           <span> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></span>
         </span>
-        <span  *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></span>
+        <span  role="cell" *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></span>
     </button>  
     
     <div *ngIf="queueFetchFailed" class="qm-queue-failed-count" aria-live="polite">

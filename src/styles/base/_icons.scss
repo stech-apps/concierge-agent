@@ -26,6 +26,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-pin:before {
+  content: "\e95e";
+  color: #fff;
+}
+.icon-ic-outline-pin:before {
+  content: "\e97b";
+  color: #fff;
+}
+
 .icon-button-down .path1:before {
   content: "\e974";
   color: rgb(0, 0, 0);

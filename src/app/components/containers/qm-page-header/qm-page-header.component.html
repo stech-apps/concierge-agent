@@ -20,7 +20,7 @@
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>
     <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
-        [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-right':userDirections === 'LTR','icon-caret-left':userDirections === 'rtl','icon-caret-left':userDirections === 'RTL'}"></i></span>
+        [ngClass]="{'icon-caret-right':(userDirections === 'ltr' || userDirections === 'LTR'),'icon-caret-left':(userDirections === 'rtl' || userDirections === 'RTL')}"></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
     <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()" role="navigation">
       <span class="qm-header__edit-link">{{'edit'|translate}}</span>

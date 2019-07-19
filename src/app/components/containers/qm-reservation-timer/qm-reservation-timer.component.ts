@@ -4,11 +4,12 @@ import { TimeUtils } from "./../../../../util/services/timeUtils.service";
 import { ReservationExpiryTimerDispatchers } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.dispatchers";
 import { CalendarSettingsSelectors } from "./../../../../store/services/calendar-settings/calendar-settings.selectors";
 import { ReservationExpiryTimerSelectors } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.selectors";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output ,EventEmitter} from "@angular/core";
 import { Subscription } from "rxjs";
 import { Observable } from "rxjs";
 import { UserSelectors } from "../../../../store";
 import { registerLocaleData } from "@angular/common";
+// import {  } from "events";
 
 @Component({
   selector: "qm-reservation-timer",
@@ -23,6 +24,10 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   intervalRef = null;
   prevTimeStamp = undefined;
   timerStringWCAG: string;
+  @Output() ThirtySecondsGone: EventEmitter<string> = new EventEmitter<string>();
+  @Output() ExpandtheTimer: EventEmitter<string> = new EventEmitter<string>();
+  calendarExpiryTime : number;
+  
 
   constructor(
     private userSelectors: UserSelectors,
@@ -39,8 +44,9 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const expiryReservationCalendarSettingSubscription = this.getExpiryReservationTime$.subscribe(
-      (calendarExpiryTime: number) => {
+      (calendarExpiryTime: number) => {       
         // If view is rendered on screen again reset timer!!
+        this.calendarExpiryTime = calendarExpiryTime;
         const showTimerSubscription = this.reservationExpiryTimerSelectors.showReservationExpiryTime$.subscribe(
           value => {
             if (value) {
@@ -102,6 +108,10 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
         onGoingTime
       );
 
+      // auto collapse reservation timer view after 30 seconds
+      if (this.calendarExpiryTime - onGoingTime == 30) {
+        this.ThirtySecondsGone.emit('ThirtySecondsgone');
+      }
       // 2min before expire show message "Timer about the expire!!"
       if (onGoingTime === 120) {
         const translateSubscription = this.translate

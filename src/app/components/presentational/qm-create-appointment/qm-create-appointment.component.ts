@@ -28,6 +28,12 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   public isFlowSkip = true;
   currentCustomer: ICustomer;
   currentCustomer$: Observable<ICustomer>;
+  DraggablepositionX:number;
+  DraggablepositionY:number;
+  inBounds = true;
+  TimerViewExpanded : boolean = true;
+  isDraggable:boolean = true;
+  TimerSide : string;
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
@@ -38,6 +44,11 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
   private timeSlotDispatchers:TimeslotDispatchers) {
+
+    this.DraggablepositionX = 8;
+    this.DraggablepositionY = 60;
+    this.TimerSide = 'right';
+
          
       this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
       if(this.isFlowSkip === undefined){
@@ -129,7 +140,34 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   moveReservationTimer($event) {
   }
   
+  onDragEnd($event){
+    this.DraggablepositionX = parseInt($event.x);
+    this.DraggablepositionY = parseInt($event.y);
+    var draggableTimerElement = document.getElementById('draggable-timer');
+    if(this.DraggablepositionX < -(window.innerWidth - 199)/2) {
+      console.log(this.DraggablepositionX, this.DraggablepositionY);
+      this.DraggablepositionX = -window.innerWidth + 199;
+      this.TimerSide ='left';     
+      console.log("left");
+      
+    } else {
+      console.log("right");
+      this.DraggablepositionX = 8;
+      this.TimerSide ='right';
+      
+    }   
+  }
   // deselectTime(){
   //   this.timeSlotDispatchers.deselectTimeslot();
   // }
+
+  ExpandCollapseTimer() {  
+    this.TimerViewExpanded = !this.TimerViewExpanded;
+  }
+  DraggableChangeButton() {
+    this.isDraggable = !this.isDraggable;
+  }
+  ThirtySecondsGone() {
+    this.TimerViewExpanded = false;
+  }
 }

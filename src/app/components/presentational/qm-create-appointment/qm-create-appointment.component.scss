@@ -9,24 +9,69 @@
   top: 58px;
   font-size: 2em;
   display: inline-block;
-  padding: 14px;
-  background: $white;
-  color: #5E5C5C;
-  padding-top: 0.2em;
-  padding-bottom: 0.7em;
+  background: #017c65;
+  color: #ffffff;
   z-index: 99999;
   line-height: 0.8em;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
-  margin: 1em;
   text-align: center;
   cursor: move;
   right: 0.5rem;
-  width: 124px;
   border-radius: 4px;
+  pointer-events: auto;
 }
 
 .qm-current-customer-text{
-  white-space: nowrap; text-overflow:ellipsis; max-width:20vw;
+  white-space: nowrap; 
+  text-overflow:ellipsis; 
+  max-width:20vw;
   overflow: hidden;
   outline-style:none;
+}
+.qm-expiry-container{
+  display: flex;
+ 
+  &__icon-bar{
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    min-height: 115px;
+  }
+  &__timer{
+    padding: 14px;
+  }
+}
+.qm-transparent-btn{
+  color: #ffffff;
+  font-size: 20px;
+  flex: 1;
+}
+
+.draggable-item-container {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 500;
+}
+.rotate-pin{
+  transform: rotate(270deg);
+}
+.ng-draggable {
+  cursor: grab;
+}
+ 
+.ng-dragging {
+  cursor: grabbing;
+}
+.right_icon_bar{
+  flex-direction: row;
+}
+.left_icon-bar{
+  flex-direction: row-reverse;
+}
+.hideTime {
+display: none;
 }

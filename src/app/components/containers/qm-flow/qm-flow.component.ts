@@ -17,7 +17,7 @@ import { PlatformLocation } from '@angular/common'
   selector: 'qm-flow',
   templateUrl: './qm-flow.component.html',
   styleUrls: ['./qm-flow.component.scss'],
-  host: { 'class': 'qm-flow-component-root animated slideInUp faster' }
+  host: { 'class': 'qm-flow-component-root animated slideInUp' }
 })
 export class QmFlowComponent implements OnInit, AfterContentInit {
   activeHeader: number;

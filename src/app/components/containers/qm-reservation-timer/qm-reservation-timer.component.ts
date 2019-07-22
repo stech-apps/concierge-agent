@@ -112,7 +112,12 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       if (this.calendarExpiryTime - onGoingTime == 30) {
         this.ThirtySecondsGone.emit('ThirtySecondsgone');
       }
-      // 2min before expire show message "Timer about the expire!!"
+      
+      if((this.calendarExpiryTime-onGoingTime)%120 == 0) {
+        this.ExpandtheTimer.emit('EveryTwoMins');
+      }
+
+      // 2min before expire show message "Timer about the expire!!" and expand the timer.
       if (onGoingTime === 120) {
         const translateSubscription = this.translate
           .get("warning_message_on_cancel_reservation")
@@ -120,6 +125,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
             this.toastService.errorToast(res);
           });
         translateSubscription.unsubscribe();
+        this.ExpandtheTimer.emit('TwoMins');
       }
 
       // After timer expired show message "Timer has expired!!"

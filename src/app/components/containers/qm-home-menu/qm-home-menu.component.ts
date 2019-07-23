@@ -39,7 +39,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isCreateAppointment = false;
   userDirection$: Observable<string>;
   isNative:boolean;
-  
+  isJWTTokenLoad = false;
 
   isEditFlowDisabled = false;
   isEditVisitFlowDisabled = false;
@@ -101,31 +101,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
     const JWTTokenSubscriptions = this.jwtTokenSelectors.jwtToken$.subscribe(token => {
       if (token !== '') {
+        this.isJWTTokenLoad = true;
         this.calendarBranchDispatcher.fetchCalendarBranches();
       }
     });
     this.subscriptions.add(JWTTokenSubscriptions);
-
-    const systmeInfoSubscription = this.systemInfoSelectors.systemInfoProductVersion$
-        .subscribe((version) => {
-          let status;
-          try {
-            status = this.util.compareVersions(version.includes('4.1.') ?
-            ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_1 : ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_0, version);
-          } catch (err) {
-            status = 0;
-          }
-          if (status <= 0) {
-            const systmeInfoHostSubscription = this.systemInfoSelectors.distributedAgentStatus$
-        .subscribe((value) => {
-          if (value) {
-            this.jwtTokenDispatcher.fetchJWTToken();
-          }
-        });
-        this.subscriptions.add(systmeInfoHostSubscription);
-          }
-        });
-        this.subscriptions.add(systmeInfoSubscription);
 
     //passing menu item names to add to the 2d array
     this.wordSplitter('create_appointment_single_line')
@@ -179,6 +159,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
         this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
         this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+
+        if (uttpParams[CREATE_APPOINTMENT] && uttpParams[EDIT_APPOINTMENT]) {
+          this.getJWTToken();
+        }
       }
       else {
         this.isCreateAppointment = false;
@@ -201,6 +185,30 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isVisitUser = true;
       }
     });
+  }
+
+  getJWTToken() {
+    const systmeInfoSubscription = this.systemInfoSelectors.systemInfoProductVersion$
+        .subscribe((version) => {
+          let status;
+          try {
+            status = this.util.compareVersions(version.includes('4.1.') ?
+            ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_1 : ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_0, version);
+          } catch (err) {
+            status = 0;
+          }
+          if (status <= 0) {
+            const systmeInfoHostSubscription = this.systemInfoSelectors.distributedAgentStatus$
+        .subscribe((value) => {
+          if (value) {
+            this.jwtTokenDispatcher.fetchJWTToken();
+          }
+        });
+        this.subscriptions.add(systmeInfoHostSubscription);
+          }
+        });
+        this.subscriptions.add(systmeInfoSubscription);
+
   }
 
   handleMenuItemClick(route) {
@@ -239,11 +247,18 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
             }
           }, error => {
             if (error.status === 401) {
-              this.queueService.stopQueuePoll();
-              this.router.navigate(['home/central-login'], { queryParams : {route} });
-              setTimeout(() => {
-                this.flowOpenDispatcher.flowOpen();
-              }, 1000);
+              if (this.isJWTTokenLoad) {
+                this.jwtTokenDispatcher.fetchJWTToken();
+                setTimeout(() => {
+                  this.handleMenuItemClick(route);
+                }, 2000);
+              } else {
+                this.queueService.stopQueuePoll();
+                this.router.navigate(['home/central-login'], { queryParams : {route} });
+                setTimeout(() => {
+                  this.flowOpenDispatcher.flowOpen();
+                }, 1000);
+              }
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.errorToast(v);

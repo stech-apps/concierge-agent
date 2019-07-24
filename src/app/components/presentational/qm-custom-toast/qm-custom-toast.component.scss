@@ -37,8 +37,8 @@
     // top: -10px;
     display: flex;
     height: 100%;
-    font-size: 2.5em;
-    width: 38px;
+    // font-size: 2.5em;
+    // width: px;
     @at-root [dir="rtl"] & {
         right: auto;
         left: 0;
@@ -51,7 +51,7 @@ a:focus{
 .qm-toast__message{
     margin: auto;
     font-size: 14px;
-    width: 500px;
+    width: 490px;
     height: 100%;
 }
 
@@ -63,7 +63,7 @@ a:focus{
 }
 .checkbox{
     margin: auto;height: 100%;
-    width: 155px;
+    width: 145px;
     @at-root [dir="rtl"] & {
         width: 171px;
     }
@@ -109,7 +109,7 @@ a:focus{
 
 @include qm-xs {
     .qm-toast__message{
-        width: 340px;
+        width: 320px;
     }
     .checkbox{
         width: 135px;
@@ -117,7 +117,7 @@ a:focus{
 }
 @include qm-sm {
     .qm-toast__message{
-        width: 340px;
+        width: 320px;
     }
     .checkbox{
         width: 135px;

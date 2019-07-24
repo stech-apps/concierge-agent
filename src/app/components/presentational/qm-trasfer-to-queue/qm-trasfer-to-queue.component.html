@@ -25,51 +25,51 @@
 </div>
 
 
-<div class="qm-queue-list__container" dir="{{ userDirection$ | async }}">
+<div class="qm-queue-list__container" dir="{{ userDirection$ | async }}"  role="table">
+    <caption class="sr-only">Transfer to queue list</caption>
   <div class="qm-queue-list">
-
     <div style="padding-bottom:20px;text-align:center"
       *ngIf="(this.queueCollection && this.queueCollection.length === 0)">
       {{'label.empty_queues'|translate}}
     </div>
 
-    <div class="qm-queue-list__headers qm-flex-grid"
-      *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
+    <div class="qm-queue-list__headers qm-flex-grid" 
+      *ngIf="(this.queueCollection && this.queueCollection.length !== 0)" role="rowgroup">
 
       <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn"
-        (click)="onSortClickbyQueue()">
+        (click)="onSortClickbyQueue()" role="columnheader" scope="col">
         <span class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</span>
         <span><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
           <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </span>
       </button>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label">{{'label.transfer_first'|translate}}</div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label">{{'label.transfer_last'|translate}} </div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label"> {{'label.transfer_sort'|translate}} </div>
       </div>
 
     </div>
     <hr>
 
-    <div class="qm-queue-list__body">
+    <div class="qm-queue-list__body" role="rowgroup">
       <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending;let i = index">
 
-        <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
+        <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)" role="row">
           <div class="qm-col-45 qm-queue-list-body-row-label" [innerHtml]="q.name | qmhighlight: filterText"></div>
           <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferFirst" id="{{i}}-1-transferQueue"
           (keydown.arrowdown)="onDownButttonPressed(i,1)"
           (keydown.arrowup)="onUpButttonPressed(i,1)"
           (keydown.arrowright) = "onRightButttonPressed(i,1)"
           (keydown.arrowleft) = "onLeftButttonPressed(i,1)"
-          [attr.tabindex]="checkFirstElement(i)"
+          [attr.tabindex]="checkFirstElement(i)" role="cell"
             (click)="OnTransferButtonClick('FIRST')">
             <i class="icon-queue-first"></i>
           </button>
@@ -78,7 +78,7 @@
           (keydown.arrowup)="onUpButttonPressed(i,2)"
           (keydown.arrowright) = "onRightButttonPressed(i,2)"
           (keydown.arrowleft) = "onLeftButttonPressed(i,2)"
-          [attr.tabindex]="checkFirstElement(i)"
+          [attr.tabindex]="checkFirstElement(i)" role="cell"
           id="{{i}}-2-transferQueue">
             <i class="icon-queue-last"></i>
 
@@ -88,7 +88,7 @@
           (keydown.arrowup)="onUpButttonPressed(i,3)"
           [attr.tabindex]="checkFirstElement(i)"
           (keydown.arrowright) = "onRightButttonPressed(i,3)"
-          (keydown.arrowleft) = "onLeftButttonPressed(i,3)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,3)" role="cell"
             (click)="OnTransferButtonClick('SORTED')">
             <i class="icon-clock"></i>
           </button>

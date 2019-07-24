@@ -34,8 +34,8 @@
     </div>
     <div class="qm-close-container" >
       <button class="qm-transparent-btn" id='close-toast-btn' (click)="remove()"  >
-          <span *ngIf="options.closeButton" aria-hidden="true" class="btn btn-sm toast-close-button" id="toast-msg-close">
-            </span>
+          <i *ngIf="options.closeButton" aria-hidden="true" class="btn btn-sm toast-close-button icon-close" id="toast-msg-close">
+          </i>
             <span class="sr-only">{{ 'button.clear' | translate }}</span>
       </button>
     

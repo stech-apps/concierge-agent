@@ -1,5 +1,5 @@
-<div class="qm-expire-counter ">
+<div class="qm-expire-counter " aria-hidden='true'>
   <div class="qm-expire-counter__label">{{ 'label.reservation.timer' | translate }}</div>
   <div class="qm-expire-counter__time js-expire-counter-time">{{ counterString }}</div>
 </div>
-<div role="timer" aria-live="polite" aria-atomic="true" class="sr-only" *ngIf="timerStringWCAG !== undefined">{{ ('label.reservation.timer' | translate) + timerStringWCAG }}</div>
+<div role="alert" aria-live="assertive" aria-atomic="true" class="sr-only" *ngIf="timerStringWCAG !== undefined">{{ ('label.reservation.timer' | translate) + timerStringWCAG }}</div>

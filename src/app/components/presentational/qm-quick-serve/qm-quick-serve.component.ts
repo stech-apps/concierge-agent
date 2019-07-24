@@ -1,7 +1,7 @@
 import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
 import { Subscription, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { SPService } from 'src/util/services/rest/sp.service';
@@ -42,6 +42,7 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   isShowQueueView: boolean;
   editVisitEnable: boolean;
   focusQuickServeItem:string;
+  @Output() QuickServeServicesEnabled = new EventEmitter<boolean>();
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -76,6 +77,13 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     this.subscriptions.add(branchSubscription);
 
     const serviceConfigSubscription = this.serviceSelectors.quickServices$.subscribe((services) => {
+      console.log("service list" + services.length);
+      
+      if(services.length == 0) {
+        this.QuickServeServicesEnabled.emit(false);
+      } else {
+        this.QuickServeServicesEnabled.emit(true);
+      }
       this.services = services;
       this.sortQueueList();
       if(services.length > 0){

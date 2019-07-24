@@ -34,9 +34,7 @@ $standard-home-margin : 1.5rem;
 }
 .qm-summary-card{
     width:100%;
-    // height: 100%;
     z-index: 42;
-    // overflow: auto;
 }
 
 
@@ -82,9 +80,6 @@ $standard-home-margin : 1.5rem;
 
 
 @include qm-xs {
-    .qm-home-summary-area {
-        // max-width: 768px;
-    }
     .icon-general{
         display: block;
     }
@@ -96,9 +91,6 @@ $standard-home-margin : 1.5rem;
         display: none;
    
     }
-    .qm-home-summary-area {
-    //   width:608px;
-    }
     .slide-up-icon{
         display: none;
     }
@@ -109,9 +101,7 @@ $standard-home-margin : 1.5rem;
     .slide-icon{
         display: none;
     }
-    .qm-home-summary-area {
-        // width: 852px;
-    }
+
     .slide-up-icon{
         display: none;
     }
@@ -122,10 +112,6 @@ $standard-home-margin : 1.5rem;
     .slide-icon{
         display: none;
     }
-    .qm-home-summary-area {
-        // width: 1136px
-    };
-  
     .slide-up-icon{
         display: none;
     }
@@ -225,4 +211,7 @@ $standard-home-margin : 1.5rem;
         margin-left: 20px;
         float: left;
     }    
+  }
+  .display-hidden {
+      display: none;
   }

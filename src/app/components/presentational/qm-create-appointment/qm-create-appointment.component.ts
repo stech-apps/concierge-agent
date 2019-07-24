@@ -164,12 +164,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
         }
        
         this.TimerSide = 'left';
-        console.log("left");
-        console.log(this.userDirection);
-
-
       } else {
-        console.log("right");
         this.DraggablepositionX = 8;
         this.TimerSide = 'right';
 
@@ -207,20 +202,43 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
       this.DraggablepositionX = this.DraggablepositionX - 159
     }
   }
+  GoToEdge() {
+    if (this.userDirection == 'ltr' && this.TimerSide == 'left' && this.TimerViewExpanded == false) {
+      this.DraggablepositionX = this.DraggablepositionX - 159
+    } else if (this.userDirection == 'ltr' && this.TimerSide == 'left' && this.TimerViewExpanded == true) {
+      this.DraggablepositionX = this.DraggablepositionX + 159
+    }
+    else if (this.userDirection == 'rtl' && this.TimerSide == 'right' && this.TimerViewExpanded == false) {
+      this.DraggablepositionX = this.DraggablepositionX + 159
+    }
+    else if (this.userDirection == 'rtl' && this.TimerSide == 'right' && this.TimerViewExpanded == true) {
+      this.DraggablepositionX = this.DraggablepositionX - 159
+    }  
+  }
   DraggableChangeButton() {
     this.isDraggable = !this.isDraggable;
   }
   ThirtySecondsGone() {
+    console.log("thirty min gone");
+    
     this.TimerViewExpanded = false;
+    this.GoToEdge();
   }
   ExpandtheTimer($event) {
     if($event == 'TwoMins') {
-      this.TimerViewExpanded = true;      
+      this.TimerViewExpanded = true;
+      this.GoToEdge();
     } else if ($event == 'EveryTwoMins' && this.TimerViewExpanded == false) {
       this.TimerViewExpanded = true;
+      this.GoToEdge();
       setTimeout(() => {
-        this.TimerViewExpanded = false; 
+        this.TimerViewExpanded = false;
+        this.GoToEdge(); 
       }, 10000);
+    }
+    else if ('initial') {
+      this.TimerViewExpanded = true;
+      this.GoToEdge();   
     }
   }
 }

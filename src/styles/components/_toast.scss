@@ -15,7 +15,7 @@
 .toast-close-button {
   margin: auto;
   height: 100%;
-  padding: 0px 4px;
+  // padding: 0px 4px;
   display: flex;
   align-items: center;
   color: $toast-text-color;
@@ -24,15 +24,17 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   order: 1;
+  padding: 0;
+  font-size: 24px;
 
   span {
     @include sr-only();
   }
 
-  &:before {
-    content: "\00d7"; /* This will render the 'X' */
-    font-size: rem(50px);
-  }
+  // &:before {
+  //   content: "\00d7"; /* This will render the 'X' */
+  //   font-size: rem(50px);
+  // }
 
   &:hover,
   &:focus,
@@ -96,11 +98,11 @@
   &__message {
    
     flex: 3 1 auto;
-    padding-right: 2rem;
+    // padding-right: 2rem;
         
     @at-root [dir="rtl"]  & {
       text-align: right;
-      padding-left: 2rem;
+      // padding-left: 2rem;
       padding-right: 0;      
     }
   }

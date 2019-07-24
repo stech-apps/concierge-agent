@@ -6,7 +6,8 @@ import {
   BranchSelectors,
   QueueSelectors,
   FlowOpenSelectors,
-  FlowOpenDispatchers
+  FlowOpenDispatchers,
+  ServiceSelectors
 } from "src/store/services";
 import { Subscription, Observable } from "rxjs";
 import { Util } from "src/util/util";
@@ -42,7 +43,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   isCollapse:boolean;
   slideUpSrc = "assets/images/button-up.svg";
   userDirection: string;
-  isFlowOpen:boolean
+  isFlowOpen:boolean;
+  quickServeServicesAvailable: boolean = true;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -57,7 +59,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private queueSelectors:QueueSelectors,
     private localStorage: LocalStorage,
     private flowOpenSelectors:FlowOpenSelectors,
-    private flowOpenDispatchers:FlowOpenDispatchers
+    private flowOpenDispatchers:FlowOpenDispatchers,
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -155,5 +157,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     this.isCollapse = !this.isCollapse
     this.localStorage.setSettings(STORAGE_SUB_KEY.COLLAPSE,this.isCollapse);
         
+  }
+  QuickServeServicesEnabled($event) {   
+    this.quickServeServicesAvailable = $event;
+    console.log(this.quickServeServicesAvailable);
   }
 }

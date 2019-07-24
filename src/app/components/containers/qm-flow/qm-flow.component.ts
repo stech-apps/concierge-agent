@@ -71,7 +71,7 @@ export class QmFlowComponent implements OnInit, AfterContentInit {
       if (document.getElementById("panel-title")) {
         document.getElementById("panel-title").focus();
       }
-    }, 100);
+    }, 1500);
 
   }
   ngAfterContentInit() {

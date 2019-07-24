@@ -61,6 +61,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   }
 
   startTimer(onGoingTime: number) {
+    this.ExpandtheTimer.emit('initial');
     // Stop any ongoing timer!!
     clearInterval(!!this.intervalRef && this.intervalRef);
 
@@ -70,13 +71,14 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
     );
 
     this.timerStringWCAG = this.counterString;
-    setInterval(() => {
+    var TimeSlotinterval = setInterval(() => {
       if (onGoingTime >= 120) {
         this.timerStringWCAG = this.counterString;
       } else {
         this.timerStringWCAG = undefined;
+        clearInterval(TimeSlotinterval);
       }
-    }, 60000);
+    }, 120000);
 
     // Start timer!!
     this.intervalRef = setInterval(() => {
@@ -107,13 +109,15 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       this.reservationExpiryTimerDispatchers.setReservationExpiryTimer(
         onGoingTime
       );
+      
 
       // auto collapse reservation timer view after 30 seconds
-      if (this.calendarExpiryTime - onGoingTime == 30) {
+      if ( onGoingTime > 120 && (this.calendarExpiryTime - onGoingTime == 30)) {       
+        console.log(this.calendarExpiryTime - onGoingTime);
         this.ThirtySecondsGone.emit('ThirtySecondsgone');
       }
       
-      if((this.calendarExpiryTime-onGoingTime)%120 == 0) {
+      if(onGoingTime > 120 && (this.calendarExpiryTime-onGoingTime - 30) !== 0 &&(this.calendarExpiryTime-onGoingTime - 30)%120 == 0) {
         this.ExpandtheTimer.emit('EveryTwoMins');
       }
 

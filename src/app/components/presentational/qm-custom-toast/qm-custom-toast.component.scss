@@ -128,6 +128,8 @@ a:focus{
     right: auto;
     top: 7px;
     background: white;
+    transform: translate(0%, -50%);
+    top:46%;
 }
 .checkbox-backdrop-unchecked{
     background: rgba(0, 0, 0, 0.82);

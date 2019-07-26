@@ -38,7 +38,7 @@
 </div>
     <div style="flex:3" class="qm-summary-card" *ngIf="(isShowQueueView || editVisitEnable) && !isFlowOpen" [ngClass]="{'normal-queue-ie':!isCollapse,'expanded-queue-ie':isCollapse}">
     <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
-      <qm-queue-summary ></qm-queue-summary>
+      <qm-queue-summary [isQuickServeShow]="isQuickServeEnable"></qm-queue-summary>
       <hr  [ngClass]="{ 'hr-queue': (!selelctedQueue && !selectedVisit),'hr-visit': (selelctedQueue || selectedVisit)}">
 
       <qm-queue-list isCollapesed="{{isCollapse}}" *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>

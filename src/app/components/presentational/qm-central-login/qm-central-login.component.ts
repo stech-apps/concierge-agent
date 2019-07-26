@@ -1,5 +1,6 @@
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { UserSelectors, BranchSelectors, CalendarBranchDispatchers, SystemInfoDispatchers, CalendarBranchSelectors } from '../../../../../src/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
@@ -35,7 +36,7 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
       private calendarBranchSelector: CalendarBranchSelectors,
       private route: ActivatedRoute,
       private queueService: QueueService,
-      private errorHandler: GlobalErrorHandler
+      private errorHandler: GlobalErrorHandler, private location: Location
     ) {
 
     const userSubscription = this.userSelectors.user$.subscribe((user) => this.user = user);
@@ -71,8 +72,8 @@ export class QmCentralLoginComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  onCancel(){
-    this.router.navigate(['home'])
+  onCancel() {
+    this.location.back();
     this.queueService.fetechQueueInfo();
   }
 

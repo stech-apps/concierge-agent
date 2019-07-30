@@ -30,6 +30,7 @@ import { LocalStorage,STORAGE_SUB_KEY } from "../../../../util/local-storage";
 export class QmHomeComponent implements OnInit, AfterViewInit {
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
+  isQuickCreateEnable: boolean;
   isShowQueueView: boolean;
   userDirection$: Observable<string>;
   MessageBoxInfo: IMessageBox;
@@ -68,8 +69,19 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
           this.isQuickServeEnable = params.quickServe;
           this.isShowQueueView = params.queueView;
           this.editVisitEnable = params.editVisit;
+          if (params.quickVisitAction) {
+            if (params.quickVisitAction === 'serve') {
+              this.isQuickServeEnable = true;
+              this.isQuickCreateEnable = false;
+            } else if (params.quickVisitAction === 'create') {
+              this.isQuickServeEnable = false;
+              this.isQuickCreateEnable = true;
+            } else {
+              this.isQuickServeEnable = false;
+              this.isQuickCreateEnable = false;
+            }
+          }
           console.log(params);
-          
         }
       }
     );

@@ -68,6 +68,17 @@ $standard-home-margin : 1.5rem;
     }
 }
 
+.quick-create-collapesed{
+    @include qm-xs {
+    height: 300px;
+    overflow: hidden;
+    }
+    @include qm-xs-lower {
+    height: 300px;
+    overflow: hidden;
+    }
+}
+
 .icon-general{
     display: none;
 }

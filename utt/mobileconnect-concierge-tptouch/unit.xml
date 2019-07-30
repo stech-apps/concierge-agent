@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                     Signature
     ==============================================================================================
+    7.0.6.0    2019-07-29    Support for Quick Create                                    kasran
+    =============================================================================================
     7.0.5.0    2019-07-03    quickServeServices (Quick Serve Services paramter added     nalhew
     =========================================================================================================
     7.0.4.0    2019-02-14   icon changed                                                 udaban 
@@ -55,7 +57,7 @@
 
 <unit          name  = "Concierge_Touch"
     frameworkVersion = "2"
-         unitVersion = "7.0.5.0"
+         unitVersion = "7.0.6.0"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -153,9 +155,23 @@
          defaultValue = "true"
                 label = "Quick Serve Flow"
           description = "Gives access to Quick Serve flow if user has correct access right."
-            sortOrder = "305"
-           writeLevel = "profile"
             privilege = "install:adminAdmin"/>
+      <parameter name = "quickVisitAction"
+          description = "QuickServe Flows enables access to QuickServe in the Concierge Home Page, Quick Create enables access to the QuickCreate Flow in the Concierge Home Page."
+            sortOrder = "305"
+                label = "Quick Serve/Create Flow"
+                 type = "Options"
+         defaultValue = "serve"
+           writeLevel = "profile"
+            mandatory = "true"
+            privilege = "install:adminAdmin"
+       multiSelection = "false">
+            <options>
+                <option label="None">none</option>
+                <option label="Quick Serve">serve</option>
+                <option label="Quick Create">create</option>
+            </options>
+      </parameter>
      <parameter name = "queueView"
                  type = "Boolean"
          defaultValue = "true"

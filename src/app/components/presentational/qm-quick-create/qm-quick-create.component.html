@@ -38,14 +38,15 @@
         </div>
         <div #configServiceList class="qm-quick-create__list-container" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
             <div class="qm-quick-create__item" [ngClass]="{ 'qm-quick-create__item-selected' : selectedService !== null && selectedService.id === service.id }" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
-                <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-create-item" [ngClass]="{'qm-quick-create__item-focus':focusQuickCreateItem==service.id}">
+                <div (keydown.enter)="onServiceSelect(service)" class="qm-quick-create-item" [ngClass]="{'qm-quick-create__item-focus':focusQuickCreateItem==service.id}">
+                    
                     <label for="{{serviceId(service.internalName)}}" class="qm-quick-create__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></label>
                     <div  class="qm-checkbox-label">
                             <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                               <input  id="{{serviceId(service.internalName)}}" class="styled-checkbox" type="radio" name="services"
                                 [checked]="selectedService !== null && selectedService.id === service.id" (focus)="focusQmCheckbox(service)"
-                                (keydown.enter)="onServiceSelect(service)"
-                          (keydown.space)="onServiceSelect(service)"
+                          (keydown.space)="onServiceSelect(service)" 
+                          (keydown.enter)="onServiceSelect(service)"
                                 (focusout)="focusOutQmCheckbox()">
                               <label (mouseenter)="MouseEnteredCheckbox(service)"
                                 (mouseleave)="MouseLeaveCheckbox()" (mousedown)="mousePressed = true"
@@ -65,8 +66,21 @@
             <div class="qm-quick-create__list-shadow-bottom"></div>
         </div>
         <div class="qm-quick-create__button-container">
-            <button class="qm-primary-button-disabled qm-button" (click)="onCreate()" [ngClass]="{'qm-primary-button-default' : selectedService }"  [disabled]="selectedService === null">{{ 'button.create' |
-                translate }}</button>
+            <button  class="qm-action-btn qm-create-button__item" [disabled]="selectedService === null" *ngIf="isSMSAvailable" 
+                          (click)="onSelectButton('sms')">
+                            <i class="icon-smartphone qm-action-btn__icon qm-create-button__icon"></i>
+                            <span class="qm-action-btn__text">{{ 'send_sms' | translate }}</span>
+                        </button>
+                        <button class="qm-action-btn qm-create-button__item" [disabled]="selectedService === null" *ngIf="isTicketAvailable" 
+                          (click)="onSelectButton('ticket')">
+                            <i class="icon-ticket qm-action-btn__icon qm-create-button__icon"></i>
+                            <span class="qm-action-btn__text">{{ 'print_ticket' | translate }}</span>
+                        </button>
+                        <button  class="qm-action-btn qm-create-button__item" [disabled]="selectedService === null" *ngIf="isTicketlessAvailable"
+                            (click)="onSelectButton('ticketless')">
+                            <i class="icon-ticketless qm-action-btn__icon qm-create-button__icon"></i>
+                            <span class="qm-action-btn__text">{{ 'label.ticketless' | translate }}</span>
+                        </button>
         </div>
     </div>
 </div>

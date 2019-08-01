@@ -64,6 +64,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   isFlowOpen:boolean;
 
   isQuickServeEnable:boolean;
+  isQuickCreateEnable: boolean;
   isHome: boolean;
   isCreateVisit = false;
   isArriveAppointment = false;
@@ -83,6 +84,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   handleHeaderNavigations: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() isPreventHeaderNavigations = false;
+  @Input() isQuickServeShow: boolean;
 
   constructor(  
     private userSelectors: UserSelectors,
@@ -131,7 +133,16 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       uttpParams => {
         if (uttpParams) {
-          this.isQuickServeEnable = uttpParams.quickServe;
+          if (uttpParams.quickVisitAction) {
+            if (uttpParams.quickVisitAction === 'serve') {
+              this.isQuickCreateEnable = false;
+            } else if (uttpParams.quickVisitAction === 'create' &&
+            (uttpParams.ticketLess || uttpParams.sndSMS || uttpParams.printerEnable)) {
+              this.isQuickCreateEnable = true;
+            } else {
+              this.isQuickCreateEnable = false;
+            }
+          }
           if (this.isVisitUser && uttpParams) {
             this.isCreateVisit = uttpParams[CREATE_VISIT];
           }

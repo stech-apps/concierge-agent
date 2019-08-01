@@ -1,6 +1,8 @@
 <div class="qm-content-links" dir="{{ userDirection$ | async }}">
-  <a *ngIf="isHome && isQuickServeEnable" id="cardContentLink" class="qm-content-links__link" href="javascript:;"
+  <a *ngIf="isHome && isQuickServeShow" id="cardContentServeLink" class="qm-content-links__link" href="javascript:;"
     (click)="QuickServeFocus()">{{'label.quick_serve'| translate}}</a>
+  <a *ngIf="isHome && isQuickCreateEnable" id="cardContentCreateLink" class="qm-content-links__link" href="javascript:;"
+    (click)="QuickServeFocus()">{{'label.quick_create'| translate}}</a>
   <a *ngIf="isHome && (isCreateAppointment || isEditAppointment || isArriveAppointment || isCreateVisit)" id="actionPanelContentLink" href="javascript:;" class="qm-content-links__link" 
     (click)="MenuBarFocus()">{{'label.menubar' | translate}}</a>
 </div>

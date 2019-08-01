@@ -73,7 +73,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
             if (params.quickVisitAction === 'serve') {
               this.isQuickServeEnable = true;
               this.isQuickCreateEnable = false;
-            } else if (params.quickVisitAction === 'create') {
+            } else if (params.quickVisitAction === 'create' && (params.ticketLess || params.sndSMS || params.printerEnable)) {
               this.isQuickServeEnable = false;
               this.isQuickCreateEnable = true;
             } else {

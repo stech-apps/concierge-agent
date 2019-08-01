@@ -2,7 +2,8 @@ import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
+import { ServiceSelectors, ServiceDispatchers, InfoMsgDispatchers, BranchSelectors,
+   ServicePointSelectors, DataServiceError } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { SPService } from 'src/util/services/rest/sp.service';
 import { IServicePoint } from '../../../../models/IServicePoint';
@@ -11,6 +12,12 @@ import { ToastService } from 'src/util/services/toast.service';
 import { IServiceConfiguration } from '../../../../models/IServiceConfiguration';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { DEBOUNCE_TIME } from './../../../../constants/config';
+import { NOTIFICATION_TYPE } from 'src/util/services/rest/calendar.service';
+import { QmCheckoutViewConfirmModalService } from '../qm-checkout-view-confirm-modal/qm-checkout-view-confirm-modal.service';
+import { QueueService } from '../../../../util/services/queue.service';
+import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
+import { ERROR_STATUS, Q_ERROR_CODE } from 'src/util/q-error';
+import { QmModalService } from '../qm-modal/qm-modal.service';
 
 @Component({
   selector: 'qm-quick-create',
@@ -40,6 +47,10 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
   isShowQueueView: boolean;
   editVisitEnable: boolean;
   focusQuickCreateItem: string;
+  isTicketlessAvailable = false;
+  isSMSAvailable = false;
+  isTicketAvailable = false;
+  themeColor = '#a9023a';
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -49,7 +60,12 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
     private spService: SPService,
     private translateService: TranslateService,
     private toastService: ToastService,
-    private userSelectors: UserSelectors
+    private userSelectors: UserSelectors,
+    private qmCheckoutViewConfirmModalService: QmCheckoutViewConfirmModalService,
+    private queueService: QueueService,
+    private infoMsgBoxDispatcher: InfoMsgDispatchers,
+    private errorHandler: GlobalErrorHandler,
+    private qmModalService: QmModalService,
   ) {
     this.showToolTip = false;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -64,6 +80,9 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
         if (params) {
           this.isShowQueueView = params.queueView;
           this.editVisitEnable = params.editVisit;
+          this.isTicketAvailable = params.printerEnable;
+          this.isSMSAvailable = params.sndSMS;
+          this.isTicketlessAvailable = params.ticketLess;
           if (params.quickVisitAction) {
             if (params.quickVisitAction === 'create') {
               this.isQuickCreateEnable = true;
@@ -135,23 +154,121 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCreate() {
-    this.showToolTip = false;
-    this.spService.quickServe(this.selectedBranch, this.selectedServicePoint, this.selectedService).subscribe((status: any) => {
-      if (status) {
-        this.translateService.get('quick_serve_toast').subscribe(v => {
-          this.toastService.infoToast(this.selectedService.internalName + ' ' + v);
+  onSelectButton(type: string) {
+    let notificationType;
+    if (type === 'sms') {
+      notificationType = NOTIFICATION_TYPE.sms;
+      const tempService = this.selectedService;
+      this.qmCheckoutViewConfirmModalService.openForTransKeys('msg_send_confirmation',
+          false,
+          this.isSMSAvailable,
+          this.themeColor, 'ok', 'label.cancel',
+          (result: any) => {
+            if (result) {
+              if (result.phone) {
+                this.createVisit(notificationType, result.phone, false, tempService);
+              }
+            }
+          },
+          () => { }, null);
+    } else {
+      notificationType = NOTIFICATION_TYPE.none;
+      let isTicketSelect = false;
+      if (type === 'ticket') {
+        isTicketSelect = true;
+      }
+      this.createVisit(notificationType, undefined, isTicketSelect, this.selectedService);
+    }
+  }
+
+  createVisit(notificationType: NOTIFICATION_TYPE, sms: string, isTicketSelect: boolean, service: IService) {
+    this.spService.createVisit(this.selectedBranch, this.selectedServicePoint, [service],
+      undefined, undefined, undefined, sms, isTicketSelect, undefined, notificationType).subscribe((result) => {
+      this.showSuccessMessage(result, notificationType, isTicketSelect);
+      this.queueService.fetechQueueInfo();
+    }, error => {
+      const err = new DataServiceError(error, null);
+      if (err.errorCode === '0') {
+        this.handleTimeoutError(err, 'visit_create_fail');
+      } else {
+        //this.loading = false;
+        this.showErrorMessage(error);
+      }
+    });
+  }
+
+  showSuccessMessage(result: any, notificationType: NOTIFICATION_TYPE, isTicketSelect: boolean) {
+    this.translateService.get(['visit_created',
+        'label.visitcreated.subheading',
+        'label.notifyoptions.smsandemail',
+        'label.notifyoptions.sms', 'label.notifyoptions.email',
+        'label.notifyoptions.ticket', 'label.createvisit.success.subheadingticketandsms']).subscribe(v => {
+
           this.selectedService = null;
           const searchBox = document.getElementById('visitSearch') as any;
           searchBox.value = '';
           this.filterText = '';
-        });
-      } else {
-        this.toastService.errorToast('error');
-      }
-    }
-  );
 
+          let subheadingText = v['label.visitcreated.subheading'];
+          if (isTicketSelect && notificationType === NOTIFICATION_TYPE.sms) {
+            subheadingText = v['label.createvisit.success.subheadingticketandsms'];
+          } else if (!isTicketSelect && notificationType === NOTIFICATION_TYPE.none) {
+            subheadingText = '';
+          } else if (isTicketSelect) {
+            subheadingText = v['label.notifyoptions.ticket'];
+          } else if (notificationType === NOTIFICATION_TYPE.sms) {
+            subheadingText += ` ${v['label.notifyoptions.sms']}`;
+          }
+
+          this.qmModalService.openDoneModal(v['visit_created'],
+            subheadingText, [], result.ticketId);
+      });
+  }
+
+  handleTimeoutError(err: DataServiceError<any>, msg: string) {
+    if (err.errorCode === '0') {
+      this.translateService.get(msg).subscribe(v => {
+        const unSuccessMessage = {
+          firstLineName: v,
+          icon: 'error'
+        };
+        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(unSuccessMessage);
+      });
+      this.queueService.fetechQueueInfo();
+    }
+  }
+
+  showErrorMessage(error: any) {
+    const err = new DataServiceError(error, null);
+    let errorKey = 'request_fail';
+
+    if (error.status === ERROR_STATUS.INTERNAL_ERROR || error.status === ERROR_STATUS.CONFLICT) {
+      errorKey = 'request_fail';
+      if (err.errorCode === Q_ERROR_CODE.PRINTER_ERROR || err.errorCode === Q_ERROR_CODE.HUB_PRINTER_ERROR) {
+        errorKey = 'printer_error';
+      } else if (err.errorMsg.length > 0) {
+        if (err.errorCode === Q_ERROR_CODE.QUEUE_FULL) {
+          errorKey = 'queue_full';
+        }
+      }
+    } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM) {
+      errorKey = 'paper_jam';
+    } else if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
+      errorKey = 'out_of_paper';
+    } else {
+      errorKey = 'visit_timeout';
+    }
+
+    if (err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_JAM || err.errorCode === Q_ERROR_CODE.PRINTER_PAPER_OUT) {
+      this.translateService.get('visit_create_fail').subscribe(v => {
+        const successMessage = {
+          firstLineName: v,
+          icon: 'error'
+        };
+        this.infoMsgBoxDispatcher.updateInfoMsgBoxInfo(successMessage);
+      });
+    }
+    this.errorHandler.showError(errorKey, err);
   }
 
   onScroll(eliment) {
@@ -230,6 +347,55 @@ filterServices(newFilter: string) {
   }
   serviceId(internalName: string) {
     return internalName.replace(/\s/g, '');
+  }
+
+  KeyarrowLeft(value: string) {
+    let nextElement;
+    if (value === 'input') {
+      if (this.isTicketlessAvailable) {
+        nextElement = '_ticketless';
+      } else if (this.isTicketAvailable) {
+        nextElement = '_ticket';
+      } else if (this.isSMSAvailable) {
+        nextElement = '_sms';
+      }
+    } else if (value === 'ticketless') {
+      if (this.isTicketAvailable) {
+        nextElement = '_ticket';
+      } else if (this.isSMSAvailable) {
+        nextElement = '_sms';
+      }
+    } else if (value === 'ticket') {
+      if (this.isSMSAvailable) {
+        nextElement = '_sms';
+      }
+    }
+    if (document.getElementById(this.selectedService.internalName.replace(/\s/g, '') + nextElement)) {
+      document.getElementById(this.selectedService.internalName.replace(/\s/g, '') + nextElement).focus();
+    }
+  }
+  KeyarrowRight(value: string) {
+    let nextElement;
+    if (value === 'sms') {
+      if (this.isTicketAvailable) {
+        nextElement = '_ticket';
+      } else if (this.isTicketlessAvailable) {
+        nextElement = '_ticketless';
+      } else {
+        nextElement = '';
+      }
+    } else if (value === 'ticket') {
+      if (this.isTicketlessAvailable) {
+        nextElement = '_ticketless';
+      } else {
+        nextElement = '';
+      }
+    } else if (value === 'ticketless') {
+      nextElement = '';
+    }
+    if (document.getElementById(this.selectedService.internalName.replace(/\s/g, '') + nextElement)) {
+      document.getElementById(this.selectedService.internalName.replace(/\s/g, '') + nextElement).focus();
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="qm-page-root qm-home" dir="{{ userDirection$ | async }}">
-  <qm-page-header></qm-page-header>
+  <qm-page-header [isQuickServeShow]="isQuickServeEnable"></qm-page-header>
   <div class="qm-home-content" >
     <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo" ></qm-message-box>
     <div style="flex:2" [ngClass]="{ 'quick-serve-collapesed': isCollapse}" *ngIf="isQuickServeEnable && !isFlowOpen" class="qm-quick-serve-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">

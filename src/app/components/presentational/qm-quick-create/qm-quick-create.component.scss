@@ -4,6 +4,26 @@
   
 }
 
+.qm-create-button {
+  &__item {
+    color: #E50046;
+    min-width: 35px;
+    overflow: hidden;
+    flex: 1;
+
+    &[disabled] {
+      color: $primary-action-button-disabled-color;
+      cursor: auto;
+      &:hover,
+      &:focus {
+        font-weight: $font-weight-light;
+      }
+    }
+  }
+  &__icon {
+    font-size: 2.2rem;
+  }
+}
 
 .qm-quick-create {
   display: flex;
@@ -91,11 +111,7 @@
       @include qm-sm{
         font-size: 16px;
       }
-
     }
-    
-  
-
   }
   &__item:hover {
     background-color: rgba(0,0,0,0.04);
@@ -110,6 +126,7 @@
    text-align: center;
     position: relative;
     padding: 10px 0;
+    display: flex;
   
   }
   &__button {

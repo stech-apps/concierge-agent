@@ -5,7 +5,7 @@
     display: flex;
     width: 2rem;
     margin-right: 2rem;
-    font-size: 3em;
+    font-size: 40px;
     @at-root [dir="rtl"] & {
         margin-right: 0;
         margin-left: 2rem;
@@ -138,23 +138,25 @@ a:focus{
   /* IE10+ CSS styles go here */
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .qm-check-box-background{
-        right: 144px;
+        right: 68px;
+        top: -2px;
         @at-root [dir="rtl"] & {
             right: auto;
-            left: 132px;
+            left: 69px;
+            top: -1px;
         }
         @include qm-xs {
-        right: 124px;
+        right: 68px;
         @at-root [dir="rtl"] & {
             right: auto;
-            left: 120px;
+            left: 70px;
         }
         }
         @include qm-sm {
-            right: 124px;
+            right: 68px;
             @at-root [dir="rtl"] & {
                 right: auto;
-                left: 121px;
+                left: 70px;
             }
             }
            

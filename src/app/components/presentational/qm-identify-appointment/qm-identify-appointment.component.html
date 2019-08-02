@@ -127,6 +127,7 @@
           <div role="tabpanel" id="bookingid-tabpanel" aria-labelledby="bookingid">
             <div class="qm-identify-appointment__search-area">
               <div class="qm-search qm-search--large">
+                <label for="searchAppointmentField" class="sr-only">{{'label.identify.appointment.searchbookingid' | translate}}</label>
                 <input [(ngModel)]="searchText" pattern="searchFieldValidation" #clearInputDirective="qmClearInputRef" qmClearInput
                   class="qm-search__input" name="serviceSearchInput" type="tel"
                   placeholder="{{
@@ -508,7 +509,7 @@
       <div class="qm-qr-code-modal__text-line">
         <div>{{ "point_the_scanenr" | translate }}</div>
         <div>
-
+          <label for="idField" class="sr-only">{{'qr_code_scanner' | translate}}</label>
           <input *ngIf="inputAnimationState" type="text" autofocus (input)="onSeachTextChanged()"
             [readonly]="isSearchInputReadOnly" (keyup.enter)="onEnterPressed()" [(ngModel)]="searchText"
             [formControl]="searchInputController" id="idField" class="qm-details-text-feild" autocomplete="off" />

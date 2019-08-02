@@ -2,6 +2,7 @@
 <div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
 (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
   <span class="qm-search-box-container">
+    <label for="visitSearchVisit" class="sr-only">{{ 'label.visit_search_placeholder' | translate }}</label>
   <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.visit_search_placeholder' | translate }}" id="visitSearchVisit"
   name="q" #visitSearch (input)="handleInput($event)" [(ngModel)]="inputText" (keydown.enter)="
       keyDownFunction($event, visitSearch.value.trim().toUpperCase())
@@ -88,6 +89,7 @@
     <div class="qm-qr-code-modal__text-line">
       <div>{{ "point_the_scanenr" | translate }}</div>
       <div>
+        <label for="SearchFeild" class="sr-only">{{'qr_code_scanner' | translate}}</label>
         <input class="qm-identify-visit-search__input" type="search" id="SearchFeild" name="q" #qrvisitSearch (input)="handleInputQR($event)"
           (keydown.enter)="keyDownFunction($event, qrvisitSearch.value.trim().toUpperCase())" autocomplete="off" />
       </div>

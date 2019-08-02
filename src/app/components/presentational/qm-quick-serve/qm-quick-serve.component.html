@@ -17,6 +17,7 @@
 
         <div class="qm-quick-serve-search" dir="{{ userDirection$ | async }}">
             <div class="qm-quick-serve-search__search-container">
+                <label for="visitSearch" class="sr-only">{{ 'search_service_name' | translate }} </label>
                 <input class="qm-quick-serve-search__input" type="search" placeholder="{{ 'search_service_name' | translate }}" id="visitSearch"
                 name="q" [ngModel]="searchText" (input)="handleInput($event)" (keydown.enter)="visitSearch.blur()" #visitSearch autocomplete="off">
                 <button (click)="visitSearch.value = '';clearSearchText()" *ngIf="visitSearch.value.trim()"  class="qm-action-btn--only-icon qm-transparent-close-btn">
@@ -40,7 +41,7 @@
             <div class="qm-quick-serve__item" [ngClass]="{ 'qm-quick-serve__item-selected' : selectedService !== null && selectedService.id === service.id }" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
                 <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
                     <label for="{{serviceId(service.internalName)}}" class="qm-quick-serve__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></label>
-                    <div  class="qm-checkbox-label">
+                    <div  class="qm-checkbox-label"  role="group">
                             <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                               <input  id="{{serviceId(service.internalName)}}" class="styled-checkbox" type="radio" name="services"
                                 [checked]="selectedService !== null && selectedService.id === service.id" (focus)="focusQmCheckbox(service)"

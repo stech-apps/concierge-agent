@@ -5,8 +5,9 @@
     <div class="qm-identify-visit-search__search-container">
 
       <div class="qm-input-box-container">
+        <label for="queuevisitSearch" class="sr-only">{{ 'label.search_queue' | translate }}</label>
         <input class="qm-identify-visit-search__input" type="search"
-          placeholder="{{ 'label.search_queue' | translate }}" id="visitSearch" name="q" [ngModel]="searchText"
+          placeholder="{{ 'label.search_queue' | translate }}" id="queuevisitSearch" name="q" [ngModel]="searchText"
           (input)="handleInput($event)" #visitSearch autocomplete="off">
         <button class="qm-action-btn--only-icon qm-clear-btn" *ngIf="visitSearch.value.trim()"
           (click)="visitSearch.value = '';clearSearchText()">
@@ -35,7 +36,7 @@
 
     <div class="qm-queue-list__headers qm-flex-grid" 
       *ngIf="(this.queueCollection && this.queueCollection.length !== 0)" role="rowgroup">
-
+    <div role="row" style="width: 100%;display: flex">
       <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn"
         (click)="onSortClickbyQueue()" role="columnheader" scope="col">
         <span class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</span>
@@ -55,7 +56,7 @@
       <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label"> {{'label.transfer_sort'|translate}} </div>
       </div>
-
+    </div>
     </div>
     <hr>
 
@@ -70,6 +71,7 @@
           (keydown.arrowright) = "onRightButttonPressed(i,1)"
           (keydown.arrowleft) = "onLeftButttonPressed(i,1)"
           [attr.tabindex]="checkFirstElement(i)" role="cell"
+          attr.aria-label="{{'label.transfer_first'|translate}}"
             (click)="OnTransferButtonClick('FIRST')">
             <i class="icon-queue-first"></i>
           </button>
@@ -78,6 +80,7 @@
           (keydown.arrowup)="onUpButttonPressed(i,2)"
           (keydown.arrowright) = "onRightButttonPressed(i,2)"
           (keydown.arrowleft) = "onLeftButttonPressed(i,2)"
+          attr.aria-label="{{'label.transfer_last'|translate}}"
           [attr.tabindex]="checkFirstElement(i)" role="cell"
           id="{{i}}-2-transferQueue">
             <i class="icon-queue-last"></i>
@@ -86,6 +89,7 @@
           <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferSort" id="{{i}}-3-transferQueue"
           (keydown.arrowdown)="onDownButttonPressed(i,3)"
           (keydown.arrowup)="onUpButttonPressed(i,3)"
+          attr.aria-label="{{'label.transfer_sort'|translate}}"
           [attr.tabindex]="checkFirstElement(i)"
           (keydown.arrowright) = "onRightButttonPressed(i,3)"
           (keydown.arrowleft) = "onLeftButttonPressed(i,3)" role="cell"

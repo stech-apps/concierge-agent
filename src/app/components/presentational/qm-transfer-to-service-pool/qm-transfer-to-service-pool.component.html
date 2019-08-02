@@ -3,6 +3,7 @@
     *ngIf="(this.loaded && this.servicePoints.length!==0)">
     <div class="qm-identify-visit-search__search-container">
       <div class="qm-input-box-container">
+        <label for="spSearch" class="sr-only">{{ 'label.search_spPool' | translate }}</label>
         <input class="qm-identify-visit-search__input" type="search"
           placeholder="{{ 'label.search_spPool' | translate }}" id="spSearch" name="q" [ngModel]="searchText"
           (input)="handleInput($event)" #spSearch autocomplete="off">

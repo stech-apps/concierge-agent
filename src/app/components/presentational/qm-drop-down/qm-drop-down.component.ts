@@ -132,4 +132,7 @@ export class QmDropDownComponent implements OnInit {
       }
     }
   }
+  getIdofInputBox(searchPlaceHolder) {
+    return searchPlaceHolder.replace(/\s/g, '').toLowerCase()
+  }
 }

@@ -2,8 +2,9 @@
   <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
     <div class="qm-identify-visit-search__search-container">
       <div class="qm-input-box-container">
+        <label for="visitSearchPool" class="sr-only">{{ 'label.search_userPool' | translate }}</label>
         <input class="qm-identify-visit-search__input" type="search"
-          placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText"
+          placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearchPool" name="q" [ngModel]="searchText"
           (input)="handleInput($event)" #visitSearch autocomplete="off">
         <button  *ngIf="visitSearch.value.trim()" class="qm-action-btn--only-icon qm-clear-btn">
           <i  (click)="visitSearch.value = '';clearSearchText()"

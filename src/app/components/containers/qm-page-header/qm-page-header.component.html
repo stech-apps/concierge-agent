@@ -24,7 +24,7 @@
     <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
         [ngClass]="{'icon-caret-right':(userDirections === 'ltr' || userDirections === 'LTR'),'icon-caret-left':(userDirections === 'rtl' || userDirections === 'RTL')}"></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
-    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()" role="navigation">
+    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()"   attr.aria-label="{{'edit_user_profile' | translate}}" role="navigation">
       <span class="qm-header__edit-link">{{'edit'|translate}}</span>
     </button>
   </nav>

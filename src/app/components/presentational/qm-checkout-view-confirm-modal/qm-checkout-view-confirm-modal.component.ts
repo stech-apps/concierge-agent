@@ -150,7 +150,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       'label.options.emailonly.heading',
       'label.options.emailandsms.heading'
       ]).subscribe((messages) => {
-        if(this.router.url=="/home/create-visit"){
+        if(this.router.url=="/home/create-visit" || this.router.url=="/home"){
           this.optionsHeading = messages['label.options.smsonly.heading'];
         }else{
       if (this.customer && this.isEmailEnabled && this.isSmsEnabled)

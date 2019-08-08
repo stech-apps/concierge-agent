@@ -79,7 +79,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.selectedDates &&
+    if ((changes.selectedDates && 
       changes.selectedDates.currentValue &&
       changes.selectedDates.currentValue.length > 1) || (changes.enabledDates && changes.enabledDates.currentValue && changes.enabledDates.currentValue.length > 0)) {
       // sort on date changes for better performance when range checking
@@ -87,6 +87,14 @@ export class QmCalendarComponent implements OnInit, OnChanges {
         this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
       }
       this.generateCalendar();
+    } else if ((changes.selectedDates && changes.selectedDates.previousValue &&
+      changes.selectedDates.currentValue &&
+      changes.selectedDates.currentValue.length == 1)) {
+        if (changes.selectedDates) {
+          this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
+          this.currentDate = this.selectedDates[0].mDate;
+        }
+        this.generateCalendar();
     }
   }
 
@@ -119,6 +127,15 @@ export class QmCalendarComponent implements OnInit, OnChanges {
           }
         }
       });
+      if (this.enabledDates.length == 0) {
+        this.prevMonth();
+        setTimeout(() => {
+          if (document.getElementById(`${this.TempDate.month()}-${this.TempDate.date()}-enabled`)) {
+            document.getElementById(`${this.TempDate.month()}-${this.TempDate.date()}-enabled`).focus();
+            isFocused = true;
+          }
+        }, 100);
+      }
       // if could not focus show a error message 
       setTimeout(() => {
         if (isFocused == false) {
@@ -157,6 +174,15 @@ export class QmCalendarComponent implements OnInit, OnChanges {
           }
         }
       });
+      if (this.enabledDates.length == 0) {
+        this.nextMonth();
+            setTimeout(() => {
+              if (document.getElementById(`${this.TempDate.month()}-${this.TempDate.date()}-enabled`)) {
+                document.getElementById(`${this.TempDate.month()}-${this.TempDate.date()}-enabled`).focus();
+                isFocused = true;
+              }
+            }, 100);
+      }
       // if could not focus show a error message 
       setTimeout(() => {
         if (isFocused == false) {

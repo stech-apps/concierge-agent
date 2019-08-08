@@ -339,6 +339,36 @@
     padding: 30px 24px;
   }
 }
+.qm-date-select-header {
+  font-size: 20px;
+  font-weight: normal;
+  color: $dark-transparent42;
+  padding-top: 20px;
+}
+.qm-date-enter-input {
+  border: 1px solid $dark-transparent22;
+  outline: none;
+  color: $dark-transparent62;
+  padding: 10px;
+}
+.invalid-date{
+  border: 1px solid #b00020;
+}
+
+.qm-error-message {
+  color: #b00020;
+  font-size: 0.8em;
+}
+.qm-date-enter-container{
+  padding: 10px;
+  color: $dark-transparent62;
+  display:flex;
+  flex-direction: column;
+  text-align: left;
+  @at-root [dir='rtl'] & {
+      text-align: right
+  }
+}
 
 
 // .qm-appointment-info {

@@ -72,11 +72,13 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   isOriginalAppointmentTimeChanged = false;
   isDateSelected: boolean = false;
   isShowExpandedAppointment: boolean = false;
-
+  dateType: string;
+  currentDate: string = '';
   timeConvention: string = "24";
   userDirection$: Observable<string>;
   @ViewChild("qmcalendar") qmCalendar: QmCalendarComponent;
   userLocale: string = DEFAULT_LOCALE;
+  enterDateErrorMsg: String;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -109,11 +111,16 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     private translationService: TranslateService,
     private appointmentSelectors: AppointmentSelectors,
     private queueService: QueueService,
-    private SystemInfoSelectors : SystemInfoSelectors
+    private SystemInfoSelectors : SystemInfoSelectors,
   ) {
     this.branchSubscription$ = this.branchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.userDirection$ = this.userSelectors.userDirection$;
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo => {
+      this.systemInformation = systemInfo;
+    });
+    this.subscriptions.add(systemInfoSubscription)
+    this.dateType = this.systemInformation.dateConvention;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -206,7 +213,6 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   }
 
   onSelectDate(date: CalendarDate) {
-    
     this.isDateSelected = true;
     this.originalAppointmentTime = null;
     const selectedDate = {...date , mDate : date.mDate.clone()};
@@ -221,6 +227,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
+      this.currentDate = this.currentlyActiveDate.mDate.clone().locale('en').format(this.dateType).toString();
       if (moment(this.editAppointment.start).date() !== selectedDate.mDate.date()) {
         this.originalAppointmentTime = null;
       }
@@ -427,6 +434,80 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     }
     return appointmentInfo;
   }
+
+  validateDate() {
+    if (this.dateType[2] == '-') {
+      if (this.currentDate.match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        this.reservableDates.forEach(ed => {
+          if (ed.isSame(moment(this.currentDate, this.dateType))) {
+            selectedDateAvailable = true;
+            this.selectedDates = [
+              {
+                mDate: moment(this.currentDate, this.dateType),
+                selected: true
+              }
+            ];
+          }
+        });
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translationService
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        
+        const translateSubscription = this.translationService
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
+      }
+    } else if (this.dateType[2] == '/') {
+      if (this.currentDate.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        this.reservableDates.forEach(ed => {
+          if (ed.isSame(moment(this.currentDate, this.dateType))) {
+            selectedDateAvailable = true;
+            this.selectedDates = [
+              {
+                mDate: moment(this.currentDate, this.dateType),
+                selected: true
+              }
+            ];
+          }
+        });
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translationService
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        const translateSubscription = this.translationService
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
+      }
+    }
+  }
+
   onBlurMethod(){
     // this.isShowExpandedAppointment = false;
     

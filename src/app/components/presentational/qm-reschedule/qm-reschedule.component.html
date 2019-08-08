@@ -41,21 +41,22 @@
         <span class="sr-only">{{ isShowExpandedAppointment ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
       </button>
       </div>
+      <span class=qm-appointment-info>
+        <qm-appointment-info
+      [useCalendarEndpoint]="true"
+      (onCardClick)="onAppointmentSelect($event)"
+      [useWideCard]="false"
+      (onClose)="expandAppointment()"
+      [appointmentInfo]="editAppointment"
+      *ngIf="isShowExpandedAppointment"></qm-appointment-info>
+    </span>
       <button
         *ngIf="isDeleteEnabledInUtt"
         class="qm-btn qm-btn--primary qm-reschedule__selected-cancel-button qm-text-overflow-fix"
         (click)="onCancelAppointment()">
         {{ "label.cancel.appointment" | translate }}
       </button>
-      <span class=qm-appointment-info>
-      <qm-appointment-info
-    [useCalendarEndpoint]="true"
-    (onCardClick)="onAppointmentSelect($event)"
-    [useWideCard]="false"
-    (onClose)="expandAppointment()"
-    [appointmentInfo]="editAppointment"
-    *ngIf="isShowExpandedAppointment"></qm-appointment-info>
-  </span>
+    
     </div>
 
     <h2 class="qm-reschedule__line-header"><span>{{'label.reschedule.appointment' | translate}}</span></h2>
@@ -65,12 +66,23 @@
       <div class="qm-select-time-container"  dir="{{ userDirection$ | async }}">
         
       <div class="qm-calendar-container">
-          <div
+        <div class="qm-date-enter-container">
+          <h2 class="qm-date-select-header">{{'select_or_enter_date' | translate}} </h2>
+          <label for="enterDate" class="sr-only">{{'enter_date' | translate}}, {{dateType}}</label>
+          <form>
+          <input class="qm-date-enter-input" type="text" [(ngModel)]="currentDate" id="enterDate" name="enterDate"
+            (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}">
+          </form>{{'format' | translate}} : {{dateType}} <br>
+          <p *ngIf="enterDateErrorMsg" [ngClass]="{'qm-error-message' : enterDateErrorMsg}" aria-live="assertive">
+            {{enterDateErrorMsg}}</p>
+        </div>
+            <div
           class="qm-reschedule__selected-branch qm-text-overflow-fix"
           *ngIf="isRescheduleEnabledInUtt"
         >
           {{ this.editAppointment?.branch?.name }}
         </div>
+        
         <div class="qm-calendar-placeholder">
           <qm-calendar
             [selectedDates]="selectedDates"

@@ -28,6 +28,17 @@ qm-time-filter-items {
     top: 89px;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
     border: 1px solid $dark-transparent12;
+    background: white;
+  }
+  &__enter-date {
+    color: $dark-transparent82;
+    padding: 0 20px;
+    display:flex;
+    flex-direction: column;
+    text-align: left;
+    @at-root [dir='rtl'] & {
+        text-align: right
+    }
   }
 
   &__date {
@@ -192,4 +203,25 @@ qm-time-filter-items {
   @at-root [dir="rtl"] & {
     margin-left: 8px;
   }
+}
+
+.qm-date-select-header {
+  font-size: 20px;
+  font-weight: normal;
+  color: $dark-transparent42;
+  padding-top: 20px;
+}
+.qm-date-enter-input {
+  border: 1px solid $dark-transparent22;
+  outline: none;
+  color: $dark-transparent62;
+  padding: 10px;
+}
+.invalid-date{
+  border: 1px solid #b00020;
+}
+
+.qm-error-message {
+  color: #b00020;
+  font-size: 0.8em;
 }

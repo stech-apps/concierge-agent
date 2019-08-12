@@ -54,6 +54,7 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,O
   systemInformation: ISystemInfo;
   enterDateErrorMsg: string;
   currentDate:string;
+  userDirection:string;
   
   @ViewChild("endContainer") endTimeFilters: TemplateRef<any>;
 
@@ -69,6 +70,10 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,O
         document.getElementById('qm-time-filter-header').focus();
       }
     }, 100);
+    const userSubscription = this.userDirection$.subscribe((ud)=> {
+      this.userDirection = ud.toLowerCase();
+    });
+    this.subscriptions.add(userSubscription);
 
     const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo => {
       this.systemInformation = systemInfo;
@@ -217,9 +222,29 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,O
   onSelectDate(selectedDate: CalendarDate) {
     this.selectedDate = selectedDate;
     this.isCalendarOpen = false;
+    this.enterDateErrorMsg = "";
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+  onFocus() {
+    if(this.userDirection == 'rtl') {
+      var setInput = document.getElementById("enterDate");
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+    }
+  }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+      range.select();
+    }
   }
 }

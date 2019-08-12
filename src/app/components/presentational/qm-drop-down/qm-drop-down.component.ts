@@ -79,7 +79,8 @@ export class QmDropDownComponent implements OnInit {
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
     setTimeout(()=> this.searchText = '');
-    this.qmClearInputRef.update(this.searchText);
+    setTimeout(()=> this.qmClearInputRef.update(this.searchText));
+    
     $event.stopPropagation();
             if(this.searchInput) {
               setTimeout(() => this.searchInput.nativeElement.focus());
@@ -89,6 +90,7 @@ export class QmDropDownComponent implements OnInit {
   itemClick(item: IDropDownItem | any, $event) {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
+    this.qmClearInputRef.update(this.searchText);
     if($event) {
       $event.stopPropagation();
     }
@@ -97,7 +99,9 @@ export class QmDropDownComponent implements OnInit {
     this.highlightedItemId = item.id;
   }
 
-  handleInput(searchText: string) {}
+  handleInput(searchText: string) {
+    
+  }
 
   clickOnSearch($event) {
     $event.stopPropagation();

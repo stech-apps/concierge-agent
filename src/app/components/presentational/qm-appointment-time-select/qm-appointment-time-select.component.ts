@@ -62,6 +62,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   selectedTimeHeading: string = "";
   public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
+  userDirection: string;
   selectedTime$: Observable<Moment>;
   showTimer: Boolean;
   systemInformation: ISystemInfo;
@@ -167,6 +168,10 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         this.timeFormat = tf;
       }
     );
+    const userSubscription = this.userDirection$.subscribe((ud)=> {
+      this.userDirection = ud.toLowerCase();
+    });
+    this.subscriptions.add(userSubscription);
 
     const expiryReservationCalendarSettingSubscription = this.getExpiryReservationTime$.subscribe(
       (time: number) => {
@@ -267,6 +272,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.timeSlotDispatchers.selectTimeslot(null);
       this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format("dddd DD MMMM");
       this.currentDate = this.currentlyActiveDate.mDate.clone().locale('en').format(this.dateType).toString();
+      this.enterDateErrorMsg = "";
       this.cdr.detectChanges();
       if (this.calendarRef && this.calendarRef.isUserDateSelected && this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
         this.timeSlotContainer.nativeElement.scrollIntoView();
@@ -288,6 +294,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
                 selected: true
               }
             ];
+            if(document.getElementById('qm-time-slot-categories')) {
+              document.getElementById('qm-time-slot-categories').focus();
+            }
           }
         });
         setTimeout(() => {
@@ -410,5 +419,24 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.getTimeSlots();
     this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
     this.timeSlotDispatchers.selectTimeslot(null);
+  }
+  onFocus() {
+    if(this.userDirection == 'rtl') {
+      var setInput = document.getElementById("enterDate");
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+    }
+  }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+      range.select();
+    }
   }
 }

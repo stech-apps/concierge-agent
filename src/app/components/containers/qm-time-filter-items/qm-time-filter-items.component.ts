@@ -69,6 +69,8 @@ export class QmTimeFilterItemsComponent implements OnInit {
   }
 
   scrollToClosest(timeLabel: string) {
+   
+    
     let nextClosestTime = this.getClosestTime(timeLabel);
     const index = this.getPositionOfTimeInList(nextClosestTime);
     const timeSlotControls = this.elRef.nativeElement.querySelectorAll(
@@ -76,11 +78,15 @@ export class QmTimeFilterItemsComponent implements OnInit {
     );
 
     if (index !== -1) {
-      const itemToScrollTo = timeSlotControls[index];
-
+      const itemToScrollTo = timeSlotControls[index];      
       if (itemToScrollTo !== undefined) {
         itemToScrollTo.scrollIntoView(true);
       }
+      setTimeout(() => {
+        if(itemToScrollTo) {
+          itemToScrollTo.focus();
+        }
+      }, 100);
     }
   }
 

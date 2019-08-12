@@ -41,7 +41,7 @@
         labelProperty="name"
       ></qm-drop-down>
 
-      <div class="qm-error-message" *ngIf="errorMessage"> {{ errorMessage }}</div>
+      <div class="qm-error-message" *ngIf="errorMessage" role="alert"> {{ errorMessage }}</div>
 
       <div class="qm-use-as-default" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
         <!--

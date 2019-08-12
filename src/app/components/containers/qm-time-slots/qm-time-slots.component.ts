@@ -346,6 +346,11 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
       if (itemToScrollTo !== undefined) {
         itemToScrollTo.scrollIntoView(true);
+        setTimeout(() => {
+          if(itemToScrollTo) {
+            itemToScrollTo.focus();
+          }
+        }, 100);
       }
     } else {
       const emptyCategory = this.elRef.nativeElement.querySelector(

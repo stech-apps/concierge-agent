@@ -62,6 +62,11 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   onModalClick() {
     this.onClose.emit(true);
+    setTimeout(() => {
+      if(document.getElementById('qm-more-info')) {
+        document.getElementById('qm-more-info').focus();
+      }
+    }, 200);
   }
 
   cardClick() {

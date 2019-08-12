@@ -28,7 +28,7 @@
         <span class="qm-text-overflow-fix">{{
           getSelectedAppointmentInfoCustomer()
         }}</span>
-        <button class="qm-reschedule__selected--icon qm-transparent-btn" (click)="expandAppointment()" (blur)="onBlurMethod()">
+        <button class="qm-reschedule__selected--icon qm-transparent-btn" (click)="expandAppointment()" (blur)="onBlurMethod()" id="qm-more-info">
           <i
             class="icon-info"
             [ngClass]="{
@@ -71,7 +71,7 @@
           <label for="enterDate" class="sr-only">{{'enter_date' | translate}}, {{dateType}}</label>
           <form>
           <input class="qm-date-enter-input" type="text" [(ngModel)]="currentDate" id="enterDate" name="enterDate"
-            (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}">
+            (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}" (focus)="onFocus()">
           </form>{{'format' | translate}} : {{dateType}} <br>
           <p *ngIf="enterDateErrorMsg" [ngClass]="{'qm-error-message' : enterDateErrorMsg}" aria-live="assertive">
             {{enterDateErrorMsg}}</p>

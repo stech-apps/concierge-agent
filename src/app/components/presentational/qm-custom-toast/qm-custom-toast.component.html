@@ -21,7 +21,7 @@
       <div class="checkbox">
         <label for="qm-checkbox" class="qm-checkbox-label">        
           <div class="qm-checkbox__selector">      
-              <input id="qm-skip-branch" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isAutoClose" > 
+              <input id="qm-skip-branch" class="styled-checkbox" type="checkbox" (focus)="skipButtonHover = true"    (focusout)="skipButtonHover = false;" (change)="onSwitchChange()" [(ngModel)]="isAutoClose" > 
             <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
             (mouseup) ="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
             <div style="height: 100%;position: absolute" *ngIf="skipButtonHover || mousePressed" >

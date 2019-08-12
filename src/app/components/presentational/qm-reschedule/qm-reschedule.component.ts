@@ -79,6 +79,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
   @ViewChild("qmcalendar") qmCalendar: QmCalendarComponent;
   userLocale: string = DEFAULT_LOCALE;
   enterDateErrorMsg: String;
+  userDirection: string;
 
   currentRescheduleState: RescheduleState = RescheduleState.Default;
   selectedDates: CalendarDate[];
@@ -161,6 +162,10 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     const serviceSubscription = this.serviceSubscription$.subscribe(s => {
       this.selectedServices = s;
     });
+    const userSubscription = this.userDirection$.subscribe((ud)=> {
+      this.userDirection = ud.toLowerCase();
+    });
+    this.subscriptions.add(userSubscription);
 
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
@@ -228,6 +233,7 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
       this.currentDate = this.currentlyActiveDate.mDate.clone().locale('en').format(this.dateType).toString();
+      this.enterDateErrorMsg = "";
       if (moment(this.editAppointment.start).date() !== selectedDate.mDate.date()) {
         this.originalAppointmentTime = null;
       }
@@ -449,6 +455,9 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
                 selected: true
               }
             ];
+            if(document.getElementById('qm-time-slot-categories')) {
+              document.getElementById('qm-time-slot-categories').focus();
+            }
           }
         });
         setTimeout(() => {
@@ -508,8 +517,24 @@ export class QmRescheduleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onBlurMethod(){
-    // this.isShowExpandedAppointment = false;
-    
+  onFocus() {
+    if(this.userDirection == 'rtl') {
+      var setInput = document.getElementById("enterDate");
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+    }
   }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+      range.select();
+    }
+  }
+
 }

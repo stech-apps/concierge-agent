@@ -29,9 +29,9 @@
           <label for="enterDate" class="sr-only">{{'enter_date' | translate}}, {{dateType}}</label>
           <form>
             <input class="qm-date-enter-input" type="text" [(ngModel)]="currentDate" id="enterDate"
-              (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}" name="enterDate">
+              (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}" name="enterDate" (focus)="onFocus()">
             <br>{{'format' | translate}} : {{dateType}} </form>
-          <p *ngIf="enterDateErrorMsg" [ngClass]="{'qm-error-message' : enterDateErrorMsg}" aria-live="assertive">
+          <p *ngIf="enterDateErrorMsg" [ngClass]="{'qm-error-message' : enterDateErrorMsg}" aria-live="assertive" role="alert">
             {{enterDateErrorMsg}}</p>
         </div>
         <div class="qm-time-container" dir="{{ userDirection$ | async }}">

@@ -20,6 +20,7 @@
         </div>
       </div>
     </div>
+    <div class="qm-notes-error" *ngIf="notes.length == 255" aria-live="assertive" role="alert"> {{'notes_error' | translate}}</div>
     <div class="qm-modal__footer">
       <div class="qm-generic-layout qm-generic-layout--align-right">
         <button type="button" class="qm-btn qm-btn--secondary qm-btn-cancel" (click)="activeModal.close(null);">

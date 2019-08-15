@@ -13,7 +13,7 @@ import { INFO_SVG } from 'src/svgs/info-icon';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { Observable, Subscription } from 'rxjs';
 import { UserSelectors } from 'src/store';
-import { ToastStatusDispatchers, ToastStatusSelectors } from 'src/store/services/toast-status';
+import { AutoCloseStatusDispatchers, AutoCloseStatusSelectors } from 'src/store/services/autoclose-status';
 
 @Component({
   selector: 'qm-qm-custom-toast',
@@ -59,8 +59,8 @@ export class QmCustomToastComponent extends Toast {
     private localStorage: LocalStorage,
     public domSanitizer: DomSanitizer,
     private userSelectors: UserSelectors,
-    private toastStatusDispatchers: ToastStatusDispatchers,
-    private toastStatusSelectors: ToastStatusSelectors
+    private toastStatusDispatchers: AutoCloseStatusDispatchers,
+    private toastStatusSelectors: AutoCloseStatusSelectors
   ) {
     super(toastrService, toastPackage);
   }

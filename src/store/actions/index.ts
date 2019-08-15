@@ -34,6 +34,6 @@ export * from './staffpool.actions';
 export * from './native.api.actions';
 export * from './global-notify.actions';
 export * from './flow-open.actions';
-export * from './toast-status.actions';
+export * from './autoclose-status.actions';
 export * from './jwtToken.actions';
 

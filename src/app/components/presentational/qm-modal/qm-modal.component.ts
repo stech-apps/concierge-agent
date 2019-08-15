@@ -1,13 +1,13 @@
-import { AutoClose } from "./../../../../util/services/autoclose.service";
-import { Component, OnInit } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
-import { UserSelectors } from "./../../../../store/services/user/user.selectors";
+import { AutoClose } from './../../../../util/services/autoclose.service';
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { UserSelectors } from './../../../../store/services/user/user.selectors';
 
 @Component({
-  selector: "qm-modal",
-  templateUrl: "./qm-modal.component.html",
-  styleUrls: ["./qm-modal.component.scss"]
+  selector: 'qm-modal',
+  templateUrl: './qm-modal.component.html',
+  styleUrls: ['./qm-modal.component.scss']
 })
 export class QmModalComponent implements OnInit {
   title: string;

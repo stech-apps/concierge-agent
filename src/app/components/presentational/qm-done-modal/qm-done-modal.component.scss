@@ -1,0 +1,22 @@
+.modal-checkbox{
+    position: absolute;
+    right: 4rem;
+    top: 1rem;
+    @at-root [dir="rtl"] & {
+        right: 20rem;
+    }
+}
+
+.modal-checkbox-backdrop{
+    height: 100%;
+    position: absolute;
+    top: -0.5rem;
+    right: 8.4rem;
+    @at-root [dir="rtl"] & {
+        right: 0rem;
+    }
+}
+
+.modal-container{
+    padding-top: 3rem;
+}

@@ -78,8 +78,8 @@ import {
   NativeApiSelectors,
   FlowOpenDispatchers,
   FlowOpenSelectors,
-  ToastStatusDispatchers,
-  ToastStatusSelectors,
+  AutoCloseStatusDispatchers,
+  AutoCloseStatusSelectors,
   JWTTokenDataService,
   JWTTokenDispatchers,
   JWTTokenSelectors
@@ -161,8 +161,8 @@ export const storeServices = [
   NativeApiSelectors,
   FlowOpenDispatchers,
   FlowOpenSelectors,
-  ToastStatusDispatchers,
-  ToastStatusSelectors,
+  AutoCloseStatusDispatchers,
+  AutoCloseStatusSelectors,
   JWTTokenDataService,
   JWTTokenDispatchers,
   JWTTokenSelectors

@@ -7,14 +7,30 @@
     }
 }
 
-.modal-checkbox-backdrop{
-    height: 100%;
+.button-container{
     position: absolute;
-    top: -0.5rem;
-    right: 8.4rem;
-    @at-root [dir="rtl"] & {
-        right: 0rem;
+    top: 1rem;
+    display: flex;
+    @at-root [dir="ltr"] & {
+        right: 1rem;
     }
+    @at-root [dir="rtl"] & {
+        left: 1rem;
+    }
+}
+
+.close-button {
+    position: relative;
+    top: 0rem;
+    right: 0rem;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.modal-checkbox-backdrop{
+    top: -0.5rem;
+    left: 0rem;
+    right: 0rem;
 }
 
 .modal-container{

@@ -1,10 +1,9 @@
 .modal-checkbox{
-    position: absolute;
-    right: 4rem;
-    top: 1rem;
-    @at-root [dir="rtl"] & {
-        right: 20rem;
-    }
+    padding-top: 1rem;
+}
+
+.footer-container{
+    justify-content: space-between;
 }
 
 .button-container{
@@ -28,9 +27,15 @@
 }
 
 .modal-checkbox-backdrop{
-    top: -0.5rem;
-    left: 0rem;
-    right: 0rem;
+    margin-left: -8.3rem;
+    margin-top: -0.4rem;
+    position: relative;
+    @at-root [dir="ltr"] & {
+        margin-left: -8.3rem;
+    }
+    @at-root [dir="rtl"] & {
+        margin-right: -7.9rem;
+    }
 }
 
 .modal-container{

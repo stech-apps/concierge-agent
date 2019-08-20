@@ -4,20 +4,6 @@
         <!-- <i class="qm-action-btn__icon qm-done-modal__header-icon" [ngClass]="{'icon-done-rtl': userDirection == 'rtl' || userDirection == 'RTL', 'icon-done-solid': userDirection == 'ltr' || userDirection == 'LTR'}" aria-hidden="true"></i> -->
       <span id="qm-modal__headline" tabindex="-1" class="qm-modal__headline">{{ (heading) | translate }}</span>
       <div class="button-container">
-        <div class="checkbox">
-          <label for="qm-checkbox" class="qm-checkbox-label">        
-            <div class="qm-checkbox__selector">      
-                <input id="qm-skip-branch" [ngModelOptions]="{standalone: true}" class="styled-checkbox" type="checkbox" (focus)="skipButtonHover = true"    (focusout)="skipButtonHover = false;" (change)="onSwitchChange()" [(ngModel)]="isAutoCloseModal" > 
-              <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
-              (mouseup) ="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
-              <div *ngIf="skipButtonHover || mousePressed">
-              <div 
-              [ngClass]="{ 'checkbox-backdrop-unchecked': !isAutoCloseModal}"
-               class="qm-check-box-background modal-checkbox-backdrop"></div>
-              </div>
-            </div>
-          </label>
-        </div>
         <button class="qm-transparent-btn qm-action-btn qm-modal-close close-button"  (click)="activeModal.dismiss()">
           <i aria-hidden="true" class="icon-close"></i>
           <span class="sr-only">{{ 'button.close' | translate }}</span>
@@ -43,7 +29,21 @@
       </div>
     </div>
     <div class="qm-modal__footer">
-      <div class="qm-generic-layout qm-generic-layout--justify-center">   
+      <div class="qm-generic-layout footer-container">  
+          <div class="checkbox modal-checkbox">
+              <label for="qm-checkbox" class="qm-checkbox-label">        
+                <div class="qm-checkbox__selector">      
+                    <input id="qm-skip-branch" [ngModelOptions]="{standalone: true}" class="styled-checkbox" type="checkbox" (focus)="skipButtonHover = true"    (focusout)="skipButtonHover = false;" (change)="onSwitchChange()" [(ngModel)]="isAutoCloseModal" > 
+                  <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+                  (mouseup) ="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
+                  <div *ngIf="skipButtonHover || mousePressed">
+                  <div 
+                  [ngClass]="{ 'checkbox-backdrop-unchecked': !isAutoCloseModal}"
+                   class="qm-check-box-background modal-checkbox-backdrop"></div>
+                  </div>
+                </div>
+              </label>
+            </div> 
         <button class="qm-btn qm-btn--primary qm-btn-finish" (click)="activeModal.close()">
           <span class="qm-btn__text" title="{{ 'button.label.ok' | translate }}">
             {{ 'button.label.ok' | translate }}

@@ -60,7 +60,7 @@
   <div class="qm-reservation-expiry-timer" id="draggable-timer" [ngDraggable]="isDraggable"
     (endOffset)="onDragEnd($event)" [handle]="myHandle" [position]="{x: DraggablepositionX, y: DraggablepositionY}"
     [preventDefaultEvent]='false' [inBounds]="inBounds" [bounds]="container">
-    <div class="qm-expiry-container"
+    <div class="qm-expiry-container" #myHandle
       [ngClass]="{'right_icon_bar': ((TimerSide =='right' && userDirection == 'ltr') || (TimerSide =='left' && userDirection == 'rtl')),'left_icon-bar':(( TimerSide =='left' && userDirection == 'ltr')|| ((TimerSide =='right' && userDirection == 'rtl')))}">
       <div class="qm-expiry-container__icon-bar">
         <button class="qm-transparent-btn" *ngIf='TimerViewExpanded' (click)="DraggableChangeButton()"
@@ -75,9 +75,9 @@
         ||(!TimerViewExpanded && TimerSide =='right' && userDirection == 'rtl' )|| (TimerViewExpanded && TimerSide =='left' && userDirection == 'rtl'))}"></i>
         <span class="sr-only"> {{'expand_collapse' | translate}}</span>
       </button>
-        <span class="qm-transparent-btn" #myHandle role="button"> <i class="icon-move-drag"></i></span>
+        <span class="qm-transparent-btn" role="button"> <i class="icon-move-drag"></i></span>
       </div>
-      <div class="qm-expiry-container__timer" [ngClass]="{'hideTime': !TimerViewExpanded}">
+      <div class="qm-expiry-container__timer" [ngClass]="{'hideTime': !TimerViewExpanded}" >
         <qm-reservation-timer (ThirtySecondsGone)="ThirtySecondsGone()" (ExpandtheTimer)="ExpandtheTimer($event)">
         </qm-reservation-timer>
       </div>

@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { CalendarBranchSelectors, CalendarBranchDispatchers, BranchSelectors, BranchDispatchers, CalendarServiceSelectors, CustomerDispatchers, CustomerSelector, ReservationExpiryTimerSelectors, TimeslotSelectors, ServicePointSelectors, TimeslotDispatchers, UserSelectors } from './../../../../store/services';
 import { IBranch } from 'src/models/IBranch';
 import { FLOW_TYPE } from '../../../../util/flow-state';
@@ -36,6 +36,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   TimerSide: string;
   userDirection$: Observable<string>;
   userDirection: string;
+  private expandButtonPressed: Subject<void> = new Subject<void>();
 
   constructor(
     private calendarBranchSelectors: CalendarBranchSelectors, private calendarBranchDispatchers: CalendarBranchDispatchers,
@@ -189,6 +190,7 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
   // }
 
   ExpandCollapseTimer() {
+    this.expandButtonPressed.next();
     this.TimerViewExpanded = !this.TimerViewExpanded;
     if (this.userDirection == 'ltr' && this.TimerSide == 'left' && this.TimerViewExpanded == false) {
       this.DraggablepositionX = this.DraggablepositionX - 159
@@ -219,12 +221,11 @@ export class QmCreateAppointmentComponent implements OnInit, OnDestroy {
     this.isDraggable = !this.isDraggable;
   }
   ThirtySecondsGone() {
-    console.log("thirty min gone");
-    
     this.TimerViewExpanded = false;
     this.GoToEdge();
   }
   ExpandtheTimer($event) {
+    this.expandButtonPressed.next();
     if($event == 'TwoMins') {
       this.TimerViewExpanded = true;
       this.GoToEdge();

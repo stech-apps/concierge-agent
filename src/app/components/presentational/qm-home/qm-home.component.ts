@@ -81,7 +81,6 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
               this.isQuickCreateEnable = false;
             }
           }
-          console.log(params);
         }
       }
     );
@@ -173,6 +172,5 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   QuickServeServicesEnabled($event) {   
     this.quickServeServicesAvailable = $event;
     this.isQuickServeEnable = this.quickServeServicesAvailable;
-    console.log(this.quickServeServicesAvailable);
   }
 }

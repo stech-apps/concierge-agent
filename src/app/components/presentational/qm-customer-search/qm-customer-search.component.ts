@@ -93,8 +93,6 @@ constructor(
     this.firstDateString = this.dateType.substring(0,1);
     this.secondDateString = this.dateType.substring(3,4);
     this.thirdDateString = this.dateType.substring(6,7);
-    console.log(this.firstDateString + ' ' + this.secondDateString + ' ' + this.thirdDateString);
-    
 
 
     const customerLoadedSubscription = this.customerLoaded$.subscribe(

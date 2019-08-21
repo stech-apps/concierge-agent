@@ -36,7 +36,7 @@
             (click)="deselectAppointment()"
             ><i class="icon-close qm-action-btn__icon "></i
           >
-          <span class="sr-only">{{ 'button.close' | translate }}</span>
+          <span class="sr-only">{{ ('button.close' | translate ) + ' ' + getSelectedAppointmentInfoTime() + ' ' + getSelectedAppointmentInfoDate() + ' ' + getSelectedAppointmentInfoCustomer () }}</span>
         </button>
         </div>
         <button

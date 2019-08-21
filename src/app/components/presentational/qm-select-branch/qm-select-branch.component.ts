@@ -231,13 +231,5 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
     return completeAddress;
   }
-
-  mouseDown(){
-    console.log(this.skipButtonHover);
-    
-  }
-  mouseUp() {
-    console.log(this.skipButtonHover);  
-  }
  
 }

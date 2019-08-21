@@ -16,7 +16,7 @@
           <div class="qm-selected-box__text">{{ currentBranch.name }}</div>
           <button class="qm-transparent-btn remove-icon"  (click)="deselectBranch()">
             <i aria-hidden="true" class="icon-close"></i>
-            <span class="sr-only">{{ 'button.remove' | translate }}</span>
+            <span class="sr-only">{{ ('button.remove' | translate)  + ' ' + currentBranch.name}}</span>
           </button>
       </div>
     </div>
@@ -28,8 +28,8 @@
 <div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}" >
     <div class="qm-flow-sub-header__left">
     <div class="qm-search qm-search--large">
-        <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
-        <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
+        <label id="branchSerachLabel" class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
+        <input  aria-labelledby="branchSerachLabel" [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
           id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()"
           autocomplete="off">
   
@@ -58,7 +58,7 @@
       </button>
       <div class="quick-serve-tooltip" *ngIf="showToolTip">
         <div class="triangle"></div>
-        <div class="quick-serve-tooltip__rec">
+        <div class="quick-serve-tooltip__rec" aria-live="assertive" role="alert">
             {{'branch_skip_tooltip'|translate}}
         </div>
       </div>   

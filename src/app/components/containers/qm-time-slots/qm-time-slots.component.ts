@@ -173,9 +173,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
   KeyTab() {
     let focusable = document.getElementsByClassName("qm-time-select-slot")[0];
-    focusable.setAttribute('Name',"firstTimeElement");
-    console.log(focusable);
-    
+    focusable.setAttribute('Name',"firstTimeElement");   
     document.getElementsByName('firstTimeElement')[0].focus();
   }
 

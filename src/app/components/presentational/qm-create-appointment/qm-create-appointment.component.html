@@ -78,7 +78,7 @@
         <span class="qm-transparent-btn" role="button"> <i class="icon-move-drag"></i></span>
       </div>
       <div class="qm-expiry-container__timer" [ngClass]="{'hideTime': !TimerViewExpanded}" >
-        <qm-reservation-timer (ThirtySecondsGone)="ThirtySecondsGone()" (ExpandtheTimer)="ExpandtheTimer($event)">
+        <qm-reservation-timer [events]="expandButtonPressed.asObservable()" (ThirtySecondsGone)="ThirtySecondsGone()" (ExpandtheTimer)="ExpandtheTimer($event)">
         </qm-reservation-timer>
       </div>
     </div>

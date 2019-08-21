@@ -96,8 +96,6 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,O
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    
     if (changes.selectedDate) {
       console.log(changes.selectedDate);
       

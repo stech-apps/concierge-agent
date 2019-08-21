@@ -1,9 +1,27 @@
 .modal-checkbox{
-    padding-top: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    @at-root [dir="ltr"] & {
+        margin-left: -10px;
+    }
+    @at-root [dir="rtl"] & {
+        margin-right: -10px;
+    }
 }
 
 .footer-container{
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+
+    &__devider{
+        height: 0.5px;
+        background-color: rgba(0, 0, 0, 0.12);
+        padding-top: 1px;
+    }
+    
+    &__footer{
+        margin-top: 3rem;
+    }
 }
 
 .button-container{

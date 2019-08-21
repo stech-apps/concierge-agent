@@ -31,6 +31,7 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   userDirection$: Observable<string>;
   locale: string;
   isUserDateSelected: boolean = false;
+  WCAGMonth: string;
 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() multiSelect: boolean;
@@ -444,11 +445,13 @@ export class QmCalendarComponent implements OnInit, OnChanges {
   prevMonth(): void {
     this.currentDate = moment(this.currentDate).subtract(1, 'months');
     this.generateCalendar();
+    this.WCAGMonth = this.currentDate.locale(this.locale).format('MMMM').toLowerCase() + ' ' + this.currentDate.locale(this.locale).format('YYYY');
   }
 
   nextMonth(): void {
     this.currentDate = moment(this.currentDate).add(1, 'months');
     this.generateCalendar();
+    this.WCAGMonth = this.currentDate.locale(this.locale).format('MMMM').toLowerCase() + ' ' + this.currentDate.locale(this.locale).format('YYYY');
   }
 
   firstMonth(): void {

@@ -3,23 +3,35 @@
   <ng-container *ngIf="timeConvention === 'AMPM'">
     <button tabindex="-1"id="{{ComponentId}}-sidebar-value-1" type="button" class="qm-timelist-sidebar__btn" title="AM"
       (keyup.arrowup)="KeyarrowUp(1,ComponentId)" (keydown.tab)="TabToTimeSlots(ComponentId)" (keyup.arrowdown)="KeyarrowDown(1,ComponentId)"
-      (click)="handleClick('AM')" (keydown)="onKeydown($event,ComponentId)">AM</button>
+      (click)="handleClick('AM')" (keydown)="onKeydown($event,ComponentId)">AM 
+      <span class="sr-only"> Time slot</span>
+    </button>
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-2" type="button" class="qm-timelist-sidebar__btn" title="PM"
       (click)="handleClick('PM')" (keyup.arrowup)="KeyarrowUp(2,ComponentId)"
-      (keyup.arrowdown)="KeyarrowDown(2,ComponentId)" (keydown)="onKeydown($event,ComponentId)">PM</button>
+      (keyup.arrowdown)="KeyarrowDown(2,ComponentId)" (keydown)="onKeydown($event,ComponentId)">PM
+      <span class="sr-only"> Time slot</span>
+    </button>
   </ng-container>
   <ng-container *ngIf="timeConvention == '24'">
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-1" type="button" class="qm-timelist-sidebar__btn" title="08"
       (keyup.arrowup)="KeyarrowUp(1,ComponentId)" (keydown.tab)="TabToTimeSlots(ComponentId)" (keyup.arrowdown)="KeyarrowDown(1,ComponentId)"
-      (click)="handleClick('08')" (keydown)="onKeydown($event,ComponentId)">08</button>
+      (click)="handleClick('08')" (keydown)="onKeydown($event,ComponentId)">08
+      <span class="sr-only"> Time slot</span>
+    </button>
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-2" type="button" class="qm-timelist-sidebar__btn" title="12"
       (keyup.arrowup)="KeyarrowUp(2,ComponentId)" (keyup.arrowdown)="KeyarrowDown(2,ComponentId)" (keydown)="onKeydown($event,ComponentId)"
-      (click)="handleClick('12')">12</button>
+      (click)="handleClick('12')">12
+      <span class="sr-only"> Time slot</span>
+    </button>
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-3" type="button" class="qm-timelist-sidebar__btn" title="16"
       (keyup.arrowup)="KeyarrowUp(3,ComponentId)" (keyup.arrowdown)="KeyarrowDown(3,ComponentId)" (keydown)="onKeydown($event,ComponentId)"
-      (click)="handleClick('16')">16</button>
+      (click)="handleClick('16')">16
+      <span class="sr-only"> Time slot</span>
+    </button>
     <button tabindex="-1" id="{{ComponentId}}-sidebar-value-4" type="button" class="qm-timelist-sidebar__btn" title="20"
       (keyup.arrowup)="KeyarrowUp(4,ComponentId)" (keyup.arrowdown)="KeyarrowDown(4,ComponentId)" (keydown)="onKeydown($event,ComponentId)"
-      (click)="handleClick('20')">20</button>
+      (click)="handleClick('20')">20
+      <span class="sr-only"> Time slot</span>
+    </button>
   </ng-container>
 </div>

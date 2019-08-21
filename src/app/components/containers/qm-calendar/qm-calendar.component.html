@@ -7,8 +7,9 @@
     <div>
       <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>
         {{ currentDate.locale(this.locale).format('YYYY') }}</span>
+        <span class="sr-only" aria-live="assertive" role="alert"> {{WCAGMonth}}</span>
     </div>
-
+    
     <button (click)="nextMonth()" id="qm-next-month"><i class="icon-caret-right"></i>
       <span class="sr-only">{{ 'button.nextMonth' | translate }}</span>
     </button>

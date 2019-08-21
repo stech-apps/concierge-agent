@@ -46,7 +46,7 @@
 
             <div class="quick-serve-tooltip" *ngIf="showToolTip">
               <div class="triangle"></div>
-              <div class="quick-serve-tooltip__rec">
+              <div class="quick-serve-tooltip__rec" aria-live="assertive" role="alert">
                 {{'customer_skip_tooltip'|translate}}
               </div>
             </div>
@@ -69,7 +69,7 @@
                 </div>
                 <button class="qm-transparent-btn" (click)="clearCustomer(); f.customerCreateForm.markAsPristine();f.customerCreateForm.markAsUntouched();">
                   <i aria-hidden="true" class="icon-close remove-icon"></i>
-                  <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                  <span class="sr-only">{{ ('button.clear' | translate) + ' ' + currentCustomer.firstName + " " + currentCustomer.lastName }}</span>
                 </button>
               </div>
             </div>

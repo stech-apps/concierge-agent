@@ -16,7 +16,8 @@
           (keyup.arrowup)="TimeSlotCategoryArrowUp(n)"
           (keyup.arrowdown)="TimeSlotCategoryArrowDown(n)"
           (keydown)="onKeydownTimeCategory($event)"
-          id="{{n}}-timeSlotCategory" >{{ti.title }}</button>
+          id="{{n}}-timeSlotCategory" >{{ti.title }} <span class="sr-only"> Time slot</span> </button>
+          
         </div>
       </ng-container>
     </div>

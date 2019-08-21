@@ -4,7 +4,7 @@ import { TimeUtils } from "./../../../../util/services/timeUtils.service";
 import { ReservationExpiryTimerDispatchers } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.dispatchers";
 import { CalendarSettingsSelectors } from "./../../../../store/services/calendar-settings/calendar-settings.selectors";
 import { ReservationExpiryTimerSelectors } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.selectors";
-import { Component, OnInit, OnDestroy, Output ,EventEmitter} from "@angular/core";
+import { Component, OnInit, OnDestroy, Output ,EventEmitter, Input} from "@angular/core";
 import { Subscription } from "rxjs";
 import { Observable } from "rxjs";
 import { UserSelectors } from "../../../../store";
@@ -27,6 +27,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   @Output() ThirtySecondsGone: EventEmitter<string> = new EventEmitter<string>();
   @Output() ExpandtheTimer: EventEmitter<string> = new EventEmitter<string>();
   calendarExpiryTime : number;
+  @Input() events: Observable<void>;
   
 
   constructor(
@@ -58,6 +59,10 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       }
     );
     this.subscriptions.add(expiryReservationCalendarSettingSubscription);
+   var eventsSubscription = this.events.subscribe(() => {
+      this.timerStringWCAG = this.counterString;
+   });
+   this.subscriptions.add(eventsSubscription);
   }
 
   startTimer(onGoingTime: number) {

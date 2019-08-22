@@ -2,11 +2,11 @@
 
 context('Profile Page', () => {
   beforeEach(()=> {
-    cy.visit('http://localhost:8080/login.jsp');
+    cy.visit('http://10.2.2.92:8080/login.jsp');
     cy.get('#username').type('superadmin');
     cy.get('#password').type('ulan');
     cy.get('button[type="submit"]').click();
-    cy.visit('http://localhost:8080/connectconcierge');
+    cy.visit('http://10.2.2.92:8080/connectconcierge');
   });
 
   it('W3C Validate profile page', () => {
@@ -29,12 +29,12 @@ context('Profile Page', () => {
   });
   
   function clearKnownIssues(messages) {
-    var presentErrors = [];
+    var actualErrors = [];
     for (const msg of messages) {
       if(msg.type === 'error' &&  !msg.message.includes('_ngcontent-c')) {
-        presentErrors = [...presentErrors, msg];
+        actualErrors = [...actualErrors, msg];
       }
     }
-    return presentErrors;
+    return actualErrors;
   }
 });

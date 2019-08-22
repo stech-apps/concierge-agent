@@ -121,12 +121,19 @@ export class QmDropDownComponent implements OnInit {
           if (prevItem) {
             this.highlightedItemId = prevItem.id;
           }
+          if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
+            document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
+          }
           break;
         case 40: // down
           let nextItem = this.items[++currentIndex];
 
           if (nextItem) {
             this.highlightedItemId = nextItem.id;
+          }
+
+          if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
+            document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
           }
 
           break;
@@ -138,5 +145,10 @@ export class QmDropDownComponent implements OnInit {
   }
   getIdofInputBox(searchPlaceHolder) {
     return searchPlaceHolder.replace(/\s/g, '').toLowerCase()
+  }
+  focusItem() {
+    if (document.getElementById('dropdownItem_2')) {
+      document.getElementById('dropdownItem_2').focus();
+    }
   }
 }

@@ -1,8 +1,8 @@
 {
     "remote_deploy": {
-        "host": "10.2.3.35",
-        "username": "kasun",
-        "password": "Love2017KP"
+        "host": "",
+        "username": "",
+        "password": ""
     },
     "artifactory": {
         "host": "artifactory.qmatic.net",

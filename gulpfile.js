@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const zip = require('gulp-zip');
 var fs = require('fs');
 const del = require('del');
-var sftp = require('gulp-sftp');
+var sftp = require('./build-configuration/gulp-sftp-copy');
 var ncmd = require('node-cmd');
 var mkdirp = require('mkdirp');
 var getDirName = require('path').dirname;
@@ -10,7 +10,7 @@ var getDirName = require('path').dirname;
 require('events').EventEmitter.prototype._maxListeners = 100;
 
 // Remote Deployment Defaults
-var remoteDeploymentDefaultPath = 'C:\\qmatic\\orchestra\\system\\custdeploy';
+var remoteDeploymentDefaultPath = 'C://qmatic//orchestra//system//custdeploy';
 var remoteDeploymentDefaultLangPath =
   'C:\\qmatic\\orchestra\\system\\conf\\lang';
 var remoteDeploymentDefaultHost = 'localhost';
@@ -177,7 +177,6 @@ function writeFile(path, contents, cb = () => { }) {
 
 // Deploy build to orchestra
 gulp.task('deploy:war', function () {
-
   if (!useLocalCopy) {
     return gulp.src('./dist/webapp/connectconcierge.war').pipe(
       sftp({
@@ -217,6 +216,7 @@ gulp.task('deploy:war:artifactory', function () {
 // Deploy lang file to orchestra
 gulp.task('deploy:lang', function () {
   if (!useLocalCopy) {
+
     return gulp
       .src('./dist/properties/connectConciergeMessages.properties')
       .pipe(

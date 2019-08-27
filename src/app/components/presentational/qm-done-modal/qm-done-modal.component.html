@@ -35,7 +35,7 @@
               <label for="qm-checkbox" class="qm-checkbox-label">        
                 <div class="qm-checkbox__selector">      
                     <input id="qm-done-auto-close" [ngModelOptions]="{standalone: true}" class="styled-checkbox" type="checkbox" (focus)="skipButtonHover = true"    (focusout)="skipButtonHover = false;" (change)="onSwitchChange()" [(ngModel)]="isAutoCloseModal" > 
-                  <label for="qm-done-auto-close" class="qm-checkbox__selector-icon-text"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+                  <label for="qm-done-auto-close" class="qm-checkbox__selector-icon-text modal-checkbox__label"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
                   (mouseup) ="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
                   <div *ngIf="skipButtonHover || mousePressed">
                   <div 

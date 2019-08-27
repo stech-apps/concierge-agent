@@ -7,6 +7,10 @@
     @at-root [dir="rtl"] & {
         margin-right: -10px;
     }
+
+    &__label{
+        line-height: 2rem;
+    }
 }
 
 .footer-container{

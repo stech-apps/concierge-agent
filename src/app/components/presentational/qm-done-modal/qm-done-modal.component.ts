@@ -39,7 +39,7 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(userSubscription);
     this.isAutoCloseModal = this.localStorage.getSettingForKey(STORAGE_SUB_KEY.MODAL_AUTOCLOSE);
-    this.modalStatusDispatchers.setToastStatus(this.isAutoCloseModal);
+    this.modalStatusDispatchers.setModalStatus(this.isAutoCloseModal);
     const modalStatusSubscription = this.modalStatusSelectors.ModalStatus$.subscribe( ms => {
       this.isAutoCloseModal = ms;
       this.setAutoclose();

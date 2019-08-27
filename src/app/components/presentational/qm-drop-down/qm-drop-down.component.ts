@@ -1,5 +1,6 @@
 import { Observable } from "rxjs";
 import { IDropDownItem } from "./../../../../models/IDropDownItem";
+import { NgOption } from '@ng-select/ng-select';
 import {
   Component,
   OnInit,
@@ -25,26 +26,27 @@ export class QmDropDownComponent implements OnInit {
 
   @ViewChild("searchInput") searchInput: ElementRef;
   @HostListener("window:keydown", ["$event"])
-  onKeyUp(ev: KeyboardEvent) {
-    this.triggerKeyPress(ev);
-  }
+  // onKeyUp(ev: KeyboardEvent) {
+  //   this.triggerKeyPress(ev);
+  // }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes["items"]) {
-      let preselectedItem = this.items.find(
-        i => i[this.labelProperty] === this.caption
-      );
-      if (preselectedItem) {
-        this.highlightedItemId = preselectedItem.id;
-        this.selectedItem = preselectedItem;
-      }
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes["items"]) {
+  //     let preselectedItem = this.items.find(
+  //       i => i[this.labelProperty] === this.caption
+  //     );
+  //     if (preselectedItem) {
+  //       this.highlightedItemId = preselectedItem.id;
+  //       this.selectedItem = preselectedItem;
+  //     }
+  //   }
+  // }
 
   isExpanded = false;
   userDirection$: Observable<string>;
   searchText: string;
   selectedItem: any;
+  highlightedItemId = -1;
 
   constructor(private userSelectors: UserSelectors) {
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -52,10 +54,10 @@ export class QmDropDownComponent implements OnInit {
 
   ngOnInit() {}
 
+  @Input() itemType: string;
+
   @Input()
   caption: string;
-
-  highlightedItemId: number;
 
   @Input()
   isItemSelected: boolean;
@@ -87,16 +89,17 @@ export class QmDropDownComponent implements OnInit {
             }
   }
 
-  itemClick(item: IDropDownItem | any, $event) {
+  itemClick(itemIndex: IDropDownItem | any, $event) {
+    const item: IDropDownItem = this.items[itemIndex];
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
     this.qmClearInputRef.update(this.searchText);
-    if($event) {
+    if ($event) {
       $event.stopPropagation();
     }
     this.isItemSelected = true;
     this.selectedItem = item;
-    this.highlightedItemId = item.id;
+    this.highlightedItemId = itemIndex;
   }
 
   handleInput(searchText: string) {
@@ -118,23 +121,23 @@ export class QmDropDownComponent implements OnInit {
         case 38: // up
           let prevItem = this.items[--currentIndex];
 
-          if (prevItem) {
-            this.highlightedItemId = prevItem.id;
-          }
-          if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
-            document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
-          }
+          // if (prevItem) {
+          //   this.highlightedItemId = prevItem.id;
+          // }
+          // if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
+          //   document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
+          // }
           break;
         case 40: // down
           let nextItem = this.items[++currentIndex];
 
-          if (nextItem) {
-            this.highlightedItemId = nextItem.id;
-          }
+          // if (nextItem) {
+          //   this.highlightedItemId = nextItem.id;
+          // }
 
-          if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
-            document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
-          }
+          // if (document.getElementById('dropdownItem_' + this.highlightedItemId)) {
+          //   document.getElementById('dropdownItem_' + this.highlightedItemId).focus();
+          // }
 
           break;
         case 13: // enter
@@ -144,11 +147,33 @@ export class QmDropDownComponent implements OnInit {
     }
   }
   getIdofInputBox(searchPlaceHolder) {
-    return searchPlaceHolder.replace(/\s/g, '').toLowerCase()
+    return searchPlaceHolder.replace(/\s/g, '').toLowerCase();
   }
-  focusItem() {
-    if (document.getElementById('dropdownItem_2')) {
-      document.getElementById('dropdownItem_2').focus();
+  onItemDownButttonPressed (i: number) {
+    if (this.highlightedItemId < (this.items.length - 1)) {
+      this.highlightedItemId = ++this.highlightedItemId;
+      if (document.getElementById(`dropdownItem_${this.itemType + (i + 1)}`)) {
+        document.getElementById(`dropdownItem_${this.itemType + (i + 1)}`).focus();
+      }
+    } else {
+      if (document.getElementById(`dropdownItem_${this.itemType + i}`)) {
+        document.getElementById(`dropdownItem_${this.itemType + i}`).focus();
+      }
     }
+  }
+  onItemUpButttonPressed (i: number) {
+    if (this.highlightedItemId > 0) {
+      this.highlightedItemId = --this.highlightedItemId;
+      if (document.getElementById(`dropdownItem_${this.itemType + (i - 1)}`)) {
+        document.getElementById(`dropdownItem_${this.itemType + (i - 1)}`).focus();
+      } else {
+        if (document.getElementById(`dropdownItem_${this.itemType + i}`)) {
+          document.getElementById(`dropdownItem_${this.itemType + i}`).focus();
+        }
+      }
+    }
+  }
+  clearSelection() {
+    this.highlightedItemId = -1;
   }
 }

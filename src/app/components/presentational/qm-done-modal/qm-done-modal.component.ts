@@ -61,7 +61,6 @@ export class QmDoneModalComponent implements OnInit, OnDestroy {
   onSwitchChange() {
     this.modalStatusDispatchers.setModalStatus(this.isAutoCloseModal);
     this.localStorage.setSettings(STORAGE_SUB_KEY.MODAL_AUTOCLOSE, this.isAutoCloseModal);
-    // this.SetAutoclose();
   }
 
   setAutoclose() {

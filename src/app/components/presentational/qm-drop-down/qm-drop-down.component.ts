@@ -99,7 +99,7 @@ export class QmDropDownComponent implements OnInit {
     }
     this.isItemSelected = true;
     this.selectedItem = item;
-    this.highlightedItemId = itemIndex;
+    this.highlightedItemId = -1;
   }
 
   handleInput(searchText: string) {

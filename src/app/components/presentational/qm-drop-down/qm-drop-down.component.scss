@@ -83,6 +83,15 @@
             max-height: 50vh;
             overflow-y: auto;
         }
+        
+        &__ul {
+            @at-root [dir="ltr"] & {
+                margin-left: -40px;
+            }
+            @at-root [dir="rtl"] & {
+                margin-right: -40px;
+            }
+        }
 
         &__button {
             color: $drop-down-item-color;
@@ -92,6 +101,7 @@
             text-decoration: none;
             cursor: pointer;
             border: none;
+            background-color: white;
 
             @at-root [dir="ltr"] & {
                 text-align: left

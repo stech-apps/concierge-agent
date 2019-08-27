@@ -3,12 +3,11 @@
     <div class="qm-dropdown-button--label" [ngClass]="{'qm-dropdown-button--label-selected': isItemSelected}">{{caption | translate}}</div>
     <div  class="qm-dropdown-button--arrow  icon-caret-down" [ngClass]="{'icon-caret-up': isExpanded}" *ngIf="items.length > 1"></div>
   </button>
-  <div class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
+  <div role="combobox" class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
-          <label class="sr-only" for="{{getIdofInputBox(searchPlaceHolder)}}">{{ searchPlaceHolder | translate}}</label>
-          <input #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
+          <input (keydown.arrowdown)="onItemDownButttonPressed(-1)" #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched "
-            id="{{getIdofInputBox(searchPlaceHolder)}}" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}" autocomplete="off" >
+            id="{{getIdofInputBox(searchPlaceHolder)}}" name="q" type="search" placeholder="{{ searchPlaceHolder | translate}}" autocomplete="off" role="searchbox">
     
           <button *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
             <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
@@ -16,6 +15,19 @@
           </button>
         </div>
 
-    <button class="qm-dropdown__content__button" *ngFor="let item of items | qmDropDownFilter : searchText : labelProperty" [attr.id]="'dropdownItem_' + item.id" [ngClass]="{'qm-item-selected': highlightedItemId === item.id }"  (click)="itemClick(item, $event)" [innerHtml]="item[labelProperty] | qmhighlight : searchText"></button>
+    <ul class="qm-dropdown__content__ul" role="listbox">
+      <li role="option" *ngFor="let item of items | qmDropDownFilter : searchText : labelProperty; let itemIndex = index"
+      (keydown.arrowdown)="onItemDownButttonPressed(itemIndex)"
+      (keydown.arrowup)="onItemUpButttonPressed(itemIndex)"
+      (keydown.enter)="itemClick(itemIndex, $event)"
+      (keydown.tab)="clearSelection()"
+      (keydown.space)="itemClick(itemIndex, $event)"
+       class="qm-dropdown__content__button" 
+       [attr.tabindex]="itemIndex==0 ? 0 : -1" 
+       [attr.id]="'dropdownItem_' + itemType + itemIndex" 
+       [ngClass]="{'qm-item-selected': highlightedItemId === itemIndex }"  
+       (click)="itemClick(itemIndex, $event)" 
+       [innerHtml]="item[labelProperty] | qmhighlight : searchText"></li>
+    </ul>
   </div>
 </div>

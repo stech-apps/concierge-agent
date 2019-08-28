@@ -25,6 +25,14 @@
       }
       .custom_header_h2{
         color: #2c3230;
+        text-decoration: underline;
+      }
+    }
+
+    &:focus {
+      .custom_header_h2{
+        color: #2c3230;
+        text-decoration: underline;
       }
     }
   }

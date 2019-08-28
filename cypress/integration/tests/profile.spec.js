@@ -1,12 +1,14 @@
 /// <reference types="Cypress" />
 
+const config = require('../../config/config.json')
+
 context('Profile Page', () => {
   beforeEach(()=> {
-    cy.visit('http://10.2.2.92:8080/login.jsp');
+    cy.visit( config.orchestraEndpoint + '/login.jsp');
     cy.get('#username').type('superadmin');
     cy.get('#password').type('ulan');
     cy.get('button[type="submit"]').click();
-    cy.visit('http://10.2.2.92:8080/connectconcierge');
+    cy.visit(config.orchestraEndpoint + '/connectconcierge');
   });
 
   it('W3C Validate profile page', () => {

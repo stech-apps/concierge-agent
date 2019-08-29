@@ -78,6 +78,7 @@ export class QmDropDownComponent implements OnInit {
   onExpand: EventEmitter<any> = new EventEmitter<any>();
 
   dropDownExpand($event) {
+    this.highlightedItemId = -1;
     this.onExpand.emit();
     this.isExpanded = !this.isExpanded;
     setTimeout(()=> this.searchText = '');

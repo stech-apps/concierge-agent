@@ -41,14 +41,14 @@
                   <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)"
                     class="qm-search__input ng-pristine ng-valid ng-touched" id="serviceSearchInput"
                     name="serviceSearchInput" placeholder="{{'label.service.search' | translate}}" #serviceSearchInput
-                    (keydown.enter)="serviceSearchInput.blur()">
+                    (keydown.enter)="ServiceSearchInputEnterPressed()">
                   <div *ngIf="(searchText || '').trim().length === 0"
                     class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
                     <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                     <span class="sr-only">Search</span>
                   </div>
                 </div>
-                <div aria-live="polite" role="alert" class="qm-service-not-found-container"
+                <div aria-live="polite" role="alert" class="qm-service-not-found-container" id="qm-service-not-found-container" tabindex="-1"
                   *ngIf=" (searchText || '').trim().length !== 0 && (filteredServiceList | filterService : [filterText, flowType])?.length===0">
                   {{'service_list_not_found'|translate}}
                 </div>
@@ -85,7 +85,7 @@
                 </div>
               </div>
             </div>
-            <div aria-live="polite" class="qm-select-service__search-heading"
+            <div aria-live="polite" class="qm-select-service__search-heading" id="searchTextDetails" tabindex="-1"
               *ngIf="(searchText || '').trim().length > 0 && (filteredServiceList | filterService : [filterText, flowType])?.length!==0">
               <span>{{'label.search.result.header' | translate}} &nbsp;</span>
               <mark>{{ '"'+ searchText + '"' }}</mark>
@@ -131,10 +131,13 @@
 
                     </span>
                     <br>
-                    <span class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText"
+                    <span class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText" aria-live="assertive" role="alert"
                       [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate)) | qmhighlight: searchText">
                     </span>
                   </button>
+                  <div class="qm-list__item--info" aria-live="assertive" class="sr-only" role="alert" *ngIf="service.showInfoInMostFrequent">
+                      {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}}
+                    </div>
                   <button tabindex="-1" id="{{i}}-freq-service-info" class="qm-transparent-btn"
                     *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText"
                     (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent"
@@ -188,10 +191,16 @@
                         [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
                       </span>
                       <br>
-                      <span class="qm-list__item--info" *ngIf="service.showInfo || filterText"
+               
+                      <span class="qm-list__item--info" *ngIf="service.showInfo || filterText" 
                         [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate))| qmhighlight: searchText">
-                      </span>
+      
+                    </span>
                     </button>
+                    <div class="qm-list__item--info" aria-live="assertive" class="sr-only" role="alert" *ngIf="service.showInfo">
+                      {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}}
+                    </div>
+
                     <button tabindex="-1" id="{{j}}-service-info" class="qm-transparent-btn"
                       (keydown.arrowright)="onRightButttonPressedinInfo(j)"
                       (keydown.arrowleft)="onLeftButttonPressedinInfo(j)"

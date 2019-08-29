@@ -26,6 +26,7 @@
 .qm-toast-inner-container {
     position: relative;
     padding-right: 1.8rem;
+    width: 100%;
     @at-root [dir="rtl"]  {
         padding-right: 0;
     }
@@ -60,7 +61,9 @@ a:focus{
     font-weight: normal;
     letter-spacing: 0.25px;
     color: #ebeaea
+
 }
+
 .checkbox{
     margin: auto;height: 100%;
     width: 145px;
@@ -83,28 +86,26 @@ a:focus{
     height: 106%;
 }
 .styled-checkbox + label:before{
-    border: 3px solid white;
+    border: 2px solid white;
+
 }
 .styled-checkbox:checked + label:after {
-    top: 11px;
+    top: 13px;
+    left: 14px;
+    box-shadow:2px 0 0 #017c65, 4px 0 0 #017c65, 4px -2px 0 #017c65, 4px -4px 0 #017c65, 4px -6px 0 #017c65, 4px -8px 0px 0px #017c65, 4px -8px 0px 0px #017c65, 4px -10px 0px 0px #017c65, 4px -12px 0px 0px #017c65;
+    background: #017c65
+}
+.styled-checkbox-warning:checked + label:after {
+    box-shadow:2px 0 0 #b00020, 4px 0 0 #b00020, 4px -2px 0 #b00020, 4px -4px 0 #b00020, 4px -6px 0 #b00020, 4px -8px 0px 0px #b00020, 4px -8px 0px 0px #b00020, 4px -10px 0px 0px #b00020, 4px -12px 0px 0px #b00020;
+    background: #b00020
 }
 .styled-checkbox:checked + label:before { 
-    background: transparent;
+    background: white;
 }
 .qm-transparent-btn{
     height: 100%;
     width: 100%;
 }
-
-
-// .qm-toast--info + {
-//     @at-root [dir="rtl"] {  
-//      .qm-toast-icon
-//         .icon-complete:before{
-//                     content: "\e944";
-//             }
-//         }
-// }
 
 
 @include qm-xs {

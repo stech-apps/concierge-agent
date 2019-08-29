@@ -574,4 +574,20 @@ export class QmSelectServiceComponent implements OnInit {
     }
   
   }
+
+  ServiceSearchInputEnterPressed() {
+    if(document.getElementById('qm-service-not-found-container')) {
+      document.getElementById('qm-service-not-found-container').focus();
+    } else if(document.getElementById('searchTextDetails')) {
+      document.getElementById('searchTextDetails').focus();
+    } else {
+    if(document.getElementsByClassName("qm-service-list__item--text").length>0) {
+      document.getElementsByClassName("qm-service-list__item--text")[0].setAttribute('id',"firstServiceElement");
+      setTimeout(() => {
+        if(document.getElementById('firstServiceElement')) {
+          document.getElementById('firstServiceElement').focus();
+        }
+      }, 100);
+    }}
+  }
 }

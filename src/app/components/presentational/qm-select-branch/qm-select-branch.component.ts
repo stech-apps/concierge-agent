@@ -231,5 +231,20 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
     return completeAddress;
   }
+
+  branchInputEnterPressed() {
+    var BranchElements = document.getElementsByClassName("qm-branch-list__item--text")
+    if(document.getElementById('searchTextDetails')) {
+      document.getElementById('searchTextDetails').focus();
+    } else {
+    if(document.getElementsByClassName("qm-branch-list__item--text").length>0) {
+      document.getElementsByClassName("qm-branch-list__item--text")[0].setAttribute('id',"firstBranchElement");
+      setTimeout(() => {
+        if(document.getElementById('firstBranchElement')) {
+          document.getElementById('firstBranchElement').focus();
+        }
+      }, 100);
+    }}
+  }
  
 }

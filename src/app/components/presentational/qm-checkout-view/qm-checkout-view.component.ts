@@ -1047,9 +1047,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onNotesChanged(value) {
-    if(value) {
+    // if(value) {
       this.noteTextStr = value;
-    }
+    // }
  
   }
 

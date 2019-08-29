@@ -30,7 +30,7 @@
     <div class="qm-search qm-search--large">
         <label id="branchSerachLabel" class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
         <input  aria-labelledby="branchSerachLabel" [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
-          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()"
+          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput  (keydown.enter)="branchInputEnterPressed()"
           autocomplete="off">
   
         <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
@@ -71,7 +71,7 @@
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
-  <div aria-live="polite" role="alert" class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
+  <div aria-live="polite" role="alert" id="searchTextDetails" tabindex="-1" class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
     <span>{{'label.search.result.header' | translate}} &nbsp;</span>
     <mark>{{ '"'+ searchText + '"' }}</mark>
     <span class="qm-select-branch__foundbox">{{ ' ' + 
@@ -100,6 +100,7 @@
           <span class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</span>
         </span>      
       </button>
+      <span class="sr-only" *ngIf="b.showInfo" aria-live="assertive" role="alert"> {{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }} </span>
       <button tabindex="-1" class="qm-transparent-btn qm-action-btn__icon" type="button" id="{{i}}-more-info"
       (keydown.arrowright) = "onRightButttonPressedinInfo(i)"
       (keydown.arrowleft) = "onLeftButttonPressedinInfo(i)"

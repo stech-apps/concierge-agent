@@ -89,8 +89,7 @@ export class QmDropDownComponent implements OnInit {
             }
   }
 
-  itemClick(itemIndex: IDropDownItem | any, $event) {
-    const item: IDropDownItem = this.items[itemIndex];
+  itemClick(item: IDropDownItem | any, $event) {
     this.itemClickCallBack.emit(item);
     this.isExpanded = false;
     this.qmClearInputRef.update(this.searchText);

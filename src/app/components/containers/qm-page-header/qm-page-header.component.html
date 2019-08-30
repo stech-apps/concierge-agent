@@ -1,35 +1,52 @@
+<div class="qm-content-links" dir="{{ userDirection$ | async }}">
+  <a *ngIf="isHome && isQuickServeShow" id="cardContentServeLink" class="qm-content-links__link" href="javascript:;"
+    (click)="QuickServeFocus()">{{'label.quick_serve'| translate}}</a>
+  <a *ngIf="isHome && isQuickCreateEnable" id="cardContentCreateLink" class="qm-content-links__link" href="javascript:;"
+    (click)="QuickServeFocus()">{{'label.quick_create'| translate}}</a>
+  <a *ngIf="isHome && (isCreateAppointment || isEditAppointment || isArriveAppointment || isCreateVisit)" id="actionPanelContentLink" href="javascript:;" class="qm-content-links__link" 
+    (click)="MenuBarFocus()">{{'label.menubar' | translate}}</a>
+</div>
 <header class="qm-header" *ngIf="!isFlowOpen">
   <span class="qm-header__title">{{'module_name' | translate}}</span>
 </header>
 <header class="qm-header" dir="{{ userDirection$ | async }}" *ngIf="!isFlowOpen">
-  <div class="qm-header__left">
-    <a *ngIf="!isNative" href="/" (click)="homeClick($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
-      <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
-      <span class="sr-only">{{ 'label.home' | translate }}</span>
-    </a>
+  <nav class="qm-header__left">
     <a *ngIf="!isNative" href="/" class="qm-header__brand-logo-container" (click)="homeClick($event)">
+      <span *ngIf="!isNative"
+        class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
+        <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
+      </span>
       <img class="qm-header__brand-logo" [src]="brandLogoSrc" alt="" role="presentation" />
       <span class="sr-only">{{ 'label.home' | translate }}</span>
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
     <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>
-    <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon" [ngClass]="{'icon-caret-right':userDirections === 'ltr','icon-caret-left':userDirections === 'rtl'}" ></i></span>
+    <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
+        [ngClass]="{'icon-caret-right':(userDirections === 'ltr' || userDirections === 'LTR'),'icon-caret-left':(userDirections === 'rtl' || userDirections === 'RTL')}"></i></span>
     <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
-    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()">
-      <span class="qm-header__edit-link" >{{'edit'|translate}}</span>
+    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()"   attr.aria-label="{{'edit_user_profile' | translate}}" role="navigation">
+      <span class="qm-header__edit-link">{{'edit'|translate}}</span>
     </button>
-  </div>
+  </nav>
 
-  <div class="qm-header__right">
-
-    <a *ngIf="!isNative" href="/help" target="_blank" class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
+  <nav class="qm-header__right">
+    <ul class="qm-header-icon-list">
+      <li>
+    <a *ngIf="!isNative" href="/help" target="_blank"
+      class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
       <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
-      <!-- <span class="sr-only">{{ 'label.help' | translate }}</span> -->
+      <span class="sr-only">{{ 'label.help' | translate }}</span>
     </a>
-    <span class="qm-header__user-name">{{userFullName$ | async}}</span> 
+  </li>
+  <li>
+    <span class="qm-header__user-name">{{userFullName$ | async}}</span>
+  </li>
+  <li>
     <a href="/logout.jsp" (click)="logout($event)" class="qm-action-btn qm-action-btn--only-icon qm-header__logout-btn">
       <i class="qm-action-btn__icon icon-exit" aria-hidden="true"></i>
-      <!-- <span class="sr-only">{{ 'label.logout' | translate }}</span> -->
+      <span class="sr-only">{{ 'label.logout' | translate }}</span>
     </a>
-  </div>
+  </li>
+  </ul>
+  </nav>
 </header>

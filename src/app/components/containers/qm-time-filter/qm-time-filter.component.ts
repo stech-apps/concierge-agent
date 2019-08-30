@@ -6,25 +6,31 @@ import {
   TemplateRef,
   AfterViewInit,
   ElementRef,
-  OnDestroy
+  OnDestroy,
+  SimpleChanges,
+  OnChanges
 } from "@angular/core";
-import { UserSelectors } from "src/store";
+import { UserSelectors, SystemInfoSelectors } from "src/store";
 import { Observable, Subscription } from "rxjs";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { CalendarDate } from "../qm-calendar/qm-calendar.component";
 import { DEFAULT_LOCALE } from "src/constants/config";
+import { ISystemInfo } from "src/models/ISystemInfo";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "qm-qm-time-filter",
   templateUrl: "./qm-time-filter.component.html",
   styleUrls: ["./qm-time-filter.component.scss"]
 })
-export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
+export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,OnChanges {
   constructor(
     private userSelectors: UserSelectors,
     public activeModal: NgbActiveModal,
-    public elRef: ElementRef
+    public elRef: ElementRef,
+    private systemInfoSelectors: SystemInfoSelectors,
+    private translate: TranslateService
   ) {
     this.isCalendarOpen = false;
   }
@@ -44,6 +50,12 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   public selectedDate: CalendarDate;
   isCalendarOpen: boolean;
   isCalendarEverShown: boolean;
+  dateType: string;
+  systemInformation: ISystemInfo;
+  enterDateErrorMsg: string;
+  currentDate:string;
+  userDirection:string;
+  
   @ViewChild("endContainer") endTimeFilters: TemplateRef<any>;
 
   ngOnInit() {
@@ -53,6 +65,22 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     
     this.subscriptions.add(userLocaleSubscription);
+    setTimeout(() => {
+      if(document.getElementById('qm-time-filter-header')) {
+        document.getElementById('qm-time-filter-header').focus();
+      }
+    }, 100);
+    const userSubscription = this.userDirection$.subscribe((ud)=> {
+      this.userDirection = ud.toLowerCase();
+    });
+    this.subscriptions.add(userSubscription);
+
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo => {
+      this.systemInformation = systemInfo;
+    });
+    this.subscriptions.add(systemInfoSubscription);
+
+    this.dateType = this.systemInformation.dateConvention;
   }
 
   ngAfterViewInit() {
@@ -65,6 +93,12 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
       selectedElements.forEach(element => {
         element.scrollIntoView();
       });
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedDate) {
+      console.log(changes.selectedDate);
+      
     }
   }
 
@@ -96,6 +130,84 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  isToday(date: moment.Moment): boolean {
+    return moment().isSame(moment(date), 'day');
+  }
+
+
+  validateDate(value) {
+    console.log(value);
+    
+    if (this.dateType[2] == '-') {
+      if (value.match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/g) && moment(value, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        if (this.isToday(moment(value, this.dateType)) || moment(value, this.dateType).isAfter(moment.now())) {
+          selectedDateAvailable = true;
+          this.selectedDate = 
+                     ({
+                        mDate: moment(value, this.dateType),
+                        selected: true
+                      })
+                      this.isCalendarOpen = false;
+        }
+
+  
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translate
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        
+        const translateSubscription = this.translate
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
+      }
+    } else if (this.dateType[2] == '/') {
+      if (value.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{2}/g) && moment(value, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        if (this.isToday(moment(value, this.dateType)) || moment(value, this.dateType).isAfter(moment.now())) {
+          selectedDateAvailable = true;
+          this.selectedDate = 
+                     ({
+                        mDate: moment(value, this.dateType),
+                        selected: true
+                      })
+                      this.isCalendarOpen = false;
+        }
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translate
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        const translateSubscription = this.translate
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
+      }
+    }
+  }
+
   onTimeEndSelect(endTime: moment.Moment) {
     this.selectedEndTime = endTime;
     this.checkValidation();
@@ -108,9 +220,29 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   onSelectDate(selectedDate: CalendarDate) {
     this.selectedDate = selectedDate;
     this.isCalendarOpen = false;
+    this.enterDateErrorMsg = "";
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+  onFocus() {
+    if(this.userDirection == 'rtl') {
+      var setInput = document.getElementById("enterDate");
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+    }
+  }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+      range.select();
+    }
   }
 }

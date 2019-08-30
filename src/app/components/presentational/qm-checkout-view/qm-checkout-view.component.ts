@@ -78,6 +78,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
   isArriveAppointment: boolean = false;
+  hideCustomer: boolean = false;
 
   themeColor: string = "#a9023a";
   whiteColor: string = "#ffffff";
@@ -163,7 +164,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const uttSubscription = this.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
-          
+          this.hideCustomer = uttParameters.hideCustomer;
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
           this.isVipLvl2Enabled = uttParameters.vipLvl2;
@@ -182,6 +183,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     const customerSubscription = this.customerSelector.currentCustomer$
       .subscribe(customer => {
         this.selectedCustomer = customer;
+        
         if (customer) {
           this.customerEmail = customer.properties.email;
           this.customerSms = customer.properties.phoneNumber;
@@ -234,6 +236,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+   
 
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
@@ -1044,7 +1047,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   onNotesChanged(value) {
-    this.noteTextStr = value;
+    // if(value) {
+      this.noteTextStr = value;
+    // }
+ 
   }
 
   // Go to previous panels

@@ -19,6 +19,8 @@ import { ReserveEffects } from './reserve.effects';
 import { QueueVisitsEffects } from './queue-visits.effects';
 import { ServicePointPoolEffects } from './service-point-pool.effects';
 import { StaffPoolEffects } from './staff-pool.effcts';
+import { JWTTokenEffects } from './jwtToken.effects';
+import { from } from 'rxjs';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -40,5 +42,6 @@ export const effects: any[] = [
     ReserveEffects,
     AppointmentEffects,
     QueueVisitsEffects,
-    StaffPoolEffects
+    StaffPoolEffects,
+    JWTTokenEffects
 ];

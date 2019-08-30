@@ -134,21 +134,7 @@
 }
 
 .qm-clear-search{ 
-    // margin: 0px 10px 0px -25px;
-    // position: relative;
-    // z-index: 2;
-    // color: black;
-    // @at-root [dir="rtl"] {
-    //     .qm-clear-search{
-    //      margin: 0px -25px 0px 10px;
-    //     }
-    //    }
-    margin-left: -35px;
-    margin-top: 12px;
     color: $dark-transparent42;
-    @at-root [dir="rtl"] & {
-      margin-right: -35px;
-  }
   font-size: 1.4em;
   cursor: pointer;
 }
@@ -166,15 +152,30 @@
 }
 
 .qm-search__icon{
-    margin-left: -35px;
-    margin-top: 10px;
-    color: $dark-transparent42;
-    @at-root [dir="rtl"] & {
-      margin-right: -35px;
-  }
+    margin-top: -3px;
+    color: $dark-transparent62;
   }
 
 .qm-service-point-list__body{
     height: 280px;
     overflow: auto;
 }
+
+.qm-input-box-container{
+    position: relative;
+    width: 100%;
+}
+.qm-clear-btn {
+    position: absolute;
+    right: 10px;
+    margin-top: 12px;
+    border: none;
+    background: transparent;
+    @at-root [dir="rtl"] & {
+        left: 10px;
+        right: auto;
+    }
+}
+[tabindex="-1"]:focus {
+    outline: solid #72a2f7 1px !important;
+  }

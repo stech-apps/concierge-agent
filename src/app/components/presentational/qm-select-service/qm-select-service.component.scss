@@ -75,6 +75,14 @@
       text-overflow: ellipsis;
     }
   }
+  &__no-service{
+    margin-top: 10px;
+    font-size: 14px;
+    color: #000000;
+    @at-root [dir='rtl'] & {
+      text-align: right;
+  }
+  }
 }
 
 .quick-serve-tooltip{
@@ -319,6 +327,7 @@ display: flex;
   width:120%;
   font-size: 18px;
   padding: 1rem;
+  color: $dark-transparent82;
 }
 
 
@@ -357,5 +366,29 @@ display: flex;
 @include qm-xs{
   .qm-pannel-inner-container{
     margin: 0;
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .qm-checkbox__border{
+    margin-top: -16px;
+  }
+}
+.qm-check-box-background {
+  top: -8px;
+  left: 8px;
+  @at-root [dir="rtl"] & {
+    left: auto;
+    right: 17px;
+  }
+}
+[tabindex="-1"]:focus {
+  outline: solid #72a2f7 1px !important;
+}
+.qm-transparent-btn{
+  text-align: left;
+  @at-root [dir='rtl'] & {
+    text-align: right;
   }
 }

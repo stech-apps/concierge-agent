@@ -23,6 +23,7 @@ import { RouterModule } from "@angular/router";
 // Components
 import { AppComponent } from "./app.component";
 import { QmQuickServeComponent } from "src/app/components/presentational/qm-quick-serve/qm-quick-serve.component";
+import { QmQuickCreateComponent } from "src/app/components/presentational/qm-quick-create/qm-quick-create.component";
 
 // Routes
 import { appRoutes } from "./../routes/app-routes";
@@ -176,6 +177,7 @@ import { QmTabberComponent } from './components/containers/qm-tabber/qm-tabber.c
 import { FilterQuickServeServicePipe } from './components/presentational/qm-quick-serve/filter-quick-serve-service.pipe';
 import { QmAppointmentInfoComponent } from './components/presentational/qm-appointment-info/qm-appointment-info.component';
 import { QmKeyCaptureDirective } from './directives/qm-key-capture.directive';
+import {A11yModule} from '@angular/cdk/a11y';
 
 
 // Global options for Toastr
@@ -184,7 +186,8 @@ const toastrGlobalOptions = {
   preventDuplicates: true,
   autoDismiss: true,
   iconClasses: {},
-  class: 'toast-msg'
+  class: 'toast-msg',
+  toastComponent: QmCustomToastComponent
 };
 
 export class MyHammerConfig extends HammerGestureConfig {
@@ -209,6 +212,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmHomeComponent,
     QmSideMenuComponent,
     QmQuickServeComponent,
+    QmQuickCreateComponent,
     QmHomeMenuComponent,
     QmQueueSummaryComponent,
     QmQueueListComponent,
@@ -279,7 +283,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     FilterQuickServeServicePipe,
     QmTabberComponent,
     QmAppointmentInfoComponent,
-    QmKeyCaptureDirective
+    QmKeyCaptureDirective,
   ],
   entryComponents: [
     QmCustomToastComponent,
@@ -297,6 +301,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     MomentModule,
     FormsModule,
+    A11yModule,
     NgSelectModule,
     ReactiveFormsModule,
     EffectsModule.forRoot(effects),
@@ -320,6 +325,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     AngularDraggableModule
+    
   ],
   providers: [
     ...storeServices,

@@ -70,9 +70,7 @@ input:focus{
     
   color:  $dark-transparent42;
   z-index: 20;
-  position: relative;
   font-size: 1.5em;
-  margin-top: 12px;
   @at-root [dir="ltr"] & {
       right: 1.4em;
   }
@@ -84,9 +82,9 @@ input:focus{
 color: $dark-transparent62;
 }
 .qm-search__icon{
-  
+  position: absolute;
   margin-top: 10px;
-  color: $dark-transparent42;
+  color: $dark-transparent62;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
 } @at-root [dir="ltr"] & {
@@ -111,7 +109,8 @@ color: $dark-transparent62;
 
 .qm-action-btn--only-icon{
   width: 0px;
-  vertical-align: middle
+  vertical-align: middle;
+  position: relative;
 }
 
 input {
@@ -293,9 +292,11 @@ hr{
     margin: 30px 48px 0 48px;
     &__label-text-captial{
       font-size: 21px;
+      font-weight: 400;
     }
     &__label-text{
       font-size: 21px;
+      font-weight: 400;
     } }
   .qm-search-visit-container{
     padding: 0px 32px;
@@ -319,9 +320,11 @@ hr{
     margin: 30px 48px 0 48px;
     &__label-text-captial{
       font-size: 21px;
+      font-weight: 400;
     }
     &__label-text{
       font-size: 21px;
+      font-weight: 400;
     } }
   .qm-search-visit-container{
     padding: 0px 32px;
@@ -346,9 +349,11 @@ hr{
     margin: 37px 40px 0 40px;
     &__label-text-captial{
       font-size: 21px;
+      font-weight: 400;
     }
     &__label-text{
       font-size: 21px;
+      font-weight: 400;
     } }
     .qm-search-visit-container{
       padding: 0px 24px;
@@ -373,9 +378,11 @@ hr{
     margin: 44px 48px 0 48px;
     &__label-text-captial{
       font-size: 21px;
+      font-weight: 400;
     }
     &__label-text{
       font-size: 21px;
+      font-weight: 400;
     } }
     .qm-search-visit-container{
       padding: 0px 40px;
@@ -401,9 +408,11 @@ hr{
     margin: 44px 48px 0 48px;
     &__label-text-captial{
       font-size: 21px;
+      font-weight: 400;
     }
     &__label-text{
       font-size: 21px;
+      font-weight: 400;
     }
   }
   .qm-search-visit-container{
@@ -445,5 +454,17 @@ button:focus{
     outline: none;
 }
 
-
-
+.qm-search-box-container{
+  position: relative;
+}
+.qm-transparent-close-btn{
+  position: absolute;
+  right: 0;
+  margin: 10px 0;
+  background: transparent;
+  border: none;
+  @at-root [dir="rtl"] & {
+    left: 0;
+    right: auto;
+}
+}

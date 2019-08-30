@@ -4,11 +4,12 @@ import { TimeUtils } from "./../../../../util/services/timeUtils.service";
 import { ReservationExpiryTimerDispatchers } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.dispatchers";
 import { CalendarSettingsSelectors } from "./../../../../store/services/calendar-settings/calendar-settings.selectors";
 import { ReservationExpiryTimerSelectors } from "./../../../../store/services/reservation-expiry-timer/reservation-expiry-timer.selectors";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output ,EventEmitter, Input} from "@angular/core";
 import { Subscription } from "rxjs";
 import { Observable } from "rxjs";
 import { UserSelectors } from "../../../../store";
 import { registerLocaleData } from "@angular/common";
+// import {  } from "events";
 
 @Component({
   selector: "qm-reservation-timer",
@@ -22,6 +23,12 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
   counterString: string;
   intervalRef = null;
   prevTimeStamp = undefined;
+  timerStringWCAG: string;
+  @Output() ThirtySecondsGone: EventEmitter<string> = new EventEmitter<string>();
+  @Output() ExpandtheTimer: EventEmitter<string> = new EventEmitter<string>();
+  calendarExpiryTime : number;
+  @Input() events: Observable<void>;
+  
 
   constructor(
     private userSelectors: UserSelectors,
@@ -38,8 +45,9 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const expiryReservationCalendarSettingSubscription = this.getExpiryReservationTime$.subscribe(
-      (calendarExpiryTime: number) => {
+      (calendarExpiryTime: number) => {       
         // If view is rendered on screen again reset timer!!
+        this.calendarExpiryTime = calendarExpiryTime;
         const showTimerSubscription = this.reservationExpiryTimerSelectors.showReservationExpiryTime$.subscribe(
           value => {
             if (value) {
@@ -51,9 +59,14 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       }
     );
     this.subscriptions.add(expiryReservationCalendarSettingSubscription);
+   var eventsSubscription = this.events.subscribe(() => {
+      this.timerStringWCAG = this.counterString;
+   });
+   this.subscriptions.add(eventsSubscription);
   }
 
   startTimer(onGoingTime: number) {
+    this.ExpandtheTimer.emit('initial');
     // Stop any ongoing timer!!
     clearInterval(!!this.intervalRef && this.intervalRef);
 
@@ -61,6 +74,16 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
     this.counterString = this.timeUtils.formatSecondsIntoMinituesAndSeconds(
       onGoingTime
     );
+
+    this.timerStringWCAG = this.counterString;
+    var TimeSlotinterval = setInterval(() => {
+      if (onGoingTime >= 120) {
+        this.timerStringWCAG = this.counterString;
+      } else {
+        this.timerStringWCAG = undefined;
+        clearInterval(TimeSlotinterval);
+      }
+    }, 120000);
 
     // Start timer!!
     this.intervalRef = setInterval(() => {
@@ -78,7 +101,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
         this.prevTimeStamp = Math.floor(new Date().getTime()/1000);
         onGoingTime--;
       }
-      if(onGoingTime < 0){
+      if (onGoingTime < 0){
         onGoingTime = 0;
       }
 
@@ -91,8 +114,19 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
       this.reservationExpiryTimerDispatchers.setReservationExpiryTimer(
         onGoingTime
       );
+      
 
-      // 2min before expire show message "Timer about the expire!!"
+      // auto collapse reservation timer view after 30 seconds
+      if ( onGoingTime > 120 && (this.calendarExpiryTime - onGoingTime == 30)) {       
+        console.log(this.calendarExpiryTime - onGoingTime);
+        this.ThirtySecondsGone.emit('ThirtySecondsgone');
+      }
+      
+      if(onGoingTime > 120 && (this.calendarExpiryTime-onGoingTime - 30) !== 0 &&(this.calendarExpiryTime-onGoingTime - 30)%120 == 0) {
+        this.ExpandtheTimer.emit('EveryTwoMins');
+      }
+
+      // 2min before expire show message "Timer about the expire!!" and expand the timer.
       if (onGoingTime === 120) {
         const translateSubscription = this.translate
           .get("warning_message_on_cancel_reservation")
@@ -100,6 +134,7 @@ export class QmReservationTimerComponent implements OnInit, OnDestroy {
             this.toastService.errorToast(res);
           });
         translateSubscription.unsubscribe();
+        this.ExpandtheTimer.emit('TwoMins');
       }
 
       // After timer expired show message "Timer has expired!!"

@@ -81,14 +81,29 @@ export class Util {
         return number;
     }
 
+    phoneNoRegEx() {
+        return /^[0-9\+\s]+$/;
+    }
+
+    emailRegEx() {
+        return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    }
+
+    numberRegEx() {
+        return /^[0-9]*$/;
+    }
+
     phoneNoValidator() {
-        return [Validators.pattern(/^[0-9\+\s]+$/)]
+        return [Validators.pattern(this.phoneNoRegEx())];
     }
 
     emailValidator() {
-        return [Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)];
+        return [Validators.pattern(this.emailRegEx())];
     }
 
+    numberValidator() {
+        return Validators.pattern(this.numberRegEx());
+    }
   
     getLocaleDate(dateString: string) {
         var date = new Date(dateString);

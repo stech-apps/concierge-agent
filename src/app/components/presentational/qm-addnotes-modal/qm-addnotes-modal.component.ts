@@ -17,6 +17,11 @@ export class QmAddnotesModalComponent implements OnInit {
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+  setTimeout(() => {
+    if(document.getElementById('qm-notes-heading')) {
+      document.getElementById('qm-notes-heading').focus();
+    }
+  }, 100);
   }
 
   addNotes() {

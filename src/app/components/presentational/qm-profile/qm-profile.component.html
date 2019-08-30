@@ -6,9 +6,13 @@
   >
     <qm-page-header></qm-page-header>
     <div class="qm-profile-content">
-      <div class="qm-profile-content__title">
+        <button id="qm-close-button" tabindex="5" class="qm-tab qm-transparent-btn qm-action-btn qm-modal-close"  (click)="onCancel()">
+            <i aria-hidden="true" class="icon-close"></i>
+            <span class="sr-only">{{ 'button.close' | translate }}</span>
+          </button>
+      <h1 class="qm-profile-content__title" tabindex="-1" id='qm-profile-page-title'>
         {{ "label.select.profile.settings" | translate }}
-      </div>
+      </h1>
       <div class="qm-dropdown-heading">
         {{ "label.profile.branch" | translate }}
       </div>
@@ -18,6 +22,7 @@
         (onExpand)="collapseSiblingDropDowns(sdd)"
         [searchPlaceHolder]="'label.branch.search'"
         [caption]="selectedBranch?.name"
+        itemType="branch"
         [isItemSelected]="selectedBranch?.id > -1"
         [items]="branches"
         (itemClick)="onBranchSelect($event)"
@@ -31,33 +36,35 @@
         (onExpand)="collapseSiblingDropDowns(bdd)"
         [searchPlaceHolder]="'placeholder.profile.servicepoint'"
         [caption]="selectedServicePoint?.name"
+        itemType="service"
         [isItemSelected]="selectedServicePoint?.id > -1"
         (itemClick)="onServicePointSelect($event)"
         [items]="servicePoints"
         labelProperty="name"
       ></qm-drop-down>
 
-      <div class="qm-error-message" *ngIf="errorMessage"> {{ errorMessage }}</div>
+      <div class="qm-error-message" *ngIf="errorMessage" role="alert"> {{ errorMessage }}</div>
 
-      <div class="qm-use-as-default">
+      <div class="qm-use-as-default" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
         <!--
           input type="checkbox" class="qm-use-as-default__checkbox" [(ngModel)]="isEnableUseDefault"/
         -->
-
         <label for="qm-checkbox" class="qm-checkbox-label">
-          <input
-            id="qm-checkbox"
-            class="qm-checkbox qm-tab"
-            type="checkbox"
-            [(ngModel)]="isEnableUseDefault"
-            [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1"/>
-          <div class="qm-checkbox__selector">
-            <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-            <div class="qm-checkbox__selector-icon-text">
-              <span>{{ "label.skip_next_time" | translate }}</span>
+            <div class="qm-checkbox__selector">
+              <input id="qm-skip-step" class="styled-checkbox qm-tab" type="checkbox"
+                [(ngModel)]="isEnableUseDefault" (focus)="skipButtonHover = true;skipBranchFocus=true"
+                (focusout)="skipButtonHover = false;skipBranchFocus=false"
+                [disabled]=" selectedBranch.id==-1 || selectedServicePoint.id==-1">
+              <label for="qm-skip-step" (mouseenter)="skipButtonHover = true"
+                (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
+                (mouseup)="mousePressed = false"
+                class="qm-checkbox__selector-icon-text">{{ 'label.skip_next_time' | translate }}</label>
+              <div aria-hidden="true" *ngIf="skipButtonHover || mousePressed"
+                [ngClass]="{ 'checkbox-backdrop-unchecked': !isEnableUseDefault}" class="qm-check-box-background">
+              </div>
             </div>
-          </div>
-        </label>
+          </label>
+
       </div>
 
       <div class="qm-profile-button-container">

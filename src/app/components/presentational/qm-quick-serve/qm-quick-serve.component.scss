@@ -24,6 +24,15 @@
   &__header {
     color: $dark-transparent82;
     line-height: 2em;
+    font-weight: 300;
+    display: flex;
+    @at-root [dir='rtl'] {
+      text-align: right;
+    }
+  }
+  &__header-container {
+    color: $dark-transparent82;
+    line-height: 2em;
     padding-top: 20px;
     padding-bottom: 10px;
     font-weight: 300;
@@ -92,6 +101,9 @@
     background-color: rgba(0,0,0,0.04);
     cursor: pointer;
   }
+  &__item-selected {
+    background-color: rgba(0,0,0,0.04);
+  }
   &__button-container {
  
     margin: 0 auto;
@@ -120,7 +132,7 @@
 }
 
 .qm-option__help-btn{
-  padding: 0 20px;
+  // padding: 0 20px;
   z-index: 40;
 }
 
@@ -155,6 +167,7 @@
   
   &__search-container{
       display: flex;
+      position: relative;
   }
 
 }
@@ -162,7 +175,7 @@
 .qm-search__icon{
 
   margin-top: 10px;
-  color: $dark-transparent42;
+  color: $dark-transparent62;
   @at-root [dir="rtl"] & {
     margin-right: -38px;
   }
@@ -173,6 +186,7 @@
 .qm-clear-search{ 
   
   margin-top: 12px;
+  margin-bottom: 15px;
   color: $dark-transparent42;
   @at-root [dir="rtl"] & {
     margin-right: -35px;
@@ -209,17 +223,19 @@
   // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
 }
 
+
+
 .quick-serve-tooltip{
   width: 350px;
     z-index: 30;
     position: absolute;
-    margin-left: 12px;
+    margin-left: 51px;
     // margin-top: -87px;
     margin-bottom: 10px;
 
 
     @at-root [dir="rtl"] & {
-        margin-right: 12px;
+        margin-right: 55px;
         text-align: right;
     }
 
@@ -235,6 +251,17 @@
 
     }
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .quick-serve-tooltip{
+  @at-root [dir="rtl"] & {
+    margin-right: -203px;
+}
+  }
+
+}
+
 
 button:focus{
   font-weight: 500;
@@ -309,6 +336,7 @@ button:focus{
     
   &__content {
     width: 476px;
+    z-index: 2;
   }
   &__header {
     font-size: 28px;
@@ -332,6 +360,13 @@ button:focus{
   &__header {
     font-size: 24px;
     margin: 0px 20px;
+  }
+  }
+  .quick-serve-tooltip{
+    margin-left: 10px;
+    @at-root [dir="rtl"] & {
+      margin-right: 12px;
+      text-align: right;
   }
   }
 } 
@@ -392,15 +427,76 @@ button:focus{
   border:  solid #007bff 1px;
 }
 
+.qm-checkbox__border {
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  border-radius: 6px;
+  width: 22px;
+  height: 21px;
+  position: absolute;
+  margin-left: 3px;
+  margin-top: 19px;
+  @at-root [dir="rtl"] & {
+    margin-right: 3px;
+  }
+}
+
 button:active,button:hover{
   i{
   border:  none;
 }
 }
 
+
+.qm-transparent-close-btn{
+  border: none;
+  background: transparent;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  // display: contents;
+  @at-root [dir="rtl"] & {
+    left: 0;
+    right: auto;
+}
+}
+.qm-transparent-close-btn:focus{
+  border: none;
+  outline: none;
+}
+.styled-checkbox {
+  right: 30px;
+  left: auto;
+}
+
+.qm-check-box-background{
+  left: auto;
+  top: 8px;
+  right: -12px;
+  top: calc(50% - 4px);
+    left: auto;
+    transform: translate(-50%,-50%);
+  @at-root [dir="rtl"] & {
+    right: auto;
+    left: 28px;
+  }
+}
+
 // IE specific fix for tooltip
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .quick-serve-tooltip{
-    margin-left:-203px;
+    margin-left:-187px;
+    @at-root [dir="rtl"] & {
+      margin-right:-187px !important;
+    }
   }
+  .qm-check-box-background{
+    right: -15px;
+    @at-root [dir="rtl"] & {
+      left: 24px;
+    }
+  }
+}
+
+.checkbox-backdrop-container{
+  height: 100%;
 }

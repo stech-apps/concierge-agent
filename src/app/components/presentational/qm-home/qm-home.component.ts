@@ -6,7 +6,8 @@ import {
   BranchSelectors,
   QueueSelectors,
   FlowOpenSelectors,
-  FlowOpenDispatchers
+  FlowOpenDispatchers,
+  ServiceSelectors
 } from "src/store/services";
 import { Subscription, Observable } from "rxjs";
 import { Util } from "src/util/util";
@@ -29,6 +30,7 @@ import { LocalStorage,STORAGE_SUB_KEY } from "../../../../util/local-storage";
 export class QmHomeComponent implements OnInit, AfterViewInit {
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
+  isQuickCreateEnable: boolean;
   isShowQueueView: boolean;
   userDirection$: Observable<string>;
   MessageBoxInfo: IMessageBox;
@@ -42,7 +44,8 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   isCollapse:boolean;
   slideUpSrc = "assets/images/button-up.svg";
   userDirection: string;
-  isFlowOpen:boolean
+  isFlowOpen:boolean;
+  quickServeServicesAvailable: boolean = true;
 
   constructor(
     private servicePointSelectors: ServicePointSelectors,
@@ -57,7 +60,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     private queueSelectors:QueueSelectors,
     private localStorage: LocalStorage,
     private flowOpenSelectors:FlowOpenSelectors,
-    private flowOpenDispatchers:FlowOpenDispatchers
+    private flowOpenDispatchers:FlowOpenDispatchers,
   ) {
     this.MessageBoxInfo$ = this.InfoMsgBoxSelectors.InfoMsgBoxInfo$;
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -66,6 +69,18 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
           this.isQuickServeEnable = params.quickServe;
           this.isShowQueueView = params.queueView;
           this.editVisitEnable = params.editVisit;
+          if (params.quickVisitAction) {
+            if (params.quickVisitAction === 'serve') {
+              this.isQuickServeEnable = true;
+              this.isQuickCreateEnable = false;
+            } else if (params.quickVisitAction === 'create' && (params.ticketLess || params.sndSMS || params.printerEnable)) {
+              this.isQuickServeEnable = false;
+              this.isQuickCreateEnable = true;
+            } else {
+              this.isQuickServeEnable = false;
+              this.isQuickCreateEnable = false;
+            }
+          }
         }
       }
     );
@@ -153,5 +168,9 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
     this.isCollapse = !this.isCollapse
     this.localStorage.setSettings(STORAGE_SUB_KEY.COLLAPSE,this.isCollapse);
         
+  }
+  QuickServeServicesEnabled($event) {   
+    this.quickServeServicesAvailable = $event;
+    this.isQuickServeEnable = this.quickServeServicesAvailable;
   }
 }

@@ -49,7 +49,7 @@
     }
     padding: .5rem .75rem;
      &.ng-invalid.ng-dirty {
-      border: 2px solid #E50046;
+      border: 2px solid $error-color;
     }
   }
 

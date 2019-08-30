@@ -1,7 +1,7 @@
 import { UserSelectors } from './../../../../store/services/user/user.selectors';
 import { QueueSelectors, QueueDispatchers, BranchSelectors, QueueVisitsDispatchers, NativeApiSelectors, NativeApiDispatchers, ServicePointSelectors } from 'src/store';
 import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Queue } from '../../../../models/IQueue';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../util/services/toast.service';
@@ -56,6 +56,8 @@ export class QmQueueSummaryComponent implements OnInit {
   canDelete: boolean;
   cancherypick: boolean;
   inputText: string;
+
+  @Input() isQuickServeShow: boolean;
 
   constructor(
     private queueSelectors: QueueSelectors,

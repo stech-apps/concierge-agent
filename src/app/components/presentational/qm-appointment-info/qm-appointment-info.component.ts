@@ -40,6 +40,9 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    setTimeout(() => {
+      document.getElementById('app-info-close').focus();
+    }, 100);
     
     const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo=>{
       this.systemInformation = systemInfo;
@@ -59,6 +62,11 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   onModalClick() {
     this.onClose.emit(true);
+    setTimeout(() => {
+      if(document.getElementById('qm-more-info')) {
+        document.getElementById('qm-more-info').focus();
+      }
+    }, 200);
   }
 
   cardClick() {

@@ -27,6 +27,8 @@ import * as fromStaffPool from './staff-pool.reducer';
 import * as fromNativeApi from './native.api.reducer'
 import * as fromGlobalNotify from './global-notify.reducer'
 import * as fromFlowOpen from './flow-open.reducer'
+import * as fromAutoCloseState from './autoclose-status.reducer';
+import * as fromJWTToken from './jwtToken.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -55,7 +57,9 @@ export interface IAppState {
   staffPool:fromStaffPool.IStaffPoolState,
   nativeApi:fromNativeApi.NativeApiState,
   globalNotify: fromGlobalNotify.IGlobalNotifyState,
-  flowOpen:fromFlowOpen.IFlowOpenState
+  flowOpen:fromFlowOpen.IFlowOpenState,
+  autoCloseState: fromAutoCloseState.IAutoCloseStatus,
+  jwtToken: fromJWTToken.IJWTTokenState,
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -85,5 +89,7 @@ export const reducers: ActionReducerMap<IAppState> = {
   staffPool:fromStaffPool.reducer,
   nativeApi: fromNativeApi.reducer,
   globalNotify: fromGlobalNotify.reducer,
-  flowOpen: fromFlowOpen.reducer
+  flowOpen: fromFlowOpen.reducer,
+  autoCloseState: fromAutoCloseState.reducer,
+  jwtToken: fromJWTToken.reducer
 };

@@ -1,18 +1,21 @@
 <div class="qm-modal qm-done-modal qm-form-modal qm-modal--md" [dir]="userDirection$ | async" cdkTrapFocus>
-  <form class="qm-modal__box-container">
+  <form class="qm-modal__box-container modal-container">
     <div class="qm-modal__header">
-        <i class="qm-action-btn__icon qm-done-modal__header-icon" [ngClass]="{'icon-done-rtl': userDirection == 'rtl', 'icon-done-solid': userDirection != 'rtl'}" aria-hidden="true"></i>
-      <span class="qm-modal__headline">{{ (heading) | translate }}</span>
-      <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="activeModal.dismiss()">
-        <i aria-hidden="true" class="icon-close"></i>
-      </button>
+        <!-- <i class="qm-action-btn__icon qm-done-modal__header-icon" [ngClass]="{'icon-done-rtl': userDirection == 'rtl' || userDirection == 'RTL', 'icon-done-solid': userDirection == 'ltr' || userDirection == 'LTR'}" aria-hidden="true"></i> -->
+      <span id="qm-modal__headline" tabindex="-1" class="qm-modal__headline">{{ (heading) | translate }}</span>
+      <div class="button-container">
+        <button class="qm-transparent-btn qm-action-btn qm-modal-close close-button"  (click)="activeModal.dismiss()">
+          <i aria-hidden="true" class="icon-close"></i>
+          <span class="sr-only">{{ 'button.close' | translate }}</span>
+        </button>
+      </div>
     </div>
     <div class="qm-done-modal__subheader">
       {{ (subHeading) | translate }}
     </div>
     <div class="qm-modal__body">
       <div class="qm-modal-row">
-        <h3 class="qm-done-modal__details-heading" *ngIf="fieldList && fieldList.length>0">{{ ( fieldListHeading || 'label.appconfirm.details.heading') | translate }}</h3>
+        <h1 class="qm-done-modal__details-heading" *ngIf="fieldList && fieldList.length>0">{{ ( fieldListHeading || 'label.appconfirm.details.heading') | translate }}</h1>
      
         <ng-container *ngFor="let field of fieldList">
           <div class="qm-done-modal__detail-item">
@@ -25,8 +28,23 @@
         </div>
       </div>
     </div>
-    <div class="qm-modal__footer">
-      <div class="qm-generic-layout qm-generic-layout--justify-center">   
+    <div class="qm-modal__footer footer-container__footer">
+      <div class="footer-container__devider"></div>
+      <div class="qm-generic-layout footer-container">  
+          <div class="checkbox modal-checkbox">
+              <label for="qm-checkbox" class="qm-checkbox-label">        
+                <div class="qm-checkbox__selector modal-checkbox__label">      
+                    <input id="qm-done-auto-close" [ngModelOptions]="{standalone: true}" class="styled-checkbox" type="checkbox" (focus)="skipButtonHover = true"    (focusout)="skipButtonHover = false;" (change)="onSwitchChange()" [(ngModel)]="isAutoCloseModal" > 
+                  <label for="qm-done-auto-close" class="qm-checkbox__selector-icon-text"  (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+                  (mouseup) ="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
+                  <div *ngIf="skipButtonHover || mousePressed">
+                  <div 
+                  [ngClass]="{ 'checkbox-backdrop-unchecked': !isAutoCloseModal}"
+                   class="qm-check-box-background modal-checkbox-backdrop"></div>
+                  </div>
+                </div>
+              </label>
+            </div> 
         <button class="qm-btn qm-btn--primary qm-btn-finish" (click)="activeModal.close()">
           <span class="qm-btn__text" title="{{ 'button.label.ok' | translate }}">
             {{ 'button.label.ok' | translate }}

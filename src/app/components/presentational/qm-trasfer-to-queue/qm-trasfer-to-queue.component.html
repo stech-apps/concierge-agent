@@ -1,63 +1,100 @@
-<div class="qm-flow-sub-header">
-  <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}" *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
+<div>
+<div class="qm-flow-sub-header" >
+  <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}"
+    *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
     <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_queue' | translate }}" id="visitSearch"
-        name="q" [ngModel]="searchText" (input)="handleInput($event)" #visitSearch autocomplete="off">
-      <div class="qm-action-btn--only-icon">
-        <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search"
-          aria-hidden="true"></i>
-      </div>
-      <div class="qm-action-btn--only-icon">
-        <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
+
+      <div class="qm-input-box-container">
+        <label for="queuevisitSearch" class="sr-only">{{ 'label.search_queue' | translate }}</label>
+        <input class="qm-identify-visit-search__input" type="search"
+          placeholder="{{ 'label.search_queue' | translate }}" id="queuevisitSearch" name="q" [ngModel]="searchText"
+          (input)="handleInput($event)" #visitSearch autocomplete="off">
+        <button class="qm-action-btn--only-icon qm-clear-btn" *ngIf="visitSearch.value.trim()"
+          (click)="visitSearch.value = '';clearSearchText()">
+          <i class=" qm-action-btn__icon icon-close " aria-hidden="true"></i>
+        </button>
+        <span class="qm-action-btn--only-icon qm-clear-btn">
+          <i *ngIf="!visitSearch.value.trim()" aria-hidden="true"
+            class="qm-action-btn__icon icon-search qm-search__icon"></i>
+            <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
+        </span>
+        <div *ngIf="(queueCollection | filterQueue : filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'queue_list_not_found' | translate }}</div>
+        <div *ngIf="(queueCollection | filterQueue : filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (queueCollection | filterQueue : filterText).length + ((queueCollection | filterQueue : filterText).length === 1 ? ('label.queue.found' | translate) : ('label.queues.found' | translate)) }}</div>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="qm-queue-list__container" dir="{{ userDirection$ | async }}">
+<div class="qm-queue-list__container" dir="{{ userDirection$ | async }}"  role="table">
+    <caption class="sr-only">Transfer to queue list</caption>
   <div class="qm-queue-list">
+    <div style="padding-bottom:20px;text-align:center"
+      *ngIf="(this.queueCollection && this.queueCollection.length === 0)">
+      {{'label.empty_queues'|translate}}
+    </div>
 
-      <div style="padding-bottom:20px;text-align:center" *ngIf="(this.queueCollection && this.queueCollection.length === 0)">
-          {{'label.empty_queues'|translate}} 
-        </div>
-
-    <div class="qm-queue-list__headers qm-flex-grid" *ngIf="(this.queueCollection && this.queueCollection.length !== 0)">
-
-      <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn" (click)="onSortClickbyQueue()">
-        <div class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</div>
-        <div><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
+    <div class="qm-queue-list__headers qm-flex-grid" 
+      *ngIf="(this.queueCollection && this.queueCollection.length !== 0)" role="rowgroup">
+    <div role="row" style="width: 100%;display: flex">
+      <button class="qm-queue-list-header-item qm-col-45 qm-flex-grid qm-transparent-btn"
+        (click)="onSortClickbyQueue()" role="columnheader" scope="col">
+        <span class="qm-queue-list-header-item">{{'label.queue_view_queue' | translate}}</span>
+        <span><i *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+          <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+        </span>
       </button>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferFirst" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label">{{'label.transfer_first'|translate}}</div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferLast" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label">{{'label.transfer_last'|translate}} </div>
       </div>
 
-      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort">
+      <div class="qm-queue-list-header-item qm-col-15 qm-flex-grid" *ngIf="btnTransferSort" role="columnheader" scope="col" >
         <div class="qm-queue-list-header-item-label"> {{'label.transfer_sort'|translate}} </div>
       </div>
-
+    </div>
     </div>
     <hr>
 
-    <div class="qm-queue-list__body">
-      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending">
+    <div class="qm-queue-list__body" role="rowgroup">
+      <div *ngFor="let q of queueCollection | filterQueue : filterText:sortedBy:sortAscending;let i = index">
 
-        <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)">
+        <div class="qm-flex-grid qm-queue-list-body-row" (click)="selectQueue(q)" role="row">
           <div class="qm-col-45 qm-queue-list-body-row-label" [innerHtml]="q.name | qmhighlight: filterText"></div>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferFirst" (click)="OnTransferButtonClick('FIRST')">
-            <i class="icon-queue-first" ></i>
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferFirst" id="{{i}}-1-transferQueue"
+          (keydown.arrowdown)="onDownButttonPressed(i,1)"
+          (keydown.arrowup)="onUpButttonPressed(i,1)"
+          (keydown.arrowright) = "onRightButttonPressed(i,1)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,1)"
+          [attr.tabindex]="checkFirstElement(i)" role="cell"
+          attr.aria-label="{{'label.transfer_first'|translate}}"
+            (click)="OnTransferButtonClick('FIRST')">
+            <i class="icon-queue-first"></i>
           </button>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferLast" (click)="OnTransferButtonClick('LAST')">
-            <i class="icon-queue-last" ></i>
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferLast" (click)="OnTransferButtonClick('LAST')" 
+          (keydown.arrowdown)="onDownButttonPressed(i,2)"
+          (keydown.arrowup)="onUpButttonPressed(i,2)"
+          (keydown.arrowright) = "onRightButttonPressed(i,2)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,2)"
+          attr.aria-label="{{'label.transfer_last'|translate}}"
+          [attr.tabindex]="checkFirstElement(i)" role="cell"
+          id="{{i}}-2-transferQueue">
+            <i class="icon-queue-last"></i>
 
           </button>
-          <button class="qm-col-15 qm-transparent-btn" *ngIf="btnTransferSort" (click)="OnTransferButtonClick('SORTED')">
-            <i class="icon-clock" ></i>
+          <button class="qm-col-15 qm-transparent-btn qm-transfer-btn" *ngIf="btnTransferSort" id="{{i}}-3-transferQueue"
+          (keydown.arrowdown)="onDownButttonPressed(i,3)"
+          (keydown.arrowup)="onUpButttonPressed(i,3)"
+          attr.aria-label="{{'label.transfer_sort'|translate}}"
+          [attr.tabindex]="checkFirstElement(i)"
+          (keydown.arrowright) = "onRightButttonPressed(i,3)"
+          (keydown.arrowleft) = "onLeftButttonPressed(i,3)" role="cell"
+            (click)="OnTransferButtonClick('SORTED')">
+            <i class="icon-clock"></i>
           </button>
         </div>
       </div>
@@ -68,4 +105,5 @@
   </div>
   <div class="qm-no-results" *ngIf="(queueCollection | filterQueue : filterText).length===0  && filterText!=''"> {{'queue_not_found'
     |translate}} </div>
+</div>
 </div>

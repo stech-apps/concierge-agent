@@ -1,145 +1,179 @@
 <div class="qm-pannel-container" [ngStyle]="{'height': !editMode  ? 'calc(100% - 80px)' : '100%'}">
-    <div class="qm-pannel-full-inner-container"> 
-  <div class="qm-pannel-inner-container" dir="{{ userDirection$ | async }}"> 
-    
-    <div class="qm-flow-sub-header">
-      <div class="qm-flow-sub-header__right">
-        <div class="qm-checkbox__container">
-          <label for="qm-checkbox" class="qm-checkbox-label">
-          <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip">
-            <div class="qm-checkbox__selector">
-              <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-                <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
-            </div>
-          </label>
-          <button type="button" class="qm-action-btn qm-option__help-btn qm-tooltip-btn"  (click)="showToolTip = !showToolTip">
-            <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
-          </button>
-          
-          <div class="quick-serve-tooltip" *ngIf="showToolTip">
-            <div class="triangle"></div>
-            <div class="quick-serve-tooltip__rec">
-                {{'customer_skip_tooltip'|translate}}
-            </div>
-          </div> 
+  <div class="qm-pannel-full-inner-container">
+    <div class="qm-pannel-inner-container" dir="{{ userDirection$ | async }}">
 
+      <div class="qm-flow-sub-header">
+        <div class="qm-flow-sub-header__right">
+          <div class="qm-checkbox__container" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
+            <label for="qm-checkbox" class="qm-checkbox-label">        
+              <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">      
+                  <input id="qm-skip-step" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip"  
+                  (focus)="skipButtonHover = true" (focusout)="skipButtonHover = false"> 
+                <label for="qm-skip-step" (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+                (mouseup) ="mousePressed = false" class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</label>
+                <div 
+                [ngClass]="{ 'checkbox-backdrop-unchecked': !isFlowSkip}"
+                 class="qm-check-box-background"></div>
+              </div>
+            </label>
+            <button type="button" class="qm-action-btn qm-option__help-btn qm-tooltip-btn"
+              (click)="showToolTip = !showToolTip">
+              <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
+              <span class="sr-only">{{ 'button.info' | translate }}</span>
+            </button>
+
+            <div class="quick-serve-tooltip" *ngIf="showToolTip">
+              <div class="triangle"></div>
+              <div class="quick-serve-tooltip__rec" aria-live="assertive" role="alert">
+                {{'customer_skip_tooltip'|translate}}
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-  <div class="qm-crossline-header-container" >
-    <div class="qm-crossline-header"></div>
-    <h2 class="qm-crossline-header-text">{{ 'addCustomer_heading' | translate }}</h2>
-    <br>
-  </div>
-  <div>
-    
-      <div class="qm-input-box qm-input-box__extend">
-        <form class="qm-input-box__container" [formGroup]="customerCreateForm" (keyup.enter)="accept()" autocomplete="off" >
-          <div class="qm-input-box__input-section">
-            <!-- First Name and Last Name section -->
-            <div class="qm-input-box__row">
-              <div class="qm-input-box__col-50">
-                <div class="qm-input-box__left-side">
-                    <div>
-                      <label for="firstName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.first_name'|translate }}</label>
-                    </div>
-                     <br>
-                      <input #firstName class="qm-input-box__input" type="text" name='firstName' formControlName = "firstName"
-                      maxlength="50"  [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}"> 
-                     
-                      <div *ngIf="firstName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('firstName')"></i>
-                      </div>      
-                </div>
-              </div>
-              <div class="qm-input-box__col-50">
-                  <div>
-                    <label for="lastName" class="qm-input-box__inputbox-name qm-input-box__label-first-label" >{{'label.last_name'|translate }}</label>           
-                  </div> 
-                    <input class="qm-input-box__input" type="text" name='lastName' formControlName = "lastName"  #lastName  maxlength="50" [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
-                    <div *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-                        <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('lastName')"></i>
-                    </div> 
-              </div>
-            </div>
-
-            <!-- Email Section -->
-            <div class="qm-input-box__row">
-                <label for="email" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'email'|translate }}</label>
-                <input class="qm-input-box__input" type="text" name='email' formControlName = "email" #email  >
-                <div *ngIf="email.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-                <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInputFeild('email')"></i>
-                </div> 
-                <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid"> {{'error.form.email.invalid'|translate}}</div>
-            </div>
-
-          <!-- Phone Section  -->
-            <div class="qm-input-box__row">
+      <div class="qm-crossline-header-container">
+        <div class="qm-crossline-header"></div>
+        <h1 class="qm-crossline-header-text">{{ 'addCustomer_heading' | translate }}</h1>
+        <br>
+      </div>
+      <div>
+        <div class="qm-input-box qm-input-box__extend">
+          <form class="qm-input-box__container" [formGroup]="customerCreateForm"
+            autocomplete="off">
+            <div class="qm-input-box__input-section">
+              <!-- First Name and Last Name section -->
+              <div class="qm-input-box__row">
                 <div class="qm-input-box__col-50">
-                    <div class="qm-input-box__left-side">
-                      <label for="phone" class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.phone'|translate }}</label>
-                      <input  class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' formControlName = "phone" (keyup)="restrictNumbers($event)" (keypress)="restrictNumbers($event)" #phone>
-                      <span *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-                          <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"  (click)="clearInputFeild('phone')"></i>
-                      </span> 
-                      <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid"> {{'error.form.phone.invalid'|translate}}</div>
+                  <div class="qm-input-box__left-side">
+                    <div>
+                      <label for="firstName"
+                        class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.first_name'|translate }}</label>
                     </div>
+                    <br>
+                    <div class="qm-input-group">
+                      <input #firstName id="firstName" class="qm-input-box__input" type="text" name='firstName'
+                        formControlName="firstName" maxlength="50"
+                        [ngClass]="{'invalid': (invalidFirstName && firstName.value=='')}">
+
+                      <button *ngIf="firstName.value.trim()" class="qm-action-btn qm-action-btn--only-icon" (click)="clearInputFeild('firstName')">
+                        <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+                        <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+                <div class="qm-input-box__col-50">
+                  <div>
+                    <label for="lastName"
+                      class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{'label.last_name'|translate }}</label>
+                  </div>
+                  <div class="qm-input-group">
+                    <input id="lastName" class="qm-input-box__input" type="text" name='lastName'
+                      formControlName="lastName" #lastName maxlength="50"
+                      [ngClass]="{'invalid': (invalidLastName && lastName.value=='')}">
+                    <button *ngIf="lastName.value.trim()" class="qm-action-btn qm-action-btn--only-icon"  (click)="clearInputFeild('lastName')">
+                      <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+                      <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Email Section -->
+              <div class="qm-input-box__row">
+                <label for="email" id="email-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('email').invalid }">{{'label.email'|translate }}</label>
+                <div class="qm-input-group">
+                  <input class="qm-input-box__input" type="text" id="email" name='email' formControlName="email" #email [attr.aria-invalid]="customerCreateForm.get('email').invalid" attr.aria-describedby="email-error">
+                  <button *ngIf="email.value.trim()" class="qm-action-btn qm-action-btn--only-icon"  (click)="clearInputFeild('email')">
+                    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon">
+                    </i>
+                    <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                  </button>
+                </div>
+                <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid" id="email-error" role="alert"> {{ 'error.form.email.invalid' | translate }}</div>
+              </div>
+
+              <!-- Phone Section  -->
+              <div class="qm-input-box__row">
+                <div class="qm-input-box__col-50">
+                  <div class="qm-input-box__left-side">
+                    <label for="phone" id="phone-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('phone').invalid }">{{'label.phone'|translate }}</label>
+                    <div class="qm-input-group">
+                      <input id="phone" class="qm-input-box__input" type="tel" inputmode="numeric" name='phone' attr.aria-describedby="phone-error"
+                        formControlName="phone"
+                        #phone [attr.aria-invalid]="customerCreateForm.get('phone').invalid">
+                      <button *ngIf="phone.value.trim()" class="qm-action-btn qm-action-btn--only-icon" (click)="clearInputFeild('phone')">
+                        <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+                        <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                      </button>
+                    </div>
+                    <div class="qm-form-error-message" *ngIf="customerCreateForm.get('phone').invalid" id="phone-error" role="alert"> {{'error.form.phone.invalid.des'|translate}}</div>
+                  </div>
+                </div>
+              </div>
 
               <!-- DOB Section -->
               <div class="qm-input-box__row">
-                  <div class="qm-input-box__left-side" formGroupName="dateOfBirth">
-                    <label for="date_of_birth" class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label" >{{'date_of_birth'|translate }}</label>
-                    <div class="qm-input-box__dob-container">
-                      <!-- Month -->
-                      <div>
-                        <div class="qm-dob-container"> 
-                          <label for="month" class="qm-input-box__inputbox-name qm-input-box__month-element-container">{{'month'|translate }}</label>
-                          <label for="day" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container">{{'day'|translate }}</label>
-                          <label for="year" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container">{{'year'|translate }}</label>
-                        </div>
-                        <div class="qm-dob-container" [ngClass]="{'qm-dob-error':customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')}">    
-                          <ng-select #month       [items]="months"
-                                                  [selectOnTab]="true"
-                                                  [clearable]="false"
-                                                  notFoundText="{{ 'label.no.items.found' | translate }}"
-                                                  bindValue="value"
-                                                  placeholder="{{ 'field.createCustomerForm.month' | translate }}"
-                                                  formControlName="month"
-                                                  dropdownPosition="bottom"
-                                                  id="birthday_select"
-                                                  (click)="ScrollToBottom()"
-                                                  class="qm-birthday-select qm-input-box__month-element-container">
-                          </ng-select>
-                          <input class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container" #day formControlName="day" #day type="text" maxlength="2" placeholder="DD" name="day" > 
-                          <input class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container" #year formControlName="year"  type="text" maxlength="4" placeholder="YYYY" name="year"  />
-                        </div>
+                <div class="qm-input-box__left-side" formGroupName="dateOfBirth">
+                  <label for="date_of_birth"
+                    class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</label>
+                  <div class="qm-input-box__dob-container">
+                    <!-- Month -->
+                    <div>
+                      <div id="date_of_birth" class="qm-dob-container">
+                          <label for="birthday_select" id="month-label" class="qm-input-box__inputbox-name qm-input-box__month-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth')?.get('month')?.hasError('incorrect') }">{{'month'|translate }}</label>
+                          <label for="day" id="day-label" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay }">{{'day'|translate }}</label>
+                          <label for="year" id="year-label" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max') }">{{'year'|translate }}</label>
                       </div>
-                      <button *ngIf="day.value || year.value || customerCreateForm.value.dateOfBirth.month"  (click)="clearDob()" class="qm-transparent-btn qm-input-box__dob-element-container qm-clear-dob" >
-                          <i class="qm-action-btn__icon icon-close qm-close__icon qm-dob-close-icon qm-dob-close__icon"></i>
-                        </button>
-                      <br>
+                      <div class="qm-dob-container">
+                        <ng-select #month [items]="months" [selectOnTab]="true" [clearable]="false"
+                          notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value"
+                          placeholder="{{ 'field.createCustomerForm.month' | translate }}" formControlName="month"
+                          tabindex="0"
+                          dropdownPosition="bottom" id="birthday_select" (click)="ScrollToBottom()"
+                          [attr.aria-expanded]="isExpanded" (open)="DropDownStatus(true)"
+                          (close)="DropDownStatus(false)"
+                          attr.aria-describedby="month-error"
+                          [attr.aria-invalid]="customerCreateForm.get('dateOfBirth')?.get('month')?.hasError('incorrect')"
+                          class="qm-birthday-select qm-input-box__month-element-container">
+                        </ng-select>
+                        <input
+                          class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container"
+                          #day formControlName="day" #day type="text" maxlength="2" name="day" attr.aria-describedby="day-error"
+                          id="day" [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay">
+                        <input
+                          class="qm-input-box__input qm-input-box__year-element-container qm-input-box__dob-element-container"
+                          #year formControlName="year" type="text" maxlength="4" name="year" attr.aria-describedby="year-error"
+                          id="year" [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max')"/>
+                      </div>
                     </div>
-                  
+                    <button *ngIf="day.value || year.value || customerCreateForm.value.dateOfBirth.month"
+                      (click)="clearDob()" class="qm-transparent-btn qm-input-box__dob-element-container qm-clear-dob">
+                      <i class="qm-action-btn__icon icon-close qm-close__icon qm-dob-close-icon qm-dob-close__icon"></i>
+                      <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                    </button>
+                    <br>
                   </div>
-            </div>
-            <div>
-            
-                <div class="qm-dob__error-message qm-form-error-message" *ngIf="customerCreateForm.get('dateOfBirth')?.errors?.invalidDay || customerCreateForm.get('dateOfBirth').get('year')?.hasError('min')|| customerCreateForm.get('dateOfBirth').get('day')?.hasError('min')|| customerCreateForm.get('dateOfBirth').hasError('incompleteDob')">{{ 'error.form.dob.incompleteDob' | translate }}</div>
-              </div>
-         
-    
 
-          </div>
-        </form>
+                </div>
+                <div>
+
+                    <div class="qm-dob__error-message qm-form-error-message" id="year-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('year')?.hasError('minlength') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('pattern')">{{ 'error.form.dob.invalidYear' | translate }}</div>
+                    <div class="qm-dob__error-message qm-form-error-message" id="year-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('year')?.hasError('max')">{{ 'error.form.dob.incompleteYear' | translate }}</div>
+                    <div class="qm-dob__error-message qm-form-error-message" id="day-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth')?.get('day')?.hasError('max') && customerCreateForm.get('dateOfBirth').get('month').value && customerCreateForm.get('dateOfBirth').get('year').value">{{ 'error.form.dob.incompleteDay' | translate : dateError }}</div>
+                    <div class="qm-dob__error-message qm-form-error-message" id="day-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || (customerCreateForm.get('dateOfBirth')?.get('day')?.hasError('max') && customerCreateForm.get('dateOfBirth')?.get('day').value && (!(customerCreateForm.get('dateOfBirth').get('month').value) || !(customerCreateForm.get('dateOfBirth').get('year').value)))">{{ 'error.form.dob.invalidDay' | translate }}</div>
+                    <div class="qm-dob__error-message qm-form-error-message" id="month-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('month').hasError('incorrect')">{{ 'error.form.dob.incompleteMonth' | translate }}</div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-  </div>
-  </div>
+    </div>
   </div>
 </div>
 <div class="qm-flow-done-bar">
-    <div class="qm-flow-done-bar__done-button" (click)="doneButtonClick()" >   {{'label.banner_done' | translate }}</div>
+  <button class="qm-flow-done-bar__done-button" (click)="doneButtonClick()"> {{'label.banner_done' | translate }}</button>
 </div>

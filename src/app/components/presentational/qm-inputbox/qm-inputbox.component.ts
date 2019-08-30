@@ -31,7 +31,11 @@ export class QmInputboxComponent implements OnInit {
   controls: any;
   currentCustomer:ICustomer
   editMode:boolean;
-
+  isExpanded = false;
+  dateError = {
+    days: '',
+    month: ''
+  };
   
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
@@ -137,15 +141,12 @@ export class QmInputboxComponent implements OnInit {
 
     
     // Validators
-    const phoneValidators = this.util.phoneNoValidator();    
+    const today = new Date();
+    const phoneValidators = this.util.phoneNoValidator();
     const emailValidators = this.util.emailValidator();
-    let dayValidators = [Validators.maxLength(2), Validators.max(31)];
-    let yearValidators = [Validators.maxLength(4), Validators.min(1)];
-    let monthValidators = [];
-    dayValidators = [...dayValidators];
-    yearValidators = [...yearValidators];
-    monthValidators = [...monthValidators];
-
+    const dayValidators = [Validators.maxLength(2), Validators.max(31), this.util.numberValidator()];
+    const yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), this.util.numberValidator()];
+    const monthValidators = [];
     //subscribe customer List 
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);
@@ -154,8 +155,8 @@ export class QmInputboxComponent implements OnInit {
        
     // Customer creation form
     this.customerCreateForm = new FormGroup({
-      firstName: new FormControl('',Validators.required,whiteSpaceValidator),
-      lastName:new FormControl('',Validators.required,whiteSpaceValidator),
+      firstName: new FormControl('',Validators.required, whiteSpaceValidator),
+      lastName:new FormControl('',Validators.required, whiteSpaceValidator),
       phone:new FormControl(this.countrycode, phoneValidators),
       email:new FormControl('',emailValidators),
       dateOfBirth: this.fb.group(
@@ -289,36 +290,36 @@ export class QmInputboxComponent implements OnInit {
     this.subscriptions.unsubscribe();
   }
   
+  Donothing(event) {
+    event.stopPropagation();
+  }
   // Date of Birth validation
   isValidDOBEntered(control: FormGroup) {
-    let errors = null;
     if (control.value) {
-      // invalid date check for leap year
-      if (control.value.year && control.value.month && control.value.day) {
-        const d = new Date(
-          control.value.year,
-          parseInt(control.value.month, 10) - 1,
-          control.value.day
-        );
-        if (d && d.getMonth() + 1 !== parseInt(control.value.month, 10)) {
-          control.setErrors({
-            invalidDay: true
-          });
-          errors = { ...errors, invalidDay: true };
+      if (control.value.year && control.value.day && !control.value.month) {
+        control.controls['month'].setErrors({'incorrect': true});
+      } else {
+        control.controls['month'].setErrors(null);
+      }
+      if (control.value.year && control.value.month) {
+        const lastDay = new Date(control.value.year, control.value.month, 0).getDate();
+        const tempDayValidators = [Validators.maxLength(2), Validators.max(lastDay), this.util.numberValidator()];
+        control.controls['day'].setValidators(tempDayValidators);
+        if (control.value.day && parseInt(control.value.day, 10) > lastDay) {
+          control.controls['day'].setErrors({'max': true});
+        } else if (control.value.day && parseInt(control.value.day, 10) <= lastDay) {
+          control.controls['day'].setErrors(null);
         }
-      } else if (
-        control.value.year ||
-        control.value.month ||
-        control.value.day
-      ) {
-        control.setErrors({
-          incompleteDay: true
+
+        const selectedMonth = this.months.find(function (item) {
+          return item.value === control.value.month;
         });
-        errors = { ...errors, incompleteDob: true };
+        this.dateError = {
+          days: lastDay.toString(),
+          month: selectedMonth.label
+        };
       }
     }
-
-    return errors;
   }
 // restric input feild of birth date and year to numbers
   restrictNumbers($event) {
@@ -427,6 +428,9 @@ export class QmInputboxComponent implements OnInit {
     searchBox.scrollIntoView();
     
   }
+  DropDownStatus(value: boolean) {
+    this.isExpanded = value;
+  }
   
   clearDob(){
     this.customerCreateForm.patchValue({
@@ -436,10 +440,12 @@ export class QmInputboxComponent implements OnInit {
         year: ''
       }
     })
-    this.customerCreateForm.markAsDirty();
+    if(this.currentCustomer) {
+      this.customerCreateForm.get("dateOfBirth").markAsDirty();
+    } else {
+      this.customerCreateForm.get("dateOfBirth").markAsPristine();
+    }
+
   }
-
-
-  
 }
 

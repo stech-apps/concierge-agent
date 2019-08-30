@@ -25,6 +25,9 @@ export class QmTimeFilterItemsComponent implements OnInit {
   @Input() 
   public selectedTime: moment.Moment = moment();
 
+  @Input() 
+  public ComponentId: string = '';
+
   @Input()
   public skipFirst: boolean = false;
 
@@ -66,6 +69,8 @@ export class QmTimeFilterItemsComponent implements OnInit {
   }
 
   scrollToClosest(timeLabel: string) {
+   
+    
     let nextClosestTime = this.getClosestTime(timeLabel);
     const index = this.getPositionOfTimeInList(nextClosestTime);
     const timeSlotControls = this.elRef.nativeElement.querySelectorAll(
@@ -73,11 +78,15 @@ export class QmTimeFilterItemsComponent implements OnInit {
     );
 
     if (index !== -1) {
-      const itemToScrollTo = timeSlotControls[index];
-
+      const itemToScrollTo = timeSlotControls[index];      
       if (itemToScrollTo !== undefined) {
         itemToScrollTo.scrollIntoView(true);
       }
+      setTimeout(() => {
+        if(itemToScrollTo) {
+          itemToScrollTo.focus();
+        }
+      }, 100);
     }
   }
 
@@ -137,4 +146,38 @@ export class QmTimeFilterItemsComponent implements OnInit {
 
     return timeToScrollTo;
   }
+  // arrow key functions
+  KeyarrowUp(value : number, compId: string) { 
+    if(document.getElementById(`${(value - 1)}-${compId}-slot`) ){
+      document.getElementById(`${(value - 1)}-${compId}-slot`).focus();
+    }
+  }
+  KeyarrowDown(value : number, compId: string) {
+    if(document.getElementById(`${(value + 1)}-${compId}-slot`) ){
+      document.getElementById(`${(value + 1)}-${compId}-slot`).focus();
+    }
+  }
+  Tabbed(compId: string) {
+    if (compId == 'startTime') {
+      if(document.getElementById(`endTime-qm-time-sidebar`) ){
+         document.getElementById(`endTime-qm-time-sidebar`).focus();
+      }
+    }
+  }
+  focusFirstElement(ComponentId: string) {
+    var focusable = document.getElementById(`${ComponentId}-container`).querySelectorAll('button');
+    setTimeout(() => {
+      if (focusable.length > 0) {
+        focusable[0].setAttribute("name",`${ComponentId}-firstTimeSlotValue`);
+        document.getElementsByName(`${ComponentId}-firstTimeSlotValue`)[0].focus();
+      }          
+    }, 3);
+  }
+  onKeydown(event, ComponentId) {
+    if(event.shiftKey && event.keyCode == 9) {
+        document.getElementById(`${ComponentId}-qm-time-sidebar`).focus();
+        event.stopPropagation();
+        event.preventDefault();        
+  }
+}
 }

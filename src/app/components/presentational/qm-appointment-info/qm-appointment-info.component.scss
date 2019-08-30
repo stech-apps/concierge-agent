@@ -20,6 +20,11 @@
   max-height: 432px;
   padding: $standard-padding;
 
+  @at-root [dir="rtl"] {
+    right: 0;
+    left: auto;
+  }
+
 
   &__datetimecontainer {
     display: flex;

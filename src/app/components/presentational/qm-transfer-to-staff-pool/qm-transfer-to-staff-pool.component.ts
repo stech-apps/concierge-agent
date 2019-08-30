@@ -189,6 +189,19 @@ handleInput($event) {
 clearSearchText(){
   this.filterText="";
 }
+
+// Arrow key functions
+onDownButttonPressed (i: number) {
+  if (document.getElementById(`${i+1}-staff-member`)) {
+    document.getElementById(`${i+1}-staff-member`).focus();
+  }
+}
+onUpButttonPressed (i: number) {
+  if (document.getElementById(`${i-1}-staff-member`)) {
+    document.getElementById(`${i-1}-staff-member`).focus();
+  }
+}
+
   
 }
 

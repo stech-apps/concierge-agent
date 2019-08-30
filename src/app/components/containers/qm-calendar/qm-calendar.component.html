@@ -1,33 +1,46 @@
 <div class="qm-calendar" dir="{{ userDirection$ | async }}">
   <div class="qm-calendar-navs">
-      <button (click)="prevMonth()">
-        <i class="icon-caret-left"></i>
-      </button>
-      <div>
-          <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>  {{ currentDate.locale(this.locale).format('YYYY') }}</span>
-      </div> 
-        
-      <button (click)="nextMonth()"><i class="icon-caret-right"></i></button>
+    <button (click)="prevMonth()">
+      <i class="icon-caret-left"></i>
+      <span class="sr-only">{{ 'button.prvMonth' | translate }}</span>
+    </button>
+    <div>
+      <span class="p4">{{  currentDate.locale(this.locale).format('MMMM').toLowerCase()  }}</span><span>
+        {{ currentDate.locale(this.locale).format('YYYY') }}</span>
+        <span class="sr-only" aria-live="assertive" role="alert"> {{WCAGMonth}}</span>
+    </div>
+    
+    <button (click)="nextMonth()" id="qm-next-month"><i class="icon-caret-right"></i>
+      <span class="sr-only">{{ 'button.nextMonth' | translate }}</span>
+    </button>
 
   </div>
-  <div class="qm-calendar-month-grid">
-    <div class="qm-calendar-day-names">
-      <div *ngFor="let name of dayNames" class="qm-day-name p9">
+  <div class="qm-calendar-month-grid" role="table">
+    <div class="qm-calendar-day-names" role="rowgroup">
+      <div role="row" style="display: flex;width:100%">
+      <div role="columnheader" scope="col" *ngFor="let name of dayNames" class="qm-day-name p9">
         {{ name | translate }}
       </div>
     </div>
-    <div class="qm-calendar-weeks">
-      <div *ngFor="let week of weeks; last as isLast" class="qm-calendar-week" [ngClass]="{'qm-calendar-week--last': isLast}">
+    </div>
+    <div class="qm-calendar-weeks" id="qm-calendar" tabindex="0" (focus)="focusFirstDate()"
+      role="rowgroup">
+      <div *ngFor="let week of weeks; last as isLast;" class="qm-calendar-week"
+        [ngClass]="{'qm-calendar-week--last': isLast}" role="row">
         <ng-container *ngFor="let day of week">
-          <div class="qm-week-date disabled"  *ngIf="!isSelectedMonth(day.mDate)">
+          <div class="qm-week-date disabled" role="cell" *ngIf="!isSelectedMonth(day.mDate)">
             <div class="qm-date-text"></div>
           </div>
-          <button class="qm-week-date enabled qm-transparent-btn"
-               *ngIf="isSelectedMonth(day.mDate)"
-               (click)="selectDate(day, true)"
-               [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}"
-               [attr.tabindex]="day.disabled ? '-1' : null">
-            <div class="qm-date-text" tabindex="-1">{{ day.mDate.date() }}</div>
+          <button role="cell" class="qm-week-date enabled qm-transparent-btn qm-date" 
+            (keydown)="onKeydown($event,day.mDate.month(),day.mDate.date(),week[0].mDate.date(),week[week.length-1].mDate.date())" *ngIf="isSelectedMonth(day.mDate)" (click)="selectDate(day, true)"
+            (keyup.enter)="selectDate(day, true)" (keyup.spacebar)="selectDate(day, true)"
+            (keyup.arrowup)="KeyarrowUp(day.mDate.year(),day.mDate.month(),day.mDate.date())" (keyup.arrowleft)="KeyarrowLeft(day.mDate.month(),day.mDate.date())"
+            (keyup.arrowdown)="KeyarrowDown(day.mDate.year(),day.mDate.month(),day.mDate.date())" (keyup.arrowright)="KeyarrowRight(day.mDate.month(),day.mDate.date())"
+            (keyup.tab)="TabPressed()" [ngClass]="{ today: day.today, selected: day.selected, disabled: day.disabled}"
+            [disabled]="day.disabled" [attr.tabindex]="day.disabled ? null : '-1'"
+            [attr.id]="day.disabled ? day.mDate.month()+ '-' + day.mDate.date() + '-disabled' : day.mDate.month() + '-' + day.mDate.date() + '-enabled'"
+            [attr.aria-label]="getDateName(day)">
+            <span class="qm-date-text">{{ day.mDate.date() }}</span>
           </button>
         </ng-container>
       </div>

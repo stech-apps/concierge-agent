@@ -6,8 +6,9 @@ $pale-blue: #334366;
 $qmatic-bordeaux: rgb(169, 2, 58);
 $danger-red: rgb(228, 0, 70);
 $primary-pink:#E50046;
+$error-color: #b00020;
 
-$pale-aquamarine: #03996C;
+$pale-aquamarine: #017C65;
 $light-gray1: #f4f4f4;
 $light-gray2: #dedede;
 $light-gray3: #f9f9f9;
@@ -102,9 +103,9 @@ $checkbox-color: $pale-aquamarine;
 $list-item-selected-color: $light-aquamarine;
 $list-item-hover-color: $dark-transparent04;
 // Toasts
-$toast-success-background-color: $secondary-color;
-$toast-error-background-color: $primary-pink;
-$toast-info-background-color: $secondary-color;
+$toast-success-background-color: #017c65;
+$toast-error-background-color: #b00020;
+$toast-info-background-color: #017c65;
 $toast-text-color: $white;
 // Print
 $print-border-color: $d-gray;
@@ -120,16 +121,11 @@ $wating-list-background: $late-midnight-blue;
 
 
 $queue-indicator-red: $danger-red;
-$queue-indicator-yellow: rgb(255, 228, 91);
+$queue-indicator-yellow: #DA7715;
 //modal
 $modal-text-color: $black;
 $modal-secondary-button-background: #8e8e8e;
 
-$queue-indicator-red: $danger-red;
-$queue-indicator-yellow: rgb(255, 228, 91);
-
-$queue-indicator-red: $danger-red;
-$queue-indicator-yellow: rgb(255, 228, 91);
 $app-theme: var(--app-theme);
 $header-inactive: $dark-gray;
 $flow-background : $light-gray10;
@@ -141,14 +137,14 @@ $calendar-background: $white;
 $calendar-today-background: #e3f2ff;
 
 // tool tip colors
-$tooltip-color: $dark-transparent42;
+$tooltip-color: $dark-transparent62;
 
 $search-bar-background: $white;
 $seach-bar-text-color: $black;
 
 //reskin 
 $hover-background-main: $dark-transparent04;
-$icon-color-default:  $dark-transparent42;
+$icon-color-default:  $dark-transparent62;
 $background-default: $light-gray10;
 $timeslot-background: #f5f5f5;
 

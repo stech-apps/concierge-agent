@@ -5,8 +5,8 @@ import { NativeApiService } from './native-api.service';
 import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable, NgZone } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, interval, of, Subject, empty } from 'rxjs';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { Observable, throwError, interval, of, Subject, empty, Subscription } from 'rxjs';
 import { tap, catchError, flatMap, retry, map, switchMap, filter } from 'rxjs/operators';
 import { from } from 'rxjs/internal/observable/from';
 import { retryWhen } from 'rxjs/internal/operators/retryWhen';
@@ -20,6 +20,9 @@ import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 import { delayWhen } from 'rxjs/internal/operators/delayWhen';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SPService } from 'src/util/services/rest/sp.service';
+import { JWTTokenSelectors } from 'src/store/services/jwtToken/jwtToken.selectors';
+import { SystemInfoSelectors } from 'src/store/services/system-info/system-info.selectors';
+import { calendarEndpoint } from 'src/store/services/data.service';
 
 @Injectable()
 export class QmGlobalHttpInterceptor implements HttpInterceptor {
@@ -33,6 +36,8 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
     private lastRequestAction = 'NONE';
     // Retry all get requests this many times before starting ping.
     private numberOfTries = 4;
+    private jwtToken = undefined;
+    private subscriptions: Subscription = new Subscription();
 
     public recoverApp = new Subject<boolean>();
 
@@ -47,13 +52,33 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
         private serviceState: ServiceStateService, private translateService: TranslateService,
         private nativeApiService: NativeApiService, private userStatusSelector: UserStatusSelectors,
         private router: Router, private userStatusDispatchers: UserStatusDispatchers,
-        private spService: SPService, private toastService: ToastService) {
+        private spService: SPService, private toastService: ToastService, private jwtTokenSelectors: JWTTokenSelectors,
+        private systemInfoSelectors: SystemInfoSelectors) {
 
         window["globalNotifyDispatchers"] = this.globalNotifyDispatchers;
         window["qmGlobalHttpInterceptor"] = this;
     }
 
+    checkJWTToken() {
+        const JWTTokenSubscriptions = this.jwtTokenSelectors.jwtToken$.subscribe(token => {
+            this.jwtToken = token;
+        });
+        this.subscriptions.add(JWTTokenSubscriptions);
+    }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let reqRef = req;
+        if (req.url.includes(calendarEndpoint) && this.jwtToken !== undefined && this.jwtToken !== '') {
+            reqRef = req.clone({
+                headers: new HttpHeaders({
+                  'Authorization': 'Bearer ' + this.jwtToken
+                })
+              });
+        }
+        if (this.jwtToken === undefined) {
+            this.jwtToken = '';
+            this.checkJWTToken();
+        }
         if ((this.isABlockedUrl(req.url) && req.method != 'GET') && !this.isAResourceFile(req)) {
 
             if (!this.serviceState.isActive()) {
@@ -77,7 +102,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                 this.serviceState.setActive(true);
             }
 
-            return next.handle(req).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })), tap((response: any) => {
+            return next.handle(reqRef).pipe(timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })), tap((response: any) => {
                 if (response instanceof HttpResponse) {
                     if ((this.isABlockedUrl(req.url) && req.method != 'GET') && !this.isAResourceFile(req)) {
                         //networkMessageController.hideNetworkMessage();
@@ -135,7 +160,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url) && !this.isSkipGetUrls(req.url)) {
                 return this.zone.run(() => {
 
-                    return next.handle(req).pipe(
+                    return next.handle(reqRef).pipe(
                         tap((res) => {
                             this.isPingSuccess = false;
                         }),
@@ -200,7 +225,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
             }
             else {
-                return next.handle(req);
+                return next.handle(reqRef);
             }
         }
     }

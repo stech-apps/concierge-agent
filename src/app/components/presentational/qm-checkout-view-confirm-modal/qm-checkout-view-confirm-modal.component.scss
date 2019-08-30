@@ -164,4 +164,18 @@
 
 .qm-popup-input{
     height: 44px;
+
+    input.ng-invalid.ng-touched {
+        border:solid $error-color 1px;
+        color: $error-color;
+    }
+}
+
+.qm-invalid-field__label{
+    color: $error-color;
+}
+
+.qm-invalid-input{
+    border:solid $error-color 1px;
+    color: $error-color;
 }

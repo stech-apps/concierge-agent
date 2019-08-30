@@ -26,7 +26,7 @@
   }
 
   &:input {
-    display: none;
+    // display: none;
   }
 
   &:checked {
@@ -68,4 +68,126 @@
         margin-bottom: 5px;
     }
   }
+}
+
+.qm-checkbox__border{
+    border: 1px solid rgba(0,0,0,0.62);
+    border-radius: 7px;
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    margin-left: 4px;
+    margin-top: -3.5px;
+    @at-root [dir="rtl"] & {
+      margin-right: 4px;
+    }
+}
+
+
+.styled-checkbox {
+ 
+  opacity: 0; // hide it
+  border: 1px solid black;
+  position: absolute;
+  left: 12px;
+  & + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+  }
+  // Box.
+  & + label:before {
+    border: 3px solid rgba(0, 0, 0, 0.54);
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-left: 10px;  
+  }
+  
+
+  // Box hover
+  &:hover + label:before {
+    
+  }
+
+  &:checked + &:hover + label:before {
+    background: #017c65;
+    border:none;
+    box-shadow: 0 0 0 3px rgba(1,124,101,0.12)
+  }
+  
+  // Box focus
+  &:focus + label:before {
+    // box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+  }
+
+  // Box checked
+  &:checked + label:before {
+    border:none;
+    background: #017c65;    
+  }
+
+  
+  
+  // Disabled state label.
+  &:disabled + label {
+    color: rgba(0, 0, 0, 0.38);
+    cursor: auto;
+  }
+
+  // Disabled box.
+  &:disabled + label:before {
+    box-shadow: none;
+    border: 3px solid rgba(0, 0, 0, 0.38);
+  }
+
+  // Checkmark. Could be replaced with an image
+  &:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 9px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: 
+      2px 0 0 white,
+      4px 0 0 white,
+      4px -2px 0 white,
+      4px -4px 0 white,
+      4px -6px 0 white,
+      4px -8px 0 white;
+    transform: rotate(45deg);
+    @at-root [dir='rtl'] & {
+      left: auto;
+      right: 15px;
+      -webkit-transform: scaleX(-1) rotate(45deg);
+      transform: scaleX(-1) rotate(45deg);
+    }
+  }
+}
+
+.qm-check-box-background{
+  background: #017c65;
+  border-radius: 44px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  z-index: 0;
+  top:0;
+  opacity: 0.12;
+  left: 8px;
+  @at-root [dir='rtl'] & {
+    left: auto;
+    right: 0px;
+  }
+}
+
+.checkbox-backdrop-unchecked{
+  background:rgba(0, 0, 0, 0.8);
 }

@@ -1,15 +1,21 @@
 .toast-container {
   margin: 0 auto;
-  width: 568px;
+  width: 800px;
   font-size: 18px;
+  @include qm-xs {
+    width: 600px;
+  }
+  @include qm-sm {
+    width: 600px;
+  }
 }
 
 
 
 .toast-close-button {
-  height: rem(28px);
-  width: rem(28px);
-  padding: 0;
+  margin: auto;
+  height: 100%;
+  // padding: 0px 4px;
   display: flex;
   align-items: center;
   color: $toast-text-color;
@@ -18,15 +24,17 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   order: 1;
+  padding: 0;
+  font-size: 16px;
 
   span {
     @include sr-only();
   }
 
-  &:before {
-    content: "\00d7"; /* This will render the 'X' */
-    font-size: rem(28px);
-  }
+  // &:before {
+  //   content: "\00d7"; /* This will render the 'X' */
+  //   font-size: rem(50px);
+  // }
 
   &:hover,
   &:focus,
@@ -43,26 +51,24 @@
 .qm-toast {
   display: flex;
   align-items: center;
-  padding: rem($standard-padding $standard-padding / 2 $standard-padding $standard-padding * 1.5);
+  padding: 10px;
   color: $toast-text-color;
   background: $tertiary-color;
-  max-width: 50vw;
   width: 100%;
   z-index: 3;
   margin: 0 auto;
 
   @include qm-xs {
+    padding: 10px 18px;
     max-width: none;
   }
 
   @include qm-sm {
+    padding: 10px 18px;
     max-width: none;
   };
 
-  @at-root [dir='rtl'] & {
-    padding: rem($standard-padding $standard-padding * 1.5 $standard-padding $standard-padding / 2);
-  }
-
+  
   & + & {
     border-top: 1px solid $light-transparent42;
   }
@@ -92,11 +98,11 @@
   &__message {
    
     flex: 3 1 auto;
-    padding-right: 2rem;
+    // padding-right: 2rem;
         
     @at-root [dir="rtl"]  & {
       text-align: right;
-      padding-left: 2rem;
+      // padding-left: 2rem;
       padding-right: 0;      
     }
   }
@@ -104,14 +110,52 @@
   // Modifiers
   &--success {
     background: $toast-success-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i:before{
+          content: "\e950";
+        }
+      }
+      @at-root [dir="rtl"] {  
+        .qm-toast-icon{
+          i:before{
+            content: "\e944" !important;
+          }
+      }
+    } 
+    }
+    
+      
   }
 
   &--danger {
     background: $toast-error-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i:before{
+          content: "\e913" !important;
+        }
+      }
+      
+    }   
   }
 
   &--info {
     background: $toast-success-background-color;
+    .qm-toast-inner-container{
+      .qm-toast-icon{
+        i:before{
+          content: "\e950";
+        }
+      }
+      @at-root [dir="rtl"] {  
+        .qm-toast-icon{
+          i:before{
+            content: "\e944" !important;
+          }
+      }
+    }
+    }   
   }
 
   // @include qm-xs{
@@ -122,3 +166,11 @@
 }
 
 
+
+#close-toast-btn:focus{
+  border:  solid #007bff 1px;
+}
+
+.toast{
+  display: flex !important;
+}

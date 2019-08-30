@@ -24,6 +24,8 @@ export class QmIdentifyCustomerComponent implements OnInit {
 
   SkipThisTimeFocused:boolean;
   showToolTip:boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
 
   constructor(
     private customerDispatchers:CustomerDispatchers,
@@ -68,7 +70,6 @@ export class QmIdentifyCustomerComponent implements OnInit {
 
   clearCustomer(){
     this.customerDispatchers.resetCurrentCustomer()
-
   }
 
   doneButtonClick() {

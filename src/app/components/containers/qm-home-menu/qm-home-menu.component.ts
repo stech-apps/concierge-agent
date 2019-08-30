@@ -4,7 +4,9 @@ import { UserSelectors } from './../../../../store/services/user/user.selectors'
 import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 import { UserRole } from './../../../../models/UserPermissionsEnum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors, InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors, SystemInfoDataService, FlowOpenDispatchers, FlowOpenSelectors } from 'src/store';
+import { AccountSelectors, ServicePointSelectors, CalendarBranchDispatchers, BranchSelectors,
+  InfoMsgDispatchers, SystemInfoSelectors, CalendarBranchSelectors, LicenseInfoSelectors, SystemInfoDataService,
+  FlowOpenDispatchers, FlowOpenSelectors, JWTTokenDispatchers, JWTTokenSelectors } from 'src/store';
 
 import { ToastService } from '../../../../util/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +15,9 @@ import { Recycle } from '../../../../util/services/recycle.service';
 import { CalendarService } from '../../../../util/services/rest/calendar.service';
 import { NativeApiService } from '../../../../util/services/native-api.service';
 import { ISystemInfo } from '../../../../models/ISystemInfo';
+import { Util } from '../../../../util/util';
+import { ORCHESTRA_VERSIONS } from '../../../../util/version-handller';
+
 
 @Component({
   selector: 'qm-home-menu',
@@ -20,9 +25,6 @@ import { ISystemInfo } from '../../../../models/ISystemInfo';
   styleUrls: ['./qm-home-menu.component.scss']
 })
 export class QmHomeMenuComponent implements OnInit, OnDestroy {
-
-
-
   //user permissions
   isVisitUser = false;
   isAppointmentUser = false;
@@ -37,7 +39,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isCreateAppointment = false;
   userDirection$: Observable<string>;
   isNative:boolean;
-  
+  isJWTTokenLoad = false;
 
   isEditFlowDisabled = false;
   isEditVisitFlowDisabled = false;
@@ -63,7 +65,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     private calendarService: CalendarService, private systemInfoService: SystemInfoDataService, private branchSelector: BranchSelectors,
     private systemInfoSelectors: SystemInfoSelectors, private calendarBranchSelector: CalendarBranchSelectors,
     private nativeApi: NativeApiService, private licenseInfoSelectors: LicenseInfoSelectors,
-    private flowOpenDispatcher:FlowOpenDispatchers, private flowOpenSeletctors:FlowOpenSelectors
+    private flowOpenDispatcher:FlowOpenDispatchers, private flowOpenSeletctors:FlowOpenSelectors,
+    private jwtTokenDispatcher: JWTTokenDispatchers, private util: Util, private jwtTokenSelectors: JWTTokenSelectors
 ) {
 
   }
@@ -95,6 +98,14 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
     this.systemInformation$ = this.systemInfoSelectors.systemInfo$;
     this.licenseIsValid$ = this.licenseInfoSelectors.isValidLicense$;
+
+    const JWTTokenSubscriptions = this.jwtTokenSelectors.jwtToken$.subscribe(token => {
+      if (token !== '') {
+        this.isJWTTokenLoad = true;
+        this.calendarBranchDispatcher.fetchCalendarBranches();
+      }
+    });
+    this.subscriptions.add(JWTTokenSubscriptions);
 
     //passing menu item names to add to the 2d array
     this.wordSplitter('create_appointment_single_line')
@@ -148,6 +159,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
         this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
         this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+
+        if (uttpParams[CREATE_APPOINTMENT] && uttpParams[EDIT_APPOINTMENT]) {
+          this.getJWTToken();
+        }
       }
       else {
         this.isCreateAppointment = false;
@@ -170,6 +185,30 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isVisitUser = true;
       }
     });
+  }
+
+  getJWTToken() {
+    const systmeInfoSubscription = this.systemInfoSelectors.systemInfoProductVersion$
+        .subscribe((version) => {
+          let status;
+          try {
+            status = this.util.compareVersions(version.includes('4.1.') ?
+            ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_1 : ORCHESTRA_VERSIONS.JWT_TOKEN_SUPPORTED_7_0, version);
+          } catch (err) {
+            status = 0;
+          }
+          if (status <= 0) {
+            const systmeInfoHostSubscription = this.systemInfoSelectors.distributedAgentStatus$
+        .subscribe((value) => {
+          if (value) {
+            this.jwtTokenDispatcher.fetchJWTToken();
+          }
+        });
+        this.subscriptions.add(systmeInfoHostSubscription);
+          }
+        });
+        this.subscriptions.add(systmeInfoSubscription);
+
   }
 
   handleMenuItemClick(route) {
@@ -208,11 +247,18 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
             }
           }, error => {
             if (error.status === 401) {
-              this.queueService.stopQueuePoll();
-              this.router.navigate(['home/central-login'], { queryParams : {route} });
-              setTimeout(() => {
-                this.flowOpenDispatcher.flowOpen();
-              }, 1000);
+              if (this.isJWTTokenLoad) {
+                this.jwtTokenDispatcher.fetchJWTToken();
+                setTimeout(() => {
+                  this.handleMenuItemClick(route);
+                }, 2000);
+              } else {
+                this.queueService.stopQueuePoll();
+                this.router.navigate(['home/central-login'], { queryParams : {route} });
+                setTimeout(() => {
+                  this.flowOpenDispatcher.flowOpen();
+                }, 1000);
+              }
             } else {
               this.translateService.get('no_central_access').subscribe(v => {
                 this.toastService.errorToast(v);

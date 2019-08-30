@@ -25,7 +25,9 @@ export enum STORAGE_SUB_KEY {
     ACTIVE_WORKSTATION = "active_workstation",
     ACTIVE_BRANCH = "active_branch",
     SERVICES = "services",
-    COLLAPSE = "collapse"
+    COLLAPSE = "collapse",
+    TOAST_AUTOCLOSE = "toast_autoclose",
+    MODAL_AUTOCLOSE = "modal_autoclose" 
 }
 
 export interface IUserService {

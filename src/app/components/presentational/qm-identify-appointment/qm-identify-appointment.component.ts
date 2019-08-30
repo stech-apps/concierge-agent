@@ -45,6 +45,7 @@ import { QmClearInputDirective } from "src/app/directives/qm-clear-input.directi
 import { DEFAULT_LOCALE } from "src/constants/config";
 import { GlobalNotifySelectors } from "src/store/services/global-notify";
 import { ISystemInfo } from "src/models/ISystemInfo";
+import { utils } from "protractor";
 
 @Component({
   selector: "qm-identify-appointment",
@@ -106,6 +107,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   ];
   qrCodeValue: string;
   qrCodeContent: any;
+  userDirection: string;
 
   selectedBranchFormatted = { selectedBranch: "" }; 
   isMultiBranchEnable = false;
@@ -199,6 +201,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.userDirection$.subscribe((ud)=>{
+      this.userDirection = ud;
+    })
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
   }
 
@@ -333,6 +338,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         }
       }
     );
+    
 
     if (this.useCalendarEndpoint) {
       const customersFromAllDates = this.customerSelectors.customer$.subscribe(
@@ -1672,4 +1678,50 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
       this.expandedAppointment.showInfo = false;
     }
   }
+
+  searchFieldValidation () {
+    const regex = this.util.numberRegEx();
+    const isValid = regex.test(this.searchText);
+    return isValid;
+  }
+   // Arrow key functions
+   onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-appointment`)) {
+      document.getElementById(`${i+1}-appointment`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-appointment`)) {
+      document.getElementById(`${i-1}-appointment`).focus();
+    }
+  }
+  onLeftButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onRightButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-appointment`)) {
+        document.getElementById(`${i}-appointment`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-appointment`)) {
+        document.getElementById(`${i}-appointment`).focus();
+      }
+    }
+  }
+
 }

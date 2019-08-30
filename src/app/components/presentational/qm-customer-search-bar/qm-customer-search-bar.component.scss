@@ -9,34 +9,32 @@
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 ::-ms-input-placeholder { /* Microsoft Edge */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 
 .qm-search__icon{
     @at-root [dir="ltr"] & {
-        right: 1.4em;
+        right: 0.4em;
     }
     @at-root [dir="rtl"] & {
-        left: 1.4em;
+        left: 0.4em;
     }
-    color:  $dark-transparent42;
+    color:  $dark-transparent62;
     z-index: 1000;
     position: relative;
 }
 .qm-close__icon{
-    @at-root [dir="ltr"] & {
-        right: 1.6em;
-    }
-    @at-root [dir="rtl"] & {
-        left: 1.6em;
-    }
+   
     color:  $dark-transparent42;
     z-index: 1000;
     position: relative;
@@ -48,19 +46,25 @@
 
 
 .qm-action-btn--only-icon{
-    width: 0px;
+    background: transparent;
+    border: none;
     margin-top: 10px !important;
+    position: absolute;
+    right: 10px;
+    @at-root [dir="rtl"] & {
+        left: 10px;
+        right: auto;
+    }
 }
 
 .customer-search__parent {
     width:100%;
     margin:auto;
     display: flex;
+    position: relative;
 }
 
 .qm-search__icon{
     margin-top: 0px;
 }
-.qm-close__icon{
-    margin-top: 3px;
-}
+

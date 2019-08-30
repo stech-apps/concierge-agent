@@ -51,3 +51,6 @@
         }
     }
 }
+button[tabindex="-1"]:focus {
+    border:  solid #007bff 1px !important;  
+  }

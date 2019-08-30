@@ -29,6 +29,9 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   userDirection$: Observable<string>;
   showToolTip: boolean;
   skipBranchFocus: boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
+  userDirection: string;
 
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 
@@ -82,14 +85,56 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(calendarBranchSubscription);
 
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.userDirection$.subscribe((ud)=>{
+      this.userDirection = ud;
+    })
     this.inputChanged
       .pipe(distinctUntilChanged(), debounceTime(DEBOUNCE_TIME || 0))
       .subscribe(text => this.filterBranches(text));
   }
+  // Arrow key functions
+  onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-branch-btn`)) {
+      document.getElementById(`${i+1}-branch-btn`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-branch-btn`)) {
+      document.getElementById(`${i-1}-branch-btn`).focus();
+    }
+  }
+  onLeftButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onRightButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-branch-btn`)) {
+        document.getElementById(`${i}-branch-btn`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-branch-btn`)) {
+        document.getElementById(`${i}-branch-btn`).focus();
+      }
+    }
+  }
 
   onToggleBranchSelection(branch: ICalendarBranchViewModel) {
     if (this.currentBranch.id && this.currentBranch.id != branch.id) {
-      this.qmModalService.openForTransKeys('', 'label.msg_confirm_branch_selection', 'label.label.yes', 'no', (v) => {
+      this.qmModalService.openForTransKeys('', 'label.msg_confirm_branch_selection', 'label.yes', 'label.no', (v) => {
         if (v) {
           this.calendarBranchDispatchers.selectCalendarBranch(branch);
           this.timeSlotDispatchers.deselectTimeslot();
@@ -109,8 +154,8 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-
+  ngOnInit() { 
+  
   }
 
   deselectBranch() {
@@ -187,5 +232,19 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
     return completeAddress;
   }
 
+  branchInputEnterPressed() {
+    var BranchElements = document.getElementsByClassName("qm-branch-list__item--text")
+    if(document.getElementById('searchTextDetails')) {
+      document.getElementById('searchTextDetails').focus();
+    } else {
+    if(document.getElementsByClassName("qm-branch-list__item--text").length>0) {
+      document.getElementsByClassName("qm-branch-list__item--text")[0].setAttribute('id',"firstBranchElement");
+      setTimeout(() => {
+        if(document.getElementById('firstBranchElement')) {
+          document.getElementById('firstBranchElement').focus();
+        }
+      }, 100);
+    }}
+  }
  
 }

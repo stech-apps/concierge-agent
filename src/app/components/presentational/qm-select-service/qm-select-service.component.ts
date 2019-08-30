@@ -47,6 +47,9 @@ export class QmSelectServiceComponent implements OnInit {
 
   isInitialServiceLoaded = false;
   showToolTip:boolean;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
+  userDirection: string;
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -166,6 +169,10 @@ export class QmSelectServiceComponent implements OnInit {
       this.subscriptions.add(calendarServiceSubscription);
     }
 
+    this.userDirection$.subscribe((ud)=>{
+      this.userDirection = ud;
+    })
+
     if(this.flowType === FLOW_TYPE.ARRIVE_APPOINTMENT){
       const appointmentSubscription = this.appointmentSelectors.selectedAppointment$.subscribe((appointment) => {
         if(appointment){
@@ -234,6 +241,86 @@ export class QmSelectServiceComponent implements OnInit {
       }
     }
   }
+
+  // Arrow key functions
+  onFreqServiceDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-frq-serv-btn`)) {
+      document.getElementById(`${i+1}-frq-serv-btn`).focus();
+    }
+  }
+  onFreqServiceUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-frq-serv-btn`)) {
+      document.getElementById(`${i-1}-frq-serv-btn`).focus();
+    }
+  }
+  onServiceDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-serv-btn`)) {
+      document.getElementById(`${i+1}-serv-btn`).focus();
+    }
+  }
+  onServiceUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-serv-btn`)) {
+      document.getElementById(`${i-1}-serv-btn`).focus();
+    }
+  }
+  onServiceLeftButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-service-info`)) {
+        document.getElementById(`${i}-service-info`).focus();
+      }
+    }
+  }
+  onServiceRightButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-service-info`)) {
+        document.getElementById(`${i}-service-info`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-serv-btn`)) {
+        document.getElementById(`${i}-serv-btn`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-serv-btn`)) {
+        document.getElementById(`${i}-serv-btn`).focus();
+      }
+    }
+  }
+  onFreqServiceLeftButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-freq-service-info`)) {
+        document.getElementById(`${i}-freq-service-info`).focus();
+      }
+    }
+  }
+  onFreqServiceRightButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-freq-service-info`)) {
+        document.getElementById(`${i}-freq-service-info`).focus();
+      }
+    }
+  }
+  onFreqLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-frq-serv-btn`)) {
+        document.getElementById(`${i}-frq-serv-btn`).focus();
+      }
+    }
+  }
+  onFreqRightButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-frq-serv-btn`)) {
+        document.getElementById(`${i}-frq-serv-btn`).focus();
+      }
+    }
+  }
+
+
 
   onFlowStepActivated() {
     this.searchText = '';
@@ -486,5 +573,21 @@ export class QmSelectServiceComponent implements OnInit {
       this.showToolTip = true;
     }
   
+  }
+
+  ServiceSearchInputEnterPressed() {
+    if(document.getElementById('qm-service-not-found-container')) {
+      document.getElementById('qm-service-not-found-container').focus();
+    } else if(document.getElementById('searchTextDetails')) {
+      document.getElementById('searchTextDetails').focus();
+    } else {
+    if(document.getElementsByClassName("qm-service-list__item--text").length>0) {
+      document.getElementsByClassName("qm-service-list__item--text")[0].setAttribute('id',"firstServiceElement");
+      setTimeout(() => {
+        if(document.getElementById('firstServiceElement')) {
+          document.getElementById('firstServiceElement').focus();
+        }
+      }, 100);
+    }}
   }
 }

@@ -17,29 +17,29 @@ import { PlatformLocation } from '@angular/common'
   selector: 'qm-flow',
   templateUrl: './qm-flow.component.html',
   styleUrls: ['./qm-flow.component.scss'],
-  host: { 'class': 'qm-flow-component-root animated slideInUp faster' }
+  host: { 'class': 'qm-flow-component-root animated slideInUp' }
 })
-export class QmFlowComponent implements OnInit,AfterContentInit {
-  activeHeader:number;
+export class QmFlowComponent implements OnInit, AfterContentInit {
+  activeHeader: number;
   public isFlowSkip = true;
   userDirection$: Observable<string>;
   private subscriptions: Subscription = new Subscription();
-  @Input() FlowName: string;  
+  @Input() FlowName: string;
   @Output() headerClicked = new EventEmitter<QmFlowPanelComponent>();
   @Output() onFlowExitInvoked = new EventEmitter();
-  mltyBrnch:boolean;
+  mltyBrnch: boolean;
 
   constructor(
     private router: Router,
     private qmModalService: QmModalService,
     private recycleService: Recycle,
     private queueService: QueueService,
-    private timeSlotDispatchers:TimeslotDispatchers,
-    private AccountDispatchers:AccountDispatchers,
+    private timeSlotDispatchers: TimeslotDispatchers,
+    private AccountDispatchers: AccountDispatchers,
     private localStorage: LocalStorage,
     private userSelectors: UserSelectors,
-    private servicePointSelectors:ServicePointSelectors,
-    private flowDispatchers:FlowOpenDispatchers,
+    private servicePointSelectors: ServicePointSelectors,
+    private flowDispatchers: FlowOpenDispatchers,
     location: PlatformLocation
   ) {
 
@@ -49,16 +49,16 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
 
     this.activeHeader = 0;
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.BRANCH_SKIP);
-    
+
     const uttSubscription = this.servicePointSelectors.uttParameters$
       .subscribe(uttParameters => {
         if (uttParameters) {
-         this.mltyBrnch = uttParameters.mltyBrnch;
+          this.mltyBrnch = uttParameters.mltyBrnch;
         }
       })
       .unsubscribe();
     this.subscriptions.add(uttSubscription);
-   }
+  }
 
   @HostBinding('class.slideOutDown') exitFlow: boolean = false;
 
@@ -66,15 +66,30 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   flowPanels = new QueryList<QmFlowPanelComponent>();
 
   ngOnInit() {
-    this.userDirection$ = this.userSelectors.userDirection$;   
+    this.userDirection$ = this.userSelectors.userDirection$;
+    setTimeout(() => {
+      if (document.getElementById("panel-title")) {
+        document.getElementById("panel-title").focus();
+      }
+    }, 1500);
+
   }
-  ngAfterContentInit(){
-    if(this.FlowName=='label.create_appointment' && (this.isFlowSkip || this.isFlowSkip==undefined) &&  this.mltyBrnch){
+  ngAfterContentInit() {
+    if (this.FlowName == 'label.create_appointment' && (this.isFlowSkip || this.isFlowSkip == undefined) && this.mltyBrnch) {
       this.activeHeader = 1;
-    }    
+    }
+ 
+    
   }
 
   panelHeaderClick(flowPanel: QmFlowPanelComponent) {
+    setTimeout(() => {
+      if (document.getElementById("panel-title")) {
+        document.getElementById("panel-title").focus();
+      }
+      
+    }, 100);
+
     this.headerClicked.emit(flowPanel);
     // let panelFound = false;
     // if (flowPanel.isContentVisible && flowPanel.hasResult()) {
@@ -103,20 +118,20 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     // });
   }
 
-  
+
   onFlowExit(result?: any) {
     this.AccountDispatchers.setMenuItemStatus(true);
-   if (result) {
+    if (result) {
       this.exitFlow = true;
       this.recycleService.clearCache();
       this.queueService.setQueuePoll();
-      if(this.router.url!=="/profile"){
+      if (this.router.url !== "/profile") {
         this.flowDispatchers.flowClose();
       }
       setTimeout(() => {
         this.AccountDispatchers.setMenuItemStatus(false);
-        if(this.router.url!="/profile"){
-        this.router.navigate(['home']);
+        if (this.router.url != "/profile") {
+          this.router.navigate(['home']);
         }
       }, 1000);
     }
@@ -129,16 +144,16 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
           this.queueService.setQueuePoll();
           this.queueService.fetechQueueInfo();
           this.onFlowExitInvoked.emit();
-          
-          if(this.router.url!=="/profile"){
+
+          if (this.router.url !== "/profile") {
             this.flowDispatchers.flowClose();
           }
 
           setTimeout(() => {
             this.AccountDispatchers.setMenuItemStatus(false);
-            if(this.router.url!=="/profile"){
-            this.router.navigate(['home']);
-           
+            if (this.router.url !== "/profile") {
+              this.router.navigate(['home']);
+
             }
           }, 1000);
         }
@@ -154,9 +169,18 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
   }
 
   onFlowNext(panel: QmFlowPanelComponent) {
+    setTimeout(() => {
+      if (document.getElementById("panel-title")) {
+        document.getElementById("panel-title").focus();
+      } else if (document.getElementById("notification-heading")) {
+        document.getElementById("notification-heading").focus() 
+      }
+      
+    }, 100);
+
     let panelsCollection = this.flowPanels.toArray();
     let panelIndex = panelsCollection.indexOf(panel);
-    this.activeHeader=panelIndex;
+    this.activeHeader = panelIndex;
     this.flowPanels.forEach((fp, index) => {
       fp.isActive = false;
       fp.isContentVisible = false;
@@ -171,17 +195,17 @@ export class QmFlowComponent implements OnInit,AfterContentInit {
     panel.isHeaderVisible = true;
   }
 
-  
-headerItemClicked(n){
-  
-  if(n<this.activeHeader){
-    this.onFlowNext(this.flowPanels.toArray()[n]);
-    this.activeHeader = n;
-  }
-  
-}
 
-test(){
-}
+  headerItemClicked(n) {
+
+    if (n < this.activeHeader) {
+      this.onFlowNext(this.flowPanels.toArray()[n]);
+      this.activeHeader = n;
+    }
+
+  }
+
+  test() {
+  }
 }
 

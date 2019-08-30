@@ -44,6 +44,7 @@ export class QmTrasferToQueueComponent implements OnInit {
   queueSearched: boolean;
   selectedQueue: Queue;
   showEstWaitTime: boolean;
+  firstElementCheck: boolean = true;
 
   constructor(
     private queueSelectors: QueueSelectors,
@@ -109,7 +110,7 @@ ngOnInit() {
   //       this.toastService.infoToast(noappointments);
   //     }
   //   ).unsubscribe();
-  // }
+  // 
 }
 
 
@@ -212,6 +213,31 @@ transferVisitMsgBoxText(type){
   
 }
 
+// Arrow functions
+onDownButttonPressed (i:number, j:number) {
+ if (document.getElementById(`${i+1}-${j}-transferQueue`)) {
+  document.getElementById(`${i+1}-${j}-transferQueue`).focus();
+ }
+}
+onUpButttonPressed (i:number, j:number) {
+  if (document.getElementById(`${i-1}-${j}-transferQueue`)) {
+   document.getElementById(`${i-1}-${j}-transferQueue`).focus();
+  }
+ }
+ onRightButttonPressed (i:number, j:number) {
+  if (document.getElementById(`${i}-${j+1}-transferQueue`)) {
+   document.getElementById(`${i}-${j+1}-transferQueue`).focus();
+  } else if (document.getElementById(`${i}-${j+2}-transferQueue`)) {
+    document.getElementById(`${i}-${j+2}-transferQueue`).focus();
+  }
+ }
+ onLeftButttonPressed (i:number, j:number) {
+  if (document.getElementById(`${i}-${j-1}-transferQueue`)) {
+   document.getElementById(`${i}-${j-1}-transferQueue`).focus();
+  } else if (document.getElementById(`${i}-${j-2}-transferQueue`)) {
+    document.getElementById(`${i}-${j-2}-transferQueue`).focus();
+  }
+ }
 
 
 handleInput($event) {
@@ -221,6 +247,16 @@ handleInput($event) {
 
 clearSearchText() {
   this.filterText = "";
+}
+// check first element
+checkFirstElement(i: number) {
+// if (i == 0 && this.firstElementCheck) {
+//   this.firstElementCheck = false;
+//   return '0';
+// } else {
+//   return '-1';
+// }
+return '0';
 }
   
 }

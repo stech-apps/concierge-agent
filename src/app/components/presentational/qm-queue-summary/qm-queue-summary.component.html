@@ -1,26 +1,29 @@
 
 <div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
-(this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeEnable }">
+(this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
+  <span class="qm-search-box-container">
+    <label for="visitSearchVisit" class="sr-only">{{ 'label.visit_search_placeholder' | translate }}</label>
   <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.visit_search_placeholder' | translate }}" id="visitSearchVisit"
   name="q" #visitSearch (input)="handleInput($event)" [(ngModel)]="inputText" (keydown.enter)="
       keyDownFunction($event, visitSearch.value.trim().toUpperCase())
     " autocomplete="off" />
-  <div *ngIf="visitSearch.value.trim()" class="qm-action-btn qm-action-btn--only-icon">
-    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon" (click)="clearInput(); visitSearch.value = ''"></i>
-  </div>
+  <button *ngIf="visitSearch.value.trim()" class="qm-transparent-close-btn"  (click)="clearInput(); visitSearch.value = ''">
+    <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+    <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
+  </button>
+</span>
   <div class="qm-action-btn--only-icon">
     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
   </div>
   <button class="btn qm-button qm-primary-button-default qm-search-button" (click)="searchVisit(visitSearch.value.trim().toUpperCase())">
-    <span tabindex="-1" class="btn__content">
+
     {{'search'|translate}}
-    </span>
   </button>
   <button *ngIf="visitQR" (click)="SearchQRButtonClick()" class="btn scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
-    <div  tabindex="-1">
+    <span>
     <i class="qm-action-btn__icon icon-scan-qr"></i>
-    <div>{{ "scan_qr" | translate }}</div>
-    </div>
+    <span>{{ "scan_qr" | translate }}</span>
+    </span>
   </button>
 </div>
 <div class="qm-visit-loading" *ngIf="!queueVisitIDloaded && queueVisitIDloading">
@@ -36,15 +39,14 @@
 <div class="qm-visit-no-visit-found" *ngIf="queueVisitIDloaded && !isRequestFromQR && (isSelectedVisitFail || isInvalidVisitEntry)">
   <span *ngIf="isInvalidVisitEntry">{{ "visit_invalid_entry" | translate }}
   </span>
-  <span *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{ "no_visit_match" | translate }}
+  <span aria-live="assertive" role="alert" *ngIf="!isInvalidVisitEntry && isSelectedVisitFail">{{ "no_visit_match" | translate }}
 </span>
 </div>
 
 
 
 <div class="qm-queue-list-title" *ngIf="!selectedQueue && !selectedVisit">
-  <span class="qm-queue-list-title__label-text">{{ "ql_queue_status_label" | translate }}
-  </span>
+  <h1 class="qm-queue-list-title__label-text">{{ "ql_queue_status_label" | translate }}</h1>
   <ng-container *ngIf="!queueFetchFailed">
     <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
     <span class="qm-queue-summary--value">{{ queueSummary.totalCustomersWaiting }} {{ "people_waiting_label" | translate
@@ -54,14 +56,12 @@
 
 <div class="qm-queue-list-title" *ngIf="selectedQueue || selectedVisit" dir="{{ userDirection$ | async }}" >
   <button (click)="resetQueue()" class="qm-back-icon qm-transparent-btn" id="qm-back-to-queue-btn">
-    <i *ngIf="userDirections === 'ltr'" class="icon-caret-left"></i>
-    <i *ngIf="userDirections === 'rtl'" class="icon-caret-right"></i>
+    <i *ngIf="userDirections === 'ltr' || userDirections === 'LTR'" class="icon-caret-left"></i>
+    <i *ngIf="userDirections === 'rtl' || userDirections === 'RTL'" class="icon-caret-right"></i>
+    <span class="sr-only">{{ 'button.back' | translate }}</span>
   </button>
-  <span (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue && !queueName">{{ selectedQueue.name
-    }}
-  </span>
-  <span (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{ queueName }}
-  </span>
+  <h1 (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="selectedQueue && !queueName">{{ selectedQueue.name }}</h1>
+  <h1 (click)="resetQueue()" class="qm-queue-list-title__label-text-captial" *ngIf="queueName">{{ queueName }}</h1>
   <span><i class="icon-customer-solid" aria-hidden="true"></i></span>
   <span class="qm-queue-summary--value" *ngIf="selectedQueue">{{ selectedQueue.customersWaiting }}
   </span>
@@ -71,15 +71,16 @@
 
 <!-- Qr modal -->
 
-<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}">
+<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}" cdkTrapFocus>
   <div class="qm-qr-code-modal__container">
     <div class="qm-qr-code-modal__heading">
       <h1 class="qm-qr-code-modal__heading-text">
         {{ "scan_qr_code" | translate }}
       </h1>
-      <div class="qm-qr-code-modal__close-container">
-        <i class="icon-close" (click)="closeqr()"></i>
-      </div>
+      <button tabindex="-1" class="qm-qr-code-modal__close-container qm-transparent-btn" (click)="closeqr()">
+        <i class="icon-close" ></i>
+        <span class="sr-only">{{ 'button.close' | translate }}</span>
+      </button>
     </div>
     <div class="qm-qr-code-modal__content">
       <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
@@ -88,6 +89,7 @@
     <div class="qm-qr-code-modal__text-line">
       <div>{{ "point_the_scanenr" | translate }}</div>
       <div>
+        <label for="SearchFeild" class="sr-only">{{'qr_code_scanner' | translate}}</label>
         <input class="qm-identify-visit-search__input" type="search" id="SearchFeild" name="q" #qrvisitSearch (input)="handleInputQR($event)"
           (keydown.enter)="keyDownFunction($event, qrvisitSearch.value.trim().toUpperCase())" autocomplete="off" />
       </div>

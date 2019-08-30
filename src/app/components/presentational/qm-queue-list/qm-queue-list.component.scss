@@ -5,11 +5,13 @@
 }
 
 .qm-queue-list {
+  height: 10px;
+
   margin-top: rem($standard-margin * 1.5);
   .sort-icon {
     margin-left: 0.4rem;
     cursor: pointer;
-    color: $dark-transparent12;
+    color: $dark-transparent42;
   }
   .selected-sort-icon{
     color: $dark-transparent62;
@@ -152,7 +154,9 @@
 }
 
 
-
+.qm-transparent-row-btn{
+  width: 100%;
+}
 
 @include qm-lg { 
   .qm-queue-list {

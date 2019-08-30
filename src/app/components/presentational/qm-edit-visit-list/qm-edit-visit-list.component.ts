@@ -95,6 +95,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     private errorHandler: GlobalErrorHandler
   ) {
+  
 
     // 24 hour time converstion
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
@@ -164,6 +165,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.visits = visitList;
       this.visitClicked = false;
       this.selectedVisitId = -1;
+     
       //if only one visit in queue open visit options
       // if (this.visits.length === 1) {
       //   this.visitClicked = true;
@@ -213,6 +215,12 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
      
+          if (this.selectedVisitId) {
+            setTimeout(() => {
+              document.getElementById('qm-title').focus();
+            }, 100);
+          }
+
           // to apply name of the queue of selected visit  
           var selectedQ = this.queueSummary.queues.find(obj => {
             return obj.id === this.visits[0].queueId
@@ -242,6 +250,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.StartAutoCollapse();
+ 
   }
 
   resetQRReader() {
@@ -341,6 +350,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
           objDiv.scrollIntoView();
+          // objDiv.querySelectorAll('button')[0].focus();
+          document.getElementById('qm-title').focus();
+          // console.log(objDiv.);
+          
        
       }, 100); 
 
@@ -358,6 +371,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'tq';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
  
   }
 
@@ -366,6 +384,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'staff';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
   transferToSPfPool(visit) {
@@ -373,6 +396,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.visitDispatchers.setectVisit(visit);
     this.visitOptionStatus = 'cp';
     this.ResetAutoCollapse();
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
   cherryPickVisit(index: number, event: Event) {
@@ -501,6 +529,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
   backToQueueOptionsButton(){
     this.visitOptionStatus = 'initial';
+    setTimeout(() => {
+      if (document.getElementById('qm-title')) {
+        document.getElementById('qm-title').focus();
+      }
+    }, 100);
   }
 
 
@@ -541,6 +574,44 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.StopAutoCollapse();
     this.StartAutoCollapse();
   }
-
+  // Arrow key functions
+  onDownButttonPressed (i: number) {
+    if (document.getElementById(`${i+1}-visit`)) {
+      document.getElementById(`${i+1}-visit`).focus();
+    }
+  }
+  onUpButttonPressed (i: number) {
+    if (document.getElementById(`${i-1}-visit`)) {
+      document.getElementById(`${i-1}-visit`).focus();
+    }
+  }
+  onLeftButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onRightButttonPressed(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-more-info`)) {
+        document.getElementById(`${i}-more-info`).focus();
+      }
+    }
+  }
+  onLeftButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'ltr') {
+      if(document.getElementById(`${i}-visit`)) {
+        document.getElementById(`${i}-visit`).focus();
+      }
+    }
+  }
+  onRightButttonPressedinInfo(i: number) {
+    if(this.userDirection.toLowerCase() == 'rtl') {
+      if(document.getElementById(`${i}-visit`)) {
+        document.getElementById(`${i}-visit`).focus();
+      }
+    }
+  }
 
 }

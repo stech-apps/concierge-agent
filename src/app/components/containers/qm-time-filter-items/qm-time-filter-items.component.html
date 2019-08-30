@@ -1,15 +1,29 @@
-<div class="qm-time-filter__items" dir="{{userDirection$ | async }}">
-  
+<div class="qm-time-filter__items" dir="{{userDirection$ | async }}" tabindex="0" id="{{ComponentId}}-container" (focus)="focusFirstElement(ComponentId)">
   <ng-container *ngIf="timeConvention === 'AMPM'">
-    <button class="qm-time-filter__item qm-transparent-btn" [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}" (click)="timeSelected(t)" *ngFor="let t of timeCollection" >
+    <button class="qm-time-filter__item qm-transparent-btn"
+      [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}"
+      (click)="timeSelected(t)" *ngFor="let t of timeCollection;let i = index"
+      id="{{i}}-{{ComponentId}}-slot"
+      (keyup.arrowup) = "KeyarrowUp(i,ComponentId)"
+      (keyup.arrowdown) = "KeyarrowDown(i,ComponentId)"
+      (keydown.tab) = "Tabbed(ComponentId)"
+      (keydown)="onKeydown($event,ComponentId)"
+      tabindex="-1">
       <span class="qm-time-filter__item--time"> {{ t | amDateFormat: 'hh:mm' }}</span>
       <span class="qm-time-filter__item--meridian"> {{ t | amDateFormat: 'A' }}</span>
     </button>
   </ng-container>
 
-  <ng-container  *ngIf="timeConvention === '24'">
-    <button class="qm-time-filter__item" [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}" (click)="timeSelected(t)" *ngFor="let t of timeCollection" >
-        <span class="qm-time-filter__item--time"> {{ t | amDateFormat: 'HH:mm' }}</span>
-      </button>
+  <ng-container *ngIf="timeConvention === '24'">
+    <button class="qm-time-filter__item"
+      [ngClass]="{'qm-time-filter__item--selected': selectedTime.format('YYYY-MM-DD HH:mm') === t.format('YYYY-MM-DD HH:mm')}"
+      (click)="timeSelected(t)" *ngFor="let t of timeCollection;let i = index" id="{{i}}-{{ComponentId}}-slot"
+      (keyup.arrowup) = "KeyarrowUp(i,ComponentId)"
+      (keyup.arrowdown) = "KeyarrowDown(i,ComponentId)"
+      (keydown.tab) = "Tabbed(ComponentId)"
+      (keydown)="onKeydown($event,ComponentId)"
+      tabindex="-1">
+      <span class="qm-time-filter__item--time"> {{ t | amDateFormat: 'HH:mm' }}</span>
+    </button>
   </ng-container>
 </div>

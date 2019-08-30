@@ -5,19 +5,22 @@
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 ::-ms-input-placeholder { /* Microsoft Edge */
         font-size: 1.1em;
         font-weight: 100;
+        color: $dark-transparent62;
     }
 
 .qm-search__icon{
     right: 1.2em;
-    color:  $dark-transparent42;
+    color:  $dark-transparent62;
     z-index: 1000;
     position: relative;
 }
@@ -27,12 +30,6 @@
     z-index: 1000;
     position: relative;
     font-size: 1.5em;
-    @at-root [dir="ltr"] & {
-        right: 1.4em;
-    }
-    @at-root [dir="rtl"] & {
-        left: 1.4em;
-    }
 }
 
 .qm-dob-close__icon{
@@ -50,8 +47,15 @@
 }
 
 .qm-action-btn--only-icon{
-    width: 0px;
-    vertical-align: middle
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 14px;
+    @at-root [dir="ltr"] & {
+        right: 1.2em;
+    }
+    @at-root [dir="rtl"] & {
+        left: 1.2em;
+    }
 }
 
 
@@ -78,7 +82,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 .qm-dob-label{
-    color: $dark-transparent42;
+    color: $dark-transparent62;
     font-weight: 500;
 }
 .qm-form-error-message{
@@ -95,7 +99,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .qm-dob-error{
-    outline: 2px solid #E50046;
+    outline: 2px solid $error-color;
 }
 
 .qm-clear-dob{
@@ -234,3 +238,33 @@ input[type=number]::-webkit-outer-spin-button {
   .qm-checkbox-label{
       z-index: 400;
   }
+  .qm-checkbox-focused{
+    border:  solid #007bff 1px;
+  }
+  
+  .qm-input-group{
+      position: relative;
+  }
+  .ng-select:focus{
+    border: 1px solid#72a2f7;
+    }
+    
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* IE10+ CSS styles go here */
+        .qm-checkbox__border{
+          margin-top: -16px;
+        }
+      }
+        
+.qm-invalid-field__label{
+    color: $error-color;
+}
+.qm-check-box-background {
+    top: -8px;
+    left: 0px;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        top: -7px;
+        left: 0px;
+    }
+
+}

@@ -146,7 +146,6 @@
 
 .qm-visit-list__options {
     margin: rem($standard-margin*0.5);
-    width: 504x;
     z-index: 1000;
     position: absolute;
     margin-left: 12px;
@@ -173,6 +172,10 @@
             display: flex;
             align-items: center;
             font-weight: 500;
+            &__header{
+                font-size: 21px;
+                line-height: 21px;
+            }
         }
         .qm-icon{
             flex: 1;
@@ -344,7 +347,11 @@
             flex:10;
             display: flex;
             align-items: center;
-            font-weight: 500
+            font-weight: 500;
+            &__header{
+                font-size: 21px;
+                line-height: 21px;
+            }
         }
         .qm-icon{
             flex: 1;
@@ -581,7 +588,7 @@
     align-self: center;
     text-align: center;
     align-items: center;
-    color: $dark-transparent42;
+    color: $dark-transparent62;
     cursor: pointer;
 }
 

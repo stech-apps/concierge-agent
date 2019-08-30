@@ -51,6 +51,9 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   previousBranch: IBranch;
   user: IAccount;
   errorMessage: string;
+  skipBranchFocus:boolean = false;
+  skipButtonHover: boolean;
+  mousePressed: boolean;
 
   constructor(
     private branchSelectors: BranchSelectors,
@@ -174,6 +177,7 @@ export class QmProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.queueService.stopQueuePoll();
     setTimeout(() => {
+      document.getElementById('qm-profile-page-title').focus();
       if( this.isEnableUseDefault && ((this.selectedBranch.id == -1) &&
         (this.selectedServicePoint.id==-1))  ){
           this.isEnableUseDefault =false;

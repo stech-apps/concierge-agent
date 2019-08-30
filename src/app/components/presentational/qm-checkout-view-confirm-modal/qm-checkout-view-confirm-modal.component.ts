@@ -86,18 +86,25 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    setTimeout(() => {
+      if (document.getElementById('qm-modal-headline')) {
+        document.getElementById('qm-modal-headline').focus();
+      }
+    }, 100);
       
     // Customer creation form
     const emailValidators = this.util.emailValidator();
+    const smsValidators = [Validators.minLength(this.countryCode.length + 1), ...this.util.phoneNoValidator()];
 
     if(this.isSmsEnabled && this.isEmailEnabled){
       this.confirmModalForm = new FormGroup({
-        phone: new FormControl('',Validators.pattern(this.regexvalue())),
+        phone: new FormControl('',smsValidators),
         email:new FormControl('',emailValidators)   
       });
     } else if(this.isSmsEnabled){
       this.confirmModalForm = new FormGroup({
-        phone: new FormControl('',Validators.pattern(this.regexvalue()))
+        phone: new FormControl('',smsValidators)
       });
     } else if(this.isEmailEnabled){
       this.confirmModalForm = new FormGroup({
@@ -143,7 +150,7 @@ export class QmCheckoutViewConfirmModalComponent implements OnInit, OnDestroy {
       'label.options.emailonly.heading',
       'label.options.emailandsms.heading'
       ]).subscribe((messages) => {
-        if(this.router.url=="/home/create-visit"){
+        if(this.router.url=="/home/create-visit" || this.router.url=="/home"){
           this.optionsHeading = messages['label.options.smsonly.heading'];
         }else{
       if (this.customer && this.isEmailEnabled && this.isSmsEnabled)

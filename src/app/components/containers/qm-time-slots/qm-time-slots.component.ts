@@ -20,6 +20,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   private readonly HOUR_12FORMAT = 'AMPM';
   timeFormat: string = this.HOUR_24FORMAT; //todo read from orchestra setting
   public userDirection$: Observable<string>;
+  public firstElement: boolean = false;
   
   private readonly TIME_GAP = 4;
   private subscriptions: Subscription = new Subscription();
@@ -39,13 +40,15 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
   @Output()
   onTimeSlotSelect: EventEmitter<ITimeSlot> = new EventEmitter<ITimeSlot>();
 
-
   ngOnInit() {
     const timeConventionSubscriptioon = this.systemInfoSelectors.timeConvention$.subscribe((tf)=> {
       this.timeFormat = tf;
       this.generateTimeSlotCategories();
       this.timeSlotCategories[0].isActive = true;
     });
+
+
+    
     
     const timeSlotSubscription = this.timeSlotSelectors.times$.subscribe((times) => {
       this.timeSlots = [];
@@ -115,6 +118,110 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  // Arrow function implementation
+  KeyarrowUp(i : number, j: number, Count: ITimeSlot[], category : string) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4);
+    // Count.filter(ts => ts.category.toString() == category);
+    if(parseInt(category) > 1){
+      category = (parseInt(category) - 1).toString();
+    }
+    let upperElement = Math.ceil(Count.filter(ts => ts.category.toString() == category).length/4);   
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } else if (document.getElementById(`${j-1}-${upperElement}-${col}`)) {
+      document.getElementById(`${j-1}-${upperElement}-${col}`).focus();
+    } else if (document.getElementById(`${j-1}-${upperElement - 1}-${col}`)) {     
+      document.getElementById(`${j-1}-${(upperElement - 1)}-${col}`).focus()
+    }
+  }
+  KeyarrowDown(i : number, j: number) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4) + 2;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } else if (document.getElementById(`${j+1}-1-${col}`)) {
+      document.getElementById(`${j+1}-1-${col}`).focus();
+    }
+  }
+  KeyarrowLeft(i : number, j: number) {
+    let col = (i%4) ;
+    let row =  Math.floor(i/4) + 1;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } 
+    // else if (document.getElementById(`${j+1}-1-1`)) {
+    //   document.getElementById(`${j+1}-1-1`).focus();
+    // }
+  }
+  KeyarrowRight(i : number, j: number) {
+    let col = (i%4) + 2 ;
+    let row =  Math.floor(i/4) + 1;
+    if(document.getElementById(`${j}-${row}-${col}`)) {
+      document.getElementById(`${j}-${row}-${col}`).focus();
+    } 
+    // else if (document.getElementById(`${j+1}-1-1`)) {
+    //   document.getElementById(`${j+1}-1-1`).focus();
+    // }
+  }
+
+  getTimeSlotElementId(i: number, j: string) {
+    let col = (i%4) + 1;
+    let row =  Math.floor(i/4) + 1;  
+    return j + '-' + row.toString() + '-' + col.toString();
+  }
+
+  KeyTab() {
+    let focusable = document.getElementsByClassName("qm-time-select-slot")[0];
+    focusable.setAttribute('Name',"firstTimeElement");   
+    document.getElementsByName('firstTimeElement')[0].focus();
+  }
+
+  // Focus first element of time slot 
+  focusFirstTimeSlotCategory() {
+    let TimeSlots = document.getElementById("qm-time-slot-categories").getElementsByClassName("qm-time-slot-category--title");
+    if (TimeSlots.length) {
+      TimeSlots[0].setAttribute("name","firstTimeCategroy");
+      document.getElementsByName("firstTimeCategroy")[0].focus();
+    }
+  }
+  // TimeSlot Category focus arrow keys
+  TimeSlotCategoryArrowUp(n : number) {
+    if (document.getElementById(`${n-1}-timeSlotCategory`)) {
+      document.getElementById(`${n-1}-timeSlotCategory`).focus();
+    }
+  }
+  TimeSlotCategoryArrowDown(n : number) {
+    if (document.getElementById(`${n+1}-timeSlotCategory`)) {
+      document.getElementById(`${n+1}-timeSlotCategory`).focus();
+    }
+  }
+
+  focusFirstTimeSlot() {
+    var focusable = document.getElementById("qm-time-slot-container").querySelectorAll('button');
+    focusable[0].setAttribute("name","firstTimeSlot");
+    setTimeout(() => {
+      if (focusable.length > 0) {
+        document.getElementsByName("firstTimeSlot")[0].focus();
+      }          
+    }, 1);
+  }
+  onKeydownTimeCategory(event) {
+    if(event.shiftKey && event.keyCode == 9) {
+      document.getElementById("qm-calendar").focus();
+      // event.stopPropagation();
+      event.preventDefault();        
+  }    
+  }
+  onKeydownTimeSlot(event) {
+    if(event.shiftKey && event.keyCode == 9) {
+      document.getElementById("qm-time-slot-categories").focus();
+      // event.stopPropagation();
+      event.preventDefault();        
+  }    
+  }
+
+ 
   generateTimeSlotCategories() {
 
     if(this.timeFormat == this.HOUR_24FORMAT) {
@@ -237,6 +344,11 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
 
       if (itemToScrollTo !== undefined) {
         itemToScrollTo.scrollIntoView(true);
+        setTimeout(() => {
+          if(itemToScrollTo) {
+            itemToScrollTo.focus();
+          }
+        }, 100);
       }
     } else {
       const emptyCategory = this.elRef.nativeElement.querySelector(

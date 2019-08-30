@@ -146,9 +146,9 @@ qm-identify-appointment{
       text-align: left;
       margin-top: 0.75rem;
 
-      color: $dark-transparent42;
+      color: $dark-transparent62;
       i {
-        color: $dark-transparent82;
+        color: $dark-transparent62;
       }
       @at-root [dir="rtl"] & {
         text-align: right;
@@ -191,26 +191,29 @@ qm-identify-appointment{
           margin: 0;
         }
 
-        @at-root [dir='ltr'] & .qm-search__icon{
-          right: 44px;
-        }
+        // @at-root [dir='ltr'] & .qm-search__icon{
+        //   right: 44px;
+        // }
 
-        @at-root [dir='rtl'] & .qm-search__icon{
-          right: 44px;
-        }
+        // @at-root [dir='rtl'] & .qm-search__icon{
+        //   right: 44px;
+        // }
 
                   // placeholder styles
           ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             font-size: 18px;
             font-weight: 100;
+            color: $dark-transparent62;
           }
           :-ms-input-placeholder { /* Internet Explorer 10-11 */
             font-size: 18px;
             font-weight: 100;
+            color: $dark-transparent62;
           }
           ::-ms-input-placeholder { /* Microsoft Edge */
             font-size: 18px;
             font-weight: 100;
+            color: $dark-transparent62;
           }
       }
 
@@ -411,11 +414,15 @@ qm-identify-appointment{
     flex-wrap: wrap;
 
     i.icon-caret-up {
-      color: #ccc;
+      color: $dark-transparent42;
+    }
+
+    i.icon-caret-down {
+      color: $dark-transparent42;
     }
     
     i.icon-caret-up.active-sort-column, i.icon-caret-down.active-sort-column {
-      color: black;
+      color: $dark-transparent62;
       font-size: 18px;
     }
 

@@ -28,7 +28,8 @@ import {
   EventEmitter,
   Input,
   ViewChild,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import { BookingHelperService } from "src/util/services/booking-helper.service";
 import { ICalendarService } from "src/models/ICalendarService";
@@ -38,6 +39,8 @@ import { ITimeSlot } from "src/models/ITimeSlot";
 import { IAppointment } from "src/models/IAppointment";
 import { Moment } from "moment";
 import { DEFAULT_LOCALE } from "src/constants/config";
+import { ISystemInfo } from "src/models/ISystemInfo";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "qm-appointment-time-select",
@@ -59,14 +62,15 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   selectedTimeHeading: string = "";
   public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
+  userDirection: string;
   selectedTime$: Observable<Moment>;
   showTimer: Boolean;
-
+  systemInformation: ISystemInfo;
   selectedServices: ICalendarService[] = [];
   selectedDates: CalendarDate[];
-
-  selectedTime: string;
-
+  dateType: string;
+  selectedTime: string = '';
+  enterDateErrorMsg: string = '';
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
@@ -75,6 +79,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private readonly HOUR_12FORMAT = "AMPM";
   timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
   userLocale: string = DEFAULT_LOCALE;
+  currentDate: string = '';
 
   @ViewChild('timeSlotContainer') timeSlotContainer: ElementRef;
   @ViewChild(QmCalendarComponent) calendarRef: QmCalendarComponent;
@@ -93,7 +98,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     private calendarSettingsDispatchers: CalendarSettingsDispatchers,
     private userSelectors: UserSelectors,
     private systemInfoSelectors: SystemInfoSelectors,
-    private resevationTimeSelectors: ReservationExpiryTimerSelectors
+    private resevationTimeSelectors: ReservationExpiryTimerSelectors,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
@@ -108,6 +115,12 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const serviceSubscription = this.serviceSubscription$.subscribe(s => {
       this.selectedServices = s;
     });
+
+    const systemInfoSubscription = this.systemInfoSelectors.systemInfo$.subscribe(systemInfo => {
+      this.systemInformation = systemInfo;
+    });
+    this.subscriptions.add(systemInfoSubscription)
+    this.dateType = this.systemInformation.dateConvention;
 
     const reservableDatesSub = this.reserveSelectors.reservableDates$.subscribe(
       (dates: moment.Moment[]) => {
@@ -155,6 +168,10 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         this.timeFormat = tf;
       }
     );
+    const userSubscription = this.userDirection$.subscribe((ud)=> {
+      this.userDirection = ud.toLowerCase();
+    });
+    this.subscriptions.add(userSubscription);
 
     const expiryReservationCalendarSettingSubscription = this.getExpiryReservationTime$.subscribe(
       (time: number) => {
@@ -195,13 +212,12 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const timeSlotsSubscription = this.timeSlotSelectors.times$.subscribe(
       ts => {
         if (ts.length) {
-         
+
         }
       }
     );
     this.subscriptions.add(timeSlotsSubscription);
     this.subscriptions.add(timeConventionSubscriptioon);
-
     const reservedSub = this.reserveSelectors.reservedAppointment$.subscribe(
       alreadyReserved => {
         if (alreadyReserved) {
@@ -255,8 +271,87 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
       this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format("dddd DD MMMM");
-      if(this.calendarRef && this.calendarRef.isUserDateSelected && this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
+      this.currentDate = this.currentlyActiveDate.mDate.clone().locale('en').format(this.dateType).toString();
+      this.enterDateErrorMsg = "";
+      this.cdr.detectChanges();
+      if (this.calendarRef && this.calendarRef.isUserDateSelected && this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
         this.timeSlotContainer.nativeElement.scrollIntoView();
+      }
+    }
+  }
+
+  validateDate() {
+    if (this.dateType[2] == '-') {
+      if (this.currentDate.match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        this.reservableDates.forEach(ed => {
+          if (ed.isSame(moment(this.currentDate, this.dateType))) {
+            selectedDateAvailable = true;
+            this.selectedDates = [
+              {
+                mDate: moment(this.currentDate, this.dateType),
+                selected: true
+              }
+            ];
+            if(document.getElementById('qm-time-slot-categories')) {
+              document.getElementById('qm-time-slot-categories').focus();
+            }
+          }
+        });
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translate
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        
+        const translateSubscription = this.translate
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
+      }
+    } else if (this.dateType[2] == '/') {
+      if (this.currentDate.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
+        this.enterDateErrorMsg = "";
+        var selectedDateAvailable = false;
+        this.reservableDates.forEach(ed => {
+          if (ed.isSame(moment(this.currentDate, this.dateType))) {
+            selectedDateAvailable = true;
+            this.selectedDates = [
+              {
+                mDate: moment(this.currentDate, this.dateType),
+                selected: true
+              }
+            ];
+          }
+        });
+        setTimeout(() => {
+          if (selectedDateAvailable == false) {
+            const translateSubscription = this.translate
+              .get("select_date_not_available")
+              .subscribe((res: string) => {
+                this.enterDateErrorMsg = res
+              });
+            translateSubscription.unsubscribe();
+          }
+        }, 100);
+
+      } else {
+        const translateSubscription = this.translate
+          .get("invalid_date_format")
+          .subscribe((res: string) => {
+            this.enterDateErrorMsg = res
+          });
+        translateSubscription.unsubscribe();
       }
     }
   }
@@ -324,5 +419,24 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     this.getTimeSlots();
     this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
     this.timeSlotDispatchers.selectTimeslot(null);
+  }
+  onFocus() {
+    if(this.userDirection == 'rtl') {
+      var setInput = document.getElementById("enterDate");
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+    }
+  }
+
+  setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+      input.focus();
+      input.setSelectionRange(selectionStart, selectionEnd);
+    } else if (input.createTextRange) {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', selectionEnd);
+      range.moveStart('character', selectionStart);
+      range.select();
+    }
   }
 }

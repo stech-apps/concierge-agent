@@ -5,11 +5,12 @@
         <span class="qm-modal__headline">{{ title }}</span>
         <button class="qm-transparent-btn qm-action-btn qm-modal-close"  (click)="closeX()">
           <i aria-hidden="true" class="icon-close"></i>
+          <span class="sr-only">{{ 'button.close' | translate }}</span>
         </button>
       </div>
       <div class="qm-modal__message-container" *ngIf="message && message.length > 0">
         <div>
-          <div class="qm-modal__message">
+          <div tabindex="-1" id="qm-modal-message" class="qm-modal__message">
             {{ message }}
           </div>
         </div>

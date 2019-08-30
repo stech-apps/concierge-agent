@@ -1,39 +1,63 @@
-<div class="qm-flow-sub-header" *ngIf="this.loaded && StaffPool.length!==0">
-    <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
-      <div class="qm-identify-visit-search__search-container">
-      <input class="qm-identify-visit-search__input" type="search" placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearch" name="q" [ngModel]="searchText" (input)="handleInput($event)"  #visitSearch autocomplete="off"> 
-      <div class="qm-action-btn--only-icon">
-      <i *ngIf="visitSearch.value.trim()" (click)="visitSearch.value = '';clearSearchText()" class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
-      </div>
-      <div class="qm-action-btn--only-icon">
-          <i *ngIf="!visitSearch.value.trim()"  aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
-        </div>
+<div class="qm-flow-sub-header" *ngIf="this.loaded && StaffPool.length!==0" >
+  <div class="qm-identify-visit-search" dir="{{ userDirection$ | async }}">
+    <div class="qm-identify-visit-search__search-container">
+      <div class="qm-input-box-container">
+        <label for="visitSearchPool" class="sr-only">{{ 'label.search_userPool' | translate }}</label>
+        <input class="qm-identify-visit-search__input" type="search"
+          placeholder="{{ 'label.search_userPool' | translate }}" id="visitSearchPool" name="q" [ngModel]="searchText"
+          (input)="handleInput($event)" #visitSearch autocomplete="off">
+        <button  *ngIf="visitSearch.value.trim()" class="qm-action-btn--only-icon qm-clear-btn">
+          <i  (click)="visitSearch.value = '';clearSearchText()"
+            class=" qm-action-btn__icon icon-close qm-clear-search" aria-hidden="true"></i>
+            <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
+        </button >
+        <span class="qm-action-btn--only-icon qm-clear-btn">
+          <i *ngIf="!visitSearch.value.trim()" aria-hidden="true"
+            class="qm-action-btn__icon icon-search qm-search__icon"></i>
+        </span>
+        <div *ngIf="(StaffPool |filterStaffPool : filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'staff_member_list_not_found' | translate }}</div>
+        <div *ngIf="(StaffPool |filterStaffPool : filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (StaffPool |filterStaffPool : filterText).length + ((StaffPool |filterStaffPool : filterText).length === 1 ? ('label.staffmember.found' | translate) : ('label.staffmembers.found' | translate)) }}</div>
       </div>
     </div>
   </div>
-  
-  
-   <div class="qm-service-point-list__container" dir="{{ userDirection$ | async }}">
-      <div class="qm-service-point-list">
-        <div style="padding-bottom:20px;text-align:center" *ngIf="(this.loaded && this.StaffPool.length===0)">
-          {{'label.empty_user_pool'|translate}} 
+</div>
+
+
+<div class="qm-service-point-list__container" dir="{{ userDirection$ | async }}">
+  <div class="qm-service-point-list">
+    <div style="padding-bottom:20px;text-align:center" *ngIf="(this.loaded && this.StaffPool.length===0)">
+      {{'label.empty_user_pool'|translate}}
+    </div>
+    <div class="qm-service-point-list__headers qm-flex-grid" *ngIf="this.loaded && StaffPool.length!==0">
+      <button class="qm-service-point-list-header-item qm-col qm-flex-grid qm-transparent-btn"
+        (click)="onSortClickbyLastName()">
+        <div class="qm-service-point-list-header-item-label">{{'name' | translate}}</div>
+        <div><i *ngIf="StaffPool.length>1" class="sort-icon"
+            [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i>
+            <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </div>
-          <div  class="qm-service-point-list__headers qm-flex-grid" *ngIf="this.loaded && StaffPool.length!==0">
-            <button class="qm-service-point-list-header-item qm-col qm-flex-grid qm-transparent-btn" (click)="onSortClickbyLastName()">
-              <div class="qm-service-point-list-header-item-label">{{'name' | translate}}</div>
-              <div><i  *ngIf="StaffPool.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true }"></i></div>
-            </button>
-          </div>
-          <hr>
-        
-          <div class="qm-service-point-list__body">
-            <div *ngFor="let s of StaffPool |filterStaffPool : filterText ">
-            <button  class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn" (click)="selectPool(s.id)">
-                <div class="qm-col qm-service-point-list-body-row-first-label" [innerHtml]="s.firstName + ' ' + s.lastName | qmhighlight: filterText"></div>
-            </button>
-          </div>
-          </div>
-        </div> 
-        <div class="qm-no-results" *ngIf="(StaffPool | filterStaffPool : filterText).length===0 && loaded && filterText!=''"> {{'staff_pool_not_found' |translate}} </div>
-  
-  </div> 
+      </button>
+    </div>
+    <hr>
+
+    <div class="qm-service-point-list__body">
+      <div *ngFor="let s of StaffPool |filterStaffPool : filterText; let i = index ">
+        <button class="qm-flex-grid qm-service-point-list-body-row qm-transparent-btn"
+        [attr.tabindex]=" i==0 ? 0 : -1"
+         (click)="selectPool(s.id)"
+         (keydown.arrowdown)="onDownButttonPressed(i)"
+         (keydown.arrowup)="onUpButttonPressed(i)"
+         id="{{i}}-staff-member"
+         >
+          <div class="qm-col qm-service-point-list-body-row-first-label"
+            [innerHtml]="s.firstName + ' ' + s.lastName | qmhighlight: filterText"></div>
+        </button>
+      </div>
+      <div class="qm-no-results" *ngIf="(StaffPool | filterStaffPool : filterText).length===0 && loaded && filterText!=''">
+          {{'staff_pool_not_found' |translate}} </div>
+    </div>
+
+  </div>
+
+
+</div>

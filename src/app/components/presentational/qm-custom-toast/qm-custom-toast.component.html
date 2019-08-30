@@ -1,25 +1,50 @@
-  <div class="qm-toast-inner-container">
-    <div *ngIf="title" [class]="options.titleClass" [attr.aria-label]="title" class="custom-title">
-      {{ title }}
-    </div>
-
-    <span [innerHtml]="iconSvg" class="qm-toast-icon"></span> 
-    <span *ngIf="message && options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
-      [innerHTML]="message">
-    </span>
-    <div *ngIf="message && !options.enableHtml" role="alert" aria-live="polite" class="custom-message" [class]="options.messageClass"
-      [attr.aria-label]="message">
-      {{ message }}
-    </div>
-
-    <div class="qm-close-container">
-      <!-- <a *ngIf="!options.closeButton" class="btn btn-pink btn-sm" (click)="action($event)">
-        {{ undoString }}
-      </a> -->
-      <a *ngIf="options.closeButton" (click)="remove()" class="btn btn-sm toast-close-button" id="toast-msg-close">
-      </a>
-    </div>
+<div class="qm-toast-inner-container" cdkTrapFocus dir="{{userDirection$ | async}}">
+  <div *ngIf="title" [class]="options.titleClass" [attr.aria-label]="title" class="custom-title">
+    {{ title }}
   </div>
+
+  <!-- <span [innerHtml]="iconSvg" class="qm-toast-icon"></span>  -->
+  <div class="qm-toast-icon">
+    <i class="icon-complete"></i>
+    <!-- <i class="icon-alert-star" *ngIf="options.toastType == 'error'"></i> -->
+  </div>
+
+  <span *ngIf="message && options.enableHtml" role="alert" aria-live="assertive" class="custom-message"
+    [class]="options.messageClass" [innerHTML]="message">
+  </span>
+  <div *ngIf="message && !options.enableHtml" role="alert" aria-live="assertive" class="custom-message"
+    [class]="options.messageClass" [attr.aria-label]="message">
+    {{ message }}
+
+  </div>
+  <div>
+    <div class="checkbox">
+      <label for="qm-checkbox" class="qm-checkbox-label">
+        <div class="qm-checkbox__selector">
+          <input id="qm-skip-branch" class="styled-checkbox" [ngClass]="{'styled-checkbox-warning' : options.toastClass.substring(options.toastClass.length - 4) === 'nger'}" 
+          type="checkbox" (focus)="skipButtonHover = true"  (change)="onSwitchChange()"
+            (focusout)="skipButtonHover = false;" [(ngModel)]="isAutoClose">
+          <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text" (mouseenter)="skipButtonHover = true"
+            (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
+            (mouseup)="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
+          <div style="height: 100%;position: absolute" *ngIf="skipButtonHover || mousePressed">
+            <div [ngClass]="{ 'checkbox-backdrop-unchecked': !isAutoClose}" class="qm-check-box-background"></div>
+          </div>
+        </div>
+      </label>
+    </div>
+
+  </div>
+  <div class="qm-close-container">
+    <button class="qm-transparent-btn" id='close-toast-btn' (click)="remove()">
+      <i *ngIf="options.closeButton" aria-hidden="true" class="btn btn-sm toast-close-button icon-close"
+        id="toast-msg-close">
+      </i>
+      <span class="sr-only">{{ 'button.clear' | translate }}</span>
+    </button>
+
+  </div>
+</div>
 <div *ngIf="options.progressBar">
   <div class="toast-progress" [style.width]="width + '%'"></div>
 </div>

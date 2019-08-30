@@ -2,7 +2,6 @@
 
 
 .customer-search-list-container{
-    width: 100;
     margin: 10px 0px 0px 0px;
 }
 .qm-flow-selected-customer{
@@ -75,7 +74,7 @@
 }
 .qm-info-text{
     text-align: left;
-    color: $dark-transparent42;
+    color: $dark-transparent62;
     font-size: 1em;
     margin-top: 0.8em;
     display: flex;
@@ -84,7 +83,7 @@
 .qm-details-icon{
     font-size: 1.5em;
     vertical-align: middle;
-    color: $black
+    color: $dark-transparent62;
 }
 
 
@@ -232,4 +231,14 @@
   .qm-flow-sub-header__right{
     flex: inherit;
 
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    .qm-checkbox__border{
+      margin-top: -16px;
+    }
+  }
+  .qm-check-box-background{
+    left: 0px;
+    top: -7px;
   }

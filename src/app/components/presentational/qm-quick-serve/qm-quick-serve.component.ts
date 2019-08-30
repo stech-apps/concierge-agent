@@ -1,7 +1,7 @@
 import { UserSelectors } from 'src/store/services';
 import { IService } from './../../../../models/IService';
 import { Subscription, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { ServiceSelectors, ServiceDispatchers, BranchSelectors, ServicePointSelectors } from '../../../../../src/store';
 import { IBranch } from '../../../../models/IBranch';
 import { SPService } from 'src/util/services/rest/sp.service';
@@ -36,12 +36,13 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
   showToolTip: boolean;
-
+  hoveredService: string = '';
 
   isQuickServeEnable: boolean;
   isShowQueueView: boolean;
   editVisitEnable: boolean;
   focusQuickServeItem:string;
+  @Output() QuickServeServicesEnabled = new EventEmitter<boolean>();
 
   constructor(
     private serviceSelectors: ServiceSelectors,
@@ -67,6 +68,13 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
           this.isQuickServeEnable = params.quickServe;
           this.isShowQueueView = params.queueView;
           this.editVisitEnable = params.editVisit;
+          if (params.quickVisitAction) {
+            if (params.quickVisitAction === 'serve') {
+              this.isQuickServeEnable = true;
+            } else {
+              this.isQuickServeEnable = false;
+            }
+          }
         }
       }
     );
@@ -75,15 +83,24 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
     this.subscriptions.add(branchSubscription);
 
+    let serviceLoadedSubscription;
     const serviceConfigSubscription = this.serviceSelectors.getQuickServices$.subscribe((services) => {
       this.services = services;
       this.sortQueueList();
-      if(services.length > 0){
-        setTimeout(() => {
-          this.checkShadow();
-        }, 1000);
-      }
+      serviceLoadedSubscription = this.serviceSelectors.isQuickServiceLoaded$.subscribe((val) => {
+        if (val) {
+          if (this.services.length === 0) {
+            this.QuickServeServicesEnabled.emit(false);
+          } else {
+            this.QuickServeServicesEnabled.emit(true);
+            setTimeout(() => {
+              this.checkShadow();
+            }, 1000);
+          }
+        }
+      });
     });
+    this.subscriptions.add(serviceLoadedSubscription);
     this.subscriptions.add(serviceConfigSubscription);
 
     const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
@@ -245,6 +262,16 @@ filterQueues(newFilter: string) {
   
   focusOutQmCheckbox(){
     this.focusQuickServeItem = null;    
+  }
+  
+  MouseEnteredCheckbox(service) {
+    this.hoveredService = service.id;
+  }
+  MouseLeaveCheckbox() {
+    this.hoveredService = '';
+  }
+  serviceId(internalName: string) {
+    return internalName.replace(/\s/g, '');
   }
 
 }

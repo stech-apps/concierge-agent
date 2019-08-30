@@ -1,9 +1,23 @@
+@import "../../../../styles/base/_component-manifest.scss";
+
 .qm-toast-icon {
     float: left;
-    display: block;
-    width: 4rem;
+    display: flex;
+    width: 2rem;
     margin-right: 2rem;
+    font-size: 40px;
+    @at-root [dir="rtl"] & {
+        margin-right: 0;
+        margin-left: 2rem;
+    }
 }
+// .qm-toast--danger
+//     .qm-toast-icon
+//         .icon-complete:before{
+//             content: "\e913" !important;
+          
+// }
+
 
 [class^="col"] {
     padding: 5px;
@@ -12,14 +26,141 @@
 .qm-toast-inner-container {
     position: relative;
     padding-right: 1.8rem;
+    width: 100%;
+    @at-root [dir="rtl"]  {
+        padding-right: 0;
+    }
 }
 
 .qm-close-container {
     position: absolute;
     right: 0;
-    top: -0.8rem;
+    // top: -10px;
+    display: flex;
+    height: 100%;
+    // font-size: 2.5em;
+    // width: px;
+    @at-root [dir="rtl"] & {
+        right: auto;
+        left: 0;
+      }
 }
 
 a:focus{
     border:  solid #007bff 1px;
+}
+.qm-toast__message{
+    margin: auto;
+    font-size: 14px;
+    width: 490px;
+    height: 100%;
+}
+
+.qm-checkbox__selector-icon-text{
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0.25px;
+    color: #ebeaea
+
+}
+
+.checkbox{
+    margin: auto;height: 100%;
+    width: 145px;
+    @at-root [dir="rtl"] & {
+        width: 171px;
+    }
+    @include qm-xs {
+        @at-root [dir="rtl"] & {
+            width: 160px;
+        } 
+    }
+    @include qm-sm {
+        @at-root [dir="rtl"] & {
+            width: 160px;
+        } 
+    }
+}
+.qm-checkbox-label {
+    margin: auto;
+    height: 106%;
+}
+.styled-checkbox + label:before{
+    border: 2px solid white;
+
+}
+.styled-checkbox:checked + label:after {
+    top: 13px;
+    left: 14px;
+    box-shadow:2px 0 0 #017c65, 4px 0 0 #017c65, 4px -2px 0 #017c65, 4px -4px 0 #017c65, 4px -6px 0 #017c65, 4px -8px 0px 0px #017c65, 4px -8px 0px 0px #017c65, 4px -10px 0px 0px #017c65, 4px -12px 0px 0px #017c65;
+    background: #017c65
+}
+.styled-checkbox-warning:checked + label:after {
+    box-shadow:2px 0 0 #b00020, 4px 0 0 #b00020, 4px -2px 0 #b00020, 4px -4px 0 #b00020, 4px -6px 0 #b00020, 4px -8px 0px 0px #b00020, 4px -8px 0px 0px #b00020, 4px -10px 0px 0px #b00020, 4px -12px 0px 0px #b00020;
+    background: #b00020
+}
+.styled-checkbox:checked + label:before { 
+    background: white;
+}
+.qm-transparent-btn{
+    height: 100%;
+    width: 100%;
+}
+
+
+@include qm-xs {
+    .qm-toast__message{
+        width: 320px;
+    }
+    .checkbox{
+        width: 135px;
+    }
+}
+@include qm-sm {
+    .qm-toast__message{
+        width: 320px;
+    }
+    .checkbox{
+        width: 135px;
+    }
+}
+.qm-check-box-background {
+    left: auto;
+    right: auto;
+    top: 7px;
+    background: white;
+    transform: translate(0%, -50%);
+    top:46%;
+}
+.checkbox-backdrop-unchecked{
+    background: rgba(0, 0, 0, 0.82);
+}
+
+  /* IE10+ CSS styles go here */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .qm-check-box-background{
+        right: 68px;
+        top: -2px;
+        @at-root [dir="rtl"] & {
+            right: auto;
+            left: 69px;
+            top: -1px;
+        }
+        @include qm-xs {
+        right: 68px;
+        @at-root [dir="rtl"] & {
+            right: auto;
+            left: 70px;
+        }
+        }
+        @include qm-sm {
+            right: 68px;
+            @at-root [dir="rtl"] & {
+                right: auto;
+                left: 70px;
+            }
+            }
+           
+    }
+  
 }

@@ -77,7 +77,12 @@ import {
   NativeApiDispatchers,
   NativeApiSelectors,
   FlowOpenDispatchers,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  AutoCloseStatusDispatchers,
+  AutoCloseStatusSelectors,
+  JWTTokenDataService,
+  JWTTokenDispatchers,
+  JWTTokenSelectors
 
 } from "./services";
 
@@ -155,5 +160,10 @@ export const storeServices = [
   NativeApiDispatchers,
   NativeApiSelectors,
   FlowOpenDispatchers,
-  FlowOpenSelectors
+  FlowOpenSelectors,
+  AutoCloseStatusDispatchers,
+  AutoCloseStatusSelectors,
+  JWTTokenDataService,
+  JWTTokenDispatchers,
+  JWTTokenSelectors
 ];

@@ -14,6 +14,7 @@
     <button class="qm-notes-btn js-notes-btn" (click)="toggleNotesInput()">
         <span class="qm-notes-btn__text" [ngClass]="{ 'qm-notes-btn__text--has-text' : hasNotesText() }" [innerHTML]="getButtonText()"></span>
         <i class="qm-notes-btn__icon icon-edit" aria-hidden="true"></i>
+        <span class="sr-only">{{ 'button.edit' | translate }}</span>
       </button>
   </div>
 </div>

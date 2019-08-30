@@ -1,4 +1,4 @@
-<div class="qm-flow-main-header"  *ngIf="flowPanels.toArray()"  dir="{{ userDirection$ | async }}">
+<nav class="qm-flow-main-header"  *ngIf="flowPanels.toArray()"  dir="{{ userDirection$ | async }}">
     <i class="qm-flow-main-header__icon" [ngClass]="{'icon-createappointment': FlowName=='label.create_appointment','icon-editappointment': FlowName=='label.change_appointment','icon-arriveappointment':FlowName=='label.checkin.appointment','icon-addvisit': FlowName=='create_visit_single_line','icon-editvisit': FlowName=='change_visit_single_line'}"></i>
     <div class="qm-flow-main-header__topic"   [ngStyle]="{'padding':FlowName=='change_visit_single_line' ||FlowName=='create_visit_single_line' ? '1.7rem 1em' : '0.7rem 1em' }"> <div [innerHTML]="FlowName | translate"></div>  </div>
     <div class="qm-fishes-container">
@@ -6,6 +6,6 @@
     </div>
     <button class="qm-flow-close" (click)="onFlowExit();"> {{'label.cancel'|translate}}</button>
  
-</div>
+</nav>
 
-<ng-content></ng-content>
+<ng-content></ng-content> 

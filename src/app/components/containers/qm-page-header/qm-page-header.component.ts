@@ -1,6 +1,8 @@
 import { Logout } from "./../../../../util/services/logout.service";
 import { AutoClose } from "./../../../../util/services/autoclose.service";
 import { IService } from "./../../../../models/IService";
+import { UserRole } from './../../../../models/UserPermissionsEnum';
+import { CREATE_VISIT, EDIT_VISIT, CREATE_APPOINTMENT, EDIT_APPOINTMENT, ARRIVE_APPOINTMENT } from './../../../../constants/utt-parameters';
 
 import {
   Component,
@@ -22,7 +24,8 @@ import {
   ReserveDispatchers,
   QueueDispatchers,
   FlowOpenSelectors,
-  ServicePointDispatchers
+  ServicePointDispatchers,
+  AccountSelectors
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -60,6 +63,20 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   userDirections: string;
   isFlowOpen:boolean;
 
+  isQuickServeEnable:boolean;
+  isQuickCreateEnable: boolean;
+  isHome: boolean;
+  isCreateVisit = false;
+  isArriveAppointment = false;
+  isEditAppointment = false;
+  isCreateAppointment = false;
+
+   //user permissions
+   isVisitUser = false;
+   isAppointmentUser = false;
+   isAllOutputMethodsDisabled: boolean;
+   printerEnabled: boolean;
+
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
 
@@ -67,10 +84,9 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   handleHeaderNavigations: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() isPreventHeaderNavigations = false;
+  @Input() isQuickServeShow: boolean;
 
-  constructor(
-    
-   
+  constructor(  
     private userSelectors: UserSelectors,
     public route: ActivatedRoute,
     public autoCloseService: AutoClose,
@@ -83,7 +99,9 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private reserveDispatchers:ReserveDispatchers,
     private queueDispatchers: QueueDispatchers,
     private flowOpenSelectors:FlowOpenSelectors,
-    private servicePointDispatchers:ServicePointDispatchers
+    private servicePointDispatchers:ServicePointDispatchers,
+    private accountSelectors: AccountSelectors,
+    
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -92,6 +110,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
     this.isFlowOpen = false;
+    
   }
 
   ngOnInit() {
@@ -100,7 +119,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       this.userDirections = direction;
       
     });
-    this.headerSubscriptions.add(userDirectionSubscription);    
+    this.headerSubscriptions.add(userDirectionSubscription); 
+    this.checkUserPermissions();   
     
     const licenseSubscription = this.isValidLicense$.subscribe(
       (licenseIsValid: boolean) => {
@@ -108,6 +128,44 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       }
     );
     this.headerSubscriptions.add(licenseSubscription);
+
+    
+    const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
+      uttpParams => {
+        if (uttpParams) {
+          if (uttpParams.quickVisitAction) {
+            if (uttpParams.quickVisitAction === 'serve') {
+              this.isQuickCreateEnable = false;
+            } else if (uttpParams.quickVisitAction === 'create' &&
+            (uttpParams.ticketLess || uttpParams.sndSMS || uttpParams.printerEnable)) {
+              this.isQuickCreateEnable = true;
+            } else {
+              this.isQuickCreateEnable = false;
+            }
+          }
+          if (this.isVisitUser && uttpParams) {
+            this.isCreateVisit = uttpParams[CREATE_VISIT];
+          }
+          else {
+            this.isCreateVisit = false;
+          }
+    
+          if (this.isAppointmentUser && uttpParams) {
+            this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
+            this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
+            this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+          }
+          else {
+            this.isCreateAppointment = false;
+            this.isEditAppointment = false;
+            this.isArriveAppointment = false;
+          }       
+        }
+      }
+    );
+    this.headerSubscriptions.add(servicePointsSubscription);
+
+
 
     const servicePointSubscription = this.servicePoint$.subscribe(
       (servicePoint: IServicePoint) => {
@@ -131,6 +189,15 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       this.isFlowOpen = status;
     });
     this.headerSubscriptions.add(flowOpenSubscription);
+    this.isHome = true;
+    this.router.events.subscribe((event) => {
+      if (this.router.url=="/home"){
+        this.isHome = true;
+      } else {
+        this.isHome = false;
+    }
+  });
+  
   }
   ngOnDestroy() {
     this.headerSubscriptions.unsubscribe();
@@ -156,5 +223,29 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.queueDispatchers.setectVisit(null);
     this.queueDispatchers.resetFetchVisitError();
     
+  }
+  QuickServeFocus() {
+    if(document.getElementById("visitSearch")) {
+      document.getElementById("visitSearch").focus();
+    }
+  }
+  MenuBarFocus() {
+    if(document.getElementById("create_appointment")) {
+      document.getElementById("create_appointment").focus();
+    }
+  }
+  checkUserPermissions() {
+    this.accountSelectors.userRole$.subscribe((ur: UserRole) => {
+      if (ur && UserRole.All) {
+        this.isAppointmentUser = true;
+        this.isVisitUser = true;
+      }
+      else if (ur && UserRole.AppointmentUserRole) {
+        this.isAppointmentUser = true;
+      }
+      else if (ur & UserRole.VisitUserRole) {
+        this.isVisitUser = true;
+      }
+    });
   }
 }

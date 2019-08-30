@@ -28,3 +28,7 @@ qm-timelist-siderbar {
     width: 100%;
     height: 100%;
 }
+
+button[tabindex="-1"]:focus {
+    border:  solid #007bff 1px !important;  
+}

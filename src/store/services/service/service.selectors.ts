@@ -21,6 +21,12 @@ const getAllServices = createSelector(
   (state: IServiceState) => state.services
 );
 
+const isQuickServiceLoaded = createSelector(
+  getServiceState,
+  (state: IServiceState) => state.servicesConfiguration.length > 0 &&
+  state.servicesConfiguration.length === state.services.length ? true : false
+);
+
 const getOpenServicePoint = createSelector(
   getServicePointState,
   (state: IServicePointState) => state.openServicePoint
@@ -102,4 +108,5 @@ export class ServiceSelectors {
   isQuickServiceEnable$ = this.store.select(isQuickServiceEnable);
   isServiceLoaded$ = this.store.select(isServiceLoaded);
   getQuickServices$ = this.store.select(getQuickServices);
+  isQuickServiceLoaded$ = this.store.select(isQuickServiceLoaded);
 }

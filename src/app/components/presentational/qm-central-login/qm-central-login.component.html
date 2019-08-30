@@ -3,8 +3,9 @@
   <div class="qm-central-login__form-content">
       <form [formGroup]="formLogin" class="qm-central-login__form">
           <div class="qm-central-login__form-field">
-            <label class="qm-central-login__form-label">{{ 'userName' | translate}}</label>
+            <label for="userName" class="qm-central-login__form-label">{{ 'userName' | translate}}</label>
             <input type="text"
+                   id="userName"
                    name="userName"
                    class="qm-central-login__input"
                    maxlength="50"
@@ -13,8 +14,9 @@
                    formControlName="userName" />
           </div>
           <div class="qm-central-login__form-field">
-              <label class="qm-central-login__form-label">{{ 'password' | translate}}</label>
+              <label for="password" class="qm-central-login__form-label">{{ 'password' | translate}}</label>
               <input type="password"
+                     id="password"
                      name="password"
                      class="qm-central-login__input"
                      maxlength="50"

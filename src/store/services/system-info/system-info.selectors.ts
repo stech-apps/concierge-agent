@@ -77,7 +77,7 @@ export class SystemInfoSelectors {
   systemInfoLicenseCompanyName$ = this.store.select(getSystemInfoLicenseCompanyName);
   systemInfoHost$ = this.store.select(getSystemInfoHost);
   systemInfoHostAddress$ = this.store.select(getSystemInfoHostAddress);
-  DistributedAgentStatus$ = this.store.select(getDistributedAgentStatus);
+  distributedAgentStatus$ = this.store.select(getDistributedAgentStatus);
   centralHostAddress$ = this.store.select(getCentralHost);
   authorizationHeader$ = this.store.select(getAuthorizationHeader);
   timeConvention$ = this.store.select(getTimeConvention);

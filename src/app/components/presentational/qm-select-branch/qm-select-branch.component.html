@@ -1,7 +1,7 @@
-<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}">
-    <div class="qm-pannel-full-inner-container"> 
+<div class="qm-pannel-container" dir="{{ userDirection$ | async}}" [ngStyle]="{'height':  currentBranch && currentBranch.publicId  ? 'calc(100% - 80px)' : '100%'}" id="main-container">
+    <div class="qm-pannel-full-inner-container" > 
       <div>     
-        <div class="qm-flow-header">{{ 'label.select_branch_header' | translate}}</div>
+        <h1 id='panel-title' aria-label="Select branch label" class="qm-flow-header" tabindex="-1">{{ 'label.select_branch_header' | translate}}</h1>
       </div>
       <div class="qm-white-container">
   <div class="qm-pannel-inner-container"> 
@@ -16,6 +16,7 @@
           <div class="qm-selected-box__text">{{ currentBranch.name }}</div>
           <button class="qm-transparent-btn remove-icon"  (click)="deselectBranch()">
             <i aria-hidden="true" class="icon-close"></i>
+            <span class="sr-only">{{ ('button.remove' | translate)  + ' ' + currentBranch.name}}</span>
           </button>
       </div>
     </div>
@@ -24,12 +25,13 @@
   </div>
  
 </div>
-<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}">
+<div class="qm-branch-search-area"  dir="{{ userDirection$ | async}}" >
     <div class="qm-flow-sub-header__left">
     <div class="qm-search qm-search--large">
-        <label class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
-        <input [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
-          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput (keydown.enter)="branchSearchInput.blur()">
+        <label id="branchSerachLabel" class="sr-only" for="branchSearchInput">{{'branch_search_placeholder' | translate}}</label>
+        <input  aria-labelledby="branchSerachLabel" [(ngModel)]="searchText" qmClearInput (input)="handleInput($event)" class="qm-search__input ng-pristine ng-valid ng-touched"
+          id="branchSearchInput" name="q" type="search" placeholder="{{'label.branch.search' | translate}}" #branchSearchInput  (keydown.enter)="branchInputEnterPressed()"
+          autocomplete="off">
   
         <div *ngIf="(searchText || '').trim().length === 0" class="qm-action-btn qm-action-btn--only-icon qm-search__btn">
           <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
@@ -39,19 +41,24 @@
 </div>
   <div class="qm-flow-sub-header__right">
     <div class="qm-checkbox__container">
-      <label for="qm-checkbox" class="qm-checkbox-label">
-        <input id="qm-checkbox" class="qm-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip" (focus)="skipBranchFocus=true"  (focusout)="skipBranchFocus=false">
-        <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">
-          <i aria-hidden="true" class="qm-checkbox__selector-icon"></i>
-          <div class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</div>
+      <div for="qm-checkbox" class="qm-checkbox-label">        
+        <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':skipBranchFocus}">      
+            <input id="qm-skip-branch" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()" [(ngModel)]="isFlowSkip"  
+            (focus)="skipButtonHover = true" (focusout)="skipButtonHover = false"> 
+          <label for="qm-skip-branch" (mouseenter)="skipButtonHover = true"   (mouseleave) ="skipButtonHover = false"   (mousedown)="mousePressed = true"
+          (mouseup) ="mousePressed = false" class="qm-checkbox__selector-icon-text">{{ 'label.skip.branch' | translate }}</label>
+          <div *ngIf="skipButtonHover || mousePressed" 
+          [ngClass]="{ 'checkbox-backdrop-unchecked': !isFlowSkip}"
+           class="qm-check-box-background"></div>
         </div>
-      </label>
+      </div>
       <button  (click)="clickedshowToolTip()" type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn">
         <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
+        <span class="sr-only">{{ 'button.info' | translate }}</span>
       </button>
       <div class="quick-serve-tooltip" *ngIf="showToolTip">
         <div class="triangle"></div>
-        <div class="quick-serve-tooltip__rec">
+        <div class="quick-serve-tooltip__rec" aria-live="assertive" role="alert">
             {{'branch_skip_tooltip'|translate}}
         </div>
       </div>   
@@ -64,7 +71,7 @@
     <div class="qm-crossline-header"></div>
     <h2 class="qm-crossline-header-text qm-text-overflow-fix">{{ 'label.branch.allbranches' | translate }}</h2>
   </div>
-  <div class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
+  <div aria-live="polite" role="alert" id="searchTextDetails" tabindex="-1" class="qm-select-branch__search-heading" *ngIf="(searchText || '').trim().length > 0">
     <span>{{'label.search.result.header' | translate}} &nbsp;</span>
     <mark>{{ '"'+ searchText + '"' }}</mark>
     <span class="qm-select-branch__foundbox">{{ ' ' + 
@@ -75,20 +82,32 @@
   </div>
   <div class="qm-flow-list-container">
   <div class="qm-list">
-    <div *ngFor="let b of calendarBranches | filterBranch : filterText;" class="qm-branch-list__item qm-list__item" 
+    <div *ngFor="let b of calendarBranches | filterBranch : filterText;let i = index" class="qm-branch-list__item qm-list__item" 
       [ngClass]="{'qm-branch-list__item--selected, qm-list__item--selected': b.publicId === currentBranch.publicId, 
       'qm-list__item--info-active' : b.showInfo}">
-      <div tabindex="0" class="qm-branch-list__item--text qm-list__item--text" (click)="onToggleBranchSelection(b)" (keydown.enter)="onToggleBranchSelection(b)" (keydown.space)="onToggleBranchSelection(b)" [ngClass]="{'qm-outline':b.showInfo}">
-        <div  class="qm-list__item--label" [ngClass]="{'qm-highlight-text':b.showInfo}" [innerHtml]="b.name | qmhighlight: searchText">
-        </div>
-        <div class="qm-list__item--info" *ngIf="b.showInfo">
+      <button id="{{i}}-branch-btn" class="qm-branch-list__item--text qm-list__item--text qm-transparent-btn" (click)="onToggleBranchSelection(b)" 
+      [attr.tabindex]=" i==0 ? 0 : -1"
+      (keydown.enter)="onToggleBranchSelection(b)" 
+      (keydown.arrowdown)="onDownButttonPressed(i)"
+      (keydown.arrowup)="onUpButttonPressed(i)"
+      (keydown.arrowright) = "onRightButttonPressed(i)"
+      (keydown.arrowleft) = "onLeftButttonPressed(i)"
+      (keydown.space)="onToggleBranchSelection(b)" [ngClass]="{'qm-outline':b.showInfo}">
+        <span  class="qm-list__item--label" [ngClass]="{'qm-highlight-text':b.showInfo}" [innerHtml]="b.name | qmhighlight: searchText">
+        </span>
+        <span class="qm-list__item--info" *ngIf="b.showInfo">
           <i class="qm-list__item--info__icon qm-action-btn__icon  icon-location-light" aria-hidden="true"></i>
-          <div class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</div>
-        </div>      
-      </div>
-      <button class="qm-transparent-btn qm-action-btn__icon" type="button"  (click)="b.showInfo = !b.showInfo">
+          <span class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</span>
+        </span>      
+      </button>
+      <span class="sr-only" *ngIf="b.showInfo" aria-live="assertive" role="alert"> {{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }} </span>
+      <button tabindex="-1" class="qm-transparent-btn qm-action-btn__icon" type="button" id="{{i}}-more-info"
+      (keydown.arrowright) = "onRightButttonPressedinInfo(i)"
+      (keydown.arrowleft) = "onLeftButttonPressedinInfo(i)"
+        (click)="b.showInfo = !b.showInfo">
         <i *ngIf="!b.showInfo" class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
         <i *ngIf="b.showInfo" class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
+        <span class="sr-only">{{ b.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
       </button>
     
       </div>

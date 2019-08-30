@@ -1,4 +1,4 @@
-<qm-flow #f [FlowName] ="'label.create_appointment'">
+<qm-flow #f [FlowName]="'label.create_appointment'" dir="{{ userDirection$ | async }}">
   <qm-flow-panel #pb *ngIf="multiBranchEnabled" [headerVisibilityOverridden]="true" [isContentVisible]="!isFlowSkip"
     [isActive]="!isFlowSkip" [title]="'label.select_branch_header'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pb); branchHeaderClick();" (onFlowExit)="f.onFlowExit();">
@@ -10,47 +10,77 @@
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-<qm-flow-panel #ps [isHeaderVisible]="isFlowSkip" [isActive]="isFlowSkip" [isContentVisible]="isFlowSkip" [isShowExitFlow]="!multiBranchEnabled" 
-  [title]="'label.specify_service'">
+  <qm-flow-panel #ps [isHeaderVisible]="isFlowSkip" [isActive]="isFlowSkip" [isContentVisible]="isFlowSkip"
+    [isShowExitFlow]="!multiBranchEnabled" [title]="'label.specify_service'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(ps)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'label.specify_service' | translate}}</qm-flow-panel-title>
       <qm-flow-panel-result *ngIf="selectedServices.length === 1">{{ selectedServices[0].name }}</qm-flow-panel-result>
-      <qm-flow-panel-result *ngIf="selectedServices.length > 1">{{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
+      <qm-flow-panel-result *ngIf="selectedServices.length > 1">
+        {{ selectedServices.length + ' ' + ( 'services_selected' | translate) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-select-service [isVisible]="ps.isContentVisible" (onFlowNext)="f.onFlowNext(pa); " [flowType]="flowType"></qm-select-service>
+      <qm-select-service [isVisible]="ps.isContentVisible" (onFlowNext)="f.onFlowNext(pa); " [flowType]="flowType">
+      </qm-select-service>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  
-  <qm-flow-panel #pa   [title]="'label.date_and_time'">
+
+  <qm-flow-panel #pa [title]="'label.date_and_time'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pa); ats.reloadTimeSlots.next();" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'label.date_and_time' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result *ngIf="(selectedTimeSlot$ | async)?.length > 0">{{ (selectedDate$ | async).format('YYYY-MM-DD') + ' ' + (selectedTimeSlot$ | async) }}</qm-flow-panel-result>
+      <qm-flow-panel-result *ngIf="(selectedTimeSlot$ | async)?.length > 0">
+        {{ (selectedDate$ | async).format('YYYY-MM-DD') + ' ' + (selectedTimeSlot$ | async) }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-appointment-time-select #ats (onFlowNext)="f.onFlowNext(pc)"></qm-appointment-time-select>
     </qm-flow-panel-content>
   </qm-flow-panel>
 
-  <qm-flow-panel #pc  [title]="'addCustomer'">
+  <qm-flow-panel #pc [title]="'addCustomer'">
     <qm-flow-panel-header (click)="f.panelHeaderClick(pc)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'addCustomer' | translate}}</qm-flow-panel-title>
-      <qm-flow-panel-result class="qm-current-customer-text" *ngIf="currentCustomer">{{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</qm-flow-panel-result>
+      <qm-flow-panel-result class="qm-current-customer-text" *ngIf="currentCustomer">
+        {{currentCustomer.firstName + ' ' +currentCustomer.lastName }}</qm-flow-panel-result>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
       <qm-identify-customer (onFlowNext)="f.onFlowNext(px)" [flowType]="flowType"></qm-identify-customer>
     </qm-flow-panel-content>
   </qm-flow-panel>
-  
-  <qm-flow-panel #px  [title]="'label.confirm'" class="qm-checkout-view-flowpanel">
+
+  <qm-flow-panel #px [title]="'label.confirm'" class="qm-checkout-view-flowpanel">
     <qm-flow-panel-header (click)="f.panelHeaderClick(px)" (onFlowExit)="f.onFlowExit()">
       <qm-flow-panel-title>{{ 'label.confirm' | translate}}</qm-flow-panel-title>
     </qm-flow-panel-header>
     <qm-flow-panel-content>
-      <qm-checkout-view [flowType]="flowType" (goToPanelByIndex)="f.goToPanelByIndex($event)" (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
+      <qm-checkout-view [flowType]="flowType" (goToPanelByIndex)="f.goToPanelByIndex($event)"
+        (onFlowExit)="f.onFlowExit(px, true)"></qm-checkout-view>
     </qm-flow-panel-content>
-  </qm-flow-panel> 
+  </qm-flow-panel>
 </qm-flow>
-<div class="qm-reservation-expiry-timer" ngDraggable *ngIf="showExpiryReservationTime$ | async">
-  <qm-reservation-timer></qm-reservation-timer>
+<div class="draggable-item-container" #container *ngIf="showExpiryReservationTime$ | async">
+  <div class="qm-reservation-expiry-timer" id="draggable-timer" [ngDraggable]="isDraggable"
+    (endOffset)="onDragEnd($event)" [handle]="myHandle" [position]="{x: DraggablepositionX, y: DraggablepositionY}"
+    [preventDefaultEvent]='false' [inBounds]="inBounds" [bounds]="container">
+    <div class="qm-expiry-container" #myHandle
+      [ngClass]="{'right_icon_bar': ((TimerSide =='right' && userDirection == 'ltr') || (TimerSide =='left' && userDirection == 'rtl')),'left_icon-bar':(( TimerSide =='left' && userDirection == 'ltr')|| ((TimerSide =='right' && userDirection == 'rtl')))}">
+      <div class="qm-expiry-container__icon-bar">
+        <button class="qm-transparent-btn" *ngIf='TimerViewExpanded' (click)="DraggableChangeButton()"
+          [ngClass]="{'rotate-pin': !isDraggable}"> <i class="icon-pin"></i>
+          <span class="sr-only"> {{'pin' | translate}}</span>
+        </button>
+        <button class="qm-transparent-btn" (click)="ExpandCollapseTimer()">
+          <i
+            [ngClass]="{'icon-caret-right': ((TimerViewExpanded && TimerSide =='right' && userDirection == 'ltr') ||  (!TimerViewExpanded && TimerSide =='left' && userDirection == 'ltr')
+        ||(TimerViewExpanded && TimerSide =='right' && userDirection == 'rtl') || (!TimerViewExpanded && TimerSide =='left' && userDirection == 'rtl')) ,
+        'icon-caret-left': ((!TimerViewExpanded && TimerSide =='right' && userDirection == 'ltr')|| (TimerViewExpanded && TimerSide =='left' && userDirection == 'ltr')
+        ||(!TimerViewExpanded && TimerSide =='right' && userDirection == 'rtl' )|| (TimerViewExpanded && TimerSide =='left' && userDirection == 'rtl'))}"></i>
+        <span class="sr-only"> {{'expand_collapse' | translate}}</span>
+      </button>
+        <span class="qm-transparent-btn" role="button"> <i class="icon-move-drag"></i></span>
+      </div>
+      <div class="qm-expiry-container__timer" [ngClass]="{'hideTime': !TimerViewExpanded}" >
+        <qm-reservation-timer [events]="expandButtonPressed.asObservable()" (ThirtySecondsGone)="ThirtySecondsGone()" (ExpandtheTimer)="ExpandtheTimer($event)">
+        </qm-reservation-timer>
+      </div>
+    </div>
+  </div>
 </div>

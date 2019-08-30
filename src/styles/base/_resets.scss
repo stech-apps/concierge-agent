@@ -289,13 +289,13 @@
    * 2. Remove the padding in IE 10.
    */
 
- [type="checkbox"],
- [type="radio"] {
-   box-sizing: border-box;
-   /* 1 */
-   padding: 0;
-   /* 2 */
- }
+//  [type="checkbox"],
+//  [type="radio"] {
+//    box-sizing: border-box;
+//    /* 1 */
+//    padding: 0;
+//    /* 2 */
+//  }
 
  /**
    * Correct the cursor style of increment and decrement buttons in Chrome.
@@ -391,8 +391,15 @@ button {
 
 
  .sr-only {
-  display: none;
-  visibility: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
 }
 
 * {
@@ -401,3 +408,12 @@ button {
   outline: none;
 } 
 
+/* clears the 'X' from Internet Explorer */
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+
+/* clears the 'X' from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }

@@ -28,7 +28,7 @@
           
               <span class="qm-standard-text-field__error-message" id="phone-error" role="alert" aria-live="polite" >
                 <ng-container *ngIf="confirmModalForm.get('phone')?.errors && confirmModalForm.get('phone')?.dirty">
-                      {{ confirmModalForm.get('phone')?.hasError('pattern') ? ('erroccr.form.phone.invalid.des' | translate) : (phone.value.length > 0 ? ('error.form.phone.invalid' | translate) : '') }}
+                      {{ confirmModalForm.get('phone')?.hasError('pattern') ? ('error.form.phone.invalid.des' | translate) : (phone.value.length > 0 ? ('error.form.phone.invalid' | translate) : '') }}
                 </ng-container>
               </span>
             </label>

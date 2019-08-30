@@ -38,6 +38,49 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 13</h2>
+
+**Date: 30/08/2019**
+ 
+**Build number: 13**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **166698795** | **Quick serve select service** heighlight service row after selecting the service |
+| **000000000** | **WCAG support** |
+| **167012414** | **Reservation Timer Update** |
+| **165530740** | **Distributed support for Concierge - token** |
+| **166115094** | **Quick Create Concierge** |
+| **167732454** | **Autoclose on visit and appointment create popup** |
+| **167084539** | **Accessible date pickerMy** |
+| **166953268** | **Enter Date** when selecting a date there shall always be an option to enter the date in a written format |
+| **167530902** | **Concierge Note filed - Indicate character limit to user** |
+| **166029245** | **WCAG : Toasts (NL140)** |
+| **166025007** | **Quick Serve  Update - Casual Caller** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **166864770** | **IE 11 only > Create visit flow > add customer banner > "Done" button disappear.** |
+| **164361808** | **Serve icon not visible for SAML users** |
+| **167338686** | **Add new customer form > DOB validation issue** |
+| **167060742** | **Queue view should take full width when quick serve is not available.** |
+| **166463789** | **Distributed Environment > create appointment flow > press 'cancel' will redirect user to a empty screen.** |
+| **167801817** | **Android Landscape mode > Menubar item texts partially visible** |
+| **167776864** | **iOS/Android > Profile page - navigation UI issue** |
+
+<h3>Known issues</h3>
+| **Id/Jira** | **Description** |
+| --- | --- |
+| **xxx** | **Bug header** Bug text |
+
+<h3>Upgrade instructions</h3> 
+
+----------
+
 <h2>Version 12</h2>
 
 **Date: 03/07/2019**
@@ -48,7 +91,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | --- | --- |
-| **165784415** | **Concierge security vulnerability** node packages were updated and security vulnarabilities were 
+| **165784415** | **Concierge security vulnerability** node packages were updated and security vulnarabilities were |
 | **166025007** | **Quick Serve  Update - Casual Caller** |
 
 <h3>Bug fixes</h3>

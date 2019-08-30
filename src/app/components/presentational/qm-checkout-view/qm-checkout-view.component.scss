@@ -95,6 +95,16 @@
         color: $black;
       }
 
+      .custom_header_h2:hover {
+        text-decoration: none;
+      }
+
+      .qm-checkout-view__summary-grouping:hover {
+        .custom_header_h2 {
+          text-decoration: none;
+        }
+      }
+
       .qm-checkout-view__summary-grouping:not(.qm-services-grouping) {
         &:hover {
           background-color: $white;

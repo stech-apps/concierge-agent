@@ -4,6 +4,19 @@
   
 }
 
+.qm-service-not-found-container{
+  background:$white; 
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+  font-size: 18px;
+  padding: 1rem;
+  color: $dark-transparent82;
+
+  &__empty-shadow{
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
 .qm-create-button {
   &__item {
     color: #E50046;

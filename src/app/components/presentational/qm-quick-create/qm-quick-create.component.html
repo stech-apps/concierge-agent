@@ -24,19 +24,23 @@
                     aria-hidden="true"></i>
                     <span class="sr-only">{{ 'button.clearSearch' | translate }}</span>
                 </button>
-                <div *ngIf="(services|filterQuickServeService:filterText).length === 0" aria-live="assertive" role="alert" class="sr-only">{{ 'service_list_not_found' | translate }}</div>
-                <div *ngIf="(services|filterQuickServeService:filterText).length > 0 && filterText.length > 0" aria-live="assertive" role="alert" class="sr-only">{{ (services|filterQuickServeService:filterText).length + ((services|filterQuickServeService:filterText).length === 1 ? ('label.service.found' | translate) : ('label.services.found' | translate)) }}</div>
+                <div aria-live="assertive" aria-atomic="true" class="sr-only">
+                        <span *ngIf="(services|filterQuickServeService:filterText).length > 0 && filterText.length > 0">{{ (services|filterQuickServeService:filterText).length + ((services|filterQuickServeService:filterText).length === 1 ? ('label.service.found' | translate) : ('label.services.found' | translate)) }}</span>
+                    </div>
                 <div class="qm-action-btn--only-icon">
                     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                 </div>
             </div>
+            <div aria-live="assertive" aria-atomic="true" class="qm-service-not-found-container" [ngClass]="{'qm-service-not-found-container__empty-shadow': ((services|filterQuickServeService:filterText).length > 0)}" id="qm-service-not-found-container" tabindex="-1">
+                <span *ngIf="(services|filterQuickServeService:filterText).length === 0">{{ (services|filterQuickServeService:filterText).length === 0 ? ('service_list_not_found'|translate) : '' }}</span>
+            </div> 
         </div>
 
 
         <div [style.visibility]="isTopBarVisible ? 'visible' : 'hidden'">
             <div class="qm-quick-create__list-shadow-top"></div>
         </div>
-        <div #configServiceList class="qm-quick-create__list-container" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
+        <div #configServiceList class="qm-quick-create__list-container" *ngIf="(services|filterQuickServeService:filterText).length > 0" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
             <div class="qm-quick-create__item" [ngClass]="{ 'qm-quick-create__item-selected' : selectedService !== null && selectedService.id === service.id }" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
                 <div (keydown.enter)="onServiceSelect(service)" class="qm-quick-create-item" [ngClass]="{'qm-quick-create__item-focus':focusQuickCreateItem==service.id}">
                     
@@ -65,7 +69,7 @@
         <div [style.visibility]="isBottomBarVisible ? 'visible' : 'hidden'">
             <div class="qm-quick-create__list-shadow-bottom"></div>
         </div>
-        <div class="qm-quick-create__button-container">
+        <div class="qm-quick-create__button-container" *ngIf="(services|filterQuickServeService:filterText).length > 0">
             <button  class="qm-action-btn qm-create-button__item" [disabled]="selectedService === null" *ngIf="isSMSAvailable" 
                           (click)="onSelectButton('sms')">
                             <i class="icon-smartphone qm-action-btn__icon qm-create-button__icon"></i>

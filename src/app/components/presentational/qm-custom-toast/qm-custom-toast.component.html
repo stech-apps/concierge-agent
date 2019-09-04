@@ -9,10 +9,10 @@
     <!-- <i class="icon-alert-star" *ngIf="options.toastType == 'error'"></i> -->
   </div>
 
-  <span *ngIf="message && options.enableHtml" role="alert" aria-live="assertive" class="custom-message"
+  <span *ngIf="message && options.enableHtml" class="custom-message"
     [class]="options.messageClass" [innerHTML]="message">
   </span>
-  <div *ngIf="message && !options.enableHtml" role="alert" aria-live="assertive" class="custom-message"
+  <div *ngIf="message && !options.enableHtml" class="custom-message"
     [class]="options.messageClass" [attr.aria-label]="message">
     {{ message }}
 
@@ -27,7 +27,7 @@
           <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text" (mouseenter)="skipButtonHover = true"
             (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
             (mouseup)="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
-          <div style="height: 100%;position: absolute" *ngIf="skipButtonHover || mousePressed">
+          <div aria-hidden="true" style="height: 100%;position: absolute" *ngIf="skipButtonHover || mousePressed">
             <div [ngClass]="{ 'checkbox-backdrop-unchecked': !isAutoClose}" class="qm-check-box-background"></div>
           </div>
         </div>

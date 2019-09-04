@@ -338,6 +338,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onKeydownEnter(event,index: number, visitId: number) {
+    // if(event.keyCode == 13) {
+    //   this.selectVisit(index, visitId);
+    // }
+  }
 
 
   selectVisit(index: number, visitId: number) {    

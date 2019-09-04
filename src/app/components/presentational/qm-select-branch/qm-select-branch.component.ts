@@ -11,6 +11,7 @@ import { CalendarBranchSelectors, CalendarBranchDispatchers, UserSelectors, Bran
 import { ICalendarBranch } from 'src/models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { IBranch } from 'src/models/IBranch';
+import { FilterBranchPipe } from './filter-branch.pipe';
 
 @Component({
   selector: 'qm-select-branch',
@@ -192,7 +193,10 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   doneButtonClick() {
     this.onFlowNext.emit();
   }
-
+  filterBranchCount(count) {
+    console.log(count);
+    
+  }
   onSwitchChange() {
     this.localStorage.setSettings(STORAGE_SUB_KEY.BRANCH_SKIP, this.isFlowSkip);
   }
@@ -245,6 +249,11 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
         }
       }, 100);
     }}
+  }
+  branchCount() {
+    var sampleFilter = new FilterBranchPipe()
+    return sampleFilter.transform(this.calendarBranches,this.searchText).length;
+     
   }
  
 }

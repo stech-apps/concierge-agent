@@ -340,7 +340,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
 
 
-  selectVisit(index: number, visitId: number) {
+  selectVisit(index: number, visitId: number) {    
     this.selectedVisitId === visitId && this.visits.length > 1 ? this.visitClicked = !this.visitClicked : this.visitClicked = true;
     this.selectedVisitId = visitId;
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
@@ -349,12 +349,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
 
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
-          objDiv.scrollIntoView();
-          // objDiv.querySelectorAll('button')[0].focus();
-          document.getElementById('qm-title').focus();
-          // console.log(objDiv.);
-          
-       
+          if(objDiv) {
+            objDiv.scrollIntoView();
+            document.getElementById('qm-title').focus();      
+          }
       }, 100); 
 
    
@@ -613,5 +611,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       }
     }
   }
+
 
 }

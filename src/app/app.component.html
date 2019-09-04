@@ -2,6 +2,6 @@
     <qm-global-error></qm-global-error>
     <router-outlet></router-outlet>
   
-    <div #hf class="qm-messages" toastContainer dir="{{ userDirection$ | async }}">
+    <div #hf class="qm-messages"  role="alert" aria-live="assertive" toastContainer dir="{{ userDirection$ | async }}">
     </div>
 </qm-auto-close> 

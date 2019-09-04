@@ -318,7 +318,10 @@ export class QmQueueSummaryComponent implements OnInit {
   dismissKeyboard(event) {
     var elem = event.currentTarget || event.target;
     // #142130605 - Requirement remove keyboard when enter pressed
-    elem.blur();
+    // elem.blur();
+    if(document.getElementById('noVisitError')) {
+      document.getElementById('noVisitError').focus();
+    }
   }
 
   isAppointmentIdValid(val: string) {

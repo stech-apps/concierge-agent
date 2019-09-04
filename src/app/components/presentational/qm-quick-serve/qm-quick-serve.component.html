@@ -48,7 +48,6 @@
                             <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                               <input  id="{{serviceId(service.internalName)}}" class="styled-checkbox" type="radio" name="services"
                                 [checked]="selectedService !== null && selectedService.id === service.id" (focus)="focusQmCheckbox(service)"
-                                (keydown.enter)="onServiceSelect(service)"
                           (keydown.space)="onServiceSelect(service)"
                                 (focusout)="focusOutQmCheckbox()">
                               <label (mouseenter)="MouseEnteredCheckbox(service)"

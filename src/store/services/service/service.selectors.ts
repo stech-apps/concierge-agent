@@ -77,6 +77,25 @@ const getQuickServices = createSelector(
   }
 );
 
+const getQuickCreateServices = createSelector(
+  getServiceState,
+  getUttParameters,
+  (serviceState: IServiceState, uttParamState: IUTTParameter) => {
+    if (uttParamState.quickServeServices == null || uttParamState.quickServeServices === '') {
+      return serviceState.services;
+    } else {
+      const uttService = uttParamState.quickServeServices.split(',');
+      if (serviceState.services.length > 0) {
+        return serviceState.services.filter(function (val) {
+          return this.indexOf(val.id.toString()) >= 0;
+        }, uttService);
+      } else {
+        return serviceState.services;
+      }
+    }
+  }
+);
+
 const isQuickServiceEnable = createSelector(
   getAllQuickServices,
   (state: IServiceConfiguration[]) => {
@@ -108,5 +127,6 @@ export class ServiceSelectors {
   isQuickServiceEnable$ = this.store.select(isQuickServiceEnable);
   isServiceLoaded$ = this.store.select(isServiceLoaded);
   getQuickServices$ = this.store.select(getQuickServices);
+  getQuickCreateServices$ = this.store.select(getQuickCreateServices);
   isQuickServiceLoaded$ = this.store.select(isQuickServiceLoaded);
 }

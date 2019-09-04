@@ -98,7 +98,7 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
     const branchSubscription = this.branchSelectors.selectedBranch$.subscribe((branch) => this.selectedBranch = branch);
     this.subscriptions.add(branchSubscription);
 
-    const serviceSubscription = this.serviceSelectors.services$.subscribe((services) => {
+    const serviceSubscription = this.serviceSelectors.getQuickCreateServices$.subscribe((services) => {
       if (services.length === 0) {
         this.serviceDispatchers.fetchServices(this.selectedBranch);
       } else {

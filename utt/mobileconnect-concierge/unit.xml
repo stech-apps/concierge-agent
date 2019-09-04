@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.7.0   2019-09-03    Quick create service filter                                 kasran
+    =============================================================================================
     7.0.6.0   2019-07-29    Support for Quick Create                                    kasran
     =============================================================================================
     7.0.5.0   2019-06-27    quickServeServices (Quick Serve Services paramter added     nalhew
@@ -58,7 +60,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.6.0"
+         unitVersion = "7.0.7.0"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -427,8 +429,8 @@
         </parameter>
         <parameter name = "quickServeServices" 
                    type = "Service" 
-                  label = "Quick Serve Included services"
-            description = "Services that shall appear in the Quick Serve list. Note that if no service is selected all services that do not hold delivered service or outcome will be listed."
+                  label = "Quick Serve / Quick Create Included services"
+            description = "Services that shall appear in the Quick Serve / Quick Create list. If no service is selected all services will be listed. Note that for Quick Serve all services except those that hold delivered service or outcome will be listed."
          multiSelection = "true"
               sortOrder = "384" 
              writeLevel = "profile" 

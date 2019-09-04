@@ -63,8 +63,9 @@
         (keydown.arrowup)="onUpButttonPressed(i)"
         (keydown.arrowright) = "onRightButttonPressed(i)"
         (keydown.arrowleft) = "onLeftButttonPressed(i)"
-        (keydown.enter)="selectVisit(i,visit.visitId)" 
-        (keydown.space)="selectVisit(i,visit.visitId)" class="qm-visit-list-body-row qm-transparent-btn" 
+        (keydown)="onKeydownEnter($event,i,visit.visitId)"
+        (keydown.space)="selectVisit(i,visit.visitId)" 
+        class="qm-visit-list-body-row qm-transparent-btn" 
         [ngClass]="{'qm-visit-list-body-row-selected':  visits && visitClicked && selectedVisitId === visit.visitId, 'info-selected':infoVisitId === visit.visitId}"
          >
          <span role="cell" class="qm-flex-grid  qm-row-text" [ngStyle]="{'height':infoVisitId === visit.visitId ? '0%':'100%'}"> 

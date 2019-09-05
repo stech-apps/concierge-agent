@@ -44,7 +44,7 @@
             <div class="qm-quick-create__item" [ngClass]="{ 'qm-quick-create__item-selected' : selectedService !== null && selectedService.id === service.id }" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
                 <div (keydown.enter)="onServiceSelect(service)" class="qm-quick-create-item" [ngClass]="{'qm-quick-create__item-focus':focusQuickCreateItem==service.id}">
                     
-                    <label for="{{serviceId(service.internalName)}}" class="qm-quick-create__item__label"  [innerHtml]="service.internalName | qmhighlight: filterText"></label>
+                    <label for="{{serviceId(service.internalName)}}" class="qm-quick-create__item__label"  (click)="onServiceSelect(service)"  [innerHtml]="service.internalName | qmhighlight: filterText"></label>
                     <div  class="qm-checkbox-label">
                             <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                               <input  id="{{serviceId(service.internalName)}}" class="styled-checkbox" type="radio" name="services"

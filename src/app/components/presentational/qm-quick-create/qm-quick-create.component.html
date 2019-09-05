@@ -7,9 +7,9 @@
                 <span class="sr-only">{{ 'button.info' | translate }}</span>
             </button>
 
-            <div class="quick-create-tooltip" *ngIf="showToolTip">
-                <div class="triangle"></div>
-                <div class="quick-create-tooltip__rec" aria-live="assertive" role="alert">
+            <div class="quick-create-tooltip" aria-live="assertive" aria-atomic="true">
+                <div class="triangle" *ngIf="showToolTip"></div>
+                <div class="quick-create-tooltip__rec" *ngIf="showToolTip">
                     {{'quick_create_tooltip'|translate}}
                 </div>
             </div>              

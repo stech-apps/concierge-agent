@@ -135,9 +135,10 @@
                       [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate)) | qmhighlight: searchText">
                     </span>
                   </button>
-                  <div class="qm-list__item--info" aria-live="assertive" class="sr-only" role="alert" *ngIf="service.showInfoInMostFrequent">
-                      {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}}
-                    </div>
+                  <div aria-live="assertive" aria-atomic="true" class="sr-only">
+                      <span *ngIf="service.showInfoInMostFrequent">
+                          {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
+                  </div>
                   <button tabindex="-1" id="{{i}}-freq-service-info" class="qm-transparent-btn"
                     *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText"
                     (click)="service.showInfoInMostFrequent = !service.showInfoInMostFrequent"
@@ -197,8 +198,9 @@
       
                     </span>
                     </button>
-                    <div class="qm-list__item--info" aria-live="assertive" class="sr-only" role="alert" *ngIf="service.showInfo">
-                      {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}}
+                    <div aria-live="assertive" aria-atomic="true" class="sr-only">
+                        <span *ngIf="service.showInfo">
+                            {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
                     </div>
 
                     <button tabindex="-1" id="{{j}}-service-info" class="qm-transparent-btn"

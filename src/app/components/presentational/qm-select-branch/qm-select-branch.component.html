@@ -115,8 +115,10 @@
                       class="qm-list__item--info__text">{{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }}</span>
                   </span>
                 </button>
-                <span class="sr-only" *ngIf="b.showInfo" aria-live="assertive" role="alert">
-                  {{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }} </span>
+                <div aria-live="assertive" aria-atomic="true" class="sr-only">
+                    <span *ngIf="b.showInfo">
+                        {{ getBranchAddressText(b) || ('label.noinformation.avaialble' | translate) }} </span>
+                </div>
                 <button tabindex="-1" class="qm-transparent-btn qm-action-btn__icon" type="button" id="{{i}}-more-info"
                   (keydown.arrowright)="onRightButttonPressedinInfo(i)"
                   (keydown.arrowleft)="onLeftButttonPressedinInfo(i)" (click)="b.showInfo = !b.showInfo">

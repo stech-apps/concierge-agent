@@ -31,9 +31,11 @@
                     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
                 </div>
             </div>
-            <div aria-live="assertive" aria-atomic="true" class="qm-service-not-found-container" [ngClass]="{'qm-service-not-found-container__empty-shadow': ((services|filterQuickServeService:filterText).length > 0)}" id="qm-service-not-found-container" tabindex="-1">
-                <span *ngIf="(services|filterQuickServeService:filterText).length === 0">{{ (services|filterQuickServeService:filterText).length === 0 ? ('service_list_not_found'|translate) : '' }}</span>
-            </div> 
+            <div aria-live="assertive" aria-atomic="true">
+                <div class="qm-service-not-found-container" [ngClass]="{'qm-service-not-found-container__empty-shadow': ((services|filterQuickServeService:filterText).length > 0)}" id="qm-service-not-found-container" tabindex="-1">
+                    <span *ngIf="(services|filterQuickServeService:filterText).length === 0">{{ (services|filterQuickServeService:filterText).length === 0 ? ('service_list_not_found'|translate) : '' }}</span>
+                </div> 
+            </div>
         </div>
 
 

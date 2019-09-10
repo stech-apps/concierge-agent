@@ -46,6 +46,8 @@ export class QmInputboxComponent implements OnInit {
     year: ''
   };
 
+  isMonthFocus = false;
+
   firstName:string
 
   private dateLabelKeys: string[] = [
@@ -446,6 +448,9 @@ export class QmInputboxComponent implements OnInit {
       this.customerCreateForm.get("dateOfBirth").markAsPristine();
     }
 
+  }
+  monthFiledSelection(value: boolean) {
+    this.isMonthFocus = value;
   }
 }
 

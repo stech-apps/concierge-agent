@@ -42,6 +42,8 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     year: ''
   };
 
+  isMonthFocus = false;
+
   private dateLabelKeys: string[] = [
     'calendar.month.none',
     'calendar.month.january',
@@ -296,5 +298,9 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       }
     })
     this.customerCreateForm.markAsDirty();
+  }
+
+  monthFiledSelection(value: boolean) {
+    this.isMonthFocus = value;
   }
 }

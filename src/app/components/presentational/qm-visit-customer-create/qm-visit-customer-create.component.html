@@ -116,14 +116,18 @@
 
               <!-- DOB Section -->
               <div class="qm-input-box__row">
-                <div class="qm-input-box__left-side" formGroupName="dateOfBirth">
-                  <label for="date_of_birth"
+                <div class="qm-input-box__left-side" role="group" aria-labelledby="date_of_birth" formGroupName="dateOfBirth">
+                  <label id="date_of_birth"
                     class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</label>
                   <div class="qm-input-box__dob-container">
                     <!-- Month -->
                     <div>
-                      <div id="date_of_birth" class="qm-dob-container">
-                          <label for="birthday_select" id="month-label" class="qm-input-box__inputbox-name qm-input-box__month-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth')?.get('month')?.hasError('incorrect') }">{{'month'|translate }}</label>
+                      <div class="qm-dob-container">
+                          <!-- #168261878 - labelForId not work in the project. We add tempry fix for this -->
+                          <div aria-live="polite" aria-atomic="true" class="sr-only">
+                              <span *ngIf="isMonthFocus">{{'months_dropdown'|translate }}</span>
+                          </div>
+                          <label for="month-selector" id="month-label" class="qm-input-box__inputbox-name qm-input-box__month-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth')?.get('month')?.hasError('incorrect') }">{{'month'|translate }}</label>
                           <label for="day" id="day-label" class="qm-input-box__inputbox-name qm-input-box__day-element-container qm-input-box__dob-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay }">{{'day'|translate }}</label>
                           <label for="year" id="year-label" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max') }">{{'year'|translate }}</label>
                       </div>
@@ -132,6 +136,9 @@
                           notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value"
                           placeholder="{{ 'field.createCustomerForm.month' | translate }}" formControlName="month"
                           tabindex="0"
+                          (focus)="monthFiledSelection(true)"
+                          (blur)="monthFiledSelection(false)"
+                          labelForId="month-selector"
                           dropdownPosition="bottom" id="birthday_select" (click)="ScrollToBottom()"
                           [attr.aria-expanded]="isExpanded" (open)="DropDownStatus(true)"
                           (close)="DropDownStatus(false)"

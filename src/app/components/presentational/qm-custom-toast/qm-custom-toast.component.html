@@ -24,7 +24,10 @@
           <input id="qm-skip-branch" class="styled-checkbox" [ngClass]="{'styled-checkbox-warning' : options.toastClass.substring(options.toastClass.length - 4) === 'nger'}" 
           type="checkbox" (focus)="skipButtonHover = true"  (change)="onSwitchChange()"
             (focusout)="skipButtonHover = false;" [(ngModel)]="isAutoClose">
-          <label for="qm-skip-branch" class="qm-checkbox__selector-icon-text" (mouseenter)="skipButtonHover = true"
+          <label for="qm-skip-branch" (mouseenter)="skipButtonHover = true"
+          (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
+          (mouseup)="mousePressed = false" ></label>
+            <label class="qm-checkbox__selector-icon-text" for="qm-skip-branch" (mouseenter)="skipButtonHover = true"
             (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
             (mouseup)="mousePressed = false">{{ 'label.autoclose' | translate }}</label>
           <div aria-hidden="true" style="height: 100%;position: absolute" *ngIf="skipButtonHover || mousePressed">

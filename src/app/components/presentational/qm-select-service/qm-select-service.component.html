@@ -85,18 +85,23 @@
                 </div>
               </div>
             </div>
-            <div aria-live="polite" class="qm-select-service__search-heading" id="searchTextDetails" tabindex="-1"
+            <div aria-hidden="true" class="qm-select-service__search-heading" id="searchTextDetails" tabindex="-1"
               *ngIf="(searchText || '').trim().length > 0 && (filteredServiceList | filterService : [filterText, flowType])?.length!==0">
-              <span>{{'label.search.result.header' | translate}} &nbsp;</span>
+              <span class="qm-select-service__search-heading-your-search">{{'label.search.result.header' | translate}} &nbsp;</span>
               <mark>{{ '"'+ searchText + '"' }}</mark>
               <span class="qm-select-service__foundbox">{{ ' ' + 
           (filteredServiceList | filterService : [filterText, flowType])?.length + ' ' 
           + ((filteredServiceList | filterService : [filterText, flowType])?.length == '1' ? ('label.service.found' | translate) :  ('label.services.found' | translate))
-       
       }}
               </span>
             </div>
-
+            <div class="sr-only" aria-live="polite">
+              <span *ngIf="((filterText || '').trim().length > 0) && ServiceCount()!==0">
+                  {{('label.search.result.header' | translate)  + ' ' + filterText + ' ' + ServiceCount() + ' ' 
+                  + ( ServiceCount() == '1' ? ('label.service.found' | translate) :  ('label.services.found' | translate))
+              }}
+              </span>
+              </div>
           </div>
         </div>
 

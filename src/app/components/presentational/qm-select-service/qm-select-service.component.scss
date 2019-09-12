@@ -162,6 +162,9 @@
       font-weight: bold;
       background: transparent;
     }
+    &-your-search {
+      color: $dark-transparent82;
+    }
     padding-top: 1rem;
     @at-root [dir="rtl"] & {
       text-align: right;

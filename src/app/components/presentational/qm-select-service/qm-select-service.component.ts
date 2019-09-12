@@ -14,6 +14,7 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ICalendarService } from '../../../../models/ICalendarService';
 import { ICalendarBranch } from '../../../../models/ICalendarBranch';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
+import { FilterServicePipe } from './filter-service.pipe';
 
 @Component({
   selector: 'qm-select-service',
@@ -589,5 +590,9 @@ export class QmSelectServiceComponent implements OnInit {
         }
       }, 100);
     }}
+  }
+  ServiceCount() {
+    var sampleFilter = new FilterServicePipe()
+      return sampleFilter.transform(this.filteredServiceList, [this.filterText, this.flowType]).length;     
   }
 }

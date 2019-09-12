@@ -1,53 +1,75 @@
 <div role="table" class="qm-queue-list" dir="{{userDirection$ | async}}">
-    <caption class="sr-only">Queue details</caption>
+  <caption class="sr-only">Queue details</caption>
   <div class="qm-queue-list__headers qm-flex-grid" role="rowgroup">
     <div role="row" style="display: flex;width:100%">
-    <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-45 qm-flex-grid" (click)="onSortClickbyQueue()">
-      <div class="qm-queue-list-header-item">{{'label.ql_queue' | translate}}</div>
-      <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true,'selected-sort-icon':sortedBy =='Queue' }"></i>
-        <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
-      </button>    
-    </div>
-  
-    <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-15 qm-flex-grid"  (click)="onSortClickbyWaitingCustomers()">
-      <div class="qm-queue-list-header-item-label">{{'label.ql_customer' | translate}}</div>
-      <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='WaitingCustomers' }"></i>
-        <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
-      </button>
-    </div>
+      <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-45 qm-flex-grid"
+        (click)="onSortClickbyQueue()">
+        <div class="qm-queue-list-header-item">{{'label.ql_queue' | translate}}</div>
+        <button class="qm-transparent-btn"><i class="sort-icon"
+            [ngClass]="{'icon-caret-up': sortAscending !== true, 'icon-caret-down': sortAscending ===  true,'selected-sort-icon':sortedBy =='Queue' }"></i>
+          <span
+            class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+        </button>
+      </div>
 
-    <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-15 qm-flex-grid"  (click)=" onSortClickbyMaxWaitTime()">
-    <div class="qm-queue-list-header-item-label"> {{ 'label.wait_time' | translate}} </div>
-    <button class="qm-transparent-btn"><i class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='MaxWaitTime' }"></i>
-      <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
-    </button>
+      <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-15 qm-flex-grid"
+        (click)="onSortClickbyWaitingCustomers()">
+        <div class="qm-queue-list-header-item-label">{{'label.ql_customer' | translate}}</div>
+        <button class="qm-transparent-btn"><i class="sort-icon"
+            [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='WaitingCustomers' }"></i>
+          <span
+            class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+        </button>
+      </div>
+
+      <div role="columnheader" scope="col" class="qm-queue-list-header-item qm-col-15 qm-flex-grid"
+        (click)=" onSortClickbyMaxWaitTime()">
+        <div class="qm-queue-list-header-item-label"> {{ 'label.wait_time' | translate}} </div>
+        <button class="qm-transparent-btn"><i class="sort-icon"
+            [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true,'selected-sort-icon':sortedBy =='MaxWaitTime' }"></i>
+          <span
+            class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+        </button>
+      </div>
+
+      <div role="columnheader" scope="col" *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label">
+        {{ 'label.est_wait_time' | translate}} </div>
     </div>
-    
-    <div role="columnheader" scope="col" *ngIf="showEstWaitTime" class="qm-col-15 qm-queue-list-header-item-label"> {{ 'label.est_wait_time' | translate}} </div>
   </div>
-  </div>  
 
-  <div aria-live="polite" *ngIf="updatedQueue !== undefined" class="sr-only">{{ updatedQueue.customersWaiting + ('people_waiting_label' | translate) + updatedQueue.name }}</div>
-  <div role="rowgroup" class="qm-queue-list__body" [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable, 'qm-queue-list__body-native':isNative }" >
-    <button role="row" class="qm-flex-grid qm-queue-list-body-row qm-transparent-btn qm-transparent-row-btn" *ngFor="let q of queueCollection;let i = index" [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
-    (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}" 
-    (click)="selectQueue(q)" (keydown.enter)="selectQueue(q)" (keydown.space)="selectQueue(q)" [attr.tabindex]=" i==0 ? 0 : -1" id="{{i}}-queue-name" (keydown.arrowdown)="onDownButttonPressed(i)"
-    (keydown.arrowup)="onUpButttonPressed(i)">
-        <span role="cell" class="qm-col-45 qm-queue-name"  [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
-        (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">{{q.name}}</span>
-        <span role="cell" class="qm-col-15" *ngIf="!queueFetchFailed">{{q.customersWaiting }}</span>
-        <span role="cell" class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
-          <span class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time" [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></span>
-          <span> {{q.max_w_time }}  <span *ngIf = "q.max_w_time != '-'">{{'min'|translate}}</span></span>
-        </span>
-        <span  role="cell" *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span *ngIf = "q.est_w_time != '-'"> {{'min'|translate}}</span></span>
-    </button>  
-    
+  <div aria-live="polite" *ngIf="updatedQueue !== undefined" class="sr-only">
+    {{ updatedQueue.customersWaiting + ('people_waiting_label' | translate) + updatedQueue.name }}</div>
+  <div role="rowgroup" class="qm-queue-list__body"
+    [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable, 'qm-queue-list__body-native':isNative }">
+    <div role="row" class="qm-flex-grid qm-queue-list-body-row qm-transparent-btn qm-transparent-row-btn"
+      *ngFor="let q of queueCollection;let i = index"
+      [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+    (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}"
+ id="{{i}}-queue-name" >
+      <span role="cell" class="qm-col-45 qm-queue-name"
+        [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && 
+        this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">
+        <a href="#" onclick="return false;" class="qm-queue-name-link" (click)="selectQueue(q)">
+            {{q.name}}      
+        </a>         
+      </span>
+      <span role="cell"  class="qm-col-15" *ngIf="!queueFetchFailed">
+        {{q.customersWaiting }}</span>
+      <span role="cell" class="qm-col-15 max-wait-time-container" *ngIf="!queueFetchFailed">
+        <span class="qm-wait-icon-inside-container"><i class="icon-alert-star max-wait-time"
+            [ngClass]="{'gray-indicator': queueIndicator.isGrayIndicator(q), 'red-indicator': queueIndicator.isRedIndicator(q), 'yellow-indicator': queueIndicator.isYellowIndicator(q)}"></i></span>
+        <span> {{q.max_w_time }} <span *ngIf="q.max_w_time != '-'">{{'min'|translate}}</span></span>
+      </span>
+      <span role="cell" *ngIf="showEstWaitTime && !queueFetchFailed" class="qm-col-15">{{ q.est_w_time || '-' }} <span
+          *ngIf="q.est_w_time != '-'"> {{'min'|translate}}</span></span>
+    </div>
+
     <div *ngIf="queueFetchFailed" class="qm-queue-failed-count" aria-live="polite">
       <div><i class="qm-action-btn__icon icon-warn" aria-hidden="true"></i></div>
       <div>{{'ql_connectivity_issue' | translate}}</div>
       <div>{{'ql_unble_to_update_queue' | translate}}</div>
     </div>
   </div>
-  
+
 </div>

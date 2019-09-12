@@ -69,6 +69,9 @@ export class QmDropDownComponent implements OnInit {
   labelProperty: string = "text";
 
   @Input()
+  isTopView: boolean;
+
+  @Input()
   items: Array<IDropDownItem | any>;
 
   @Output("itemClick")

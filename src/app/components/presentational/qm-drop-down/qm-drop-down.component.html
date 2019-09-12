@@ -1,9 +1,12 @@
 <div class="qm-dropdown" tabindex="0" [ngClass]="{'qm-dropdown--unselected': isItemSelected, 'qm-dropdown--noitems': !isItemSelected && items.length === 0 }" dir="{{userDirection$ | async}}">
-  <button class="qm-dropdown-button qm-tab qm-tab-click" [attr.aria-expanded]="isExpanded" [ngClass]="{'qm-tab-click-active': isExpanded, 'qm-tab-disabled': (items.length < 2)}" (click)="dropDownExpand($event)">
+  <button aria-haspopup="true" class="qm-dropdown-button qm-tab qm-tab-click" [attr.aria-expanded]="isExpanded" [ngClass]="{'qm-tab-click-active': isExpanded, 'qm-tab-disabled': (items.length < 2)}" (click)="dropDownExpand($event)">
     <div class="qm-dropdown-button--label" [ngClass]="{'qm-dropdown-button--label-selected': isItemSelected}">{{caption | translate}}</div>
     <div  class="qm-dropdown-button--arrow  icon-caret-down" [ngClass]="{'icon-caret-up': isExpanded}" *ngIf="items.length > 1"></div>
   </button>
-  <div role="combobox" class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
+  <div aria-live="polite" aria-atomic="true" class="sr-only">
+    <span *ngIf="isExpanded === true">{{ isTopView ? ('branch_dropdown'| translate) : ('service_point_dropdown'| translate) }}</span>
+  </div>
+  <div class="qm-dropdown__content" *ngIf="items.length > 1" [ngClass]="{'qm-dropdown__content--expanded': isExpanded}" #dropdownContent>
       <div class="qm-search qm-search--large qm-dd-search">
           <input (keydown.arrowdown)="onItemDownButttonPressed(-1)" #searchInput [(ngModel)]="searchText" (click)="clickOnSearch($event)" #qmClearInputRef = qmClearInputRef qmClearInput (input)="handleInput($event)"
                 class="qm-search__input ng-pristine ng-valid ng-touched "
@@ -13,9 +16,12 @@
             <i aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
             <span class="sr-only">{{'search'| translate}}</span>
           </button>
+          <div aria-live="assertive" aria-atomic="true" class="sr-only">
+            <span *ngIf="items && (items|qmDropDownFilter:searchText:labelProperty).length > 0 && searchText && searchText.length > 0">{{ (items|qmDropDownFilter:searchText:labelProperty).length +  (isTopView ? ('label.branches.found' | translate) : ('label.service_points.found' | translate)) }}</span>
+          </div>
         </div>
 
-    <ul class="qm-dropdown__content__ul" role="listbox">
+    <ul role="listbox" [ngStyle]="{'max-height': isTopView === true ? '30vh' : '18vh'}" class="qm-dropdown__content__ul">
       <li role="option" *ngFor="let item of items | qmDropDownFilter : searchText : labelProperty; let itemIndex = index"
       (keydown.arrowdown)="onItemDownButttonPressed(itemIndex)"
       (keydown.arrowup)="onItemUpButttonPressed(itemIndex)"

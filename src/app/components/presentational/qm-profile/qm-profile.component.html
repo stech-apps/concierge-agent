@@ -27,6 +27,7 @@
         [items]="branches"
         (itemClick)="onBranchSelect($event)"
         labelProperty="name"
+        [isTopView]="true"
       ></qm-drop-down>
       <div class="qm-dropdown-heading">
         {{ "label.profile.service" | translate }}
@@ -41,6 +42,7 @@
         (itemClick)="onServicePointSelect($event)"
         [items]="servicePoints"
         labelProperty="name"
+        [isTopView]="false"
       ></qm-drop-down>
 
       <div class="qm-error-message" *ngIf="errorMessage" role="alert"> {{ errorMessage }}</div>

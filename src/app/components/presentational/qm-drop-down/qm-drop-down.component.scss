@@ -80,11 +80,10 @@
 
         &--expanded {
             display: block;
-            max-height: 50vh;
-            overflow-y: auto;
         }
         
         &__ul {
+            overflow-y: auto;
             @at-root [dir="ltr"] & {
                 margin-left: -40px;
             }

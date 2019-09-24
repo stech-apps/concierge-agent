@@ -1,8 +1,8 @@
 {
     "remote_deploy": {
-        "host": "10.2.3.35",
-        "username": "kasun",
-        "password": "Love2017KP"
+        "host": "10.2.1.33",
+        "username": "QM-ORCHESTRA-03/jenkins",
+        "password": "test123$"
     },
     "artifactory": {
         "host": "artifactory.qmatic.net",

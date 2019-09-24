@@ -48,3 +48,5 @@ gulp.config.json
 
 # Remove proxy config
 proxy.config.json
+/cypress/screenshots
+/cypress/videos

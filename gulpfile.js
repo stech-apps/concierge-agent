@@ -10,7 +10,7 @@ var getDirName = require('path').dirname;
 require('events').EventEmitter.prototype._maxListeners = 100;
 
 // Remote Deployment Defaults
-var remoteDeploymentDefaultPath = 'C://qmatic//orchestra//system//custdeploy';
+var remoteDeploymentDefaultPath = 'C:\\qmatic\\orchestra\\system\\custdeploy';
 var remoteDeploymentDefaultLangPath =
   'C:\\qmatic\\orchestra\\system\\conf\\lang';
 var remoteDeploymentDefaultHost = 'localhost';
@@ -181,7 +181,8 @@ gulp.task('deploy:war', function () {
     return gulp.src('./dist/webapp/connectconcierge.war').pipe(
       sftp({
         remotePath: remoteDeploymentDefaultPath,
-        remotePlatform: remoteDeploymentPlatform,
+        remotePlatform: 'windows',
+        agentForward: true,
         host: remoteDeployHost,
         user: remoteDeployUsername,
         pass: remoteDeployPassword,

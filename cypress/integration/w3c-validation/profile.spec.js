@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+
 const config = require('../../config/config.json')
 
 context('Profile Page', () => {
@@ -13,6 +14,7 @@ context('Profile Page', () => {
 
   it('W3C Validate profile page', () => {
     cy.contains('Skip next time', {timeout : 3000});
+    cy.debug();
     cy.document().then((c)=> {
       var bodycontent = c.documentElement.innerHTML;
       cy.request({

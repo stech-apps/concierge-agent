@@ -50,3 +50,5 @@ gulp.config.json
 proxy.config.json
 /cypress/screenshots
 /cypress/videos
+/cypress/screenshots
+/cypress/videos

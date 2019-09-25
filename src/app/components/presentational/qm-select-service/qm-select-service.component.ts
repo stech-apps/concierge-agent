@@ -380,11 +380,17 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   handleServiceList(selectedService: IServiceViewModel, isRemove: boolean){
+    if(this.selectedServiceList.length === 20){
+      this.translateService.get('label.limit_max_service').subscribe(v => {
+        this.toastService.errorToast(v);
+      });
+    } else {
     this.selectedServiceList.push(selectedService);
     this.selectedServiceList = this.selectedServiceList.filter(
       (val: IService) =>
         val.id !== 0
     );
+  
     
     if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
       this.timeSlotDispatchers.resetTimeslots();
@@ -407,6 +413,7 @@ export class QmSelectServiceComponent implements OnInit {
     if(this.selectedServiceList.length === 1 && !(this.isMultiServiceOn)){
       this.doneButtonClick();
     }
+  }
   }
 
   onServiceRemove(selectedService: IServiceViewModel){

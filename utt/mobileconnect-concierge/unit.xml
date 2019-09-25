@@ -326,7 +326,7 @@
                    type = "Integer"
            defaultValue = "15"
                   label = "Reconnect timer"
-            description = "In case of weak network this timer indicates how long time the app will keep trying to reconnect."
+            description = "In case of a weak network, this timer indicates how long time in minutes the connect native app will keep trying to reconnect."
              writeLevel = "profile"
               privilege = "install:adminAdmin"
                  regexp = "^\d+$"

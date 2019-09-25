@@ -32,7 +32,7 @@ export class QmSelectServiceComponent implements OnInit {
   selectedBranch: IBranch;
   loginBranch: IBranch;
   isMultiServiceOn: boolean;
-  private maxServiceSelection = 5;
+  private maxServiceSelection = 20;
   filterText: string = '';
   inputChanged: Subject<string> = new Subject<string>();
   newf: FLOW_TYPE.CREATE_APPOINTMENT;
@@ -367,7 +367,7 @@ export class QmSelectServiceComponent implements OnInit {
         }
       }, ()=> {});
     }
-    else if(this.selectedServiceList.length === 5){
+    else if(this.selectedServiceList.length === 20){
       this.translateService.get('label.limit_max_service').subscribe(v => {
         this.toastService.errorToast(v);
       });

@@ -38,6 +38,21 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 14</h2>
+
+**Date: 27/09/2019**
+ 
+**Build number: 14**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **167509836** | **WCAG regression  - Automatic Testing** |
+| **168534293** | **Increase number of max services in multi service** |
+
+----------
+
 <h2>Version 13</h2>
 
 **Date: 30/08/2019**
@@ -72,13 +87,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **167801817** | **Android Landscape mode > Menubar item texts partially visible** |
 | **167776864** | **iOS/Android > Profile page - navigation UI issue** |
 
-<h3>Known issues</h3>
-| **Id/Jira** | **Description** |
-| --- | --- |
-| **xxx** | **Bug header** Bug text |
-
-<h3>Upgrade instructions</h3> 
-
 ----------
 
 <h2>Version 12</h2>
@@ -94,19 +102,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **165784415** | **Concierge security vulnerability** node packages were updated and security vulnarabilities were |
 | **166025007** | **Quick Serve  Update - Casual Caller** |
 
-<h3>Bug fixes</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
-| **xxx** | **Bug header** Solution text |
-
-<h3>Known issues</h3>
-| **Id/Jira** | **Description** |
-| --- | --- |
-| **xxx** | **Bug header** Bug text |
-
-<h3>Upgrade instructions</h3> 
-
 ----------
 
 <h2>Version 11</h2>
@@ -115,22 +110,11 @@ This document describes the new features, bug corrections, known issues and reco
  
 **Build number:11**
 
-<h3>Stories</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **165115173** | **Updated phrases (upper to lowercase) not handled in upgraded systems** |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-<h3>Upgrade instructions</h3>
 
 ----------
 
@@ -140,23 +124,11 @@ This document describes the new features, bug corrections, known issues and reco
  
 **Build number:10**
 
-<h3>Stories</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **165016712** | **Desktop browser look odd with LDAP users (lang issue?)** |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 
@@ -166,23 +138,11 @@ This document describes the new features, bug corrections, known issues and reco
  
 **Build number:9**
 
-<h3>Stories</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
-
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **164692814** | **Concierge doesn't work on tablet Android with Android 4.4.4** |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 
@@ -221,13 +181,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163110257** | **Robustness: full packetloss and user press Create app flow, no Network Error message** |
 | **164488655** | **iOS > Create Visit Flow > Service list not loaded (Random issue)** |
 
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
-
 ----------
 
 <h2>Version 7</h2>
@@ -251,13 +204,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **161052476** | **Robustness : Robustness is not handled in User profile page** |
 | **161052471** | **Robustness : "Loading time slots" text not appear in create and edit appointment flows** |
 
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
-
 ----------
 
 <h2>Version 6</h2>
@@ -279,13 +225,6 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **163945367** | **IE11 expand queue issue** |
 | **161052482** | **Robustness: Edit visit flow > wrong msg appear if network drop while fetching visits.** |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 
@@ -316,15 +255,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163619605** | **Edit appointment flow > Wrong appointment time when scan a QR code of an appointment place for different branch than logged in.** Fixed the bug |
 | **163750353** | **Edit appointment > Find Appointment fish > Scan QR > default list is not loaded upon removal of selected appointment.** Fixed the bug |
 | **163816798** | **Text in topbar appear outside the fish (if translated)** Fixed the bug |
-
-<h3>Known issues</h3>
-
-**Orchestra**
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 <h2>Version 4</h2>
@@ -360,14 +290,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **160953264** | **Distributed environment > no branch is set, but user allows to go concierge home page.** Fixed the bug |
 | **163283312** | **UX > Text length issues** Fixed the bug |
 | **163289539** | **Scan QR Code in edit/arrive appointment flow gives "Visit not found" message** Fixed the bug |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-| **163223586** | **Internal Description Text** We cannot show internal description in the create appointment flow as we do not have that information available for create appointment flow services |
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 
@@ -410,14 +332,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **163116573** | **Edit Appointment - Try to Reschedule after selecting a time which is in the past - No restcall to fetch the timeslots.** |
 | **162631162** | **Time reserved but confirm done after reservation timed out and time is in the passed** |
 
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-| **xxx** | **Bug header** Bug text |
-
-<h3>Upgrade instructions</h3> 
-
 ----------
 <h2>Version 2</h2>
 
@@ -452,14 +366,6 @@ This document describes the new features, bug corrections, known issues and reco
 | **161644691** | **Click in Month field shall move page up.** |
 | **161049497** | **Edit Visit Flow > Wrong msg in already served/deleted visit.** Fix the bug |
 | **161503301** | **Create appointment flow > Service banner > Tool tip for "?" icon is not implemented..**|
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
----
-
-<h3>Upgrade instructions</h3> 
 
 ----------
 

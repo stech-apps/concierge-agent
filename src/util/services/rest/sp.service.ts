@@ -187,12 +187,18 @@ export class SPService implements OnDestroy {
     }
     if ((sms && sms.length === 0) || tempCustomer && tempCustomer.phone && tempCustomer.phone.length > 0) {
       params["phoneNumber"] = this.util.buildPhoneNumber(tempCustomer.phone);
+      params["primaryCustomerPhoneNumber"] = this.util.buildPhoneNumber(tempCustomer.phone); // TEN-298+CONCI-933
     }
     if (tempCustomer && tempCustomer.email && tempCustomer.email.length > 0) {
       params["email"] = tempCustomer.email;
+      params["primaryCustomerEmail"] = tempCustomer.email; // TEN-298+CONCI-933
     }
     if (tempCustomer && ((tempCustomer.firstName && tempCustomer.firstName.length > 0) || (tempCustomer.lastName && tempCustomer.lastName.length > 0))) {
       params["customers"] = tempCustomer.firstName + " " + tempCustomer.lastName;
+      // start: TEN-298+CONCI-933
+      params["primaryCustomerFirstName"] = tempCustomer.firstName;
+      params["primaryCustomerLastName"] = tempCustomer.lastName;
+      // end
     }
 
     return params;

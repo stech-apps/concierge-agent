@@ -180,7 +180,7 @@ export class SPService implements OnDestroy {
       params["phoneNumber"] = this.util.buildPhoneNumber(sms);
     }
     if (notes && notes.length > 0) {
-      params["custom1"] = this.util.replaceCharcter(notes);
+      params["custom1"] = encodeURI(notes);
     }
     if (vipLevel !== VIP_LEVEL.NONE) {
       params["level"] = vipLevel;

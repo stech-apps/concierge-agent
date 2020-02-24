@@ -73,7 +73,7 @@
             *ngIf="useCalendarEndpoint && appointmentInfo?.notes">
             <span class="qm-appointment-info-item__icon icon-edit"></span>
             <span class="qm-appointment-info-item__text">
-                {{ appointmentInfo?.notes}}
+                {{ URIDecorder(appointmentInfo?.notes)}}
             </span>
             <span class="sr-only">{{ 'button.edit' | translate }}</span>
         </div>

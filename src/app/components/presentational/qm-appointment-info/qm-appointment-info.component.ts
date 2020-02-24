@@ -80,4 +80,7 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnDestroy() {
   }
+  URIDecorder(val) {
+    return decodeURI(val);
+  }
 }

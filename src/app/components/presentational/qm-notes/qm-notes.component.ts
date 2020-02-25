@@ -128,16 +128,15 @@ export class QmNotesComponent implements OnInit, OnDestroy {
 
   toggleNotesInput() {
     this.notesInputOpened = !this.notesInputOpened;
-    const modal = this.modalService.openNotesModal(this.notes);
+    const modal = this.modalService.openNotesModal(decodeURI(this.notes));
     modal.result.then((value)=> {
       if(value !== null) {
         this.onNotesChanged.emit(value);
       }
     });
   }
-
-  test(){
-
+  
+  URIDecorder(val) {
+    return decodeURI(val);
   }
-
 }

@@ -9,7 +9,7 @@
     <!-- <p (click)="test()">{{isCustomerSelected|json}}</p> -->
 
     <div class="qm-notes__textarea" (click)="toggleNotesInput()">
-        {{notes}}
+        {{URIDecorder(notes)}}
     </div>
     <button class="qm-notes-btn js-notes-btn" (click)="toggleNotesInput()">
         <span class="qm-notes-btn__text" [ngClass]="{ 'qm-notes-btn__text--has-text' : hasNotesText() }" [innerHTML]="getButtonText()"></span>

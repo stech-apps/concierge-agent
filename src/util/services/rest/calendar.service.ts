@@ -42,7 +42,7 @@ export class CalendarService implements OnDestroy {
   createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
       var body = { 
           "title" : "appointment", 
-          "notes" : encodeURI(notes), 
+          "notes" : encodeURIComponent(notes), 
           "customers" : [this.buildCustomerObject(customer)], 
           "custom" : this.buildCustomObject(email, sms, notificationType) }
     return this.http

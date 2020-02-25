@@ -249,9 +249,10 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       firstName: formModel.firstName as string,
       lastName: formModel.lastName as string,
       email: formModel.email as string,
-      phone: phoneNo
+      phone: phoneNo,
+      dob: (formModel.dateOfBirth.year + '-' + formModel.dateOfBirth.month  + '-' + formModel.dateOfBirth.day) as string
     };
-
+    console.log(customer);
     // trim trailing spaces
     for (const key in customer) {
       if (customer[key] && customer[key].trim) {

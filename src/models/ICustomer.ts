@@ -16,4 +16,5 @@ export interface ICustomer {
   identificationNumber?: string;
   cardNumber?: string;
   created?: string;
+  dob? : string;
 }

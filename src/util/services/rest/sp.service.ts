@@ -201,6 +201,10 @@ export class SPService implements OnDestroy {
       // end
     }
 
+    if (tempCustomer && tempCustomer.dob) {
+      params["primaryCustomerDateOfBirth"] = new Date(tempCustomer.dob);
+    }
+
     return params;
   }
 

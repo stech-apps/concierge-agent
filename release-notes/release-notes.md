@@ -38,6 +38,21 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 15</h2>
+
+**Date: 28/02/2020**
+ 
+**Build number: 15**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **171248831** | **Create visit in Concierge with unknown customer information should be visible in cloud-visits** |
+| **169149219** | **save newline characters to Concierge notes field.** |
+
+----------
+
 <h2>Version 14</h2>
 
 **Date: 27/09/2019**

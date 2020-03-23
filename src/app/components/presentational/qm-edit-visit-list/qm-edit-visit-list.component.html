@@ -154,8 +154,36 @@
                   </span>
                 </button>
               </span>
+              <span *ngIf="canSendSMS" class="visit-tray-option visit-transfer-sp-btn">
+                <div class="visit-tray-extended">
+                  <button class="content qm-transparent-btn" (click)="setMobileNoVisibility()">
+                    <span class="icon">
+                      <i class="icon-mobile-ticket"></i>
+                    </span>
+                    <span class="label">
+                      {{'label.visit.send.sms' | translate}}
+                    </span>
+                  </button>
+                  <div *ngIf="isMobileNoVisible">
+                    <div class="spliter"></div>
+                    <div style="display:flex" class="qm-search-visit-container qm-queue-summary__left" [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
+                      <span class="qm-phone-number-container">
+                        <label for="smsPoneNumber" class="sr-only">{{ 'label.phone' | translate }}</label>
+                        <input class="number-input" pattern="^[0-9\+\s]+$" type="tel" inputmode="numeric" placeholder="{{ 'label.phone' | translate }}" id="smsPoneNumber"
+                         (input)="handlePhoneNumber($event)" [(ngModel)]="phoneNumber" 
+                         autocomplete="off" />
+                      </span>
+                      <button *ngIf="!isSMSTrigger" class="send-icon" [disabled]="!isValiedPhoneNumber" (click)="inputText = ''; triggerSendSMSEvent(visit)">
+                        <i aria-hidden="true" class="qm-action-btn__icon icon-next qm-close__icon qm-phone-number-container__icon"></i>
+                        <span class="sr-only">{{ button.send.sms | translate }}</span>
+                      </button>
+                      <div *ngIf="isSMSTrigger" class="sms-loader"></div>
+                    </div>
+                  </div>
+                </div>
+              </span>
 
-              <div style="display:flex;width: 66%;margin: auto;">
+              <div style="display:flex;width: 100%;margin: auto;">
                 <span *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn"  >
                   <button class="qm-transparent-btn bottom-icon-container" (click)="deleteVisit(i,$event)">
                     <span class="icon"> <i class="icon-delete delete-icon"></i></span>

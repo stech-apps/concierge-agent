@@ -424,6 +424,60 @@
         }
     }
 
+    .qm-phone-number-container {
+        width: 85%;
+
+        .number-input {
+            width: 90%;
+            border: none;
+            font-size: 16px;
+            padding: 10px 0;
+        }
+
+        &__icon {
+            @at-root [dir="ltr"] & {
+                transform:rotate(180deg);
+            }
+        }
+    }
+
+    .visit-tray-extended {
+        width: 100%;
+        .spliter {
+            width: 100%;
+            height: 1px;
+            background: $primary-pink;
+        }
+
+        .send-icon {
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .sms-loader {
+            border: 1px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 1px solid #1a1c34;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin: 10px;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }
+          
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    }
+
     .visit-tray-option {
         display: flex;
         //flex-direction: column;
@@ -431,7 +485,7 @@
         border-radius: 5px;
         width: 73%;
         margin: 33px auto;
-        justify-content: center;
+        justify-content: flex-start;
    
         button {
             display: flex;

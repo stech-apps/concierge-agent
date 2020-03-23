@@ -62,6 +62,11 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canTransferQFirst: boolean = false;
   canTransferQLast: boolean = false;
   canTransferQWait: boolean = false;
+  canSendSMS = false;
+  isMobileNoVisible = false;
+  phoneNumber: string;
+  isValiedPhoneNumber = false;
+  isSMSTrigger = false;
   canDelete: boolean = false;
   isQuickServeEnable:boolean;
   canCherryPick: boolean = false;
@@ -93,7 +98,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     private nativeApi: NativeApiService,
     private queueDispatcher: QueueDispatchers,
     private systemInfoSelectors: SystemInfoSelectors,
-    private errorHandler: GlobalErrorHandler
+    private errorHandler: GlobalErrorHandler,
+    private util: Util
   ) {
   
 
@@ -190,6 +196,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.canDelete = uttParameters.delVisit;
           this.canCherryPick = uttParameters.cherryPick;
           this.isQuickServeEnable = uttParameters.quickServe;
+          this.canSendSMS = uttParameters.sndSMS;
 
           if (this.canTransferQ == true && (this.canTransferQFirst == true || this.canTransferQLast == true || this.canTransferQWait == true)) {
             this.canTransferQ = true;
@@ -404,6 +411,31 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         document.getElementById('qm-title').focus();
       }
     }, 100);
+  }
+
+  setMobileNoVisibility() {
+    this.isMobileNoVisible = !this.isMobileNoVisible;
+  }
+
+  handlePhoneNumber($event) {
+    this.isValiedPhoneNumber = this.util.phoneNoRegEx().test($event.target.value);
+  }
+
+  triggerSendSMSEvent (visit: Visit) {
+    this.isSMSTrigger = true;
+    this.spService.sendSMSEvent(this.selectedbranchId, visit, this.phoneNumber).subscribe(result => {
+      this.isSMSTrigger = false;
+      this.isMobileNoVisible = false;
+      this.translateService.get('toast.send.sms.success').subscribe(v => {
+        this.toastService.infoToast(v);
+      });
+    }
+    , error => {
+      this.isSMSTrigger = false;
+      this.translateService.get('toast.send.sms.fail').subscribe(v => {
+        this.toastService.errorToast(v);
+      });
+    });
   }
 
   cherryPickVisit(index: number, event: Event) {

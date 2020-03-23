@@ -142,6 +142,20 @@ export class SPService implements OnDestroy {
       );
   }
 
+  sendSMSEvent(branchId: number, visit: Visit, phoneNumber: string) {
+    const smsEventName = 'SEND_VISIT_SMS';
+    const body = {
+      "visit": JSON.stringify(visit),
+      "phoneNumber": phoneNumber,
+    };
+
+    return this.http
+      .post(`${servicePoint}/branches/${branchId}/visits/${visit.visitId}/events/${smsEventName}`, body)
+      .pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
+  }
+
   createVisit(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, customer: ICustomer, sms: string, isTicketPrint: boolean, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE) {
     var body = {
       "services": this.buildService(services),

@@ -43,11 +43,11 @@
     [ngClass]="{'queue-list__body-collapsed':isCollapesed === 'true', 'qm-queuefetch-failed': queueFetchFailed,'list-without-quickserve': !isQuickServeEnable, 'qm-queue-list__body-native':isNative }">
     <div role="row" class="qm-flex-grid qm-queue-list-body-row qm-transparent-btn qm-transparent-row-btn"
       *ngFor="let q of queueCollection;let i = index"
-      [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+      [ngStyle]="{'cursor': (editVisitEnable && !(this.canDelete == false && this.canSendSMS == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
     (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) ) ? 'pointer' : ''}"
  id="{{i}}-queue-name" >
       <span role="cell" class="qm-col-45 qm-queue-name"
-        [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+        [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canSendSMS == false && this.canTransferSP == false && this.canTransferStaff == false &&
         (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && 
         this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">
         <a href="#" onclick="return false;" class="qm-queue-name-link" (click)="selectQueue(q)">

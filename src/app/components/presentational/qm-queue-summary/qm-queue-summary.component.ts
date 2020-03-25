@@ -48,6 +48,7 @@ export class QmQueueSummaryComponent implements OnInit {
   userDirections: string;
   isShowQueueView:boolean;
   canTransferSP: boolean;
+  canSendSMS: boolean;
   canTransferQ: boolean;
   canTransferStaff: boolean;
   canTransferQFirst: boolean;
@@ -97,7 +98,8 @@ export class QmQueueSummaryComponent implements OnInit {
         this.editVisitEnable = uttpParams.editVisit;
         this.visitQR = uttpParams.visitQR;
         this.canTransferSP = uttpParams.trServPool;
-        this.canTransferQ = uttpParams.btnQueueTransfer
+        this.canTransferQ = uttpParams.btnQueueTransfer;
+        this.canSendSMS = uttpParams.sndSMS;
         this.canTransferStaff = uttpParams.trUserPool;
         this.canTransferQFirst = uttpParams.btnTransferFirst;
         this.canTransferQLast = uttpParams.btnTransferLast;

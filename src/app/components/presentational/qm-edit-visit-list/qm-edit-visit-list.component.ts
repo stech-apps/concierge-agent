@@ -426,12 +426,15 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.spService.sendSMSEvent(this.selectedbranchId, visit, this.phoneNumber).subscribe(result => {
       this.isSMSTrigger = false;
       this.isMobileNoVisible = false;
+      this.phoneNumber = null;
       this.translateService.get('toast.send.sms.success').subscribe(v => {
         this.toastService.infoToast(v);
       });
     }
     , error => {
       this.isSMSTrigger = false;
+      this.isMobileNoVisible = false;
+      this.phoneNumber = null;
       this.translateService.get('toast.send.sms.fail').subscribe(v => {
         this.toastService.errorToast(v);
       });

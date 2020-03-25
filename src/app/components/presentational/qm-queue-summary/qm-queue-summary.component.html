@@ -1,5 +1,5 @@
 
-<div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+<div *ngIf="(editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canSendSMS == false && this.canTransferSP == false && this.canTransferStaff == false &&
 (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) )" style="display:flex" class="qm-search-visit-container qm-queue-summary__left" dir="{{ userDirection$ | async }}"    [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
   <span class="qm-search-box-container">
     <label for="visitSearchVisit" class="sr-only">{{ 'label.visit_search_placeholder' | translate }}</label>

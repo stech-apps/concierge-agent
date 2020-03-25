@@ -27,6 +27,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   showEstWaitTime: boolean;
   isQuickServeEnable:boolean;
   canTransferSP: boolean;
+  canSendSMS: boolean;
   canTransferQ: boolean;
   canTransferStaff: boolean;
   canTransferQFirst: boolean;
@@ -73,6 +74,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
       if (uttpParams) {
         this.showEstWaitTime = uttpParams.estWaitTime;
         this.canTransferSP = uttpParams.trServPool;
+        this.canSendSMS = uttpParams.sndSMS;
         this.canTransferQ = uttpParams.btnQueueTransfer;
         this.canTransferStaff = uttpParams.trUserPool;
         this.canTransferQFirst = uttpParams.btnTransferFirst;
@@ -198,7 +200,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   selectQueue(q) {
     if(this.editVisitEnable){
    
-    if (this.canDelete == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
+    if (this.canDelete == false && this.canSendSMS == false && this.cancherypick == false && this.canTransferSP == false && this.canTransferStaff == false &&
       (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && this.canTransferQLast == false && this.canTransferQWait == false))) {
       
     } else {

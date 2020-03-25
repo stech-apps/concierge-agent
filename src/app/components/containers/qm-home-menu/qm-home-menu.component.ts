@@ -140,7 +140,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         var canTransferQLast = uttpParams.btnTransferLast;
         var canTransferQWait = uttpParams.btnTransferSort;
         var canDelete = uttpParams.delVisit;
-        if (canDelete == false && canCherryPick == false && canTransferSP == false && canTransferQ == false && canTransferStaff == false &&
+        var canSendSMS = uttpParams.sndSMS;
+        if (canDelete == false && canCherryPick == false && canTransferSP == false && canTransferQ == false && canSendSMS && canTransferStaff == false &&
            (canTransferQ == false || (canTransferQ == true && canTransferQFirst == false && canTransferQLast == false && canTransferQWait == false))) {
             this.isEditVisitFlowDisabled =true;
         }

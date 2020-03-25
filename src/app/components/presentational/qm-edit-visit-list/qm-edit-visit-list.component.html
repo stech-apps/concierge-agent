@@ -123,7 +123,7 @@
             </div>
             <div class="qm-visit-list__options__container">
 
-              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" (click)="transferToQ(visit)">
+              <span *ngIf="canTransferQ" class="visit-tray-option visit-transfer-queue-btn" [ngClass]="{ 'visit-tray-option__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}" (click)="transferToQ(visit)">
                 <button class="content qm-transparent-btn" >
                   <span class="icon">
                     <i class="icon-queue"></i>
@@ -133,7 +133,7 @@
                   </span>
                 </button>
               </span>
-              <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn">
+              <span *ngIf="canTransferStaff" class="visit-tray-option visit-transfer-staff-btn" [ngClass]="{ 'visit-tray-option__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
 
                 <button class="content qm-transparent-btn" (click)="transferToStaffPool(visit)">
                   <span class="icon">
@@ -144,7 +144,7 @@
                   </span>
                 </button>
               </span>
-              <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn">
+              <span *ngIf="canTransferSP" class="visit-tray-option visit-transfer-sp-btn" [ngClass]="{ 'visit-tray-option__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
                 <button class="content qm-transparent-btn" (click)="transferToSPfPool(visit)">
                   <span class="icon">
                     <i class="icon-screen"></i>
@@ -154,7 +154,7 @@
                   </span>
                 </button>
               </span>
-              <span *ngIf="canSendSMS" class="visit-tray-option visit-transfer-sp-btn">
+              <span *ngIf="canSendSMS" class="visit-tray-option visit-transfer-sp-btn" [ngClass]="{ 'visit-tray-option__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
                 <div class="visit-tray-extended">
                   <button class="content qm-transparent-btn" (click)="setMobileNoVisibility()">
                     <span class="icon">
@@ -168,30 +168,35 @@
                     <div class="spliter"></div>
                     <div style="display:flex" class="qm-search-visit-container qm-queue-summary__left" [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
                       <span class="qm-phone-number-container">
-                        <label for="smsPoneNumber" class="sr-only">{{ 'label.phone' | translate }}</label>
-                        <input class="number-input" pattern="^[0-9\+\s]+$" type="tel" inputmode="numeric" placeholder="{{ 'label.phone' | translate }}" id="smsPoneNumber"
+                        <label for="smsPhoneNumber" class="sr-only">{{ 'label.phone' | translate }}</label>
+                        <input class="number-input" pattern="^[0-9\+\s]+$" placeholder="{{ 'label.phone' | translate }}" id="smsPhoneNumber"
                          (input)="handlePhoneNumber($event)" [(ngModel)]="phoneNumber" 
                          autocomplete="off" />
                       </span>
                       <button *ngIf="!isSMSTrigger" class="send-icon" [disabled]="!isValiedPhoneNumber" (click)="inputText = ''; triggerSendSMSEvent(visit)">
                         <i aria-hidden="true" class="qm-action-btn__icon icon-next qm-close__icon qm-phone-number-container__icon"></i>
-                        <span class="sr-only">{{ button.send.sms | translate }}</span>
+                        <span class="sr-only">{{ 'button.send.sms' | translate }}</span>
                       </button>
                       <div *ngIf="isSMSTrigger" class="sms-loader"></div>
                     </div>
+                    <span class="qm-standard-text-field__error-message" [ngClass]="{ 'visit-tray-option__error-message' : phoneNumber === undefined || (phoneNumber && phoneNumber.length > 0 && isValiedPhoneNumber) }" id="phone-error" role="alert" aria-live="polite" >
+                      <ng-container *ngIf="phoneNumber && phoneNumber.length > 0 && !isValiedPhoneNumber">
+                            {{ 'error.form.phone.invalid.des' | translate }}
+                      </ng-container>
+                    </span>
                   </div>
                 </div>
               </span>
 
               <div style="display:flex;width: 100%;margin: auto;">
-                <span *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn"  >
+                <span *ngIf="canDelete" class="visit-tray-option-bottom visit-delete-btn"  [ngClass]="{ 'visit-tray-option-bottom__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
                   <button class="qm-transparent-btn bottom-icon-container" (click)="deleteVisit(i,$event)">
                     <span class="icon"> <i class="icon-delete delete-icon"></i></span>
                     <span class="content">{{'remove' | translate}}</span>
                   </button>
                 </span>
                 <span *ngIf="canCherryPick" class="visit-tray-option-bottom  visit-cherry-pick-btn"
-                [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}" >
+                [ngStyle]="{'cursor': dsOrOutcomeExists && canCherryPick ? '' : 'pointer'}" [ngClass]="{ 'visit-tray-option-bottom__extend' : canSendSMS && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
                   <button class="bottom-icon-container qm-transparent-btn"  (click)="cherryPickVisit(i,$event)">
                     <span class="icon" [ngStyle]="{'color': dsOrOutcomeExists && canCherryPick ? '#bdbdbd' : '#E50046'}"> 
                       <i *ngIf="userDirection === 'ltr' || userDirection === 'LTR'" class="icon-check" ></i>

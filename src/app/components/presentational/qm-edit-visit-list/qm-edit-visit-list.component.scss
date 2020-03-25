@@ -486,6 +486,15 @@
         width: 73%;
         margin: 33px auto;
         justify-content: flex-start;
+
+        &__extend {
+            margin: 24px auto;
+        }
+
+        &__error-message {
+            min-height: 1px;
+            display: block;
+        }
    
         button {
             display: flex;
@@ -532,6 +541,10 @@
         flex-direction: column;
         width: 73%;
         margin: 23px auto;
+
+        &__extend {
+            margin: 10px auto;
+        }
 
       
         .content {

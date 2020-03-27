@@ -219,6 +219,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.visits.splice(0, this.visits.length, visit);
           this.visitOptionStatus = 'initial';
           this.visitClicked = true;
+          this.resetSendSMSParams();
           this.selectedVisitId = this.visits[0].visitId;
           this.dsOrOutcomeExists = this.visits[0].currentVisitService.deliveredServiceExists || this.visits[0].currentVisitService.outcomeExists;
      
@@ -358,6 +359,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.dsOrOutcomeExists = this.visits[index].currentVisitService.deliveredServiceExists || this.visits[index].currentVisitService.outcomeExists;
     this.visitOptionStatus = 'initial';
     this.ResetAutoCollapse();
+    this.resetSendSMSParams();
 
     setTimeout(function () {
           var objDiv = document.getElementById(visitId+'-visitOptionContainer');
@@ -424,21 +426,24 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   triggerSendSMSEvent (visit: Visit) {
     this.isSMSTrigger = true;
     this.spService.sendSMSEvent(this.selectedbranchId, visit, this.phoneNumber).subscribe(result => {
-      this.isSMSTrigger = false;
-      this.isMobileNoVisible = false;
-      this.phoneNumber = null;
+      this.resetSendSMSParams();
       this.translateService.get('toast.send.sms.success').subscribe(v => {
         this.toastService.infoToast(v);
       });
     }
     , error => {
-      this.isSMSTrigger = false;
-      this.isMobileNoVisible = false;
-      this.phoneNumber = null;
+      this.resetSendSMSParams();
       this.translateService.get('toast.send.sms.fail').subscribe(v => {
         this.toastService.errorToast(v);
       });
     });
+  }
+
+  resetSendSMSParams() {
+    this.isSMSTrigger = false;
+    this.isMobileNoVisible = false;
+    this.phoneNumber = undefined;
+    this.isValiedPhoneNumber = false;
   }
 
   cherryPickVisit(index: number, event: Event) {

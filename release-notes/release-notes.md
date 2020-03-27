@@ -38,6 +38,20 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 16</h2>
+
+**Date: 27/03/2020**
+ 
+**Build number: 16**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **CONCI-934** | **Send SMS notification from Concierge** |
+
+----------
+
 <h2>Version 15</h2>
 
 **Date: 28/02/2020**

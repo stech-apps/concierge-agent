@@ -766,7 +766,9 @@
     }   
 }
 
-
+.qm-visit-notes {
+    font-size: 20px !important;
+}
 
 @include qm-sm {
     .qm-visit-list {
@@ -916,3 +918,142 @@ button:focus{
     }
     
 }
+
+.notes-button {
+    background: transparent;
+    border: none;
+    margin: auto 10px;
+}
+
+.notes-tooltip{
+      z-index: 30;
+      position: absolute;
+      margin-left: -12px;
+      margin-top: 6px;
+      margin-bottom: 10px;
+  
+  
+      @at-root [dir="rtl"] & {
+          margin-right: -12px;
+          text-align: right;
+      }
+  
+      &__rec{
+        background: $white;
+        color: black;
+        font-size: 16px;
+        padding: 10px;
+        line-height: 24px;
+        text-align: left;
+        max-width: 95%;
+        margin-top: -22px;
+        box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+
+        @at-root [dir="rtl"] & {
+            text-align: right;
+        }
+  
+      }
+  }
+  
+  .notes-back-drop{
+    width: 100vw;
+    height: 100vh;  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    // background: rgba(0, 0, 0, 0.5);
+  } 
+  
+  
+  .notes-triangle {
+    width: 44px;
+    height: 18px;
+    position: relative;
+    overflow: hidden;
+    top:-22px;
+   
+    @at-root [dir='ltr'] & {
+      left: 2%;
+    }
+    @at-root [dir='rtl'] & {
+      right: 2%;
+  }
+  }
+  .notes-triangle:after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 50px;
+    background: white;
+    transform: rotate(45deg); /* Prefixes... */
+    top: 22px;
+    
+    box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+  }
+
+
+//   @include qm-sm{
+//     .notes-tooltip{
+//         @at-root [dir='ltr'] & {
+//             margin-left: -104px;
+//           }
+//           @at-root [dir='rtl'] & {
+//             margin-right: -104px;
+//         }
+//     }
+//     .notes-triangle{
+//         @at-root [dir='ltr'] & {
+//             left: 24%;
+//           }
+//           @at-root [dir='rtl'] & {
+//             right: 24%;
+//         }
+//     }
+//   }
+
+//   @include qm-xs{
+//     .notes-tooltip{
+//         @at-root [dir='ltr'] & {
+//             margin-left: -160px;
+//           }
+//           @at-root [dir='rtl'] & {
+//             margin-right: -160px;
+//         }
+//     }
+//     .notes-triangle{
+//         @at-root [dir='ltr'] & {
+//             left: 40%;
+//           }
+//           @at-root [dir='rtl'] & {
+//             right: 40%;
+//         }
+//     }
+//   }
+
+//   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//     /* IE10+ CSS styles go here */
+//     .notes-tooltip{
+//       @at-root [dir='ltr'] & {
+//         margin-left: -235px !important;
+//         @include qm-sm{
+//             margin-left: -280px !important;
+//         }
+//         @include qm-xs{
+//             margin-left: -335px !important;
+//         }
+//       }
+//       @at-root [dir='rtl'] & {
+//         margin-right: -235px !important;
+//         @include qm-sm{
+//             margin-right: -280px !important;
+//         }
+//         @include qm-xs{
+//             margin-right: -335px !important;
+//         }
+//     }
+//     }
+//   }

@@ -12,6 +12,7 @@ import { NativeApiService } from '../../../../util/services/native-api.service';
 import { Util } from '../../../../util/util';
 import * as moment from 'moment-timezone';
 import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
+import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 
 enum SortBy {
@@ -48,7 +49,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   userDirection: string;
   visitOptionStatus : string;
   infoVisitId:number;
-  
+  selectedNoteVisitId: number;
 
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
   @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
@@ -63,6 +64,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canTransferQLast: boolean = false;
   canTransferQWait: boolean = false;
   canSendSMS = false;
+  canShowNotes = false;
   isMobileNoVisible = false;
   phoneNumber: string;
   isValiedPhoneNumber = false;
@@ -197,6 +199,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.canCherryPick = uttParameters.cherryPick;
           this.isQuickServeEnable = uttParameters.quickServe;
           this.canSendSMS = uttParameters.sndSMS;
+          this.canShowNotes = uttParameters.mdNotes;
 
           if (this.canTransferQ == true && (this.canTransferQFirst == true || this.canTransferQLast == true || this.canTransferQWait == true)) {
             this.canTransferQ = true;
@@ -283,6 +286,10 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
         return 0;
       });
     }
+  }
+
+  getVisitNote(visit: Visit) {
+    return decodeURIComponent(visit.parameterMap.custom1);
   }
 
   sortByCustomer() {

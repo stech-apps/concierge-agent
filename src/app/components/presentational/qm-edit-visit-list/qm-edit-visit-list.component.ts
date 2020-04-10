@@ -289,7 +289,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   getVisitNote(visit: Visit) {
-    return decodeURIComponent(visit.parameterMap.custom1);
+    const decode = decodeURI(visit.parameterMap.custom1);
+    return decodeURIComponent(decode);
   }
 
   sortByCustomer() {

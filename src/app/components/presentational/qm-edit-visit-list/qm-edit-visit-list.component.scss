@@ -977,10 +977,10 @@ button:focus{
     top:-22px;
    
     @at-root [dir='ltr'] & {
-      left: 4%;
+      left: 3%;
     }
     @at-root [dir='rtl'] & {
-      right: 4%;
+      right: 3%;
   }
   }
   .notes-triangle:after {

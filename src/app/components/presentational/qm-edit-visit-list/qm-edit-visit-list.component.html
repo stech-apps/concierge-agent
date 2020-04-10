@@ -1,7 +1,7 @@
 <div dir="{{userDirection$ | async}}" role="table">
     <caption class="sr-only">Visit details</caption>
   <div class="qm-visit-list" >
-    <div class="qm-visit-list__headers qm-flex-grid" role="rowgroup">
+    <div class="qm-visit-list__headers qm-flex-grid" role="rowgroup" (mouseenter)="selectedNoteVisitId = 0">
         <div role="row" scope="col" style="display: flex;width:100%">
       <div role="columnheader" class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'ticket' | translate}}</div>
@@ -67,6 +67,7 @@
          <span  class="qm-flex-grid  qm-row-text" [ngStyle]="{'height':infoVisitId === visit.visitId ? '0%':'100%'}"> 
           <span role="cell" class="qm-col-2 qm-body-item qm-visit-list-body-row-caret-view">
             <button class="qm-visit-list-body-row-label qm-first-element qm-transparent-btn" 
+            (mouseenter)="selectedNoteVisitId = 0"
             (keydown.arrowdown)="onDownButttonPressed(i)"
             (keydown.arrowup)="onUpButttonPressed(i)"
             (keydown.arrowright) = "onRightButttonPressed(i)"
@@ -78,19 +79,19 @@
           </button>
           </span>
           <span role="cell" class="qm-col-2 qm-customer-col qm-body-item qm-visit-notes" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">
-            <button (keyup.tab)="selectedNoteVisitId = visit.id" (keydown.tab)="selectedNoteVisitId = 0" (mouseenter)="selectedNoteVisitId = visit.id" (mouseleave)="selectedNoteVisitId = 0" *ngIf="visit && visit.parameterMap.custom1 && visit.parameterMap.custom1.length > 0 && canShowNotes" class="qm-wait-icon-inside-container notes-button"><i class="icon-alert-star icon-message"
+            <button (keyup.tab)="selectedNoteVisitId = visit.id" (keydown.tab)="selectedNoteVisitId = 0" (mouseenter)="selectedNoteVisitId = visit.id" *ngIf="visit && visit.parameterMap.custom1 && visit.parameterMap.custom1.length > 0 && canShowNotes" class="qm-wait-icon-inside-container notes-button"><i class="icon-alert-star icon-message"
               ></i></button>
-              <div *ngIf="visit && selectedNoteVisitId === visit.id" class="notes-tooltip" aria-live="assertive" aria-atomic="true">
+              <div *ngIf="visit && selectedNoteVisitId === visit.id" (mouseleave)="selectedNoteVisitId = 0" class="notes-tooltip" aria-live="assertive" aria-atomic="true">
                 <div class="notes-triangle"></div>
                 <div class="notes-tooltip__rec">
                     {{ getVisitNote(visit) }}
                 </div>
             </div>
           </span>
-          <span role="cell" class="qm-col-4 qm-customer-col qm-body-item" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">{{visit.customerName }}</span>
-          <span role="cell" class="qm-col-4 qm-body-item qm-service-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{visit.serviceName }} </span>
-          <span role="cell" class="qm-col-3 qm-body-item qm-app-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{getAppointmentTime(visit)}}</span>
-          <span role="cell" class="qm-col-2 qm-body-item qm-wait-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}">{{ visit.waitingTimeStr }} <span *ngIf="visit.waitingTimeStr!='-'"> min</span></span>
+          <span role="cell" (mouseenter)="selectedNoteVisitId = 0" class="qm-col-4 qm-customer-col qm-body-item" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">{{visit.customerName }}</span>
+          <span role="cell" (mouseenter)="selectedNoteVisitId = 0" class="qm-col-4 qm-body-item qm-service-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{visit.serviceName }} </span>
+          <span role="cell" (mouseenter)="selectedNoteVisitId = 0" class="qm-col-3 qm-body-item qm-app-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}"> {{getAppointmentTime(visit)}}</span>
+          <span role="cell" (mouseenter)="selectedNoteVisitId = 0" class="qm-col-2 qm-body-item qm-wait-time-col" [ngClass]="{'qm-display-none':  infoVisitId === visit.visitId}">{{ visit.waitingTimeStr }} <span *ngIf="visit.waitingTimeStr!='-'"> min</span></span>
          </span>
         
         <!-- Extended visit container -->

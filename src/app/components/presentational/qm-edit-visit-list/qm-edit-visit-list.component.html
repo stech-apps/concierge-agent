@@ -9,7 +9,7 @@
           <span class="sr-only">{{ sortByVisitIdAsc ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
         </button>
       </div>
-      <div role="columnheader" class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
+      <div role="columnheader" *ngIf="canShowNotes" class="qm-visit-list-header-item qm-col-2 qm-flex-grid" (click)="sortByVisitId()">
         <div class="qm-visit-list-header-item-label qm-first-element-header">{{'label.queue.notes' | translate}}</div>
       </div>
       <div role="columnheader" scope="col" class="qm-visit-list-header-item qm-col-4 qm-customer-col qm-flex-grid" (click)="sortByCustomer()">
@@ -78,7 +78,7 @@
               {{visit.ticketId}} 
           </button>
           </span>
-          <span role="cell" class="qm-col-2 qm-customer-col qm-body-item qm-visit-notes" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">
+          <span role="cell" *ngIf="canShowNotes" class="qm-col-2 qm-customer-col qm-body-item qm-visit-notes" [ngClass]="{'qm-selected-visit-font':  infoVisitId === visit.visitId}">
             <button (keyup.tab)="selectedNoteVisitId = visit.id" (keydown.tab)="selectedNoteVisitId = 0" (mouseenter)="selectedNoteVisitId = visit.id" *ngIf="visit && visit.parameterMap.custom1 && visit.parameterMap.custom1.length > 0 && canShowNotes" class="qm-wait-icon-inside-container notes-button"><i class="icon-alert-star icon-message"
               ></i></button>
               <div *ngIf="visit && selectedNoteVisitId === visit.id" (mouseleave)="selectedNoteVisitId = 0" class="notes-tooltip" aria-live="assertive" aria-atomic="true">

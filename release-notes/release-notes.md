@@ -38,6 +38,20 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 17</h2>
+
+**Date: 10/04/2020**
+ 
+**Build number: 17**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **CONCI-942** | **Queue list in Concierge shows icons if notes exists on visit** |
+
+----------
+
 <h2>Version 16</h2>
 
 **Date: 27/03/2020**

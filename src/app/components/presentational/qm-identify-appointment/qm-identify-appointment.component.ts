@@ -590,8 +590,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
         } else {
-          var appDate = new Date(this.qrCodeContent.appointment_date).setHours(0, 0, 0, 0);
-          var todayDate = new Date().setHours(0, 0, 0, 0);
+          var appDate = moment(Number(this.qrCodeContent.appointment_date)).format('YYYY-MM-DD');
+          var todayDate = moment().format('YYYY-MM-DD');
           if (appDate != todayDate) {
             this.translateService
               .get("appointment_in_another_day")
@@ -727,9 +727,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
               this.getPreviousSearchState();
           } else {
             var dateOriginal = appointment.startTime.split("T");
-            var date = dateOriginal[0];
-            var appDate = new Date(date).setHours(0, 0, 0, 0);
-            var todayDate = new Date().setHours(0, 0, 0, 0);
+            var appDate = dateOriginal[0];
+            var todayDate = moment().format('YYYY-MM-DD');
             if (appDate != todayDate) {
               this.clearSelection();
               this.translateService

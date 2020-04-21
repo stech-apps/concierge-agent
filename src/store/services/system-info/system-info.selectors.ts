@@ -66,6 +66,11 @@ const getTimeConvention = createSelector(
   (state: ISystemInfo) => (state.timeConvention && state.timeConvention !== '24 hour' ? 'AMPM' : '24')
 );
 
+const getDateConvention = createSelector(
+  getSystemInfo,
+  (state: ISystemInfo) => (state.dateConvention ? state.dateConvention : 'YY-MM-DD')
+);
+
 @Injectable()
 export class SystemInfoSelectors {
   constructor(private store: Store<IAppState>) {}
@@ -81,4 +86,5 @@ export class SystemInfoSelectors {
   centralHostAddress$ = this.store.select(getCentralHost);
   authorizationHeader$ = this.store.select(getAuthorizationHeader);
   timeConvention$ = this.store.select(getTimeConvention);
+  dateConvention$ = this.store.select(getDateConvention);
 }

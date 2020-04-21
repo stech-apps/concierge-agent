@@ -599,7 +599,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 this.toastService.infoToast(
                   val +
                   " " +
-                  this.util.getLocaleDate(this.qrCodeContent.appointment_date)
+                  this.getDateTime(this.qrCodeContent.appointment_date, true)
                 );
               })
               .unsubscribe();
@@ -735,7 +735,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 .get("appointment_in_another_day")
                 .subscribe((val: string) => {
                   this.toastService.infoToast(
-                    val + " " + this.util.getLocaleDate(appointment.startTime)
+                    val + " " + this.getDateTime(appointment.startTime, false)
                   );
                 })
                 .unsubscribe();
@@ -938,6 +938,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     } else {
       return moment(timeString).format(this.systemInformation.dateConvention);
     }
+  }
+
+  getDateTime(dateString, isTimeStamp) {
+    let tmpDateString = dateString;
+    if (isTimeStamp) {
+      tmpDateString = Number(dateString);
+    }
+    return moment(tmpDateString).format(this.systemInformation.dateConvention +
+       ', '  + (this.systemInformation.timeConvention.indexOf('24') !== -1 ? 'HH:mm' : 'hh:mm A'));
   }
 
   getTimeSelectionValidity(fromTime, toTime, isFromTime = true) {

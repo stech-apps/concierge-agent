@@ -172,6 +172,7 @@ import { QmTimelistSidebarComponent } from './components/presentational/qm-timel
 import { QmTimeFilterItemsComponent } from './components/containers/qm-time-filter-items/qm-time-filter-items.component';
 import { QmPhoneNumberValidatorDirective } from './directives/qm-phone-number-validator.directive';
 import { QmTimeFormatPipe } from './pipes/qm-time-format.pipe';
+import { QmDateFormatPipe } from './pipes/qm-date-format.pipe';
 import { QmDropDownFilterPipe } from './components/presentational/qm-drop-down/qm-drop-down-filter.pipe';
 import { QmTabberComponent } from './components/containers/qm-tabber/qm-tabber.component';
 import { FilterQuickServeServicePipe } from './components/presentational/qm-quick-serve/filter-quick-serve-service.pipe';
@@ -279,6 +280,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmTimeFilterItemsComponent,
     QmPhoneNumberValidatorDirective,
     QmTimeFormatPipe,
+    QmDateFormatPipe,
     QmDropDownFilterPipe,
     FilterQuickServeServicePipe,
     QmTabberComponent,

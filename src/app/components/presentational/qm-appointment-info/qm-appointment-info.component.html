@@ -45,7 +45,7 @@
                 <span class="qm-appointment-info-item__icon icon-calendar">
                 </span>
                 <span class="qm-appointment-info-item__text">
-                    {{ (appointmentInfo.startTime || appointmentInfo.start ) | amDateFormat : systemInformation.dateConvention}}
+                    {{ (appointmentInfo.startTime || appointmentInfo.start ) | qmDateFormat : (appointmentInfo.branch && appointmentInfo.branch.fullTimeZone || '') | async }}
                 </span>
             </div>
             <div class="qm-appointment-info-item qm-appointment-info__time">

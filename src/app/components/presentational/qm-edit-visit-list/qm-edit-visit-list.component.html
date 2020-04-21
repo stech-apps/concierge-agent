@@ -193,7 +193,7 @@
                       </button>
                       <div *ngIf="isSMSTrigger" class="sms-loader"></div>
                     </div>
-                    <span class="qm-standard-text-field__error-message" [ngClass]="{ 'visit-tray-option__error-message' : phoneNumber === undefined || (phoneNumber && phoneNumber.length > 0 && isValiedPhoneNumber) }" id="phone-error" role="alert" aria-live="polite" >
+                    <span class="qm-standard-text-field__error-message visit-tray-option__error-message" id="phone-error" role="alert" aria-live="polite" >
                       <ng-container *ngIf="phoneNumber && phoneNumber.length > 0 && !isValiedPhoneNumber">
                             {{ 'error.form.phone.invalid.des' | translate }}
                       </ng-container>

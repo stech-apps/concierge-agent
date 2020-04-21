@@ -156,6 +156,20 @@ export class SPService implements OnDestroy {
       );
   }
 
+  updateCustomParameter(branchId: number, visit: Visit, phoneNumber: string) {
+    const tmpPhone = this.util.buildPhoneNumber(phoneNumber);
+    const body = {
+      'phoneNumber': tmpPhone,
+      'primaryCustomerPhoneNumber': tmpPhone,
+    };
+
+    return this.http
+      .put(`${servicePoint}/branches/${branchId}/visits/${visit.visitId}/parameters/`, body)
+      .pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
+  }
+
   createVisit(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, customer: ICustomer, sms: string, isTicketPrint: boolean, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE) {
     var body = {
       "services": this.buildService(services),

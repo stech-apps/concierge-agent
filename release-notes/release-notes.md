@@ -424,20 +424,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **xxxxxxxxx** | **New Concierge rewritten with latest Angular version** New Concierge consists of new layouts, desktop support and new utt files that overrides the old Concierge utt files |
 
-<h3>Bug fixes</h3>
-
-| **Id** | **Release notes** |
-| --- | --- |
-| **xxx** | **Bug header** Solution text |
-
-<h3>Known issues</h3>
-
-| **Id/Jira** | **Description** |
-| --- | --- |
-| **xxx** | **Bug header** Bug text |
----
-<h3>Upgrade Instructions</h3>
-
+----------
 
 <h3>Copyright notice</h3>
 

@@ -31,6 +31,15 @@ export function reducer(
         loaded:true
       };
     }
+    case QueueVisitsActions.UPDATE_QUEUE_VISITS: {
+      return {
+        ...state,
+        queueVisitsList: action.payload,
+        loading: false,
+        error: null,
+        loaded:true
+      };
+    }
     case QueueVisitsActions.FETCH_QUEUE_VISITS_FAIL: {
       return {
         ...state,

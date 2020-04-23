@@ -435,10 +435,22 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   }
 
   triggerSendSMSEvent (visit: Visit) {
+    if (!this.isValiedPhoneNumber) {
+      return;
+    }
     this.isSMSTrigger = true;
     this.spService.sendSMSEvent(this.selectedbranchId, visit, this.phoneNumber).subscribe(result => {
       this.spService.updateCustomParameter(this.selectedbranchId, visit, this.phoneNumber).subscribe(paramResult => {
-        this.resetSendSMSParams(paramResult as Visit);
+        const tmpVisitObj = paramResult as Visit;
+        this.resetSendSMSParams(tmpVisitObj);
+
+        const updateItem = this.visits.find(x => x.id === tmpVisitObj.id);
+        const visitIndex = this.visits.indexOf(updateItem);
+        updateItem.parameterMap.phoneNumber = tmpVisitObj.parameterMap.phoneNumber;
+        updateItem.parameterMap.primaryCustomerPhoneNumber = tmpVisitObj.parameterMap.primaryCustomerPhoneNumber;
+        this.visits[visitIndex] = updateItem;
+
+        this.queueVisitsDispatchers.updateQueueVisits(this.visits);
         this.translateService.get('toast.send.sms.success').subscribe(v => {
           this.toastService.infoToast(v);
         });
@@ -464,7 +476,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.phoneNumber = undefined;
     this.isValiedPhoneNumber = false;
 
-    if (visit && visit.parameterMap.phoneNumber) {
+    if (visit && visit.parameterMap.primaryCustomerPhoneNumber) {
+      this.phoneNumber = visit.parameterMap.primaryCustomerPhoneNumber;
+    } else if (visit && visit.parameterMap.phoneNumber) {
       this.phoneNumber = visit.parameterMap.phoneNumber;
     }
   }

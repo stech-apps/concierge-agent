@@ -183,7 +183,7 @@
                     <div style="display:flex" class="qm-search-visit-container qm-queue-summary__left" [ngClass]="{ 'summary-without-quickserve': !isQuickServeShow }">
                       <span class="qm-phone-number-container">
                         <label for="smsPhoneNumber" class="sr-only">{{ 'label.phone' | translate }}</label>
-                        <input class="number-input" pattern="^[0-9\+\s]+$" placeholder="{{ 'label.phone' | translate }}" id="smsPhoneNumber"
+                        <input class="number-input" pattern="^[0-9\+\s]+$" (keydown.enter)="triggerSendSMSEvent(visit)" placeholder="{{ 'label.phone' | translate }}" id="smsPhoneNumber"
                          (input)="handlePhoneNumber($event)" [(ngModel)]="phoneNumber" 
                          autocomplete="off" />
                       </span>

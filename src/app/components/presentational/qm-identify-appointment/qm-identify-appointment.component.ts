@@ -590,7 +590,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
           this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
         } else {
-          var appDate = moment(Number(this.qrCodeContent.appointment_date)).format('YYYY-MM-DD');
+          var dateOriginal = this.qrCodeContent.appointment_date.split("T");
+          var appDate = dateOriginal[0];
           var todayDate = moment().format('YYYY-MM-DD');
           if (appDate != todayDate) {
             this.translateService
@@ -599,7 +600,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 this.toastService.infoToast(
                   val +
                   " " +
-                  this.getDateTime(this.qrCodeContent.appointment_date, true)
+                  this.getDateTime(this.qrCodeContent.appointment_date)
                 );
               })
               .unsubscribe();
@@ -735,7 +736,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
                 .get("appointment_in_another_day")
                 .subscribe((val: string) => {
                   this.toastService.infoToast(
-                    val + " " + this.getDateTime(appointment.startTime, false)
+                    val + " " + this.getDateTime(appointment.startTime)
                   );
                 })
                 .unsubscribe();
@@ -940,12 +941,8 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDateTime(dateString, isTimeStamp) {
-    let tmpDateString = dateString;
-    if (isTimeStamp) {
-      tmpDateString = Number(dateString);
-    }
-    return moment(tmpDateString).format(this.systemInformation.dateConvention +
+  getDateTime(dateString) {
+    return moment(dateString).format(this.systemInformation.dateConvention +
        ', '  + (this.systemInformation.timeConvention.indexOf('24') !== -1 ? 'HH:mm' : 'hh:mm A'));
   }
 

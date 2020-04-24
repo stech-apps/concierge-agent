@@ -38,6 +38,26 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 18</h2>
+
+**Date: 24/04/2020**
+ 
+**Build number: 18**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **CONCI-950** | **Store mobile number on visit** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **CONCI-952** | **Appointments cannot be arrived by scanning if time zone of branch is -9 GMT and tablet is also on -8 GMT** |
+
+----------
+
 <h2>Version 17</h2>
 
 **Date: 10/04/2020**

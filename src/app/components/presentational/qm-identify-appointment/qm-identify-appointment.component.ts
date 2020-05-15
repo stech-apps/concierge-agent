@@ -645,7 +645,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         ap => ap.status === this.CREATED_APPOINTMENT_STATE_ID
         && ap.blocking !== true && (this.isMultiBranchEnable || this.SEARCH_STATES.ID === this.currentSearchState
           || this.SEARCH_STATES.QR === this.currentSearchState ||
-           ap.branch.id === this.selectedBranch.id)
+           ap.branch.qpId === this.selectedBranch.id)
       );
     } else {
       return appointments.filter(
@@ -832,8 +832,9 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     // in id search handle id search cases
     else if (this.SEARCH_STATES.ID == this.currentSearchState) {
 
-      if(this.appointments.length === 1 &&  this.appointments[0].status === this.CREATED_APPOINTMENT_STATE_ID
-      &&  this.appointments[0].branch.id !== this.selectedBranch.id && !this.isMultiBranchEnable) {
+      if (this.appointments.length === 1 &&  this.appointments[0].status === this.CREATED_APPOINTMENT_STATE_ID
+      && ((this.useCalendarEndpoint === false && this.appointments[0].branch.id !== this.selectedBranch.id) ||
+        (this.useCalendarEndpoint && this.appointments[0].branch.qpId !== this.selectedBranch.id)) && !this.isMultiBranchEnable) {
         this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.appointments[0].branch.name})
         .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
       }

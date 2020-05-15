@@ -38,6 +38,20 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 19</h2>
+
+**Date: 15/05/2020**
+ 
+**Build number: 19**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **CONCI-963** | **Appointment are not showed in edit view different time zone like -UTC** This issue basically happened due to the qpId and id mismatch in the specific branch. |
+
+----------
+
 <h2>Version 18</h2>
 
 **Date: 24/04/2020**

@@ -375,7 +375,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   setAppCustomer(): string {
-    return this.selectedAppointment.customers[0].firstName + " " + this.selectedAppointment.customers[0].lastName;
+    return this.selectedAppointment.customers[0] ?
+    this.selectedAppointment.customers[0].firstName + ' ' + this.selectedAppointment.customers[0].lastName : '';
   }
 
   setAppServices(): string {

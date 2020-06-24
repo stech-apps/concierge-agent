@@ -187,7 +187,7 @@ export class SPService implements OnDestroy {
   arriveAppointment(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, sms: string, isTicketPrint: boolean, notificationType: NOTIFICATION_TYPE, appointment: IAppointment) {
     var body = {
       "services": this.buildService(services),
-      "customers": [appointment.customers[0].id],
+      "customers": appointment.customers[0] ? [appointment.customers[0].id] : [],
       "appointmentId": appointment.id,
       "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, null, notificationType)
     }

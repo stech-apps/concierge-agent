@@ -38,6 +38,20 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 20</h2>
+
+**Date: 24/06/2020**
+ 
+**Build number: 20**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-7888** | **Cannot arrive appointment when it doesn't have a customer** |
+
+----------
+
 <h2>Version 19</h2>
 
 **Date: 15/05/2020**

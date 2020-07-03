@@ -199,6 +199,15 @@
     color: $dark-transparent42;
     padding-top: 20px;
 }
+.qm-date-select-format-text {
+    font-size: 16px;
+    font-weight: normal;
+    color: $dark-transparent42;
+    margin-left: 10px;
+    @at-root [dir='rtl'] & {
+        margin-right: 10px;
+    }
+}
 .qm-date-enter-input {
     border: 1px solid $dark-transparent22;
     outline: none;

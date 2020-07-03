@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                                Signature
     =========================================================================================================
+    7.0.9      2020-07-03   Added parameter to show/hide appointment customer field                 chamut
+    =========================================================================================================
     7.0.8      2020-04-08   Change description for notes                                            kasran
     =========================================================================================================
     7.0.7.0    2019-09-03   Quick create service filter                                             kasran
@@ -62,7 +64,7 @@
 
 <unit           name = "Concierge_Button"
     frameworkVersion = "2"
-         unitVersion = "7.0.8"
+         unitVersion = "7.0.9"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -424,9 +426,17 @@
           sortOrder = "382"
          writeLevel = "profile"
           privilege = "install:adminAdmin"/>
+    <parameter name = "appointmentCustomerField"
+               type = "Boolean"
+       defaultValue = "false"
+              label = "Hide Customer field"
+        description = "Show/hide number of customers field in create appointment flow"
+          sortOrder = "383"
+         writeLevel = "profile"
+          privilege = "install:adminAdmin"/> 
     <parameter name = "saveCustomerOption"
         description = "If you choose store customer in database, in the Create Visit flow, you will have the possibility to search for customers and customer data will be saved to the Central customer database. Note: For this option, a connection to Central is required. If you choose store customer on visit, in the Create Visit flow, customer data will be stored on the visit object."
-          sortOrder = "383"
+          sortOrder = "384"
               label = "Handle customer when Create Visit"
                type = "Options"
        defaultValue = "db"
@@ -442,7 +452,7 @@
       
     <parameter name = "button1"
         description = "Mapping of button 1"
-          sortOrder = "384"
+          sortOrder = "385"
               label = "Button 1"
                type = "Service"
          writeLevel = "profile"
@@ -451,7 +461,7 @@
      multiSelection = "false"/>
     <parameter name = "button2"
         description = "Mapping of button 2"
-          sortOrder = "385"
+          sortOrder = "386"
               label = "Button 2"
                type = "Service"
          writeLevel = "profile"
@@ -460,7 +470,7 @@
      multiSelection = "false"/>
     <parameter name = "button3"
         description = "Mapping of button 3"
-          sortOrder = "386"
+          sortOrder = "387"
               label = "Button 3"
                type = "Service"
          writeLevel = "profile"
@@ -469,7 +479,7 @@
      multiSelection = "false"/>
     <parameter name = "button4"
         description = "Mapping of button 4"
-          sortOrder = "387"
+          sortOrder = "388"
               label = "Button 4"
                type = "Service"
          writeLevel = "profile"
@@ -478,7 +488,7 @@
      multiSelection = "false"/>
     <parameter name = "button5"
         description = "Mapping of button 5"
-          sortOrder = "388"
+          sortOrder = "389"
               label = "Button 5"
                type = "Service"
          writeLevel = "profile"
@@ -577,7 +587,7 @@
          writeLevel = "profile" 
           readLevel = "profile" 
           privilege = "install:adminAdmin"
-          mandatory = "false"/>
+          mandatory = "false"/>  
     <parameter name = "unitName"
                type = "UnitName"
               label = "Unit name"

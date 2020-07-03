@@ -9,7 +9,7 @@
   <h1 class="qm-text-overflow-fix">{{ 'label.select.datetime' | translate}}</h1> -->
       </div>
       <div class="qm-appointment-time-select__content" id="main-container" dir="{{ userDirection$ | async }}">
-        <div class="qm-number-of-customers">
+        <div *ngIf="showCustomerSection" class="qm-number-of-customers">
           <div class="qm-number-of-customers__text qm-text-overflow-fix">{{ 'label.no_of_customers' | translate }}</div>
           <div class="qm-number-of-customers__numeric">
             <button class="qm-transparent-btn qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">
@@ -30,7 +30,8 @@
           <form>
             <input class="qm-date-enter-input" type="text" [(ngModel)]="currentDate" id="enterDate"
               (keydown.enter)="validateDate()" [ngClass]="{'invalid-date' : enterDateErrorMsg}" name="enterDate" (focus)="onFocus()">
-            <br>{{'format' | translate}} : {{dateType}} </form>
+          <span class="qm-date-select-format-text">({{dateType}}) </span> 
+        </form>
           <p *ngIf="enterDateErrorMsg" [ngClass]="{'qm-error-message' : enterDateErrorMsg}" aria-live="assertive" role="alert">
             {{enterDateErrorMsg}}</p>
         </div>

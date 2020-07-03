@@ -36,6 +36,8 @@
     Version history in descending order:
     ====================================
     Version    Date         Comments                                                     Signature
+    =========================================================================================================
+    7.0.9      2020-07-03    Added parameter to show/hide appointment customer field     chamut
     ==============================================================================================
     7.0.8      2020-04-08    Change description for notes                                kasran
     =============================================================================================
@@ -61,7 +63,7 @@
 
 <unit          name  = "Concierge_Touch"
     frameworkVersion = "2"
-         unitVersion = "7.0.8"
+         unitVersion = "7.0.9"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -422,9 +424,17 @@
             sortOrder = "382"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/>
+      <parameter name = "appointmentCustomerField"
+                 type = "Boolean"
+         defaultValue = "false"
+                label = "Hide Customer field"
+          description = "Show/hide number of customers field in create appointment flow"
+            sortOrder = "383"
+           writeLevel = "profile"
+            privilege = "install:adminAdmin"/> 
       <parameter name = "saveCustomerOption"
           description = "If you choose store customer in database, in the Create Visit flow, you will have the possibility to search for customers and customer data will be saved to the Central customer database. Note: For this option, a connection to Central is required. If you choose store customer on visit, in the Create Visit flow, customer data will be stored on the visit object."
-            sortOrder = "383"
+            sortOrder = "384"
                 label = "Handle customer when Create Visit"
                  type = "Options"
          defaultValue = "db"
@@ -527,7 +537,7 @@
            writeLevel = "profile" 
             readLevel = "profile" 
             privilege = "install:adminAdmin"
-            mandatory = "false"/>                 
+            mandatory = "false"/>
       <parameter name = "surfaceApplication" description="Defines what surface application that should be used"
                 label = "Touch Application"
                  type = "SurfaceApplication"

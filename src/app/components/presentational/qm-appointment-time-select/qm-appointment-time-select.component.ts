@@ -1,11 +1,11 @@
-import { ReserveSelectors } from "./../../../../store/services/reserve/reserve.selectors";
-import { IService } from "./../../../../models/IService";
-import { ICalendarBranch } from "./../../../../models/ICalendarBranch";
-import { IBookingInformation } from "./../../../../models/IBookingInformation";
-import { TimeslotSelectors } from "./../../../../store/services/timeslot/timeslot.selectors";
-import { CalendarDate, QmCalendarComponent } from "./../../containers/qm-calendar/qm-calendar.component";
-import { IBranch } from "src/models/IBranch";
-import { Subscription, Observable } from "rxjs";
+import { ReserveSelectors } from './../../../../store/services/reserve/reserve.selectors';
+import { IService } from './../../../../models/IService';
+import { ICalendarBranch } from './../../../../models/ICalendarBranch';
+import { IBookingInformation } from './../../../../models/IBookingInformation';
+import { TimeslotSelectors } from './../../../../store/services/timeslot/timeslot.selectors';
+import { CalendarDate, QmCalendarComponent } from './../../containers/qm-calendar/qm-calendar.component';
+import { IBranch } from 'src/models/IBranch';
+import { Subscription, Observable } from 'rxjs';
 import {
   BranchSelectors,
   TimeslotDispatchers,
@@ -18,8 +18,9 @@ import {
   ReservationExpiryTimerSelectors,
   CalendarSettingsDispatchers,
   UserSelectors,
-  SystemInfoSelectors
-} from "src/store";
+  SystemInfoSelectors,
+  ServicePointSelectors,
+} from 'src/store';
 import {
   Component,
   OnInit,
@@ -30,25 +31,26 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef
-} from "@angular/core";
-import { BookingHelperService } from "src/util/services/booking-helper.service";
-import { ICalendarService } from "src/models/ICalendarService";
-import * as moment from "moment";
-import { concat } from "rxjs/internal/operators/concat";
-import { ITimeSlot } from "src/models/ITimeSlot";
-import { IAppointment } from "src/models/IAppointment";
-import { Moment } from "moment";
-import { DEFAULT_LOCALE } from "src/constants/config";
-import { ISystemInfo } from "src/models/ISystemInfo";
-import { TranslateService } from "@ngx-translate/core";
+} from '@angular/core';
+import { BookingHelperService } from 'src/util/services/booking-helper.service';
+import { ICalendarService } from 'src/models/ICalendarService';
+import * as moment from 'moment';
+import { concat } from 'rxjs/internal/operators/concat';
+import { ITimeSlot } from 'src/models/ITimeSlot';
+import { IAppointment } from 'src/models/IAppointment';
+import { Moment } from 'moment';
+import { DEFAULT_LOCALE } from 'src/constants/config';
+import { ISystemInfo } from 'src/models/ISystemInfo';
+import { TranslateService } from '@ngx-translate/core';
+import { IUTTParameter } from 'src/models/IUTTParameter';
 
 @Component({
-  selector: "qm-appointment-time-select",
-  templateUrl: "./qm-appointment-time-select.component.html",
-  styleUrls: ["./qm-appointment-time-select.component.scss"]
+  selector: 'qm-appointment-time-select',
+  templateUrl: './qm-appointment-time-select.component.html',
+  styleUrls: ['./qm-appointment-time-select.component.scss']
 })
 export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
-  noOfCustomers: number = 1;
+  noOfCustomers = 1;
   private subscriptions: Subscription = new Subscription();
   selectedBranch: ICalendarBranch = new ICalendarBranch();
   private branchSubscription$: Observable<ICalendarBranch>;
@@ -59,7 +61,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   private settingReservationExpiryTime: number;
   public showExpiryReservationTime$: Observable<Boolean>;
   public preselectedTimeSlot: string = null;
-  selectedTimeHeading: string = "";
+  selectedTimeHeading = '';
   public reservableDates: moment.Moment[] = [];
   public userDirection$: Observable<string>;
   userDirection: string;
@@ -69,18 +71,19 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   selectedServices: ICalendarService[] = [];
   selectedDates: CalendarDate[];
   dateType: string;
-  selectedTime: string = '';
-  enterDateErrorMsg: string = '';
+  selectedTime = '';
+  enterDateErrorMsg = '';
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
   reloadTimeSlots: EventEmitter<any> = new EventEmitter();
-  private readonly HOUR_24FORMAT = "24";
-  private readonly HOUR_12FORMAT = "AMPM";
-  timeFormat: string = this.HOUR_12FORMAT; //todo read from orchestra setting
+  private readonly HOUR_24FORMAT = '24';
+  private readonly HOUR_12FORMAT = 'AMPM';
+  timeFormat: string = this.HOUR_12FORMAT; // todo read from orchestra setting
   userLocale: string = DEFAULT_LOCALE;
-  currentDate: string = '';
-
+  currentDate = '';
+  showCustomerSection = false;
+  private uttSubscription$: Observable<IUTTParameter>;
   @ViewChild('timeSlotContainer') timeSlotContainer: ElementRef;
   @ViewChild(QmCalendarComponent) calendarRef: QmCalendarComponent;
 
@@ -100,13 +103,15 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     private systemInfoSelectors: SystemInfoSelectors,
     private resevationTimeSelectors: ReservationExpiryTimerSelectors,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private servicePointSelectors: ServicePointSelectors,
   ) {
     this.branchSubscription$ = this.calendarBranchSelectors.selectedBranch$;
     this.serviceSubscription$ = this.calendarServiceSelectors.selectedServices$;
     this.reservedAppointment$ = this.reserveSelectors.reservedAppointment$;
     this.getExpiryReservationTime$ = this.calendarSettingsSelectors.getReservationExpiryTime$;
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.uttSubscription$ = this.servicePointSelectors.uttParameters$;
 
     const branchSubscription = this.branchSubscription$.subscribe(cb => {
       this.selectedBranch = cb;
@@ -154,12 +159,18 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const userLocaleSubscription = this.userSelectors.userLocale$.subscribe((ul) => this.userLocale = ul)
 
+    const uttSubscription = this.uttSubscription$.subscribe((params) => {
+      this.showCustomerSection = !params.appointmentCustomerField;
+    });
+
+
     this.subscriptions.add(branchSubscription);
     this.subscriptions.add(serviceSubscription);
     this.subscriptions.add(reservableDatesSub);
     this.subscriptions.add(serviceSelectionSubscription);
     this.subscriptions.add(reloadTimeSlotSub);
     this.subscriptions.add(userLocaleSubscription);
+    this.subscriptions.add(uttSubscription);
   }
 
   ngOnInit() {
@@ -221,13 +232,13 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
     const reservedSub = this.reserveSelectors.reservedAppointment$.subscribe(
       alreadyReserved => {
         if (alreadyReserved) {
-          let timeFormat: string = "HH:mm";
+          let timeFormat = 'HH:mm';
 
           this.selectedTimeHeading = this.currentlyActiveDate.mDate.clone().locale(this.userLocale).format(
-            "dddd DD MMMM, "
+            'dddd DD MMMM, '
           );
           if (this.timeFormat != this.HOUR_24FORMAT) {
-            timeFormat = "hh:mm A";
+            timeFormat = 'hh:mm A';
           }
 
           this.selectedTimeHeading += `${moment(alreadyReserved.start)
@@ -270,9 +281,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       this.getTimeSlots();
       this.reservationExpiryTimerDispatchers.hideReservationExpiryTimer();
       this.timeSlotDispatchers.selectTimeslot(null);
-      this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format("dddd DD MMMM");
+      this.selectedTimeHeading = date.mDate.clone().locale(this.userLocale).format('dddd DD MMMM');
       this.currentDate = this.currentlyActiveDate.mDate.clone().locale('en').format(this.dateType).toString();
-      this.enterDateErrorMsg = "";
+      this.enterDateErrorMsg = '';
       this.cdr.detectChanges();
       if (this.calendarRef && this.calendarRef.isUserDateSelected && this.timeSlotContainer && this.timeSlotContainer.nativeElement) {
         this.timeSlotContainer.nativeElement.scrollIntoView();
@@ -283,8 +294,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   validateDate() {
     if (this.dateType[2] == '-') {
       if (this.currentDate.match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
-        this.enterDateErrorMsg = "";
-        var selectedDateAvailable = false;
+        this.enterDateErrorMsg = '';
+        let selectedDateAvailable = false;
         this.reservableDates.forEach(ed => {
           if (ed.isSame(moment(this.currentDate, this.dateType))) {
             selectedDateAvailable = true;
@@ -302,7 +313,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           if (selectedDateAvailable == false) {
             const translateSubscription = this.translate
-              .get("select_date_not_available")
+              .get('select_date_not_available')
               .subscribe((res: string) => {
                 this.enterDateErrorMsg = res
               });
@@ -311,9 +322,9 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         }, 100);
 
       } else {
-        
+
         const translateSubscription = this.translate
-          .get("invalid_date_format")
+          .get('invalid_date_format')
           .subscribe((res: string) => {
             this.enterDateErrorMsg = res
           });
@@ -321,8 +332,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       }
     } else if (this.dateType[2] == '/') {
       if (this.currentDate.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{2}/g) && moment(this.currentDate, this.dateType).isValid()) {
-        this.enterDateErrorMsg = "";
-        var selectedDateAvailable = false;
+        this.enterDateErrorMsg = '';
+        let selectedDateAvailable = false;
         this.reservableDates.forEach(ed => {
           if (ed.isSame(moment(this.currentDate, this.dateType))) {
             selectedDateAvailable = true;
@@ -337,7 +348,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           if (selectedDateAvailable == false) {
             const translateSubscription = this.translate
-              .get("select_date_not_available")
+              .get('select_date_not_available')
               .subscribe((res: string) => {
                 this.enterDateErrorMsg = res
               });
@@ -347,7 +358,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
       } else {
         const translateSubscription = this.translate
-          .get("invalid_date_format")
+          .get('invalid_date_format')
           .subscribe((res: string) => {
             this.enterDateErrorMsg = res
           });
@@ -366,7 +377,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.locale(DEFAULT_LOCALE).format("YYYY-MM-DD"),
+      date: this.currentlyActiveDate.mDate.locale(DEFAULT_LOCALE).format('YYYY-MM-DD'),
       time: timeSlot.title
     };
 
@@ -393,7 +404,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.format("YYYY-MM-DD"),
+      date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
       time: this.selectedTime
     };
 
@@ -405,7 +416,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       (queryString, service: ICalendarService) => {
         return queryString + `;servicePublicId=${service.publicId}`;
       },
-      ""
+      ''
     );
   }
 
@@ -422,8 +433,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
   onFocus() {
     if(this.userDirection == 'rtl') {
-      var setInput = document.getElementById("enterDate");
-      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById("enterDate")).value.length,(<HTMLInputElement>document.getElementById("enterDate")).value.length)
+      const setInput = document.getElementById('enterDate');
+      this.setSelectionRange(setInput,(<HTMLInputElement>document.getElementById('enterDate')).value.length,(<HTMLInputElement>document.getElementById('enterDate')).value.length);
     }
   }
 
@@ -432,7 +443,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       input.focus();
       input.setSelectionRange(selectionStart, selectionEnd);
     } else if (input.createTextRange) {
-      var range = input.createTextRange();
+      const range = input.createTextRange();
       range.collapse(true);
       range.moveEnd('character', selectionEnd);
       range.moveStart('character', selectionStart);

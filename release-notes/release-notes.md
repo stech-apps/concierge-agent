@@ -38,6 +38,21 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+<h2>Version 21</h2>
+
+**Date: 03/07/2020**
+ 
+**Build number: 21**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8052** | **Make the customer field configurable** |
+
+----------
+
+
 <h2>Version 20</h2>
 
 **Date: 24/06/2020**

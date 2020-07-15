@@ -38,6 +38,21 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 -->
+
+<h2>Version 22</h2>
+
+**Date: 10/07/2020**
+ 
+**Build number: 22**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8007** | **Concierge doesn't except other QR code input rather then qrCodeInternalId** |
+
+----------
+
 <h2>Version 21</h2>
 
 **Date: 03/07/2020**

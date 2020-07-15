@@ -523,13 +523,27 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
         this.isQrCodeLoaded = false;
         try {
           this.qrCodeContent = JSON.parse(this.qrCodeContent);
-          this.qrCodeValue = this.qrCodeContent.appointment_id;
-          var branchId = this.qrCodeContent.branch_id;
-          var date = this.qrCodeContent.appointment_date;
-          var branchName = this.qrCodeContent.branch_name;
-        this.currentSearchState = this.SEARCH_STATES.QR;
-          this.searchAppointments();
-         
+          if (this.qrCodeContent.appointment_id) {
+            this.qrCodeValue = this.qrCodeContent.appointment_id;
+            var branchId = this.qrCodeContent.branch_id;
+            var date = this.qrCodeContent.appointment_date;
+            var branchName = this.qrCodeContent.branch_name;
+
+            this.currentSearchState = this.SEARCH_STATES.QR;
+            this.searchAppointments();
+          } else {
+            if (isNaN(this.qrCodeContent)) {
+              this.showQRCodeError();
+            } else {
+              this.qrCodeValue = this.util.qWebBookIdConverter(this.qrCodeContent.toString());
+              if (this.qrCodeValue) {
+                this.currentSearchState = this.SEARCH_STATES.QR;
+                this.searchAppointments();
+              } else {
+                this.showQRCodeError();
+              }
+            }
+          }
         } catch (err) {
           this.showQRCodeError();
         }
@@ -580,34 +594,39 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showAppointmentNotFoundError() {
     if (this.SEARCH_STATES.QR === this.currentSearchState) {
       this.clearInput();
-      if (this.useCalendarEndpoint) {
+      if (this.qrCodeContent.appintment_id) {
+        if (this.useCalendarEndpoint) {
           this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
           .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
 
-      } else {
-        if (this.qrCodeContent.branch_id !== String(this.selectedBranch.id)) {
-          this.translateService
-          this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
-          .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
         } else {
-          var dateOriginal = this.qrCodeContent.appointment_date.split("T");
-          var appDate = dateOriginal[0];
-          var todayDate = moment().format('YYYY-MM-DD');
-          if (appDate != todayDate) {
+          if (this.qrCodeContent.branch_id !== String(this.selectedBranch.id)) {
             this.translateService
-              .get("appointment_in_another_day")
-              .subscribe((val: string) => {
-                this.toastService.infoToast(
-                  val +
-                  " " +
-                  this.getDateTime(this.qrCodeContent.appointment_date)
-                );
-              })
-              .unsubscribe();
+            this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : this.qrCodeContent.branch_name})
+            .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
           } else {
-            this.isShowAppointmentNotFound = true;
+            var dateOriginal = this.qrCodeContent.appointment_date.split("T");
+            var appDate = dateOriginal[0];
+            var todayDate = moment().format('YYYY-MM-DD');
+            if (appDate != todayDate) {
+              this.translateService
+                .get("appointment_in_another_day")
+                .subscribe((val: string) => {
+                  this.toastService.infoToast(
+                    val +
+                    " " +
+                    this.getDateTime(this.qrCodeContent.appointment_date)
+                  );
+                })
+                .unsubscribe();
+            } else {
+              this.isShowAppointmentNotFound = true;
+            }
           }
         }
+      } else {
+        this.translateService.get('label.appointment_not_found_qr')
+          .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
       }
     } else {
       this.isShowAppointmentNotFound = true;

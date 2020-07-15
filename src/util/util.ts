@@ -138,4 +138,12 @@ export class Util {
     getRefreshUrl() {
         return this._refreshUrl;
     }
+
+    qWebBookIdConverter(value: string) {
+        if (value.length > 4) {
+            return value.substring(0, value.length - 4);
+        } else {
+            return null;
+        }
+    }
 }

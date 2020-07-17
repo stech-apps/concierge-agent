@@ -51,6 +51,12 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **QP-8007** | **Concierge doesn't except other QR code input rather then qrCodeInternalId** |
 
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8144** | **Improve UI - create appointment flow** |
+
 ----------
 
 <h2>Version 21</h2>

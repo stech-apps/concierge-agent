@@ -187,17 +187,27 @@
         flex-direction: column;
     }
 }
-
+.qm-flow-header{
+    @include qm-sm{
+        margin-bottom: 5px;
+      }
+    @include qm-md{
+        margin-bottom: 5px;
+      }
+}
 .qm-pannel-inner-container{
     @include qm-sm{
-        padding: 30px 24px;
+        padding: 5px 24px;
       }
+    @include qm-md{
+        padding: 5px 24px;
+    }
 }
 .qm-date-select-header {
     font-size: 20px;
     font-weight: normal;
     color: $dark-transparent42;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 .qm-date-select-format-text {
     font-size: 16px;

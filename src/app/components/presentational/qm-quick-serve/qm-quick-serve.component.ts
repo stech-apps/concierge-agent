@@ -86,7 +86,6 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
     let serviceLoadedSubscription;
     const serviceConfigSubscription = this.serviceSelectors.getQuickServices$.subscribe((services) => {
       this.services = services;
-      this.sortQueueList();
       serviceLoadedSubscription = this.serviceSelectors.isQuickServiceLoaded$.subscribe((val) => {
         if (val) {
           if (this.services.length === 0) {

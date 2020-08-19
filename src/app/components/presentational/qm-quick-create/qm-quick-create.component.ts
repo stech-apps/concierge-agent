@@ -103,7 +103,6 @@ export class QmQuickCreateComponent implements OnInit, OnDestroy {
         this.serviceDispatchers.fetchServices(this.selectedBranch);
       } else {
         this.services = services;
-        this.sortServiceList();
         if (services.length > 0) {
           setTimeout(() => {
             this.checkShadow();

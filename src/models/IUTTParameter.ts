@@ -50,4 +50,5 @@ export interface IUTTParameter {
     quickServeServices: string;
     quickVisitAction: string;
     appointmentCustomerField: boolean;
+    appointmentStatEnable: boolean;
   }

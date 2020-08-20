@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { GlobalErrorHandler } from '../../../util/services/global-error-handler.service';
-import { DataServiceError, calendarEndpoint, calendarPublicEndpoint, calendarPublicEndpointV2 } from 'src/store/services/data.service';
+import { calendarEndpoint, calendarPublicEndpoint, calendarPublicEndpointV2, appointmentEndPoint } from 'src/store/services/data.service';
 import { IAppointment } from '../../../models/IAppointment';
 import { ICustomer } from '../../../models/ICustomer';
 import { Util } from '../../util';
@@ -62,6 +62,27 @@ export class CalendarService implements OnDestroy {
    .post(`${this.hostAddress}${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body).pipe(
     catchError(this.errorHandler.handleError(true))
   );
+}
+
+fetchAppointmentQP(appointmentId: string) {
+  return this.http
+   .get(`${this.hostAddress}${calendarEndpoint}/appointments/publicid/${appointmentId}`).pipe(
+      catchError(this.errorHandler.handleError(true))
+    );
+}
+
+setAppointmentStatEvent(appointment: IAppointment) {
+  const statEventBody = {
+    'applicationName': 'Concierge',
+    'event': 'CREATE/UPDATE/DELETE'
+  };
+  return this.http
+      .post
+      (`${appointmentEndPoint}/branches/${appointment.branch.id}/appointments/${appointment.qpId}/events/APP_ORIGIN`,
+      statEventBody)
+      .pipe(
+          catchError(this.errorHandler.handleError())
+      );
 }
 
 private buildDate(appointment: IAppointment){

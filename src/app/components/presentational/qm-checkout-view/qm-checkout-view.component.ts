@@ -74,6 +74,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   vipLevel2Checked: boolean = false;
   vipLevel3Checked: boolean = false;
   isMultiBranchEnabled: boolean = true;
+  isAppointmentStatEventEnable = false;
 
   isCreateVisit: boolean = false;
   isCreateAppointment: boolean = false;
@@ -146,7 +147,6 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     private queueService: QueueService,
     private reserveDispatchers: ReserveDispatchers,
     private errorHandler: GlobalErrorHandler
- 
   ) {
     this.userDirection$ = this.userSelectors.userDirection$;
 
@@ -173,7 +173,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.emailActionEnabled = uttParameters.sndEmail;
           this.ticketActionEnabled = uttParameters.printerEnable;
           this.ticketlessActionEnabled = uttParameters.ticketLess;
-          this.isMultiBranchEnabled = uttParameters.mltyBrnch;         
+          this.isMultiBranchEnabled = uttParameters.mltyBrnch;
+          this.isAppointmentStatEventEnable = uttParameters.appointmentStatEnable ? uttParameters.appointmentStatEnable : false;
         }
       })
       .unsubscribe();
@@ -653,6 +654,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.showSuccessMessage(result);
           this.onFlowExit.emit();
           this.queueService.fetechQueueInfo();
+          this.setAppointmentStatEvent(result);
         }
       }, error => {
         const err = new DataServiceError(error, null);
@@ -679,6 +681,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       });
 
      }
+  }
+
+  setAppointmentStatEvent(result) {
+    if (this.isAppointmentStatEventEnable) {
+      this.calendarService.fetchAppointmentQP((result as IAppointment).publicId).subscribe(appointmentRes => {
+        this.calendarService.setAppointmentStatEvent((appointmentRes as any).appointment).subscribe(res => {}, err => {});
+      }, error => {});
+    }
   }
 
   getServicesQueryString(): string {

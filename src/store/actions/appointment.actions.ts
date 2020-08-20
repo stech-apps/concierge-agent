@@ -96,12 +96,12 @@ export type AllAppointmentActions =
   | SearchAppointmentsSuccess
   | SearchCalendarAppointmentsSuccess
   | SearchAppointmentsFail
-  | DeleteAppointment 
-  | DeleteAppointmentFail 
-  | DeleteAppointmentSuccess 
-  | RescheduleAppointment 
-  | RescheduleAppointmentFail 
-  | RescheduleAppointmentSuccess 
+  | DeleteAppointment
+  | DeleteAppointmentFail
+  | DeleteAppointmentSuccess
+  | RescheduleAppointment
+  | RescheduleAppointmentFail
+  | RescheduleAppointmentSuccess
   | SearchCalendarAppointmentsFail
   | ResetAppointmentError
   | ResetAppointmentLoading;

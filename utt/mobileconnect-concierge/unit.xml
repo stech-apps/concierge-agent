@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.10    2020-08-20    Added parameter to send stat event                          kasran
+    =============================================================================================
     7.0.9     2020-07-03    Added parameter to show/hide appointment customer field     chamut
     =============================================================================================
     7.0.8     2020-04-08    Change description for notes                                kasran
@@ -64,7 +66,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.9"
+         unitVersion = "7.0.10"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -450,7 +452,14 @@
               privilege = "install:adminAdmin"
               mandatory = "false">
         </parameter>
-              
+        <parameter name = "appointmentStatEnable"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Send appointment stat event"
+            description = "Only check if you want to report on appointment origins"
+              sortOrder = "386"
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"/>     
               
       
     

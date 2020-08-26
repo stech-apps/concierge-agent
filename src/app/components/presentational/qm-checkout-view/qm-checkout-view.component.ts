@@ -686,7 +686,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   setAppointmentStatEvent(result) {
     if (this.isAppointmentStatEventEnable) {
       this.calendarService.fetchAppointmentQP((result as IAppointment).publicId).subscribe(appointmentRes => {
-        this.calendarService.setAppointmentStatEvent((appointmentRes as any).appointment).subscribe(res => {}, err => {});
+        const qpAppointment = (appointmentRes as any).appointment;
+        if (qpAppointment.qpId) {
+          this.calendarService.setAppointmentStatEvent(qpAppointment).subscribe(res => {}, err => {});
+        }
       }, error => {});
     }
   }

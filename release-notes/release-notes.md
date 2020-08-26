@@ -39,6 +39,26 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 23</h2>
+
+**Date: 26/08/2020**
+ 
+**Build number: 23**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8065** | **Concierge: add stat event to gather statistics on appointments** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8251** | **Quick create list is sorted wrongly in Firefox** |
+
+----------
+
 <h2>Version 22</h2>
 
 **Date: 10/07/2020**

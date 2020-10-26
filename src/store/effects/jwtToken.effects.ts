@@ -2,7 +2,7 @@ import { JWTTokenDataService } from './../services';
 import { GlobalErrorHandler } from './../../util/services/global-error-handler.service';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -21,8 +21,8 @@ export class JWTTokenEffects {
 
   @Effect()
   getJWTToken$: Observable<Action> = this.actions$
-      .ofType(JWTTokenActions.FETCH_JWT_TOKEN)
       .pipe(
+        ofType(JWTTokenActions.FETCH_JWT_TOKEN),
         switchMap(() =>
           toAction(
             this.jwtTokenDataService.getJWTToken(),

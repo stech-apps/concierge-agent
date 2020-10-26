@@ -16,9 +16,9 @@ let _uniqueIdCounter = 0;
 })
 export class QmFlowPanelComponent implements OnInit {
 
-  @ContentChild(QmFlowPanelHeaderComponent) header: QmFlowPanelHeaderComponent;
-  @ContentChild(QmFlowPanelContentComponent) content: QmFlowPanelContentComponent;
-  @ContentChild(QmFlowPanelResult) resultContainer: QmFlowPanelResult;
+  @ContentChild(QmFlowPanelHeaderComponent, /* TODO: add static flag */ {}) header: QmFlowPanelHeaderComponent;
+  @ContentChild(QmFlowPanelContentComponent, /* TODO: add static flag */ {}) content: QmFlowPanelContentComponent;
+  @ContentChild(QmFlowPanelResult, /* TODO: add static flag */ {}) resultContainer: QmFlowPanelResult;
 
   index: number = _uniqueIdCounter++;
   id: string = `qm-flow-panel-${this.index}`;

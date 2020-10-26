@@ -22,7 +22,7 @@ export class FilterServicePointsPipe implements PipeTransform {
   sortQueueList(servicePoints,sortAscending) {
     
       // sort by name
-      servicePoints = servicePoints.sort((a, b) => {
+      servicePoints = servicePoints.slice().sort((a, b) => {
 
               var nameA = a.name.toUpperCase(); // ignore upper and lowercase
               var nameB = b.name.toUpperCase(); // ignore upper and lowercase

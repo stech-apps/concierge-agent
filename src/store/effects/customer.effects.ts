@@ -4,7 +4,7 @@ import { CustomerDataService } from "../services/customer/customer-data.service"
 import { ToastService } from "../../util/services/toast.service";
 import { TranslateService } from "@ngx-translate/core";
 import { GlobalErrorHandler } from "../../util/services/global-error-handler.service";
-import { Effect,Actions } from "@ngrx/effects";
+import { Effect,Actions, ofType } from "@ngrx/effects";
 import { Observable } from 'rxjs';
 import * as CustomerActions from './../actions'
 import { switchMap,tap } from "../../../node_modules/rxjs/operators";
@@ -20,8 +20,8 @@ export class CustomerEffects{
 
     @Effect()
     getCustomers$: Observable<Action> = this.actions$
-      .ofType(CustomerActions.FETCH_CUSTOMERS)
       .pipe(
+        ofType(CustomerActions.FETCH_CUSTOMERS),
         switchMap((action: CustomerActions.FetchCustomers) => {
             return toAction(
               this.customerDataService.getCustomers(action.payload),
@@ -34,8 +34,8 @@ export class CustomerEffects{
 
       @Effect()
       getAppointmentCustomers$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.FETCH_APPOINTMENT_CUSTOMERS)
         .pipe(
+          ofType(CustomerActions.FETCH_APPOINTMENT_CUSTOMERS),
           switchMap((action: CustomerActions.FetchCustomers) => {
               return toAction(
                 this.customerDataService.getAppointmentCustomers(action.payload),
@@ -48,8 +48,8 @@ export class CustomerEffects{
     
       @Effect()
       createCustomer$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.CREATE_CUSTOMER)
         .pipe(
+          ofType(CustomerActions.CREATE_CUSTOMER),
           switchMap((action: CustomerActions.CreateCustomer) => {
               return toAction(
                 this.customerDataService.createCustomer(action.payload),
@@ -62,21 +62,22 @@ export class CustomerEffects{
     
         @Effect()
         selectCustomerAfterCreation$: Observable<Action> = this.actions$
-          .ofType(CustomerActions.CREATE_CUSTOMER_SUCCESS)
           .pipe(
+            ofType(CustomerActions.CREATE_CUSTOMER_SUCCESS),
             switchMap((action:CustomerActions.CreateCustomerSuccess)=>
             [new CustomerActions.SelectCustomer(action.payload)]
           ));
         
         @Effect({dispatch:false})
         createCustomerFailed$: Observable<Action> = this.actions$
-            .ofType(CustomerActions.CREATE_CUSTOMER_FAIL)
-            .pipe()
+            .pipe(
+              ofType(CustomerActions.CREATE_CUSTOMER_FAIL)
+            )
         
         @Effect()
         updateCustomer$:Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER)
         .pipe(
+          ofType(CustomerActions.UPDATE_CUSTOMER),
             switchMap((action:CustomerActions.UpdateCustomer)=>{
                 return toAction(
                     this.customerDataService.updateCustomer(action.payload),
@@ -88,8 +89,8 @@ export class CustomerEffects{
 
         @Effect()
         selectCustomerAfterUpdate$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_SUCCESS)
         .pipe(
+          ofType(CustomerActions.UPDATE_CUSTOMER_SUCCESS),
         switchMap((action:CustomerActions.UpdateCUstomerSuccess)=>
         []
         )
@@ -98,13 +99,14 @@ export class CustomerEffects{
   
         @Effect({dispatch:false})
         updateCustomerFailed$: Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_FAIL)
-        .pipe();
+        .pipe(
+          ofType(CustomerActions.UPDATE_CUSTOMER_FAIL)
+        );
 
         @Effect()
         updateCustomerPartailly$:Observable<Action> = this.actions$
-        .ofType(CustomerActions.UPDATE_CUSTOMER_PARTIALLY)
         .pipe(
+          ofType(CustomerActions.UPDATE_CUSTOMER_PARTIALLY),
             switchMap((action:CustomerActions.UpdateCustomerPartially)=>{
                 return toAction(
                     this.customerDataService.updateCustomer(action.payload),

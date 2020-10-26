@@ -19,10 +19,10 @@ export class QmFlowPanelHeaderComponent implements OnInit {
   @Output()
   onFlowExit: EventEmitter<any>  = new EventEmitter<any>();
 
-  @ContentChild(QmFlowPanelResult) 
+  @ContentChild(QmFlowPanelResult, /* TODO: add static flag */ {}) 
   result: QmFlowPanelResult;
 
-  @ContentChild(QmFlowPanelTitle) 
+  @ContentChild(QmFlowPanelTitle, /* TODO: add static flag */ {}) 
   title: QmFlowPanelTitle;
 
   @Input()

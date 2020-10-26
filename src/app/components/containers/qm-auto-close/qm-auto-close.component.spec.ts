@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmAutoCloseComponent } from './qm-auto-close.component';
 
@@ -6,7 +6,7 @@ describe('QmAutoCloseComponent', () => {
   let component: QmAutoCloseComponent;
   let fixture: ComponentFixture<QmAutoCloseComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmAutoCloseComponent ]
     })

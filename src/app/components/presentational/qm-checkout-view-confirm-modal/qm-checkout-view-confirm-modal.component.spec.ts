@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmCheckoutViewConfirmModalComponent } from './qm-checkout-view-confirm-modal.component';
 
@@ -6,7 +6,7 @@ describe('QmCheckoutViewConfirmModalComponent', () => {
   let component: QmCheckoutViewConfirmModalComponent;
   let fixture: ComponentFixture<QmCheckoutViewConfirmModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmCheckoutViewConfirmModalComponent ]
     })

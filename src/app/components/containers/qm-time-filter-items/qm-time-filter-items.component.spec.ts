@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmTimeFilterItemsComponent } from './qm-time-filter-items.component';
 
@@ -6,7 +6,7 @@ describe('QmTimeFilterItemsComponent', () => {
   let component: QmTimeFilterItemsComponent;
   let fixture: ComponentFixture<QmTimeFilterItemsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmTimeFilterItemsComponent ]
     })

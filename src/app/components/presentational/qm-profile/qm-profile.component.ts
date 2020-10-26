@@ -16,7 +16,7 @@ import {
 } from "../../../../../src/store";
 import { QEvents } from "src/util/services/qevents/qevents.service";
 import { TranslateService } from "@ngx-translate/core";
-import { AfterViewInit } from "@angular/core/src/metadata/lifecycle_hooks";
+import { AfterViewInit } from '@angular/core';
 import { ToastService } from "../../../../util/services/toast.service";
 import { APP_URL } from "../../../../util/url-helper";
 import { SPService } from "../../../../util/services/rest/sp.service";

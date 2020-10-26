@@ -1,7 +1,8 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable, EventEmitter, Output, Directive } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorage, STORAGE_SUB_KEY } from '../local-storage';
 
+@Directive()
 @Injectable()
 export class ToastService {
   @Output() msgBoxOpen: EventEmitter<any> = new EventEmitter();

@@ -224,7 +224,7 @@ filterQueues(newFilter: string) {
   sortQueueList() {
     if (this.services) {
       // sort by name
-      this.services = this.services.sort((a, b) => {
+      this.services = this.services.slice().sort((a, b) => {
 
             
               // var nameA = a.name.toUpperCase(); // ignore upper and lowercase

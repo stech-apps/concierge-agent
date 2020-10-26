@@ -23,7 +23,7 @@ export class FilterQueuePipe implements PipeTransform {
   sortQueueList(queueList, type, sortAscending) {
     
     // sort by name
-    queueList = queueList.sort((a, b) => {
+    queueList = queueList.slice().sort((a, b) => {
 
           if(type=="SERVICE_POINT"){
             var nameA = a.name.toUpperCase(); // ignore upper and lowercase

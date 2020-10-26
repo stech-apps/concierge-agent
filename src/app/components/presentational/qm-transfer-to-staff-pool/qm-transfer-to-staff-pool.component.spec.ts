@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmTransferToStaffPoolComponent } from './qm-transfer-to-staff-pool.component';
 
@@ -6,7 +6,7 @@ describe('QmTransferToStaffPoolComponent', () => {
   let component: QmTransferToStaffPoolComponent;
   let fixture: ComponentFixture<QmTransferToStaffPoolComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmTransferToStaffPoolComponent ]
     })

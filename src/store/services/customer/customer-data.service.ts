@@ -7,7 +7,9 @@ import { ICustomer } from "../../../models/ICustomer";
 import { servicePoint, restEndpoint, DataServiceError } from '../data.service';
 import { ToastService } from "../../../util/services/toast.service";
 import { TranslateService } from "../../../../node_modules/@ngx-translate/core";
+import { Injectable as Injectable_1 } from "@angular/core";
 
+@Injectable_1()
 @Injectable()
 export class CustomerDataService{
     constructor(private http: HttpClient, private errorHandler: GlobalErrorHandler,

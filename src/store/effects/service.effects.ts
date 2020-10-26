@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store/src/models';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -20,8 +20,8 @@ export class ServiceEffects {
 
     @Effect()
     getServices$: Observable<Action> = this.actions$
-      .ofType(AllActions.FETCH_SERVICES)
       .pipe(
+        ofType(AllActions.FETCH_SERVICES),
         switchMap((action: AllActions.FetchServices) =>
           toAction(
             this.serviceDataService.getServices(action.payload),
@@ -33,8 +33,8 @@ export class ServiceEffects {
 
     @Effect()
     getServicesConfiguration$: Observable<Action> = this.actions$
-      .ofType(AllActions.FETCH_SERVICE_CONFIGURATION)
       .pipe(
+        ofType(AllActions.FETCH_SERVICE_CONFIGURATION),
         switchMap((action: AllActions.FetchServiceConfiguration) =>
           toAction(
             this.serviceDataService.getServicesConfiguration(action.branch, action.services),

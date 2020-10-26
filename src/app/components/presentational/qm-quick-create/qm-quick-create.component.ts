@@ -312,7 +312,7 @@ filterServices(newFilter: string) {
   sortServiceList() {
     if (this.services) {
       // sort by name
-      this.services = this.services.sort((a, b) => {
+      this.services = this.services.slice().sort((a, b) => {
           const stateA = a.internalName.toUpperCase(); // ignore upper and lowercase
           const stateB = b.internalName.toUpperCase(); // ignore upper and lowercase
           if (stateA < stateB) {

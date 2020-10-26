@@ -16,7 +16,7 @@ import { LicenseAuthGuard } from "src/auth-guards/license-auth-guard";
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule, ApplicationRef, ErrorHandler } from "@angular/core";
+import { NgModule, ApplicationRef, ErrorHandler, Injectable } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -30,7 +30,7 @@ import { appRoutes } from "./../routes/app-routes";
 
 // NGRX Store
 import { StoreModule, Store, ActionReducer, MetaReducer } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
+import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 // Moment
@@ -191,6 +191,7 @@ const toastrGlobalOptions = {
   toastComponent: QmCustomToastComponent
 };
 
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     // override hammerjs default configuration
@@ -310,7 +311,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     StoreModule.forRoot(reducers),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      { enableTracing: false, relativeLinkResolution: 'legacy' } // <-- debugging purposes only
+ // <-- debugging purposes only
     ),
     ToastrModule.forRoot(toastrGlobalOptions),
     ToastContainerModule,
@@ -325,7 +327,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       }
     }),
     BrowserAnimationsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AngularDraggableModule
     
   ],

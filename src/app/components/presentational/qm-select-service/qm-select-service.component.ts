@@ -480,7 +480,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   sortServices(serviceList: ICalendarService[]): ICalendarService[] {
-    return serviceList.sort(
+    return serviceList.slice().sort(
       (service1: ICalendarService, service2: ICalendarService) => {
         if(this.flowType === FLOW_TYPE.CREATE_APPOINTMENT){
           if (service1.name.toLowerCase() < service2.name.toLowerCase() ) { return -1; }
@@ -500,7 +500,7 @@ export class QmSelectServiceComponent implements OnInit {
     var serviceIds = serviceIds = this.localStorage.getStoreForKey(this.localStorage.getStorageKey(this.flowType));
 
     if(serviceIds !== null && serviceIds !== undefined){
-      serviceIds.sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
+      serviceIds.slice().sort(function(a,b) {return (a.usage > b.usage) ? -1 : ((b.usage > a.usage) ? 1 : 0);} ); 
 
       if(serviceIds.length >= this.mostFrequentServiceCount){
         serviceIds = serviceIds.slice(0, this.mostFrequentServiceCount);

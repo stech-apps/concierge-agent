@@ -101,7 +101,7 @@ export function reducer (
  * @param branchList - Fetched branch list
  */
 function sortBranches(branchList: any): ICalendarBranch[] {
-  return branchList.sort(
+  return branchList.slice().sort(
     (branch1: ICalendarBranch, branch2: ICalendarBranch) => {
       if (branch1.name.toLowerCase() < branch2.name.toLowerCase() ) { return -1; }
       if (branch1.name.toLowerCase() > branch2.name.toLowerCase() ) { return 1; }

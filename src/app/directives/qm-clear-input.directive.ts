@@ -2,7 +2,7 @@ import { QmClearInputButtonComponent } from './qm-clear-input-button/qm-clear-in
 import { Directive, HostListener, ElementRef, Renderer2, OnInit,
   ComponentFactory, ComponentFactoryResolver, Input, TemplateRef, ViewContainerRef,
   EventEmitter, Output, } from '@angular/core';
-import { ComponentRef } from '@angular/core/src/linker/component_factory';
+import { ComponentRef } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Directive({

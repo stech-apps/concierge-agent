@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmModalComponent } from './qm-modal.component';
 
@@ -6,7 +6,7 @@ describe('QmModalComponent', () => {
   let component: QmModalComponent;
   let fixture: ComponentFixture<QmModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmModalComponent ]
     })

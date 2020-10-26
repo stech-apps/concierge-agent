@@ -99,7 +99,7 @@ export function reducer (
  * @param branchList - Fetched branch list
  */
 function sortBranches(branchList: any): IBranch[] {
-  return branchList.sort(
+  return branchList.slice().sort(
     (branch1: IBranch, branch2: IBranch) => {
       if (branch1.name.toLowerCase() < branch2.name.toLowerCase() ) { return -1; }
       if (branch1.name.toLowerCase() > branch2.name.toLowerCase() ) { return 1; }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmFlowPanelHeaderComponent } from './qm-flow-panel-header.component';
 
@@ -6,7 +6,7 @@ describe('QmFlowPanelHeaderComponent', () => {
   let component: QmFlowPanelHeaderComponent;
   let fixture: ComponentFixture<QmFlowPanelHeaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmFlowPanelHeaderComponent ]
     })

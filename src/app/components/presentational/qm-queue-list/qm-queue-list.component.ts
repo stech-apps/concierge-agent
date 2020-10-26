@@ -146,7 +146,7 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   sortQueueList(type) {
     if (this.queueCollection) {
       // sort by name
-      this.queueCollection = this.queueCollection.sort((a, b) => {
+      this.queueCollection = this.queueCollection.slice().sort((a, b) => {
         if (type == "QUEUE" || type == "MAXWAITTIME" || type == "ESTWAITTIME") {
           if (type == "QUEUE") {
             var nameA = a.name.toUpperCase(); // ignore upper and lowercase

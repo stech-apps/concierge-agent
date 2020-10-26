@@ -72,7 +72,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
             }
           );
 
-          this.timeSlots.sort((a, b) => a.title.localeCompare(b.title));
+          this.timeSlots.slice().sort((a, b) => a.title.localeCompare(b.title));
           this.selectedCategory = preselectedTimeSlotCategory;
 
           setTimeout(()=> {
@@ -296,7 +296,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
         } else {
           return nextClosestTime;
         }
-      }, {title: ''}
+      },
     );
 
     return timeToScrollTo.title;
@@ -325,7 +325,7 @@ export class QmTimeSlotsComponent implements OnInit, OnDestroy {
             return nextClosestTime;
           }
         }
-      }, {title: ''}
+      },
     );
 
     return timeToScrollTo.title;

@@ -10,7 +10,7 @@ import { IServiceConfiguration } from '../../../models/IServiceConfiguration';
 import { IServicePoint } from '../../../models/IServicePoint';
 import { IServicePointState } from './../../reducers/service-point.reducer';
 import { IUTTParameter } from 'src/models/IUTTParameter';
-import { forEach } from '@angular/router/src/utils/collection';
+// import { forEach } from '@angular/router/src/utils/collection';
 
 // selectors
 const getServiceState = createFeatureSelector<IServiceState>('services');

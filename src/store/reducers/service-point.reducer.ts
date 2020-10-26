@@ -74,7 +74,7 @@ export function reducer (
  * @param serviceList Fetched serviceList
  */
 function sortServicePoints(servicePoints: IServicePoint[]): IServicePoint[] {
-  return servicePoints.sort(
+  return servicePoints.slice().sort(
     (service1: IServicePoint, service2: IServicePoint) => {
       if (service1.name.toLowerCase() < service2.name.toLowerCase() ) { return -1; }
       if (service1.name.toLowerCase() > service2.name.toLowerCase() ) { return 1; }

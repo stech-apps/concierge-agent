@@ -56,7 +56,7 @@ export class QmTimeFilterComponent implements OnInit, AfterViewInit, OnDestroy,O
   currentDate:string;
   userDirection:string;
   
-  @ViewChild("endContainer") endTimeFilters: TemplateRef<any>;
+  @ViewChild("endContainer", { static: true }) endTimeFilters: TemplateRef<any>;
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;

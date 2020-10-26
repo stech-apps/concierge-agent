@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmQuickCreateComponent } from './qm-quick-create.component';
 
@@ -6,7 +6,7 @@ describe('QmQucikCreateComponent', () => {
   let component: QmQuickCreateComponent;
   let fixture: ComponentFixture<QmQuickCreateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmQuickCreateComponent ]
     })

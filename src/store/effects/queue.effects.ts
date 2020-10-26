@@ -1,7 +1,7 @@
 import { QueueDataService } from './../services/queue/queue-data.service';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -23,8 +23,8 @@ export class QueueEffects {
 
   @Effect()
   getQueueSummary$: Observable<Action> = this.actions$
-    .ofType(QueueActions.FETCH_QUEUE_INFO)
     .pipe(
+      ofType(QueueActions.FETCH_QUEUE_INFO),
       switchMap((fetchQueueRequest: FetchQueueInfo) =>
         toAction(
           this.queueDataService.getQueueInformation(fetchQueueRequest.payload),
@@ -36,8 +36,8 @@ export class QueueEffects {
 
   @Effect()
   getSelectedVisit$:Observable<Action> = this.actions$
-  .ofType(QueueActions.FETCH_SELECTED_VISIT_INFO)
   .pipe(
+    ofType(QueueActions.FETCH_SELECTED_VISIT_INFO),
     switchMap((fetchSelectedVisit:FetchSelectedVisitInfo)=>
     toAction(
       this.queueDataService.getSelectedVist(fetchSelectedVisit.branch,fetchSelectedVisit.searchText),

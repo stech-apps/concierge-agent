@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
   userDirection$: Observable<string>;
-  @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
+  @ViewChild(ToastContainerDirective, { static: true }) toastContainer: ToastContainerDirective;
 
   constructor(private systemInfoDispatchers: SystemInfoDispatchers, private systemInfoSelectors: SystemInfoSelectors,
     private accountDispatchers: AccountDispatchers,

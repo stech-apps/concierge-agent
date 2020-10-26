@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmCustomerSearchBarComponent } from './qm-customer-search-bar.component';
 
@@ -6,7 +6,7 @@ describe('QmCustomerSearchBarComponent', () => {
   let component: QmCustomerSearchBarComponent;
   let fixture: ComponentFixture<QmCustomerSearchBarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmCustomerSearchBarComponent ]
     })

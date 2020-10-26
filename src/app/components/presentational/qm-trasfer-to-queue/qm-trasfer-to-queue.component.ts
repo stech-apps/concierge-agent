@@ -133,7 +133,7 @@ filterQueues(newFilter: string) {
 sortQueueList(type) {
   if (this.queueCollection) {
     // sort by name
-    this.queueCollection = this.queueCollection.sort((a, b) => {
+    this.queueCollection = this.queueCollection.slice().sort((a, b) => {
             const nameA = a.name.toUpperCase(); // ignore upper and lowercase
             const nameB = b.name.toUpperCase(); // ignore upper and lowercase
             if ((nameA < nameB && this.sortAscending) || (nameA > nameB && !this.sortAscending) ) {

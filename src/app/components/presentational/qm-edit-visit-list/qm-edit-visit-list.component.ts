@@ -12,7 +12,7 @@ import { NativeApiService } from '../../../../util/services/native-api.service';
 import { Util } from '../../../../util/util';
 import * as moment from 'moment-timezone';
 import { GlobalErrorHandler } from 'src/util/services/global-error-handler.service';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
+// import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 
 enum SortBy {
@@ -273,7 +273,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.sortByVisitIdAsc = !this.sortByVisitIdAsc;
     if (this.visits && this.visits.length) {
       // sort by visitId
-      this.visits = this.visits.sort((a, b) => {
+      this.visits = this.visits.slice().sort((a, b) => {
         var nameA = a.ticketId.toUpperCase(); // ignore upper and lowercase
         var nameB = b.ticketId.toUpperCase(); // ignore upper and lowercase
         if ((nameA < nameB && this.sortByVisitIdAsc) || (nameA > nameB && !this.sortByVisitIdAsc)) {
@@ -298,7 +298,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.sortByCustomerAsc = !this.sortByCustomerAsc;
     if (this.visits && this.visits.length) {
       // sort by customer
-      this.visits = this.visits.sort((a, b) => {
+      this.visits = this.visits.slice().sort((a, b) => {
         var nameA = a.customerName.toUpperCase(); // ignore upper and lowercase
         var nameB = b.customerName.toUpperCase(); // ignore upper and lowercase
         if ((nameA < nameB && this.sortByCustomerAsc) || (nameA > nameB && !this.sortByCustomerAsc)) {
@@ -319,7 +319,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.sortByServiceAsc = !this.sortByServiceAsc;
     if (this.visits && this.visits.length) {
       // sort by service
-      this.visits = this.visits.sort((a, b) => {
+      this.visits = this.visits.slice().sort((a, b) => {
         var nameA = a.serviceName.toUpperCase(); // ignore upper and lowercase
         var nameB = b.serviceName.toUpperCase(); // ignore upper and lowercase
         if ((nameA < nameB && this.sortByServiceAsc) || (nameA > nameB && !this.sortByServiceAsc)) {
@@ -339,7 +339,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     this.sortByAppTimeAsc = !this.sortByAppTimeAsc;
     if (this.visits && this.visits.length) {
       // sort by APpTime
-      this.visits = this.visits.sort((a, b) => {
+      this.visits = this.visits.slice().sort((a, b) => {
         var nameA = a.appointmentTime.toUpperCase(); // ignore upper and lowercase
         var nameB = b.appointmentTime.toUpperCase(); // ignore upper and lowercase
         if ((nameA < nameB && this.sortByAppTimeAsc) || (nameA > nameB && !this.sortByAppTimeAsc)) {

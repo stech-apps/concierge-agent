@@ -34,7 +34,7 @@ export class QmSelectBranchComponent implements OnInit, OnDestroy {
   mousePressed: boolean;
   userDirection: string;
 
-  @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
+  @ViewChild(QmClearInputDirective, { static: true }) clearInputDirective: QmClearInputDirective;
 
   private _isVisible: boolean;
 

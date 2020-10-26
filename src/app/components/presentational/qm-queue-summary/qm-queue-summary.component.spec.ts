@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmQueueSummaryComponent } from './qm-queue-summary.component';
 
@@ -6,7 +6,7 @@ describe('QmQueueSummaryComponent', () => {
   let component: QmQueueSummaryComponent;
   let fixture: ComponentFixture<QmQueueSummaryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmQueueSummaryComponent ]
     })

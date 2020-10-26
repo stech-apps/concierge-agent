@@ -183,7 +183,7 @@ export class QmTransferToServicePoolComponent implements OnInit {
     sortQueueList() {
       if (this.servicePoints) {
         // sort by name
-        this.servicePoints = this.servicePoints.sort((a, b) => {
+        this.servicePoints = this.servicePoints.slice().sort((a, b) => {
 
               
                 // var nameA = a.name.toUpperCase(); // ignore upper and lowercase

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store/src/models';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -18,8 +18,8 @@ export class CalendarPingEffects {
 
   @Effect()
   getCalendarPing$: Observable<Action> = this.actions$
-    .ofType(CalendarPingActions.FETCH_CALENDAR_PING_INFO)
     .pipe(
+      ofType(CalendarPingActions.FETCH_CALENDAR_PING_INFO),
       switchMap(() =>
         toAction(
           this.calendarPingDataService.getCalendarPingInfo(),

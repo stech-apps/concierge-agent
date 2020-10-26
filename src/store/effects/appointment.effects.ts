@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Injectable, Pipe } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
@@ -38,8 +38,8 @@ export class AppointmentEffects {
 
   @Effect()
   searchAppointments$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.SEARCH_APPOINTMENTS)
-    .pipe(
+  .pipe(
+    ofType(AppointmentActions.SEARCH_APPOINTMENTS),
       switchMap((action: AppointmentActions.SearchAppointments) =>
         toAction(
           this.appointmentDataService.searchAppointments(action.payload),
@@ -51,8 +51,8 @@ export class AppointmentEffects {
 
   @Effect()
   searchCalendarAppointments$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS)
     .pipe(
+      ofType(AppointmentActions.SEARCH_CALENDAR_APPOINTMENTS),
       switchMap((action: AppointmentActions.SearchAppointments) =>
         toAction(
           this.appointmentDataService.searchCalendarAppointments(action.payload),
@@ -64,8 +64,8 @@ export class AppointmentEffects {
 
   @Effect()
   deleteAppointment$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.DELETE_APPOINTMENT)
     .pipe(
+      ofType(AppointmentActions.DELETE_APPOINTMENT),
       switchMap((action: AppointmentActions.DeleteAppointment) =>
         this.appointmentDataService.deleteAppointment(action.payload).pipe(
           mergeMap(() => [new AppointmentActions.DeleteAppointmentSuccess(action.payload, action.succssCallBack)]),
@@ -77,8 +77,8 @@ export class AppointmentEffects {
 
   @Effect()
   deleteAppointmentSuccess$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.DELETE_APPOINTMENT_SUCCESS)
     .pipe(
+      ofType(AppointmentActions.DELETE_APPOINTMENT_SUCCESS),
       tap((action: AppointmentActions.DeleteAppointmentSuccess) => {
         action.succssCallBack();
       }),
@@ -90,8 +90,8 @@ export class AppointmentEffects {
 
   @Effect()
   deleteAppointmentFailed$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.DELETE_APPOINTMENT_FAIL)
     .pipe(
+      ofType(AppointmentActions.DELETE_APPOINTMENT_FAIL),
       switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
         return this.translateService.get(['appointment_deleted_fail', 'appointment_not_found_detail']).pipe(
           switchMap((messages) => {
@@ -112,9 +112,9 @@ export class AppointmentEffects {
       }));
 
   @Effect()
-  rescheduleAppointment$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT)
+  rescheduleAppointment$: Observable<Action> = this.actions$    
     .pipe(
+      ofType(AppointmentActions.RESCHEDULE_APPOINTMENT),
       switchMap((action: AppointmentActions.RescheduleAppointment) =>
         this.appointmentDataService.rescheduleAppointment(action.payload).pipe(
           mergeMap(() => [new AppointmentActions.RescheduleAppointmentSuccess(action.payload)]),
@@ -125,8 +125,8 @@ export class AppointmentEffects {
 
   @Effect()
   rescheduleAppointmentSuccess$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS)
     .pipe(
+      ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_SUCCESS),
       switchMap((action: AppointmentActions.RescheduleAppointmentSuccess) => {
         return this.translateService.get(['label.notifyoptions.smsandemail', 
         'label.notifyoptions.email', 'label.notifyoptions.sms']).pipe(
@@ -190,8 +190,8 @@ export class AppointmentEffects {
 
   @Effect()
   rescheduleAppointmentFailed$: Observable<Action> = this.actions$
-    .ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL)
     .pipe(
+      ofType(AppointmentActions.RESCHEDULE_APPOINTMENT_FAIL),
       switchMap((action: AppointmentActions.RescheduleAppointmentFail) => {
         return this.translateService.get(['label.appointment.reschedule.fail']).pipe(
           switchMap((messages) => {

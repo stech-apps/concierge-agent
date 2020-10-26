@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmQueueListComponent } from './qm-queue-list.component';
 
@@ -6,7 +6,7 @@ describe('QmQueueListComponent', () => {
   let component: QmQueueListComponent;
   let fixture: ComponentFixture<QmQueueListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmQueueListComponent ]
     })

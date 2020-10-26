@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store/src/models';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -18,8 +18,8 @@ export class CalendarServiceEffects {
 
       @Effect()
     getCalendarServices$: Observable<Action> = this.actions$
-      .ofType(AllActions.FETCH_CALENDAR_SERVICES)
       .pipe(
+        ofType(AllActions.FETCH_CALENDAR_SERVICES),
         switchMap((action: AllActions.FetchCalendarServices) =>
           toAction(
             this.serviceDataService.getCalendarServices(action.payload),
@@ -31,8 +31,8 @@ export class CalendarServiceEffects {
 
     @Effect()
     getServiceGroups$: Observable<Action> = this.actions$
-      .ofType(AllActions.FETCH_SERVICE_GROUPS)
       .pipe(
+        ofType(AllActions.FETCH_SERVICE_GROUPS),
         switchMap((action: AllActions.FetchServiceGroups) =>
           toAction(
             this.serviceDataService.getServiceGroups(action.payload, action.branch, action.multiServiceEnabled),

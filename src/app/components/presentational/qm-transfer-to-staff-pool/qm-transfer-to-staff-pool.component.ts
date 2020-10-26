@@ -162,7 +162,7 @@ filterStaffPool(newFilter: string) {
 sortQueueList() {
   if (this.StaffPool) {
     // sort by name
-    this.StaffPool = this.StaffPool.sort((a, b) => {
+    this.StaffPool = this.StaffPool.slice().sort((a, b) => {
             var nameA = a.firstName.toUpperCase() + a.lastName.toUpperCase(); // ignore upper and lowercase
             var nameB = b.firstName.toUpperCase() + b.lastName.toUpperCase(); // ignore upper and lowercase
            

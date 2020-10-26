@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmDropDownComponent } from './qm-drop-down.component';
 
@@ -6,7 +6,7 @@ describe('QmDropDownComponent', () => {
   let component: QmDropDownComponent;
   let fixture: ComponentFixture<QmDropDownComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmDropDownComponent ]
     })

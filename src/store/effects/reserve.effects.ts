@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Action } from '@ngrx/store/src/models';
 import { TranslateService } from '@ngx-translate/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { ReserveDataService, DataServiceError } from '../services';
 import { switchMap, tap, map, withLatestFrom, mergeMap, catchError } from 'rxjs/operators';
 import * as ReserveActions from './../actions';
@@ -34,88 +34,88 @@ export class ReserveEffects {
 
   @Effect()
   reserveAppointment$: Observable<any> = this.actions$
-    .ofType(ReserveActions.RESERVE_APPOINTMENT)
     .pipe(
-    switchMap((action: AllActions.ReserveAppointment) =>
-      toAction(
-        this.reserveDataService.reserveAppointment(action.payload.bookingInformation, action.payload.appointment),
-        AllActions.ReserveAppointmentSuccess,
-        AllActions.ReserveAppointmentFail
+      ofType(ReserveActions.RESERVE_APPOINTMENT),
+      switchMap((action: AllActions.ReserveAppointment) =>
+        toAction(
+          this.reserveDataService.reserveAppointment(action.payload.bookingInformation, action.payload.appointment),
+          AllActions.ReserveAppointmentSuccess,
+          AllActions.ReserveAppointmentFail
+        )
       )
-    )
     );
 
   @Effect()
   fetchReservableDates$: Observable<any> = this.actions$
-    .ofType(ReserveActions.FETCH_RESERVABLE_DATES)
     .pipe(
-    switchMap((action: AllActions.FetchReservableDates) =>
-      toAction(
-        this.reserveDataService.fetchReservableDates(action.payload),
-        AllActions.FetchReservableDatesSuccess,
-        AllActions.FetchReservableDatesFail
+      ofType(ReserveActions.FETCH_RESERVABLE_DATES),
+      switchMap((action: AllActions.FetchReservableDates) =>
+        toAction(
+          this.reserveDataService.fetchReservableDates(action.payload),
+          AllActions.FetchReservableDatesSuccess,
+          AllActions.FetchReservableDatesFail
+        )
       )
-    )
     );
 
   @Effect()
   unreserveAppointment$: Observable<Action> = this.actions$
-    .ofType(ReserveActions.DESELECT_TIMESLOT)
     .pipe(
-    withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
-    switchMap((data: any) => {
-      const [action, reservedAppointment] = data;
-      if (reservedAppointment) {
-        return toAction(
-          this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
-          ReserveActions.UnreserveAppointmentSuccess,
-          ReserveActions.UnreserveAppointmentFail
-        );
-      } else {
-        return empty();
-      }
-    })
-  );
+      ofType(ReserveActions.DESELECT_TIMESLOT),
+      withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
+      switchMap((data: any) => {
+        const [action, reservedAppointment] = data;
+        if (reservedAppointment) {
+          return toAction(
+            this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
+            ReserveActions.UnreserveAppointmentSuccess,
+            ReserveActions.UnreserveAppointmentFail
+          );
+        } else {
+          return empty();
+        }
+      })
+    );
 
   @Effect()
   removerreserveAppointment$: Observable<Action> = this.actions$
-    .ofType(ReserveActions.UNRESERVE_APPOINTMENT)
     .pipe(
-    withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
-    switchMap((data: any) => {
-      const [action, reservedAppointment] = data;
-      if (reservedAppointment) {
-        return toAction(
-          this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
-          ReserveActions.UnreserveAppointmentSuccess,
-          ReserveActions.UnreserveAppointmentFail
-        );
-      } else {
-        return empty();
-      }
-    })
+      ofType(ReserveActions.UNRESERVE_APPOINTMENT),
+      withLatestFrom(this.store$.select((state: IAppState) => state.reserved.reservedAppointment)),
+      switchMap((data: any) => {
+        const [action, reservedAppointment] = data;
+        if (reservedAppointment) {
+          return toAction(
+            this.reserveDataService.unreserveAppointment(reservedAppointment.publicId),
+            ReserveActions.UnreserveAppointmentSuccess,
+            ReserveActions.UnreserveAppointmentFail
+          );
+        } else {
+          return empty();
+        }
+      })
     );
 
   @Effect()
   reserveAppointmentFailed$: Observable<Action> = this.actions$
-    .ofType(ReserveActions.RESERVE_APPOINTMENT_FAIL)
     .pipe(
-    tap(
-      (action: ReserveActions.ReserveAppointmentFail) => {
-        if (action.payload['errorCode'] == "E440") {
-          this.errorHandler.showError('time_slot_already_taken', action.payload);
-        } else {
-          this.errorHandler.showError('error.reserve.appointment.failed', action.payload);
+      ofType(ReserveActions.RESERVE_APPOINTMENT_FAIL),
+      tap(
+        (action: ReserveActions.ReserveAppointmentFail) => {
+          if (action.payload['errorCode'] == "E440") {
+            this.errorHandler.showError('time_slot_already_taken', action.payload);
+          } else {
+            this.errorHandler.showError('error.reserve.appointment.failed', action.payload);
+          }
         }
-      }
-    ),
-    switchMap((action: ReserveActions.ReserveAppointmentFail) => {
+      ),
+      switchMap((action: ReserveActions.ReserveAppointmentFail) => {
 
-      const bookingInformation: IBookingInformation = {
-        ...action.payload.requestData.bookingInformation
-      };
+        const bookingInformation: IBookingInformation = {
+          ...action.payload.requestData.bookingInformation
+        };
 
-      return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation)];
-    })
+        return [new ReserveActions.DeselectTimeslot, new ReserveActions.FetchTimeslots(bookingInformation)];
+      })
     );
 }

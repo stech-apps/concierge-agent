@@ -104,7 +104,7 @@ export function reducer (
  * @param serviceList Fetched serviceList
  */
 function sortServices(serviceList: IService[]): IService[] {
-  return serviceList.sort(
+  return serviceList.slice().sort(
     (service1: IService, service2: IService) => {
       if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
       if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }
@@ -114,7 +114,7 @@ function sortServices(serviceList: IService[]): IService[] {
 }
 
 function sortConfigServices(serviceList: IServiceConfiguration[]): IServiceConfiguration[] {
-  return serviceList.sort(
+  return serviceList.slice().sort(
     (service1: IServiceConfiguration, service2: IServiceConfiguration) => {
       if (service1.internalName.toLowerCase() < service2.internalName.toLowerCase() ) { return -1; }
       if (service1.internalName.toLowerCase() > service2.internalName.toLowerCase() ) { return 1; }

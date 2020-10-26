@@ -18,9 +18,9 @@ export enum CUSTOMER_SAVE_OPTION {
 })
 export class QmCreateVisitComponent implements OnInit {
 
-  @ViewChild('f') f: any;
+  @ViewChild('f', { static: true }) f: any;
   @ViewChild('pc') pc: any;
-  @ViewChild('px') px: any;
+  @ViewChild('px', { static: true }) px: any;
 
   private subscriptions: Subscription = new Subscription();
   private _isFlowSkip: boolean = false;

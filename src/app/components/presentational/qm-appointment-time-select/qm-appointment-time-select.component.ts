@@ -84,8 +84,8 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   currentDate = '';
   showCustomerSection = false;
   private uttSubscription$: Observable<IUTTParameter>;
-  @ViewChild('timeSlotContainer') timeSlotContainer: ElementRef;
-  @ViewChild(QmCalendarComponent) calendarRef: QmCalendarComponent;
+  @ViewChild('timeSlotContainer', { static: true }) timeSlotContainer: ElementRef;
+  @ViewChild(QmCalendarComponent, { static: true }) calendarRef: QmCalendarComponent;
 
   constructor(
     private branchSelectors: BranchSelectors,

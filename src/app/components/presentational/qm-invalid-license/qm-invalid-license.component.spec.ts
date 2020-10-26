@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmInvalidLicenseComponent } from './qm-invalid-license.component';
 
@@ -6,7 +6,7 @@ describe('QmInvalidLicenseComponent', () => {
   let component: QmInvalidLicenseComponent;
   let fixture: ComponentFixture<QmInvalidLicenseComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmInvalidLicenseComponent ]
     })

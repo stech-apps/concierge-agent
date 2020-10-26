@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class QmSideMenuComponent implements OnInit {
 
-  @ViewChild('menu') menu: ElementRef;
+  @ViewChild('menu', { static: true }) menu: ElementRef;
 
   subscriptions: Subscription = new Subscription();
   currentUser: string;

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmTrasferToQueueComponent } from './qm-trasfer-to-queue.component';
 
@@ -6,7 +6,7 @@ describe('QmTrasferToQueueComponent', () => {
   let component: QmTrasferToQueueComponent;
   let fixture: ComponentFixture<QmTrasferToQueueComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmTrasferToQueueComponent ]
     })

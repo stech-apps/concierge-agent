@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmClearInputButtonComponent } from './qm-clear-input-button.component';
 
@@ -6,7 +6,7 @@ describe('QmClearInputButtonComponent', () => {
   let component: QmClearInputButtonComponent;
   let fixture: ComponentFixture<QmClearInputButtonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmClearInputButtonComponent ]
     })

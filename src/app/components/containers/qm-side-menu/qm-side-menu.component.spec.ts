@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmSideMenuComponent } from './qm-side-menu.component';
 
@@ -6,7 +6,7 @@ describe('QmSideMenuComponent', () => {
   let component: QmSideMenuComponent;
   let fixture: ComponentFixture<QmSideMenuComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmSideMenuComponent ]
     })

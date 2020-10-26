@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store/src/models';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 
@@ -19,8 +19,8 @@ export class LicenseInfoEffects {
 
     @Effect()
     getLicenseInfo$: Observable<Action> = this.actions$
-      .ofType(LicenseActions.FETCH_LICENSE_INFO)
       .pipe(
+        ofType(LicenseActions.FETCH_LICENSE_INFO),
         switchMap(() =>
           toAction(
             this.licenseInfoDataService.getInfo(),

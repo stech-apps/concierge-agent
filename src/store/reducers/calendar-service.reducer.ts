@@ -129,7 +129,7 @@ export interface ICalendarServiceState {
    * @param serviceList Fetched serviceList
    */
   function sortServices(serviceList: ICalendarService[]): ICalendarService[] {
-    return serviceList.sort(
+    return serviceList.slice().sort(
       (service1: ICalendarService, service2: ICalendarService) => {
         if (service1.name.toLowerCase() < service2.name.toLowerCase() ) { return -1; }
         if (service1.name.toLowerCase() > service2.name.toLowerCase() ) { return 1; }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QmAppPageNotFoundComponent } from './qm-app-page-not-found.component';
 
@@ -6,7 +6,7 @@ describe('QmAppPageNotFoundComponent', () => {
   let component: QmAppPageNotFoundComponent;
   let fixture: ComponentFixture<QmAppPageNotFoundComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QmAppPageNotFoundComponent ]
     })

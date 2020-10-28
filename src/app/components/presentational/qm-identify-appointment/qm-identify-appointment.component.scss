@@ -473,6 +473,8 @@ qm-identify-appointment{
       font-size: 16px;
       color: $dark-transparent82;
       position: relative;
+      justify-content: center;
+      align-items: center;
 
       @include qm-sm{
         font-size: 16px;

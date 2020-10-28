@@ -200,13 +200,13 @@ export function reducer(
   function updateQueueList(queueList: any, queueInfo: Queue) {
     if(queueInfo && queueList.queues){
     var queue = queueList.queues.find(queue => queue.id === queueInfo.id);
+    var newQueueList = [...queueList.queues];
     if(queue){
       let index = queueList.queues.indexOf(queue);
-      queue.customersWaiting = queueInfo.customersWaiting;
-      queue.waitingTime = queueInfo.waitingTime;
-      queueList.queues[index] = queue;
+      queue = {...queue, customersWaiting: queueInfo.customersWaiting, waitingTime: queueInfo.waitingTime}
+      newQueueList[index] = queue;
     }
-    return queueList.queues;
+    return newQueueList;
   }
   }
 

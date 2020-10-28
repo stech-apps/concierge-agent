@@ -377,7 +377,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.locale(DEFAULT_LOCALE).format('YYYY-MM-DD'),
+      date: this.currentlyActiveDate.mDate.clone().locale(DEFAULT_LOCALE).format('YYYY-MM-DD'),
       time: timeSlot.title
     };
 

@@ -19,6 +19,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "allowedCommonJsDependencies": ["lodash","angular2-moment","hammerjs"],
             "assets": [
               "src/favicon.ico",
               "src/assets",

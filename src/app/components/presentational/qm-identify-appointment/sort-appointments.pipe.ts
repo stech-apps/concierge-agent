@@ -1,7 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { IAppointment } from "src/models/IAppointment";
 import { Pipe, PipeTransform } from "@angular/core";
-import * as _ from "lodash";
+import * as _ from "lodash-es";
 
 @Pipe({
   name: "sortAppointments"

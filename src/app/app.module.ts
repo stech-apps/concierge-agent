@@ -11,7 +11,7 @@ import { ServicePointSelectors } from './../store/services';
 import { QmCustomToastComponent } from "./components/presentational/qm-custom-toast/qm-custom-toast.component";
 import { NativeApiService } from "./../util/services/native-api.service";
 // Route guards
-import { LicenseAuthGuard } from "src/auth-guards/license-auth-guard";
+import { LicenseAuthGuard } from "../../src/auth-guards/license-auth-guard";
 
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
@@ -79,8 +79,8 @@ import { PlatformDispatchers } from "src/store/services/platform";
 import { QmProfileComponent } from "./components/presentational/qm-profile/qm-profile.component";
 import { QmPageHeaderComponent } from "./components/containers/qm-page-header/qm-page-header.component";
 import { QmDropDownComponent } from "./components/presentational/qm-drop-down/qm-drop-down.component";
-import { QEvents } from "src/util/services/qevents/qevents.service";
-import { QEventsHelper } from "src/util/services/qevents/qevents";
+import { QEvents } from "../util/services/qevents/qevents.service";
+import { QEventsHelper } from "../util/services/qevents/qevents";
 import { QmAutoCloseComponent } from "./components/containers/qm-auto-close/qm-auto-close.component";
 import { AutoClose } from "../util/services/autoclose.service";
 import { QmHomeComponent } from "src/app/components/presentational/qm-home/qm-home.component";
@@ -307,8 +307,14 @@ export class MyHammerConfig extends HammerGestureConfig {
     A11yModule,
     NgSelectModule,
     ReactiveFormsModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+      },
+    }),
     EffectsModule.forRoot(effects),
-    StoreModule.forRoot(reducers),
+    // StoreModule.forRoot(reducers),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false, relativeLinkResolution: 'legacy' } // <-- debugging purposes only

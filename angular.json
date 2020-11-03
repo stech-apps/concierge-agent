@@ -19,7 +19,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "allowedCommonJsDependencies": ["lodash","angular2-moment","hammerjs"],
+            "allowedCommonJsDependencies": ["lodash","angular2-moment","hammerjs", "moment-timezone"],
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -40,7 +40,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "100kb"
                 }
               ],
               "fileReplacements": [

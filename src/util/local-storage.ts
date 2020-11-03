@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { UserSelectors, BranchSelectors, ServicePointSelectors, AccountSelectors } from '../store';
+import { ServicePointSelectors } from '../store/services/service-point/service-point.selectors';
+import { AccountSelectors } from '../store/services/account/account.selectors';
+import { BranchSelectors } from '../store/services/branch/branch.selectors';
+import { UserSelectors } from '../store/services/user/user.selectors';
+
 import { IAccount } from '../models/IAccount';
 import { IBranch } from '../models/IBranch';
 import { IServicePoint } from '../models/IServicePoint';

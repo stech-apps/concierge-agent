@@ -67,7 +67,8 @@ export class QEvents {
 
     // Configure the CometD object.
     this.cometd.configure({
-      url: window.location.origin + '/cometd'
+      url: window.location.origin + '/cometd',
+      useWorkerScheduler: false
     });
   }
  

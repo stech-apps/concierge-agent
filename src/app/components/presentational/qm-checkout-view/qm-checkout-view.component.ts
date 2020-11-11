@@ -1003,9 +1003,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     return tempList;
   }
 
-  getSelectedAppointmentSummaryTime(format = 'dddd DD MMMM') {
+  getSelectedAppointmentSummaryTime(format = 'dddd DD MMMM', brachTimeZone = this.selectedAppointment.branch ? this.selectedAppointment.branch.fullTimeZone : '') {
     if(this.selectedAppointment && (this.selectedAppointment.start || this.selectedAppointment.startTime)) {
-      return moment((this.selectedAppointment).start || (this.selectedAppointment).startTime)
+
+      return brachTimeZone !== '' ? moment((this.selectedAppointment).start || (this.selectedAppointment).startTime)
+            .tz(brachTimeZone)
+            .locale(this.userLocale)
+            .format(format) : 
+            moment((this.selectedAppointment).start || (this.selectedAppointment).startTime)
             .locale(this.userLocale)
             .format(format);
     }

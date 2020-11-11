@@ -213,5 +213,8 @@ export class QmQueueListComponent implements OnInit, OnDestroy {
   }
   
 }
+falseReturnMethod() {
+  return false;
+}
 
 }

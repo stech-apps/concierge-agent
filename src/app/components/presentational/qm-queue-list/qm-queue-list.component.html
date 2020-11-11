@@ -50,7 +50,7 @@
         [ngStyle]="{'color': (editVisitEnable && !(this.canDelete == false && this.cancherypick == false && this.canSendSMS == false && this.canTransferSP == false && this.canTransferStaff == false &&
         (this.canTransferQ == false || (this.canTransferQ == true && this.canTransferQFirst == false && 
         this.canTransferQLast == false && this.canTransferQWait == false))) ) ? '#017C65' : 'rgba(0,0,0,0.82)'}">
-        <a href="#" onclick="return false;" class="qm-queue-name-link" (click)="selectQueue(q)">
+        <a class="qm-queue-name-link" (click)="selectQueue(q)">
             {{q.name}}      
         </a>         
       </span>

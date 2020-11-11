@@ -207,7 +207,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     this.timeConvention$ = this.systemInfoSelectors.timeConvention$;
   }
 
-  ngOnInit() {
+  ngOnInit() {   
 
     if (this.useCalendarEndpoint) {
       this.selectedDate = { mDate: moment() };

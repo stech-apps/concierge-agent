@@ -35,7 +35,8 @@ export class QmAppLoaderComponent implements OnInit, OnDestroy {
         if (window.performance) {
           if(performance.navigation.redirectCount == 1) {
             this.spService.fetchUserStatus().subscribe((us: IUserStatus)=> {
-             if(us.userState === USER_STATE.NO_STARTED_USER_SESSION || us.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION) {
+             if(us.userState === USER_STATE.NO_STARTED_USER_SESSION ||
+              us.userState === USER_STATE.NO_STARTED_SERVICE_POINT_SESSION || us.workProfileId !== null) {
               this.router.navigate([this.PROFILE_ROUTE]);
              }
              else {

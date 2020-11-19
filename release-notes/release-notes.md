@@ -39,6 +39,20 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 24</h2>
+
+**Date: 19/11/2020**
+ 
+**Build number: 24**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8829** | **Incorrect service point name appear in the counter** |
+
+----------
+
 <h2>Version 23</h2>
 
 **Date: 26/08/2020**

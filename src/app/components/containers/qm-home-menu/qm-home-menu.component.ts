@@ -120,7 +120,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   checkUttPermissions() {
     this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) {
-        if (!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess) {
+        if (!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess && !uttpParams.noNotification) {
           this.isAllOutputMethodsDisabled = true;
         }
         this.printerEnabled = uttpParams.printerEnable;

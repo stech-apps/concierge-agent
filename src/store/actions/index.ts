@@ -1,4 +1,4 @@
-import { from } from 'rxjs';
+// import { from } from 'rxjs';
 
 // Barrel
 export * from './data.actions';
@@ -36,4 +36,5 @@ export * from './global-notify.actions';
 export * from './flow-open.actions';
 export * from './autoclose-status.actions';
 export * from './jwtToken.actions';
+export * from './language.actions';
 

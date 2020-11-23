@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AutoClose } from '../../../../util/services/autoclose.service';
 import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
@@ -10,6 +10,10 @@ import { Util } from '../../../../util/util';
 import { NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 import { ThrowStmt } from '@angular/compiler';
+import { IUTTParameter } from 'src/models/IUTTParameter';
+import { LanguageDispatchers, LanguageSelectors } from 'src/store/services/language';
+import { ILanguage } from 'src/models/ILanguage';
+import { FLOW_TYPE } from 'src/util/flow-state';
 
 @Component({
   selector: 'qm-inputbox',
@@ -17,6 +21,7 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./qm-inputbox.component.scss']
 })
 export class QmInputboxComponent implements OnInit {
+  @Input() flowType: FLOW_TYPE;
   customerCreateForm:FormGroup;
   countrycode:string;
   editCustomer: ICustomer;
@@ -32,10 +37,16 @@ export class QmInputboxComponent implements OnInit {
   currentCustomer:ICustomer
   editMode:boolean;
   isExpanded = false;
+  isLangExpanded = false;
   dateError = {
     days: '',
     month: ''
   };
+  public isLanguageSelectEnabled: boolean = true;
+  public languages: NgOption[] = [];
+  uttParameters$: Observable<IUTTParameter>;
+  languages$: Observable<ILanguage[]>;
+  supportedLanguagesArray: ILanguage[];
   
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
@@ -47,6 +58,7 @@ export class QmInputboxComponent implements OnInit {
   };
 
   isMonthFocus = false;
+  isLanguageFocus = false;
 
   firstName:string
 
@@ -77,10 +89,13 @@ export class QmInputboxComponent implements OnInit {
     private customerDispatchers:CustomerDispatchers,
     private customerSelectors:CustomerSelector,
     private util: Util,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public LanguageSelectors: LanguageSelectors,
+    public languageDispatchers: LanguageDispatchers
   ) {
     // this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.languages$ = this.LanguageSelectors.languages$;
    }
 
   ngOnInit() {
@@ -88,10 +103,11 @@ export class QmInputboxComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
       this.countrycode = params.countryCode;
+      this.isLanguageSelectEnabled = params.notificationLanguage;      
     }
     });
     this.subscriptions.add(servicePointsSubscription);
-
+    this.languageDispatchers.fetchLanguages();
     // patch values if current customer available
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;
@@ -115,7 +131,8 @@ export class QmInputboxComponent implements OnInit {
             month: this.date.month ? this.date.month : null,
             day: this.date.day ? this.date.day : '',
             year: this.date.year ? this.date.year : ''
-          }
+          },
+          language: this.currentCustomer.properties.lang
         })
       }else if((this.customerCreateForm!==undefined) && !this.currentCustomer  ){
         
@@ -128,7 +145,8 @@ export class QmInputboxComponent implements OnInit {
             month: null,
             day: '',
             year: ''
-          }
+          },
+          language: ''
         })
       }
     });
@@ -170,7 +188,8 @@ export class QmInputboxComponent implements OnInit {
         {
           validator: this.isValidDOBEntered.bind(this)
         }
-      )
+      ),
+      language:new FormControl(''),
     })
 
     
@@ -209,7 +228,36 @@ export class QmInputboxComponent implements OnInit {
           phone:this.countrycode
         })
       }
-   
+
+      let languagesSubscription = this.languages$.subscribe((languages) => {
+        this.supportedLanguagesArray = languages;
+        if (this.supportedLanguagesArray && (this.languages.length !== languages.length)) {
+          this.languages = this.supportedLanguagesArray
+            .map(language => ({
+              value: language.key,
+              label: language.value
+            }));
+          const langChangeSubscription = this.translateService
+                .get('label.language.defaultlanguage')
+                .subscribe(
+                  (languageText: string) => {
+                    this.languages.unshift({ value: '', label: languageText })
+                  }
+                ).unsubscribe();
+      
+          this.subscriptions.add(langChangeSubscription);
+        }
+        if (languages === null) {
+          const langChangeSubscription = this.translateService
+                .get('label.language.defaultlanguage')
+                .subscribe(
+                  (languageText: string) => {
+                    this.languages.unshift({ value: '', label: languageText })
+                  }
+                ).unsubscribe();
+        }
+      })
+      this.subscriptions.add(languagesSubscription);
   }
   
   clearCustomerForm(){
@@ -226,7 +274,8 @@ export class QmInputboxComponent implements OnInit {
           month: null,
           day: '',
           year: ''
-        }
+        },
+        language: ''
       });
      
 
@@ -262,7 +311,8 @@ export class QmInputboxComponent implements OnInit {
       lastName: this.customerCreateForm.value.lastName.trim(),
       properties:{phoneNumber: this.customerCreateForm.value.phone.trim(),
                         email: this.customerCreateForm.value.email.trim(),
-                        dateOfBirth:this.getDateOfBirth()
+                        dateOfBirth:this.getDateOfBirth(),
+                        lang:this.customerCreateForm.value.language
                       }
     }
     return customerSave
@@ -390,11 +440,23 @@ export class QmInputboxComponent implements OnInit {
   }
 
   update(){
-    if(this.customerCreateForm.valid && ((this.currentCustomer.firstName != this.customerCreateForm.value.firstName )||(this.currentCustomer.lastName != this.customerCreateForm.value.lastName )||(this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone )||(this.currentCustomer.properties.email != this.customerCreateForm.value.email )||(this.date.year &&(this.date.year != this.customerCreateForm.value.dateOfBirth.year))||(!this.date.year && this.customerCreateForm.value.dateOfBirth.year)||(this.date.day &&(this.date.day != this.customerCreateForm.value.dateOfBirth.day))||(!this.date.day && this.customerCreateForm.value.dateOfBirth.year)||(this.date.month!=this.customerCreateForm.value.dateOfBirth.month))){
+    if (
+      this.customerCreateForm.valid &&
+      (this.currentCustomer.firstName != this.customerCreateForm.value.firstName ||
+        this.currentCustomer.lastName != this.customerCreateForm.value.lastName ||
+        this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone ||
+        this.currentCustomer.properties.email != this.customerCreateForm.value.email ||
+        (this.date.year && this.date.year != this.customerCreateForm.value.dateOfBirth.year) ||
+        (!this.date.year && this.customerCreateForm.value.dateOfBirth.year) ||
+        (this.date.day && this.date.day != this.customerCreateForm.value.dateOfBirth.day) ||
+        (!this.date.day && this.customerCreateForm.value.dateOfBirth.year) ||
+        this.date.month != this.customerCreateForm.value.dateOfBirth.month) ||
+        this.currentCustomer.properties.lang != this.customerCreateForm.value.language
+    ) {
       this.accept();
-    }else if(this.customerCreateForm.valid && this.customerCreateForm.dirty ){
-        this.onFlowNext.emit();
-        this.customerCreateForm.markAsPristine()
+    } else if (this.customerCreateForm.valid && this.customerCreateForm.dirty) {
+      this.onFlowNext.emit();
+      this.customerCreateForm.markAsPristine();
     }
   }
   discard(){
@@ -433,6 +495,9 @@ export class QmInputboxComponent implements OnInit {
   DropDownStatus(value: boolean) {
     this.isExpanded = value;
   }
+  LangDropDownStatus(value: boolean) {
+    this.isLangExpanded = value;
+  }
   
   clearDob(){
     this.customerCreateForm.patchValue({
@@ -451,6 +516,9 @@ export class QmInputboxComponent implements OnInit {
   }
   monthFiledSelection(value: boolean) {
     this.isMonthFocus = value;
+  }
+  languageFiledSelection(value: boolean) {
+    this.isLanguageFocus = value;
   }
 }
 

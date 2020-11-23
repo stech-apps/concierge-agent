@@ -82,9 +82,8 @@
             </span>
           </div>
 
-
-          <!-- Phone Section -->
           <div class="qm-input-box__row">
+            <!-- Phone Section -->
             <div class="qm-input-box__col-50">
               <div class="qm-input-box__left-side">
                 <label for="phone" id="phone-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label"
@@ -103,6 +102,26 @@
                     {{'error.form.phone.invalid.des'|translate}}
                   </span>
                 </div>
+              </div>
+            </div>
+            <!-- Notification Language -->
+            <div class="qm-input-box__col-50" *ngIf="isLanguageSelectEnabled && (flowType=='CREATE_APPOINTMENT')">
+              <div>
+                <label for="language" id="language-label"
+                  class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{ 'label.language.heading' | translate }}
+                </label>
+              </div>
+              <div class="qm-standard-text-field">
+                  <label class="qm-standard-text-field__label">
+                    <div aria-live="polite" aria-atomic="true" class="sr-only">
+                      <span *ngIf="isLanguageFocus">{{ 'label.language.dropdown' | translate }}</span>
+                    </div>
+                    <ng-select #languageSelect [items]="languages" (focus)="languageFiledSelection(true)" (blur)="languageFiledSelection(false)" [selectOnTab]="true" [clearable]="false"
+                      notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value" tabindex="0"
+                      placeholder="{{ 'label.language.heading' | translate }}" formControlName="language"
+                      [attr.aria-expanded]="isLangExpanded" (open)="LangDropDownStatus(true)" (close)="LangDropDownStatus(false)">
+                    </ng-select>
+                  </label>              
               </div>
             </div>
           </div>
@@ -239,14 +258,14 @@
             </button>
 
             <!-- To select a customer -->
-            <button [disabled]="!customerCreateForm.valid"
+            <button [disabled]="!customerCreateForm.valid" type="button"
               *ngIf="editMode && currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"
               class="qm-button qm-primary-button-disabled"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="next()">
               <span> {{'button_add'|translate}} </span>
             </button>
             <!-- To update a custoemr -->
-            <button [disabled]="!customerCreateForm.valid"
+            <button [disabled]="!customerCreateForm.valid" type="button"
               *ngIf="editMode && currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"
               class="qm-button qm-primary-button-disabled"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
@@ -254,7 +273,7 @@
             </button>
 
             <!-- from confirm view -->
-            <button *ngIf="!editMode && currentCustomer" class="qm-button qm-primary-button-disabled"
+            <button *ngIf="!editMode && currentCustomer" class="qm-button qm-primary-button-disabled" type="button"
               [attr.tabindex]="customerCreateForm.valid && customerCreateForm.dirty ? null : '-1'"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid && customerCreateForm.dirty }"
               (click)="update()">

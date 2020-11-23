@@ -21,6 +21,7 @@ import { ServicePointPoolEffects } from './service-point-pool.effects';
 import { StaffPoolEffects } from './staff-pool.effcts';
 import { JWTTokenEffects } from './jwtToken.effects';
 import { from } from 'rxjs';
+import { LanguageEffects } from './language.effects';
 
 export const effects: any[] = [
     SystemInfoEffects,
@@ -43,5 +44,8 @@ export const effects: any[] = [
     AppointmentEffects,
     QueueVisitsEffects,
     StaffPoolEffects,
-    JWTTokenEffects
+    JWTTokenEffects,
+    LanguageEffects
 ];
+
+export * from './language.effects';

@@ -187,6 +187,13 @@
       <span>{{ 'send_sms_and_email' | translate}}</span>
       <span class="sr-only"> notification method</span>
     </button>
+    <button class="button qm-button-plain qm-button-plain-with-icon" [ngClass]="{'qm-button-plain--active' : noNotificationSelected }" *ngIf="isNoNotificationEnabled && (flowType=='CREATE_APPOINTMENT')"
+      (click)="onNoNotificationSelected()">
+      <span class="qm-button-icon-container">
+      <span class="icon-close-circle"></span></span>
+      <span>{{ 'no_notification' | translate}}</span>
+      <span class="sr-only"> notification method</span>
+    </button>
 
   </div>
   <div class="qm-flow-done-bar" *ngIf="buttonEnabled">

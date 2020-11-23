@@ -60,6 +60,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   emailActionEnabled: boolean = false;
   ticketlessActionEnabled: boolean = false;
   isNoteEnabled: boolean = false;
+  isNoNotificationEnabled: boolean = false;
   isVipLvl1Enabled: boolean = false;
   isVipLvl2Enabled: boolean = false;
   isVipLvl3Enabled: boolean = false;
@@ -69,6 +70,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   smsSelected: boolean = false;
   emailSelected: boolean = false;
   emailAndSmsSelected: boolean = false;
+  noNotificationSelected: boolean = false;
   ticketlessSelected: boolean = false;
   vipLevel1Checked: boolean = false;
   vipLevel2Checked: boolean = false;
@@ -175,6 +177,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.ticketlessActionEnabled = uttParameters.ticketLess;
           this.isMultiBranchEnabled = uttParameters.mltyBrnch;
           this.isAppointmentStatEventEnable = uttParameters.appointmentStatEnable ? uttParameters.appointmentStatEnable : false;
+          this.isNoNotificationEnabled = uttParameters.noNotification;
         }
       })
       .unsubscribe();
@@ -237,8 +240,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-   
-
+    
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
         this.ticketlessActionEnabled = false;
@@ -246,10 +248,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
         this.isVipLvl1Enabled = false;
         this.isVipLvl2Enabled = false;
         this.isVipLvl3Enabled = false;
-        if(this.emailActionEnabled && !this.smsActionEnabled){
+        if(this.emailActionEnabled && !this.smsActionEnabled && !this.isNoNotificationEnabled){
             this.onEmailSelected();
-        }else if(!this.emailActionEnabled && this.smsActionEnabled){
+        }else if(!this.emailActionEnabled && this.smsActionEnabled && !this.isNoNotificationEnabled){
           this.onSmsSelected();
+        } else if (!this.emailActionEnabled && !this.smsActionEnabled && this.isNoNotificationEnabled){
+          this.onNoNotificationSelected();
         }
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:
@@ -333,6 +337,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.ticketSelected = false;
     this.smsSelected = false;
     this.emailSelected = false;
+    this.noNotificationSelected = false;
     this.ticketColor = this.whiteColor;
     this.smsColor = this.whiteColor;
     this.emailColor = this.whiteColor;
@@ -520,6 +525,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.emailSelected = true;
     this.emailAndSmsSelected = false;
     this.smsSelected = false;
+    this.noNotificationSelected = false;
     this.buttonEnabled = true;
   }
 
@@ -561,6 +567,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     this.smsSelected = true;
     this.emailSelected = false;
     this.emailAndSmsSelected = false;
+    this.noNotificationSelected = false;
     this.smsColor = this.themeColor;
     this.buttonEnabled = true;
   }
@@ -571,9 +578,23 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       this.buttonEnabled = true;
       this.smsSelected = false;
       this.emailSelected = false;
+      this.noNotificationSelected = false;
     }else{
       this.buttonEnabled = false;
     }
+  }
+
+  onNoNotificationSelected() {
+    this.noNotificationSelected = !this.noNotificationSelected;
+    if (this.noNotificationSelected) {
+      this.buttonEnabled = true;
+      this.smsSelected = false;
+      this.emailSelected = false;
+      this.emailAndSmsSelected = false;
+    }else{
+      this.buttonEnabled = false;
+    }
+
   }
 
   onTicketlessSelected() {
@@ -794,6 +815,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           }
           else if (this.smsSelected) {
             subheadingText += ` ${v['label.notifyoptions.sms']}`
+          } else if(this.noNotificationSelected) {
+            subheadingText = '';
           }
 
           this.qmModalService.openDoneModal(v['label.appcreated.heading'],
@@ -946,6 +969,9 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     }
     else if (this.emailSelected) {
       notificationType = NOTIFICATION_TYPE.email;
+    } 
+    else if (this.noNotificationSelected) {
+      notificationType = NOTIFICATION_TYPE.none;
     }
 
     return notificationType;
@@ -1085,10 +1111,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   ButtonSelectedByUtt(){
     switch (this.flowType) {
       case FLOW_TYPE.CREATE_APPOINTMENT:
-        if(this.emailActionEnabled && !this.smsActionEnabled){
+        if(this.emailActionEnabled && !this.smsActionEnabled && !this.isNoNotificationEnabled){
             this.onEmailSelected();
-        }else if(!this.emailActionEnabled && this.smsActionEnabled){
+        }else if(!this.emailActionEnabled && this.smsActionEnabled && !this.isNoNotificationEnabled){
           this.onSmsSelected();
+        } else if(!this.emailActionEnabled && !this.smsActionEnabled && this.isNoNotificationEnabled){
+          this.onNoNotificationSelected();
         }
         break;
       case FLOW_TYPE.ARRIVE_APPOINTMENT:

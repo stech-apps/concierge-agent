@@ -29,6 +29,7 @@ import * as fromGlobalNotify from './global-notify.reducer'
 import * as fromFlowOpen from './flow-open.reducer'
 import * as fromAutoCloseState from './autoclose-status.reducer';
 import * as fromJWTToken from './jwtToken.reducer';
+import * as fromLanguage from './language.reducer';
 
 export interface IAppState {
   systemInfo: fromSystemInfo.ISystemInfoState;
@@ -60,6 +61,7 @@ export interface IAppState {
   flowOpen:fromFlowOpen.IFlowOpenState,
   autoCloseState: fromAutoCloseState.IAutoCloseStatus,
   jwtToken: fromJWTToken.IJWTTokenState,
+  language: fromLanguage.ILanguageState;
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
@@ -91,5 +93,6 @@ export const reducers: ActionReducerMap<IAppState> = {
   globalNotify: fromGlobalNotify.reducer,
   flowOpen: fromFlowOpen.reducer,
   autoCloseState: fromAutoCloseState.reducer,
-  jwtToken: fromJWTToken.reducer
+  jwtToken: fromJWTToken.reducer,
+  language: fromLanguage.reducer
 };

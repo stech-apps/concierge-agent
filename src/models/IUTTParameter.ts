@@ -51,4 +51,6 @@ export interface IUTTParameter {
     quickVisitAction: string;
     appointmentCustomerField: boolean;
     appointmentStatEnable: boolean;
+    notificationLanguage: boolean;
+    noNotification: boolean;
   }

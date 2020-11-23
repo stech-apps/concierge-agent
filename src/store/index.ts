@@ -83,8 +83,8 @@ import {
   JWTTokenDataService,
   JWTTokenDispatchers,
   JWTTokenSelectors
-
 } from "./services";
+import { LanguageDispatchers, LanguageDataService, LanguageSelectors } from './services/language';
 
 export const storeServices = [
   SystemInfoDataService,
@@ -165,5 +165,8 @@ export const storeServices = [
   AutoCloseStatusSelectors,
   JWTTokenDataService,
   JWTTokenDispatchers,
-  JWTTokenSelectors
+  JWTTokenSelectors,
+  LanguageDispatchers,
+  LanguageDataService,
+  LanguageSelectors
 ];

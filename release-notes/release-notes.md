@@ -39,7 +39,7 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 24</h2>
+<h2>Version 24 - internal</h2>
 
 **Date: 19/11/2020**
  

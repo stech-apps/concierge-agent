@@ -105,7 +105,7 @@
               </div>
             </div>
             <!-- Notification Language -->
-            <div class="qm-input-box__col-50" *ngIf="isLanguageSelectEnabled && (flowType=='CREATE_APPOINTMENT')">
+            <div class="qm-input-box__col-50" *ngIf="isLanguageSelectEnabled && (flowType=='CREATE_APPOINTMENT' || 'CREATE_VISIT')">
               <div>
                 <label for="language" id="language-label"
                   class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{ 'label.language.heading' | translate }}

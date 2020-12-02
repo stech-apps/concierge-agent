@@ -232,6 +232,7 @@ export class QmInputboxComponent implements OnInit {
       let languagesSubscription = this.languages$.subscribe((languages) => {
         this.supportedLanguagesArray = languages;
         if (this.supportedLanguagesArray && (this.languages.length !== languages.length)) {
+          this.supportedLanguagesArray = this.supportedLanguagesArray.filter(lang => lang.key !== 'defaultLanguage');
           this.languages = this.supportedLanguagesArray
             .map(language => ({
               value: language.key,
@@ -306,15 +307,22 @@ export class QmInputboxComponent implements OnInit {
     if(this.customerCreateForm.value.phone== this.countrycode){
       this.customerCreateForm.value.phone = "";
     }
-    const customerSave:ICustomer={
+    const customerSave: ICustomer = {
       firstName: this.customerCreateForm.value.firstName.trim(),
       lastName: this.customerCreateForm.value.lastName.trim(),
-      properties:{phoneNumber: this.customerCreateForm.value.phone.trim(),
-                        email: this.customerCreateForm.value.email.trim(),
-                        dateOfBirth:this.getDateOfBirth(),
-                        lang:this.customerCreateForm.value.language
-                      }
-    }
+      properties: this.customerCreateForm.value.language
+        ? {
+            phoneNumber: this.customerCreateForm.value.phone.trim(),
+            email: this.customerCreateForm.value.email.trim(),
+            dateOfBirth: this.getDateOfBirth(),
+            lang: this.customerCreateForm.value.language,
+          }
+        : {
+            phoneNumber: this.customerCreateForm.value.phone.trim(),
+            email: this.customerCreateForm.value.email.trim(),
+            dateOfBirth: this.getDateOfBirth(),
+          }
+    };
     return customerSave
   }
 

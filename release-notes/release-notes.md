@@ -39,17 +39,25 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 24 - internal</h2>
+<h2>Version 24 - Internal</h2>
 
 **Date: 19/11/2020**
  
 **Build number: 24**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8225** | **Concierge - Add No notification for appointment Booking** |
+| **QP-7883** | **It should be possible to select a customer language in Concierge** |
 
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-8829** | **Incorrect service point name appear in the counter** |
+
 
 ----------
 

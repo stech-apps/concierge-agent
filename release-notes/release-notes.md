@@ -39,7 +39,7 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 24</h2>
+<h2>Version 4.0.0.24</h2>
 
 **Date: 07/12/2020**
  
@@ -62,7 +62,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
-<h2>Version 23</h2>
+<h2>Version Version 4.0.0.23</h2>
 
 **Date: 26/08/2020**
  

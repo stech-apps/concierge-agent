@@ -51,6 +51,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **QP-8225** | **Concierge - Add No notification for appointment Booking** |
 | **QP-7883** | **It should be possible to select a customer language in Concierge** |
+| **QP-8483** | **Upgrade to the latest Angular version** |
 
 <h3>Bug fixes</h3>
 

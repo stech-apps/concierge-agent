@@ -39,9 +39,9 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 24 - Internal</h2>
+<h2>Version 24</h2>
 
-**Date: 19/11/2020**
+**Date: 07/12/2020**
  
 **Build number: 24**
 

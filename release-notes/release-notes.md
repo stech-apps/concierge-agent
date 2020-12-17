@@ -39,6 +39,22 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.25 - internal</h2>
+
+**Date: 12/12/2020**
+ 
+**Build number: 25**
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8880** | **Show a message that at least one option must be selected in utt** |
+
+
+----------
+
 <h2>Version 4.0.0.24</h2>
 
 **Date: 07/12/2020**

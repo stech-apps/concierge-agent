@@ -28,8 +28,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   //user permissions
   isVisitUser = false;
   isAppointmentUser = false;
-  isAllOutputMethodsDisabled: boolean;
+  smsEnabled: boolean;
   printerEnabled: boolean;
+  ticketLessEnabled: boolean;
+  emailEnabled: boolean;
+  noNotificationEnabled: boolean;
 
   // final flow permissions
   isCreateVisit = false;
@@ -120,10 +123,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   checkUttPermissions() {
     this.servicePointSelectors.uttParameters$.subscribe((uttpParams) => {
       if (uttpParams) {
-        if (!uttpParams.sndEmail && !uttpParams.sndSMS && !uttpParams.ticketLess && !uttpParams.noNotification) {
-          this.isAllOutputMethodsDisabled = true;
-        }
+        this.smsEnabled = uttpParams.sndSMS; 
+        this.emailEnabled = uttpParams.sndEmail
         this.printerEnabled = uttpParams.printerEnable;
+        this.ticketLessEnabled = uttpParams.ticketLess;
+        this.noNotificationEnabled = uttpParams.noNotification;
 
         if (!uttpParams.delAppointment && !uttpParams.reSheduleAppointment) {
           this.isEditFlowDisabled = true;
@@ -274,22 +278,22 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   }
 
   handleUttRequirements(route) {
-    if (this.isAllOutputMethodsDisabled && route == 'create-appointment') {
+    if (!this.smsEnabled && route == 'create-appointment'  && !this.emailEnabled && !this.noNotificationEnabled) {
       this.translateService.get('no_notification_methods').subscribe(v => {
-        this.toastService.infoToast(v);
+        this.toastService.errorToast(v);
       })
-    } else if (this.isAllOutputMethodsDisabled && route == 'arrive-appointment' && !this.printerEnabled) {
+    } else if (!this.smsEnabled && route == 'arrive-appointment' && !this.printerEnabled && !this.ticketLessEnabled ) {
       this.translateService.get('no_notification_methods').subscribe(v => {
-        this.toastService.infoToast(v);
+        this.toastService.errorToast(v);
       })
-    } else if (this.isAllOutputMethodsDisabled && route == 'create-visit' && !this.printerEnabled) {
+    } else if (!this.smsEnabled && route == 'create-visit' && !this.printerEnabled && !this.ticketLessEnabled && !this.noNotificationEnabled)  {
       this.translateService.get('no_notification_methods').subscribe(v => {
-        this.toastService.infoToast(v);
+        this.toastService.errorToast(v);
       });
     }
     else if (route == 'edit-appointment' && this.isEditFlowDisabled) {
       this.translateService.get('no_actions_available').subscribe(v => {
-        this.toastService.infoToast(v);
+        this.toastService.errorToast(v);
       });
     }
     else {

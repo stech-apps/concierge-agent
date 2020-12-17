@@ -25,6 +25,7 @@ export class QmAddnotesModalComponent implements OnInit {
   }
 
   addNotes() {
+    this.notes = encodeURIComponent(this.notes.toString());  
     this.activeModal.close(this.notes);
   }
 

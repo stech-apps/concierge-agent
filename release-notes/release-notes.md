@@ -39,7 +39,7 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 4.0.0.25 - internal</h2>
+<h2>Version 4.0.0.25</h2>
 
 **Date: 18/12/2020**
  

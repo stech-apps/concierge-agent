@@ -51,6 +51,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-8880** | **Show a message that at least one option must be selected in utt** |
+| **QP-8811** | **Concierge - Note doesn't show in the queue list if the note has a percentage mark** |
 
 
 ----------

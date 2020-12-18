@@ -41,7 +41,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.0.0.25 - internal</h2>
 
-**Date: 12/12/2020**
+**Date: 18/12/2020**
  
 **Build number: 25**
 

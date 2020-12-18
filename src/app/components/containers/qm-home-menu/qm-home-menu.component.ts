@@ -286,7 +286,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.errorToast(v);
       })
-    } else if (!this.smsEnabled && route == 'create-visit' && !this.printerEnabled && !this.ticketLessEnabled && !this.noNotificationEnabled)  {
+    } else if (!this.smsEnabled && route == 'create-visit' && !this.printerEnabled && !this.ticketLessEnabled)  {
       this.translateService.get('no_notification_methods').subscribe(v => {
         this.toastService.errorToast(v);
       });

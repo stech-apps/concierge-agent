@@ -85,7 +85,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     
     this.isNative = this.nativeApi.isNativeBrowser();
 
-    if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment || this.isArriveAppointment) && this.hostAddressStr) {
+    if (this.isAppointmentUser && (this.isCreateAppointment || this.isEditAppointment) && this.hostAddressStr) {
       this.calendarBranchDispatcher.fetchCalendarBranches();
     }
 
@@ -179,14 +179,14 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
   checkUserPermissions() {
     this.accountSelectors.userRole$.subscribe((ur: UserRole) => {
-      if (ur && UserRole.All) {
+      if (ur == UserRole.All) {
         this.isAppointmentUser = true;
         this.isVisitUser = true;
       }
-      else if (ur && UserRole.AppointmentUserRole) {
+      else if (ur == UserRole.AppointmentUserRole) {
         this.isAppointmentUser = true;
       }
-      else if (ur & UserRole.VisitUserRole) {
+      else if (ur == UserRole.VisitUserRole) {
         this.isVisitUser = true;
       }
     });
@@ -273,6 +273,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         );
       }
     } else {
+      console.log("check")
       this.handleUttRequirements(route);
     }
   }

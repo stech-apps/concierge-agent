@@ -216,6 +216,13 @@
                 {{ 'error.form.dob.invalidDay' | translate }}
               </span>
             </div>
+            <div class="qm-dob__error-message qm-form-error-message" id="day-error" aria-live="assertive"
+              aria-atomic="true">
+              <span
+                *ngIf="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') && !(customerCreateForm.get('dateOfBirth').get('year')?.hasError('minlength'))">
+                {{ 'error.form.dob.incompleteYearOld' | translate }}
+              </span>
+            </div>
             <div class="qm-dob__error-message qm-form-error-message" id="month-error" aria-live="assertive"
               aria-atomic="true">
               <span *ngIf="customerCreateForm.get('dateOfBirth').get('month').hasError('incorrect')">

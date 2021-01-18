@@ -129,7 +129,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     const phoneValidators = this.util.phoneNoValidator();
     const emailValidators = this.util.emailValidator();
     const dayValidators = [Validators.maxLength(2), Validators.max(31), this.util.numberValidator()];
-    const yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), this.util.numberValidator()];
+    const yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), Validators.min(today.getFullYear() - 125), this.util.numberValidator()];
     const monthValidators = [];
 
     this.customerCreateForm = new FormGroup({

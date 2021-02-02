@@ -53,6 +53,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
 
   hostAddressStr:string;
   menuItemEnable:boolean;
+  menuItemCount: number = 0;
 
   isFlowOpen:boolean;
 
@@ -163,6 +164,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
       if (this.isVisitUser && uttpParams) {
         this.isCreateVisit = uttpParams[CREATE_VISIT];
         this.isEditVisit = uttpParams[EDIT_VISIT];
+
+        this.menuItemCount = this.isCreateVisit ? this.menuItemCount + 1 : this.menuItemCount + 0;
       }
       else {
         this.isCreateVisit = false;
@@ -173,12 +176,19 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
         this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
         this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
-        this.isCreateQCAAppointment = uttpParams.qcaCreateEnable && uttpParams.qcaCreateUrl && uttpParams.qcaCreateUrl.length > 0 && !(this.isNative);
-        this.isEditQCAAppointment = uttpParams.qcaEditEnable && uttpParams.qcaEditUrl && uttpParams.qcaEditUrl.length > 0 && !(this.isNative);
 
+        this.isNative = this.nativeApi.isNativeBrowser();
+        this.isCreateQCAAppointment = uttpParams.qcaCreateEnable && uttpParams.qcaCreateUrl && uttpParams.qcaCreateUrl.length > 0 && this.isNative === false;
+        this.isEditQCAAppointment = uttpParams.qcaEditEnable && uttpParams.qcaEditUrl && uttpParams.qcaEditUrl.length > 0 && this.isNative === false;
         if (uttpParams[CREATE_APPOINTMENT] && uttpParams[EDIT_APPOINTMENT]) {
           this.getJWTToken();
         }
+
+        this.menuItemCount = this.isCreateAppointment ? this.menuItemCount + 1 : this.menuItemCount + 0;
+        this.menuItemCount = this.isEditAppointment ? this.menuItemCount + 1 : this.menuItemCount + 0;
+        this.menuItemCount = this.isArriveAppointment ? this.menuItemCount + 1 : this.menuItemCount + 0;
+        this.menuItemCount = this.isCreateQCAAppointment ? this.menuItemCount + 1 : this.menuItemCount + 0;
+        this.menuItemCount = this.isEditQCAAppointment ? this.menuItemCount + 1 : this.menuItemCount + 0;
       }
       else {
         this.isCreateAppointment = false;
@@ -203,6 +213,10 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isVisitUser = true;
       }
     });
+  }
+
+  getMenuItemCount() {
+
   }
 
   getJWTToken() {

@@ -1,41 +1,41 @@
-<div class='qm-home-menu' dir="{{ userDirection$ | async }}"
-  *ngIf="!isFlowOpen && (isCreateAppointment || isEditAppointment || isArriveAppointment || isCreateVisit)">
+<div class='qm-home-menu' [ngClass]="{'qm-home-menu__extend': menuItemCount > 5}" dir="{{ userDirection$ | async }}"
+  *ngIf="!isFlowOpen && (isCreateAppointment || isEditAppointment || isCreateQCAAppointment || isEditQCAAppointment || isArriveAppointment || isCreateVisit)">
 
   <div *ngIf="menuItemEnable" class="qm-menu-item-disable">
 
   </div>
   <nav class="menu-bar-navigation">
-    <button class="qm-home-menu__item qm-home-qca" id="create_appointment" *ngIf="isCreateQCAAppointment" 
+    <button class="qm-home-menu__item qm-home-qca" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" id="create_appointment" *ngIf="isCreateQCAAppointment" 
       (click)="handleMenuItemClick('create-qca-appointment')">
       <i class="icon-createappointment qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[0][0]}}</span>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[0][1]}}</span>
     </button>
-    <button class="qm-home-menu__item" id="create_appointment" *ngIf="isCreateAppointment" 
+    <button class="qm-home-menu__item" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" id="create_appointment" *ngIf="isCreateAppointment" 
       (click)="handleMenuItemClick('create-appointment')">
       <i class="icon-createappointment qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[1][0]}}</span>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[1][1]}}</span>
     </button>
-    <button class="qm-home-menu__item qm-home-qca" *ngIf="isEditQCAAppointment" 
+    <button class="qm-home-menu__item qm-home-qca" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" *ngIf="isEditQCAAppointment" 
       (click)="handleMenuItemClick('edit-qca-appointment')">
       <i class="icon-editappointment qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[2][0]}}</span>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[2][1]}}</span>
     </button>
-    <button class="qm-home-menu__item" *ngIf="isEditAppointment" 
+    <button class="qm-home-menu__item" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" *ngIf="isEditAppointment" 
       (click)="handleMenuItemClick('edit-appointment')">
       <i class="icon-editappointment qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[3][0]}}</span>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[3][1]}}</span>
     </button>
-    <button class="qm-home-menu__item" *ngIf="isArriveAppointment" 
+    <button class="qm-home-menu__item" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" *ngIf="isArriveAppointment" 
       (click)="handleMenuItemClick('arrive-appointment')">
       <i class="icon-arriveappointment qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text ">{{menuItemWordArray[4][0]}}</span>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[4][1]}}</span>
     </button>
-    <button class="qm-home-menu__item" *ngIf="isCreateVisit" 
+    <button class="qm-home-menu__item" [ngClass]="{'qm-home-menu__item__extend': menuItemCount > 5}" *ngIf="isCreateVisit" 
       (click)="handleMenuItemClick('create-visit')">
       <i class="icon-addvisit qm-home-menu__icon"></i>
       <span class="qm-home-menu__item--text">{{menuItemWordArray[5][0]}}</span>

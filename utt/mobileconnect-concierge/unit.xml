@@ -38,6 +38,7 @@
     Version    Date         Comments                                                    Signature
     =============================================================================================
     7.0.12    2021-02-01    Added parameter to allow QCA                                kasran
+                            Added parameter to quick arrive appointment(QR code)
     =============================================================================================
     7.0.11    2020-11-19    Added parameter to select notification language             basama
                             Added parameter to select No notification
@@ -485,7 +486,7 @@
                    type = "Boolean"
            defaultValue = "false"
                   label = "Create QCA Appointment"
-            description = "Create appointments using QCA"
+            description = "Gives access to the Create QCA Appointemnt flow if user has correct access right."
               sortOrder = "389"
              writeLevel = "profile"
               privilege = "install:adminAdmin"/> 
@@ -501,12 +502,12 @@
                    type = "Boolean"
            defaultValue = "false"
                   label = "Edit QCA Appointment"
-            description = "Edit appointments using QCA"
+            description = "Gives access to the Edit QCA Appointemnt flow if user has correct access right."
               sortOrder = "391"
              writeLevel = "profile"
               privilege = "install:adminAdmin"/> 
         <parameter name = "qcaEditUrl"
-              sortOrder = "391"
+              sortOrder = "392"
                   label = "Edit QCA Appointment URL"
             description = "A URL that can access the edit QCA appointment"
                    type = "String"

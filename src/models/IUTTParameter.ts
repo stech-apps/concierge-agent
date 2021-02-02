@@ -53,4 +53,8 @@ export interface IUTTParameter {
     appointmentStatEnable: boolean;
     notificationLanguage: boolean;
     noNotification: boolean;
+    qcaCreateEnable: boolean;
+    qcaEditEnable: boolean;
+    qcaCreateUrl: string;
+    qcaEditUrl: string;
   }

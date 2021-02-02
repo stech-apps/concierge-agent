@@ -39,6 +39,20 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.26</h2>
+
+**Date: 02/02/2021**
+ 
+**Build number: 26**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-8927** | **Directed/re-directed to Create/edit QCA Appointments from Concierge** |
+
+----------
+
 <h2>Version 4.0.0.25</h2>
 
 **Date: 18/12/2020**

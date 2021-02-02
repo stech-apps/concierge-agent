@@ -33,6 +33,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   ticketLessEnabled: boolean;
   emailEnabled: boolean;
   noNotificationEnabled: boolean;
+  qcaCreateURL: string;
+  qcaEditURL: string;
 
   // final flow permissions
   isCreateVisit = false;
@@ -40,6 +42,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   isArriveAppointment = false;
   isEditAppointment = false;
   isCreateAppointment = false;
+  isEditQCAAppointment = false;
+  isCreateQCAAppointment = false;
   userDirection$: Observable<string>;
   isNative:boolean;
   isJWTTokenLoad = false;
@@ -111,7 +115,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     this.subscriptions.add(JWTTokenSubscriptions);
 
     //passing menu item names to add to the 2d array
+    this.wordSplitter('create_qca_appointment_single_line')
     this.wordSplitter('create_appointment_single_line')
+    this.wordSplitter('edit_qca_appointment_single_line')
     this.wordSplitter('edit_appointment_single_line')
     this.wordSplitter('arrive_appointment_single_line')
     this.wordSplitter('create_visit_single_line')
@@ -128,6 +134,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.printerEnabled = uttpParams.printerEnable;
         this.ticketLessEnabled = uttpParams.ticketLess;
         this.noNotificationEnabled = uttpParams.noNotification;
+
+        this.qcaEditURL = uttpParams.qcaEditUrl;
+        this.qcaCreateURL = uttpParams.qcaCreateUrl;
 
         if (!uttpParams.delAppointment && !uttpParams.reSheduleAppointment) {
           this.isEditFlowDisabled = true;
@@ -164,6 +173,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
         this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
         this.isArriveAppointment = uttpParams[ARRIVE_APPOINTMENT];
+        this.isCreateQCAAppointment = uttpParams.qcaCreateEnable && uttpParams.qcaCreateUrl && uttpParams.qcaCreateUrl.length > 0 && !(this.isNative);
+        this.isEditQCAAppointment = uttpParams.qcaEditEnable && uttpParams.qcaEditUrl && uttpParams.qcaEditUrl.length > 0 && !(this.isNative);
 
         if (uttpParams[CREATE_APPOINTMENT] && uttpParams[EDIT_APPOINTMENT]) {
           this.getJWTToken();
@@ -173,6 +184,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         this.isCreateAppointment = false;
         this.isEditAppointment = false;
         this.isArriveAppointment = false;
+        this.isCreateQCAAppointment = false;
+        this.isEditQCAAppointment = false;
       }
     });
   }
@@ -219,7 +232,11 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   handleMenuItemClick(route) {
     this.InfoMsgBoxDispatcher.resetInfoMsgBoxInfo();
     // initial check for central connectivity
-    if (route === 'create-appointment' || route === 'edit-appointment') {
+    if (route === 'create-qca-appointment'){
+      window.open(this.qcaCreateURL);
+    } else if (route === 'edit-qca-appointment'){
+      window.open(this.qcaEditURL);
+    } else if (route === 'create-appointment' || route === 'edit-appointment') {
       let calendarBranchId: number;
       const selectedBranchSub = this.branchSelector.selectedBranch$.subscribe((branch => calendarBranchId = branch.id));
       this.subscriptions.add(selectedBranchSub);

@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.12    2021-02-01    Added parameter to allow QCA                                kasran
+    =============================================================================================
     7.0.11    2020-11-19    Added parameter to select notification language             basama
                             Added parameter to select No notification
     =============================================================================================
@@ -69,7 +71,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.11"
+         unitVersion = "7.0.12"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -478,10 +480,39 @@
             description = "Only check if you want to report on appointment origins"
               sortOrder = "388"
              writeLevel = "profile"
+              privilege = "install:adminAdmin"/>   
+        <parameter name = "qcaCreateEnable"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Create QCA Appointment"
+            description = "Create appointments using QCA"
+              sortOrder = "389"
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"/> 
+        <parameter name = "qcaCreateUrl"
+              sortOrder = "390"
+                  label = "Create QCA Appointment URL"
+            description = "A URL that can access the create QCA appointment"
+                   type = "String"
+             writeLevel = "profile"
+                 regexp = "(^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1})|^$|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3}\:[0-9]{1,5}$)"
+              privilege = "install:adminAdmin"/>
+        <parameter name = "qcaEditEnable"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Edit QCA Appointment"
+            description = "Edit appointments using QCA"
+              sortOrder = "391"
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"/> 
+        <parameter name = "qcaEditUrl"
+              sortOrder = "391"
+                  label = "Edit QCA Appointment URL"
+            description = "A URL that can access the edit QCA appointment"
+                   type = "String"
+             writeLevel = "profile"
+                 regexp = "(^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1})|^$|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3})|(^(?:[0-9]{1,3}\.){3}[0-9]{1,3}\:[0-9]{1,5}$)"
               privilege = "install:adminAdmin"/>     
-              
-      
-    
 
               
         <parameter name = "unitName"

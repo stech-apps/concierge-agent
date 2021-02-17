@@ -50,6 +50,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-8927** | **Directed/re-directed to Create/edit QCA Appointments from Concierge** |
+| **QP-9211** | **Improved usage flow using QR code in arrival (check-in)** |
 
 ----------
 

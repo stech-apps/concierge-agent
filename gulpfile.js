@@ -293,7 +293,7 @@ gulp.task(
  */
 gulp.task(
   'build:war:properties',
-  gulp.series('create:war', 'create:utt', 'create:properties', 'clean:war')
+  gulp.series('create:war', 'create:utt', 'create:properties', 'clean:war', 'reset:appVersion')
 );
 
 /**
@@ -316,7 +316,8 @@ gulp.task(
     'create:release-notes',
     'clean:war',
     'create:artifactory:zip',
-    'clean:artifactory')
+    'clean:artifactory',
+    'reset:appVersion')
 );
 
 /**

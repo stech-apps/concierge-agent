@@ -57,6 +57,7 @@ export class QmQueueSummaryComponent implements OnInit {
   canDelete: boolean;
   cancherypick: boolean;
   inputText: string;
+  isQRSelected = false;
 
   @Input() isQuickServeShow: boolean;
 
@@ -189,7 +190,8 @@ export class QmQueueSummaryComponent implements OnInit {
     
     // QR code subscription
     const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe((value) => {
-      if (value != null) {
+      if (value != null && this.isQRSelected) {
+        this.isQRSelected = false;
         this.setQRRelatedData({ "branchId": this.selectedbranchId, "qrCode": value, "isQrCodeLoaded": true })
         if (!this.nativeApi.isNativeBrowser()) {
           this.removeDesktopQRReader();
@@ -211,7 +213,6 @@ export class QmQueueSummaryComponent implements OnInit {
       }
       else {
         this.removeQRCodeListner();
-        
         this.isQRReaderOpen = false; 
       }
     });
@@ -332,6 +333,7 @@ export class QmQueueSummaryComponent implements OnInit {
 
   SearchQRButtonClick(){
     this.isQRReaderOpen = true;
+    this.isQRSelected = true;
     var searchBox = document.getElementById("visitSearchVisit") as any;
     searchBox.value = '';
     this.queueDispatchers.resetError();

@@ -153,7 +153,7 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
 
     const appointmentSubscription = this.appointmentSelectors.appointments$.subscribe(
       apps => {
-        if (this.isQRSelected) {
+        if (this.isQRSelected){
           this.handleAppointmentResponse(apps);
         }
       }
@@ -168,11 +168,12 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.subscriptions.add(appointmentErrorSub);
 
       // QR code subscription - value comming from native or desktop qr reader 
       const qrCodeSubscription = this.nativeApiSelector.qrCode$.subscribe(
         value => {
-          if (value != null) {
+          if (value != null && this.isQRSelected) {
             // if  qr value not null
             this.qrCodeContent = value;
             this.isQrCodeLoaded = true;
@@ -189,7 +190,7 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
       const qrCodeScannerSubscription = this.nativeApiSelector.qrCodeScannerState$.subscribe(
         value => {
           // if the scanner value is true show the qr modal otherwise remove the qr modal
-          if (value === true) {
+          if (value === true && this.isQRSelected) {
             this.isQrCodeLoaded = false;
             this.qrCodeContent = null;
             this.isQRReaderOpen = true;
@@ -212,7 +213,6 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
         }
       );
       this.subscriptions.add(qrCodeScannerSubscription);
-
   }
 
   ngOnInit() {
@@ -282,6 +282,7 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
         this.toastService.errorToast(noappointments);
       })
       .unsubscribe();
+      this.closeAppointment();
   }
 
   onSelectButton(type: string) {
@@ -319,7 +320,7 @@ export class QmQuickArriveComponent implements OnInit, OnDestroy {
 
   qrButtonClick(){
     //this.searchAppointment('175');
-      this.isQRSelected = true;
+    this.isQRSelected = true;
     this.isQRReaderOpen = true;
     //this.queueDispatchers.resetError();
     if (this.nativeApi.isNativeBrowser()) {
@@ -529,7 +530,7 @@ handleQRCodeValidation(appointment: IAppointment) {
         
         this.translateService.get('label.appointment_in_another_branch', { appointmentBranch : appointment.branch.name})
         .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();
-          
+        this.closeAppointment();
       } else {
         var dateOriginal = appointment.startTime.split("T");
         var appDate = dateOriginal[0];
@@ -544,10 +545,11 @@ handleQRCodeValidation(appointment: IAppointment) {
               );
             })
             .unsubscribe();
-            
+          this.closeAppointment();
         } else {
           this.selectedAppointment = appointment;
           this.selectedCustomer = this.selectedAppointment.customers[0];
+          this.isQRSelected = false;
         }
       }
     } else {
@@ -557,6 +559,7 @@ handleQRCodeValidation(appointment: IAppointment) {
           this.toastService.infoToast(noappointments);
         })
         .unsubscribe();
+      this.closeAppointment();
     }
   } else {
     this.clearInput();
@@ -566,7 +569,7 @@ handleQRCodeValidation(appointment: IAppointment) {
         this.toastService.errorToast(noappointments);
       })
       .unsubscribe();
-      
+    this.closeAppointment();
   }    
 }
 }

@@ -155,6 +155,46 @@ gulp.task('write:manifest', done => {
   done();
 });
 
+// Set app version ***************************************
+
+gulp.task('set:appVersion', done => {
+  try {
+    var pageData = fs.readFileSync('./src/app/components/containers/qm-home-menu/qm-home-menu.component.html');
+    var versionInfo = getVersionInfo();
+    if (versionInfo && pageData) {
+      pageData = pageData.toString().replace('%APP_VERSION%', ' (Concierge ' + versionInfo.version + ') ');
+      fs.writeFileSync('./src/app/components/containers/qm-home-menu/qm-home-menu.component.html', pageData);
+      done();
+      return true;
+    }
+  } catch (ex) {
+    console.log(
+      'There was an exception when trying to read the property file or package.json - ' + ex
+    );
+    done();
+    return false;
+  }
+});
+
+gulp.task('reset:appVersion', done => {
+  try {
+    var pageData = fs.readFileSync('./src/app/components/containers/qm-home-menu/qm-home-menu.component.html');
+    var versionInfo = getVersionInfo();
+    if (versionInfo && pageData) {
+      pageData = pageData.toString().replace(' (Concierge ' + versionInfo.version + ') ' ,'%APP_VERSION%');
+      fs.writeFileSync('./src/app/components/containers/qm-home-menu/qm-home-menu.component.html', pageData);
+      done();
+      return true;
+    }
+  } catch (ex) {
+    console.log(
+      'There was an exception when trying to read the property file or package.json - ' + ex
+    );
+    done();
+    return false;
+  }
+});
+
 function getVersionInfo() {
   var appData = JSON.parse(fs.readFileSync('./src/app.json'));
   if (appData) {

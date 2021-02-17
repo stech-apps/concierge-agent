@@ -1,6 +1,7 @@
 {
   "name": "connect-concierge",
-  "version": "0.0.0",
+  "version": "4.0.0",
+  "build": "26",
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",

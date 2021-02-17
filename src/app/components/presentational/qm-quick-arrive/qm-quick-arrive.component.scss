@@ -1,0 +1,805 @@
+@import '../../../../styles/base/_component-manifest.scss';
+[dir='rtl'] .qm-quick-arrive {
+  margin-left: rem($standard-margin);
+  
+}
+
+.qm-service-not-found-container{
+  background:$white; 
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+  font-size: 18px;
+  padding: 1rem;
+  color: $dark-transparent82;
+
+  &__empty-shadow{
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+.qm-arrive-button {
+  &__item {
+    color: #E50046;
+    min-width: 35px;
+    overflow: hidden;
+    flex: 1;
+
+    &[disabled] {
+      color: $primary-action-button-disabled-color;
+      cursor: auto;
+      &:hover,
+      &:focus {
+        font-weight: $font-weight-light;
+      }
+    }
+  }
+  &__icon {
+    font-size: 2.2rem;
+  }
+}
+
+.qm-quick-arrive {
+  display: flex;
+  justify-content: center;
+  margin: 5em 1em 2em 1em;
+  margin-left: auto;
+  margin-right: auto;  
+  @at-root [dir='rtl'] {
+    margin-left: rem($standard-margin);
+  }
+  &__content {
+    background-color: $white;
+    padding-bottom: 10px;
+    min-height: 219px;
+    max-height: calc(100vh - 250px);
+    border-radius: 4px;
+  }
+  &__header {
+    color: $dark-transparent82;
+    line-height: 2em;
+    font-weight: 300;
+    display: flex;
+    @at-root [dir='rtl'] {
+      text-align: right;
+    }
+  }
+  &__header-container {
+    color: $dark-transparent82;
+    line-height: 2em;
+    padding-top: 20px;
+    font-weight: 300;
+    display: flex;
+    @at-root [dir='rtl'] {
+      text-align: right;
+    }
+  }
+  svg {
+    fill: $primary-text-color;
+    display: inline-block;
+    width: rem(54px);
+    padding-bottom: $standard-padding;
+  }
+  &__list-container {
+    width: 93%;
+    margin: 0 auto;
+    overflow: auto;
+    height: calc(100vh - 480px);
+    -ms-overflow-style: auto;
+  }
+  &__icon {
+    color: $pale-aquamarine;
+    padding-top: 15px;
+  }
+  &__uncheck-icon {
+    color: $dark-transparent12;
+    padding-top: 15px;
+  }
+  &__item {
+    color: black;
+    background-color: white;
+    text-align: left;
+    // height: 100%;
+    // border-radius: 3px;
+    // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  
+    width: 100%;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    @at-root [dir='rtl'] & {
+      text-align: right;
+    }
+    &__label {
+      width: 100%;
+      padding: 1em 0em;
+      // line-height: 2.5em;
+      font-size: 18px;
+      text-align: left;
+      // margin: 0 15px;
+      @at-root [dir='rtl'] & {
+        text-align: right;
+      }
+      @include qm-sm{
+        font-size: 16px;
+      }
+    }
+  }
+  &__item:hover {
+    background-color: rgba(0,0,0,0.04);
+    cursor: pointer;
+  }
+  &__item-selected {
+    background-color: rgba(0,0,0,0.04);
+  }
+  &__button-container {
+ 
+    margin: 0 auto;
+   text-align: center;
+    position: relative;
+    padding: 10px 0;
+    display: flex;
+  
+  }
+  &__button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+    text-align: center;
+    border-radius: 250px;
+    color: #fff;
+    background-color: var(--app-theme);
+    &[disabled] {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+}
+
+.qm-option__help-btn{
+  // padding: 0 20px;
+  z-index: 40;
+}
+
+
+
+.qm-quick-arrive-search{
+  width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
+
+  &__input{
+      padding: 0 15px;
+      height: 48px;
+      width: 100%;
+      font-weight: 100;
+      margin: auto;
+      font-size: 18px;
+      border: 1px solid $dark-transparent12;
+      margin-bottom: 5px;
+      color: $dark-transparent82;
+  }
+  &__input:focus{
+      border: 1px solid $dark-transparent42;
+  }
+
+  &__input::placeholder{
+    font-size: 18px;
+    font-weight: 200;
+    color: $dark-transparent62;
+
+}
+  
+  &__search-container{
+      display: flex;
+      position: relative;
+  }
+
+}
+
+.qm-search__icon{
+
+  margin-top: 10px;
+  color: $dark-transparent62;
+  @at-root [dir="rtl"] & {
+    margin-right: -38px;
+  }
+  @at-root [dir="ltr"] & {
+    margin-left: -35px;
+  }
+}
+.qm-clear-search{ 
+  
+  margin-top: 12px;
+  margin-bottom: 15px;
+  color: $dark-transparent42;
+  @at-root [dir="rtl"] & {
+    margin-right: -35px;
+  }
+  @at-root [dir="ltr"] & {
+    margin-left: -35px;
+  }
+  font-size: 1.4em;
+  cursor: pointer;
+
+}
+.qm-clear-search:hover{ 
+  color: $dark-transparent62;
+}
+
+.triangle {
+  width: 65px;
+  height: 77px;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  top:-22px;
+
+}
+.triangle:after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: $dark-transparent82;
+  transform: rotate(45deg); /* Prefixes... */
+  top: 75px;
+  
+  // box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.quick-arrive-tooltip{
+  width: 350px;
+    z-index: 30;
+    position: absolute;
+    margin-left: 51px;
+    // margin-top: -87px;
+    margin-bottom: 10px;
+
+
+    @at-root [dir="rtl"] & {
+        margin-right: 55px;
+        text-align: right;
+    }
+
+    &__rec{
+      background: $dark-transparent82;
+      color: $white;
+      font-size: 16px;
+      padding: 10px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 5px;
+      margin-top: -22px;
+
+    }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .quick-arrive-tooltip{
+  @at-root [dir="rtl"] & {
+    margin-right: -203px;
+}
+  }
+
+}
+
+
+button:focus{
+  font-weight: 500;
+}
+.tool-tip-back-drop{
+  width: 100vw;
+  height: 100vh;  
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  // background: rgba(0, 0, 0, 0.5);
+} 
+
+.qm-quick-arrive-item{
+  display: flex;
+  width: 100%;
+  padding: 0px 8px;
+}
+
+.qm-quick-arrive-item:focus {
+  background: rgba(0,0,0,0.04);
+}
+
+// @media screen and (orientation:portrait) { 
+//   .qm-quick-serve {
+//   &__content {
+//     // width: 476px;
+//   }
+//   &__header {
+//     font-size: 28px;
+//     margin: 0px 32px;
+//   }
+//   }
+// }
+
+
+@media only screen and (max-width: 768px) {
+  .qm-quick-arrive {
+    &__list-container {
+      max-height: calc(27.5vh - 9rem);
+    }
+  }
+}
+
+
+@include qm-xs-lower { 
+  .qm-quick-arrive {
+    &__list-container {
+      max-height: calc(27.5vh - 9rem);
+    }
+    
+  &__content {
+    width: 476px;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+  
+}
+}
+
+
+@include qm-xs { 
+  .qm-quick-arrive {
+    &__list-container {
+      max-height: calc(27.5vh - 9rem);
+    }
+    
+  &__content {
+    width: 476px;
+    z-index: 2;
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+  }
+}
+
+
+@include qm-sm { 
+ 
+  .qm-quick-arrive {
+    // width: calc(100vw - 608px);
+    width: 100%;
+    margin-left: auto;
+      margin-right: auto;
+  &__content {
+    width: 80%
+   
+  }
+  &__header {
+    font-size: 24px;
+    margin: 0px 20px;
+  }
+  }
+  .quick-arrive-tooltip{
+    margin-left: 10px;
+    @at-root [dir="rtl"] & {
+      margin-right: 12px;
+      text-align: right;
+  }
+  }
+} 
+
+
+@include qm-md { 
+  .qm-quick-arrive {
+    // width: calc(100vw - 852px);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+  &__content {
+    width: 80%
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+}
+
+} 
+
+
+/* Extra large devices (L display size - 1920px and up) */
+@include qm-lg { 
+  .qm-quick-arrive {
+    // width: calc(100vw - 1136px);
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+  &__content {
+    width: 80%
+  }
+  &__header {
+    font-size: 28px;
+    margin: 0px 32px;
+  }
+
+}
+
+}
+
+
+button:focus{
+  i{
+  border:  solid #72a2f7 1px;
+}
+}
+.qm-tooltip-btn:focus{
+  border: none !important;
+  outline: none !important;
+}
+.qm-checkbox:focus{
+  border:  solid #007bff 1px;
+}
+.qm-quick-arrive__item-focus{
+  border:  solid #007bff 1px;
+}
+
+.qm-checkbox__border {
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  border-radius: 6px;
+  width: 22px;
+  height: 21px;
+  position: absolute;
+  margin-left: 3px;
+  margin-top: 19px;
+  @at-root [dir="rtl"] & {
+    margin-right: 3px;
+  }
+}
+
+button:active,button:hover{
+  i{
+  border:  none;
+}
+}
+
+
+.qm-transparent-close-btn{
+  border: none;
+  background: transparent;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  // display: contents;
+  @at-root [dir="rtl"] & {
+    left: 0;
+    right: auto;
+}
+}
+.qm-transparent-close-btn:focus{
+  border: none;
+  outline: none;
+}
+.styled-checkbox {
+  right: 30px;
+  left: auto;
+}
+
+.qm-check-box-background{
+  left: auto;
+  top: 8px;
+  right: -12px;
+  top: calc(50% - 4px);
+    left: auto;
+    transform: translate(-50%,-50%);
+  @at-root [dir="rtl"] & {
+    right: auto;
+    left: 28px;
+  }
+}
+
+// IE specific fix for tooltip
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .quick-arrive-tooltip{
+    margin-left:-187px;
+    @at-root [dir="rtl"] & {
+      margin-right:-187px !important;
+    }
+  }
+  .qm-check-box-background{
+    right: -15px;
+    @at-root [dir="rtl"] & {
+      left: 24px;
+    }
+  }
+}
+
+.checkbox-backdrop-container{
+  height: 100%;
+}
+
+// qr-code-modal related css
+.qm-qr-code-modal
+{background: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: 1000000;
+
+  &__container{
+   position:fixed; 
+   top: 50%;
+   left: 50%; 
+   width:30em;
+   height:18em;
+   margin-top: -9em; 
+   margin-left: -15em;
+   border: 1px solid #ccc;
+   background-color: #f3f3f3;
+  }
+
+  &__heading{
+    display: flex;
+
+  }
+  &__heading-text{
+    color: $dark-transparent82;
+    font-size: 1.7em;
+    font-weight: 300;
+    padding: 10px 40px;
+    flex: 9;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__close-container{
+    color: $dark-transparent42;
+    padding: 25px;
+    font-size: 1.8em;
+    flex: 1;
+    text-align: right;
+    cursor: pointer;
+    @at-root [dir="rtl"] & {
+            text-align: left;
+          }
+  }
+  &__content{
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: $dark-transparent82;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__done-icon{
+    padding: 0px 10px;
+    color: $pale-aquamarine
+  }
+  &__text-line{
+    color: $dark-transparent82;
+    font-size: 1.3em;
+    font-weight: 300;
+    padding: 20px 40px;
+    flex: 1;
+    text-align: center
+  }
+  input{
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -400vw;
+  }
+
+}
+
+.qm-checkout-view {
+  width: 100%;
+  // height: 100vh;
+  display: flex;
+  justify-content: center;
+  color: #000000;
+  &__section {
+    padding: 0.5rem 0;
+  }
+  .qm-button-plain {
+    align-items: center;
+  } 
+
+  &__summary {
+    flex: 1;
+    margin: auto;
+  
+
+    h2 {
+      color: $primary-pink;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.17px;
+      line-height: 32px;
+      text-align: left;
+      @at-root [dir="rtl"] & {
+        text-align: right;
+      }
+    }
+    h1 {
+      color: rgba(0, 0, 0, 0.72);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+      margin-left: 0.5rem;
+      @at-root [dir="rtl"] & {
+        text-align: right;
+      }
+    }
+
+    &--arive {
+      h2,
+      .custom_header_h2,
+      .qm-summary-item__icon {
+        color: $black;
+      }
+
+      .custom_header_h2:hover {
+        text-decoration: none;
+      }
+
+      .qm-checkout-view__summary-grouping:hover {
+        .custom_header_h2 {
+          text-decoration: none;
+        }
+      }
+
+      .qm-checkout-view__summary-grouping:not(.qm-services-grouping) {
+        &:hover {
+          background-color: $white;
+          cursor: auto;
+          .qm-summary-item {
+            color: $black;
+          }
+        }
+      }
+    
+      .icon-service {
+        color: $pale-aquamarine;
+      }
+
+
+    }
+  }
+  &__unlinked-customer {
+    h2 {
+      color: $dark-transparent82;
+      font-weight: 300;
+      padding: 10px 0px;
+    }
+    .custom_header_h2{
+      color: $dark-transparent82;
+      font-weight: 300;
+      padding: 10px 0px;
+    }
+  }
+  &__summary-create-visit {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    h1 {
+      color: $dark-transparent82;
+      font-size: 1.5em;
+      font-weight: 300;
+      margin-top: 1rem;
+    }
+    .custom_header_h3{
+      color: $dark-transparent82;
+      font-size: 1.5em;
+      font-weight: 300;
+      margin-top: 1rem;
+    }
+    h2 {
+      color: $dark-transparent62;
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 24px;
+      margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+      margin-left: 0.5rem;
+      @at-root [dir="rtl"] & {
+        text-align: right;
+      }
+    }
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    &__summary-create-visit {
+      height: 100%;
+    }
+  }
+}
+
+.qm-summary-item {
+  display: flex;
+  line-height: 44px;
+  font-size: 18px;
+  max-width: 90%;
+  &__icon {
+    font-size: 27px;
+    line-height: 44px;
+    margin-right: 0.5rem;
+    color: $secondary-color;
+    display: inline-block;
+  }
+  &__text {
+    font-weight: 300;
+    display: inline-block;
+    max-width: calc(100% - 50px);
+    &--time-period {
+      display: flex;
+    }
+  }
+}
+
+.visit-details-card{
+  background-color: $white;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-right: 10px;
+  margin-left: 10px;
+  overflow-y: auto;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  vertical-align: bottom;
+  color: black;
+
+  &__header {
+    display: flex;
+  }
+
+  &__close {
+    height: 30px;
+    padding: 0;
+  }
+
+  &__header-content {
+    flex: 15;
+  }
+}
+
+.custom_header_h2{
+  color: black;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.17px;
+  line-height: 32px;
+  text-align: left;
+  @at-root [dir="rtl"] & {
+    text-align: right;
+  }
+}
+
+.qr_scanner {
+  background: transparent;
+  border: none;
+  opacity: 0.8;
+  color: black;
+  width: 100%;
+
+  &__icon {
+    font-size: 14em;
+  }
+}

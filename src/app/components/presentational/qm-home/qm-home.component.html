@@ -8,6 +8,9 @@
     <div style="flex:2" [ngClass]="{ 'quick-create-collapesed': isCollapse}" *ngIf="isQuickCreateEnable && !isFlowOpen" class="qm-quick-create-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
       <qm-quick-create></qm-quick-create>
     </div>
+    <div style="flex:2" [ngClass]="{ 'quick-arrive-collapesed': isCollapse}" *ngIf="isQuickArriveEnable && !isFlowOpen" class="qm-quick-arrive-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
+      <qm-quick-arrive></qm-quick-arrive>
+    </div>
     <div class="icon-general" style="position: relative; margin-top: -80px;" *ngIf="(isShowQueueView||editVisitEnable)">
     <!--  expand collapse button css-->
     <button class="qm-transparent-btn"  (click)="collapseBtnClicked()">

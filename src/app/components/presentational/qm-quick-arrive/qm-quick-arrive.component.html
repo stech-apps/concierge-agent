@@ -1,0 +1,112 @@
+<div class="qm-quick-arrive" dir="{{ userDirection$ | async }}">
+    <div class="qm-quick-arrive__content">
+        <div class="qm-quick-arrive__header-container">
+            <h1 class="qm-quick-arrive__header">{{ 'label.quick_arrive' | translate }}</h1>
+            <button id='quick_arrive_tooltip' type="button" class="qm-action-btn qm-action-btn--only-icon qm-option__help-btn qm-tooltip-btn" (click)="showHideToolTip()">
+                <i class="qm-action-btn__icon icon-help" aria-hidden="true" ></i>
+                <span class="sr-only">{{ 'button.info' | translate }}</span>
+            </button>
+
+            <div class="quick-arrive-tooltip" aria-live="assertive" aria-atomic="true">
+                <div class="triangle" *ngIf="showToolTip"></div>
+                <div class="quick-arrive-tooltip__rec" *ngIf="showToolTip">
+                    {{'quick_arrive_tooltip'|translate}}
+                </div>
+            </div>              
+        </div>
+
+        <div>
+          <button *ngIf="!selectedAppointment" (click)="qrButtonClick()" class="btn scan-qr-container qr_scanner">
+            <span>
+            <i class="qm-action-btn__icon icon-scan-qr qr_scanner__icon"></i>
+            <span>{{ "scan_qr" | translate }}</span>
+            </span>
+        </button>
+        </div>
+
+        <!-- Appointment details view -->
+        <div *ngIf="selectedAppointment">
+          <div class="qm-checkout-view__summary" id="main-container">
+            <div class="visit-details-card">
+            <div class="visit-details-card__header">
+              <div class="qm-checkout-view__summary-grouping visit-details-card__header-content">
+                <div class="custom_header_h2" *ngIf="selectedCustomer">{{selectedCustomer.firstName + ' ' + selectedCustomer.lastName}}</div>
+                <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.phoneNumber">
+                  <span class="qm-summary-item__icon icon-phone"></span>
+                  <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.phoneNumber }}</span>
+                </div>
+          
+                <div class="qm-summary-item" *ngIf="selectedCustomer && selectedCustomer.properties?.email">
+                  <span class="qm-summary-item__icon icon-mail"></span>
+                  <span class="qm-summary-item__text qm-text-overflow-fix" *ngIf="selectedCustomer">{{ selectedCustomer.properties?.email }}</span>
+                </div>
+              </div>
+              <button tabindex="-1" class="qm-qr-code-modal__close-container qm-transparent-btn visit-details-card__close" (click)="closeAppointment()">
+                <i class="icon-close" ></i>
+                <span class="sr-only">{{ 'button.close' | translate }}</span>
+              </button>
+            </div>  
+        
+            <h1>{{ 'label.appconfirm.details.heading' | translate }}</h1>
+            <div class="qm-checkout-view__summary-grouping">
+              <div class="qm-summary-item">
+                <span class="qm-summary-item__icon icon-clock"></span>
+                <span class="qm-summary-item__text qm-summary-item__text--time-period"><span>{{ 'quick_arrive_date' | translate }}&nbsp;</span><span>{{getStartTime()}}</span><span>&nbsp;-&nbsp;</span><span>{{getEndTime()}}</span></span>
+              </div>
+            </div>
+            <div class="qm-checkout-view__summary-grouping qm-services-grouping">
+              <div class="qm-summary-item">
+                <span class="qm-summary-item__icon icon-service"></span>
+                <span class="qm-summary-item__text qm-text-overflow-fix">{{getAppServices()}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="qm-quick-arrive__button-container">
+          <button  class="qm-action-btn qm-arrive-button__item" *ngIf="isSMSAvailable" 
+                        (click)="onSelectButton('sms')">
+                          <i class="icon-smartphone qm-action-btn__icon qm-arrive-button__icon"></i>
+                          <span class="qm-action-btn__text">{{ 'send_sms' | translate }}</span>
+                      </button>
+                      <button class="qm-action-btn qm-arrive-button__item" *ngIf="isTicketAvailable" 
+                        (click)="onSelectButton('ticket')">
+                          <i class="icon-ticket qm-action-btn__icon qm-arrive-button__icon"></i>
+                          <span class="qm-action-btn__text">{{ 'print_ticket' | translate }}</span>
+                      </button>
+                      <button  class="qm-action-btn qm-arrive-button__item" *ngIf="isTicketlessAvailable"
+                          (click)="onSelectButton('ticketless')">
+                          <i class="icon-ticketless qm-action-btn__icon qm-arrive-button__icon"></i>
+                          <span class="qm-action-btn__text">{{ 'label.ticketless' | translate }}</span>
+                      </button>
+      </div>
+    </div>
+</div>
+
+<!-- Qr modal -->
+
+<div class="qm-qr-code-modal" *ngIf="!this.nativeApi.isNativeBrowser() && isQRReaderOpen" (click)="foucusInput()" dir="{{userDirection$ | async}}" cdkTrapFocus>
+    <div class="qm-qr-code-modal__container">
+      <div class="qm-qr-code-modal__heading">
+        <h1 class="qm-qr-code-modal__heading-text">
+          {{ "scan_qr_code" | translate }}
+        </h1>
+        <button tabindex="-1" class="qm-qr-code-modal__close-container qm-transparent-btn" (click)="closeqr()">
+          <i class="icon-close" ></i>
+          <span class="sr-only">{{ 'button.close' | translate }}</span>
+        </button>
+      </div>
+      <div class="qm-qr-code-modal__content">
+        <i class="icon-done-solid qm-qr-code-modal__done-icon"></i>
+        <div>{{ "ready_to_scan" | translate }}</div>
+      </div>
+      <div class="qm-qr-code-modal__text-line">
+        <div>{{ "point_the_scanenr" | translate }}</div>
+        <div>
+          <label for="ArriveSearchField" class="sr-only">{{'qr_code_scanner' | translate}}</label>
+          <input class="qm-identify-visit-search__input" type="search" id="ArriveSearchField" name="q" #qrArriveSearch (input)="handleInputArriveQR($event)"
+            (keydown.enter)="keyDownFunction($event, qrArriveSearch.value.trim().toUpperCase())" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+  
+  </div>

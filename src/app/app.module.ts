@@ -24,6 +24,7 @@ import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { QmQuickServeComponent } from "src/app/components/presentational/qm-quick-serve/qm-quick-serve.component";
 import { QmQuickCreateComponent } from "src/app/components/presentational/qm-quick-create/qm-quick-create.component";
+import { QmQuickArriveComponent } from "src/app/components/presentational/qm-quick-arrive/qm-quick-arrive.component";
 
 // Routes
 import { appRoutes } from "./../routes/app-routes";
@@ -215,6 +216,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmSideMenuComponent,
     QmQuickServeComponent,
     QmQuickCreateComponent,
+    QmQuickArriveComponent,
     QmHomeMenuComponent,
     QmQueueSummaryComponent,
     QmQueueListComponent,

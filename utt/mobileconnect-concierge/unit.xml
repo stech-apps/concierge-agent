@@ -162,9 +162,9 @@
             description = "Gives access to Quick Serve flow if user has correct access right."
               privilege = "install:adminAdmin"/>
         <parameter name = "quickVisitAction"
-            description = "QuickServe Flows enables access to QuickServe in the Concierge Home Page, Quick Create enables access to the QuickCreate Flow in the Concierge Home Page."
+            description = "QuickServe Flows enables access to QuickServe, Quick Create enables access to the Quickreate Flow and Quick Arrive enables access to the QuickArrive Flow in the Concierge Home Page."
               sortOrder = "305"
-                  label = "Quick Serve/Create Flow"
+                  label = "Quick Serve/Create/Arrive Flow"
                    type = "Options"
            defaultValue = "serve"
              writeLevel = "profile"
@@ -175,6 +175,7 @@
                 <option label="None">none</option>
                 <option label="Quick Serve">serve</option>
                 <option label="Quick Create">create</option>
+                <option label="Quick Arrive">arrive</option>
             </options>
         </parameter> 
         <parameter name = "queueView"

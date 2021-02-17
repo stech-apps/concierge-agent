@@ -31,6 +31,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   private subscriptions: Subscription = new Subscription();
   isQuickServeEnable: boolean;
   isQuickCreateEnable: boolean;
+  isQuickArriveEnable: boolean;
   isShowQueueView: boolean;
   userDirection$: Observable<string>;
   MessageBoxInfo: IMessageBox;
@@ -73,6 +74,10 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
             if (params.quickVisitAction === 'serve') {
               this.isQuickServeEnable = true;
               this.isQuickCreateEnable = false;
+            } else if (params.quickVisitAction === 'arrive' && (params.ticketLess || params.sndSMS || params.printerEnable)) {
+              this.isQuickArriveEnable = true;
+              this.isQuickCreateEnable = false;
+              this.isQuickServeEnable = false;
             } else if (params.quickVisitAction === 'create' && (params.ticketLess || params.sndSMS || params.printerEnable)) {
               this.isQuickServeEnable = false;
               this.isQuickCreateEnable = true;

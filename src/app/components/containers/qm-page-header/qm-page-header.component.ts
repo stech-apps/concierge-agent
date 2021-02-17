@@ -65,6 +65,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
 
   isQuickServeEnable:boolean;
   isQuickCreateEnable: boolean;
+  isQuickArriveEnable:boolean;
   isHome: boolean;
   isCreateVisit = false;
   isArriveAppointment = false;
@@ -136,6 +137,10 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
           if (uttpParams.quickVisitAction) {
             if (uttpParams.quickVisitAction === 'serve') {
               this.isQuickCreateEnable = false;
+            } else if (uttpParams.quickVisitAction === 'arrive') {
+              this.isQuickArriveEnable = true;
+              this.isQuickCreateEnable = false;
+              this.isQuickServeEnable = false;
             } else if (uttpParams.quickVisitAction === 'create' &&
             (uttpParams.ticketLess || uttpParams.sndSMS || uttpParams.printerEnable)) {
               this.isQuickCreateEnable = true;

@@ -196,7 +196,7 @@ gulp.task('reset:appVersion', done => {
 });
 
 function getVersionInfo() {
-  var appData = JSON.parse(fs.readFileSync('./src/app.json'));
+  var appData = JSON.parse(fs.readFileSync('./package.json'));
   if (appData) {
     return {
       versionPrefix: appData.version,

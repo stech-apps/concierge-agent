@@ -83,6 +83,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   visitLoaded:boolean;
   visitLoading:boolean;
   queueVisitIdLoaded:boolean;
+  countryCode: string;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -200,6 +201,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.isQuickServeEnable = uttParameters.quickServe;
           this.canSendSMS = uttParameters.sndSMS;
           this.canShowNotes = uttParameters.mdNotes;
+          this.countryCode = uttParameters.countryCode
 
           if (this.canTransferQ == true && (this.canTransferQFirst == true || this.canTransferQLast == true || this.canTransferQWait == true)) {
             this.canTransferQ = true;
@@ -479,6 +481,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.phoneNumber = visit.parameterMap.primaryCustomerPhoneNumber;
     } else if (visit && visit.parameterMap.phoneNumber) {
       this.phoneNumber = visit.parameterMap.phoneNumber;
+    } else if (visit && this.countryCode) {
+      this.phoneNumber = this.countryCode;
     }
   }
 

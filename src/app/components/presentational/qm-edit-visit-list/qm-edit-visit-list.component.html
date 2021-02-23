@@ -194,7 +194,7 @@
                       <div *ngIf="isSMSTrigger" class="sms-loader"></div>
                     </div>
                     <span class="qm-standard-text-field__error-message visit-tray-option__error-message" id="phone-error" role="alert" aria-live="polite" >
-                      <ng-container *ngIf="phoneNumber && phoneNumber.length > 0 && !isValiedPhoneNumber">
+                      <ng-container *ngIf="phoneNumber && phoneNumber.length > 0 && !isValiedPhoneNumber && phoneNumber !== countryCode">
                             {{ 'error.form.phone.invalid.des' | translate }}
                       </ng-container>
                     </span>

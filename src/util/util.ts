@@ -11,9 +11,11 @@ export class Util {
     qrCodeListnerTimer: any;
     public qrRelatedData: any;
     private _refreshUrl: string;
+    countryCode: string = undefined;
 
     constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers, private globalDispatchers: GlobalNotifyDispatchers) {
         window['x'] = this.setSelectedApplicationTheme.bind(this);
+       
     }
 
     compareVersions(baseVersion, currentVersion) {
@@ -82,7 +84,29 @@ export class Util {
     }
 
     phoneNoRegEx() {
-        return /^[0-9\+\s]+$/;
+        // const phoneRegex = `\\(?\\+?\d?[-\s()0-9]{6,}$`
+        // if (this.countryCode == undefined ) {
+        //     const uttSubscription = this.servicePointSelectors.uttParameters$
+        //     .subscribe(uttParameters => {
+        //       if (uttParameters) {
+        //         this.countryCode = uttParameters.countryCode;
+        //       }
+        //     })
+        //     .unsubscribe();
+        // }
+       
+        // var phonePrefiForRegex;
+        // if (this.countryCode !== '') {
+        //   phonePrefiForRegex = this.countryCode.toString().replace('+', '\\\+');
+        // }
+        // var phoneValidators;
+        // if (phonePrefiForRegex) {
+        //     phoneValidators = phoneRegex + '|^' + phonePrefiForRegex;
+        //   } else {
+        //     phoneValidators = phoneRegex;
+        //   }
+
+        return /^\(?\+?\d?[-\s()s0-9]{6,}$/;
     }
 
     emailRegEx() {
@@ -94,7 +118,30 @@ export class Util {
     }
 
     phoneNoValidator() {
-        return [Validators.pattern(this.phoneNoRegEx())];
+        const phoneRegex = `\\(?\\+?\d?[-\s()0-9]{6,}$`
+
+        if (this.countryCode == undefined ) {
+            const uttSubscription = this.servicePointSelectors.uttParameters$
+            .subscribe(uttParameters => {
+              if (uttParameters) {
+                this.countryCode = uttParameters.countryCode;
+              }
+            })
+            .unsubscribe();
+        }
+       
+        var phonePrefiForRegex;
+        if (this.countryCode !== '') {
+          phonePrefiForRegex = this.countryCode.toString().replace('+', '\\\+');
+        }
+        var phoneValidators;
+        if (phonePrefiForRegex) {
+          phoneValidators = [Validators.pattern( phoneRegex + '|^' + phonePrefiForRegex)];
+        } else {
+          phoneValidators = [Validators.pattern( phoneRegex)];
+        }
+
+        return phoneValidators;
     }
 
     emailValidator() {

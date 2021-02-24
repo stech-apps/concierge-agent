@@ -41,7 +41,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.0.0.26</h2>
 
-**Date: 02/02/2021**
+**Date: 24/02/2021**
  
 **Build number: 26**
 
@@ -51,8 +51,16 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **QP-8927** | **Directed/re-directed to Create/edit QCA Appointments from Concierge** |
 | **QP-9211** | **Improved usage flow using QR code in arrival (check-in)** |
+| **QP-9123** | **Concierge: Improve the DoB - Year validation** |
+| **QP-9178** | **Phone validation differs between Concierge and other applications(AB, MT, QWB)** |
 
 ----------
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-9094** | **All menu items appearing for a visit user** |
 
 <h2>Version 4.0.0.25</h2>
 

@@ -39,6 +39,21 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.27-Internal</h2>
+
+**Date: 05/05/2021**
+ 
+**Build number: 1**
+
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-9915** | **Confirm dialog after reschedule appointment in Concierge ignores {{confirmOptions}}** |
+
+----------
+
 <h2>Version 4.0.0.26</h2>
 
 **Date: 24/02/2021**

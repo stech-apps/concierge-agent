@@ -141,16 +141,17 @@ export class AppointmentEffects {
             this.userSelectors.userLocale$.subscribe(ul=> userLocale = ul).unsubscribe();
 
             let confirmText = '';
-            const customer = (action.payload.customers[0]);
-            if(customer.email && customer.phone) {
+            // const customer = (action.payload.customers[0]);
+           if (action.payload.custom) {
+             const customObj = JSON.parse(action.payload.custom);
+             if (customObj.notificationType === 'both') {
               confirmText = messages['label.notifyoptions.smsandemail']
-            }
-            else if (customer.email){
+            } else if (customObj.notificationType === 'email') {
               confirmText = messages['label.notifyoptions.email']
-            }
-            else if(customer.phone) {
+            } else if (customObj.notificationType === 'sms') {
               confirmText = messages['label.notifyoptions.sms']
             }
+           }
 
             var successMessage = {
               heading: "heading.reschedule.done",

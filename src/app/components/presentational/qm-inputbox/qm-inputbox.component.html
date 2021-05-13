@@ -118,7 +118,7 @@
                     </div>
                     <ng-select #languageSelect [items]="languages" (focus)="languageFiledSelection(true)" (blur)="languageFiledSelection(false)" [selectOnTab]="true" [clearable]="false"
                       notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value" tabindex="0"
-                      placeholder="{{ 'label.language.heading' | translate }}" formControlName="language"
+                      placeholder="{{ 'label.language.heading' | translate }}" formControlName="language"  [clearable]="false" [searchable]="false" 
                       [attr.aria-expanded]="isLangExpanded" (open)="LangDropDownStatus(true)" (close)="LangDropDownStatus(false)">
                     </ng-select>
                   </label>              
@@ -153,6 +153,7 @@
                   <div class="qm-dob-container">
                     <ng-select #month (focus)="monthFiledSelection(true)" (blur)="monthFiledSelection(false)"
                       labelForId="month-selector" [items]="months" [selectOnTab]="true" [clearable]="false"
+                      [searchable]="false" 
                       notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value"
                       placeholder="{{ 'field.createCustomerForm.month' | translate }}" formControlName="month"
                       dropdownPosition="bottom" (click)="ScrollToBottom()" id="birthday_select"

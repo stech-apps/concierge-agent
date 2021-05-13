@@ -123,8 +123,8 @@
         <div *ngIf="visitClicked && selectedVisitId === visit.visitId && this.visitOptionStatus === 'initial'"  
                 class="qm-visit-list__options-2" id="{{visit.visitId}}-visitOptionContainer" cdkTrapFocus>
           <!-- <div class="triangle-with-shadow"></div> -->
-          <div class="qm-visit-list__options-2__rec" id="visit-rec" tabindex="-1">
-            <div class="qm-visit-list__options-2__heading">
+          <div class="qm-visit-list__options-2__rec" id="visit-rec" tabindex="-1" [ngClass]="{ 'qm-visit-list__options-2__rec-extend' : isMobileNoVisible && canTransferStaff && canTransferSP && (canTransferQ && (canTransferQFirst || canTransferQLast || canTransferQWait))}">
+            <div class="qm-visit-list__options-2__heading" [ngClass]="{ 'qm-visit-list__options-2__heading-extend' : canSendSMS}" >
               <div class="qm-title" id="qm-title" tabindex="-1">
                <span class="qm-visit-options-ticket-id"> {{visit.ticketId}} </span>
                <h1 class="qm-title__header">{{'visit_options'|translate}}</h1>

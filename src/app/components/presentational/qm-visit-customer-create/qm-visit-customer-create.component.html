@@ -132,10 +132,11 @@
                           <label for="year" id="year-label" class="qm-input-box__inputbox-name qm-input-box__year-element-container qm-input-box__dob-element-container" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('year')?.hasError('max') }">{{'year'|translate }}</label>
                       </div>
                       <div class="qm-dob-container">
+                     
                         <ng-select #month [items]="months" [selectOnTab]="true" [clearable]="false"
+                         [searchable]="false" 
                           notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value"
                           placeholder="{{ 'field.createCustomerForm.month' | translate }}" formControlName="month"
-                          tabindex="0"
                           (focus)="monthFiledSelection(true)"
                           (blur)="monthFiledSelection(false)"
                           labelForId="month-selector"

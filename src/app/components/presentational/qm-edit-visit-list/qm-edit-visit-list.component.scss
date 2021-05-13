@@ -343,6 +343,9 @@
         color: #929596;
         background-color: white;
         display: flex;
+        &-extend{
+            padding: 20px 20px 0 20px;
+        }
         .qm-title{
             flex:10;
             display: flex;
@@ -375,6 +378,9 @@
         margin-left: auto;
         margin-right: auto;
         border-radius: 4px;
+        &-extend{
+            height: 490px;
+        }
     }
 
     
@@ -484,11 +490,11 @@
         border: 1px solid $primary-pink;
         border-radius: 5px;
         width: 73%;
-        margin: 33px auto;
+        margin: 30px auto;
         justify-content: flex-start;
 
         &__extend {
-            margin: 24px auto;
+            margin: 20px auto;
         }
 
         &__error-message {

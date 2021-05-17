@@ -39,18 +39,26 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 4.0.0.27-Internal</h2>
+<h2>Version 4.0.0.27</h2>
 
-**Date: 05/05/2021**
+**Date: 17/05/2021**
  
 **Build number: 1**
 
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-9354** | **Version in status bar** |
 
 <h3>Bug fixes</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-9915** | **Confirm dialog after reschedule appointment in Concierge ignores {{confirmOptions}}** |
+| **QP-9388** | **'Activate SMS Ticket' option break UI issue fixed** |
+| **QP-8593** | **NVDA dropdown reading issue fixed** |
+| **QP-9349** | **Default country code is not taken in visit list > Activate SMS ticket option** |
 
 ----------
 

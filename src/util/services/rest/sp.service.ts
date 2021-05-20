@@ -95,6 +95,11 @@ export class SPService implements OnDestroy {
                 this.toastService.errorToast(v); 
              });
             }
+            else if (error.errorCode === '8096') {
+              this.translateService.get(['request_fail', 'messages.error.generic.with.context'],{errorCode: error.errorCode}).subscribe(errorMsgs => {
+                this.toastService.errorToast(`${errorMsgs['request_fail']} ${errorMsgs['messages.error.generic.with.context']}`);
+             });
+            }
             
             this.errorHandler.handleError()
             return  empty();

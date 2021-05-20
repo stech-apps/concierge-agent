@@ -43,7 +43,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Date: 17/05/2021**
  
-**Build number: 1**
+**Build number: 3**
 
 <h3>Stories</h3>
 
@@ -59,6 +59,8 @@ This document describes the new features, bug corrections, known issues and reco
 | **QP-9388** | **'Activate SMS Ticket' option break UI issue fixed** |
 | **QP-8593** | **NVDA dropdown reading issue fixed** |
 | **QP-9349** | **Default country code is not taken in visit list > Activate SMS ticket option** |
+| **QP-7785** | **Buttons - Handle text better** |
+| **QP-8772** | **No message display to the user when 'Quick serve' fails** |
 
 ----------
 

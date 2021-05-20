@@ -370,6 +370,13 @@
   }
 }
 
+.btn-wrap-reschedule{
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:200px;
+}
+
 
 // .qm-appointment-info {
 //   @at-root [dir="rtl"] & {

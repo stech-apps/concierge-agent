@@ -15,14 +15,14 @@
   <div class="qm-action-btn--only-icon">
     <i *ngIf="!visitSearch.value.trim()" aria-hidden="true" class="qm-action-btn__icon icon-search qm-search__icon"></i>
   </div>
-  <button class="btn qm-button qm-primary-button-default qm-search-button" (click)="searchVisit(visitSearch.value.trim().toUpperCase())">
+  <button class="btn qm-button qm-primary-button-default qm-search-button btn-wrap" (click)="searchVisit(visitSearch.value.trim().toUpperCase())">
 
     {{'search'|translate}}
   </button>
   <button *ngIf="visitQR" (click)="SearchQRButtonClick()" class="btn scan-qr-container" [ngStyle]="{ color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)' }">
     <span>
     <i class="qm-action-btn__icon icon-scan-qr"></i>
-    <span>{{ "scan_qr" | translate }}</span>
+    <span class="btn-wrap-qr">{{ "scan_qr" | translate }}</span>
     </span>
   </button>
 </div>

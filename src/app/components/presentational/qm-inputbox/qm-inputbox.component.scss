@@ -124,3 +124,10 @@ border: 1px solid#72a2f7;
 .qm-invalid-field__label{
     color: $error-color;
 }
+
+.btn-wrap {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

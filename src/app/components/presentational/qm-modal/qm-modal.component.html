@@ -16,13 +16,13 @@
         </div>
       </div>
       <div class="qm-modal__button-container">
-        <button class="qm-modal__secondary-button btn-light-active-action :active btn-plain" (click)="decline(); autoCloseService.refreshAutoClose()"
+        <button class="qm-modal__secondary-button btn-light-active-action :active btn-plain btn-wrap" (click)="decline(); autoCloseService.refreshAutoClose()"
           *ngIf="btnCancelText && btnCancelText.length > 0">
           <span title="{{ btnCancelText }}">
             {{ btnCancelText }}
           </span>
         </button>
-        <button type="button" class="qm-btn--primary btn-light-active-action :active" (click)="accept(); autoCloseService.refreshAutoClose()"
+        <button type="button" class="qm-btn--primary btn-light-active-action :active btn-wrap" (click)="accept(); autoCloseService.refreshAutoClose()"
           *ngIf="btnOkText && btnOkText.length > 0">
           <span title="{{ btnOkText }}">
             {{ btnOkText }}

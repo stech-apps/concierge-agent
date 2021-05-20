@@ -883,6 +883,32 @@ button:focus{
   padding: 30px 24px;
 }
 
+.btn-wrap {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:180px;
+  display:inline-block;
+}
+.btn-wrap:hover:disabled{
+  font-weight: 400;
+}
+.btn-wrap-qr {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:135px;
+  display:inline-block;
+}
+
+.btn-wrap-refresh {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:100px;
+  display:inline-block;
+}
+
 // IE specific fix
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
    .qm-pannel-container-arrive{

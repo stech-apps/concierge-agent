@@ -515,3 +515,15 @@ button:active,button:hover{
 .checkbox-backdrop-container{
   height: 100%;
 }
+
+.btn-wrap {
+  max-width: 160px;
+  overflow: hidden;
+}
+.btn-wrap-qr {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:135px;
+  display:inline-block;
+}

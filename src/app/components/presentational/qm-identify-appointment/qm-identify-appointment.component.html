@@ -101,7 +101,7 @@
 
           <button (click)="onSearchButtonClick('qr')" role="tab" id="qr"
             attr.aria-selected="{{ currentSearchState === 'qr' }}" *ngIf="qrButtonVisible"
-            class="scan-qr-container qm-transparent-btn" [ngStyle]="{
+            class="scan-qr-container qm-transparent-btn btn-wrap-qr" [ngStyle]="{
             color: !isQRReaderOpen ? '#E50046' : 'rgba(0, 0, 0, 0.82)'
           }">
             <i class="qm-action-btn__icon icon-scan-qr"></i>
@@ -143,7 +143,7 @@
               </div>
               </div>
 
-              <button (click)="onEnterPressed()" [disabled]="searchText.length === 0 || !searchFieldValidation()" class="qm-btn qm-btn--primary">
+              <button (click)="onEnterPressed()" [disabled]="searchText.length === 0 || !searchFieldValidation()" class="qm-btn qm-btn--primary btn-wrap">
                 {{ "label.identify.appointment.fetch" | translate }}
               </button>
 
@@ -275,8 +275,8 @@
                   'qm-identify-appointment__refresh-button--disabled': isRefreshDisabled
                 }" (click)="refreshAppointments()" (keydown.enter)="refreshAppointments()"
                 (keydown.space)="refreshAppointments()">
-                {{ "label.identifyappointment.refresh" | translate }}
-                <i class="icon-refresh qm-action-btn__icon "></i></button>
+                <span class="btn-wrap-refresh">{{ "label.identifyappointment.refresh" | translate }}</span>
+                <i class="icon-refresh qm-action-btn__icon " style="margin-top: -12px;"></i></button>
             </div>
           </div>
 

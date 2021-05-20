@@ -57,3 +57,10 @@
   margin-bottom: 0;
   display: flex;
 }
+.btn-wrap {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:100px;
+  display:inline-block;
+}

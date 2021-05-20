@@ -70,7 +70,7 @@
             <div class="qm-quick-serve__list-shadow-bottom"></div>
         </div>
         <div class="qm-quick-serve__button-container" *ngIf="(services|filterQuickServeService:filterText).length > 0">
-            <button class="qm-primary-button-disabled qm-button" (click)="onServe()" [ngClass]="{'qm-primary-button-default' : selectedService }"  [disabled]="selectedService === null">{{ 'serve' |
+            <button class="qm-primary-button-disabled qm-button btn-wrap" (click)="onServe()" [ngClass]="{'qm-primary-button-default' : selectedService }"  [disabled]="selectedService === null">{{ 'serve' |
                 translate }}</button>
         </div>
     </div>

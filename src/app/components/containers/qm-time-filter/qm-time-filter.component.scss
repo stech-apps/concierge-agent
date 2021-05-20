@@ -225,3 +225,11 @@ qm-time-filter-items {
   color: #b00020;
   font-size: 0.8em;
 }
+
+.btn-wrap-apply{
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:100px;
+  display:inline-block;
+}

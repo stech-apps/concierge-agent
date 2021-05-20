@@ -1000,6 +1000,14 @@ button:focus{
     box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
   }
 
+  .btn-wrap-submit {
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    max-width:212px;
+    display:inline-block;
+  }
+
 
 //   @include qm-sm{
 //     .notes-tooltip{

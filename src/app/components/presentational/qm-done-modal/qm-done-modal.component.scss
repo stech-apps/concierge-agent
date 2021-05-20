@@ -63,3 +63,10 @@
 .modal-container{
     padding-top: 3rem;
 }
+
+.btn-wrap-ok {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}

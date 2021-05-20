@@ -468,3 +468,17 @@ button:focus{
     right: auto;
 }
 }
+
+.btn-wrap {
+  max-width: 160px;
+  overflow: hidden;
+  padding: 8px 1rem;
+}
+
+.btn-wrap-qr {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:135px;
+  display:inline-block;
+}

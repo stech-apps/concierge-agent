@@ -11,12 +11,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class QmAddnotesModalComponent implements OnInit {
 
   notes: string = '';
+  currentNote: string = '';
   userDirection$: Observable<string>;
 
   constructor(public activeModal: NgbActiveModal, private userSelectors: UserSelectors) { }
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
+    this.currentNote = this.notes;
+    
   setTimeout(() => {
     if(document.getElementById('qm-notes-heading')) {
       document.getElementById('qm-notes-heading').focus();
@@ -31,5 +34,9 @@ export class QmAddnotesModalComponent implements OnInit {
 
   clearNotes() {
     this.notes = '';
+  }
+
+  decline() {
+    this.activeModal.close(encodeURIComponent(this.currentNote));
   }
 }

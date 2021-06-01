@@ -39,6 +39,27 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.28 - Internal</h2>
+
+**Date: 20/05/2021**
+ 
+**Build number: 3**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-7785** | **Buttons - Handle text better** |
+| **QP-8772** | **No message display to the user when 'Quick serve' fails** |
+| **QP-10007** | **Undefined Note label** |
+
+----------
+
 <h2>Version 4.0.0.27</h2>
 
 **Date: 17/05/2021**

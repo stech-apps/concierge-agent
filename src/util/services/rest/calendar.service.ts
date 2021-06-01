@@ -39,12 +39,12 @@ export class CalendarService implements OnDestroy {
 }
 
 
-  createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){
-      var body = { 
+  createAppointment(appointment: IAppointment, notes: string, customer: ICustomer, email: string, sms: string, notificationType: NOTIFICATION_TYPE){ 
+    var body = { 
           "title" : "appointment", 
           "notes" : notes, 
           "customers" : [this.buildCustomerObject(customer)], 
-          "custom" : this.buildCustomObject(email, sms, notificationType) }
+          "custom" : this.buildCustomObject(email, sms, notificationType, appointment.numberOfCustomers) }
     return this.http
      .post(`${this.hostAddress}${calendarPublicEndpointV2}/branches/appointments/${appointment.publicId}/confirm`, body).pipe(
         catchError(this.errorHandler.handleError(true))
@@ -57,7 +57,7 @@ export class CalendarService implements OnDestroy {
         "notes" : this.util.replaceCharcter(notes), 
         "services" : appointment.services,
         "customers" : [this.buildCustomerObject(customer)], 
-        "custom" : this.buildCustomObject(email, sms, notificationType) }
+        "custom" : this.buildCustomObject(email, sms, notificationType, appointment.numberOfCustomers) }
   return this.http
    .post(`${this.hostAddress}${calendarPublicEndpointV2}/branches/${appointment.branch.publicId}/dates/${this.buildDate(appointment)}/times/${this.buildTime(appointment)}/book`, body).pipe(
     catchError(this.errorHandler.handleError(true))
@@ -95,13 +95,16 @@ private buildTime(appointment: IAppointment){
     return timeObj;
 }
 
-  private buildCustomObject(email: string, sms: string, notificationType: NOTIFICATION_TYPE){
+  private buildCustomObject(email: string, sms: string, notificationType: NOTIFICATION_TYPE, numberOfCustomers: number){
     var custom = "{\"notificationType\":\"" + notificationType +  "\"";
     if(sms && sms.length > 0){
       custom = custom + ",\"phoneNumber\":\"" + this.util.buildPhoneNumber(sms) + "\"";
     }
     if(email && email.length > 0){
       custom = custom + ",\"email\":\"" + email + "\"";
+    }
+    if(numberOfCustomers){
+      custom = custom + ",\"nrOfCustomers\":\"" + numberOfCustomers + "\"";
     }
     custom = custom + ",\"appId\":\"concierge\"}";
 

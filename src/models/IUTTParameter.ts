@@ -52,6 +52,7 @@ export interface IUTTParameter {
     appointmentCustomerField: boolean;
     appointmentStatEnable: boolean;
     notificationLanguage: boolean;
+    birthdateRequired: boolean;
     noNotification: boolean;
     qcaCreateEnable: boolean;
     qcaEditEnable: boolean;

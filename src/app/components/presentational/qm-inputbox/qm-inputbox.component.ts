@@ -24,6 +24,7 @@ export class QmInputboxComponent implements OnInit {
   @Input() flowType: FLOW_TYPE;
   customerCreateForm:FormGroup;
   countrycode:string;
+  dobRequired:boolean;
   editCustomer: ICustomer;
   editCustomer$: Observable<ICustomer>;
   userDirection$: Observable<string>;
@@ -103,7 +104,8 @@ export class QmInputboxComponent implements OnInit {
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if(params){
       this.countrycode = params.countryCode;
-      this.isLanguageSelectEnabled = params.notificationLanguage;      
+      this.isLanguageSelectEnabled = params.notificationLanguage;     
+      this.dobRequired = params.birthdateRequired;
     }
     });
     this.subscriptions.add(servicePointsSubscription);
@@ -164,9 +166,14 @@ export class QmInputboxComponent implements OnInit {
     const today = new Date();
     const phoneValidators = this.util.phoneNoValidator();
     const emailValidators = this.util.emailValidator();
-    const dayValidators = [Validators.maxLength(2), Validators.max(31), this.util.numberValidator()];
-    const yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), Validators.min(today.getFullYear() - 125), this.util.numberValidator()];
-    const monthValidators = [];
+    let dayValidators = [Validators.maxLength(2), Validators.max(31), this.util.numberValidator()];
+    let yearValidators = [Validators.maxLength(4), Validators.minLength(4), Validators.max(today.getFullYear()), Validators.min(today.getFullYear() - 125), this.util.numberValidator()];
+    let monthValidators = [];
+    if (this.dobRequired) {
+      dayValidators.push(Validators.required);
+      yearValidators.push(Validators.required);
+      monthValidators.push(Validators.required);
+    }
     //subscribe customer List 
     const customerSubscription = this.customerSelectors.customer$.subscribe((customer) => this.customers = customer);
     this.subscriptions.add(customerSubscription);

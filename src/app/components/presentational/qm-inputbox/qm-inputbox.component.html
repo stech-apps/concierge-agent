@@ -130,9 +130,14 @@
           <div class="qm-input-box__row">
             <div class="qm-input-box__left-side" role="group" aria-labelledby="date_of_birth"
               formGroupName="dateOfBirth">
-              <span id="date_of_birth"
-                class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</span>
+              <div>
+                <span id="date_of_birth"
+                  class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</span>
+                <label *ngIf="dobRequired" class="qm-input-box__inputbox-name qm-input-box__label-required qm-require-dob"
+                  [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').touched && customerCreateForm.get('dateOfBirth').invalid}">{{'required'|translate}}</label>
+              </div>
               <div class="qm-input-box__dob-container">
+                
                 <!-- Month -->
                 <div>
                   <div class="qm-dob-container">

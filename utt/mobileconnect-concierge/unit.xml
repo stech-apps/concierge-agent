@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.13    2021-06-01    Added parameter to make DOB mandotory                       basama
+    =============================================================================================
     7.0.12    2021-02-01    Added parameter to allow QCA                                kasran
                             Added parameter to quick arrive appointment(QR code)
     =============================================================================================
@@ -72,7 +74,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.12"
+         unitVersion = "7.0.13"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -548,7 +550,15 @@
                   label = "Service threshold to show/hide search area"
               sortOrder = "2"
                    type = "String"
-              mandatory = "true" />              
+              mandatory = "true" />
+        <parameter name = "birthdateRequired"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Birthdate Mandatory"
+            description = "making date of birth mandatory when booking appointments"
+              sortOrder = "387"
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"/>              
  		  
 	</parameters>
 	

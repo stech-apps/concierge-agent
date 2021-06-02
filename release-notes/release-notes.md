@@ -48,6 +48,7 @@ This document describes the new features, bug corrections, known issues and reco
 <h3>Stories</h3>
 
 | **Id** | **Release notes** |
+| **QP-10118** | **possible making date of birth mandatory when booking appointments in Concierge** |
 | --- | --- |
 
 <h3>Bug fixes</h3>

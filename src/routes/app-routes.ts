@@ -14,6 +14,7 @@ import { QmCreateVisitComponent } from '../app/components/presentational/qm-crea
 import { QmArriveAppointmentComponent } from 'src/app/components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
 import { QmEditVisitComponent } from '../app/components/presentational/qm-edit-visit/qm-edit-visit.component';
 import { QmCentralLoginComponent } from 'src/app/components/presentational/qm-central-login/qm-central-login.component';
+import { QmWcagStatementComponent } from 'src/app/components/presentational/qm-wcag-statement/qm-wcag-statement.component';
 export const appRoutes: Routes = [
   {
     path: '',
@@ -21,6 +22,7 @@ export const appRoutes: Routes = [
       { path: 'loading', component: QmAppLoaderComponent },
       { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
       { path: 'invalid-license', component: QmInvalidLicenseComponent },
+      { path: 'accessibility', component: QmWcagStatementComponent },
 
       {
         path: 'home', component: QmHomeComponent, children: [

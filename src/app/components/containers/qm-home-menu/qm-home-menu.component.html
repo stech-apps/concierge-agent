@@ -46,6 +46,7 @@
 
 <footer class="qm-footer" *ngIf="!isNative">
   <div *ngIf="systemInformation$ | async as systemInformation" class="qm-footer__content">
+    
     <p class="qm-footer__text">
       {{ 'poweredBy' | translate }} QMATIC
       {{ systemInformation.productName }}
@@ -55,5 +56,11 @@
       {{ 'licensedTo' | translate }}
       {{ systemInformation.licenseCompanyName }}
     </p>
+    <p class="qm-footer__text qm-footer__link" (click)="redirectToStatement()">
+      <span><i class="icon-caret-right"></i></span>
+      <span class="qm-footer__statement"> Accessibility statement</span>
+    </p>
+    
   </div>
+  
 </footer>

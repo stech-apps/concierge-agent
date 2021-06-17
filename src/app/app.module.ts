@@ -180,6 +180,7 @@ import { FilterQuickServeServicePipe } from './components/presentational/qm-quic
 import { QmAppointmentInfoComponent } from './components/presentational/qm-appointment-info/qm-appointment-info.component';
 import { QmKeyCaptureDirective } from './directives/qm-key-capture.directive';
 import {A11yModule} from '@angular/cdk/a11y';
+import { QmWcagStatementComponent } from './components/presentational/qm-wcag-statement/qm-wcag-statement.component';
 
 
 // Global options for Toastr
@@ -289,6 +290,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmTabberComponent,
     QmAppointmentInfoComponent,
     QmKeyCaptureDirective,
+    QmWcagStatementComponent,
   ],
   entryComponents: [
     QmCustomToastComponent,

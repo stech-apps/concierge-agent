@@ -1,0 +1,111 @@
+<div class="qm-wcag" style="height: calc(100vh);overflow: auto;">
+  <qm-page-header></qm-page-header>
+  <div class="qm-wcag-page" style="background-color: #fff;max-width: 70%; margin: auto;padding-top: 80px;">
+    
+    <div><span (click)="backToHome()" class="qm-wcag__btn"><i class="icon-caret-left"></i> Back</span></div>
+    <div class="qm-wcag-statement" style="color: rgba(0, 0, 0, 0.87); margin:0 10vw;">
+      <h1>Accessibility statement for Qmatic – Appointment booking</h1>
+
+      <p style="margin-bottom: 15px;">
+        This accessibility statement applies to the customer facing appointment
+        booking website. This website is run by Qmatic.
+      </p>
+     
+      <p>
+        We want as many people as possible to be able to use this website. For
+        example, that means you should be able to:
+      </p>
+      <ul style="margin-bottom: 15px;">
+        <li>zoom in up to 300% without the text spilling off the screen</li>
+        <li>navigate the website using just a keyboard</li>
+        <li>
+          listen to most of the website using a screen reader (including the
+          most recent versions of JAWS, NVDA and VoiceOver)
+        </li>
+        <li>
+          view the website on your preferred device in horizontal and vertical
+          orientation without losing content
+        </li>
+      </ul>
+      <p style="margin-bottom: 15px;">
+        We’ve also made the website text as simple as possible to understand.
+      </p>
+      <p style="margin-bottom: 20px;">
+        <a href="https://mcmw.abilitynet.org.uk/">VAbilityNet </a>
+        AbilityNet has advice on making your device easier to use if you have a
+        disability.
+      </p>
+
+      <h2>How accessible this website is</h2>
+      <p>We know some parts of this website are not fully accessible:</p>
+      <ul style="margin-bottom: 20px;">
+        <li>You cannot search and pick a date by typing</li>
+        <li>You cannot skip to the main content when using a screen reader</li>
+      </ul>
+      <h2>Reporting accessibility problems with this website</h2>
+      <p style="margin-bottom: 15px;">
+        We’re always looking to improve the accessibility of this website. If
+        you find any problems not listed on this page or think we’re not meeting
+        accessibility requirements, contact us by:
+      </p>
+      <p style="margin-bottom: 15px;">Sending an email with your feedback to: <a href="mailto:design@qmatic.com">design@qmatic.com</a></p>
+     
+      <p>
+        We will get back to you with an answer and planned action in regard to
+        the feedback in 30 days.
+      </p>
+
+      <h2>Technical information about this website’s accessibility</h2>
+      <p style="margin-bottom: 20px;">
+        Qmatic is committed to making its website accessible, in accordance with
+        the European standard for accessibility requirements when procuring IT
+        products and services, EN 301 549 V2.1.2.
+      </p>
+
+      <h3>Compliance status</h3>
+      <p style="margin-bottom: 20px;">
+        This website is fully compliant with the 
+        <a href="https://www.w3.org/TR/WCAG21/">
+          Web Content Accessibility Guidelines version 2.1</a
+        >
+        AA standard.
+      </p>
+
+      <h2>What we’re doing to improve accessibility</h2>
+      <p>To improve accessibility, we will:</p>
+      <ul style="margin-bottom: 20px;">
+        <li>Make it possible to select a date by typing the preferred date</li>
+      </ul>
+
+      <h2>Preparation of this accessibility statement</h2>
+      <p>
+        This statement was prepared on [date when it was first published]. It
+        was last reviewed on [date when it was last reviewed].
+      </p>
+      <p style="margin-bottom: 20px;">
+        This website was last tested on [date]. The test was carried out by an
+        expert review through
+        <a href="https://www.funka.com/">Funka</a>
+        [date].
+      </p>
+      <p>
+        You can read the full accessibility test report [add link to report].
+      </p>
+    </div>
+    <footer class="qm-footer"> 
+        <div  class="qm-footer__content">
+          
+          <p class="qm-footer__text">
+            {{ 'poweredBy' | translate }} QMATIC
+          </p>
+          <p class="qm-footer__text qm-footer__link" (click)="backToHome()">
+            <span><i class="icon-caret-right"></i></span>
+            <span class="qm-footer__statement"> Accessibility statement</span>
+          </p>
+          
+        </div>
+      </footer>
+  </div>
+  
+  
+</div>

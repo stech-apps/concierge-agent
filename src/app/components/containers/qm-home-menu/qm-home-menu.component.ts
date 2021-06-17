@@ -35,6 +35,7 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
   noNotificationEnabled: boolean;
   qcaCreateURL: string;
   qcaEditURL: string;
+  accessbilityStatement: string;
 
   // final flow permissions
   isCreateVisit = false;
@@ -356,5 +357,9 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
         let secondArray = splitedName.slice(Math.floor(splitedName.length / 2),splitedName.length).toString().replace(/,/g, ' ');
         this.menuItemWordArray.push([firstArray, secondArray]);
     })
+  }
+
+  redirectToStatement(){
+    this.router.navigate(['accessibility']);
   }
 }

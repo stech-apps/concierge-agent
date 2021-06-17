@@ -49,6 +49,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | **QP-10118** | **possible making date of birth mandatory when booking appointments in Concierge** |
+| **QP-10145** | **WCAG Statement Accessible from UI** |
 | --- | --- |
 
 <h3>Bug fixes</h3>

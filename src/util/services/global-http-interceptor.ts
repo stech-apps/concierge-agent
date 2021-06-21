@@ -264,7 +264,7 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
 
     isSkipGetUrls(url) {
         let isSkip = false;
-        if (url.match(/^\/rest\/appointment\/.+appointments\/\d+$/) || url.match(/branches\/\d\/queues$/)) {
+        if (url.match(/^\/rest\/appointment\/.+appointments\/\d+$/) || url.match(/branches\/\d\/queues$/) || url.match(/groups\/languages$/)) {
             isSkip = true;
         }
 

@@ -59,6 +59,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **QP-7785** | **Buttons - Handle text better** |
 | **QP-8772** | **No message display to the user when 'Quick serve' fails** |
 | **QP-10007** | **Undefined Note label** |
+| **QP-10172** | **Connection error while creating and serving visit** |
 
 ----------
 

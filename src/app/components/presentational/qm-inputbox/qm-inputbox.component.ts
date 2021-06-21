@@ -106,10 +106,14 @@ export class QmInputboxComponent implements OnInit {
       this.countrycode = params.countryCode;
       this.isLanguageSelectEnabled = params.notificationLanguage;     
       this.dobRequired = params.birthdateRequired;
+      this.isLanguageSelectEnabled = params.notificationLanguage;
+      if (this.isLanguageSelectEnabled) {
+        this.languageDispatchers.fetchLanguages();
+      }    
     }
     });
     this.subscriptions.add(servicePointsSubscription);
-    this.languageDispatchers.fetchLanguages();
+    
     // patch values if current customer available
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {
       this.currentCustomer = customer;

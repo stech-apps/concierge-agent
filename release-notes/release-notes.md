@@ -39,9 +39,9 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 4.0.0.28 - Internal</h2>
+<h2>Version 4.0.0.28</h2>
 
-**Date: 20/05/2021**
+**Date: 22/06/2021**
  
 **Build number: 3**
 
@@ -60,6 +60,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **QP-8772** | **No message display to the user when 'Quick serve' fails** |
 | **QP-10007** | **Undefined Note label** |
 | **QP-10172** | **Connection error while creating and serving visit** |
+| **QP-10115** | **Cannot edit appointment using concierge** |
 
 ----------
 

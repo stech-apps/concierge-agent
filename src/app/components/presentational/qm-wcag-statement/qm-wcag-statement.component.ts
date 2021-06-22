@@ -17,5 +17,8 @@ export class QmWcagStatementComponent implements OnInit {
   backToHome(){
     this.router.navigate(['home']);
   }
+  redirectToStatement(){
+    this.router.navigate(['accessibility']);
+  }
 
 }

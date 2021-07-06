@@ -378,6 +378,8 @@ export class QmInputboxComponent implements OnInit {
         control.controls['day'].setValidators(tempDayValidators);
         if (control.value.day && parseInt(control.value.day, 10) > lastDay) {
           control.controls['day'].setErrors({'max': true});
+        } else if ((control.value.day && parseInt(control.value.day) <= 0) || !control.value.day) {
+          control.controls['day'].setErrors({'min': true});
         } else if (control.value.day && parseInt(control.value.day, 10) <= lastDay) {
           control.controls['day'].setErrors(null);
         }

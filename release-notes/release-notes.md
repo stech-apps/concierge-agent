@@ -39,11 +39,25 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.29 - Internal</h2>
+
+**Date: 06/07/2021**
+ 
+**Build number: 29**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-10238** | **DOB - value 0 is accepted for Day (DD) field, which should not be.** |
+
+----------
+
 <h2>Version 4.0.0.28</h2>
 
 **Date: 22/06/2021**
  
-**Build number: 3**
+**Build number: 28**
 
 <h3>Stories</h3>
 
@@ -68,7 +82,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Date: 17/05/2021**
  
-**Build number: 3**
+**Build number: 27**
 
 <h3>Stories</h3>
 

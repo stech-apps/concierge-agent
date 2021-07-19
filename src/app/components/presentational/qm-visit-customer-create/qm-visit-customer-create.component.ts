@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICustomer } from '../../../../models/ICustomer';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
-import { CustomerDispatchers, CustomerSelector, ServicePointSelectors, UserSelectors } from '../../../../store';
+import { CustomerDispatchers, CustomerSelector, ServicePointSelectors, SystemInfoSelectors, UserSelectors } from '../../../../store';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LocalStorage, STORAGE_SUB_KEY } from '../../../../util/local-storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -61,6 +61,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
   ];
 
   public months: NgOption[];
+  public dobOrder = { month : 0, day : 1 , year : 2};
 
   constructor(
     private customerDispatchers: CustomerDispatchers,
@@ -72,6 +73,7 @@ export class QmVisitCustomerCreateComponent implements OnInit {
     private servicePointSelectors: ServicePointSelectors,
     private util: Util,
     private fb: FormBuilder,
+    public systemInfoSelectors: SystemInfoSelectors
   ) {
 
     this.isFlowSkip = localStorage.getSettingForKey(STORAGE_SUB_KEY.CUSTOMER_SKIP);
@@ -85,6 +87,22 @@ export class QmVisitCustomerCreateComponent implements OnInit {
       }
     });
     this.subscriptions.add(customerSubscription);
+
+    const systemInfoDateSubscription = this.systemInfoSelectors.dateConvention$.subscribe(
+      (val: string) => {
+        if(val){
+          var objArr = val.split('-');
+          if (objArr.length !== 3) {
+            objArr = val.split('/');
+          }
+          this.dobOrder.day = objArr.indexOf('DD');
+          this.dobOrder.month = objArr.indexOf('MM');
+          this.dobOrder.year = objArr.indexOf('YY');
+        }
+        
+      }
+    );
+    this.subscriptions.add(systemInfoDateSubscription);
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe((params) => {
       if (params) {

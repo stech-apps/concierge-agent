@@ -102,10 +102,10 @@ input:focus{
   }
   &__dob-element-container{
     @at-root [dir="ltr"] & {
-      margin-left: 10px;
+      margin-right: 10px;
     }
     @at-root [dir="rtl"] & {
-      margin-right: 10px;
+      margin-left: 10px;
     }
   }
 

@@ -41,7 +41,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.0.0.29 - Internal</h2>
 
-**Date: 06/07/2021**
+**Date: 19/07/2021**
  
 **Build number: 29**
 
@@ -50,6 +50,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-10238** | **DOB - value 0 is accepted for Day (DD) field, which should not be.** |
+| **QP-10239** | **Concierge > Add an option to change the order of the dob input of customer from** |
 
 ----------
 

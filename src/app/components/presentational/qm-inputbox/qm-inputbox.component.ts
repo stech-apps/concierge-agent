@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AutoClose } from '../../../../util/services/autoclose.service';
-import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors } from '../../../../store';
+import { UserSelectors, CustomerDispatchers, CustomerDataService, CustomerSelector, ServicePointSelectors, SystemInfoSelectors } from '../../../../store';
 import { FormGroup, FormControl, FormBuilder, FormArray, FormGroupDirective, Validators, AbstractControl, } from '@angular/forms';
 import { ICustomer } from '../../../../models/ICustomer';
 import { first } from '../../../../../node_modules/rxjs/operators';
@@ -44,6 +44,7 @@ export class QmInputboxComponent implements OnInit {
     month: ''
   };
   public isLanguageSelectEnabled: boolean = true;
+  public dobOrder = { month : 0, day : 1 , year : 2};
   public languages: NgOption[] = [];
   uttParameters$: Observable<IUTTParameter>;
   languages$: Observable<ILanguage[]>;
@@ -92,7 +93,8 @@ export class QmInputboxComponent implements OnInit {
     private util: Util,
     private translateService: TranslateService,
     public LanguageSelectors: LanguageSelectors,
-    public languageDispatchers: LanguageDispatchers
+    public languageDispatchers: LanguageDispatchers,
+    public systemInfoSelectors: SystemInfoSelectors
   ) {
     // this.editCustomer$ = this.customerSelectors.editCustomer$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -113,6 +115,22 @@ export class QmInputboxComponent implements OnInit {
     }
     });
     this.subscriptions.add(servicePointsSubscription);
+
+    const systemInfoDateSubscription = this.systemInfoSelectors.dateConvention$.subscribe(
+      (val: string) => {
+        if(val){
+          var objArr = val.split('-');
+          if (objArr.length !== 3) {
+            objArr = val.split('/');
+          }
+          this.dobOrder.day = objArr.indexOf('DD');
+          this.dobOrder.month = objArr.indexOf('MM');
+          this.dobOrder.year = objArr.indexOf('YY');
+        }
+        
+      }
+    );
+    this.subscriptions.add(systemInfoDateSubscription);
     
     // patch values if current customer available
     const CurrentcustomerSubscription = this.customerSelectors.currentCustomer$.subscribe((customer) => {

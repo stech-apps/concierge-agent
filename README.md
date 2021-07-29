@@ -1,6 +1,6 @@
 # Concierge
 
-This is an Angular 7 application. Read more about Angular here: `https://angular.io/docs`
+This is an Angular 10 application. Read more about Angular here: `https://angular.io/docs`
 
 This project uses ngrx/store to keep the application state. Read more here:
 `https://github.com/ngrx/platform`

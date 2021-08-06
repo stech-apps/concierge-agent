@@ -37,6 +37,8 @@
     ====================================
     Version    Date         Comments                                                    Signature
     =============================================================================================
+    7.0.14    2021-07-30    Added parameters to show primary and secondary resources     chamut
+    =============================================================================================
     7.0.13    2021-06-01    Added parameter to make DOB mandotory                       basama
     =============================================================================================
     7.0.12    2021-02-01    Added parameter to allow QCA                                kasran
@@ -74,7 +76,7 @@
 
 <unit           name = "Concierge"
     frameworkVersion = "2"
-         unitVersion = "7.0.13"
+         unitVersion = "7.0.14"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -558,7 +560,23 @@
             description = "making date of birth mandatory when booking appointments"
               sortOrder = "387"
              writeLevel = "profile"
-              privilege = "install:adminAdmin"/>              
+              privilege = "install:adminAdmin"/> 
+        <parameter name = "primaryResource"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Primary resource"
+            description = "If enabled, show Primary resource of the visit"
+              sortOrder = "3"
+             writeLevel = "branch"
+              privilege = "install:adminAdmin"/> 
+        <parameter name = "secondaryResource"
+                   type = "Boolean"
+           defaultValue = "false"
+                  label = "Secondary resource"
+            description = "If enabled, show Secondary resource of the visit"
+              sortOrder = "4"
+             writeLevel = "branch"
+              privilege = "install:adminAdmin"/> 
  		  
 	</parameters>
 	

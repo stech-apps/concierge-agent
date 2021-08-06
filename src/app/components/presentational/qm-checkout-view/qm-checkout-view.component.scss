@@ -48,6 +48,9 @@
       margin-right: 0.5rem;
       color: $secondary-color;
       display: inline-block;
+      &-resources {
+        font-size: 24px;
+     }
     }
     &__text {
       font-weight: 300;

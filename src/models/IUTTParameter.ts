@@ -58,4 +58,6 @@ export interface IUTTParameter {
     qcaEditEnable: boolean;
     qcaCreateUrl: string;
     qcaEditUrl: string;
+    primaryResource: boolean;
+    secondaryResource: boolean;
   }

@@ -31,4 +31,5 @@ export interface IAppointment {
     notes?: string 
   }
   showInfo?: boolean;
+  resourceServiceDecorators?: any;
 }

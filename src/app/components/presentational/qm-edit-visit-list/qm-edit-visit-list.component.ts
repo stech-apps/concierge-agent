@@ -19,7 +19,9 @@ enum SortBy {
   VISITID = "VISITID",
   CUSTOMER = "CUSTOMER",
   SERVICE = "SERVICE",
-  APPTIME = "APPTIME"
+  APPTIME = "APPTIME",
+  PRIRESOURCE = "PRIRESOURCE",
+  SECRSOURCE = "SECRSOURCE"
 }
 
 
@@ -43,6 +45,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   sortByCustomerAsc = true;
   sortByServiceAsc = true;
   sortByAppTimeAsc = true;
+  sortByPriResourceAsc = true;
+  sortBySecResourceAsc = true;
   sortingIndicator: string = SortBy.VISITID;
   selectedVisitId: number;
   visitClicked: boolean = false;
@@ -50,6 +54,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   visitOptionStatus : string;
   infoVisitId:number;
   selectedNoteVisitId: number;
+  showPriResource = false;
+  showsecResource = false;
 
   @Output() onFlowNext: EventEmitter<any> = new EventEmitter<any>();
   @Output() NextFlow: EventEmitter<any> = new EventEmitter<any>();
@@ -72,6 +78,8 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
   canDelete: boolean = false;
   isQuickServeEnable:boolean;
   canCherryPick: boolean = false;
+  isPrResourceEnable = false;
+  isSecResourceEnable = false;
   private timeoutHandle = null;
 
   dsOrOutcomeExists: boolean = false;
@@ -174,7 +182,6 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.visits = visitList;
       this.visitClicked = false;
       this.selectedVisitId = -1;
-     
       //if only one visit in queue open visit options
       // if (this.visits.length === 1) {
       //   this.visitClicked = true;
@@ -201,7 +208,9 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.isQuickServeEnable = uttParameters.quickServe;
           this.canSendSMS = uttParameters.sndSMS;
           this.canShowNotes = uttParameters.mdNotes;
-          this.countryCode = uttParameters.countryCode
+          this.countryCode = uttParameters.countryCode;
+          this.isPrResourceEnable = uttParameters.primaryResource;
+          this.isSecResourceEnable = uttParameters.secondaryResource;
 
           if (this.canTransferQ == true && (this.canTransferQFirst == true || this.canTransferQLast == true || this.canTransferQWait == true)) {
             this.canTransferQ = true;
@@ -294,6 +303,14 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
     return decodeURIComponent(visit.parameterMap.custom1);
   }
 
+  getShowPriResource(): boolean {
+    return this.isPrResourceEnable && this.visits[0]?.currentVisitService?.primaryResource;
+  }
+
+  getShowSecResource(): boolean {
+    return this.isSecResourceEnable && this.visits[0]?.currentVisitService?.secondaryResources?.length;
+  }
+
   sortByCustomer() {
     this.sortingIndicator = SortBy.CUSTOMER;
     this.sortByCustomerAsc = !this.sortByCustomerAsc;
@@ -347,6 +364,48 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           return -1;
         }
         if ((nameA > nameB && this.sortByAppTimeAsc) || (nameA < nameB && !this.sortByAppTimeAsc)) {
+          return 1;
+        }
+        // names must be equal
+        return 0;
+      });
+    }
+  }
+
+  sortByPriResource() {
+    this.sortingIndicator = SortBy.PRIRESOURCE;
+    this.sortByPriResourceAsc = !this.sortByPriResourceAsc;
+    if (this.visits && this.visits.length) {
+      // sort by Primary resource
+      this.visits = this.visits.slice().sort((a, b) => {
+        var nameA = a.currentVisitService.primaryResource && a.currentVisitService.primaryResource.displayName
+        ? a.currentVisitService.primaryResource.displayName.toUpperCase() : ''; // ignore upper and lowercase
+        var nameB = b.currentVisitService.primaryResource && b.currentVisitService.primaryResource.displayName
+        ? b.currentVisitService.primaryResource.displayName.toUpperCase() : ''; // ignore upper and lowercase
+        if ((nameA < nameB && this.sortByPriResourceAsc) || (nameA > nameB && !this.sortByPriResourceAsc)) {
+          return -1;
+        }
+        if ((nameA > nameB && this.sortByPriResourceAsc) || (nameA < nameB && !this.sortByPriResourceAsc)) {
+          return 1;
+        }
+        // names must be equal
+        return 0;
+      });
+    }
+  }
+
+  sortBySecResource() {
+    this.sortingIndicator = SortBy.SECRSOURCE;
+    this.sortBySecResourceAsc = !this.sortBySecResourceAsc;
+    if (this.visits && this.visits.length) {
+      // sort by Primary resource
+      this.visits = this.visits.slice().sort((a, b) => {
+        var nameA = a.currentVisitService?.secondaryResources[0]?.displayName?.toUpperCase() || ''; // ignore upper and lowercase
+        var nameB = b.currentVisitService?.secondaryResources[0]?.displayName?.toUpperCase() || ''; // ignore upper and lowercase
+        if ((nameA < nameB && this.sortBySecResourceAsc) || (nameA > nameB && !this.sortBySecResourceAsc)) {
+          return -1;
+        }
+        if ((nameA > nameB && this.sortBySecResourceAsc) || (nameA < nameB && !this.sortBySecResourceAsc)) {
           return 1;
         }
         // names must be equal

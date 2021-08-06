@@ -62,6 +62,20 @@
                 {{ appointmentInfo?.servicesDisplayLabel }}
             </span>
         </div>
+        <div *ngIf="getShowPriResource()" class="qm-appointment-info-item qm-appointment-info__resources">
+            <span class="qm-appointment-info-item__icon qm-appointment-info-item__icon-resources icon-radiobutton-unchecked">
+            </span>
+            <span class="qm-appointment-info-item__text">
+                {{ (appointmentInfo?.resourceServiceDecorators[0]?.primaryResource?.displayName || '') + ' ['+ (appointmentInfo?.resourceServiceDecorators[0]?.primaryResource?.category || '')+']' }}
+            </span>
+        </div>
+        <div *ngIf="getShowSecResource()" class="qm-appointment-info-item qm-appointment-info__resources">
+            <span class="qm-appointment-info-item__icon qm-appointment-info-item__icon-resources icon-radiobutton-unchecked">
+            </span>
+            <span class="qm-appointment-info-item__text">
+                {{ (appointmentInfo?.resourceServiceDecorators[0]?.secondaryResources[0]?.displayName || '') + ' ['+ (appointmentInfo?.resourceServiceDecorators[0]?.secondaryResources[0]?.category || '')+']' }}
+            </span>
+        </div>
         <div *ngIf="useCalendarEndpoint" class="qm-appointment-info-item qm-appointment-info__branches">
             <span class="qm-appointment-info-item__icon icon-home">
             </span>

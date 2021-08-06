@@ -155,6 +155,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   isRefreshDisabled: boolean = false;
   isShowAppointmentInfo: boolean = false;
 
+  showPriResource = false;
+  showsecResource = false;
+
+  // utt
+  isPrResourceEnable = false;
+  isSecResourceEnable = false;
+
   @ViewChild('clearInputDirective') clearInputDirective: QmClearInputDirective;
 
   @Output()
@@ -196,8 +203,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     private nativeApiDispatcher: NativeApiDispatchers,
     private modalService: QmModalService,
     private systemInfoSelectors: SystemInfoSelectors,
-    private globalNotifySelectors: GlobalNotifySelectors,
-    private SystemInfoSelectors: SystemInfoSelectors
+    private globalNotifySelectors: GlobalNotifySelectors
   ) {
     this.currentSearchState = this.SEARCH_STATES.INITIAL;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -317,8 +323,13 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
 
     const uttSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       uttParameters => {
-        // qr button enable depending on utt settngs
+
         if (uttParameters) {
+
+          this.isPrResourceEnable = uttParameters.primaryResource;
+          this.isSecResourceEnable = uttParameters.secondaryResource;
+
+        // qr button enable depending on utt settngs
           if (uttParameters.appointmentQR) {
             this.qrButtonVisible = true;
           }
@@ -502,6 +513,15 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(globalNotifySub);
+  }
+
+  getShowPriResource(): boolean {
+    return this.isPrResourceEnable && this.appointments[0]?.resourceServiceDecorators?.[0]?.primaryResource;
+  }
+
+  getShowSecResource(): boolean {
+    return this.isSecResourceEnable &&
+    this.appointments[0]?.resourceServiceDecorators?.[0]?.secondaryResources?.length;
   }
 
   initializeSortState() {

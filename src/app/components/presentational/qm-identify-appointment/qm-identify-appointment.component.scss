@@ -74,9 +74,9 @@ qm-identify-appointment{
 
 
 
-    .qm-pannel-container__identify--arrive & {
-      width :100%;
-    }
+    // .qm-pannel-container__identify--arrive & {
+    //   width :100%;
+    // }
   }
 
   @mixin searchbox-dimensions {
@@ -655,6 +655,9 @@ qm-identify-appointment{
           &__header-service, &__cell-service {
             flex:3;
           }
+          &__header-resources, &__cell-resources {
+            flex:3;
+          }
           &__header-branch, &__cell-branch {
             flex: 3;
           }
@@ -677,6 +680,9 @@ qm-identify-appointment{
             flex: 3;
           }
           &__header-service, &__cell-service {
+            flex:3;
+          }
+          &__header-resources, &__cell-resources {
             flex:3;
           }
           &__header-branch, &__cell-branch {
@@ -712,6 +718,10 @@ qm-identify-appointment{
           flex:3;
         }
 
+        &__header-resources, &__cell-resources {
+          flex:3;
+        }
+
         &__header-branch, &__cell-branch {
           flex: 3;
         }
@@ -742,6 +752,9 @@ qm-identify-appointment{
           &__header-service, &__cell-service {
             flex:3;
           }
+          &__header-resources, &__cell-resources {
+            flex:3;
+          }
           &__header-branch, &__cell-branch {
             flex: 3;
           }
@@ -764,6 +777,9 @@ qm-identify-appointment{
             flex: 3;
           }
           &__header-service, &__cell-service {
+            flex:3;
+          }
+          &__header-resources, &__cell-resources {
             flex:3;
           }
           &__header-branch, &__cell-branch {
@@ -796,6 +812,10 @@ qm-identify-appointment{
         }
 
         &__header-service, &__cell-service {
+          flex:3;
+        }
+
+        &__header-resources, &__cell-resources {
           flex:3;
         }
 

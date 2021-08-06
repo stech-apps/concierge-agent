@@ -683,6 +683,13 @@
         color: $dark-transparent82;
         margin-top: 9px;
         cursor: pointer;
+        padding-right: 10px;
+        @at-root [dir="rtl"] & {
+            padding-left: 10px;
+         }
+         &-resources {
+            font-size: 1.5em;
+         }
         }
     &__text{
         margin-top:9px;

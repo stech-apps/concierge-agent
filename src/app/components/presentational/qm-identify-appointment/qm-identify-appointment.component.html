@@ -346,6 +346,34 @@
                     <span class="sr-only">{{ sortColumn !== 'branchDisplayLabel' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
                   </span>
                 </button>
+                <button *ngIf="getShowPriResource()" (click)="sortAppointments('primaryResource')"  role="columnheader"
+                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
+                  <span>{{
+                    appointments[0]?.resourceServiceDecorators[0]?.primaryResource?.category || ''
+                  }}</span>
+                  <span>
+                    <i
+                      class="qm-action-btn__icon"
+                      [ngClass]="getSortIcons('primaryResource')"
+                    ></i>
+                    <span class="sr-only">{{ sortColumn !== 'primaryResource' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
+                  </span>
+                </button>
+                <button *ngIf="getShowSecResource()" (click)="sortAppointments('secondaryResource')"  role="columnheader"
+                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
+                  <span>{{
+                    appointments[0]?.resourceServiceDecorators[0]?.secondaryResources[0]?.category || ''
+                  }}</span>
+                  <span>
+                    <i
+                      class="qm-action-btn__icon"
+                      [ngClass]="getSortIcons('secondaryResource')"
+                    ></i>
+                    <span class="sr-only">{{ sortColumn !== 'secondaryResource' ? ('button.sortSelect' | translate) : (!isDescending ? ('button.sortASC' | translate) : ('button.sortDES' | translate)) }}</span>
+                  </span>
+                </button>
                 <button  role="columnheader" (click)="
                     sortAppointments(
                       useCalendarEndpoint ? 'start' : 'startTime'
@@ -426,15 +454,23 @@
                         <span role="cell" class="qm-table__cell-35  qm-table__customer qm-table__cell-customer"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.custName }}
-                      </span>
+                        </span>
                         <span role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app.servicesDisplayLabel }}
-                    </span>
+                        </span>
                         <span role="cell" class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.branch?.name }}
-                  </span>
+                        </span>
+                        <span *ngIf="getShowPriResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-resources"
+                          [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
+                          {{ app?.resourceServiceDecorators[0]?.primaryResource?.displayName || '' }}
+                        </span>
+                        <span *ngIf="getShowSecResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-resources"
+                          [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
+                          {{ app?.resourceServiceDecorators[0]?.secondaryResources[0]?.displayName || '' }}
+                        </span>
                         <span role="cell"
                           class="qm-table__cell-15 qm-table__cell-xs-20 qm-table__cell--align-right qm-table__cell-time">
                           {{
@@ -443,7 +479,7 @@
                               : (app.branch && app.branch.fullTimeZone) || ""
                             | async
                         }}
-                      </span>
+                        </span>
                         <span role="cell"
                           class="qm-table__cell-15 qm-table__cell-xs-25 qm-table__cell--align-right qm-table__cell-date">
                           {{
@@ -452,7 +488,7 @@
                             (app.branch && app.branch.fullTimeZone) || ""
                           )
                         }}
-                      </span>
+                        </span>
                       </button>
                       <qm-appointment-info [useCalendarEndpoint]="useCalendarEndpoint"
                         (onCardClick)="onAppointmentSelect($event)" [useWideCard]="true"

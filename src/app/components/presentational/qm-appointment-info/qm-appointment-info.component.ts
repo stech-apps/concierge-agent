@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter,
   HostBinding, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { SystemInfoSelectors, UserSelectors } from 'src/store';
+import { SystemInfoSelectors, UserSelectors, ServicePointSelectors } from 'src/store';
 import { Subscription, Observable } from 'rxjs';
 import { ISystemInfo } from 'src/models/ISystemInfo';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,13 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
     // date format related variables
     systemInformation:ISystemInfo;
+
+  showPriResource = false;
+  showsecResource = false;
+
+  // utt
+  isPrResourceEnable = false;
+  isSecResourceEnable = false;
 
   @Input()
   appointmentInfo: any = {};
@@ -34,9 +41,10 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
 
   subscriptions: Subscription = new Subscription();
 
-  constructor(private elementRef: ElementRef, 
+  constructor(private elementRef: ElementRef,
     public userSelectors: UserSelectors,
-    public systemInfoSelectors:SystemInfoSelectors) { }
+    public systemInfoSelectors: SystemInfoSelectors,
+    private servicePointSelectors: ServicePointSelectors) { }
 
   ngOnInit() {
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -48,9 +56,27 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
       this.systemInformation = systemInfo;
     });
 
-    this.subscriptions.add(systemInfoSubscription)
+    this.subscriptions.add(systemInfoSubscription);
+
+    const uttSubscription = this.servicePointSelectors.uttParameters$.subscribe(
+      uttParameters => {
+        if (uttParameters) {
+          this.isPrResourceEnable = uttParameters.primaryResource;
+          this.isSecResourceEnable = uttParameters.secondaryResource;
+        }
+      }
+    );
+    this.subscriptions.add(uttSubscription);
   }
-  
+
+  getShowPriResource(): boolean {
+    return this.isPrResourceEnable && this.appointmentInfo?.resourceServiceDecorators?.[0]?.primaryResource;
+  }
+
+  getShowSecResource(): boolean {
+    return this.isSecResourceEnable
+    && this.appointmentInfo?.resourceServiceDecorators?.[0]?.secondaryResources?.length;
+  }
 
   ngAfterViewInit() {
     /* let infoCardElement = this.elementRef.nativeElement;
@@ -79,6 +105,7 @@ export class QmAppointmentInfoComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   URIDecorder(val) {
     return decodeURIComponent(val);

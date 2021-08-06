@@ -41,9 +41,15 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.0.0.29 - Internal</h2>
 
-**Date: 19/07/2021**
+**Date: 04/08/2021**
  
 **Build number: 29**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-10198** | **Primary and secondary Resources shown in Concierge** |
 
 <h3>Bug fixes</h3>
 

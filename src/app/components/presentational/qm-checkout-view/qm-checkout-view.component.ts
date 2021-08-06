@@ -106,6 +106,13 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   private selectedServices: ICalendarService[];
   private tempCustomer: ICustomer;
 
+  showPriResource = false;
+  showsecResource = false;
+
+  // utt
+  isPrResourceEnable = false;
+  isSecResourceEnable = false;
+
   //variables related to expandable appointment details view
   serviceStr: string;
   isExpanded: boolean = true;
@@ -178,6 +185,8 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
           this.isMultiBranchEnabled = uttParameters.mltyBrnch;
           this.isAppointmentStatEventEnable = uttParameters.appointmentStatEnable ? uttParameters.appointmentStatEnable : false;
           this.isNoNotificationEnabled = uttParameters.noNotification;
+          this.isPrResourceEnable = uttParameters.primaryResource;
+          this.isSecResourceEnable = uttParameters.secondaryResource;
         }
       })
       .unsubscribe();
@@ -328,6 +337,14 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  getShowPriResource(): boolean {
+    return this.isPrResourceEnable && this.selectedAppointment?.resourceServiceDecorators?.[0]?.primaryResource;
+  }
+
+  getShowSecResource(): boolean {
+    return this.isSecResourceEnable && this.selectedAppointment?.resourceServiceDecorators?.[0]?.secondaryResources?.length;
   }
 
   resetViewData() {

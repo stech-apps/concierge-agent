@@ -321,7 +321,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     // StoreModule.forRoot(reducers),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false, relativeLinkResolution: 'legacy' } // <-- debugging purposes only
+      { enableTracing: false, relativeLinkResolution: 'corrected' } // <-- debugging purposes only
  // <-- debugging purposes only
     ),
     ToastrModule.forRoot(toastrGlobalOptions),

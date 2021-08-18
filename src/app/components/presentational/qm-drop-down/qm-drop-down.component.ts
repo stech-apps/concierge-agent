@@ -114,6 +114,9 @@ export class QmDropDownComponent implements OnInit {
     $event.preventDefault();
   }
 
+  isExpandedValue() {
+    return this.isExpanded;
+  }
   triggerKeyPress(e: KeyboardEvent) {
     if (this.isExpanded) {
       let currentIndex = this.items.findIndex(

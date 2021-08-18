@@ -169,7 +169,7 @@
                     </ng-select>
                     <input
                       class="qm-input-box__input qm-input-box__day-element-container qm-input-box__dob-element-container"
-                      #day formControlName="day" attr.aria-describedby="day-error"
+                      formControlName="day" attr.aria-describedby="day-error"
                       [attr.aria-invalid]="customerCreateForm.get('dateOfBirth').get('day')?.hasError('min') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('pattern') || customerCreateForm.get('dateOfBirth').get('day')?.hasError('max') || customerCreateForm.get('dateOfBirth')?.errors?.invalidDay"
                       #day type="text" maxlength="2" name="day" id="day" (input)="autoCloseService.refreshAutoClose()" [ngStyle]="{'order': dobOrder.day }">
                     <input

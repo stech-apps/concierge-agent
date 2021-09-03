@@ -359,7 +359,8 @@ export class QmHomeMenuComponent implements OnInit, OnDestroy {
     })
   }
 
-  redirectToStatement(){
+  redirectToStatement($event){
+    $event.preventDefault();
     this.router.navigate(['accessibility']);
   }
 }

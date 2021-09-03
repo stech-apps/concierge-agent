@@ -44,13 +44,12 @@
         </div>
         <div #configServiceList class="qm-quick-serve__list-container" *ngIf="(services|filterQuickServeService:filterText).length > 0" (scroll)="onScroll($event.target)" [ngStyle]="{'max-height':(!isShowQueueView && !editVisitEnable) ? 'calc(100vh - 480px)':'auto' }">
             <div class="qm-quick-serve__item" [ngClass]="{ 'qm-quick-serve__item-selected' : selectedService !== null && selectedService.id === service.id }" (click)="onServiceSelect(service)" *ngFor="let service of services|filterQuickServeService:filterText" >
-                <div (keydown.enter)="onServiceSelect(service)"  (keydown.enter)="onServiceSelect(service)" class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
+                <div (keydown)="ServiceSelectKeyPressed(service, $event)"   class="qm-quick-serve-item" [ngClass]="{'qm-quick-serve__item-focus':focusQuickServeItem==service.id}">
                     <label for="{{serviceId(service.internalName)}}" class="qm-quick-serve__item__label" (click)="onServiceSelect(service)" [innerHtml]="service.internalName | qmhighlight: filterText"></label>
                     <div  class="qm-checkbox-label"  role="group">
                             <div class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
                               <input  id="{{serviceId(service.internalName)}}" class="styled-checkbox" type="radio" name="services"
                                 [checked]="selectedService !== null && selectedService.id === service.id" (focus)="focusQmCheckbox(service)"
-                          (keydown.space)="onServiceSelect(service)"
                                 (focusout)="focusOutQmCheckbox()">
                               <label (mouseenter)="MouseEnteredCheckbox(service)"
                                 (mouseleave)="MouseLeaveCheckbox()" (mousedown)="mousePressed = true"

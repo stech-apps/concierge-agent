@@ -102,6 +102,9 @@
     &:hover{
       cursor: pointer;
     }
+    &:focus{
+      color: #fafafa;
+    }
   }
   &__statement:hover{
     text-decoration: underline;

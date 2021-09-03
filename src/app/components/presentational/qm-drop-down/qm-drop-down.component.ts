@@ -42,7 +42,7 @@ export class QmDropDownComponent implements OnInit {
   //   }
   // }
 
-  isExpanded = false;
+  public isExpanded = false;
   userDirection$: Observable<string>;
   searchText: string;
   selectedItem: any;

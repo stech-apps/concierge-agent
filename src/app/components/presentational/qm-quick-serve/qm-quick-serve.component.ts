@@ -145,8 +145,14 @@ export class QmQuickServeComponent implements OnInit, OnDestroy {
   checkShadow(){
     this.onScroll(this.configServiceList.nativeElement);
   }
-
+  ServiceSelectKeyPressed(selectedService: IService, $event) {
+    if ($event.keyCode == 32 ) {
+      $event.preventDefault();
+      this.onServiceSelect(selectedService);
+    }
+  }
   onServiceSelect(selectedService: IService) {
+    
     this.showToolTip = false;
     if(this.selectedService === selectedService){
       this.selectedService = null;

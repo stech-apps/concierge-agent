@@ -394,7 +394,7 @@ export class QmInputboxComponent implements OnInit {
         const lastDay = new Date(control.value.year, control.value.month, 0).getDate();
         const tempDayValidators = [Validators.maxLength(2), Validators.max(lastDay), Validators.min(1), this.util.numberValidator()];
         control.controls['day'].setValidators(tempDayValidators);
-        control.value.day = control.value.day.trim();
+        control.value.day = control.value.day.toString().trim();
         if (control.value.day && parseInt(control.value.day, 10) > lastDay) {
           control.controls['day'].setErrors({'max': true});
         } else if ((control.value.day && parseInt(control.value.day) <= 0) || !control.value.day || !control.value.day.match(/^[0-9]*$/)) {
@@ -438,6 +438,8 @@ export class QmInputboxComponent implements OnInit {
       const intMonth = parseInt(month, 10) + 1;
       if (intMonth < 10) {
         newMonth = '0' + intMonth;
+      } else {
+        newMonth  = intMonth.toString();
       }
     }
 

@@ -58,6 +58,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **QP-10238** | **DOB - value 0 is accepted for Day (DD) field, which should not be.** |
 | **QP-10239** | **Concierge > Add an option to change the order of the dob input of customer from** |
+| **QP-10481** | **White screen appear for 1-2 seconds when user navigate from customer fish to confirm fish.** |
 
 ----------
 
@@ -175,7 +176,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 ----------
 
-<h2>Version Version 4.0.0.23</h2>
+<h2>Version 4.0.0.23</h2>
 
 **Date: 26/08/2020**
  
@@ -382,7 +383,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | --- | --- |
-| **165784415** | **Concierge security vulnerability** node packages were updated and security vulnarabilities were |
+| **165784415** | **Concierge security vulnerability** node packages were updated and security vulnerabilities |
 | **166025007** | **Quick Serve  Update - Casual Caller** |
 
 ----------
@@ -588,7 +589,7 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **162572091** | **Expand Queue** Resizing |
 | **163023320** | **Start Page Resizing** Resizing |
-| **162572385** | **collapse quickserve section in xs screens** Layout adjuestment |
+| **162572385** | **collapse quickserve section in xs screens** Layout adjustment |
 | **160084603** | **new icon on HOME page for Concierge** New concierge icon added to the Orchestra home page |
 | **161641618** | **WCAG Manual Test** Manually test WCAG and document changes |
 | **163055833** | **Resizing date & time/reschedule** Responsive and other improvements in date and time reschedule screens |

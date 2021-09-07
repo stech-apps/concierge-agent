@@ -41,7 +41,7 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.0.0.29</h2>
 
-**Date: 04/08/2021**
+**Date: 07/09/2021**
  
 **Build number: 29**
 

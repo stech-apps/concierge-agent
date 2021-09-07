@@ -39,7 +39,7 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
-<h2>Version 4.0.0.29 - Internal</h2>
+<h2>Version 4.0.0.29</h2>
 
 **Date: 04/08/2021**
  
@@ -50,6 +50,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **QP-10198** | **Primary and secondary Resources shown in Concierge** |
+| **QP-10390** | **Angular update version 10 to 12** |
 
 <h3>Bug fixes</h3>
 

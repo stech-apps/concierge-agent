@@ -614,7 +614,7 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showAppointmentNotFoundError() {
     if (this.SEARCH_STATES.QR === this.currentSearchState) {
       this.clearInput();
-      if (this.qrCodeContent.appintment_id) {
+      if (this.qrCodeContent.appointment_id) {
         if (this.useCalendarEndpoint) {
           this.translateService.get('label.appointment_in_another_branch', { appointmentBranch: this.qrCodeContent.branch_name })
             .subscribe(msg => this.toastService.errorToast(msg)).unsubscribe();

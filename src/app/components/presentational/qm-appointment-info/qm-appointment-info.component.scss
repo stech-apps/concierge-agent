@@ -19,7 +19,10 @@
   width: 542px;
   max-height: 432px;
   padding: $standard-padding;
-
+  
+  @include qm-xs-lower{
+    width: 450px;
+} 
   @at-root [dir="rtl"] {
     right: 0;
     left: auto;

@@ -24,7 +24,7 @@
             </div>
             <div class="qm-queue-list-header-item-label">{{'label.queue_view_queue' | translate}}</div>
             <div><i  *ngIf="sortedBy =='Queue' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i>
-              <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+              <span class="qm-queue-list-header-sr sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
             </div>
           </div>
           <div class="qm-queue-list-header-item qm-col qm-flex-grid" (click)="onSortClickbyWaitingCustomers()" >
@@ -33,7 +33,7 @@
             </div>
             <div class="qm-queue-list-header-item-label">{{'queue_view_waiting_customers_label' | translate}}</div>
             <div><i *ngIf="sortedBy =='WaitingCustomers' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i>
-              <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+              <span class="qm-queue-list-header-sr sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               </div>
               <div class="qm-queue-list-header-item-label"> {{ 'queue_view_max_wait_time_label' | translate}} </div>
               <div><i  *ngIf="sortedBy =='MaxWaitTime' && queueCollection.length>1" class="sort-icon" [ngClass]="{'icon-caret-up': sortAscending === true, 'icon-caret-down': sortAscending !==  true }"></i>
-                <span class="sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
+                <span class="qm-queue-list-header-sr sr-only">{{ sortAscending ? ('button.sortASC' | translate) : ('button.sortDES' | translate) }}</span>
               </div>
           </div>
           <div *ngIf="showEstWaitTime"  class="qm-queue-list-header-item qm-col qm-flex-grid" >

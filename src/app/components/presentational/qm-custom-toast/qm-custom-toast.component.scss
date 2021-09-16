@@ -7,17 +7,10 @@
     height: 100%;
     margin: auto;
     font-size: 40px;
-    // @at-root [dir="rtl"] & {
-    //     margin-right: 0;
-    //     margin-left: 2rem;
-    // }
+    @include qm-xs-lower  {  
+        margin: 0 5px;
+    }
 }
-// .qm-toast--danger
-//     .qm-toast-icon
-//         .icon-complete:before{
-//             content: "\e913" !important;
-          
-// }
 
 
 [class^="col"] {
@@ -69,12 +62,20 @@ a:focus{
 }
 
 .checkbox{
+   
     margin: auto;height: 100%;
     width: 145px;
     @at-root [dir="rtl"] & {
         width: 171px;
     }
+    @include qm-xs-lower  {  
+        width: 120px;
+        @at-root [dir="rtl"] & {
+            width: 160px;
+        } 
+    }
     @include qm-xs {
+        width: 120px;
         @at-root [dir="rtl"] & {
             width: 160px;
         } 

@@ -272,14 +272,25 @@
 
             <!-- To select a customer -->
             <button [disabled]="!customerCreateForm.valid" type="button"
-              *ngIf="editMode && currentCustomer && !((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"
+              *ngIf="editMode && currentCustomer && 
+              !((currentCustomer.firstName != firstName.value ) ||(currentCustomer.lastName != lastName.value )||
+              (currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||
+              (date.year &&(date.year != year.value))||(!date.year && year.value)
+              ||(date.month &&(date.month != customerCreateForm.value.dateOfBirth.month))||(!date.month && customerCreateForm.value.dateOfBirth.month)
+              ||(date.day &&(date.day != day.value)) ||(!date.day && day.value))"
               class="qm-button qm-primary-button-disabled btn-wrap"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="next()">
               <span> {{'button_add'|translate}} </span>
             </button>
+
             <!-- To update a custoemr -->
             <button [disabled]="!customerCreateForm.valid" type="button"
-              *ngIf="editMode && currentCustomer && ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )||(date.year &&(date.year != year.value))||(!date.year && year.value)||(date.day &&(date.day != day.value))||(!date.day && day.value))"
+              *ngIf="editMode && currentCustomer && 
+              ((currentCustomer.firstName != firstName.value )||(currentCustomer.lastName != lastName.value )
+              ||(currentCustomer.properties.phoneNumber != phone.value )||(currentCustomer.properties.email != email.value )
+              ||(date.year &&(date.year != year.value))||(!date.year && year.value)
+              ||(date.month &&(date.month != customerCreateForm.value.dateOfBirth.month))||(!date.month && customerCreateForm.value.dateOfBirth.month)
+              ||(date.day &&(date.day != day.value))||(!date.day && day.value))"
               class="qm-button qm-primary-button-disabled btn-wrap"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid}" (click)="accept()">
               <span> {{'button_save_and_add'|translate}} </span>

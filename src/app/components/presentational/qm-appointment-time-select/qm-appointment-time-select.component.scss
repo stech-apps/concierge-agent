@@ -72,6 +72,10 @@
             visibility: hidden;
             display: none;
         }
+        @include qm-xs-lower {
+            visibility: hidden;
+            display: none;
+        }
     }
 
     &-slots {
@@ -86,6 +90,10 @@
     @include qm-xs{
         flex-direction: column;
     }
+    @include qm-xs-lower{
+        flex-direction: column;
+    }
+    
 }
 
 .qm-time-header {
@@ -126,6 +134,12 @@
             margin: 48px auto 0 auto;
         }
     }  
+    @include qm-xs-lower{
+        margin: 48px auto 0 auto;
+        @at-root [dir="rtl"] & {
+            margin: 48px auto 0 auto;
+        }
+    }
 }
 
 .qm-calendar-placeholder {
@@ -147,6 +161,10 @@
             position: static;
             height: 25rem; 
         }
+        @include qm-xs-lower {
+            position: static;
+            height: 25rem; 
+        }
 
         &__scrollable {
             @include qm-xs {
@@ -157,13 +175,23 @@
                    margin-left: auto;
                }
             }
+            @include qm-xs-lower {
+                margin-left: 56px; 
+ 
+                @at-root [dir='rtl'] & {
+                    margin-right: 56px;
+                    margin-left: auto;
+                }
+             }
         }
     }
 
     @include qm-xs{
         margin: 47px auto 0rem auto;
     }
-
+    @include qm-xs-lower{
+        margin: 47px auto 0rem auto;
+    }
 
 }
 
@@ -184,6 +212,9 @@
     position: relative;
 
     @include qm-xs {
+        flex-direction: column;
+    }
+    @include qm-xs-lower {
         flex-direction: column;
     }
 }

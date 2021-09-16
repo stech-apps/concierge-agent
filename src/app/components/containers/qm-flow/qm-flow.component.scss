@@ -20,6 +20,16 @@
   display: flex;
 }
 
+@include qm-xs-lower { 
+  .qm-fishes {
+   font-size: 0;
+  }
+  .qm-fishes-first { 
+    font-size: 0;
+  }
+}
+
+
 div:focus{
   .qm-fishes-text{
     font-weight: 500 !important;

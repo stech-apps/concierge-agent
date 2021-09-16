@@ -334,6 +334,15 @@
         text-align: right;
     }
     
+    @include qm-xs { 
+        width: 100%;
+    }
+
+    @include qm-xs-lower { 
+        width: 100%;
+    }
+    
+    
 
     &__heading{
         border-radius: 4px;
@@ -725,7 +734,7 @@
         }
     }
     .qm-visit-list__body {
-        max-height: calc(100vh - 165px);
+        max-height: calc(100vh - 485px);
         min-height: calc(100vh - 892px);
         // height: 10px;
     }
@@ -733,11 +742,76 @@
         min-height: 56px;
         font-size: 16px;
     }
-    
+    .qm-visit-list__options-2 {
+        width: 100%;
+        margin-left:-3px;
+        margin-right:-3px;
+        max-height: 65%;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    } 
     
 }
 
 
+@include qm-xs {
+    .qm-visit-list {
+        &-body-row {
+            min-height: 56px;
+            margin: 4px 0px;
+            
+        }
+    }
+    .qm-visit-list__body {
+        max-height:calc(100vh - 485px);
+        min-height: calc(100vh - 892px);
+        // height: 10px;
+    }
+    .qm-row-text{
+        min-height: 56px;
+        font-size: 16px;
+    }
+    .qm-visit-list__options-2 {
+        width: 100%;
+        margin-left:-3px;
+        margin-right:-3px;
+        max-height: 65%;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    } 
+    
+}
+
+@include qm-sm {
+    .qm-visit-list {
+        &-body-row {
+            min-height: 56px;
+            margin: 4px 0px;
+            
+        }
+    }
+    .qm-visit-list__body {
+        max-height: calc(100vh - 485px);
+        min-height: calc(100vh - 892px);
+        // height: 10px;
+    }
+    .qm-row-text{
+        min-height: 56px;
+        font-size: 16px;
+    }
+    .qm-visit-list__options-2 {
+        width: 100%;
+        margin-left:-3px;
+        margin-right:-3px;
+        max-height: 65%;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    } 
+    
+}
 .qm-display-none{
     @include qm-xs {
         display: none;
@@ -756,11 +830,11 @@
             
         }
     }
-    .qm-visit-list__body {
-        max-height: calc(100vh - 843px);
-        min-height: calc(100vh - 892px);
-        // height: 10px;
-    }
+    // .qm-visit-list__body {
+    //     max-height: calc(100vh - 843px);
+    //     min-height: calc(100vh - 892px);
+    //     // height: 10px;
+    // }
     .qm-service-col{
         display: none;
     }
@@ -885,27 +959,27 @@
 }
 
 .visit-list-body-collapesed{
-    @include qm-xs {
-        max-height: calc(100vh - 594px);
+    @include qm-xs-height-lower {
+        max-height: calc(100vh - 400px);
         min-height: calc(100vh - 594px);
         margin-bottom: 28px;
     }
-    @include qm-xs-lower {
-        max-height: calc(100vh - 594px);
-        min-height: calc(100vh - 692px);
-        margin-bottom: 28px;
-        }
 }
 
 .visit-list-body-without-quick-serve{
     @include qm-xs {
-    max-height: calc(100vh - 165px);
+    max-height: calc(100vh - 843px);
     min-height: calc(100vh - 459px);
     }
     @include qm-xs-lower {
-    max-height: calc(100vh - 165px);
+    max-height: calc(100vh - 843px);
     min-height: calc(100vh - 459px);
-}
+    }
+    @include qm-xs-height-lower {
+        max-height: calc(100vh - 400px);
+        min-height: calc(100vh - 594px);
+        margin-bottom: 28px;
+    }
 }
 
 .info-selected{
@@ -1014,66 +1088,3 @@ button:focus{
     max-width:212px;
     display:inline-block;
   }
-
-
-//   @include qm-sm{
-//     .notes-tooltip{
-//         @at-root [dir='ltr'] & {
-//             margin-left: -104px;
-//           }
-//           @at-root [dir='rtl'] & {
-//             margin-right: -104px;
-//         }
-//     }
-//     .notes-triangle{
-//         @at-root [dir='ltr'] & {
-//             left: 24%;
-//           }
-//           @at-root [dir='rtl'] & {
-//             right: 24%;
-//         }
-//     }
-//   }
-
-//   @include qm-xs{
-//     .notes-tooltip{
-//         @at-root [dir='ltr'] & {
-//             margin-left: -160px;
-//           }
-//           @at-root [dir='rtl'] & {
-//             margin-right: -160px;
-//         }
-//     }
-//     .notes-triangle{
-//         @at-root [dir='ltr'] & {
-//             left: 40%;
-//           }
-//           @at-root [dir='rtl'] & {
-//             right: 40%;
-//         }
-//     }
-//   }
-
-//   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-//     /* IE10+ CSS styles go here */
-//     .notes-tooltip{
-//       @at-root [dir='ltr'] & {
-//         margin-left: -235px !important;
-//         @include qm-sm{
-//             margin-left: -280px !important;
-//         }
-//         @include qm-xs{
-//             margin-left: -335px !important;
-//         }
-//       }
-//       @at-root [dir='rtl'] & {
-//         margin-right: -235px !important;
-//         @include qm-sm{
-//             margin-right: -280px !important;
-//         }
-//         @include qm-xs{
-//             margin-right: -335px !important;
-//         }
-//     }
-//     }
-//   }

@@ -205,3 +205,15 @@ $lg-width: map-get($qm-device-breakpoints, lg-width );
     @content;
   }
 }
+
+$xs-height: map-get($qm-height-breakpoints, xs-height );
+$sm-height: map-get($qm-height-breakpoints, sm-height );
+$md-height: map-get($qm-height-breakpoints, md-height );
+$lg-height: map-get($qm-height-breakpoints, lg-height );
+
+
+@mixin qm-xs-height-lower {
+  @media (max-height: #{$xs-height}) {
+    @content;
+  }
+}

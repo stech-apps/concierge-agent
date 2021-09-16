@@ -22,6 +22,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;  
     max-width: 50%;  
+    @include qm-xs-lower{
+      max-width: 70%;
+    }
   }
 }
 

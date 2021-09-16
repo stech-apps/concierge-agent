@@ -317,19 +317,6 @@ button:focus{
   background: rgba(0,0,0,0.04);
 }
 
-// @media screen and (orientation:portrait) { 
-//   .qm-quick-serve {
-//   &__content {
-//     // width: 476px;
-//   }
-//   &__header {
-//     font-size: 28px;
-//     margin: 0px 32px;
-//   }
-//   }
-// }
-
-
 @media only screen and (max-width: 768px) {
   .qm-quick-arrive {
     &__list-container {
@@ -744,6 +731,8 @@ button:active,button:hover{
     margin-right: 0.5rem;
     color: $secondary-color;
     display: inline-block;
+
+
   }
   &__text {
     font-weight: 300;
@@ -801,5 +790,9 @@ button:active,button:hover{
 
   &__icon {
     font-size: 14em;
+    @include qm-xs-height-lower {  
+      font-size: 8em;
+    }
   }
+  
 }

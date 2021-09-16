@@ -125,7 +125,7 @@
 
   <!-- right pannel -->
   <div class="qm-checkout-view__notifications">
-    <div style="width:480px">
+    <div class="qm-checkout-view__notifications-container" style="width:480px">
     <div *ngIf=" isVipLvl1Enabled || isVipLvl2Enabled || isVipLvl3Enabled" class="qm-checkout-view__vip-container">
       <div class="vip-label" [style.flex]="('label.vip_section' | translate).length > 6 ? 1.5: 1">{{ 'label.vip_section' | translate }}</div>
           <div class="radio-container">

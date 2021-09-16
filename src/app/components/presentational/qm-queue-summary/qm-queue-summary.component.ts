@@ -106,8 +106,8 @@ export class QmQueueSummaryComponent implements OnInit {
         this.canTransferQLast = uttpParams.btnTransferLast;
         this.canTransferQWait = uttpParams.btnTransferSort;
         this.canDelete = uttpParams.delVisit;
-        this.cancherypick = uttpParams.cherryPick;
-        this.isQuickServeEnable = uttpParams.quickServe;
+        this.cancherypick = uttpParams.cherryPick;;
+        this.isQuickServeEnable = uttpParams.quickVisitAction !== 'none' ? true : false;
         this.isShowQueueView = uttpParams.queueView;
         this.editVisitEnable = uttpParams.editVisit;
        }

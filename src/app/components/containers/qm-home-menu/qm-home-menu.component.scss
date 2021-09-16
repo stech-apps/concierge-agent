@@ -120,6 +120,19 @@
   -webkit-line-clamp: 2;
 }
 
+@include qm-xs-height-lower {
+  .qm-home-menu__item--text{
+  visibility: hidden;
+  display: none;
+  }
+  .qm-home-menu__icon {
+    font-size: 2.5em;
+  }
+  .qm-home-menu {
+    height: 3.5rem;
+  }
+}
+
 button:focus{
   // border:  solid #007bff 1px;
   outline: none;

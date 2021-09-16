@@ -32,7 +32,9 @@
     background-color: $white;
     padding-bottom: 10px;
     min-height: 219px;
-    max-height: calc(100vh - 250px);
+    // max-height: calc(100vh - 250px);
+    display: flex;
+    flex-direction: column;
     border-radius: 4px;
   }
   &__header {
@@ -67,6 +69,7 @@
     overflow: auto;
     height: calc(100vh - 480px);
     -ms-overflow-style: auto;
+    flex-grow: 1;
   }
   &__icon {
     color: $pale-aquamarine;
@@ -303,54 +306,27 @@ button:focus{
   background: rgba(0,0,0,0.04);
 }
 
-// @media screen and (orientation:portrait) { 
-//   .qm-quick-serve {
-//   &__content {
-//     // width: 476px;
-//   }
-//   &__header {
-//     font-size: 28px;
-//     margin: 0px 32px;
-//   }
-//   }
-// }
-
-
-@media only screen and (max-width: 768px) {
-  .qm-quick-serve {
-    &__list-container {
-      max-height: calc(27.5vh - 9rem);
-    }
-  }
-}
-
 
 @include qm-xs-lower { 
   .qm-quick-serve {
-    &__list-container {
-      max-height: calc(27.5vh - 9rem);
-    }
-    
+
   &__content {
     width: 476px;
+    height: calc(100vh - 350px) !important;
   }
   &__header {
     font-size: 28px;
     margin: 0px 32px;
   }
-  
 }
 }
 
 
 @include qm-xs { 
   .qm-quick-serve {
-    &__list-container {
-      max-height: calc(27.5vh - 9rem);
-    }
-    
   &__content {
     width: 476px;
+    height: calc(100vh - 350px) !important;
     z-index: 2;
   }
   &__header {
@@ -362,9 +338,7 @@ button:focus{
 
 
 @include qm-sm { 
- 
   .qm-quick-serve {
-    // width: calc(100vw - 608px);
     width: 100%;
     margin-left: auto;
       margin-right: auto;
@@ -389,7 +363,6 @@ button:focus{
 
 @include qm-md { 
   .qm-quick-serve {
-    // width: calc(100vw - 852px);
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -409,7 +382,6 @@ button:focus{
 /* Extra large devices (L display size - 1920px and up) */
 @include qm-lg { 
   .qm-quick-serve {
-    // width: calc(100vw - 1136px);
     width:100%;
     margin-left: auto;
     margin-right: auto;
@@ -526,4 +498,46 @@ button:active,button:hover{
   text-overflow:ellipsis;
   max-width:135px;
   display:inline-block;
+}
+
+
+@media (max-height: #{$xs-height}) and (max-width: 1023px) {
+  .qm-quick-serve__content {
+    height: calc(100vh - 500px) !important;
+  }
+}
+
+
+
+// height lower than 500px
+@include qm-xs-height-lower { 
+  .qm-quick-serve__header-container {
+    height: 55px;
+  }
+  .qm-quick-serve__header {
+    font-size: 25px;
+    &-container {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+  .qm-quick-serve__btn { 
+    height: 35px;
+  }
+  .qm-quick-serve-search {
+  margin: 5px auto;
+  height: 48px;
+  &__input{
+    height: 40px;
+    font-size: 17px;
+  }
+  }
+ 
+  .qm-quick-serve__list-container{
+    flex-grow: 1;
+  }
+  .qm-quick-serve__content {
+    height: calc(100vh - 200px);
+  }
+  
 }

@@ -56,7 +56,7 @@ export class QmTabberComponent implements OnInit, OnDestroy {
     }
   };
 
-  getNextTabbaleElement = () => {
+  getNextTabbaleElement = () => { 
     let focusableElements = $(this.tabber.nativeElement).find(".qm-tab").filter((i, item)=> {
       return !$(item).hasClass('qm-tab-disabled');
     });

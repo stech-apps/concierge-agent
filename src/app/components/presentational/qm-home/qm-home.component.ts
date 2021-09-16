@@ -171,6 +171,7 @@ export class QmHomeComponent implements OnInit, AfterViewInit {
   
   collapseBtnClicked(){
     this.isCollapse = !this.isCollapse
+    console.log(this.isCollapse);
     this.localStorage.setSettings(STORAGE_SUB_KEY.COLLAPSE,this.isCollapse);
         
   }

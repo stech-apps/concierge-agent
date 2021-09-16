@@ -10,7 +10,12 @@
   }
 }
 
+@include qm-xs-lower  { 
+  .toast-container {
+    width: 70%;
+   }
 
+}
 
 .toast-close-button {
   margin: auto;

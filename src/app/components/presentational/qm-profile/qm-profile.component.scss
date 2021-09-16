@@ -2,17 +2,20 @@
 .qm-profile {
   
   display: flex;
-  min-height: 100vh;
+  padding-top: 70px;
+  padding-bottom: 16px;
   flex-direction: column;
   @include qm-background;
   &-cancel {
     cursor: pointer;
   }
   &-content {
+    height: 490px;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: rem(154px) auto 0 auto;
+    margin: auto;
     border-radius: 4px;
     background-color: $white;
     color: $dark-transparent82;
@@ -162,14 +165,17 @@
   }
 }
 
-@media screen and (max-width: 800px) {
-  .qm-profile {
-    &-content {
-      margin-top: 154px;
-      width: 70%;
-    }
-  }
-}
+// @media screen and (max-width: 800px) {
+//   .qm-profile {
+//     &-content {
+//       margin-top: 154px;
+//       width: 70%;
+//     }
+//   }
+// }
+
+
+
 
 @include qm-sm {
   .qm-profile {
@@ -183,6 +189,13 @@
   .qm-profile {
     &-content {
       width: 70%;
+    }
+  }
+}
+@include qm-xs-lower {
+  .qm-profile {
+    &-content {
+      width: 90%;
     }
   }
 }

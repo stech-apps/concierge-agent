@@ -221,7 +221,7 @@
         <ng-template #appointmentsTable>
           <div class="qm-identify-appointment__pannel-container" *ngIf="currentSearchState !== 'customer'">
             <div class="qm-identify-appointment__pannel-header">
-              <span *ngIf="showTimeLabel">
+              <span *ngIf="showTimeLabel" style="display: flex;">
                 {{
                   (useCalendarEndpoint
                     ? "label.identifyappointment.upcoming"
@@ -318,7 +318,7 @@
                 </span>
                 </button>
                 <button (click)="sortAppointments('servicesDisplayLabel')"  role="columnheader"
-                  class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  class="qm-table__cell-35 qm-table__header-service  qm-text-overflow-fix qm-xs-hidden qm-xs-lower-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                   <span>{{
                     "list.identifyappointment.heading.service" | translate
@@ -333,7 +333,7 @@
                 </button>
 
                 <button *ngIf="useCalendarEndpoint" (click)="sortAppointments('branchDisplayLabel')"  role="columnheader"
-                  class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  class="qm-table__cell-30  qm-table__header-branch qm-text-overflow-fix qm-xs-hidden qm-xs-lower-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                   <span>{{
                     "list.identifyappointment.heading.branch" | translate
@@ -347,7 +347,7 @@
                   </span>
                 </button>
                 <button *ngIf="getShowPriResource()" (click)="sortAppointments('primaryResource')"  role="columnheader"
-                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-xs-lower-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                   <span>{{
                     appointments[0]?.resourceServiceDecorators[0]?.primaryResource?.category || ''
@@ -361,7 +361,7 @@
                   </span>
                 </button>
                 <button *ngIf="getShowSecResource()" (click)="sortAppointments('secondaryResource')"  role="columnheader"
-                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-transparent-btn"
+                  class="qm-table__cell-35 qm-table__header-resources  qm-text-overflow-fix qm-xs-hidden qm-xs-lower-hidden qm-transparent-btn"
                   [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                   <span>{{
                     appointments[0]?.resourceServiceDecorators[0]?.secondaryResources[0]?.category || ''
@@ -455,19 +455,19 @@
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.custName }}
                         </span>
-                        <span role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-service"
+                        <span role="cell" class="qm-table__cell-35 qm-xs-hidden qm-xs-lower-hidden qm-table__cell-service"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app.servicesDisplayLabel }}
                         </span>
-                        <span role="cell" class="qm-table__cell-30 qm-xs-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
+                        <span role="cell" class="qm-table__cell-30 qm-xs-hidden qm-xs-lower-hidden qm-table__cell-branch" *ngIf="useCalendarEndpoint"
                           [ngClass]="{ 'qm-table__cell-20': useCalendarEndpoint }">
                           {{ app.branch?.name }}
                         </span>
-                        <span *ngIf="getShowPriResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-resources"
+                        <span *ngIf="getShowPriResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-xs-lower-hidden qm-table__cell-resources"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app?.resourceServiceDecorators[0]?.primaryResource?.displayName || '' }}
                         </span>
-                        <span *ngIf="getShowSecResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-table__cell-resources"
+                        <span *ngIf="getShowSecResource()" role="cell" class="qm-table__cell-35 qm-xs-hidden qm-xs-lower-hidden qm-table__cell-resources"
                           [ngClass]="{ 'qm-table__cell-25': useCalendarEndpoint }">
                           {{ app?.resourceServiceDecorators[0]?.secondaryResources[0]?.displayName || '' }}
                         </span>

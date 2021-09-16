@@ -1,6 +1,9 @@
 .qm-checkbox__container {
   position: relative;
   display: flex;
+  @include qm-xs-lower{ 
+    padding-bottom: 15px;
+  }
 }
 
 .qm-option__checkbox:checked~.qm-option__checkbox-icon:before {

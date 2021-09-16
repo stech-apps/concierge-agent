@@ -318,19 +318,6 @@ button:focus{
   background: rgba(0,0,0,0.04);
 }
 
-// @media screen and (orientation:portrait) { 
-//   .qm-quick-serve {
-//   &__content {
-//     // width: 476px;
-//   }
-//   &__header {
-//     font-size: 28px;
-//     margin: 0px 32px;
-//   }
-//   }
-// }
-
-
 @media only screen and (max-width: 768px) {
   .qm-quick-create {
     &__list-container {
@@ -338,6 +325,7 @@ button:focus{
     }
   }
 }
+
 
 
 @include qm-xs-lower { 
@@ -351,6 +339,25 @@ button:focus{
   }
   &__header {
     font-size: 28px;
+    margin: 0px 32px;
+  }
+  
+}
+}
+
+
+@include qm-xs-height-lower { 
+  .qm-quick-create {
+    &__header-container {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    &__list-container {
+      max-height: calc(27.5vh - 3rem) !important;
+    }
+    
+  &__header {
+    font-size: 25px;
     margin: 0px 32px;
   }
   
@@ -511,21 +518,6 @@ button:active,button:hover{
   }
 }
 
-// IE specific fix for tooltip
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .quick-create-tooltip{
-    margin-left:-187px;
-    @at-root [dir="rtl"] & {
-      margin-right:-187px !important;
-    }
-  }
-  .qm-check-box-background{
-    right: -15px;
-    @at-root [dir="rtl"] & {
-      left: 24px;
-    }
-  }
-}
 
 .checkbox-backdrop-container{
   height: 100%;

@@ -11,6 +11,11 @@
         margin:0;
       }
     }
+    @include qm-xs-lower {
+      h1 {
+        margin:0;
+      }
+    }
   }  
 }
 
@@ -147,6 +152,10 @@
       @include qm-xs {
         padding-bottom: 0.3rem;
       }
+      
+      @include qm-xs-lower {
+        padding-bottom: 0.3rem;
+      }
     }
 
     &--details {
@@ -172,7 +181,9 @@
       @include qm-xs {
         width: 428px;
       }
-
+      @include qm-xs-lower {
+        width: 428px;
+      }
       span {
         display: inline-block;
         margin-left: 2rem;
@@ -199,6 +210,9 @@
     @include qm-xs {
       flex-wrap: wrap;
     }
+    @include qm-xs-lower {
+      flex-wrap: wrap;
+    }
   }
 }
 
@@ -222,6 +236,16 @@
     border: 1px solid rgba(0, 0, 0, 0.12);   
     @include qm-xs {
       height: 25rem;
+      flex-basis: auto;
+      flex-grow: 0;
+      flex-shrink: 1;
+    @at-root [dir="rtl"] & { 
+        margin: 1.56rem 0 0;
+      }
+    }
+    @include qm-xs-lower {
+      height: 25rem;
+      width:450px;
       flex-basis: auto;
       flex-grow: 0;
       flex-shrink: 1;
@@ -265,6 +289,10 @@
   @include qm-xs{
       margin: 48px auto 0 auto;
   }  
+  @include qm-xs-lower{
+    width: 450px;
+    margin: 48px auto 0 auto;
+}  
 }
 
 .qm-select-time-container{
@@ -272,6 +300,9 @@
   display: flex;
   @include qm-xs{
    flex-direction: column;
+}  
+@include qm-xs-lower{
+  flex-direction: column;
 }  
 }
 

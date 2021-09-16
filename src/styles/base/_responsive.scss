@@ -1,5 +1,11 @@
 @import '../util/mixins';
 
+@include qm-xs-lower {
+    .qm-xs-lower-hidden {
+        display: none !important;
+    }
+}
+
 @include qm-xs {
     .qm-xs-hidden {
         display: none !important;

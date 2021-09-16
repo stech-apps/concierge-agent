@@ -1,60 +1,49 @@
 <div class="qm-page-root qm-home" dir="{{ userDirection$ | async }}">
   <qm-page-header [isQuickServeShow]="isQuickServeEnable"></qm-page-header>
-  <div class="qm-home-content" >
-    <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo" ></qm-message-box>
-    <div style="flex:2" [ngClass]="{ 'quick-serve-collapesed': isCollapse}" *ngIf="isQuickServeEnable && !isFlowOpen" class="qm-quick-serve-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
-      <qm-quick-serve (QuickServeServicesEnabled) = "QuickServeServicesEnabled($event)"></qm-quick-serve>
+  <div class="qm-home-content">
+    <qm-message-box class="qm-home-content__msg-box" *ngIf="MessageBoxInfo"></qm-message-box>
+    <div style="flex:2" [ngClass]="{ 'quick-serve-collapesed': isCollapse}" *ngIf="isQuickServeEnable && !isFlowOpen"
+      class="qm-quick-serve-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
+      <qm-quick-serve (QuickServeServicesEnabled)="QuickServeServicesEnabled($event)"></qm-quick-serve>
     </div>
-    <div style="flex:2" [ngClass]="{ 'quick-create-collapesed': isCollapse}" *ngIf="isQuickCreateEnable && !isFlowOpen" class="qm-quick-create-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
+    <div style="flex:2" [ngClass]="{ 'quick-create-collapesed': isCollapse}" *ngIf="isQuickCreateEnable && !isFlowOpen"
+      class="qm-quick-create-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
       <qm-quick-create></qm-quick-create>
     </div>
-    <div style="flex:2" [ngClass]="{ 'quick-arrive-collapesed': isCollapse}" *ngIf="isQuickArriveEnable && !isFlowOpen" class="qm-quick-arrive-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
+    <div style="flex:2" [ngClass]="{ 'quick-arrive-collapesed': isCollapse}" *ngIf="isQuickArriveEnable && !isFlowOpen"
+      class="qm-quick-arrive-container" [ngStyle]="{'width':isShowQueueView ? auto:'100vw'}">
       <qm-quick-arrive></qm-quick-arrive>
     </div>
-    <div class="icon-general" style="position: relative; margin-top: -80px;" *ngIf="(isShowQueueView||editVisitEnable)">
-    <!--  expand collapse button css-->
-    <button class="qm-transparent-btn"  (click)="collapseBtnClicked()">
-    <i class="action-btn slide-icon"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
-      <span class="path1"></span>
-      <span class="path2"></span>
-      <span class="path3"></span>
-      <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span>
-    </i>
-  </button>
-</div>
-<div class="icon-ie" style="position: relative; margin-top: -140px;" *ngIf="(isShowQueueView||editVisitEnable )">
-  <!--  expand collapse button css-->
-  <button class="qm-transparent-btn"  (click)="collapseBtnClicked()">
-    <!--custom icon for IE  -->
-    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& (userDirection === 'rtl' || userDirection === 'RTL')"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
-        <span class="path3"></span> 
-        <span class="path2"></span> 
-        <!-- <span class="path1"></span>       -->
-        <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span>
-    </i>
 
-      <!--custom icon for IE  -->
-    <i class="action-btn slide-icon" *ngIf="(isShowQueueView||editVisitEnable )&& (userDirection === 'ltr' || userDirection === 'LTR')"  [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}"> 
-        <span class="path1"></span>
-        <span class="path2"></span>
-        <span class="path3"></span>  
-        <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate) }}</span> 
-    </i>
-  </button>
-</div>
-    <div style="flex:3" class="qm-summary-card" *ngIf="(isShowQueueView || editVisitEnable) && !isFlowOpen" [ngClass]="{'normal-queue-ie':!isCollapse,'expanded-queue-ie':isCollapse}">
-    <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable"> 
-      <qm-queue-summary [isQuickServeShow]="isQuickServeEnable"></qm-queue-summary>
-      <hr  [ngClass]="{ 'hr-queue': (!selelctedQueue && !selectedVisit),'hr-visit': (selelctedQueue || selectedVisit)}">
 
-      <qm-queue-list isCollapesed="{{isCollapse}}" *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>
-      <qm-edit-visit-list isCollapesed="{{isCollapse}}" *ngIf="selelctedQueue || selectedVisit"></qm-edit-visit-list>
+    <div class="qm-summary-card" *ngIf="(isShowQueueView || editVisitEnable) && !isFlowOpen"
+      [ngClass]="{'normal-queue-ie':!isCollapse,'expanded-queue-ie':isCollapse}">
+      <div class="qm-home-summary-area" *ngIf="isShowQueueView || editVisitEnable">
+        <div class="icon-general" *ngIf="(isShowQueueView||editVisitEnable)">
+          <!--  expand collapse button css-->
+          <button class="qm-transparent-btn" (click)="collapseBtnClicked()">
+            <i class="action-btn slide-icon"
+              [ngClass]="{ 'slide-collapesed': isCollapse,'icon-button-down': isCollapse,'icon-button-up': !isCollapse}">
+              <span class="path1"></span>
+              <span class="path2"></span>
+              <span class="path3"></span>
+              <span class="sr-only">{{ isCollapse ? ('button.moveBottom' | translate) : ('button.moveTop' | translate)
+                }}</span>
+            </i>
+          </button>
+        </div>
+        <qm-queue-summary [isQuickServeShow]="isQuickServeEnable || isQuickCreateEnable || isQuickArriveEnable"></qm-queue-summary>
+        <hr
+          [ngClass]="{ 'hr-queue': (!selelctedQueue && !selectedVisit),'hr-visit': (selelctedQueue || selectedVisit)}">
+
+        <qm-queue-list isCollapesed="{{isCollapse}}" *ngIf="!selelctedQueue && !selectedVisit"></qm-queue-list>
+        <qm-edit-visit-list isCollapesed="{{isCollapse}}" *ngIf="selelctedQueue || selectedVisit"></qm-edit-visit-list>
       </div>
     </div>
   </div>
   <qm-home-menu></qm-home-menu>
   <!-- <div style="background: red; position:absolute;left:0;right:0;top:0;bottom:0;z-index: 500;" class="animated slideInUp animated.faster"> -->
   <!-- <p> Test screen</p> -->
-<!-- </div> -->
+  <!-- </div> -->
   <router-outlet></router-outlet>
 </div>

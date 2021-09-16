@@ -257,3 +257,25 @@ button:active,button:hover{
     margin: 0 5px;
   }
 }
+
+@include qm-xs-lower  { 
+  .qm-header__edit-link {
+    margin: 5px;
+    width: 38px;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .qm-header__user-name {
+    width: 80px;
+  }
+  .qm-header__branch-name  {
+  display: none;  
+  }
+  .qm-header__less-than-icon {
+    display: none;  
+  }
+  .qm-header__service-point-name {
+    display: none;  
+  }
+}

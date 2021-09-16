@@ -544,7 +544,7 @@
     flex-direction: column;
   }
   .visit-details-card{
-    width: 720px;
+    width: 100%;
     height: 46vh;
     margin-bottom: 20px;
     padding: 22px;
@@ -552,6 +552,9 @@
   .qm-checkout-view__notifications{
     padding: 24px 0 100px 0;
     height: auto;
+    &-container {
+      width: 90% !important;
+    }
   }
 }
 // IE Specific fixes

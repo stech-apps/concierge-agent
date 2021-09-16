@@ -9,7 +9,7 @@
 
   margin-top: rem($standard-margin * 1.5);
   .sort-icon {
-    margin-left: 0.4rem;
+    // margin-left: 0.4rem;
     cursor: pointer;
     color: $dark-transparent42;
   }
@@ -80,6 +80,10 @@
       }
     }
   }
+  &-header-sr{
+    width: 20px;
+}
+
 
   &-body-row {
     padding: 0 10px;
@@ -207,7 +211,7 @@
       margin-bottom: 8px;
     }
     &__body {
-      max-height: calc(100vh - 830px);
+      max-height: calc(100vh - 470px);
     }
   }
 }
@@ -220,11 +224,19 @@
       margin-bottom: 8px;
     }
     &__body {
-      max-height: calc(100vh - 830px);
+      max-height: calc(100vh - 470px);
       font-size: 18px
     }
   }
 }
+@include qm-xs-height-lower { 
+  .qm-queue-list {
+    &__body {
+      max-height: calc(100vh - 410px);
+    }
+  }
+}
+
 
 .list-without-quickserve{
   @include qm-xs  {
@@ -237,10 +249,15 @@
 
 .queue-list__body-collapsed{
   @include qm-xs  {
-  max-height: calc(100vh - 575px);
+    max-height: calc(100vh - 460px);
+    margin-top: 10px;
   }
   @include qm-xs-lower {
-    max-height: calc(100vh - 575px);
+    max-height: calc(100vh - 460px);
+    margin-top: 10px;
+    }
+    @include qm-xs-height-lower {  
+      max-height: calc(100vh - 450px);
     }
 }
 

@@ -280,14 +280,24 @@ hr{
     margin-top: 80px;
   }
 }
+@media screen and (max-width: 1023px) {
+  :host {
+    margin-top: 10px !important;
+  } 
+}
 
 
-
+@include qm-xs-height-lower { 
+  :host {
+    margin-top: 60px;
+  } 
+  .qm-queue-list-title {
+    margin: 15px 48px 0 48px !important;
+  }
+}
 
 @include qm-xs-lower  {
-  :host {
-    margin-top: 30px;
-  }
+
   .qm-queue-list-title{
     margin: 30px 48px 0 48px;
     &__label-text-captial{
@@ -301,21 +311,20 @@ hr{
   .qm-search-visit-container{
     padding: 0px 32px;
     input{
-      width: 50vw;
+      width: 40vw;
       height: 44px;      
     }
   }
   .qm-search-button{
     height: 44px;
+    min-width: 120px;
     padding: 0em 1em;
 }
 }
 
 
 @include qm-xs  {
-  :host {
-    margin-top: 30px;
-  }
+
   .qm-queue-list-title{
     margin: 30px 48px 0 48px;
     &__label-text-captial{
@@ -343,7 +352,7 @@ hr{
 
 @include qm-sm  {
   :host {
-    margin-top: 86px;
+    margin-top: 60px;
   }
   .qm-queue-list-title{
     margin: 37px 40px 0 40px;

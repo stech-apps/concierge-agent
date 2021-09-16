@@ -205,7 +205,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
           this.canTransferQWait = uttParameters.btnTransferSort;
           this.canDelete = uttParameters.delVisit;
           this.canCherryPick = uttParameters.cherryPick;
-          this.isQuickServeEnable = uttParameters.quickServe;
+          this.isQuickServeEnable = uttParameters.quickVisitAction !== 'none' ? true : false;
           this.canSendSMS = uttParameters.sndSMS;
           this.canShowNotes = uttParameters.mdNotes;
           this.countryCode = uttParameters.countryCode;
@@ -706,7 +706,7 @@ export class QmEditVisitListComponent implements OnInit, OnDestroy {
       this.infoVisitId = id;
       setTimeout(function () {
         var objDiv = document.getElementById(id+'-expanded-visit-info');
-        objDiv.scrollIntoView();
+        // objDiv.scrollIntoView();
      
     }, 100); 
     }    

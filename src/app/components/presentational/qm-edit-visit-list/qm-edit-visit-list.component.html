@@ -70,8 +70,8 @@
         {{ 'label.visit.loading.text' | translate }}
       </div>
     </div>
-
-    <div role="rowgroup" id="qm-visit-container" *ngIf="visits && visits.length && (visitLoaded||queueVisitIdLoaded)  " class="qm-visit-list__body"  [ngClass]="{'visit-list-body-collapesed':  isCollapesed==='true','visit-list-body-without-quick-serve':  !isQuickServeEnable}" dir="{{userDirection$ | async}}">      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
+    <div role="rowgroup" id="qm-visit-container" *ngIf="visits && visits.length && (visitLoaded||queueVisitIdLoaded)  " class="qm-visit-list__body"  
+    [ngClass]="{'visit-list-body-collapesed':  isCollapesed==='true','visit-list-body-without-quick-serve':  !isQuickServeEnable}" dir="{{userDirection$ | async}}">      <div class="qm-visit-list-body-row-container"  *ngFor="let visit of visits; index as i">
         <div>
         <div style="display:flex"  id="{{visit.visitId}}-expanded-visit-info" role="rowgroup"> 
           <div  role="row" style="display: flex;width: 100%;">

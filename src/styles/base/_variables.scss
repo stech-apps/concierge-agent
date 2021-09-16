@@ -66,6 +66,14 @@ $qm-device-breakpoints: (
   lg-width: 1920px
 ) !default;
 
+
+$qm-height-breakpoints: (
+  xs-height: 650px,
+  sm-height: 1024px,
+  md-height: 1440px,
+  lg-height: 1920px
+) !default;
+
 $appointment-identify-searchbar-width: 55%;
 // search input
 $standard-item-height: 56px;

@@ -16,7 +16,7 @@
         </div>
 
         <div>
-          <button *ngIf="!selectedAppointment" (click)="qrButtonClick()" class="btn scan-qr-container qr_scanner">
+          <button id="quick-arrive" *ngIf="!selectedAppointment" (click)="qrButtonClick()" class="btn scan-qr-container qr_scanner">
             <span>
             <i class="qm-action-btn__icon icon-scan-qr qr_scanner__icon"></i>
             <span>{{ "scan_qr" | translate }}</span>

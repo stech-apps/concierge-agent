@@ -58,25 +58,25 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   branchName: string;
   private branch$: Observable<IBranch>;
   showBranch = false;
-  showSPointName:boolean = false;
-  sPName:string;
+  showSPointName: boolean = false;
+  sPName: string;
   userDirections: string;
-  isFlowOpen:boolean;
+  isFlowOpen: boolean;
 
-  isQuickServeEnable:boolean;
+  isQuickServeEnable: boolean;
   isQuickCreateEnable: boolean;
-  isQuickArriveEnable:boolean;
+  isQuickArriveEnable: boolean;
   isHome: boolean;
   isCreateVisit = false;
   isArriveAppointment = false;
   isEditAppointment = false;
   isCreateAppointment = false;
 
-   //user permissions
-   isVisitUser = false;
-   isAppointmentUser = false;
-   isAllOutputMethodsDisabled: boolean;
-   printerEnabled: boolean;
+  //user permissions
+  isVisitUser = false;
+  isAppointmentUser = false;
+  isAllOutputMethodsDisabled: boolean;
+  printerEnabled: boolean;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -87,7 +87,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   @Input() isPreventHeaderNavigations = false;
   @Input() isQuickServeShow: boolean;
 
-  constructor(  
+  constructor(
     private userSelectors: UserSelectors,
     public route: ActivatedRoute,
     public autoCloseService: AutoClose,
@@ -97,12 +97,12 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private nativeApiService: NativeApiService,
     private branchSelectors: BranchSelectors,
     private servicePointSelectors: ServicePointSelectors,
-    private reserveDispatchers:ReserveDispatchers,
+    private reserveDispatchers: ReserveDispatchers,
     private queueDispatchers: QueueDispatchers,
-    private flowOpenSelectors:FlowOpenSelectors,
-    private servicePointDispatchers:ServicePointDispatchers,
+    private flowOpenSelectors: FlowOpenSelectors,
+    private servicePointDispatchers: ServicePointDispatchers,
     private accountSelectors: AccountSelectors,
-    
+
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
     this.userDirection$ = this.userSelectors.userDirection$;
@@ -111,18 +111,18 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
     this.isFlowOpen = false;
-    
+
   }
 
   ngOnInit() {
-    
-    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction=>{
+
+    const userDirectionSubscription = this.userSelectors.userDirection$.subscribe(direction => {
       this.userDirections = direction;
-      
+
     });
-    this.headerSubscriptions.add(userDirectionSubscription); 
-    this.checkUserPermissions();   
-    
+    this.headerSubscriptions.add(userDirectionSubscription);
+    this.checkUserPermissions();
+
     const licenseSubscription = this.isValidLicense$.subscribe(
       (licenseIsValid: boolean) => {
         this.isValidLicense = licenseIsValid;
@@ -130,7 +130,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     );
     this.headerSubscriptions.add(licenseSubscription);
 
-    
+
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
       uttpParams => {
         if (uttpParams) {
@@ -142,7 +142,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
               this.isQuickCreateEnable = false;
               this.isQuickServeEnable = false;
             } else if (uttpParams.quickVisitAction === 'create' &&
-            (uttpParams.ticketLess || uttpParams.sndSMS || uttpParams.printerEnable)) {
+              (uttpParams.ticketLess || uttpParams.sndSMS || uttpParams.printerEnable)) {
               this.isQuickCreateEnable = true;
             } else {
               this.isQuickCreateEnable = false;
@@ -154,7 +154,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
           else {
             this.isCreateVisit = false;
           }
-    
+
           if (this.isAppointmentUser && uttpParams) {
             this.isCreateAppointment = uttpParams[CREATE_APPOINTMENT];
             this.isEditAppointment = uttpParams[EDIT_APPOINTMENT];
@@ -164,7 +164,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
             this.isCreateAppointment = false;
             this.isEditAppointment = false;
             this.isArriveAppointment = false;
-          }       
+          }
         }
       }
     );
@@ -180,7 +180,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
           this.sPName = servicePoint.name;
           this.servicePointDispatchers.setPreviousServicePoint(servicePoint);
         }
-       
+
       }
     );
     this.headerSubscriptions.add(servicePointSubscription);
@@ -190,19 +190,24 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     });
     this.headerSubscriptions.add(branchSubscription);
 
-    const flowOpenSubscription = this.flowOpenSelectors.FlowOpen$.subscribe(status=>{
+    const flowOpenSubscription = this.flowOpenSelectors.FlowOpen$.subscribe(status => {
       this.isFlowOpen = status;
     });
     this.headerSubscriptions.add(flowOpenSubscription);
-    this.isHome = true;
+    // this.isHome = true;
+    if (this.router.url == "/home") {
+      this.isHome = true;
+    } else {
+      this.isHome = false;
+    }
     this.router.events.subscribe((event) => {
-      if (this.router.url=="/home"){
+      if (this.router.url == "/home") {
         this.isHome = true;
       } else {
         this.isHome = false;
-    }
-  });
-  
+      }
+    });
+
   }
   ngOnDestroy() {
     this.headerSubscriptions.unsubscribe();
@@ -222,21 +227,26 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   hasValidLicense(): boolean {
     return this.isValidLicense;
   }
-  editClick(){
+  editClick() {
     this.router.navigate(['/profile']);
     this.queueDispatchers.resetSelectedQueue();
     this.queueDispatchers.setectVisit(null);
     this.queueDispatchers.resetFetchVisitError();
-    
+
   }
   QuickServeFocus() {
-    if(document.getElementById("visitSearch")) {
+    if (document.getElementById("visitSearch")) {
       document.getElementById("visitSearch").focus();
     }
   }
   MenuBarFocus() {
-    if(document.getElementById("create_appointment")) {
+    if (document.getElementById("create_appointment")) {
       document.getElementById("create_appointment").focus();
+    }
+  }
+  QuickArriveFocus() {
+    if (document.getElementById("quick-arrive")) {
+      document.getElementById("quick-arrive").focus();
     }
   }
   checkUserPermissions() {

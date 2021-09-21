@@ -39,6 +39,20 @@ This document describes the new features, bug corrections, known issues and reco
 ----------
 -->
 
+<h2>Version 4.0.0.30 - Internal</h2>
+
+**Date: 21/09/2021**
+ 
+**Build number: 30**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **QP-QP-10480** | **Edit/Arrive Appointment Flows > QR scan > cannot scan a QR code from Andorid device when the branch name have some special chars** |
+
+----------
+
 <h2>Version 4.0.0.29</h2>
 
 **Date: 07/09/2021**

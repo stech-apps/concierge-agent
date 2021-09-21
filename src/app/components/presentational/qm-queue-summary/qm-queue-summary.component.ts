@@ -394,7 +394,19 @@ export class QmQueueSummaryComponent implements OnInit {
         if (this.qrRelatedData && this.qrRelatedData.isQrCodeLoaded) {
             this.qrRelatedData.isQrCodeLoaded = false;
             this.isRequestFromQR = true;
-            this.queueDispatchers.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+
+            var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+            if(format.test(this.qrRelatedData.qrCode)){
+              this.translateService.get('label.invalid_qr').subscribe(
+                (label: string) => {
+                  this.toastService.errorToast(label);
+                }
+              ).unsubscribe();
+            } else {
+              this.queueDispatchers.fetchSelectedVisit(this.qrRelatedData.branchId, this.qrRelatedData.qrCode);
+            }
+            
             this.searchText = '';
             this.qrRelatedData = null;
             this.removeQRCodeListner();

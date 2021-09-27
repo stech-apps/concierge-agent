@@ -3,7 +3,7 @@
   <div class="qm-pannel-full-inner-container">
     <div>
       <h1 class="qm-flow-header" tabindex="-1" id="panel-title">
-        {{  (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
+        {{ (flowType === 'ARRIVE_APPOINTMENT' ? 'edit_service' : 'label.service.heading') | translate}}</h1>
     </div>
     <div class="qm-white-container">
       <div class="qm-pannel-inner-container">
@@ -22,10 +22,17 @@
                       <div class="qm-selected-box__text">
                         {{ service.name && service.name.length > 0 ? service.name : service.internalName }}
                       </div>
+                      <div class="qm-selected-box__visitor-container" *ngIf="flowType === 'CREATE_APPOINTMENT' && servicewiseCustomersEnabled">
+                        <i aria-hidden="true" class="icon-customer visior-icon"></i>
+                        <span class="qm-selected-box__visitor-number">{{service.adult}}</span>
+                        <i aria-hidden="true" class="icon-child visior-icon"></i>
+                        <span class="qm-selected-box__visitor-number">{{service.child}}</span>
+                      </div>
                       <button class="qm-transparent-btn remove-icon" *ngIf="!service.isBind"
                         (click)="onServiceRemove(service)">
                         <i aria-hidden="true" class="icon-close remove-icon" *ngIf="!service.isBind"></i>
-                        <span class="sr-only">{{ ('button.remove' | translate) + ' ' + (service.name && service.name.length > 0 ? service.name : service.internalName) }}</span>
+                        <span class="sr-only">{{ ('button.remove' | translate) + ' ' + (service.name &&
+                          service.name.length > 0 ? service.name : service.internalName) }}</span>
                       </button>
                     </div>
                   </div>
@@ -48,7 +55,8 @@
                     <span class="sr-only">Search</span>
                   </div>
                 </div>
-                <div aria-live="polite" role="alert" class="qm-service-not-found-container" id="qm-service-not-found-container" tabindex="-1"
+                <div aria-live="polite" role="alert" class="qm-service-not-found-container"
+                  id="qm-service-not-found-container" tabindex="-1"
                   *ngIf=" (searchText || '').trim().length !== 0 && (filteredServiceList | filterService : [filterText, flowType])?.length===0">
                   {{'service_list_not_found'|translate}}
                 </div>
@@ -57,13 +65,13 @@
                 <div class="qm-checkbox__container" *ngIf="multiServiceEnabled">
                   <span for="qm-checkbox" class="qm-checkbox-label">
                     <span class="qm-checkbox__selector" [ngClass]="{'qm-checkbox-focused':multiserviceButtonFocused}">
-                      <input id="qm-multi-service" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()"  (keyup.enter)="onSwitchChange()"
-                        [(ngModel)]="isMultiServiceOn" (focus)="skipButtonHover = true"
+                      <input id="qm-multi-service" class="styled-checkbox" type="checkbox" (change)="onSwitchChange()"
+                        (keyup.enter)="onSwitchChange()" [(ngModel)]="isMultiServiceOn" (focus)="skipButtonHover = true"
                         (focusout)="skipButtonHover = false">
                       <label for="qm-multi-service" (mouseenter)="skipButtonHover = true"
                         (mouseleave)="skipButtonHover = false" (mousedown)="mousePressed = true"
-                        (mouseup)="mousePressed = false"
-                        class="qm-checkbox__selector-icon-text">{{ 'label.multi_service' | translate }}</label>
+                        (mouseup)="mousePressed = false" class="qm-checkbox__selector-icon-text">{{
+                        'label.multi_service' | translate }}</label>
                       <span aria-hidden="true" *ngIf="skipButtonHover || mousePressed"
                         [ngClass]="{ 'checkbox-backdrop-unchecked': !isMultiServiceOn}" class="qm-check-box-background">
                       </span>
@@ -87,21 +95,23 @@
             </div>
             <div aria-hidden="true" class="qm-select-service__search-heading" id="searchTextDetails" tabindex="-1"
               *ngIf="(searchText || '').trim().length > 0 && (filteredServiceList | filterService : [filterText, flowType])?.length!==0">
-              <span class="qm-select-service__search-heading-your-search">{{'label.search.result.header' | translate}} &nbsp;</span>
+              <span class="qm-select-service__search-heading-your-search">{{'label.search.result.header' | translate}}
+                &nbsp;</span>
               <mark>{{ '"'+ searchText + '"' }}</mark>
-              <span class="qm-select-service__foundbox">{{ ' ' + 
-          (filteredServiceList | filterService : [filterText, flowType])?.length + ' ' 
-          + ((filteredServiceList | filterService : [filterText, flowType])?.length == '1' ? ('label.service.found' | translate) :  ('label.services.found' | translate))
-      }}
+              <span class="qm-select-service__foundbox">{{ ' ' +
+                (filteredServiceList | filterService : [filterText, flowType])?.length + ' '
+                + ((filteredServiceList | filterService : [filterText, flowType])?.length == '1' ?
+                ('label.service.found' | translate) : ('label.services.found' | translate))
+                }}
               </span>
             </div>
             <div class="sr-only" aria-live="polite">
               <span *ngIf="((filterText || '').trim().length > 0) && ServiceCount()!==0">
-                  {{('label.search.result.header' | translate)  + ' ' + filterText + ' ' + ServiceCount() + ' ' 
-                  + ( ServiceCount() == '1' ? ('label.service.found' | translate) :  ('label.services.found' | translate))
-              }}
+                {{('label.search.result.header' | translate) + ' ' + filterText + ' ' + ServiceCount() + ' '
+                + ( ServiceCount() == '1' ? ('label.service.found' | translate) : ('label.services.found' | translate))
+                }}
               </span>
-              </div>
+            </div>
           </div>
         </div>
 
@@ -122,6 +132,7 @@
                   *ngFor="let service of mostFrequentServiceList | filterService : [filterText, flowType];let i = index"
                   class="qm-service-list__item qm-list__item"
                   [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
+
                   <button (click)="onServiceSelect(service, true)" (keydown.enter)="onServiceSelect(service, true)"
                     (keydown.space)="onServiceSelect(service, true)" id="{{i}}-frq-serv-btn"
                     [attr.tabindex]=" i==0 ? 0 : -1" (keydown.arrowdown)="onFreqServiceDownButttonPressed(i)"
@@ -136,13 +147,54 @@
 
                     </span>
                     <br>
-                    <span class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText" aria-live="assertive" role="alert"
+                    <span class="qm-list__item--info" *ngIf="service.showInfoInMostFrequent || filterText"
+                      aria-live="assertive" role="alert"
                       [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate)) | qmhighlight: searchText">
                     </span>
                   </button>
+                  <button *ngIf="flowType === 'CREATE_APPOINTMENT' && servicewiseCustomersEnabled"
+                    class="qm-transparent-btn qm-service-list__item--more"
+                    (click)="service.showMoreActionsMostFrequent = true">
+                    <i class="icon-more"></i> </button>
+                  <div class="qm-more-actions-container animated slideInRight"
+                    *ngIf="flowType === 'CREATE_APPOINTMENT' && service.showMoreActionsMostFrequent">
+                    {{ ('adults' | translate) }}
+                    <button class="qm-transparent-btn qm-more-actions-container-button"
+                      (click)="decreaseAdults(service)">
+                      <i class="icon-subtract"></i>
+                      <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                    </button>
+                    <div class="qm-more-actions-container-input" type="text"> {{service.adult}} </div>
+                    <button class="qm-transparent-btn qm-more-actions-container-button"
+                      (click)="increaseAdults(service)">
+                      <i class="icon-add"></i>
+                      <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                    </button>
+                    {{ ('children' | translate) }}
+                    <button class="qm-transparent-btn qm-more-actions-container-button"
+                      (click)="decreaseChildren(service)">
+                      <i class="icon-subtract"></i>
+                      <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                    </button>
+
+                    <div class="qm-more-actions-container-input" type="text"> {{service.child}}</div>
+                    <button class="qm-transparent-btn qm-more-actions-container-button"
+                      (click)="increaseChildren(service)">
+                      <i class="icon-add"></i>
+                      <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                    </button>
+                    <div class="qm-more-actions-container-confirm-area">
+                      <button class="qm-transparent-btn"> <i class="icon-check"
+                          (click)="onServiceSelectByVisitorCard(service, true); service.showMoreActionsMostFrequent = false"></i>
+                      </button>
+                      <button class="qm-transparent-btn"> <i class="icon-close"
+                          (click)="resetVisitorCount(service);  service.showMoreActionsMostFrequent = false"></i>
+                      </button>
+                    </div>
+                  </div>
                   <div aria-live="assertive" aria-atomic="true" class="sr-only">
-                      <span *ngIf="service.showInfoInMostFrequent">
-                          {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
+                    <span *ngIf="service.showInfoInMostFrequent">
+                      {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
                   </div>
                   <button tabindex="-1" id="{{i}}-freq-service-info" class="qm-transparent-btn"
                     *ngIf="flowType !== 'CREATE_APPOINTMENT' && !filterText"
@@ -153,8 +205,8 @@
                       class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
                     <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfoInMostFrequent"
                       class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
-                    <span
-                      class="sr-only">{{ service.showInfoInMostFrequent ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
+                    <span class="sr-only">{{ service.showInfoInMostFrequent ? ('button.closeInfo' | translate) :
+                      ('button.info' | translate) }}</span>
                   </button>
                 </div>
               </div>
@@ -197,15 +249,54 @@
                         [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
                       </span>
                       <br>
-               
-                      <span class="qm-list__item--info" *ngIf="service.showInfo || filterText" 
+
+                      <span class="qm-list__item--info" *ngIf="service.showInfo || filterText"
                         [innerHtml]="(service.internalDescription || ('label.noinformation.avaialble' | translate))| qmhighlight: searchText">
-      
-                    </span>
+
+                      </span>
                     </button>
+                    <button *ngIf="flowType === 'CREATE_APPOINTMENT' && servicewiseCustomersEnabled"
+                      class="qm-transparent-btn qm-service-list__item--more" (click)="service.showMoreActions = true">
+                      <i class="icon-more"></i> </button>
+                    <div class="qm-more-actions-container animated slideInRight"
+                      *ngIf="flowType === 'CREATE_APPOINTMENT' && service.showMoreActions">
+                      {{ ('adults' | translate) }}
+                      <button class="qm-transparent-btn qm-more-actions-container-button"
+                        (click)="decreaseAdults(service)">
+                        <i class="icon-subtract"></i>
+                        <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                      </button>
+                      <div class="qm-more-actions-container-input" type="text"> {{service.adult}}</div>
+                      <button class="qm-transparent-btn qm-more-actions-container-button"
+                        (click)="increaseAdults(service)">
+                        <i class="icon-add"></i>
+
+                        <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                      </button>
+                      {{ ('children' | translate) }}
+                      <button class="qm-transparent-btn qm-more-actions-container-button"
+                        (click)="decreaseChildren(service)">
+                        <i class="icon-subtract"></i>
+                        <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                      </button>
+
+                      <div class="qm-more-actions-container-input" type="text"> {{service.child}} </div>
+                      <button class="qm-transparent-btn qm-more-actions-container-button"
+                        (click)="increaseChildren(service)">
+                        <i class="icon-add"></i>
+                        <span class="sr-only">{{ 'button.decrease' | translate }}</span>
+                      </button>
+                      <div class="qm-more-actions-container-confirm-area">
+                        <button class="qm-transparent-btn"> <i class="icon-check"
+                            (click)="onServiceSelectByVisitorCard(service, true); service.showMoreActions = false"></i>
+                        </button>
+                        <button class="qm-transparent-btn"> <i class="icon-close"
+                            (click)="resetVisitorCount(service); service.showMoreActions = false"></i> </button>
+                      </div>
+                    </div>
                     <div aria-live="assertive" aria-atomic="true" class="sr-only">
-                        <span *ngIf="service.showInfo">
-                            {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
+                      <span *ngIf="service.showInfo">
+                        {{(service.internalDescription || ('label.noinformation.avaialble' | translate))}} </span>
                     </div>
 
                     <button tabindex="-1" id="{{j}}-service-info" class="qm-transparent-btn"
@@ -217,8 +308,8 @@
                         class="qm-action-btn__icon icon-info" aria-hidden="true"></i>
                       <i *ngIf="flowType !== 'CREATE_APPOINTMENT' && service.showInfo"
                         class="qm-action-btn__icon icon-info-solid" aria-hidden="true"></i>
-                      <span
-                        class="sr-only">{{ service.showInfo ? ('button.closeInfo' | translate) : ('button.info' | translate) }}</span>
+                      <span class="sr-only">{{ service.showInfo ? ('button.closeInfo' | translate) : ('button.info' |
+                        translate) }}</span>
                     </button>
                   </div>
                 </ng-container>

@@ -28,5 +28,18 @@ export class TimeslotEffects {
           )
         )
       );
-
+      
+  
+      @Effect()
+      getTimeslotsByVisitors$: Observable<Action> = this.actions$
+        .pipe(
+          ofType(TimeslotActions.FETCH_TIMESLOTS_BY_VISITORS),
+          switchMap((action: TimeslotActions.FetchTimeslotsByVisitors) =>
+            toAction(
+              this.timeslotDataService.getTimeslotsByVistors(action.payload),
+              TimeslotActions.FetchTimeslotsByVisitorsSuccess,
+              TimeslotActions.FetchTimeslotsByVisitorsFail
+            )
+          )
+        );
 }

@@ -45,6 +45,17 @@
     }
   }
 
+  &__visitor-container {
+    padding: 5px;
+    margin: auto 5px;
+    background: $dark-transparent04;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__visitor-number {
+    padding: 0 5px;
+  }
   &__content {
     box-sizing: border-box;
     max-width: 48vw;

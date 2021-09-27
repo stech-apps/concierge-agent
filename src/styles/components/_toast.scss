@@ -118,13 +118,13 @@
     .qm-toast-inner-container{
       .qm-toast-icon{
         i:before{
-          content: "\e950";
+          content: "\e953";
         }
       }
       @at-root [dir="rtl"] {  
         .qm-toast-icon{
           i:before{
-            content: "\e944" !important;
+            content: "\e946" !important;
           }
       }
     } 
@@ -138,7 +138,7 @@
     .qm-toast-inner-container{
       .qm-toast-icon{
         i:before{
-          content: "\e913" !important;
+          content: "\e914" !important;
         }
       }
       
@@ -150,13 +150,13 @@
     .qm-toast-inner-container{
       .qm-toast-icon{
         i:before{
-          content: "\e950";
+          content: "\e953";
         }
       }
       @at-root [dir="rtl"] {  
         .qm-toast-icon{
           i:before{
-            content: "\e944" !important;
+            content: "\e946" !important;
           }
       }
     }

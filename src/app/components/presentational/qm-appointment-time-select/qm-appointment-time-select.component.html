@@ -9,7 +9,7 @@
   <h1 class="qm-text-overflow-fix">{{ 'label.select.datetime' | translate}}</h1> -->
       </div>
       <div class="qm-appointment-time-select__content" id="main-container" dir="{{ userDirection$ | async }}">
-        <div *ngIf="showCustomerSection" class="qm-number-of-customers">
+        <div *ngIf="showCustomerSection && !servicewiseCustomers" class="qm-number-of-customers">
           <div class="qm-number-of-customers__text qm-text-overflow-fix">{{ 'label.no_of_customers' | translate }}</div>
           <div class="qm-number-of-customers__numeric">
             <button class="qm-transparent-btn qm-number-of-customers__numeric-button" (click)="changeCustomerCount(-1)">

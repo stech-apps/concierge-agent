@@ -22,8 +22,26 @@ export class ReserveDispatchers {
     this.store.dispatch(new ReserveActions.ReserveAppointment(payload));
   }
 
+  reserveAppointmentByVisitors(
+    bookingInformation: IBookingInformation,
+    appointment: IAppointment
+  ) {
+
+    // var publicIds = appointment.services.map(service =>  `publicId:${service.publicId}`)
+
+    const payload = {
+      bookingInformation,
+      appointment
+    };
+
+    this.store.dispatch(new ReserveActions.ReserveAppointmentByVistors(payload));
+  }
+
   fetchReservableDates(bookintInformation: IBookingInformation) {
     this.store.dispatch(new ReserveActions.FetchReservableDates(bookintInformation));
+  }
+  fetchReservableDatesByVisitors(bookintInformation: IBookingInformation) {
+    this.store.dispatch(new ReserveActions.FetchReservableDatesByVisitors(bookintInformation));
   }
 
   resetReserveAppointment(){

@@ -37,7 +37,10 @@
     ====================================
     Version    Date         Comments                                                     Signature
     ==============================================================================================
-    7.0.14     2021-07-30    Added parameters to show primary and secondary resources     chamut
+    7.0.15     2021-09-24    Added parameters for servicewise customers and max numeber  udaban
+                             of adults and children
+    =============================================================================================
+    7.0.14     2021-07-30    Added parameters to show primary and secondary resources    chamut
     ==============================================================================================
     7.0.13     2021-06-01    Added parameter to make DOB mandotory                       basama
     ==============================================================================================
@@ -75,7 +78,7 @@
 
 <unit          name  = "Concierge_Touch"
     frameworkVersion = "2"
-         unitVersion = "7.0.14"
+         unitVersion = "7.0.15"
                 type = "SERVICE_POINT"
       defaultNoUnits = "1"
           maxNoUnits = "1"
@@ -461,9 +464,37 @@
             sortOrder = "385"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/> 
+         <parameter name = "servicewiseCustomers"
+                   type = "Boolean"
+           defaultValue = "true"
+                  label = "Servicewise customers"
+            description = "Check this check box to enable Multi Service support for the Create Appointment flow."
+              sortOrder = "386"
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"/>
+        <parameter name = "maxAdults"
+              sortOrder = "387"
+                   type = "Integer"
+           defaultValue = "99"
+                  label = "Max number of adults"
+            description = "Maximum number of adults for service."
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"
+                 regexp = "^\d+$"
+                   size = "4" />    
+        <parameter name = "maxChildren"
+              sortOrder = "388"
+                   type = "Integer"
+           defaultValue = "99"
+                  label = "Max number of children"
+            description = "Maximum number of children for service."
+             writeLevel = "profile"
+              privilege = "install:adminAdmin"
+                 regexp = "^\d+$"
+                   size = "4" />  
       <parameter name = "saveCustomerOption"
           description = "If you choose store customer in database, in the Create Visit flow, you will have the possibility to search for customers and customer data will be saved to the Central customer database. Note: For this option, a connection to Central is required. If you choose store customer on visit, in the Create Visit flow, customer data will be stored on the visit object."
-            sortOrder = "386"
+            sortOrder = "389"
                 label = "Handle customer when Create Visit"
                  type = "Options"
          defaultValue = "db"
@@ -481,7 +512,7 @@
          defaultValue = "false"
                 label = "Send appointment stat event"
           description = "Only check if you want to report on appointment origins"
-            sortOrder = "387"
+            sortOrder = "390"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/>
       <parameter name = "qcaCreateEnable"
@@ -489,11 +520,11 @@
          defaultValue = "false"
                 label = "Create QCA Appointment"
           description = "Gives access to the Create QCA Appointemnt flow if user has correct access right."
-            sortOrder = "388"
+            sortOrder = "391"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/> 
       <parameter name = "qcaCreateUrl"
-            sortOrder = "389"
+            sortOrder = "392"
                 label = "Create QCA Appointment URL"
           description = "A URL that can access the create QCA appointment"
                  type = "String"
@@ -505,11 +536,11 @@
          defaultValue = "false"
                 label = "Edit QCA Appointment"
           description = "Gives access to the Edit QCA Appointemnt flow if user has correct access right."
-            sortOrder = "390"
+            sortOrder = "393"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/> 
       <parameter name = "qcaEditUrl"
-            sortOrder = "391"
+            sortOrder = "394"
                 label = "Edit QCA Appointment URL"
           description = "A URL that can access the edit QCA appointment"
                  type = "String"
@@ -657,7 +688,7 @@
          defaultValue = "false"
                 label = "Birthdate Mandatory"
           description = "making date of birth mandatory when booking appointments"
-            sortOrder = "387"
+            sortOrder = "396"
            writeLevel = "profile"
             privilege = "install:adminAdmin"/>
       <parameter name = "primaryResource"

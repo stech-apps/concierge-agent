@@ -73,6 +73,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   dateType: string;
   selectedTime = '';
   enterDateErrorMsg = '';
+  public servicewiseCustomers: boolean;
   @Output()
   onFlowNext: EventEmitter<any> = new EventEmitter();
 
@@ -161,6 +162,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
     const uttSubscription = this.uttSubscription$.subscribe((params) => {
       this.showCustomerSection = !params.appointmentCustomerField;
+      this.servicewiseCustomers = params.servicewiseCustomers;
     });
 
 
@@ -260,13 +262,26 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
   }
 
   fetchReservableDates() {
-    const bookingInformation: IBookingInformation = {
-      branchPublicId: this.selectedBranch.publicId,
-      serviceQuery: this.getServicesQueryString(),
-      numberOfCustomers: this.noOfCustomers
-    };
+    if (this.servicewiseCustomers) {
+      const bookingInformation: IBookingInformation = {
+        branchPublicId: this.selectedBranch.publicId,
+        serviceQuery: this.getServicesQueryString(),
+        customSlotLength: this.getCustomSlotLength(),
+        numberOfCustomers: this.noOfCustomers
+      };
+  
+      this.reserveDispatchers.fetchReservableDatesByVisitors(bookingInformation);
 
-    this.reserveDispatchers.fetchReservableDates(bookingInformation);
+    } else {
+      const bookingInformation: IBookingInformation = {
+        branchPublicId: this.selectedBranch.publicId,
+        serviceQuery: this.getServicesQueryString(),
+        numberOfCustomers: this.noOfCustomers
+      };
+  
+      this.reserveDispatchers.fetchReservableDates(bookingInformation);
+    }
+
   }
 
   ngOnDestroy() {
@@ -373,7 +388,7 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
 
   onTimeSlotSelect(timeSlot: ITimeSlot) {
     this.selectedTime = timeSlot.title;
-    const bookingInformation: IBookingInformation = {
+    var bookingInformation: IBookingInformation = {
       branchPublicId: this.selectedBranch.publicId,
       serviceQuery: this.getServicesQueryString(),
       numberOfCustomers: this.noOfCustomers,
@@ -381,9 +396,11 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       time: timeSlot.title
     };
 
-    const appointment: IAppointment = {
+    var  appointment: IAppointment = {
       services: this.selectedServices
     };
+  
+   
     if (this.preselectedTimeSlot == timeSlot.title) {
       this.onFlowNext.emit();
     }
@@ -392,23 +409,56 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
         this.timeSlotDispatchers.deselectTimeslot();
       }
       this.timeSlotDispatchers.selectTimeslot(timeSlot.title);
-      this.reserveDispatchers.reserveAppointment(
-        bookingInformation,
-        appointment
-      );
+      if (this.servicewiseCustomers) {
+        var bookingInformation: IBookingInformation = {
+          branchPublicId: this.selectedBranch.publicId,
+          serviceQuery: this.getServicesQueryString(),
+          numberOfCustomers: this.noOfCustomers,
+          customSlotLength: this.getCustomSlotLength(),
+          date: this.currentlyActiveDate.mDate.clone().locale(DEFAULT_LOCALE).format('YYYY-MM-DD'),
+          time: timeSlot.title
+        };
+        this.reserveDispatchers.reserveAppointmentByVisitors(
+          bookingInformation,
+          appointment
+        );
+      } else {
+        this.reserveDispatchers.reserveAppointment(
+          bookingInformation,
+          appointment
+        );
+      }
+    
+
+
     }
   }
 
   private getTimeSlots() {
-    const bookingInformation: IBookingInformation = {
-      branchPublicId: this.selectedBranch.publicId,
-      serviceQuery: this.getServicesQueryString(),
-      numberOfCustomers: this.noOfCustomers,
-      date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
-      time: this.selectedTime
-    };
+    if (this.servicewiseCustomers ) {
+      const bookingInformation: IBookingInformation = {
+        branchPublicId: this.selectedBranch.publicId,
+        serviceQuery: this.getServicesQueryString(),
+        customSlotLength: this.getCustomSlotLength(),
+        numberOfCustomers: this.noOfCustomers,
+        date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
+        time: this.selectedTime
+      };
+      this.timeSlotDispatchers.getTimeslotsByVisitors(bookingInformation);
+    
+    } else {
 
-    this.timeSlotDispatchers.getTimeslots(bookingInformation);
+      const bookingInformation: IBookingInformation = {
+        branchPublicId: this.selectedBranch.publicId,
+        serviceQuery: this.getServicesQueryString(),
+        numberOfCustomers: this.noOfCustomers,
+        date: this.currentlyActiveDate.mDate.format('YYYY-MM-DD'),
+        time: this.selectedTime
+      };
+      this.timeSlotDispatchers.getTimeslots(bookingInformation);
+     
+    }
+   
   }
 
   getServicesQueryString(): string {
@@ -418,6 +468,19 @@ export class QmAppointmentTimeSelectComponent implements OnInit, OnDestroy {
       },
       ''
     );
+  }
+  getCustomSlotLength() {
+    var vistorSlotLength = 0;
+    for (var service of this.selectedServices) {
+      var numberOfVisitors = service.adult + service.child;
+      this.noOfCustomers += numberOfVisitors 
+      if (numberOfVisitors == 1) {
+        vistorSlotLength +=  service.duration
+      } else {
+        vistorSlotLength  = vistorSlotLength + service.duration + (service.additionalCustomerDuration * (numberOfVisitors -1))
+      }
+    }
+    return vistorSlotLength;
   }
 
   changeCustomerCount(step) {

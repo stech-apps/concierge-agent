@@ -47,6 +47,29 @@ export function reducer (
         error: action.payload
       };
     }
+    case TimeslotActions.FETCH_TIMESLOTS_BY_VISITORS: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    }
+    case TimeslotActions.FETCH_TIMESLOTS_BY_VISITORS_SUCCESS: {
+      return {
+        ...state,
+        times: action.payload.times,
+        loading: false,
+        loaded: true,
+        error: null
+      };
+    }
+    case TimeslotActions.FETCH_TIMESLOTS_BY_VISITORS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    }
     case TimeslotActions.RESET_TIMESLOTS: {
       return {
         ...state,

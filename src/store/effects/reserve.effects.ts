@@ -46,6 +46,19 @@ export class ReserveEffects {
     );
 
   @Effect()
+  reserveAppointmentByVisitors$: Observable<any> = this.actions$
+    .pipe(
+      ofType(ReserveActions.RESERVE_APPOINTMENT_BY_VISTORS),
+      switchMap((action: AllActions.ReserveAppointment) =>
+        toAction(
+          this.reserveDataService.reserveAppointmentByVisitors(action.payload.bookingInformation, action.payload.appointment),
+          AllActions.ReserveAppointmentSuccess,
+          AllActions.ReserveAppointmentFail
+        )
+      )
+    );
+
+  @Effect()
   fetchReservableDates$: Observable<any> = this.actions$
     .pipe(
       ofType(ReserveActions.FETCH_RESERVABLE_DATES),
@@ -54,6 +67,19 @@ export class ReserveEffects {
           this.reserveDataService.fetchReservableDates(action.payload),
           AllActions.FetchReservableDatesSuccess,
           AllActions.FetchReservableDatesFail
+        )
+      )
+    );
+
+  @Effect()
+  fetchReservableDatesByVisitors$: Observable<any> = this.actions$
+    .pipe(
+      ofType(ReserveActions.FETCH_RESERVABLE_DATES_BY_VISITORS),
+      switchMap((action: AllActions.FetchReservableDatesByVisitors) =>
+        toAction(
+          this.reserveDataService.fetchReservableDatesByVisitors(action.payload),
+          AllActions.FetchReservableDatesByVisitorsSuccess,
+          AllActions.FetchReservableDatesByVisitorsFail
         )
       )
     );

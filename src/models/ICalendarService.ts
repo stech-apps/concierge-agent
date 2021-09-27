@@ -7,5 +7,9 @@ export class ICalendarService extends IService {
     publicId: string;
     custom: any;
     qpId: number;
+    adult?: number;
+    child?: number;
+    showMoreActionsMostFrequent?:boolean;
+    showMoreActions: boolean;
   }
   

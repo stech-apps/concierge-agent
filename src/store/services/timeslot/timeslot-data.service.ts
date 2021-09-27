@@ -32,4 +32,17 @@ export class TimeslotDataService {
         catchError(this.errorHandler.handleError(true))
       );
   }
+  getTimeslotsByVistors(bookingInformation: IBookingInformation): Observable<ITimeSlotResponse> {
+    return this.http
+      .get<ITimeSlotResponse>
+      (
+        `${this.hostAddress}${calendarPublicEndpointV2}/branches/`
+        + `${bookingInformation.branchPublicId}/dates/`
+        + `${bookingInformation.date}/times`
+        + `${bookingInformation.serviceQuery}`
+        + `;customSlotLength=${bookingInformation.customSlotLength}`
+      ).pipe(
+        catchError(this.errorHandler.handleError(true))
+      );
+  }
 }

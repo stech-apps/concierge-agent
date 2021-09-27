@@ -14,6 +14,10 @@ export class TimeslotDispatchers {
     this.store.dispatch(new TimeslotActions.FetchTimeslots(bookingInformation));
   }
 
+  getTimeslotsByVisitors(bookingInformation: IBookingInformation) {
+    this.store.dispatch(new TimeslotActions.FetchTimeslotsByVisitors(bookingInformation));
+  }
+
   selectTimeslot(time: string) {
     this.store.dispatch(new TimeslotActions.SelectTimeslot(time));
   }

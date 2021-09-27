@@ -60,4 +60,7 @@ export interface IUTTParameter {
     qcaEditUrl: string;
     primaryResource: boolean;
     secondaryResource: boolean;
+    servicewiseCustomers: boolean;
+    maxAdults: number;
+    maxChildren: number;
   }

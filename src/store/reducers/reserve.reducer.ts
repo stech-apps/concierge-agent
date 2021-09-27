@@ -40,6 +40,24 @@ export function reducer(
         error: null
       };
     }
+
+    case ReserveActions.RESERVE_APPOINTMENT_BY_VISTORS: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    }
+    case ReserveActions.RESERVE_APPOINTMENT_BY_VISTORS_SUCCESS: {
+      return {
+        ...state,
+        reservedAppointment: action.payload,
+        loading: false,
+        loaded: true,
+        error: null
+      };
+    }
+
     case ReserveActions.RESERVE_APPOINTMENT_FAILIURE_REPORT: {
       return {
         ...state,
@@ -82,6 +100,24 @@ export function reducer(
       };
     }
     case ReserveActions.FETCH_RESERVABLE_DATES_FAIL: {
+      return {
+        ...state,
+        reservableDates: [],
+        loading: false,
+        error: action.payload
+      };
+    }
+
+    case ReserveActions.FETCH_RESERVABLE_DATES_BY_VISITORS_SUCCESS: {
+      return {
+        ...state,
+        reservableDates: parseReservableDates(action.payload.dates),
+        loading: false,
+        loaded: true,
+        error: null
+      };
+    }
+    case ReserveActions.FETCH_RESERVABLE_DATES_BY_VISITORS_FAIL: {
       return {
         ...state,
         reservableDates: [],

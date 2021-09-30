@@ -39,6 +39,15 @@ export class CustomerDataService{
         ));
     }
 
+    getCustomersAdvanced(searchText: string): Observable<[ICustomer]> {
+        if (searchText.indexOf('+') > -1) {
+          searchText = encodeURIComponent(searchText);
+        }
+        return this.http
+          .get<[ICustomer]>(`${servicePoint}/customers/advancedSearch?text=${searchText}&option=CONTAINS`)
+          .pipe(catchError(this.errorHandler.handleError()));
+      }
+
     getAppointmentCustomers(searchText:string):Observable<ICustomer[]>{
         return this.http
        .get<ICustomer[]>(`${restEndpoint}/appointment/customers/search?text=${encodeURIComponent(searchText)}`)        

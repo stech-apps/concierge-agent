@@ -5,18 +5,29 @@ import { ToastService } from "../../util/services/toast.service";
 import { TranslateService } from "@ngx-translate/core";
 import { GlobalErrorHandler } from "../../util/services/global-error-handler.service";
 import { Effect,Actions, ofType } from "@ngrx/effects";
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as CustomerActions from './../actions'
 import { switchMap,tap } from "../../../node_modules/rxjs/operators";
-
+import { AdvancedSearchCompatible } from '../../util/compatible-helper';
+import { SystemInfoSelectors } from '../services/system-info'
 
 const toAction = CustomerActions.toAction();
+var isAdvanceSearchEnable = true;
 @Injectable()
 export class CustomerEffects{
+  private subscriptions: Subscription = new Subscription();
     constructor( 
         private actions$ : Actions,
-        private customerDataService:CustomerDataService
-    ){}
+        private customerDataService:CustomerDataService,
+        private systemInfoSelectors: SystemInfoSelectors,
+    ){
+      const productVersionSubscription = systemInfoSelectors.systemInfoProductVersion$.subscribe(
+        (version: string) => {
+          isAdvanceSearchEnable = AdvancedSearchCompatible(version);
+        }
+      );
+      this.subscriptions.add(productVersionSubscription);
+    }
 
     @Effect()
     getCustomers$: Observable<Action> = this.actions$
@@ -24,7 +35,7 @@ export class CustomerEffects{
         ofType(CustomerActions.FETCH_CUSTOMERS),
         switchMap((action: CustomerActions.FetchCustomers) => {
             return toAction(
-              this.customerDataService.getCustomers(action.payload),
+              isAdvanceSearchEnable ? this.customerDataService.getCustomersAdvanced(action.payload) : this.customerDataService.getCustomers(action.payload),
               CustomerActions.FetchCustomersSuccess,
               CustomerActions.FetchCustomersFail
             );
@@ -38,7 +49,7 @@ export class CustomerEffects{
           ofType(CustomerActions.FETCH_APPOINTMENT_CUSTOMERS),
           switchMap((action: CustomerActions.FetchCustomers) => {
               return toAction(
-                this.customerDataService.getAppointmentCustomers(action.payload),
+                isAdvanceSearchEnable ? this.customerDataService.getCustomersAdvanced(action.payload) : this.customerDataService.getAppointmentCustomers(action.payload),
                 CustomerActions.FetchAppointmentCustomersSuccess,
                 CustomerActions.FetchAppointmentCustomersFail
               );

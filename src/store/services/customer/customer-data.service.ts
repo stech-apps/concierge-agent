@@ -44,7 +44,7 @@ export class CustomerDataService{
           searchText = encodeURIComponent(searchText);
         }
         return this.http
-          .get<[ICustomer]>(`${servicePoint}/customers/advancedSearch?text=${searchText}&option=CONTAINS`)
+          .get<[ICustomer]>(`${servicePoint}/customers/advancedSearch?text=${searchText}&option=STARTS_WITH`)
           .pipe(catchError(this.errorHandler.handleError()));
       }
 

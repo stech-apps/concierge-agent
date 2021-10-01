@@ -10,6 +10,7 @@ import * as CustomerActions from './../actions'
 import { switchMap,tap } from "../../../node_modules/rxjs/operators";
 import { AdvancedSearchCompatible } from '../../util/compatible-helper';
 import { SystemInfoSelectors } from '../services/system-info'
+import { BLOCKED_ERROR_CODES } from "src/app/shared/error-codes";
 
 const toAction = CustomerActions.toAction();
 var isAdvanceSearchEnable = true;
@@ -20,6 +21,8 @@ export class CustomerEffects{
         private actions$ : Actions,
         private customerDataService:CustomerDataService,
         private systemInfoSelectors: SystemInfoSelectors,
+        private toastService: ToastService,
+        private translateService: TranslateService,
     ){
       const productVersionSubscription = systemInfoSelectors.systemInfoProductVersion$.subscribe(
         (version: string) => {
@@ -40,6 +43,22 @@ export class CustomerEffects{
               CustomerActions.FetchCustomersFail
             );
           }
+        )
+      );
+
+      @Effect({ dispatch: false })
+      getCustomersFailed$: Observable<Action> = this.actions$
+      .pipe(
+        ofType(CustomerActions.FETCH_CUSTOMERS_FAIL),
+        tap((action: CustomerActions.FetchCustomersFail) => {
+          if ((action.payload['errorCode'] == BLOCKED_ERROR_CODES.ERROR_CODE_INVALID_SEARCH_PARAMETER)) {
+            this.translateService.get('label.customerSearch.results.error').subscribe(
+              (label: string) => {
+                this.toastService.errorToast(label);
+              }
+            ).unsubscribe();
+          }
+        }
         )
       );
 

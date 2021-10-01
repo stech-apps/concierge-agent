@@ -3,7 +3,7 @@ import { ServicePointSelectors, QueueDispatchers } from './../store/services';
 import { Injectable } from '@angular/core';
 import cssVars from 'css-vars-ponyfill';
 import { Validators } from '@angular/forms';
-import { GlobalNotifyDispatchers } from 'src/store/services/global-notify';
+import { BLOCKED_ERROR_CODES } from 'src/app/shared/error-codes';
 
 @Injectable()
 export class Util {
@@ -13,10 +13,18 @@ export class Util {
     private _refreshUrl: string;
     countryCode: string = undefined;
 
-    constructor(private servicePointSelectors: ServicePointSelectors, private queueDispatcher: QueueDispatchers, private globalDispatchers: GlobalNotifyDispatchers) {
+    constructor(private servicePointSelectors: ServicePointSelectors) {
         window['x'] = this.setSelectedApplicationTheme.bind(this);
        
     }
+
+    isBlockedErrorCode(errorCode) {
+        if (Object.values(BLOCKED_ERROR_CODES).includes(errorCode)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
 
     compareVersions(baseVersion, currentVersion) {
         var a = baseVersion.split('.')

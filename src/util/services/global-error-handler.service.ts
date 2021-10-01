@@ -1,4 +1,4 @@
-import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
+import { BLOCKED_ERROR_CODES, ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from './toast.service';
 import { Injectable } from '@angular/core';
@@ -39,6 +39,11 @@ export class GlobalErrorHandler {
 
     handleError<T>(requestData?: T, additionalData: any = {}) {
         return (res: HttpErrorResponse) => {
+             if (res instanceof DataServiceError) {
+                if(Object.values(BLOCKED_ERROR_CODES).includes(res['errorCode'] as any)){
+                    return throwError(res);
+                }
+             }
             const error = new DataServiceError(res, additionalData);
 
             /*all the request errors which need to be handled in their respective components should be created with a pipe

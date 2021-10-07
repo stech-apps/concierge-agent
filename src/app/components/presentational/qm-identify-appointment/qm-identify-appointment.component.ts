@@ -1313,10 +1313,10 @@ export class QmIdentifyAppointmentComponent implements OnInit, OnDestroy {
   showCustomerAutoComplete() {
     this.showCustomerResults = true;
     if (this.useCalendarEndpoint) {
-      this.customerDispatchers.fetchCustomers((this.searchText || "").trim());
+      this.customerDispatchers.fetchCustomers((this.searchText || ""));
     } else {
       this.customerDispatchers.fetchAppointmentCustomers(
-        (this.searchText || "").trim()
+        (this.searchText || "")
       );
     }
   }

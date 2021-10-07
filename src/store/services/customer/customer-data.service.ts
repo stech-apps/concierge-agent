@@ -43,8 +43,9 @@ export class CustomerDataService{
         if (searchText.indexOf('+') > -1) {
           searchText = encodeURIComponent(searchText);
         }
+        let searchOption = /\s/g.test(searchText) ? 'CONTAINS' : 'STARTS_WITH';
         return this.http
-          .get<[ICustomer]>(`${servicePoint}/customers/advancedSearch?text=${searchText}&option=STARTS_WITH`)
+          .get<[ICustomer]>(`${servicePoint}/customers/advancedSearch?text=${searchText}&option=${searchOption}`)
           .pipe(catchError(this.errorHandler.handleError()));
       }
 

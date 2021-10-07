@@ -3,7 +3,7 @@ enum COMPATIBLE_STATUS {
     INCOMPATIBLE
 }
 
-const ADVANCED_CUSTOMER_SEARCH = ['4.0.0.852', '4.1.0.780', '4.2.0.868'];
+const ADVANCED_CUSTOMER_SEARCH = ['4.1.0.780', '4.2.0.868'];
 
 export function AdvancedSearchCompatible(currentVersion : string) {
     let status = getCompatibleStatus(ADVANCED_CUSTOMER_SEARCH, currentVersion);

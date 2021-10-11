@@ -41,9 +41,9 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.1.0 - Internal</h2>
 
-**Date: 30/09/2021**
+**Date: 11/10/2021**
  
-**Build number: 1**
+**Build number: 2**
 
 <h3>Stories</h3>
 
@@ -62,6 +62,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **QP-10389** | **Cocncierge does not scale correctly on a 8.0" Android** |
 | **QP-10614** | **Changes made to birth month is not saving in cusotmer object.** |
 | **QP-10715** | **Artifactory build doesn't write data to MANIFEST.MF.** |
+| **QP-10477** | **WCAG screenreader issues (talkback)** |
 
 ----------
 

@@ -1,14 +1,15 @@
 import { Injectable, EventEmitter, Output, Directive } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorage, STORAGE_SUB_KEY } from '../local-storage';
+import { NativeApiService } from './native-api.service';
 
 @Directive()
 @Injectable()
 export class ToastService {
   @Output() msgBoxOpen: EventEmitter<any> = new EventEmitter();
   private localStorage: LocalStorage;
-  isAutoClose : boolean;
-  
+  isAutoClose: boolean;
+
 
   private toastrOptions: Object = {
     positionClass: 'centered',
@@ -80,24 +81,24 @@ export class ToastService {
     // 
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
-     document.getElementById("close-toast-btn").focus();      
-     },500);
+      document.getElementById("close-toast-btn").focus();
+    }, this.nativeApiService.isAndroid() ? 10000 : 500);
     return this.toastrService.success(text, '', this.successOptions);
   }
 
   infoToast(text: string) {
     setTimeout(() => {
-     document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
-    document.getElementById("close-toast-btn").focus();      
-    },500);
+      document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
+      document.getElementById("close-toast-btn").focus();
+    }, this.nativeApiService.isAndroid() ? 10000 : 500);
     return this.toastrService.success(text, '', this.infoOptions);
   }
 
   errorToast(text: string) {
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
-     document.getElementById("close-toast-btn").focus();      
-     },500);
+      document.getElementById("close-toast-btn").focus();
+    }, this.nativeApiService.isAndroid() ? 10000 : 500);
     this.toastrService.error(text, '', this.errorOptions);
   }
 
@@ -123,8 +124,6 @@ export class ToastService {
       .map(toast => this.toastrService.clear(toast.toastId));
   }
 
-  constructor(private toastrService: ToastrService) { 
-   
+  constructor(private toastrService: ToastrService, private nativeApiService: NativeApiService) {
   }
- 
 }

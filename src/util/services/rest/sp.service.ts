@@ -179,7 +179,7 @@ export class SPService implements OnDestroy {
     var body = {
       "services": this.buildService(services),
       "customers": customer ? [customer.id] : [],
-      "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType)
+      "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, tempCustomer, notificationType,null,null)
     }
     
     return this.http
@@ -189,12 +189,18 @@ export class SPService implements OnDestroy {
       );
   }
 
-  arriveAppointment(branch: IBranch, selectedServicePoint: IServicePoint, services: IService[], notes: string, vipLevel: VIP_LEVEL, sms: string, isTicketPrint: boolean, notificationType: NOTIFICATION_TYPE, appointment: IAppointment) {
+  arriveAppointment(branch: IBranch, selectedServicePoint: IServicePoint, 
+    services: IService[], notes: string, vipLevel: VIP_LEVEL, sms: string, isTicketPrint: boolean, notificationType: NOTIFICATION_TYPE, appointment: IAppointment) {
+    var selectedServicesWithPeopleServices = (appointment.properties.custom && JSON.parse(appointment.properties.custom).peopleServices) ? 
+    appointment.properties.custom && JSON.parse(appointment.properties.custom).peopleServices : null;
+    var numberOfCustomers = (appointment.properties.custom && JSON.parse(appointment.properties.custom).numberOfCustomers) ? 
+    appointment.properties.custom && parseInt(JSON.parse(appointment.properties.custom).numberOfCustomers) : null;
+
     var body = {
       "services": this.buildService(services),
       "customers": appointment.customers[0] ? [appointment.customers[0].id] : [],
       "appointmentId": appointment.id,
-      "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, null, notificationType)
+      "parameters": this.buildParametersObject(sms, isTicketPrint, notes, vipLevel, null, notificationType,numberOfCustomers, selectedServicesWithPeopleServices)
     }
     return this.http
       .post(`${servicePoint}/branches/${branch.id}/servicePoints/${selectedServicePoint.id}/visit/create`, body).pipe(
@@ -202,7 +208,8 @@ export class SPService implements OnDestroy {
       );
   }
 
-  private buildParametersObject(sms: string, isTicketPrint: boolean, notes: string, vipLevel: VIP_LEVEL, tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE) {
+  private buildParametersObject(sms: string, isTicketPrint: boolean, notes: string, vipLevel: VIP_LEVEL, 
+    tempCustomer: ICustomer, notificationType: NOTIFICATION_TYPE, numberOfCustomers:number, peopleServices: string) {
     var params = {
       "notificationType": notificationType,
       "appId": "concierge",
@@ -214,6 +221,12 @@ export class SPService implements OnDestroy {
     }
     if (notes && notes.length > 0) {
       params["custom1"] = notes;
+    }
+    if(peopleServices) {
+      params["peopleServices"] = JSON.stringify(peopleServices);
+    }
+    if(numberOfCustomers) {
+      params["numberOfCustomers"] = numberOfCustomers;
     }
     if (vipLevel !== VIP_LEVEL.NONE) {
       params["level"] = vipLevel;

@@ -219,7 +219,7 @@ input:focus{
   height: rem(24px);
   top: 2px;
   &:before {
-    content: "\e902";
+    content: "\e903";
     @include icomoon-styles;
     font-size: rem($base-unit * 1.4);
   }

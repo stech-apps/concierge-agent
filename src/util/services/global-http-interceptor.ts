@@ -2,7 +2,7 @@ import { ToastService } from './toast.service';
 import { UserStatusDispatchers } from './../../store/services/user-status/user-status.dispatchers';
 import { UserStatusSelectors } from 'src/store/services';
 import { NativeApiService } from './native-api.service';
-import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
+import { ERROR_CODE_TIMEOUT, ERROR_CODE_TIME_SLOT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable, NgZone } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
@@ -161,19 +161,39 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
             // handle retry logic when needed
             if (req.method === 'GET' && !this.isAResourceFile(req) && !this.isCentralAvailabilityChecking(req.url) && !this.isSkipGetUrls(req.url)) {
                 return this.zone.run(() => {
-
+                    var skipRetry = false;
+                    var errorCode = '';
                     return next.handle(reqRef).pipe(
                         tap((res) => {
                             this.isPingSuccess = false;
+                        }), catchError((error: HttpErrorResponse) => {
+                            // Handle timeslot exceeding issue
+                                if (error.error.error_code == "E161") {
+                                    clearTimeout(this.localTimeoutBeforeStartPing);
+                                    this.localTimeoutBeforeStartPing = undefined;
+                                    skipRetry = true;
+                                    errorCode = error.error.error_code ;
+                            }
+                            return throwError(error);
+                        
                         }),
                         timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
                         retryWhen(res => {
-                            return res.pipe(
-                                mergeMap((response) => {
-                                    const reqError = new DataServiceError(response);
-                                    if (response.status === 400 && this.util.isBlockedErrorCode(reqError.errorCode)) {
-                                        console.error(reqError);
-                                        return throwError(reqError);
+                            return interval(this.http_timeout).pipe(
+                                flatMap((count) => {
+                                    // Handle timeslot exceeding issue
+                                    if (skipRetry) {
+                                            clearTimeout(this.localTimeoutBeforeStartPing);
+                                            this.localTimeoutBeforeStartPing = undefined;
+                                            return next.handle(reqRef);
+                                    } else if (this.serviceState.getCurrentTry() === this.numberOfTries) {
+                                        if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.serviceState.getIsNetWorkPingStarted()) {
+                                            this.serviceState.setIsNetWorkPingStarted(true);
+                                            this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
+                                        } else if (!this.nativeApiService.isNativeBrowser()) {
+                                            this.serviceState.incrementTry();
+                                        }
+                                        return of(count);
                                     } else {
                                         return interval(this.http_timeout).pipe(
                                             flatMap((count) => {
@@ -215,8 +235,32 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                             })
                                         )
                                     }
-                                }),
-                            );
+                                }), delayWhen((d) => {
+                                    if (this.serviceState.getCurrentTry() < this.numberOfTries && !skipRetry) {
+                                        return of(req);
+                                    } 
+                                    else if (skipRetry) {
+                                        if (errorCode == ERROR_CODE_TIME_SLOT) {
+                                            this.translateService.get('label.error.time.slot.not.allowed').subscribe((t) => {
+                                                this.toastService.stickyToast(t);
+                                            }).unsubscribe();
+                                        }
+                                    }
+                                    else {
+                                        if (!this.nativeApiService.isNativeBrowser()) {
+                                            if (this.serviceState.getCurrentTry() === this.numberOfTries) {
+                                                this.globalNotifyDispatchers.showCriticalCommunicationError();
+                                                this.translateService.get('label.critical_com_error').subscribe((t) => {
+                                                    this.toastService.stickyToast(t);
+                                                    this.globalNotifyDispatchers.hideNotifications();
+                                                }).unsubscribe();
+                                            }
+                                        }
+
+                                       return this.recoverApp.asObservable();
+                                    }
+                                })
+                            )
                         }),
                         tap((res) => {
                             if (res instanceof HttpResponse) {

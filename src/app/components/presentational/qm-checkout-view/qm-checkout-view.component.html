@@ -66,6 +66,7 @@
               <h1>{{ 'label.visit.details.heading' | translate }}</h1>
               <button *ngIf="!isCustomerFlowHidden" class="qm-transparent-btn icon-customer-add" (click)="goToPanel(1)">
               <i   class="qm-action-btn__icon" aria-hidden="true"></i>
+              <span class="sr-only"> {{ 'addCustomer' | translate }}</span>
             </button>
           </div>
       <!-- 2 No Add Customer utt disabled-->

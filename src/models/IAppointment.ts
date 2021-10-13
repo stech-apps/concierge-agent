@@ -28,7 +28,8 @@ export interface IAppointment {
   qpId?: number;
   id?: number;
   properties?: {
-    notes?: string 
+    notes?: string;
+    custom?: string; 
   }
   showInfo?: boolean;
   resourceServiceDecorators?: any;

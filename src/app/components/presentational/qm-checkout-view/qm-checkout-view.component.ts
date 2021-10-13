@@ -121,7 +121,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
   appCustomer: string;
   appServices: string;
   timeFormat: string = 'HH:mm';
-
+  servicewiseCustomersEnabled: boolean;
   // focus related issues
   VipButton1Focucsed:boolean;
   VipButton2Focused:boolean;
@@ -174,6 +174,7 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       .subscribe(uttParameters => {
         if (uttParameters) {
           this.hideCustomer = uttParameters.hideCustomer;
+          this.servicewiseCustomersEnabled = uttParameters.servicewiseCustomers;
           this.isNoteEnabled = uttParameters.mdNotes;
           this.isVipLvl1Enabled = uttParameters.vipLvl1;
           this.isVipLvl2Enabled = uttParameters.vipLvl2;
@@ -684,8 +685,12 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
       });
     }
      else {    
+       var services = null;
+      if (this.servicewiseCustomersEnabled) {
+          services = this.selectedServices;
+        }
       this.calendarService.createAppointment(this.selectedAppointment, this.noteTextStr,
-      this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType())
+      this.selectedCustomer, this.customerEmail, this.customerSms, this.getNotificationType(),services)
       .subscribe(result => {
         if (result) {
           this.saveFrequentService();
@@ -768,7 +773,10 @@ export class QmCheckoutViewComponent implements OnInit, OnDestroy {
     var aditionalList = this.selectedServices.filter(val => {
       return val.isBind === false || val.isBind === undefined
     })
-    this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, aditionalList, this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(), this.selectedAppointment).subscribe((result) => {
+    this.spService.arriveAppointment(this.selectedBranch, this.selectedServicePoint, aditionalList, 
+      this.noteTextStr, this.selectedVIPLevel, this.customerSms, this.ticketSelected, this.getNotificationType(),
+       this.selectedAppointment)
+      .subscribe((result) => {
       this.loading = false;
       this.showSuccessMessage(result);
       this.saveFrequentService();

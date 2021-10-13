@@ -40,7 +40,8 @@ export class QmSelectServiceComponent implements OnInit {
   searchText: string;
   userDirection$: Observable<string>;
   servicewiseCustomersEnabled: boolean;
-
+  maxNumberOfAdults: number;
+  maxNumberOfChildren: number;
   multiserviceButtonFocused: boolean;
   @ViewChild(QmClearInputDirective) clearInputDirective: QmClearInputDirective;
 
@@ -197,6 +198,8 @@ export class QmSelectServiceComponent implements OnInit {
         if (this.flowType === FLOW_TYPE.CREATE_APPOINTMENT) {
           this.multiServiceEnabled = params.mltyService;
           this.servicewiseCustomersEnabled = params.servicewiseCustomers;
+          this.maxNumberOfAdults = params.maxAdults;
+          this.maxNumberOfChildren = params.maxChildren;
         }
         else {
           this.multiServiceEnabled = true; // multi service switch is only considered for create flows
@@ -354,6 +357,14 @@ export class QmSelectServiceComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  onServiceSelectButtonPressed(selectedService: IServiceViewModel, isRemove: boolean) {
+    if (this.servicewiseCustomersEnabled) {
+      this.onServiceSelectByVisitorCard(selectedService, isRemove);
+    } else {
+      this.onServiceSelect(selectedService, isRemove);
+    }
   }
 
   onServiceSelectByVisitorCard(selectedService, isRemove: boolean) {
@@ -639,7 +650,7 @@ export class QmSelectServiceComponent implements OnInit {
   }
 
   increaseAdults(service) {
-    if (service.adult < 99) {
+    if (service.adult < this.maxNumberOfAdults) {
       service.adult += 1;
     } else {
       this.translateService.get('label.error.visitors.max').subscribe(v => {
@@ -658,7 +669,7 @@ export class QmSelectServiceComponent implements OnInit {
     }
   }
   increaseChildren(service) {
-    if (service.child < 99) {
+    if (service.child < this.maxNumberOfChildren) {
       service.child += 1;
     } else {
       this.translateService.get('label.error.visitors.max').subscribe(v => {

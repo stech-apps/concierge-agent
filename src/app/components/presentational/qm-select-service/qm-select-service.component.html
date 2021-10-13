@@ -133,8 +133,8 @@
                   class="qm-service-list__item qm-list__item"
                   [ngClass]="{'qm-service-list__item--selected, qm-list__item--selected': false}">
 
-                  <button (click)="onServiceSelect(service, true)" (keydown.enter)="onServiceSelect(service, true)"
-                    (keydown.space)="onServiceSelect(service, true)" id="{{i}}-frq-serv-btn"
+                  <button (click)="onServiceSelectButtonPressed(service, true)" (keydown.enter)="onServiceSelectButtonPressed(service, true)"
+                    (keydown.space)="onServiceSelectButtonPressed(service, true)" id="{{i}}-frq-serv-btn"
                     [attr.tabindex]=" i==0 ? 0 : -1" (keydown.arrowdown)="onFreqServiceDownButttonPressed(i)"
                     (keydown.arrowup)="onFreqServiceUpButttonPressed(i)"
                     (keydown.arrowright)="onFreqServiceRightButttonPressed(i)"
@@ -243,8 +243,8 @@
                       (keydown.arrowup)="onServiceUpButttonPressed(j)"
                       (keydown.arrowright)="onServiceRightButttonPressed(j)"
                       (keydown.arrowleft)="onServiceLeftButttonPressed(j)"
-                      (keydown.enter)="onServiceSelect(service, true)" (keydown.space)="onServiceSelect(service, true)"
-                      (click)="onServiceSelect(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
+                      (keydown.enter)="onServiceSelectButtonPressed(service, true)" (keydown.space)="onServiceSelectButtonPressed(service, true)"
+                      (click)="onServiceSelectButtonPressed(service, true)" [ngClass]="{'qm-outline':service.showInfo}">
                       <span class="qm-list__item--label" [ngClass]="{'qm-highlight-text': service.showInfo}"
                         [innerHtml]="( service.name && service.name.length > 0 ? service.name : service.internalName) | qmhighlight: searchText">
                       </span>

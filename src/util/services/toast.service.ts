@@ -1,7 +1,6 @@
 import { Injectable, EventEmitter, Output, Directive } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorage, STORAGE_SUB_KEY } from '../local-storage';
-import { NativeApiService } from './native-api.service';
 
 @Directive()
 @Injectable()
@@ -82,7 +81,7 @@ export class ToastService {
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
       document.getElementById("close-toast-btn").focus();
-    }, this.nativeApiService.isAndroid() ? 10000 : 500);
+    }, this.isAndroid() ? 10000 : 500);
     return this.toastrService.success(text, '', this.successOptions);
   }
 
@@ -90,7 +89,7 @@ export class ToastService {
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
       document.getElementById("close-toast-btn").focus();
-    }, this.nativeApiService.isAndroid() ? 10000 : 500);
+    }, this.isAndroid() ? 10000 : 500);
     return this.toastrService.success(text, '', this.infoOptions);
   }
 
@@ -98,7 +97,7 @@ export class ToastService {
     setTimeout(() => {
       document.getElementsByClassName("toast-close-button")[0].setAttribute("id", "close-toast-btn");
       document.getElementById("close-toast-btn").focus();
-    }, this.nativeApiService.isAndroid() ? 10000 : 500);
+    }, this.isAndroid() ? 10000 : 500);
     this.toastrService.error(text, '', this.errorOptions);
   }
 
@@ -124,6 +123,14 @@ export class ToastService {
       .map(toast => this.toastrService.clear(toast.toastId));
   }
 
-  constructor(private toastrService: ToastrService, private nativeApiService: NativeApiService) {
+  isAndroid(): boolean {
+    if (navigator.userAgent.match(/Android/i)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  constructor(private toastrService: ToastrService) {
   }
 }

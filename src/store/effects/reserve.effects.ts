@@ -16,7 +16,7 @@ import { IAppState } from '../reducers/index';
 import { IAppointment } from '../../models/IAppointment';
 import { IService } from '../../models/IService';
 import { IBookingInformation } from '../../models/IBookingInformation';
-import { ERROR_CODE_TIMESLOT_TAKEN } from '../../app/shared/error-codes';
+import { BLOCKED_ERROR_CODES, ERROR_CODE_TIMESLOT_TAKEN } from '../../app/shared/error-codes';
 import { Observable, of, forkJoin, empty } from 'rxjs';
 
 const toAction = ReserveActions.toAction();
@@ -82,6 +82,22 @@ export class ReserveEffects {
           AllActions.FetchReservableDatesByVisitorsFail
         )
       )
+    );
+
+  @Effect({ dispatch: false })
+  fetchReservableDatesByVisitorsFail$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(ReserveActions.FETCH_RESERVABLE_DATES_BY_VISITORS_FAIL),
+      tap(
+        (action: ReserveActions.FetchReservableDatesByVisitorsFail) => {
+          if ((action.payload['errorCode'] == BLOCKED_ERROR_CODES.ERROR_CODE_TIME_SLOT)) {
+            this.translateService.get('label.error.time.slot.not.allowed').subscribe(
+              (label: string) => {
+                this.toastService.errorToast(label);
+              }
+            ).unsubscribe();
+        }}
+      ),
     );
 
   @Effect()

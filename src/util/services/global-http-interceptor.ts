@@ -2,7 +2,7 @@ import { ToastService } from './toast.service';
 import { UserStatusDispatchers } from './../../store/services/user-status/user-status.dispatchers';
 import { UserStatusSelectors } from 'src/store/services';
 import { NativeApiService } from './native-api.service';
-import { ERROR_CODE_TIMEOUT, ERROR_CODE_TIME_SLOT } from './../../app/shared/error-codes';
+import { ERROR_CODE_TIMEOUT } from './../../app/shared/error-codes';
 import { GlobalNotifyDispatchers } from './../../store/services/global-notify/global-notify.dispatchers';
 import { Injectable, NgZone } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
@@ -239,13 +239,6 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                                     if (this.serviceState.getCurrentTry() < this.numberOfTries && !skipRetry) {
                                         return of(req);
                                     } 
-                                    else if (skipRetry) {
-                                        if (errorCode == ERROR_CODE_TIME_SLOT) {
-                                            this.translateService.get('label.error.time.slot.not.allowed').subscribe((t) => {
-                                                this.toastService.stickyToast(t);
-                                            }).unsubscribe();
-                                        }
-                                    }
                                     else {
                                         if (!this.nativeApiService.isNativeBrowser()) {
                                             if (this.serviceState.getCurrentTry() === this.numberOfTries) {

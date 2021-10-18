@@ -5,6 +5,7 @@ import * as AccountActions from '../actions';
 export interface IAccountState {
   data: IAccount;
   userRole: UserRole;
+  modules: any;
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -25,6 +26,7 @@ const initialState = {
     modules: [],
   },
   userRole: UserRole.None,
+  modules: [],
   loading: false,
   loaded: false,
   error: null,
@@ -51,6 +53,7 @@ export function reducer(
           ...action.payload.data
         },
         userRole: action.payload.userRole,
+        modules: action.payload.data.modules,
         loading: false,
         loaded: true,
         error: null

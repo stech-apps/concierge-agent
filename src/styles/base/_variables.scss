@@ -27,6 +27,7 @@ $standard-animation-duration: 0.5s;
 
 $global-header-height: 56px;
 $global-footer-height: 40px;
+$global-main-height: calc(100vh - #{$global-header-height});
 
 $font-weight-light: 300;
 $font-weight-regular: 400;

@@ -40,7 +40,7 @@ export class GlobalErrorHandler {
     handleError<T>(requestData?: T, additionalData: any = {}) {
         return (res: HttpErrorResponse) => {
              if (res instanceof DataServiceError) {
-                if(Object.values(BLOCKED_ERROR_CODES).includes(res['errorCode'] as any)){
+                if(Object.values(BLOCKED_ERROR_CODES).includes(res['errorCode'] as any) || res.status === 401 || res['responseData'].status === 401){
                     return throwError(res);
                 }
              }

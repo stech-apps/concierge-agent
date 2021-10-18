@@ -5,9 +5,13 @@ export const VISIT_USER_ROLE = 'VISIT_USER_ROLE';
 export const APPOINTMENT_USER_ROLE = 'APPOINTMENT_USER_ROLE';
 export const NO_ROLE = 'NO_ROLE';
 
-
+export enum ACCESS_MODULES {
+  SERVICE_POINT = 'servicePoint',
+  CONCIERGE = 'connectconcierge'
+}
 export interface IUserRoleState {
   role: UserRole;
+  models: any,
   loading: boolean;
   loaded: boolean;
   error: Object;
@@ -25,6 +29,7 @@ const initialState = {
     isAdmin: true
   },
   role: UserRole.None,
+  models: [],
   loading: false,
   loaded: false,
   error: null
@@ -46,6 +51,7 @@ export function reducer(
       return {
         ...state,
         role: action.payload,
+        models: action.payload,
         loading: false,
         loaded: true,
         error: null

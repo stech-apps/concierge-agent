@@ -7,6 +7,7 @@ import { QmAppLoaderComponent } from '../app/components/containers/qm-app-loader
 import { AppComponent } from '../app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LicenseAuthGuard } from 'src/auth-guards/license-auth-guard';
+import { AccessModuleGuard } from 'src/auth-guards/access-module-guard';
 import { QmInvalidLicenseComponent } from 'src/app/components/presentational/qm-invalid-license/qm-invalid-license.component';
 import { QmHomeComponent } from 'src/app/components/presentational/qm-home/qm-home.component';
 import { QmCreateAppointmentComponent } from 'src/app/components/presentational/qm-create-appointment/qm-create-appointment.component';
@@ -15,14 +16,16 @@ import { QmArriveAppointmentComponent } from 'src/app/components/presentational/
 import { QmEditVisitComponent } from '../app/components/presentational/qm-edit-visit/qm-edit-visit.component';
 import { QmCentralLoginComponent } from 'src/app/components/presentational/qm-central-login/qm-central-login.component';
 import { QmWcagStatementComponent } from 'src/app/components/presentational/qm-wcag-statement/qm-wcag-statement.component';
+import { QmErrorComponent } from 'src/app/components/presentational/qm-error/qm-error.component';
 export const appRoutes: Routes = [
   {
     path: '',
     children: [
-      { path: 'loading', component: QmAppLoaderComponent },
+      { path: 'loading', component: QmAppLoaderComponent, canActivate: [AccessModuleGuard] },
       { path: 'app', component: QmAppComponent, canActivate: [LicenseAuthGuard] },
       { path: 'invalid-license', component: QmInvalidLicenseComponent },
       { path: 'accessibility', component: QmWcagStatementComponent },
+      { path: 'error', component: QmErrorComponent },
 
       {
         path: 'home', component: QmHomeComponent, children: [
@@ -32,9 +35,9 @@ export const appRoutes: Routes = [
           { path: 'edit-appointment', component: QmEditAppointmentComponent },
           { path: 'edit-visit', component: QmEditVisitComponent },
           { path: 'central-login', component: QmCentralLoginComponent}
-        ]
+        ], canActivate: [AccessModuleGuard]
       },
-      { path: 'profile', component: QmProfileComponent },
+      { path: 'profile', component: QmProfileComponent, canActivate: [AccessModuleGuard] },
  { path: 'customers', component: QmCustomersComponent},
       { path: '**', component: QmAppPageNotFoundComponent }
     ]

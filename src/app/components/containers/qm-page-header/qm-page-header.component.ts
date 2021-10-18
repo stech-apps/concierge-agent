@@ -25,7 +25,8 @@ import {
   QueueDispatchers,
   FlowOpenSelectors,
   ServicePointDispatchers,
-  AccountSelectors
+  AccountSelectors,
+  UserRoleSelectors
 } from "../../../../store";
 
 import { NativeApiService } from "../../../../util/services/native-api.service";
@@ -77,6 +78,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   isAppointmentUser = false;
   isAllOutputMethodsDisabled: boolean;
   printerEnabled: boolean;
+  private canAccessApp: boolean;
 
   @Output()
   clickBackToAppointmentsPage: EventEmitter<any> = new EventEmitter<any>();
@@ -86,6 +88,8 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
 
   @Input() isPreventHeaderNavigations = false;
   @Input() isQuickServeShow: boolean;
+
+  public isUserAccessApp$: Observable<boolean>;
 
   constructor(
     private userSelectors: UserSelectors,
@@ -102,6 +106,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     private flowOpenSelectors: FlowOpenSelectors,
     private servicePointDispatchers: ServicePointDispatchers,
     private accountSelectors: AccountSelectors,
+    private userRoleSelectors: UserRoleSelectors
 
   ) {
     this.userFullName$ = this.userSelectors.userFullName$;
@@ -111,6 +116,7 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
     this.branch$ = this.branchSelectors.selectedBranch$;
     this.isNative = this.nativeApiService.isNativeBrowser();
     this.isFlowOpen = false;
+    this.isUserAccessApp$ = this.userRoleSelectors.isUserAccessApp$;
 
   }
 
@@ -129,6 +135,13 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
       }
     );
     this.headerSubscriptions.add(licenseSubscription);
+
+    const userAccessSubscription = this.isUserAccessApp$.subscribe(
+      (canAccess: boolean) => {
+        this.canAccessApp = canAccess;
+      }
+    );
+    this.headerSubscriptions.add(userAccessSubscription);
 
 
     const servicePointsSubscription = this.servicePointSelectors.uttParameters$.subscribe(
@@ -216,7 +229,11 @@ export class QmPageHeaderComponent implements OnInit, OnDestroy {
   logout(event: Event) {
     this.reserveDispatchers.unreserveAppointment();
     event.preventDefault();
-    this.logoutService.logout(false);
+    if (this.canAccessApp){
+      this.logoutService.logout(false);
+    } else {
+      window.location.href = '/logout.jsp';
+    }
   }
 
   homeClick($event) {

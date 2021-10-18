@@ -22,11 +22,11 @@
       <span class="sr-only">{{ 'label.home' | translate }}</span>
     </a>
     <span class="qm-header__application-name">{{ 'label.application.name' | translate }}</span>
-    <span class="qm-header__branch-name" *ngIf='showBranch'>{{branchName}} </span>
-    <span class="qm-header__less-than-icon" *ngIf='showBranch'> <i class=" caret-icon"
+    <span class="qm-header__branch-name" *ngIf='showBranch && (isUserAccessApp$ | async)'>{{branchName}} </span>
+    <span class="qm-header__less-than-icon" *ngIf='showBranch && (isUserAccessApp$ | async)'> <i class=" caret-icon"
         [ngClass]="{'icon-caret-right':(userDirections === 'ltr' || userDirections === 'LTR'),'icon-caret-left':(userDirections === 'rtl' || userDirections === 'RTL')}"></i></span>
-    <span class="qm-header__service-point-name" *ngIf='showSPointName'> {{sPName}}</span>
-    <button class="qm-transparent-btn" *ngIf='showBranch' (click)="editClick()"   attr.aria-label="{{'edit_user_profile' | translate}}" role="navigation">
+    <span class="qm-header__service-point-name" *ngIf='showSPointName && (isUserAccessApp$ | async)'> {{sPName}}</span>
+    <button class="qm-transparent-btn" *ngIf='showBranch && (isUserAccessApp$ | async)' (click)="editClick()"   attr.aria-label="{{'edit_user_profile' | translate}}" role="navigation">
       <span class="qm-header__edit-link">{{'edit'|translate}}</span>
     </button>
   </nav>

@@ -39,7 +39,7 @@ export class UserRoleDataService {
         }
         else if (res.modules.includes(CONCIERGE_ROLE) || res.modules.includes(CONNECT_CONCIERGE_ROLE)) {
           isVisitUserRole = res.modules.includes(SERVICEPOINT_ROLE);
-          isAppointmentUser = res.modules.includes(CALENDAR_ROLE);
+          isAppointmentUser = res.modules.includes(CALENDAR_ROLE) && res.modules.includes(APPOINTMENT_ROLE);
         }
 
         let userRole = UserRole.None;

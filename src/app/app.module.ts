@@ -12,6 +12,7 @@ import { QmCustomToastComponent } from "./components/presentational/qm-custom-to
 import { NativeApiService } from "./../util/services/native-api.service";
 // Route guards
 import { LicenseAuthGuard } from "../../src/auth-guards/license-auth-guard";
+import { AccessModuleGuard } from "../../src/auth-guards/access-module-guard";
 
 // Angular Modules
 import { BrowserModule } from "@angular/platform-browser";
@@ -142,7 +143,7 @@ import { QmVisitCustomerCreateComponent } from './components/presentational/qm-v
 import { QmMessageBoxComponent } from './components/containers/qm-message-box/qm-message-box.component';
 import { QmNotesModalComponent } from './components/presentational/qm-notes-modal/qm-notes-modal.component';
 import { QmNotesModalService } from './components/presentational/qm-notes-modal/qm-notes-modal.service';
-
+import { QmErrorComponent } from './components/presentational/qm-error/qm-error.component';
 
 import { AngularDraggableModule } from 'angular2-draggable';
 import { QmArriveAppointmentComponent } from './components/presentational/qm-arrive-appointment/qm-arrive-appointment.component';
@@ -227,6 +228,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     QmFlowPanelHeaderComponent,
     QmFlowPanelResult,
     QmFlowPanelTitle,
+    QmErrorComponent,
     QmCreateAppointmentComponent,
     QmSelectBranchComponent,
     QmFlowPanelContentComponent,
@@ -348,6 +350,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     GlobalNotifySelectors,
     ToastService,
     LicenseAuthGuard,
+    AccessModuleGuard,
     QEvents,
     QEventsHelper,
     QueueIndicator,

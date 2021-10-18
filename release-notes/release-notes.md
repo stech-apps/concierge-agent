@@ -41,9 +41,9 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 4.1.0 - Internal</h2>
 
-**Date: 11/10/2021**
+**Date: 15/10/2021**
  
-**Build number: 2**
+**Build number: 3**
 
 <h3>Stories</h3>
 
@@ -57,12 +57,13 @@ This document describes the new features, bug corrections, known issues and reco
 
 | **Id** | **Release notes** |
 | --- | --- |
-| **QP-QP-10480** | **Edit/Arrive Appointment Flows > QR scan > cannot scan a QR code from Andorid device when the branch name have some special chars** |
+| **QP-10480** | **Edit/Arrive Appointment Flows > QR scan > cannot scan a QR code from Andorid device when the branch name have some special chars** |
 | **QP-10476** | **WCAG Keybord navigation issues.** |
 | **QP-10389** | **Cocncierge does not scale correctly on a 8.0" Android** |
 | **QP-10614** | **Changes made to birth month is not saving in cusotmer object.** |
 | **QP-10715** | **Artifactory build doesn't write data to MANIFEST.MF.** |
 | **QP-10477** | **WCAG screenreader issues (talkback)** |
+| **QP-10862** | **Handle 401 Unauthorized Error in Concierge** |
 
 ----------
 

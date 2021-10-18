@@ -179,21 +179,12 @@ export class QmGlobalHttpInterceptor implements HttpInterceptor {
                         }),
                         timeoutWith(this.http_timeout, throwError({ status: ERROR_CODE_TIMEOUT })),
                         retryWhen(res => {
-                            return interval(this.http_timeout).pipe(
-                                flatMap((count) => {
-                                    // Handle timeslot exceeding issue
-                                    if (skipRetry) {
-                                            clearTimeout(this.localTimeoutBeforeStartPing);
-                                            this.localTimeoutBeforeStartPing = undefined;
-                                            return next.handle(reqRef);
-                                    } else if (this.serviceState.getCurrentTry() === this.numberOfTries) {
-                                        if (this.nativeApiService.isNativeBrowser() && !this.isPingSuccess && !this.serviceState.getIsNetWorkPingStarted()) {
-                                            this.serviceState.setIsNetWorkPingStarted(true);
-                                            this.nativeApiService.startPing(this.native_ping_period, this.native_max_ping_count_for_message);
-                                        } else if (!this.nativeApiService.isNativeBrowser()) {
-                                            this.serviceState.incrementTry();
-                                        }
-                                        return of(count);
+                            return res.pipe(
+                                mergeMap((response) => {
+                                    const reqError = new DataServiceError(response);
+                                    if (response.status === 401 || (response.status === 400 && this.util.isBlockedErrorCode(reqError.errorCode))) {
+                                        console.error(reqError);
+                                        return throwError(reqError);
                                     } else {
                                         return interval(this.http_timeout).pipe(
                                             flatMap((count) => {

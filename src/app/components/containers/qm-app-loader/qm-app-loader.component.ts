@@ -28,7 +28,6 @@ export class QmAppLoaderComponent implements OnInit, OnDestroy {
     private servicePointSelectors: ServicePointSelectors, private servicePointDispatchers: ServicePointDispatchers,
     private util: Util, private spService: SPService) {
 
-    
     this.branchSelectors.branches$;
     this.licenseSubscription = this.licenseSelector.isLicenseLoaded$.subscribe(loadedState => {
       if (loadedState) {

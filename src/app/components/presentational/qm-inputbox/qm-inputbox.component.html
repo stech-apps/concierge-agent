@@ -66,7 +66,8 @@
 
         <!-- Email Section -->
         <div class="qm-input-box__row">
-          <label for="email" id="email-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label"
+
+          <!-- <label for="email" id="email-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label"
             [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('email').invalid }">{{'label.email'|translate }}</label>
           <div class="qm-input-box-group">
             <input class="qm-input-box__input" type="text" id="email" name='email' formControlName="email" #email
@@ -80,7 +81,7 @@
             <span *ngIf="customerCreateForm.get('email').invalid">
               {{ 'error.form.email.invalid' | translate }}
             </span>
-          </div>
+          </div> -->
 
           <div class="qm-input-box__row">
             <!-- Phone Section -->
@@ -127,7 +128,7 @@
           </div>
 
           <!-- DOB Section -->
-          <div class="qm-input-box__row">
+          <!-- <div class="qm-input-box__row">
             <div class="qm-input-box__left-side" role="group" aria-labelledby="date_of_birth"
               formGroupName="dateOfBirth">
               <div>
@@ -137,11 +138,8 @@
                   [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('dateOfBirth').touched && customerCreateForm.get('dateOfBirth').invalid}">{{'required'|translate}}</label>
               </div>
               <div class="qm-input-box__dob-container">
-                
-                <!-- Month -->
                 <div>
                   <div class="qm-dob-container">
-                    <!-- #168261878 - labelForId not work in the project. We add tempry fix for this -->
                     <div aria-live="polite" aria-atomic="true" class="sr-only">
                       <span *ngIf="isMonthFocus">{{'months_dropdown'|translate }}</span>
                     </div>
@@ -190,9 +188,7 @@
               </div>
 
             </div>
-          </div>
-
-
+          </div> -->
 
           <div>
             <div class="qm-dob__error-message qm-form-error-message" id="year-error" aria-live="assertive"

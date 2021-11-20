@@ -211,6 +211,9 @@ export class SPService implements OnDestroy {
 
     if (sms && sms.length > 0) {
       params["phoneNumber"] = this.util.buildPhoneNumber(sms);
+
+      // custom3 for reporting
+      params["custom3"] = sms;
     }
     if (notes && notes.length > 0) {
       params["custom1"] = notes;

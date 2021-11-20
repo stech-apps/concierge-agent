@@ -82,7 +82,7 @@
                 </div>
               </div>
               <!-- Email Section -->
-              <div class="qm-input-box__row">
+              <!-- <div class="qm-input-box__row">
                 <label for="email" id="email-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label" [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('email').invalid }">{{'label.email'|translate }}</label>
                 <div class="qm-input-group">
                   <input class="qm-input-box__input" type="text" id="email" name='email' formControlName="email" #email [attr.aria-invalid]="customerCreateForm.get('email').invalid" attr.aria-describedby="email-error">
@@ -93,7 +93,7 @@
                   </button>
                 </div>
                 <div class="qm-form-error-message" *ngIf="customerCreateForm.get('email').invalid" id="email-error" role="alert"> {{ 'error.form.email.invalid' | translate }}</div>
-              </div>
+              </div> -->
 
               <!-- Phone Section  -->
               <div class="qm-input-box__row">
@@ -115,15 +115,13 @@
               </div>
 
               <!-- DOB Section -->
-              <div class="qm-input-box__row">
+              <!-- <div class="qm-input-box__row">
                 <div class="qm-input-box__left-side" role="group" aria-labelledby="date_of_birth" formGroupName="dateOfBirth">
                   <label id="date_of_birth"
                     class="qm-input-box__inputbox-name qm-input-box__label-first-label qm-dob-label">{{'date_of_birth'|translate }}</label>
                   <div class="qm-input-box__dob-container">
-                    <!-- Month -->
                     <div>
                       <div class="qm-dob-container">
-                          <!-- #168261878 - labelForId not work in the project. We add tempry fix for this -->
                           <div aria-live="polite" aria-atomic="true" class="sr-only">
                               <span *ngIf="isMonthFocus">{{'months_dropdown'|translate }}</span>
                           </div>
@@ -175,7 +173,7 @@
                     <div class="qm-dob__error-message qm-form-error-message" id="day-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('year')?.hasError('min') && !(customerCreateForm.get('dateOfBirth').get('year')?.hasError('minlength'))">{{ 'error.form.dob.incompleteYearOld' | translate }}</div>
                     <div class="qm-dob__error-message qm-form-error-message" id="month-error" role="alert" *ngIf="customerCreateForm.get('dateOfBirth').get('month').hasError('incorrect')">{{ 'error.form.dob.incompleteMonth' | translate }}</div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </form>
         </div>

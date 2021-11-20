@@ -1,18 +1,18 @@
 {
     "/rest/*": {
-      "target": "http://lhr.stech.com.pk:8080",
+      "target": "http://d2.appzone.io:8070",
       "secure": false
     },
     "/calendar-backend/*": {
-      "target": "http://lhr.stech.com.pk:8080",
+      "target": "http://d2.appzone.io:8070",
       "secure": false
     },
     "/qsystem/rest/*": {
-      "target": "http://lhr.stech.com.pk:8080",
+      "target": "http://d2.appzone.io:8070",
       "secure": false
     },
     "/cometd/*": {
-      "target": "http://lhr.stech.com.pk:8080",
+      "target": "http://d2.appzone.io:8070",
       "secure": false
     },
     "/bundle/*":{

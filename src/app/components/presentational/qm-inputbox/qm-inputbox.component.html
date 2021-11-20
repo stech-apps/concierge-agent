@@ -11,7 +11,8 @@
               <div>
                 <label for="firstName" id="firstName-label"
                   class="qm-input-box__inputbox-name qm-input-box__label-first-label"
-                  [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}">{{'label.first_name'|translate }}</label>
+                  [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}">{{'label.first_name'|translate
+                  }}</label>
                 <label class="qm-input-box__inputbox-name qm-input-box__label-required"
                   [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('firstName').touched && customerCreateForm.get('firstName').invalid}">{{'required'|translate}}</label>
               </div>
@@ -41,7 +42,8 @@
             <div>
               <label for="lastName" id="lastName-label"
                 class="qm-input-box__inputbox-name qm-input-box__label-first-label"
-                [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}">{{'label.last_name'|translate }}</label>
+                [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}">{{'label.last_name'|translate
+                }}</label>
               <label class="qm-input-box__inputbox-name qm-input-box__label-required"
                 [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('lastName').touched && customerCreateForm.get('lastName').invalid}">{{'required'|translate}}</label>
             </div>
@@ -63,6 +65,30 @@
             </div>
           </div>
         </div>
+
+
+        <!-- Captain Id section -->
+        <div class="qm-input-box__row">
+          <div class="qm-input-box__col-50">
+            <div class="qm-input-box__left-side">
+              <div>
+                <label for="captainId" id="captainId"
+                  class="qm-input-box__inputbox-name">Captain ID</label>
+              </div>
+              <div class="qm-input-box-group">
+                <input #captainId class="qm-input-box__input" type="text" name='captainId' id="captainId"
+                  formControlName="captainId" maxlength="500">
+
+                <button type="button" *ngIf="captainId.value.trim()" class="qm-clear-btn"
+                  (click)="clearInputFeild('captainId')">
+                  <i aria-hidden="true" class="qm-action-btn__icon icon-close qm-close__icon"></i>
+                  <span class="sr-only">{{ 'button.clear' | translate }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <!-- Email Section -->
         <div class="qm-input-box__row">
@@ -88,7 +114,8 @@
             <div class="qm-input-box__col-50">
               <div class="qm-input-box__left-side">
                 <label for="phone" id="phone-label" class="qm-input-box__inputbox-name qm-input-box__label-first-label"
-                  [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('phone').invalid }">{{'label.phone'|translate }}</label>
+                  [ngClass]="{ 'qm-invalid-field__label' : customerCreateForm.get('phone').invalid }">{{'label.phone'|translate
+                  }}</label>
                 <div class="qm-input-box-group">
                   <input class="qm-input-box__input" type="tel" inputmode="numeric" id="phone" name='phone'
                     formControlName="phone" #phone [attr.aria-invalid]="customerCreateForm.get('phone').invalid">
@@ -106,23 +133,27 @@
               </div>
             </div>
             <!-- Notification Language -->
-            <div class="qm-input-box__col-50" *ngIf="isLanguageSelectEnabled && (flowType=='CREATE_APPOINTMENT' || 'CREATE_VISIT')">
+            <div class="qm-input-box__col-50"
+              *ngIf="isLanguageSelectEnabled && (flowType=='CREATE_APPOINTMENT' || 'CREATE_VISIT')">
               <div>
                 <label for="language" id="language-label"
-                  class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{ 'label.language.heading' | translate }}
+                  class="qm-input-box__inputbox-name qm-input-box__label-first-label">{{ 'label.language.heading' |
+                  translate }}
                 </label>
               </div>
               <div class="qm-standard-text-field">
-                  <label class="qm-standard-text-field__label">
-                    <div aria-live="polite" aria-atomic="true" class="sr-only">
-                      <span *ngIf="isLanguageFocus">{{ 'label.language.dropdown' | translate }}</span>
-                    </div>
-                    <ng-select #languageSelect [items]="languages" (focus)="languageFiledSelection(true)" (blur)="languageFiledSelection(false)" [selectOnTab]="true" [clearable]="false"
-                      notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value" tabindex="0"
-                      placeholder="{{ 'label.language.heading' | translate }}" formControlName="language"  [clearable]="false" [searchable]="false" 
-                      [attr.aria-expanded]="isLangExpanded" (open)="LangDropDownStatus(true)" (close)="LangDropDownStatus(false)">
-                    </ng-select>
-                  </label>              
+                <label class="qm-standard-text-field__label">
+                  <div aria-live="polite" aria-atomic="true" class="sr-only">
+                    <span *ngIf="isLanguageFocus">{{ 'label.language.dropdown' | translate }}</span>
+                  </div>
+                  <ng-select #languageSelect [items]="languages" (focus)="languageFiledSelection(true)"
+                    (blur)="languageFiledSelection(false)" [selectOnTab]="true" [clearable]="false"
+                    notFoundText="{{ 'label.no.items.found' | translate }}" bindValue="value" tabindex="0"
+                    placeholder="{{ 'label.language.heading' | translate }}" formControlName="language"
+                    [clearable]="false" [searchable]="false" [attr.aria-expanded]="isLangExpanded"
+                    (open)="LangDropDownStatus(true)" (close)="LangDropDownStatus(false)">
+                  </ng-select>
+                </label>
               </div>
             </div>
           </div>
@@ -234,17 +265,13 @@
           </div>
         </div>
 
-
-
-
-
-
         <div class="qm-input-box__row">
 
           <div class="qm-input-box__button-container">
 
             <!-- Cancel Button -->
-            <button type="button" class="qm-button qm-secondary-button-defult btn-wrap" (click)="cancel()" *ngIf="editMode">
+            <button type="button" class="qm-button qm-secondary-button-defult btn-wrap" (click)="cancel()"
+              *ngIf="editMode">
               {{'label.cancel'|translate}}
             </button>
             <button type="button" class="qm-button qm-secondary-button-defult btn-wrap" (click)="discard()"
@@ -282,8 +309,8 @@
             </button>
 
             <!-- from confirm view -->
-            <button *ngIf="!editMode && currentCustomer" class="qm-button qm-primary-button-disabled btn-wrap" type="button"
-              [attr.tabindex]="customerCreateForm.valid && customerCreateForm.dirty ? null : '-1'"
+            <button *ngIf="!editMode && currentCustomer" class="qm-button qm-primary-button-disabled btn-wrap"
+              type="button" [attr.tabindex]="customerCreateForm.valid && customerCreateForm.dirty ? null : '-1'"
               [ngClass]="{'qm-primary-button-default': customerCreateForm.valid && customerCreateForm.dirty }"
               (click)="update()">
               <span> {{'button.save.changes'|translate}} </span>

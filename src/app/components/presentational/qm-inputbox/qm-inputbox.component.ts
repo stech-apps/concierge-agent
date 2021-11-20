@@ -149,6 +149,7 @@ export class QmInputboxComponent implements OnInit {
         this.customerCreateForm.patchValue({
           firstName: this.currentCustomer.firstName,
           lastName:this.currentCustomer.lastName,
+          captainId:this.currentCustomer.properties.custom3,
           phone:this.currentCustomer.properties.phoneNumber,
           email:this.currentCustomer.properties.email,
           dateOfBirth: {
@@ -163,6 +164,7 @@ export class QmInputboxComponent implements OnInit {
         this.customerCreateForm.patchValue({
           firstName: '',
           lastName:'',
+          captainId: '',
           phone:this.countrycode,
           email:'',
           dateOfBirth: {
@@ -206,6 +208,7 @@ export class QmInputboxComponent implements OnInit {
     this.customerCreateForm = new FormGroup({
       firstName: new FormControl('',Validators.required, whiteSpaceValidator),
       lastName:new FormControl('',Validators.required, whiteSpaceValidator),
+      captainId:new FormControl(''),
       phone:new FormControl(this.countrycode, phoneValidators),
       email:new FormControl('',emailValidators),
       dateOfBirth: this.fb.group(
@@ -298,6 +301,7 @@ export class QmInputboxComponent implements OnInit {
       this.customerCreateForm.patchValue({
         firstName: '',
         lastName:'',
+        captainId:'',
         phone:this.countrycode,
         email:'',
         dateOfBirth: {
@@ -350,6 +354,7 @@ export class QmInputboxComponent implements OnInit {
             phoneNumber: this.customerCreateForm.value.phone.trim(),
             email: this.customerCreateForm.value.email.trim(),
             dateOfBirth: this.getDateOfBirth(),
+            custom3: this.customerCreateForm.value.captainId.trim()
           }
     };
     return customerSave
@@ -484,16 +489,11 @@ export class QmInputboxComponent implements OnInit {
   update(){
     if (
       this.customerCreateForm.valid &&
-      (this.currentCustomer.firstName != this.customerCreateForm.value.firstName ||
+      this.currentCustomer.firstName != this.customerCreateForm.value.firstName ||
         this.currentCustomer.lastName != this.customerCreateForm.value.lastName ||
         this.currentCustomer.properties.phoneNumber != this.customerCreateForm.value.phone ||
         this.currentCustomer.properties.email != this.customerCreateForm.value.email ||
-        (this.date.year && this.date.year != this.customerCreateForm.value.dateOfBirth.year) ||
-        (!this.date.year && this.customerCreateForm.value.dateOfBirth.year) ||
-        (this.date.day && this.date.day != this.customerCreateForm.value.dateOfBirth.day) ||
-        (!this.date.day && this.customerCreateForm.value.dateOfBirth.year) ||
-        this.date.month != this.customerCreateForm.value.dateOfBirth.month) ||
-        this.currentCustomer.properties.lang != this.customerCreateForm.value.language
+        this.currentCustomer.properties.custom3 != this.customerCreateForm.value.captainId
     ) {
       this.accept();
     } else if (this.customerCreateForm.valid && this.customerCreateForm.dirty) {
@@ -524,6 +524,7 @@ export class QmInputboxComponent implements OnInit {
      
      case "firstName": this.customerCreateForm.patchValue({ firstName: ''});break;
      case "lastName": this.customerCreateForm.patchValue({ lastName: ''});break;
+     case "captainId": this.customerCreateForm.patchValue({ captainId: ''});break;
      case "phone": this.customerCreateForm.patchValue({ phone: ''});break;
      case "email": this.customerCreateForm.patchValue({ email: ''});break;
                         

@@ -6,5 +6,6 @@ export interface ICustomerProperty {
     publicId?: string;
     created?: string;
     lang?: string;
-    custom3?: string;
+    custom3?: string; // for reporting
+    custom4?: string; // for custom field
   }
